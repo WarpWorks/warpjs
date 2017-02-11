@@ -1,16 +1,18 @@
 const express = require('express');
+const path = require('path');
 
-const rootRouter = require('./root').router;
+const homepageRouter = require('./homepage').router;
 const mapRouter = require('./map').router;
 
 const app = express();
 
-const path = require('path');
+const buildDir = path.resolve(path.join(__dirname, '..', 'build'));
 
 app.set('view engine', 'hbs');
-app.use('/', rootRouter);
+app.set('sendfile-options', {root: buildDir});
+
+app.use('/', homepageRouter);
 app.use('/map', mapRouter);
-app.use(express.static(path.join(__dirname, '..', 'build')));
-app.use(express.static(path.join(__dirname, '..', 'node_modules')));
+app.use('/static', express.static(buildDir));
 
 module.exports = app;
