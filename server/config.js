@@ -4,6 +4,9 @@ const rc = require('rc');
 const packageJson = require('./../package.json');
 
 const baseConfig = {
+    cookieSecret: 'ThisC00k1eISsw33t',
+    jwtSecret: 'cannotGuessThi$',
+    jwtCookieName: 'i3cPortalJWT',
     domain: 'I3C',
     columnType: 'IndustrySectors',
     rowType: 'ApplicationAreas',
