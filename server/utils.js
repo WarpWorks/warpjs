@@ -1,0 +1,53 @@
+const url = require('url');
+
+function urlFormat(pathname, query) {
+    return url.format({
+        pathname,
+        query
+    });
+}
+
+function sendHal(req, res, resource, status) {
+    resource.copyrightYear = (new Date()).getFullYear();
+
+    resource.link('i3c_homepage', {
+        href: '/',
+        title: "Home page"
+    });
+
+    if (req.i3cUser) {
+        resource.user = req.i3cUser;
+    }
+
+    if (resource.hideLoginHeader) {
+        // This is the login page, so we want to be sure that
+        // both links are available.
+        resource.link('i3c_login', {
+            href: '/session',
+            title: "Login"
+        });
+        resource.link('i3c_logout', {
+            href: '/session/logout',
+            title: "Logout"
+        });
+    } else if (req.i3cUser) {
+        resource.link('i3c_logout', {
+            href: '/session/logout',
+            title: "Logout"
+        });
+    } else {
+        resource.link('i3c_login', {
+            href: '/session',
+            title: "Login"
+        });
+    }
+
+    res.status(status || 200)
+        .header('Content-Type', 'application/hal+json')
+        .json(resource.toJSON());
+}
+
+module.exports = {
+    sendHal,
+    urlFormat
+};

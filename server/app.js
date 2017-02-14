@@ -3,6 +3,7 @@ const cookieParser = require('cookie-parser');
 const express = require('express');
 const path = require('path');
 
+const adminRouter = require('./admin').router;
 const config = require('./config');
 const homepageRouter = require('./homepage').router;
 const mapRouter = require('./map').router;
@@ -33,5 +34,8 @@ app.use(session.middlewares.i3cUser);
 app.use('/', homepageRouter);
 app.use('/session', session.router);
 app.use('/map', mapRouter);
+
+// TODO: Change this to use HeadStart
+app.use('/admin', session.middlewares.requiresI3cUser.bind(null, []), adminRouter);
 
 module.exports = app;

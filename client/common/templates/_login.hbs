@@ -3,30 +3,32 @@
     <a href="{{_links.i3c_logout.href}}"><span title="Log out" class="glyphicon
     glyphicon-log-out" /></a>
 {{^}}
-    <form class="form-horizontal" role="form"
-            action="{{_links.i3c_login.href}}" method="POST"
-            >
-        <div class="form-group">
-            <div class="col-md-5">
-                <input type="text" id="i3c-login-email"
-                    name="username"
-                    class="form-control"
-                    placeholder="email"
-                    />
+    {{#unless hideLoginHeader}}
+        <form class="form-horizontal" role="form"
+                action="{{_links.i3c_login.href}}" method="POST"
+                >
+            <div class="form-group">
+                <div class="col-md-5">
+                    <input type="text" id="i3c-login-username"
+                        name="username"
+                        class="form-control"
+                        placeholder="username"
+                        />
+                </div>
+                <div class="col-md-5">
+                    <input type="password" id="i3c-login-password"
+                        name="password"
+                        class="form-control"
+                        placeholder="password"
+                        />
+                </div>
+                <div class="col-md-1">
+                    <button type="submit" class="btn btn-default">
+                        <span title="Log in" class="glyphicon glyphicon-log-in" />
+                    </button>
+                </div>
             </div>
-            <div class="col-md-5">
-                <input type="password" id="i3c-login-password"
-                    name="password"
-                    class="form-control"
-                    placeholder="password"
-                    />
-            </div>
-            <div class="col-md-1">
-                <button type="submit" class="btn btn-default">
-                    <span title="Log in" class="glyphicon glyphicon-log-in" />
-                </button>
-            </div>
-        </div>
-    </form>
+        </form>
+    {{/unless}}
 {{/if}}
 
