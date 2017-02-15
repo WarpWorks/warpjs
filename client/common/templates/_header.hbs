@@ -1,11 +1,13 @@
-<div class="i3c-portal--header row">
-    <div class="col-md-1">
-        <a href="{{_links.self.href}}">[LOGO]</a>
+<header class="header i3c-portal--header">
+    <div class="header-top row">
+        <div class="col-md-1">
+            <a href="{{_links.i3c_homepage.href}}">[LOGO]</a>
+        </div>
+        <div class="col-md-7">
+            I3C Portal
+        </div>
+        <div class="col-md-4">
+            {{> ./_login}}
+        </div>
     </div>
-    <div class="col-md-7">
-        I3C Portal
-    </div>
-    <div class="col-md-4">
-        {{> ./_login}}
-    </div>
-</div>
+</header>
