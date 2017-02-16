@@ -7,10 +7,16 @@ const baseConfig = {
     cookieSecret: 'ThisC00k1eISsw33t',
     jwtSecret: 'cannotGuessThi$',
     jwtCookieName: 'i3cPortalJWT',
-    domain: 'I3C',
-    columnType: 'IndustrySectors',
-    rowType: 'ApplicationAreas',
-    hotspotType: 'I3CHotSpot'
+    persistence: {
+        host: 'localhost',
+        domain: 'I3C',
+        dbName: 'I3C',
+        columnType: 'IndustrySector',
+        columnSubType: 'IndustryVertical',
+        rowType: 'ApplicationArea',
+        rowSubType: 'UseCase',
+        hotspotType: 'HotSpot'
+    }
 };
 
 const config = _.clone(rc(packageJson.name, baseConfig));
