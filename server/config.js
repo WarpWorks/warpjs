@@ -8,7 +8,7 @@ const baseConfig = {
     jwtSecret: 'cannotGuessThi$',
     jwtCookieName: 'i3cPortalJWT',
     persistence: {
-        host: 'localhost',
+        host: process.env.MONGODB_HOST || 'localhost',
         domain: 'I3C',
         dbName: 'I3C',
         columnType: 'IndustrySector',
