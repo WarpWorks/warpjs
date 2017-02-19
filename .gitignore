@@ -1,0 +1,9 @@
+# Node Modules
+node_modules/
+
+# Generated Files
+app*.hbs
+*WebAPI.js
+
+# WebStorm IDE Config
+.idea/
