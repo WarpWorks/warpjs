@@ -1,0 +1,312 @@
+
+<div class="panel panel-success">
+    <div class="panel-heading"><b>HotSpot</b>
+    </div>
+    <div class="panel-body" id="DefaultPageViewPB">
+        <ul class="nav nav-tabs">
+        
+            <li class="active"><a data-toggle="tab" href="#BasicsTab">Basics</a></li>
+        
+        </ul>
+        <div class="tab-content">
+            
+            <div id="BasicsTab" class="tab-pane fade in active">
+                <div class="panel-body">
+                    
+                        <!--Body: Basics-->
+                        <form class="form-horizontal">
+                            
+                                <div class="form-group">
+                                    <label for="NameInput" class="col-sm-2 control-label">Name
+                                    </label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="NameInput">
+                                    </div>
+                                </div>
+                            
+                                <div class="form-group">
+                                    <label for="DescriptionInput" class="col-sm-2 control-label">Description
+                                    </label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="DescriptionInput">
+                                    </div>
+                                </div>
+                            
+                        </form>
+                        <script>
+                            function I3C_HotSpot_entity2Basics (entity) {
+                                $("#NameInput").val(entity.get_Name());
+                                $("#DescriptionInput").val(entity.get_Description());
+                            }
+                            function I3C_HotSpot_Basics2entity (entity) {
+                                entity.set_Name($("#NameInput").val());
+                                entity.set_Description($("#DescriptionInput").val());
+                            }
+                            whenReady(function () {
+                                getI3CAdmin().getEntityByID("I3C", "HotSpot", $active.oid, function (entity) {
+                                    I3C_HotSpot_entity2Basics(entity);
+                                });
+                            });
+                            onSave (function () {
+                                if ($active.mode === "edit") {
+                                    getI3CAdmin().getEntityByID("I3C", "HotSpot", $active.oid, function (entity) {
+                                       I3C_HotSpot_Basics2entity (entity);
+                                    });
+                                }
+                                else {
+                                    var newEntity = getI3CAdmin().addNew_HotSpot ($active.parentID, $active.relnID, $active.relnName);
+                                    I3C_HotSpot_Basics2entity (newEntity);
+                                }
+                            });
+                        </script>
+                    
+                    
+                    
+                        <hr>
+                        <form class="form-horizontal">
+                            
+                                {{> appIndustryVertical_SelectionModal }}
+                                <div class="form-group">
+                                    <label for="csv_IndustryVerticals" class="col-sm-2 control-label">IndustryVerticals
+                                    </label>
+                                    <div class="col-sm-10">
+                                        <ul class="nav nav-pills" id="csv_IndustryVerticals"></ul>
+                                    </div>
+                                </div>
+                                <script>
+                                    whenReady(function () {
+                                        // Update CSV list for current AssociationPanelItem
+                                        IndustryVerticals_updateCSVs ();
+                                    });
+                                    function IndustryVerticals_updateCSVs () {
+                                        // Update list with target entities
+                                        var reln = $active.entity.IndustryVerticals;
+                                        $("#csv_IndustryVerticals").empty();
+                                        for (i in $active.entity[reln.name].assocTargets) {
+                                            var target = $active.entity[reln.name].assocTargets[i];
+                                            var elemID = "IndustryVerticals-CSV:"+target.id;
+                                            var elem = $("<li role='presentation' id='"+elemID+"'><a href='#'>"+target.label+"</a></li>");
+                                            $("#csv_IndustryVerticals").append(elem);
+                                            elem.click(function () {
+                                                var id = $(this).attr("id").split(":")[1];
+                                                console.log("ID:"+id);
+                                                window.location.href = "./../app/IndustryVertical?oid="+id;
+                                            });
+                                        }
+
+                                        // Add pill with callback to edit target entities
+                                        var editPill = $("<li><a href='#'><span class='glyphicon glyphicon-edit'></span></a></li>");
+                                        $("#csv_IndustryVerticals").append(editPill);
+                                        editPill.on("click", function () {
+                                            $active.relationship = $active.entity.IndustryVerticals;
+
+                                            // Update model with potential targets
+                                            $active.entity.getPotentialTargets4IndustryVerticals(
+                                                IndustryVertical_updateSelectEntityModal);
+
+                                            // Remember the update function so that later we are able to update the CSV list again
+                                            $active.relationship.updateCSV = IndustryVerticals_updateCSVs;
+
+                                            // Create EntityTable object to support modal updates:
+                                            var widgetID="IndustryVertical";
+                                            if (!$active.entityTables[widgetID]) {
+                                                var columns = [  ]
+                                                var newEntityTable = new EntityTable (widgetID, "selectEntityM", columns, $active.relationship);
+                                                newEntityTable.updateRelationshipAndWidget = function () {
+                                                    $active.entity.getPotentialTargets4IndustryVerticals(
+                                                        IndustryVertical_updateSelectEntityModal);
+                                                }
+                                            }
+
+                                            // And now open the modal window
+                                            $("#selectEntityM").modal();
+                                        });
+                                    }
+                                </script>
+                            
+                                {{> appUseCase_SelectionModal }}
+                                <div class="form-group">
+                                    <label for="csv_UseCases" class="col-sm-2 control-label">UseCases
+                                    </label>
+                                    <div class="col-sm-10">
+                                        <ul class="nav nav-pills" id="csv_UseCases"></ul>
+                                    </div>
+                                </div>
+                                <script>
+                                    whenReady(function () {
+                                        // Update CSV list for current AssociationPanelItem
+                                        UseCases_updateCSVs ();
+                                    });
+                                    function UseCases_updateCSVs () {
+                                        // Update list with target entities
+                                        var reln = $active.entity.UseCases;
+                                        $("#csv_UseCases").empty();
+                                        for (i in $active.entity[reln.name].assocTargets) {
+                                            var target = $active.entity[reln.name].assocTargets[i];
+                                            var elemID = "UseCases-CSV:"+target.id;
+                                            var elem = $("<li role='presentation' id='"+elemID+"'><a href='#'>"+target.label+"</a></li>");
+                                            $("#csv_UseCases").append(elem);
+                                            elem.click(function () {
+                                                var id = $(this).attr("id").split(":")[1];
+                                                console.log("ID:"+id);
+                                                window.location.href = "./../app/UseCase?oid="+id;
+                                            });
+                                        }
+
+                                        // Add pill with callback to edit target entities
+                                        var editPill = $("<li><a href='#'><span class='glyphicon glyphicon-edit'></span></a></li>");
+                                        $("#csv_UseCases").append(editPill);
+                                        editPill.on("click", function () {
+                                            $active.relationship = $active.entity.UseCases;
+
+                                            // Update model with potential targets
+                                            $active.entity.getPotentialTargets4UseCases(
+                                                UseCase_updateSelectEntityModal);
+
+                                            // Remember the update function so that later we are able to update the CSV list again
+                                            $active.relationship.updateCSV = UseCases_updateCSVs;
+
+                                            // Create EntityTable object to support modal updates:
+                                            var widgetID="UseCase";
+                                            if (!$active.entityTables[widgetID]) {
+                                                var columns = [ 'KPIs' ]
+                                                var newEntityTable = new EntityTable (widgetID, "selectEntityM", columns, $active.relationship);
+                                                newEntityTable.updateRelationshipAndWidget = function () {
+                                                    $active.entity.getPotentialTargets4UseCases(
+                                                        UseCase_updateSelectEntityModal);
+                                                }
+                                            }
+
+                                            // And now open the modal window
+                                            $("#selectEntityM").modal();
+                                        });
+                                    }
+                                </script>
+                            
+                                {{> appTechnology_SelectionModal }}
+                                <div class="form-group">
+                                    <label for="csv_Technologies" class="col-sm-2 control-label">Technologies
+                                    </label>
+                                    <div class="col-sm-10">
+                                        <ul class="nav nav-pills" id="csv_Technologies"></ul>
+                                    </div>
+                                </div>
+                                <script>
+                                    whenReady(function () {
+                                        // Update CSV list for current AssociationPanelItem
+                                        Technologies_updateCSVs ();
+                                    });
+                                    function Technologies_updateCSVs () {
+                                        // Update list with target entities
+                                        var reln = $active.entity.Technologies;
+                                        $("#csv_Technologies").empty();
+                                        for (i in $active.entity[reln.name].assocTargets) {
+                                            var target = $active.entity[reln.name].assocTargets[i];
+                                            var elemID = "Technologies-CSV:"+target.id;
+                                            var elem = $("<li role='presentation' id='"+elemID+"'><a href='#'>"+target.label+"</a></li>");
+                                            $("#csv_Technologies").append(elem);
+                                            elem.click(function () {
+                                                var id = $(this).attr("id").split(":")[1];
+                                                console.log("ID:"+id);
+                                                window.location.href = "./../app/Technology?oid="+id;
+                                            });
+                                        }
+
+                                        // Add pill with callback to edit target entities
+                                        var editPill = $("<li><a href='#'><span class='glyphicon glyphicon-edit'></span></a></li>");
+                                        $("#csv_Technologies").append(editPill);
+                                        editPill.on("click", function () {
+                                            $active.relationship = $active.entity.Technologies;
+
+                                            // Update model with potential targets
+                                            $active.entity.getPotentialTargets4Technologies(
+                                                Technology_updateSelectEntityModal);
+
+                                            // Remember the update function so that later we are able to update the CSV list again
+                                            $active.relationship.updateCSV = Technologies_updateCSVs;
+
+                                            // Create EntityTable object to support modal updates:
+                                            var widgetID="Technology";
+                                            if (!$active.entityTables[widgetID]) {
+                                                var columns = [  ]
+                                                var newEntityTable = new EntityTable (widgetID, "selectEntityM", columns, $active.relationship);
+                                                newEntityTable.updateRelationshipAndWidget = function () {
+                                                    $active.entity.getPotentialTargets4Technologies(
+                                                        Technology_updateSelectEntityModal);
+                                                }
+                                            }
+
+                                            // And now open the modal window
+                                            $("#selectEntityM").modal();
+                                        });
+                                    }
+                                </script>
+                            
+                                {{> appStandard_SelectionModal }}
+                                <div class="form-group">
+                                    <label for="csv_Standards" class="col-sm-2 control-label">Standards
+                                    </label>
+                                    <div class="col-sm-10">
+                                        <ul class="nav nav-pills" id="csv_Standards"></ul>
+                                    </div>
+                                </div>
+                                <script>
+                                    whenReady(function () {
+                                        // Update CSV list for current AssociationPanelItem
+                                        Standards_updateCSVs ();
+                                    });
+                                    function Standards_updateCSVs () {
+                                        // Update list with target entities
+                                        var reln = $active.entity.Standards;
+                                        $("#csv_Standards").empty();
+                                        for (i in $active.entity[reln.name].assocTargets) {
+                                            var target = $active.entity[reln.name].assocTargets[i];
+                                            var elemID = "Standards-CSV:"+target.id;
+                                            var elem = $("<li role='presentation' id='"+elemID+"'><a href='#'>"+target.label+"</a></li>");
+                                            $("#csv_Standards").append(elem);
+                                            elem.click(function () {
+                                                var id = $(this).attr("id").split(":")[1];
+                                                console.log("ID:"+id);
+                                                window.location.href = "./../app/Standard?oid="+id;
+                                            });
+                                        }
+
+                                        // Add pill with callback to edit target entities
+                                        var editPill = $("<li><a href='#'><span class='glyphicon glyphicon-edit'></span></a></li>");
+                                        $("#csv_Standards").append(editPill);
+                                        editPill.on("click", function () {
+                                            $active.relationship = $active.entity.Standards;
+
+                                            // Update model with potential targets
+                                            $active.entity.getPotentialTargets4Standards(
+                                                Standard_updateSelectEntityModal);
+
+                                            // Remember the update function so that later we are able to update the CSV list again
+                                            $active.relationship.updateCSV = Standards_updateCSVs;
+
+                                            // Create EntityTable object to support modal updates:
+                                            var widgetID="Standard";
+                                            if (!$active.entityTables[widgetID]) {
+                                                var columns = [ 'Technologies' ]
+                                                var newEntityTable = new EntityTable (widgetID, "selectEntityM", columns, $active.relationship);
+                                                newEntityTable.updateRelationshipAndWidget = function () {
+                                                    $active.entity.getPotentialTargets4Standards(
+                                                        Standard_updateSelectEntityModal);
+                                                }
+                                            }
+
+                                            // And now open the modal window
+                                            $("#selectEntityM").modal();
+                                        });
+                                    }
+                                </script>
+                            
+                        </form>
+                    
+                    
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>

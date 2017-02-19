@@ -1,0 +1,28 @@
+
+<div class="table-container">
+    <table class="table table-hover" id="DefaultTableViewTable">
+        <thead>
+            <tr>
+                
+                    <th>Technologies</th>
+                
+                <th> </th>
+            </tr>
+        </thead>
+        <tbody id="Standard-DefaultTableView">
+        <tbody>
+    </table>
+</div>
+<script>
+    Standard_updateDefaultTableView = function (relationship) {
+            var queryResult = relationship.queryResults;
+            queryResult.forEach (function (elem) {
+                var TDs= "<td>"+elem.get_Technologies()+"</td>"+"";
+                $("#Standard-DefaultTableView").append("<tr class='Standard-DefaultTableView-row' id='"+elem.id+"'>"+TDs+"<td><span class='glyphicon glyphicon-forward'></span></td></tr>");
+            });
+
+            $(".Standard-DefaultTableView-row").click(function () {
+                window.location.href = "./../app/Standard?oid="+$(this).attr('id');
+            });
+        }
+</script>

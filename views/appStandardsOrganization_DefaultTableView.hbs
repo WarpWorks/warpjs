@@ -1,0 +1,26 @@
+
+<div class="table-container">
+    <table class="table table-hover" id="DefaultTableViewTable">
+        <thead>
+            <tr>
+                
+                <th> </th>
+            </tr>
+        </thead>
+        <tbody id="StandardsOrganization-DefaultTableView">
+        <tbody>
+    </table>
+</div>
+<script>
+    StandardsOrganization_updateDefaultTableView = function (relationship) {
+            var queryResult = relationship.queryResults;
+            queryResult.forEach (function (elem) {
+                var TDs= "";
+                $("#StandardsOrganization-DefaultTableView").append("<tr class='StandardsOrganization-DefaultTableView-row' id='"+elem.id+"'>"+TDs+"<td><span class='glyphicon glyphicon-forward'></span></td></tr>");
+            });
+
+            $(".StandardsOrganization-DefaultTableView-row").click(function () {
+                window.location.href = "./../app/StandardsOrganization?oid="+$(this).attr('id');
+            });
+        }
+</script>

@@ -1,0 +1,51 @@
+
+<script src="/app/I3C_WebAPI.js"></script>
+<script src="/app/appUtilities.js"></script>
+<script>
+    $(document).ready(function () {
+        $active.entityTables = {};
+        function initViews () {
+            $active.initCalls.forEach(function (fct) {
+                fct.call();
+            });
+            $active.initialized = true;
+        }
+        
+        var oid = HeadStart_getURLParam("oid");
+        if (oid) {
+            $active.oid = oid;
+            $active.mode = "edit";
+            getI3CAdmin().getEntityByID("I3C", "IndustryVertical", oid, function(entity) {
+                // Set active entity for this page (i.e. the "toplevel" entity):
+                $active.entity=entity;
+
+                // And now initialize all views (call all function which have been registered via "whenReady()")
+                console.log("Initializing views...");
+                initViews();
+            });
+        }
+        else {
+            var parentID = HeadStart_getURLParam("parentID");
+            var relnID   = HeadStart_getURLParam("relnID");
+            var relnName = HeadStart_getURLParam("relnName");
+            if (!parentID || !relnID) alert ("URL must contain valid oid OR parentID+relnID!");
+            else {
+                $active.parentID=parentID;
+                $active.relnID=relnID;
+                $active.relnName=relnName;
+                $active.mode = "create";
+            }
+        }
+        
+    });
+</script>
+<div class="container" role="main">
+    <div class="row">
+        <div class="col-sm-12">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="./I3C">I3C</a></li>
+            </ol>
+            {{> appIndustryVertical_DefaultPageView }}
+        </div>
+    </div>
+</div>
