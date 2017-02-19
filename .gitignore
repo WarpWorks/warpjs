@@ -1,6 +1,9 @@
 # Node Modules
 runtime/node_modules/
 
+# Temporary files
+attic/
+
 # Generated Files
 app*.hbs
 *WebAPI.js

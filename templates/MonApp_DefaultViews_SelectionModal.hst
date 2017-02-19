@@ -1,32 +1,59 @@
 {{Domain*}}<!-- Domain: #{{js:this.name;/}} -->
 {{Entity*}}
-{{TableView*}}{{Options}} {"saveAs": ["views", "'app'+this.getParent_Entity().name+'_'+this.name+'.hbs'"] } {{/Options}}
-<div class="table-container">
-    <table class="table table-hover" id="{{js:this.name;/}}Table">
-        <thead>
-            <tr>
-                {{TableItem*}}
-                    <th>{{js:this.getProperty().name;/}}</th>
-                {{/TableItem}}
-                <th> </th>
-            </tr>
-        </thead>
-        <tbody id="{{js:this.getParent_Entity().name;/}}-{{js:this.name;/}}">
-        <tbody>
-    </table>
-</div>
+{{TableView*}}{{Options}} {"saveAs": ["views", "'app'+this.getParent_Entity().name+'_SelectionModal.hbs'"] } {{/Options}}
 <script>
-    {{js:this.getParent_Entity().name;/}}_updateDefaultTableView = function (relationship) {
-            var queryResult = relationship.queryResults;
-            queryResult.forEach (function (elem) {
-                var TDs= {{TableItem*}}"<td>"+elem.get_{{js:this.getProperty().name;/}}()+"</td>"+{{/TableItem}}"";
-                $("#{{js:this.getParent_Entity().name;/}}-{{js:this.name;/}}").append("<tr class='{{js:this.getParent_Entity().name;/}}-{{js:this.name;/}}-row' id='"+elem.id+"'>"+TDs+"<td><span class='glyphicon glyphicon-forward'></span></td></tr>");
-            });
+    {{js:this.getParent_Entity().name;/}}_removeEntityFromSelectionList = function (relationship) {
+        console.log("Remove");
+        var id = $(this).attr('id').split(":")[1];
+        $active.entity[$active.relationship.name].removeFromAssocTargets(id);
+        $(this).remove();
+        $active.entity.changed=true;
+    }
 
-            $(".{{js:this.getParent_Entity().name;/}}-{{js:this.name;/}}-row").click(function () {
-                window.location.href = "./../app/{{js:this.getParent_Entity().name;/}}?oid="+$(this).attr('id');
-            });
+    // Update model for entity selection (create target list, paging, search, etc.)
+    {{js:this.getParent_Entity().name;/}}_updateSelectEntityModal = function (relationship) {
+        // Set title
+        $("#selectEntityM_titleH").html("Select {{js:this.getParent_Entity().name;/}}");
+
+        // Update table with potential targets
+        var widgetID="{{js:this.getParent_Entity().name;/}}";
+        $active.entityTables[widgetID].updateTable();
+
+        // Update list of  selected targets:
+        $("#selectEntityM_selectionUL").empty();
+        for (i in $active.relationship.assocTargets) {
+            var target = $active.relationship.assocTargets[i];
+            var elemID = "{{js:this.getParent_Entity().name;/}}-{{js:this.name;/}}-Delete:"+target.id;
+            var label = getShortLabel(target.label);
+            var elem =
+                $("<li role='presentation' id='"+elemID+"'><a href='#'>"+
+                label+" <span class='glyphicon glyphicon-remove'></span></a></li>");
+            $("#selectEntityM_selectionUL").append(elem);
+            elem.click({{js:this.getParent_Entity().name;/}}_removeEntityFromSelectionList);
         }
+        $("#selectEntityM_count").html("Result: "+$active.relationship.queryResultsCount);
+
+        // Callbacks for pills representing selected entities
+        $("."+$active.entityTables[widgetID].table+"-row").click(function () {
+            var id = $(this).attr('id').split(":")[1];
+            var target = get{{js:this.getParent_Entity().getParent_Domain().name;/}}Admin().findOrAddToEntityCache(id, "{{js:this.getParent_Entity().name;/}}");
+            var label = target.getShorthand();
+            // Add to nav pills:
+            var elemID = "{{js:this.getParent_Entity().name;/}}-{{js:this.name;/}}-Delete:"+id;
+            var elem = $("<li role='presentation' id='"+elemID+"'><a href='#'>"+label+" <span class='glyphicon glyphicon-remove'></span></a></li>");
+            $("#selectEntityM_selectionUL").append(elem);
+            elem.click({{js:this.getParent_Entity().name;/}}_removeEntityFromSelectionList);
+            // Also add to active Association targets:
+            $active.entity[$active.relationship.name].assocTargets.push({ "id":id, "label":label });
+            $active.entity.changed=true;
+        });
+
+        // Callback to close Modal
+        $("#selectEntityM_selectB").on("click", function () {
+            get{{js:this.getDomain().name;/}}Admin().save("{{js:this.getDomain().name;/}}");
+            $active.relationship.updateCSV();
+        });
+    }
 </script>
 {{/TableView}}
 {{/Entity}}

@@ -428,9 +428,9 @@ function {{js:this.name;/}} (type, parent, id, isEmptyShell) {
 {{js:this.name;/}}.prototype.updatePropertiesWithQueryResults = function (qr) {
     this.isEmptyShell = false;
     this._id = qr._id;
-{{BasicProperty?}}{{BasicProperty*}}    this._{{js:this.name;/}} = qr.{{js:this.name;/}};
-{{/BasicProperty}}{{/BasicProperty?}}{{Association*}}
-    this.{{js:this.name;/}}.assocTargets = qr.{{js:this.name;/}} ? qr.{{js:this.name;/}} : [];{{/Association}}
+{{BasicProperty!*}}    this._{{js:this.name;/}} = qr.{{js:this.name;/}};
+{{/BasicProperty!}}{{Association!*}}
+    this.{{js:this.name;/}}.assocTargets = qr.{{js:this.name;/}} ? qr.{{js:this.name;/}} : [];{{/Association!}}
 }
 
 {{BasicProperty?}}{{BasicProperty*}}
@@ -440,26 +440,26 @@ function {{js:this.name;/}} (type, parent, id, isEmptyShell) {
     this._{{js:this.name;/}}=value; this.changed=true; }; {{/BasicProperty}}{{/BasicProperty?}}
 
 {{js:this.name;/}}.prototype.propertiesOnly = function () {
-    var propertiesOnly = {};{{BasicProperty?}}
+    var propertiesOnly = {};{{BasicProperty!?}}
     propertiesOnly._id = this.id;
     propertiesOnly.type = this.type;
     propertiesOnly.parentID = this.parentID;
     propertiesOnly.parentRelnName = this.parentRelnName;
     propertiesOnly.relnID = this.relnID;
 
-{{BasicProperty*}}    propertiesOnly.{{js:this.name;/}} = this.get_{{js:this.name;/}}();
-{{/BasicProperty}}{{/BasicProperty?}}{{Association*}}
-    propertiesOnly.{{js:this.name;/}} = this.{{js:this.name;/}}.assocTargets;{{/Association}}
+{{BasicProperty!*}}    propertiesOnly.{{js:this.name;/}} = this.get_{{js:this.name;/}}();
+{{/BasicProperty!}}{{/BasicProperty!?}}{{Association!*}}
+    propertiesOnly.{{js:this.name;/}} = this.{{js:this.name;/}}.assocTargets;{{/Association!}}
     return propertiesOnly;
 }
 
-{{Relationship?}}
+{{Relationship!?}}
 {{js:this.name;/}}.prototype.updateRelationshipWithQueryResults = function (qr) {
     relnName = qr.parentRelnName ?
         qr.parentRelnName : // Aggregation
         qr.sourceRelnName;  // Association
     switch(relnName) {
-        {{Relationship*}}
+        {{Relationship!*}}
         case "{{js:this.name;/}}":
             this.{{js:this.name;/}}.queryResultsCount=qr.queryResultsCount;
             for (i in qr.result) {
@@ -467,11 +467,11 @@ function {{js:this.name;/}} (type, parent, id, isEmptyShell) {
                 this.{{js:this.name;/}}.queryResults.push(target);
             }
         break;
-        {{/Relationship}}
+        {{/Relationship!}}
         default: throw "Invalid relationship name: "+relnName;
     }
 }
-{{/Relationship?}}
+{{/Relationship!?}}
 
 {{Relationship?}}{{Relationship*}}
 {{js:this.getParent_Entity().name;/}}.prototype.query_{{js:this.name;/}} = function (callback) {
