@@ -1,0 +1,33 @@
+{{Domain*}}<!-- Domain: #{{js:this.name;/}} -->
+{{Entity*}}
+{{TableView*}}{{Options}} {"saveAs": ["views", "'app'+this.getParent_Entity().name+'_'+this.name+'.hbs'"] } {{/Options}}
+<div class="table-container">
+    <table class="table table-hover" id="{{js:this.name;/}}Table">
+        <thead>
+            <tr>
+                {{TableItem*}}
+                    <th>{{js:this.getProperty().name;/}}</th>
+                {{/TableItem}}
+                <th> </th>
+            </tr>
+        </thead>
+        <tbody id="{{js:this.getParent_Entity().name;/}}-{{js:this.name;/}}">
+        <tbody>
+    </table>
+</div>
+<script>
+    {{js:this.getParent_Entity().name;/}}_updateDefaultTableView = function (relationship) {
+            var queryResult = relationship.queryResults;
+            queryResult.forEach (function (elem) {
+                var TDs= {{TableItem*}}"<td>"+elem.get_{{js:this.getProperty().name;/}}()+"</td>"+{{/TableItem}}"";
+                $("#{{js:this.getParent_Entity().name;/}}-{{js:this.name;/}}").append("<tr class='{{js:this.getParent_Entity().name;/}}-{{js:this.name;/}}-row' id='"+elem.id+"'>"+TDs+"<td><span class='glyphicon glyphicon-forward'></span></td></tr>");
+            });
+
+            $(".{{js:this.getParent_Entity().name;/}}-{{js:this.name;/}}-row").click(function () {
+                window.location.href = "./../app/{{js:this.getParent_Entity().name;/}}?oid="+$(this).attr('id');
+            });
+        }
+</script>
+{{/TableView}}
+{{/Entity}}
+{{/Domain}}
