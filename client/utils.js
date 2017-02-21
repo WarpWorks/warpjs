@@ -19,6 +19,15 @@ function getCurrentPageHAL($) {
             method: 'GET',
             success(data, textStatus, jqXHR) {
                 resolve({data, textStatus, jqXHR});
+            },
+            error(jqXHR, textStatus, errorThrown) {
+                resolve({
+                    error: {
+                        textStatus,
+                        errorThrown
+                    },
+                    data: jqXHR.responseJSON
+                });
             }
         });
 
