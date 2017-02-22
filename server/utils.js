@@ -51,7 +51,7 @@ function sendHal(req, res, resource, status) {
 
     res.status(status || 200)
         .header('Content-Type', HAL_CONTENT_TYPE)
-        .json(resource.toJSON());
+        .send(resource.toJSON());
 }
 
 module.exports = {
