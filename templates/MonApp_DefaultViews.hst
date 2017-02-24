@@ -16,6 +16,8 @@
         var domain = pathSegments[pathSegments.length-1];
         get{{js:this.getParent_Domain().name;/}}Admin().getRootInstance (domain, function (rootInstance) {
             $active.oid = rootInstance.id;
+            $active.entity = rootInstance;
+            $active.entity.isRootInstance = true;
             initViews();
         });
         {{else}}
@@ -36,7 +38,7 @@
             var parentID = HeadStart_getURLParam("parentID");
             var relnID   = HeadStart_getURLParam("relnID");
             var relnName = HeadStart_getURLParam("relnName");
-            if (!parentID || !relnID) alert ("URL must contain valid oid OR parentID+relnID!");
+            if (!parentID || !relnID || !relnName) alert ("URL must contain valid oid OR parentID+relnID+relnName!");
             else {
                 $active.parentID=parentID;
                 $active.relnID=relnID;
@@ -45,13 +47,27 @@
             }
         }
         {{/if}}
+        whenReady(function () {
+            $("#breadcrumb").empty();
+            if ($active.entity.isRootInstance) {
+                var li = "<li class='breadcrumb-item'><a href='./"+$active.entity.type+"'>"+$active.entity.type+"</a></li>"
+                $("#breadcrumb").append(li);
+            }
+            else {
+                var breadcrumb = $active.entity.breadcrumb;
+                for (var idx=0; idx<breadcrumb.length; idx++) {
+                    var item=breadcrumb[idx];
+                    var li = "<li class='breadcrumb-item'><a href='./"+item.type+"?oid="+item._id+"'>"+item.type+"</a></li>"
+                    $("#breadcrumb").append(li);
+                }
+            }
+        });
     });
 </script>
 <div class="container" role="main">
     <div class="row">
         <div class="col-sm-12">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="./{{js: this.getParent_Domain().name/}}">{{js: this.getParent_Domain().name/}}</a></li>
+            <ol class="breadcrumb" id="breadcrumb">
             </ol>
             {{> app{{js:this.name;/}}_DefaultPageView }}
         </div>

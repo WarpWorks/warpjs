@@ -6,7 +6,6 @@ var pageRouter = express.Router();
 // ------------------------------------------------------------------
 
 pageRouter.get('/app/:app', function(req, res, next) {
-  console.log("Getting /app/:"+req.params.app);
   res.render('app'+req.params.app, { title: 'test', layout: '_appLayout' });
 });
 

@@ -44,7 +44,8 @@ EntityTable.prototype.updateTable=function () {
         var TDs = "";
         for (var i in this.columns) {
             var val=elem["get_"+this.columns[i]]();
-            TDs += "<td>"+getShortLabel(val)+"</td>";
+            val = val.length<15 ? val : val.slice(0, 12)+"...";
+            TDs += "<td>"+val+"</td>";
         }
         var add= "<a href='#'><span class='glyphicon glyphicon-plus'></span></a>";
         var id = this.table+"-TD:"+elem.id;

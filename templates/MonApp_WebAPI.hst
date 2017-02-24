@@ -120,9 +120,11 @@ function {{js:this.name;/}}Admin() {
                 handleResult (null);
                 return;
             }
-            var entityFromServer = result.resultList[0].result;
+            var result = result.resultList[0];
+            var entityFromServer = result.matchingEntity;
             var newEntity = get{{js:this.name;/}}Admin().findOrAddToEntityCache (entityID, entityFromServer.type);
             newEntity.updatePropertiesWithQueryResults(entityFromServer);
+            newEntity.breadcrumb = result.breadcrumb;
             handleResult (newEntity);
         }
         else {
@@ -155,7 +157,7 @@ function {{js:this.name;/}}Admin() {
                 return;
             }
             var resList = [];
-            for (i in result.resultList[0].result) {
+            for (i in result.resultList[0].queryResult) {
                 var res = result.resultList[0].result[i];
                 var newEntity = get{{js:this.name;/}}Admin().findOrAddToEntityCache (res._id, res.type);
                 newEntity.updatePropertiesWithQueryResults(res);
@@ -370,14 +372,6 @@ Base.prototype.compareToMyID = function (id) {
   return ""+this.id === ""+id;
 }
 
-// Misc tools
-
-function getShortLabel (str) {
-    str += "";
-    return str.length<30 ? str : str.slice(0, 49)+"...";
-}
-
-
 {{Entity*}}//
 // Class "{{js:this.name;/}}"
 //
@@ -462,8 +456,8 @@ function {{js:this.name;/}} (type, parent, id, isEmptyShell) {
         {{Relationship!*}}
         case "{{js:this.name;/}}":
             this.{{js:this.name;/}}.queryResultsCount=qr.queryResultsCount;
-            for (i in qr.result) {
-                target = get{{js:this.getParent_Entity().getParent_Domain().name;/}}Admin().findOrAddToEntityCache(qr.result[i]._id, qr.result[i].type, qr.result[i]);
+            for (i in qr.queryResult) {
+                target = get{{js:this.getParent_Entity().getParent_Domain().name;/}}Admin().findOrAddToEntityCache(qr.queryResult[i]._id, qr.queryResult[i].type, qr.queryResult[i]);
                 this.{{js:this.name;/}}.queryResults.push(target);
             }
         break;

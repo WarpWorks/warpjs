@@ -1,44 +1,16 @@
 var express = require('express');
 var appApiRouter = express.Router();
-var mongoClient=require('mongodb').MongoClient;
 var ObjectID = require("mongodb").ObjectID;
-var fs = require('fs');
-
-var mongoDB=null;
-useDB = function (dbName, nextFunction) {
-    var mongoServer = "127.0.0.1:27017";
-    var mongoURL = "mongodb://"+mongoServer+"/"+dbName;
-
-    if (mongoDB) {
-        nextFunction(mongoDB);
-    }
-    else {
-        try {
-            mongoClient.connect(mongoURL, function (err, db) {
-                if (err)
-                    console.log("Error connecting to DB: " + err);
-                else {
-                    mongoDB = db;
-                    nextFunction(db);
-                }
-            });
-        }
-        catch (err) {
-            console.log("Error connecting to DB: "+err);
-        }
-    }
-}
-
+var $rt = require('./../src/HSRuntime.js');
 
 appApiRouter.post('/CRUD', function (req, res, next) {
-    console.log("Post-Request '/appApi/CRUD'");
     if (req.xhr || req.accepts('json,html') === 'json') {
         try {
             var response = {};
             var resultList = [];
             var commandList = req.body.commandList;
 
-            // TBD - Hack: Currently only use Command Lists of lenght 1
+            // TBD - Hack: Currently only use Command Lists of length 1
             if (!commandList || commandList.length != 1) throw "Invalid Command List";
             var currentCommand = commandList[0];
 
@@ -47,12 +19,10 @@ appApiRouter.post('/CRUD', function (req, res, next) {
             var targetType = currentCommand.targetType;
             if (!targetType) throw "Error processing CRUD command - no target type specified!";
 
-            useDB(domain, function (db) {
+            $rt.useDB(domain, function (db) {
                 var collection = db.collection(targetType);
-                console.log("CRUD-Request using DB:"+db.databaseName+", Collection:"+collection.collectionName);
+                console.log("/appApi/CRUD: Command="+currentCommand.command+", DB="+db.databaseName+", Collection="+collection.collectionName);
 
-                if (!currentCommand.currentPage) console.log("Warning: currentPage not defined, assuming 0");
-                if (!currentCommand.entitiesPerPage) console.log("Warning: entitiesPerPage not defined, assuming 10");
                 var currentPage   = currentCommand.currentPage   ? currentCommand.currentPage : 0;
                 var entitiesPerPage = currentCommand.entitiesPerPage ? currentCommand.entitiesPerPage : 10;
                 var startingAt = entitiesPerPage * currentPage;
@@ -87,7 +57,6 @@ appApiRouter.post('/CRUD', function (req, res, next) {
                                         resultList.push({
                                             queryType: "GetRootInstance",
                                             queryID: currentCommand.queryID,
-                                            value: null,
                                             error: true,
                                             status: msg
                                         });
@@ -98,7 +67,7 @@ appApiRouter.post('/CRUD', function (req, res, next) {
                                         resultList.push({
                                             queryType: "GetRootInstance",
                                             queryID: currentCommand.queryID,
-                                            value: mongoRes2.ops[0],
+                                            rootInstance: mongoRes2.ops[0],
                                             error: false,
                                             status: msg
                                         });
@@ -115,7 +84,6 @@ appApiRouter.post('/CRUD', function (req, res, next) {
                         if (!currentCommand.parentID || currentCommand.parentID === null)
                             throw "AggregationQuery must include 'parentID'!";
                         var values = [];
-                        //skip(startingAt).limit(entitiesPerPage);
                         console.log("parentID: " + currentCommand.parentID);
                         collection.find({
                             parentID: ObjectID(currentCommand.parentID),
@@ -124,15 +92,13 @@ appApiRouter.post('/CRUD', function (req, res, next) {
                             .limit(entitiesPerPage)
                             .toArray(function (err2, arr) {
                                 var msg = "Found " + arr.length + " matching entities!";
-
-                                console.log(msg);
                                 resultList.push({
                                     queryType: "AggregationQuery",
                                     queryID: currentCommand.queryID,
                                     parentID: currentCommand.parentID,
                                     parentType: currentCommand.parentType,
                                     parentRelnName: currentCommand.parentRelnName,
-                                    result: arr,
+                                    queryResult: arr,
                                     error: false,
                                     status: msg
                                 });
@@ -195,22 +161,55 @@ appApiRouter.post('/CRUD', function (req, res, next) {
                             if (mongoRes) {
                                 msg = "Found instance for ID=" + mongoRes._id + " in Domain " + domain;
                                 result = mongoRes;
+                                var breadcrumb = [];
+                                function createBreadcrumb (mongoErr, mongoRes) {
+                                    if (mongoErr) {
+                                        err = true;
+                                        msg = mongoErr;
+                                    }
+                                    else {
+                                        var item = {};
+                                        item._id=mongoRes._id;
+                                        item.type=mongoRes.type;
+                                        breadcrumb.unshift(item);
+                                    }
+                                    if (mongoErr || mongoRes.isRootInstance) {
+                                        resultList.push({
+                                            queryType: "FindByID",
+                                            queryID: currentCommand.queryID,
+                                            matchingEntity: result,
+                                            breadcrumb: breadcrumb,
+                                            error: err,
+                                            status: msg
+                                        });
+                                        console.log(msg);
+                                        response.resultList = resultList;
+                                        response.success = true;
+                                        res.send(response);
+                                        return;
+                                    }
+                                    var parentRelnID = mongoRes.parentRelnID;
+                                    var parentID = mongoRes.parentID;
+                                    var parentEntity = $rt.findParentEntity(domain, parentRelnID);
+                                    var parentCollection = db.collection(parentEntity.name);
+                                    parentCollection.findOne({_id: ObjectID(parentID)}, createBreadcrumb);
+                                }
+                                createBreadcrumb (mongoErr, mongoRes);
                             }
                             else {
                                 err = true;
                                 msg = mongoErr ? mongoErr : "No matching object for ID=" + id;
+                                resultList.push({
+                                    queryType: "FindByID",
+                                    queryID: currentCommand.queryID,
+                                    error: err,
+                                    status: msg
+                                });
+                                console.log(msg);
+                                response.resultList = resultList;
+                                response.success = true;
+                                res.send(response);
                             }
-                            resultList.push({
-                                queryType: "FindByID",
-                                queryID: currentCommand.queryID,
-                                result: result,
-                                error: err,
-                                status: msg
-                            });
-                            console.log(msg);
-                            response.resultList = resultList;
-                            response.success = true;
-                            res.send(response);
                             return;
                         });
                         return;
@@ -236,7 +235,7 @@ appApiRouter.post('/CRUD', function (req, res, next) {
                                         sourceRelnName: currentCommand.sourceRelnName,
                                         sourceRelnID: currentCommand.sourceRelnID,
                                         targetType: currentCommand.targetType,
-                                        result: arr,
+                                        queryResult: arr,
                                         queryResultsCount: count,
                                         error: err,
                                         status: msg
@@ -264,6 +263,7 @@ appApiRouter.post('/CRUD', function (req, res, next) {
             response.success = false;
             response.error = err.toString();
             console.log("Error processing CRUD command: " + err);
+            console.log(err.stack);
             res.send(response);
         }
     }
