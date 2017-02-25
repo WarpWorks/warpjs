@@ -109,7 +109,7 @@ appApiRouter.post('/CRUD', function (req, res, next) {
                             });
                         return;
                     case "Create":
-                        var value = currentCommand.entities[0]; // TBD: HACK, should work with list
+                        var value = currentCommand.entity; // TBD: HACK, should work with list
                         if (value._id) throw "Failed to create new entity - new entity data must not contain '_id' field before creation!";
                         if (!value.parentID) throw "Failed to create new entity - parent ID is missing!";
                         value.parentID = ObjectID(value.parentID);
@@ -120,7 +120,7 @@ appApiRouter.post('/CRUD', function (req, res, next) {
                             else {
                                 console.log("Created " + value.type + " with ID " + value._id + ": " + r);
                             }
-                            response.resultList = resultList;
+                            response.newEntity = { _id: value._id, type: value.type};
                             response.success = true;
                             res.send(response);
                             return;

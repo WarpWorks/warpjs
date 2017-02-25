@@ -51,7 +51,6 @@ get{{js:this.name;/}}Admin = function  () {
 function {{js:this.name;/}}Admin() {
     this._rootInstance = null;
     this._entityCache = {};
-    this._newEntities = [];
 }
 
 {{js:this.name;/}}Admin.prototype.getRootInstance = function (domain, handleResult) {
@@ -184,32 +183,31 @@ function {{js:this.name;/}}Admin() {
 
 
 {{js:this.name;/}}Admin.prototype.save = function (domain) {
-    this.saveNewEntities(domain);
+    this.saveNewEntity(domain);
     this.saveChangedEntities(domain);
 }
 
-{{js:this.name;/}}Admin.prototype.saveNewEntities = function (domain) {
-    if (this._newEntities.length===0) return;
-
-    var entitiesWithPropertiesOnly = [];
-    for (i in this._newEntities) {
-        entitiesWithPropertiesOnly.push(this._newEntities[i].propertiesOnly());
-    }
-    this._newEntities=[];
-
+{{js:this.name;/}}Admin.prototype.saveNewEntity = function (domain) {
+    if ($active.entity === null || !$active.entity.isNew) return;
+    var newEntity = $active.entity.propertiesOnly();
     var reqData = {
         commandList: [
             {
                 command: "Create",
                 domain: domain,
-                targetType: entitiesWithPropertiesOnly[0].type, // TBD: DIRTY HACK - must be changed on the server side to work with multiple entities!
-                entities: entitiesWithPropertiesOnly
+                targetType: newEntity.type,
+                entity: newEntity
             }
         ]
     };
     this.processCRUDcommands(reqData, function (result) {
         if (result.success) {
             console.log("Create: OK!");
+            var e=result.newEntity;
+            $active.entity.id=e.newID;
+            $active.entity.isNew=false;
+            $active.mode="edit";
+            window.location.href = "./../app/"+e.type+"?oid="+e._id;
         }
         else {
             alert(result.err);
@@ -362,10 +360,11 @@ function Base(type, parent, id, isEmptyShell) {
 
     if (id)
         get{{js:this.name;/}}Admin()._entityCache[id] = this;
-    else
-        get{{js:this.name;/}}Admin()._newEntities.push(this);
-
-    // console.log("New "+type+": ["+id+"]");
+    else {
+        if ($active.entity)
+            console.log("Warning: $active.entity already exists!");
+        $active.entity = this;
+    }
 }
 
 Base.prototype.compareToMyID = function (id) {
@@ -437,9 +436,11 @@ function {{js:this.name;/}} (type, parent, id, isEmptyShell) {
     var propertiesOnly = {};{{BasicProperty!?}}
     propertiesOnly._id = this.id;
     propertiesOnly.type = this.type;
-    propertiesOnly.parentID = this.parentID;
-    propertiesOnly.parentRelnName = this.parentRelnName;
-    propertiesOnly.relnID = this.relnID;
+    if (this.isNew) {
+        propertiesOnly.parentID = this.parentID;
+        propertiesOnly.parentRelnName = this.parentRelnName;
+        propertiesOnly.parentRelnID = this.parentRelnID;
+    }
 
 {{BasicProperty!*}}    propertiesOnly.{{js:this.name;/}} = this.get_{{js:this.name;/}}();
 {{/BasicProperty!}}{{/BasicProperty!?}}{{Association!*}}

@@ -52,8 +52,9 @@
                                     });
                                 }
                                 else {
-                                    var newEntity = get{{js:this.getDomain().name;/}}Admin().addNew_{{js:this.getParent_PageView().getParent_Entity().name;/}} ($active.parentID, $active.relnID, $active.relnName);
+                                    var newEntity = get{{js:this.getDomain().name;/}}Admin().addNew_{{js:this.getParent_PageView().getParent_Entity().name;/}} ($active.parent.parentID, $active.parent.relnID, $active.parent.relnName);
                                     {{js:this.getDomain().name;/}}_{{js:this.getParent_PageView().getParent_Entity().name;/}}_{{js:this.name;/}}2entity (newEntity);
+                                    $active.entity = newEntity;
                                 }
                             });
                         </script>
@@ -181,7 +182,7 @@
                                             {{js:this.getRelationship().getTargetEntity().name;/}}_updateDefaultTableView);
                                 });
                                 // Create button to add new child elements to the current aggregation:
-                                $("#TV{{js:this.id/}}").append("<li><a href='./{{js: this.getRelationship().getTargetEntity().name; /}}?parentID="+$active.oid+"&relnID={{js:this.id;/}}&relnName={{js:this.name;/}}'>Add {{js: this.getRelationship().getTargetEntity().name; /}}</a></li>");
+                                $("#TV{{js:this.id/}}").append("<li><a href='./{{js: this.getRelationship().getTargetEntity().name; /}}?parentID="+$active.oid+"&relnID={{js: this.getRelationship().id;/}}&relnName={{js:this.getRelationship().name;/}}'>Add {{js: this.getRelationship().getTargetEntity().name; /}}</a></li>");
                                 // Add buttons to create derived entities:
                                 {{js: (function () {
                                     var derivedEntities = this.getRelationship().getTargetEntity().getAllDerivedEntities();

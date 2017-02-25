@@ -3,6 +3,22 @@
 <script src="/app/{{js:this.getParent_Domain().name/}}_WebAPI.js"></script>
 <script src="/app/appUtilities.js"></script>
 <script>
+    whenReady(function () {
+        $("#breadcrumb").empty();
+        if ($active.entity.isRootInstance) {
+            var li = "<li class='breadcrumb-item'><a href='./"+$active.entity.type+"'>"+$active.entity.type+"</a></li>"
+            $("#breadcrumb").append(li);
+        }
+        else {
+            var breadcrumb = $active.entity.breadcrumb;
+            for (var idx=0; idx<breadcrumb.length; idx++) {
+                var item=breadcrumb[idx];
+                var li = "<li class='breadcrumb-item'><a href='./"+item.type+"?oid="+item._id+"'>"+item.type+"</a></li>"
+                $("#breadcrumb").append(li);
+            }
+        }
+    });
+
     $(document).ready(function () {
         $active.entityTables = {};
         function initViews () {
@@ -36,32 +52,19 @@
         }
         else {
             var parentID = HeadStart_getURLParam("parentID");
-            var relnID   = HeadStart_getURLParam("relnID");
+            var relnID   = parseInt(HeadStart_getURLParam("relnID"));
             var relnName = HeadStart_getURLParam("relnName");
             if (!parentID || !relnID || !relnName) alert ("URL must contain valid oid OR parentID+relnID+relnName!");
             else {
-                $active.parentID=parentID;
-                $active.relnID=relnID;
-                $active.relnName=relnName;
+                $active.parent = { parentID:parentID, relnID:relnID, relnName:relnName };
                 $active.mode = "create";
+
+                // Set breadcrump
+                var li = "<li class='breadcrumb-item'><a href='#'>Create new entity</a></li>"
+                $("#breadcrumb").append(li);
             }
         }
         {{/if}}
-        whenReady(function () {
-            $("#breadcrumb").empty();
-            if ($active.entity.isRootInstance) {
-                var li = "<li class='breadcrumb-item'><a href='./"+$active.entity.type+"'>"+$active.entity.type+"</a></li>"
-                $("#breadcrumb").append(li);
-            }
-            else {
-                var breadcrumb = $active.entity.breadcrumb;
-                for (var idx=0; idx<breadcrumb.length; idx++) {
-                    var item=breadcrumb[idx];
-                    var li = "<li class='breadcrumb-item'><a href='./"+item.type+"?oid="+item._id+"'>"+item.type+"</a></li>"
-                    $("#breadcrumb").append(li);
-                }
-            }
-        });
     });
 </script>
 <div class="container" role="main">
