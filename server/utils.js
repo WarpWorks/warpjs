@@ -4,7 +4,7 @@ const url = require('url');
 const HAL_CONTENT_TYPE = 'application/hal+json';
 
 function createResource(req, data) {
-    return new hal.Resource(data, req.originalUrl);
+    return new hal.Resource(data, req.originalUrl || '[undefined]');
 }
 
 function urlFormat(pathname, query) {
@@ -51,7 +51,7 @@ function sendHal(req, res, resource, status) {
 
     res.status(status || 200)
         .header('Content-Type', HAL_CONTENT_TYPE)
-        .json(resource.toJSON());
+        .send(resource.toJSON());
 }
 
 module.exports = {
