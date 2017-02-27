@@ -43,7 +43,7 @@
             var label = target.getShorthand();
             {{js:this.getParent_Entity().name;/}}_addTargetToEntityModal(label, target);
             // Also add to active Association targets:
-            $active.entity[$active.relationship.name].assocTargets.push({ "id":id, "label":target.getShorthand() });
+            $active.entity[$active.relationship.name].assocTargets.push({ "id":id, "type":target.type, "label":target.getShorthand() });
             $active.entity.changed=true;
         });
 

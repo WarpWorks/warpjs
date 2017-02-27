@@ -52,7 +52,7 @@
                                     });
                                 }
                                 else {
-                                    var newEntity = get{{js:this.getDomain().name;/}}Admin().addNew_{{js:this.getParent_PageView().getParent_Entity().name;/}} ($active.parent.parentID, $active.parent.relnID, $active.parent.relnName);
+                                    var newEntity = get{{js:this.getDomain().name;/}}Admin().addNew_{{js:this.getParent_PageView().getParent_Entity().name;/}} ($active.parent.parentID, $active.parent.relnID, $active.parent.relnName, $active.parent.parentBaseClassID, $active.parent.parentBaseClassName);
                                     {{js:this.getDomain().name;/}}_{{js:this.getParent_PageView().getParent_Entity().name;/}}_{{js:this.name;/}}2entity (newEntity);
                                     $active.entity = newEntity;
                                 }
@@ -107,13 +107,14 @@
                                         $("#csv_{{js:this.name;/}}").empty();
                                         for (i in $active.entity[reln.name].assocTargets) {
                                             var target = $active.entity[reln.name].assocTargets[i];
+                                            console.log("TARGET TYPE:"+target.type);
                                             var elemID = "{{js:this.name;/}}-CSV:"+target.id;
-                                            var elem = $("<li role='presentation' id='"+elemID+"'><a href='#'>"+target.label+"</a></li>");
+                                            var elem = $("<li role='presentation' id='"+elemID+"' data-type='"+target.type+"'><a href='#'>"+target.label+"</a></li>");
                                             $("#csv_{{js:this.name;/}}").append(elem);
                                             elem.click(function () {
                                                 var id = $(this).attr("id").split(":")[1];
-                                                console.log("ID:"+id);
-                                                window.location.href = "./../app/{{js:this.getRelationship().getTargetEntity().name;/}}?oid="+id;
+                                                var type = $(this).data("type");
+                                                window.location.href = "./../app/"+type+"?oid="+id;
                                             });
                                         }
 
@@ -147,7 +148,17 @@
                                                             res += (idx===0?"":", ") + "'"+tableView.tableItems[idx].getProperty().name+"'";
                                                         return res;
                                                 }).call(this); /}} ];
-                                                var newEntityTable = new EntityTable (widgetID, "selectEntityM", columns, $active.relationship);
+                                                var subtypes = [ {{js: (function () {
+                                                        var res="";
+                                                        var entity = this.getRelationship().getTargetEntity();
+                                                        if (entity.isAbstract) {
+                                                            var derivedEntities = entity.getAllDerivedEntities();
+                                                            for (var idx=0; idx<derivedEntities.length; idx++)
+                                                                res += (idx===0?"":", ") + "'"+derivedEntities[idx].name+"'";
+                                                        }
+                                                        return res;
+                                                }).call(this); /}} ];
+                                                var newEntityTable = new EntityTable (widgetID, "selectEntityM", columns, subtypes, $active.relationship);
                                                 newEntityTable.updateRelationshipAndWidget = function () {
                                                     $active.entity.getPotentialTargets4{{js:this.getRelationship().name;/}}(
                                                         {{js:this.getRelationship().getTargetEntity().name;/}}_updateSelectEntityModal);
@@ -182,15 +193,17 @@
                                             {{js:this.getRelationship().getTargetEntity().name;/}}_updateDefaultTableView);
                                 });
                                 // Create button to add new child elements to the current aggregation:
-                                $("#TV{{js:this.id/}}").append("<li><a href='./{{js: this.getRelationship().getTargetEntity().name; /}}?parentID="+$active.oid+"&relnID={{js: this.getRelationship().id;/}}&relnName={{js:this.getRelationship().name;/}}'>Add {{js: this.getRelationship().getTargetEntity().name; /}}</a></li>");
+                                $("#TV{{js:this.id/}}").append("<li><a href='./{{js: this.getRelationship().getTargetEntity().name; /}}?parentID="+$active.oid+"&relnID={{js: this.getRelationship().id;/}}&relnName={{js:this.getRelationship().name;/}}&parentBaseClassID={{js: this.getRelationship().parent.getBaseClass().id;/}}&parentBaseClassName={{js: this.getRelationship().parent.getBaseClass().name;/}}'>Add {{js: this.getRelationship().getTargetEntity().name; /}}</a></li>");
                                 // Add buttons to create derived entities:
                                 {{js: (function () {
                                     var derivedEntities = this.getRelationship().getTargetEntity().getAllDerivedEntities();
+                                    var parentBaseClassID= this.getRelationship().parent.getBaseClass().id;
+                                    var parentBaseClassName= this.getRelationship().parent.getBaseClass().name;
                                     var res = "";
                                     for (i in derivedEntities) {
                                         // TBD: Ignore abstract entities!
                                         var derivedEntity = derivedEntities[i];
-                                        res += "$(\"#TV"+this.id+"\").append(\"<li><a href='"+derivedEntity.name+"?parentID=\"+$active.oid+\"&relnID="+this.id+"&relnName="+this.name+"'>Add "+derivedEntity.name+"</a></li>\");";
+                                        res += "$(\"#TV"+this.id+"\").append(\"<li><a href='"+derivedEntity.name+"?parentID=\"+$active.oid+\"&relnID="+this.id+"&relnName="+this.name+"&parentBaseClassID="+parentBaseClassID+"&parentBaseClassName="+parentBaseClassName+"'>Add "+derivedEntity.name+"</a></li>\");";
                                     }
                                     return res;
                                 }).call(this); /}}

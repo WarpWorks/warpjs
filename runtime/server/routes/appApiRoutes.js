@@ -16,7 +16,9 @@ appApiRouter.post('/CRUD', function (req, res, next) {
 
             var domain = currentCommand.domain;
             if (!domain) throw "Error processing CRUD command - no domain specified!";
-            var targetType = currentCommand.targetType;
+
+            // Always use the base type (i.e. the topmost non-abstract class in the inheritance hierarchy):
+            var targetType = $rt.getBaseClassName(domain, currentCommand.targetType).name;
             if (!targetType) throw "Error processing CRUD command - no target type specified!";
 
             $rt.useDB(domain, function (db) {
@@ -115,12 +117,12 @@ appApiRouter.post('/CRUD', function (req, res, next) {
                         value.parentID = ObjectID(value.parentID);
                         collection.insertOne(value, function (err, r) {
                             if (err) {
-                                console.log("Error creating new object of type " + value.type + ": " + err);
+                                console.log("Error creating new object of base type " + value.type + ": " + err);
                             }
                             else {
-                                console.log("Created " + value.type + " with ID " + value._id + ": " + r);
+                                console.log("Created entity with base type " + value.type + ", ID=" + value._id + ": " + r);
                             }
-                            response.newEntity = { _id: value._id, type: value.type};
+                            response.newEntity = { _id: value._id, type: currentCommand.targetType};
                             response.success = true;
                             res.send(response);
                             return;
@@ -162,18 +164,20 @@ appApiRouter.post('/CRUD', function (req, res, next) {
                                 msg = "Found instance for ID=" + mongoRes._id + " in Domain " + domain;
                                 result = mongoRes;
                                 var breadcrumb = [];
+                                // Recursive Closure:
                                 function createBreadcrumb (mongoErr, mongoRes) {
                                     if (mongoErr) {
                                         err = true;
                                         msg = mongoErr;
                                     }
-                                    else {
+                                    else if (mongoRes) {
                                         var item = {};
                                         item._id=mongoRes._id;
                                         item.type=mongoRes.type;
+                                        item.shortHand=mongoRes.Name?mongoRes.Name:mongoRes.type;
                                         breadcrumb.unshift(item);
                                     }
-                                    if (mongoErr || mongoRes.isRootInstance) {
+                                    if (mongoErr || !mongoRes || mongoRes.isRootInstance) {
                                         resultList.push({
                                             queryType: "FindByID",
                                             queryID: currentCommand.queryID,
@@ -190,8 +194,8 @@ appApiRouter.post('/CRUD', function (req, res, next) {
                                     }
                                     var parentRelnID = mongoRes.parentRelnID;
                                     var parentID = mongoRes.parentID;
-                                    var parentEntity = $rt.findParentEntity(domain, parentRelnID);
-                                    var parentCollection = db.collection(parentEntity.name);
+                                    var parentName = mongoRes.parentBaseClassName;
+                                    var parentCollection = db.collection(parentName);
                                     parentCollection.findOne({_id: ObjectID(parentID)}, createBreadcrumb);
                                 }
                                 createBreadcrumb (mongoErr, mongoRes);
@@ -215,10 +219,21 @@ appApiRouter.post('/CRUD', function (req, res, next) {
                         return;
                     case "FindAssocTargetOptions":
                         // Find all elements in collection representing this type
-                        var filter = currentCommand.filter ? currentCommand.filter.split("=") : null;
                         var query = {};
-                        if (filter&&filter.length===2)
-                            query[filter[0]]=RegExp(filter[1], "i");
+                        var filters = currentCommand.filter ? currentCommand.filter.replace(/\s/g, '').split("&") : null;
+                        if (filters) {
+                            for (var f in filters) {
+                                var filter = filters[f].split("=");
+                                if (filter.length===2) {
+                                    if (filter[0]==="Type") {
+                                        collection=db.collection(filter[1]);
+                                    }
+                                    else {
+                                        query[filter[0]] = RegExp(filter[1], "i");
+                                    }
+                                }
+                            }
+                        }
                         var cursor = collection.find(query);
                         cursor.count(function (mongoErr1, count) {
                             cursor.skip(startingAt);

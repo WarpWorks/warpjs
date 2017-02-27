@@ -11,7 +11,7 @@ HeadStart_getURLParam = function (argName) {
 //
 // Class "EntityTable"
 //
-function EntityTable (id, prefix, columns, relationship) {
+function EntityTable (id, prefix, columns, subtypes, relationship) {
     this.id=id;
     this.table=prefix+"_table";
     this.tableBody=prefix+"_tableBody";
@@ -20,6 +20,7 @@ function EntityTable (id, prefix, columns, relationship) {
     this.searchOptions=prefix+"_searchOptions";
     this.pagination=prefix+"_pagination";
     this.columns=columns;
+    this.subtypes=subtypes;
     this.relationship=relationship;
 
     // Make this available via $active
@@ -44,7 +45,8 @@ EntityTable.prototype.updateTable=function () {
         var TDs = "";
         for (var i in this.columns) {
             var val=elem["get_"+this.columns[i]]();
-            val = val.length<15 ? val : val.slice(0, 12)+"...";
+            if (typeof val === 'string')
+                val = val.length<15 ? val : val.slice(0, 12)+"...";
             TDs += "<td>"+val+"</td>";
         }
         var add= "<a href='#'><span class='glyphicon glyphicon-plus'></span></a>";
@@ -67,7 +69,12 @@ EntityTable.prototype.updateTable=function () {
     // Search options
     var searchOptions = "";
     for (i in this.columns) {
-        searchOptions += "<li><a href='#' class='"+this.table+"_csearch'>"+this.columns[i]+"</a></li>";
+        searchOptions += "<li><a href='#' class='"+this.table+"_csearch'>"+this.columns[i]+" = ...</a></li>";
+    }
+    if (this.subtypes.length>0)
+        searchOptions += "<li class='divider'></li>";
+    for (i in this.subtypes) {
+        searchOptions += "<li><a href='#' class='"+this.table+"_csearch'>Type = "+this.subtypes[i]+"</a></li>";
     }
     $("#"+this.searchOptions).empty();
     $("#"+this.searchOptions).data("widgetid", this.id);
@@ -76,7 +83,11 @@ EntityTable.prototype.updateTable=function () {
         var searchStr = $(this).text();
         var w = $(this).parent().parent().data("widgetid");
         w = $active.entityTables[w];
-        $("#"+w.searchInput).val(searchStr+"=");
+        searchStr=searchStr.replace("...", "");
+        searchStr=searchStr.replace(/\s/g, '');
+        var currentSearchStr = $("#"+w.searchInput).val();
+        if (currentSearchStr.length>0) searchStr = currentSearchStr+" & "+searchStr;
+        $("#"+w.searchInput).val(searchStr);
         $("#"+w.searchInput).focus();
     });
     $("#"+this.searchInput).data("widgetid", this.id);

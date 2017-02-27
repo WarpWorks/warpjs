@@ -171,11 +171,13 @@ function {{js:this.name;/}}Admin() {
 }
 
 {{Entity*}}
-{{js:this.getParent_Domain().name;/}}Admin.prototype.addNew_{{js:this.name;/}} = function (parentID, relnID, relnName) {
+{{js:this.getParent_Domain().name;/}}Admin.prototype.addNew_{{js:this.name;/}} = function (parentID, relnID, relnName, parentBaseClassID, parentBaseClassName) {
     var new_{{js:this.name;/}} = new {{js:this.name;/}} ("{{js:this.name;/}}", null, null, false);
     new_{{js:this.name;/}}.parentID = parentID;
     new_{{js:this.name;/}}.parentRelnName = relnName;
     new_{{js:this.name;/}}.parentRelnID = relnID;
+    new_{{js:this.name;/}}.parentBaseClassID = parentBaseClassID;
+    new_{{js:this.name;/}}.parentBaseClassName = parentBaseClassName;
     new_{{js:this.name;/}}.isNew = true;
     return new_{{js:this.name;/}};
 }
@@ -195,7 +197,7 @@ function {{js:this.name;/}}Admin() {
             {
                 command: "Create",
                 domain: domain,
-                targetType: newEntity.type,
+                targetType: $active.entity.type,
                 entity: newEntity
             }
         ]
@@ -440,6 +442,8 @@ function {{js:this.name;/}} (type, parent, id, isEmptyShell) {
         propertiesOnly.parentID = this.parentID;
         propertiesOnly.parentRelnName = this.parentRelnName;
         propertiesOnly.parentRelnID = this.parentRelnID;
+        propertiesOnly.parentBaseClassID = this.parentBaseClassID;
+        propertiesOnly.parentBaseClassName = this.parentBaseClassName;
     }
 
 {{BasicProperty!*}}    propertiesOnly.{{js:this.name;/}} = this.get_{{js:this.name;/}}();
