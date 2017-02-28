@@ -193,12 +193,14 @@
                                             {{js:this.getRelationship().getTargetEntity().name;/}}_updateDefaultTableView);
                                 });
                                 // Create button to add new child elements to the current aggregation:
-                                $("#TV{{js:this.id/}}").append("<li><a href='./{{js: this.getRelationship().getTargetEntity().name; /}}?parentID="+$active.oid+"&relnID={{js: this.getRelationship().id;/}}&relnName={{js:this.getRelationship().name;/}}&parentBaseClassID={{js: this.getRelationship().parent.getBaseClass().id;/}}&parentBaseClassName={{js: this.getRelationship().parent.getBaseClass().name;/}}'>Add {{js: this.getRelationship().getTargetEntity().name; /}}</a></li>");
+                                // TBD - ignore abstract base classes
+                                $("#TV{{js:this.id/}}").append("<li><a href='./{{js: this.getRelationship().getTargetEntity().name; /}}?parentID="+$active.oid+"&relnID={{js: this.getRelationship().id;/}}&relnName={{js:this.getRelationship().name;/}}&parentBaseClassID={{js: this.getRelationship().parent.getBaseClass()?this.getRelationship().parent.getBaseClass().id:null;/}}&parentBaseClassName={{js: this.getRelationship().parent.getBaseClass()?this.getRelationship().parent.getBaseClass().name:null;/}}'>Add {{js: this.getRelationship().getTargetEntity().name; /}}</a></li>");
                                 // Add buttons to create derived entities:
                                 {{js: (function () {
-                                    var derivedEntities = this.getRelationship().getTargetEntity().getAllDerivedEntities();
-                                    var parentBaseClassID= this.getRelationship().parent.getBaseClass().id;
-                                    var parentBaseClassName= this.getRelationship().parent.getBaseClass().name;
+                                    var derivedEntities     = this.getRelationship().getTargetEntity().getAllDerivedEntities();
+                                    // TBD: handle abstact base classes
+                                    var parentBaseClassID   = this.getRelationship().parent.getBaseClass()?this.getRelationship().parent.getBaseClass().id:null;
+                                    var parentBaseClassName = this.getRelationship().parent.getBaseClass()?this.getRelationship().parent.getBaseClass().name:null;
                                     var res = "";
                                     for (i in derivedEntities) {
                                         // TBD: Ignore abstract entities!

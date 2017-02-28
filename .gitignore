@@ -6,6 +6,7 @@ attic/
 
 # Generated Files
 app*.hbs
+portal*.hbs
 *WebAPI.js
 
 # WebStorm IDE Config

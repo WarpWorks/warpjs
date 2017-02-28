@@ -490,7 +490,7 @@ function {{js:this.name;/}} (type, parent, id, isEmptyShell) {
     get{{js:this.getDomain().name;/}}Admin().processCRUDcommands(reqData, function(res) {
         me.{{js:this.name;/}}.queryResults = [];
         get{{js:this.getDomain().name;/}}Admin().updateEntityCacheWithQueryResults (res);
-        callback (me.{{js:this.name;/}});
+        callback (me.{{js:this.name;/}}, me);
     });
 }
 
