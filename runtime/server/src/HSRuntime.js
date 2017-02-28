@@ -1,5 +1,6 @@
 var mongoClient=require('mongodb').MongoClient;
 var fs = require('fs');
+var path = require('path');
 
 //
 // Class "HSRuntime"
@@ -11,22 +12,23 @@ function HSRuntime() {
     this.mongoDBs = {};
 }
 
+var hsRoot = process.cwd();
+
 HSRuntime.prototype = {
     readFile: function (fn) {
         var txt = fs.readFileSync(fn, 'utf8');
         return txt;
     },
     getDir: function (name) {
-        var hsRoot = process.cwd()+"/";
-        var project   = hsRoot+"../"+this.getConfig().projectPath+"/";
+        var project   = path.join(hsRoot, this.getConfig().projectPath);
         switch (name) {
             // Project files
-            case "domains": return project + "domains/";
+            case "domains": return path.join(project, "domains");
         }
     },
     getConfig: function () {
         if (this.config) return this.config;
-        var cfg = this.readFile(process.cwd()+"/../config.json");
+        var cfg = this.readFile(path.join(hsRoot, "config.json"));
         this.config = JSON.parse(cfg);
         return this.config;
     },
@@ -77,7 +79,7 @@ HSRuntime.prototype.getDomains = function () {
     var files = fs.readdirSync(dir);
     for (var idx=0; idx<files.length; idx++) {
         var fn = files[idx];
-        var file = fs.readFileSync(dir + "/" + fn, 'utf8');
+        var file = this.readFile(path.join(dir, fn));
         var domain = JSON.parse(file, 2);
         this.domains[domain.name] = domain;
     }
