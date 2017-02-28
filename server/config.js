@@ -15,7 +15,8 @@ const baseConfig = {
         columnSubType: 'IndustryVertical',
         rowType: 'ApplicationArea',
         rowSubType: 'UseCase',
-        hotspotType: 'HotSpot'
+        hotspotType: 'HotSpot',
+        usersType: 'Users'
     }
 };
 
