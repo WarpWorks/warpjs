@@ -83,11 +83,11 @@
                                         queryResult.forEach (function (elem) {
                                             var heading = elem.get_Heading();
                                             if (heading && heading.length>0)
-                                                heading = "Heading: "+heading+"<br>";
+                                                heading = "<strong>"+heading+"</strong><br>";
                                             else heading = "";
                                             var content = elem.get_Content();
                                             if (content && content.length>0)
-                                                content = "Content: "+content+"<br>";
+                                                content = content+"<br>";
                                             else content = "";
                                             var div = $("<div id='"+elem.id+"'>"+heading+content+"</div>");
                                             /*
