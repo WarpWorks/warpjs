@@ -155,7 +155,7 @@ appApiRouter.post('/CRUD', function (req, res, next) {
                         return;
                     case "FindByID":
                         var id = currentCommand.targetID;
-                        if (!id) throw "Find-Query must contain targetID!";
+                        if (!id) throw "Delete-Query must contain targetID!";
                         collection.findOne({_id: ObjectID(id)}, function (mongoErr, mongoRes) {
                             var msg = "";
                             var err = false;
@@ -214,6 +214,35 @@ appApiRouter.post('/CRUD', function (req, res, next) {
                                 response.success = true;
                                 res.send(response);
                             }
+                            return;
+                        });
+                        return;
+                    case "Delete":
+                        // TBD - this also needs to delete all the child elements in the DB!!!
+                        var id = currentCommand.targetID;
+                        if (!id) throw "Find-Query must contain targetID!";
+                        collection.deleteOne({_id: ObjectID(id)}, function (mongoErr, mongoRes) {
+                            var msg = "";
+                            var err = false;
+                            var result = null;
+                            if (mongoRes) {
+                                msg = "Object deleted: "+id;
+                                result = mongoRes;
+                            }
+                            else {
+                                err = true;
+                                msg = mongoErr ? mongoErr : "No matching object for ID=" + id;
+                            }
+                            resultList.push({
+                                queryType: "Delete",
+                                queryID: currentCommand.queryID,
+                                error: err,
+                                status: msg
+                            });
+                            console.log(msg);
+                            response.resultList = resultList;
+                            response.success = true;
+                            res.send(response);
                             return;
                         });
                         return;

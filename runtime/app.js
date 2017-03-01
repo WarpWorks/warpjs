@@ -11,6 +11,8 @@ var bodyParser = require('body-parser');
 var appApiRoutes   = require('./server/routes/apiRoutes');
 var appPageRoutes  = require('./server/routes/pageRoutes');
 
+var $rt = require('./server/src/HSRuntime.js');
+
 var app = express();
 
 // view engine setup
@@ -26,6 +28,7 @@ app.use(cookieParser());
 // Public/static
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'server/generated')));
+app.use(express.static(path.join(__dirname, $rt.getConfig().public)));
 
 // Deal with Express / Handlebar Partials:
 var partialsDir = __dirname + '/views';

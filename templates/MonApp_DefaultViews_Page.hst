@@ -107,7 +107,6 @@
                                         $("#csv_{{js:this.name;/}}").empty();
                                         for (i in $active.entity[reln.name].assocTargets) {
                                             var target = $active.entity[reln.name].assocTargets[i];
-                                            console.log("TARGET TYPE:"+target.type);
                                             var elemID = "{{js:this.name;/}}-CSV:"+target.id;
                                             var elem = $("<li role='presentation' id='"+elemID+"' data-type='"+target.type+"'><a href='#'>"+target.label+"</a></li>");
                                             $("#csv_{{js:this.name;/}}").append(elem);

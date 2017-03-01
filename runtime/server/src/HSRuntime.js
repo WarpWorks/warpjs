@@ -12,7 +12,7 @@ function HSRuntime() {
     this.mongoDBs = {};
 }
 
-var hsRoot = process.cwd();
+var hsRoot = process.cwd()+"/..";
 
 HSRuntime.prototype = {
     readFile: function (fn) {

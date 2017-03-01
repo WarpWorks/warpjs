@@ -68,7 +68,7 @@
             <h1>{{js:this.name;/}}</h1>
             {{Aggregation!*}}
                 <!-- TBD - this should only be generated for Aggregation of type Overview -->
-                <div id="{{js:this.name;/}}_Overview" style="display: none;"><h2>Overview</h2></div>
+                <div id="{{js:this.name;/}}_Overview" style="display: none;"></div>
                 <script>
                     whenReady(function () {
                         get{{js:this.getDomain().name;/}}Admin().getEntityByID(
@@ -81,19 +81,47 @@
                                         $("#{{js:this.name;/}}_Overview").show();
                                         var queryResult = relationship.queryResults;
                                         queryResult.forEach (function (elem) {
-                                            var div = $("<div id='"+elem.id+"'>Heading: "+elem.get_Heading()+"<br>Content: +"+elem.get_Content()+"</div>");
-                                            div.css({"border-color": "grey",
+                                            var heading = elem.get_Heading();
+                                            if (heading && heading.length>0)
+                                                heading = "Heading: "+heading+"<br>";
+                                            else heading = "";
+                                            var content = elem.get_Content();
+                                            if (content && content.length>0)
+                                                content = "Content: "+content+"<br>";
+                                            else content = "";
+                                            var div = $("<div id='"+elem.id+"'>"+heading+content+"</div>");
+                                            /*
+                                            div.css({"border-color": "lightgrey",
                                                      "border-width": "1px",
                                                      "border-style": "solid",
                                                      "margin": "3px",
                                                      "padding": "3px"});
+                                            */
                                             $("#{{js:this.name;/}}_Overview").append(div);
                                             elem.query_Images(function (relationship, parent){
                                                 var queryResult = relationship.queryResults;
                                                 if (queryResult.length>0) {
                                                     var image = queryResult[0];
-                                                    $("#"+parent.id).append("<br>Image: "+image.get_ImageURL()+"<br>");
-                                                    $("#"+parent.id).append("<img id='theImg' src='http://lorempixel.com/300/150/"+image.get_ImageURL()+"'/>");
+                                                    var w = parseInt(""+image.get_Width());
+                                                    var h = parseInt(""+image.get_Height());
+                                                    var img = $(
+                                                        "<img id='"+image.id+"' src='/iic_images/"+image.get_ImageURL()+"' width='"+w+"' height='"+h+"' usemap='#mapFor"+image.id+"'/>");
+                                                    $("#"+parent.id).append(img);
+                                                    image.query_Map(function (relationship, parent){
+                                                        var map = $("<map name='mapFor"+parent.id+"' title='hulluhullu'>");
+                                                        var queryResult = relationship.queryResults;
+                                                        queryResult.forEach (function (area) {
+                                                            var coords = area.get_Coords();
+                                                            var title = area.get_Title();
+                                                            var href = "";
+                                                            if (area.Target && area.Target.assocTargets.length>0) {
+                                                                var target = area.Target.assocTargets[0];
+                                                                href = target.type+"?oid="+target.id;
+                                                            }
+                                                            map.append("<area shape='rect' coords='"+coords+"' title='"+title+"' href='"+href+"'>");
+                                                        });
+                                                        $("#"+parent.id).append(map);
+                                                    });
                                                 }
                                             });
                                         });
@@ -107,7 +135,7 @@
             {{PageView*}}
                 {{Panel*}}
                     {{BasicPropertyPanelItem?}}
-                        <h2>Properties</h2>
+                        <hr>
                         <ul>
                         {{BasicPropertyPanelItem*}}
                             <li id="{{js:this.name;/}}Value">xxx</li>
@@ -129,8 +157,8 @@
                     {{EnumPanelItem?}}
                         <!-- TBD -->
                     {{/EnumPanelItem?}}
+                    <hr>
                     {{AssociationPanelItem?}}
-                        <h2>Relationships</h2>
                         <ul>
                         {{AssociationPanelItem*}}
                             <li id="csv_{{js:this.name;/}}">{{js:this.name;/}}: </li>

@@ -22,6 +22,22 @@ saveHandler = function () {
     });
     get{{js:this.getDomain().name;/}}Admin().save("{{js:this.getDomain().name;/}}");
 }
+deleteHandler = function () {
+    var callbacks = [
+        {
+            close: true,
+            label: "Delete",
+            callback: function () {
+                get{{js:this.getDomain().name;/}}Admin().delete("{{js:this.getDomain().name;/}}");
+            }
+        },
+        {
+            close: true,
+            label: "Cancel"
+        }
+    ];
+    createModal("Confirmation", "Do you really want to delete this entity?", "warning", callbacks);
+}
 
 $(window).unload(function() {
     saveHandler("{{js:this.getDomain().name;/}}");
@@ -30,7 +46,7 @@ $(window).unload(function() {
 // Handler for Nav elements from _appLayout.hbs
 $(document).ready(function () {
     $("#NavButtonSaveA").on("click", saveHandler);
-    //TBD: $("#NavButtonDeleteA").on("click", deleteHandler);
+    $("#NavButtonDeleteA").on("click", deleteHandler);
     //TBD: $("#NavButtonCancelA").on("click", cancelHandler);
 });
 
@@ -188,6 +204,38 @@ function {{js:this.name;/}}Admin() {
     this.saveNewEntity(domain);
     this.saveChangedEntities(domain);
 }
+
+{{js:this.name;/}}Admin.prototype.delete = function (domain) {
+    console.log("Deleting Entity: "+$active.entity.type+":"+$active.entity.id);
+    if ($active.entity === null) return;
+    if ($active.entity.isRootInstance) {
+        alert ("Cannot delete Root Instance!");
+        return;
+    }
+    var reqData = {
+        commandList: [
+            {
+                command: "Delete",
+                domain: domain,
+                targetType: $active.entity.type,
+                targetID: $active.entity.id
+            }
+        ]
+    };
+    this.processCRUDcommands(reqData, function (result) {
+        if (result.success) {
+            console.log("Delete: OK!");
+            var parent = $active.entity.breadcrumb[$active.entity.breadcrumb.length-2];
+            var type = parent.type;
+            var oid = parent._id;
+            window.location.href = "./../app/"+type+"?oid="+oid;
+        }
+        else {
+            alert(result.err);
+        }
+    });
+}
+
 
 {{js:this.name;/}}Admin.prototype.saveNewEntity = function (domain) {
     if ($active.entity === null || !$active.entity.isNew) return;
