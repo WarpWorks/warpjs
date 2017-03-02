@@ -9,13 +9,13 @@ const baseConfig = {
     jwtCookieName: 'i3cPortalJWT',
     persistence: {
         host: process.env.MONGODB_HOST || 'localhost',
-        domain: 'I3C',
-        dbName: 'I3C',
+        dbName: 'IIC',
         columnType: 'IndustrySector',
         columnSubType: 'IndustryVertical',
         rowType: 'ApplicationArea',
         rowSubType: 'UseCase',
-        hotspotType: 'HotSpot'
+        hotspotType: 'HotSpot',
+        usersType: 'Users'
     }
 };
 
