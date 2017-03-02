@@ -3,11 +3,8 @@ const cookieParser = require('cookie-parser');
 const express = require('express');
 const path = require('path');
 
-const adminRouter = require('./admin').router;
 const config = require('./config');
-const homepageRouter = require('./homepage').router;
-const mapRouter = require('./map').router;
-const pathPrefix = require('./path-prefix');
+const router = require('./router');
 const session = require('./session');
 
 const app = express();
@@ -32,12 +29,6 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(session.middlewares.i3cUser);
 
-app.use(pathPrefix.HOMEPAGE, homepageRouter);
-app.use(pathPrefix.SESSION, session.router);
-app.use(pathPrefix.MAP, mapRouter);
-
-// TODO: Change this to use HeadStart
-app.use(pathPrefix.ADMIN, session.middlewares.requiresI3cUser.bind(null, []), adminRouter);
-app.use(pathPrefix.CONTENT, session.middlewares.requiresI3cUser.bind(null, []), adminRouter);
+app.use(router);
 
 module.exports = app;
