@@ -185,7 +185,7 @@
                         <ul>
                         {{AggregationPanelItem*}}
                             <!-- Include Default Table View here: -->
-                            <li id="{{js:this.getRelationship().name;/}}_csv">{{js:this.getRelationship().name;/}}: </li>
+                            <li id="{{js:this.getRelationship().name;/}}_csv">{{js:this.label;/}}: </li>
                             <script>
                                 whenReady(function () {
                                     // Get active entity; query for child entities in current aggregation; update table with results
