@@ -57,6 +57,13 @@ function sendHal(req, res, resource, status) {
         .send(resource.toJSON());
 }
 
+function sendIndex(res, title, bundle) {
+    res.status(200).render('index', {
+        title,
+        bundle
+    });
+}
+
 function wrapWith406(res, formats) {
     res.format(_.extend({}, formats, {
         'default': () => {
@@ -69,6 +76,7 @@ module.exports = {
     HAL_CONTENT_TYPE,
     createResource,
     sendHal,
+    sendIndex,
     urlFormat,
     wrapWith406
 };
