@@ -33,7 +33,7 @@ function index(req, res) {
 
 function extractRelationship(resource, persistence, hsEntity, entity) {
     const relationship = hsEntity.getRelationship();
-    debug("extractRelationship(): relationship=", relationship);
+    // debug("extractRelationship(): relationship=", relationship);
 
     return relationship.getDocuments(persistence, entity)
         .then((references) => {
@@ -45,6 +45,22 @@ function extractRelationship(resource, persistence, hsEntity, entity) {
 
             resource.embed('relationships', relationshipResource);
             return relationshipResource;
+        });
+}
+
+function extractBreadCrumb(responseResource, persistence, entity) {
+    debug("extractBreadCrumb(): entity=", entity.type, entity.id);
+
+    return Promise.resolve()
+        .then(() => {
+            if (entity.parentBaseClassName) {
+                return persistence.findOne(entity.parentBaseClassName, {_id: entity.parentID}, true)
+                    .then((parentEntity) => extractBreadCrumb(responseResource, persistence, parentEntity));
+            }
+        })
+        .then(() => {
+            const resource = createObjResource(entity, true);
+            responseResource.embed('breadcrumbs', resource);
         });
 }
 
@@ -127,6 +143,7 @@ function entity(req, res) {
                             });
 
                             Promise.resolve()
+                                .then(extractBreadCrumb.bind(null, responseResource, persistence, entity))
                                 .then(extractPageViews.bind(null, responseResource, persistence, hsEntity, entity))
                                 .then(utils.sendHal.bind(null, req, res, responseResource, null));
                         });
