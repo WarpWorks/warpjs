@@ -6,8 +6,11 @@ const pathInfo = require('./path-info');
 
 const HAL_CONTENT_TYPE = 'application/hal+json';
 
-function createResource(req, data) {
-    return new hal.Resource(data, req.originalUrl || '[undefined]');
+function createResource(reqOrPath, data) {
+    if (typeof reqOrPath === 'string') {
+        return new hal.Resource(data, reqOrPath || '[undefined]');
+    }
+    return new hal.Resource(data, (reqOrPath && reqOrPath.originalUrl) || '[undefined]');
 }
 
 function urlFormat(pathname, query) {
