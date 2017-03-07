@@ -14,4 +14,3 @@ const template = require("./../templates/index.hbs");
             });
     });
 })(jQuery);
-
