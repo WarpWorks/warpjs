@@ -1,0 +1,9 @@
+<ol class="breadcrumb" id="breadcrumb">
+	{{#if entity.isRootInstance}}
+	    <li class="breadcrumb-item"><a href="{{entity._links.self.href}}">{{entity.type}}</a></li>
+	{{else}}
+	    {{#each entity.breadcrumb}}
+	        <li class="breadcrumb-item"><a href="{{this._links.self.href}}" data-toggle='tooltip' title="{{this.type}}">{{this.shortHand}}</a></li>
+	    {{/each}}
+	{{/if}}
+</ol>
