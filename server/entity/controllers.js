@@ -20,6 +20,7 @@ const PROPS_TO_PICK = [
     // Panel
     'label',
     'position',
+    'alternatingColors',
 
     // Images
     'ImageURL',
