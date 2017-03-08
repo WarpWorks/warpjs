@@ -1,4 +1,4 @@
-const debug = require('debug')('I3CPortal:entity:controllers');
+const _ = require('lodash');
 const Promise = require('bluebird');
 const hs = require('HeadStart');
 
@@ -7,21 +7,43 @@ const pathInfo = require('./../path-info');
 const Persistence = require('./../persistence');
 const utils = require('./../utils');
 
-function createObjResource(obj, addSelf) {
+const PROPS_TO_PICK = [
+    'type',
+    'id',
+    'name',
+    'desc',
+
+    // Paragraph
+    'Heading',
+    'Content',
+
+    // Panel
+    'label',
+    'position',
+
+    // Images
+    'ImageURL',
+    'Caption',
+    'AltText',
+    'Width',
+    'Height',
+
+    // ImageArea
+    'Coords',
+    'Alt',
+    'HRef',
+    'Title'
+];
+
+function createObjResource(obj, addSelfLink) {
     return utils.createResource(
-        (addSelf)
+        (addSelfLink)
             ? pathInfo(pathInfo.ENTITY, 'self', { id: obj.id, type: obj.type })
             : '',
-        {
-            type: obj.type,
-            id: obj.id,
+        _.extend(_.pick(obj, PROPS_TO_PICK), {
             name: obj.Name || obj.name,
-            desc: obj.Desc || obj.desc,
-            heading: obj.Heading,
-            content: obj.Content,
-            label: obj.label,
-            position: obj.position
-        }
+            desc: obj.Desc || obj.desc
+        })
     );
 }
 
@@ -33,8 +55,6 @@ function index(req, res) {
 
 function extractRelationship(resource, persistence, hsEntity, entity) {
     const relationship = hsEntity.getRelationship();
-    // debug("extractRelationship(): relationship=", relationship);
-
     return relationship.getDocuments(persistence, entity)
         .then((references) => {
             const relationshipResource = createObjResource(relationship, true);
@@ -49,8 +69,6 @@ function extractRelationship(resource, persistence, hsEntity, entity) {
 }
 
 function extractBreadCrumb(responseResource, persistence, entity) {
-    debug("extractBreadCrumb(): entity=", entity.type, entity.id);
-
     return Promise.resolve()
         .then(() => {
             if (entity.parentBaseClassName) {
@@ -64,9 +82,64 @@ function extractBreadCrumb(responseResource, persistence, entity) {
         });
 }
 
+function entityResource(persistence, hsEntity, instance) {
+    const resource = createObjResource(instance, true);
+    const relationships = [];
+
+    if (instance.Target) {
+        instance.Target.forEach((target) => {
+            resource.link('target', {
+                title: target.label,
+                href: pathInfo(pathInfo.ENTITY, 'self', {id: target.id, type: target.type})
+            });
+        });
+    }
+
+    return Promise.each(hsEntity.getRelationships(/*true*/),
+            (relationship) => {
+                const p = relationship.getDocuments(persistence, instance);
+                relationships.push({
+                    name: relationship.name,
+                    targetEntity: relationship.getTargetEntity(),
+                    p
+                });
+                return p;
+            }
+        )
+        .then(() => {
+            return Promise.each(relationships,
+                (relationship) => {
+                    const images = relationship.p.value();
+                    return Promise.each(images,
+                        (image) => {
+                            return entityResource(persistence, relationship.targetEntity, image)
+                                .then((imageResource) => {
+                                    resource.embed(relationship.name, imageResource);
+                                });
+                        });
+                });
+        })
+        .then(() => resource);
+}
+
+function resourcesByRelationship(persistence, instance, relationship) {
+    return Promise.resolve()
+        .then(() => relationship.getDocuments(persistence, instance))
+        .then((docs) => docs[0])
+        .then((doc) => entityResource(persistence, relationship.getTargetEntity(), doc));
+}
+
+function createOverviewPanel(persistence, hsCurrentEntity, currentInstance) {
+    return Promise.resolve()
+        // Find the overview.
+        .then(() => hsCurrentEntity.getRelationships())
+        .then((rels) => rels.find((rel) => rel.name === 'Overview'))
+        .then(resourcesByRelationship.bind(null, persistence, currentInstance));
+}
+
 function extractPageViews(responseResource, persistence, hsEntity, entity) {
     return Promise.resolve(hsEntity.getPageViews(true))
-        .then((pageViews) => pageViews[0])
+        .then((pageViews) => pageViews.find((pv) => pv.name === 'PortalView') || pageViews[0])
         .then((pageView) => pageView.panels)
         .then((panels) => {
             const embeddedPanels = [];
@@ -80,23 +153,18 @@ function extractPageViews(responseResource, persistence, hsEntity, entity) {
                     return Promise.resolve()
                         .then(() => {
                             return Promise.map(panel.separatorPanelItems,
-                                (item) => createObjResource(item)
-                            );
-                        })
-                        .then((separators) => {
-                            items.push.apply(items, separators);
+                                (item) => {
+                                    items.push(createObjResource(item));
+                                });
                         })
                         .then(() => {
                             return Promise.map(panel.relationshipPanelItems,
                                 (item) => {
                                     const itemResource = createObjResource(item);
-                                    return extractRelationship(itemResource, persistence, item, entity)
-                                        .then(() => itemResource);
+                                    items.push(itemResource);
+                                    return extractRelationship(itemResource, persistence, item, entity);
                                 }
                             );
-                        })
-                        .then((relationships) => {
-                            items.push.apply(items, relationships);
                         })
                         .then(() => {
                             panel.basicPropertyPanelItems.forEach((item) => {
@@ -104,8 +172,10 @@ function extractPageViews(responseResource, persistence, hsEntity, entity) {
                                 items.push(itemResource);
                             });
                         })
-                        .then((basicProperties) => {
-                            items.push.apply(items, basicProperties);
+                        .then(() => {
+                            panel.enumPanelItems.forEach((item) => {
+                                // TODO
+                            });
                         })
                         .then(() => {
                             items.sort((a, b) => a.position - b.position);
@@ -113,6 +183,15 @@ function extractPageViews(responseResource, persistence, hsEntity, entity) {
                         });
                 }
             )
+            .then(() => {
+                // We increment the position becase we will add the overview at
+                // the first position of the panels.
+                embeddedPanels.forEach((panel) => {
+                    panel.position = panel.position + 1;
+                });
+            })
+            .then(() => createOverviewPanel(persistence, hsEntity, entity))
+            .then((panel) => embeddedPanels.unshift(panel))
             .then(() => {
                 embeddedPanels.sort((a, b) => a.position - b.position);
                 return embeddedPanels;
@@ -133,7 +212,7 @@ function entity(req, res) {
                 .then(() => hs.getDomainByName(config.domainName))
                 .then((domain) => domain.getEntityByName(req.params.type))
                 .then((hsEntity) => {
-                    hsEntity.getInstance(persistence, req.params.id)
+                    return hsEntity.getInstance(persistence, req.params.id)
                         .then((entity) => {
                             const responseResource = utils.createResource(req, {
                                 Name: entity.Name,
@@ -142,7 +221,7 @@ function entity(req, res) {
                                 Content: entity.Content
                             });
 
-                            Promise.resolve()
+                            return Promise.resolve()
                                 .then(extractBreadCrumb.bind(null, responseResource, persistence, entity))
                                 .then(extractPageViews.bind(null, responseResource, persistence, hsEntity, entity))
                                 .then(utils.sendHal.bind(null, req, res, responseResource, null));
@@ -156,7 +235,11 @@ function entity(req, res) {
                         message: err.message
                     });
 
-                    utils.sendHal(req, res, resource, 404);
+                    if (err instanceof Persistence.PersistenceError) {
+                        utils.sendHal(req, res, resource, 404);
+                    } else {
+                        utils.sendHal(req, res, resource, 500);
+                    }
                 });
         }
     });
