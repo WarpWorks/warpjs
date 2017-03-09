@@ -19,6 +19,10 @@ const baseConfig = {
         rowSubType: 'UseCase',
         hotspotType: 'HotSpot',
         usersType: 'Users'
+    },
+
+    folders: {
+        iicData: 'REPLACE_THIS'
     }
 };
 
