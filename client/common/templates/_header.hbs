@@ -1,15 +1,22 @@
 <header class="header i3c-portal--header">
     <div class="header-top row">
-        <div class="col-md-1">
-            <a href="{{_links.i3c_homepage.href}}"><img
-               src="/public/iic_images/IIC-logo-4.png" width="172" height="70"
-               alt="[LOGO]" /></a>
+        <div class="hidden-xs col-md-1" />
+
+        <div class="col-xs-12 col-md-10">
+            <div class="col-xs-2 col-md-2">
+                <a href="{{_links.i3c_homepage.href}}"><img
+                   src="/public/iic_images/IIC-logo-4.png" width="172" height="70"
+                   alt="[LOGO]" /></a>
+            </div>
+            <div class="col-xs-6 col-md-6">
+                I3C Portal
+            </div>
+
+            <div class="col-xs-4 col-md-4">
+                {{> ./_login}}
+            </div>
         </div>
-        <div class="col-md-7">
-            I3C Portal
-        </div>
-        <div class="col-md-4">
-            {{> ./_login}}
-        </div>
+
+        <div class="hidden-xs col-md-1" />
     </div>
 </header>
