@@ -28,8 +28,7 @@ HSRuntime.prototype = {
     },
     getConfig: function () {
         if (this.config) return this.config;
-        var cfg = this.readFile(path.join(hsRoot, "config.json"));
-        this.config = JSON.parse(cfg);
+        this.config = require('./../../config.json');
         return this.config;
     },
     getMongoURL: function (dbName) {
