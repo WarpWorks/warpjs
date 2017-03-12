@@ -4,7 +4,7 @@
     glyphicon-log-out" /></a>
 {{^}}
     {{#unless hideLoginHeader}}
-        <form class="form-horizontal" role="form"
+        <form class="hidden-xs hidden-sm form-horizontal" role="form"
                 action="{{_links.i3c_login.href}}" method="POST"
                 >
             <div class="form-group">
@@ -31,5 +31,13 @@
                 </div>
             </div>
         </form>
+        <div class="visible-xs visible-sm">
+            <a href="{{_links.i3c_login.href}}">
+                <button class="btn">
+                    Log in
+                    <span title="Log in" class="glyphicon glyphicon-triangle-right" />
+                </button>
+            </a>
+        </div>
     {{/unless}}
 {{/if}}
