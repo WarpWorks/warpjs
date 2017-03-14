@@ -68,7 +68,7 @@
                                     <div class="col-sm-10">
                                         <select class="form-control" id="{{js:this.name;/}}Selection">
                                             {{js: (function () {
-                                                res='';
+                                                var res='';
                                                 for (var i in this.getEnumeration().literals)
                                                     res += '<option>'+this.getEnumeration().literals[i]+'</option>';
                                                 return res;
@@ -201,7 +201,7 @@
                                     var parentBaseClassID   = this.getRelationship().parent.getBaseClass()?this.getRelationship().parent.getBaseClass().id:null;
                                     var parentBaseClassName = this.getRelationship().parent.getBaseClass()?this.getRelationship().parent.getBaseClass().name:null;
                                     var res = "";
-                                    for (i in derivedEntities) {
+                                    for (var i in derivedEntities) {
                                         // TBD: Ignore abstract entities!
                                         var derivedEntity = derivedEntities[i];
                                         res += "$(\"#TV"+this.id+"\").append(\"<li><a href='"+derivedEntity.name+"?parentID=\"+$active.oid+\"&relnID="+this.id+"&relnName="+this.name+"&parentBaseClassID="+parentBaseClassID+"&parentBaseClassName="+parentBaseClassName+"'>Add "+derivedEntity.name+"</a></li>\");";
