@@ -74,18 +74,12 @@ function extractRelationship(resource, persistence, hsEntity, entity) {
         });
 }
 
-function extractBreadCrumb(responseResource, persistence, entity) {
+function extractBreadCrumb(responseResource, persistence, hsEntity, instance) {
     return Promise.resolve()
-        .then(() => {
-            if (entity.parentBaseClassName) {
-                return persistence.findOne(entity.parentBaseClassName, {_id: entity.parentID}, true)
-                    .then((parentEntity) => extractBreadCrumb(responseResource, persistence, parentEntity));
-            }
-        })
-        .then(() => {
-            entity.name = entity.name || entity.type;
-            const resource = createObjResource(entity, true);
-            responseResource.embed('breadcrumbs', resource);
+        .then(() => hsEntity.getInstancePath(persistence, instance))
+        .then((breadcrumbs) => breadcrumbs.map((breadcrumb) => createObjResource(breadcrumb, true)))
+        .then((resources) => {
+            responseResource.embed('breadcrumbs', resources);
         });
 }
 
@@ -187,8 +181,7 @@ function createOverviewPanel(req, persistence, hsCurrentEntity, currentInstance)
 }
 
 function extractPageViews(req, responseResource, persistence, hsEntity, entity) {
-    return Promise.resolve(hsEntity.getPageViews(true))
-        .then((pageViews) => pageViews.find((pv) => pv.name === 'PortalView') || pageViews[0])
+    return Promise.resolve(hsEntity.getPageView('DefaultPortalView'))
         .then((pageView) => pageView.panels)
         .then((panels) => {
             const embeddedPanels = [];
@@ -273,7 +266,7 @@ function entity(req, res) {
                             });
 
                             return Promise.resolve()
-                                .then(extractBreadCrumb.bind(null, responseResource, persistence, instance))
+                                .then(extractBreadCrumb.bind(null, responseResource, persistence, hsEntity, instance))
                                 .then(extractPageViews.bind(null, req, responseResource, persistence, hsEntity, instance))
                                 .then(utils.sendHal.bind(null, req, res, responseResource, null));
                         });
