@@ -10,6 +10,7 @@ const PROPS_TO_PICK = [
     'name',
     'desc',
     'value',
+    'style',
 
     // Paragraph
     'Heading',
