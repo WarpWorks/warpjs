@@ -11,7 +11,7 @@ const createObjResource = require('./create-obj-resource');
 const RANDOM_IMAGE = urlTemplate.parse('http://lorempixel.com/{Width}/{Height}/{ImageURL}/');
 const IMAGE_PATH = urlTemplate.parse('/public/iic_images/{ImageURL}');
 
-function extractRelationship(resource, persistence, hsEntity, entity) {
+function extractRelationship(req, resource, persistence, hsEntity, entity) {
     const relationship = hsEntity.getRelationship();
 
     return Promise.resolve()
@@ -22,7 +22,11 @@ function extractRelationship(resource, persistence, hsEntity, entity) {
                 if (hsEntity.style === 'Preview') {
                     const referenceEntity = hsEntity.getRelationship().getTargetEntity();
                     return referenceEntity.getOverview(persistence, reference)
+                        .then(convertToResource.bind(null, req))
                         .then((overview) => {
+                            if (overview) {
+                                referenceResource.embed('overview', overview);
+                            }
                             return referenceResource;
                         })
                         .catch((err) => {
@@ -62,6 +66,10 @@ function imagePath(req, image) {
 }
 
 function convertToResource(req, data) {
+    if (!data) {
+        return null;
+    }
+
     if (data.type === 'Image') {
         imagePath(req, data);
     }
@@ -112,13 +120,13 @@ function addSeparatorPanelItems(panel, items) {
     return items;
 }
 
-function addRelationshipPanelItems(panel, persistence, entity, items) {
+function addRelationshipPanelItems(req, panel, persistence, entity, items) {
     return Promise.map(
         panel.relationshipPanelItems,
         (item) => {
             const itemResource = createObjResource(item);
             items.push(itemResource);
-            return extractRelationship(itemResource, persistence, item, entity);
+            return extractRelationship(req, itemResource, persistence, item, entity);
         }
     ).then(() => items);
 }
@@ -162,7 +170,7 @@ module.exports = (req, responseResource, persistence, hsEntity, entity) => {
 
                     return Promise.resolve([])
                         .then(addSeparatorPanelItems.bind(null, panel))
-                        .then(addRelationshipPanelItems.bind(null, panel, persistence, entity))
+                        .then(addRelationshipPanelItems.bind(null, req, panel, persistence, entity))
                         .then(addBasicPropertyPanelItems.bind(null, panel, entity))
                         .then(addEnumPanelItems.bind(null, panel))
                         .then(sortItems)

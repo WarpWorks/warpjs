@@ -17,7 +17,13 @@
     {{#each entity._embedded.relationships}}
         {{#each this._embedded.references}}
             <div class="preview-container">
-                {{> ./_preview this._embedded}}
+                {{#if this._embedded}}
+                    {{#each this._embedded.overviews}}
+                        {{> ./_preview this}}
+                    {{/each}}
+                {{else}}
+                    {{> ./_preview this Heading=this.name Content=this.desc}}
+                {{/if}}
             </div>
         {{/each}}
     {{/each}}
