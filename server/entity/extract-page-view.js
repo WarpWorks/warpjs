@@ -13,7 +13,6 @@ const IMAGE_PATH = urlTemplate.parse('/public/iic_images/{ImageURL}');
 
 function extractRelationship(resource, persistence, hsEntity, entity) {
     const relationship = hsEntity.getRelationship();
-    const targetEntity = relationship.getTargetEntity();
 
     return Promise.resolve()
         .then(() => relationship.getDocuments(persistence, entity))
@@ -21,8 +20,17 @@ function extractRelationship(resource, persistence, hsEntity, entity) {
             return Promise.map(references, (reference) => {
                 const referenceResource = createObjResource(reference, true);
                 if (hsEntity.style === 'Preview') {
-                    return targetEntity.getOverview(persistence, reference)
+                    const referenceEntity = hsEntity.getRelationship().getTargetEntity();
+                    return referenceEntity.getOverview(persistence, reference)
                         .then((overview) => {
+                            return referenceResource;
+                        })
+                        .catch((err) => {
+                            // The entity does not offer a relationship named
+                            // 'Overview'?
+                            debug(`Could not find overview for: reference=`, reference);
+                            debug(`Could not find overview for: referenceEntity=`, referenceEntity);
+                            debug(`Could not find overview: Error=`, err);
                             return referenceResource;
                         });
                 }
@@ -97,6 +105,51 @@ function createOverviewPanel(req, persistence, hsCurrentEntity, currentInstance)
         .then(convertToResource.bind(null, req));
 }
 
+function addSeparatorPanelItems(panel, items) {
+    panel.separatorPanelItems.forEach((item) => {
+        items.push(createObjResource(item));
+    });
+    return items;
+}
+
+function addRelationshipPanelItems(panel, persistence, entity, items) {
+    return Promise.map(
+        panel.relationshipPanelItems,
+        (item) => {
+            const itemResource = createObjResource(item);
+            items.push(itemResource);
+            return extractRelationship(itemResource, persistence, item, entity);
+        }
+    ).then(() => items);
+}
+
+function addBasicPropertyPanelItems(panel, entity, items) {
+    panel.basicPropertyPanelItems.forEach((item) => {
+        item.value = entity[item.name];
+        const itemResource = createObjResource(item);
+        items.push(itemResource);
+    });
+    return items;
+}
+
+function addEnumPanelItems(panel, items) {
+    panel.enumPanelItems.forEach((item) => {
+        // TODO
+        debug(`In panel.enumPanelItems...`);
+    });
+    return items;
+}
+
+function sortItems(items) {
+    items.sort((a, b) => a.position - b.position);
+    return items;
+}
+
+function embed(resource, key, items) {
+    resource.embed(key, items);
+    return resource;
+}
+
 module.exports = (req, responseResource, persistence, hsEntity, entity) => {
     return Promise.resolve(hsEntity.getPageView('DefaultPortalView'))
         .then((pageView) => pageView.getPanels())
@@ -107,41 +160,13 @@ module.exports = (req, responseResource, persistence, hsEntity, entity) => {
                     const panelResource = createObjResource(panel);
                     embeddedPanels.push(panelResource);
 
-                    const items = [];
-
-                    return Promise.resolve()
-                        .then(() => {
-                            return Promise.map(panel.separatorPanelItems,
-                                (item) => {
-                                    items.push(createObjResource(item));
-                                });
-                        })
-                        .then(() => {
-                            return Promise.map(panel.relationshipPanelItems,
-                                (item) => {
-                                    const itemResource = createObjResource(item);
-                                    items.push(itemResource);
-                                    return extractRelationship(itemResource, persistence, item, entity);
-                                }
-                            );
-                        })
-                        .then(() => {
-                            return panel.basicPropertyPanelItems.forEach((item) => {
-                                item.value = entity[item.name];
-                                const itemResource = createObjResource(item);
-                                items.push(itemResource);
-                            });
-                        })
-                        .then(() => {
-                            return panel.enumPanelItems.forEach((item) => {
-                                // TODO
-                                debug(`In panel.enumPanelItems...`);
-                            });
-                        })
-                        .then(() => {
-                            items.sort((a, b) => a.position - b.position);
-                            panelResource.embed('panelItems', items);
-                        });
+                    return Promise.resolve([])
+                        .then(addSeparatorPanelItems.bind(null, panel))
+                        .then(addRelationshipPanelItems.bind(null, panel, persistence, entity))
+                        .then(addBasicPropertyPanelItems.bind(null, panel, entity))
+                        .then(addEnumPanelItems.bind(null, panel))
+                        .then(sortItems)
+                        .then(embed.bind(null, panelResource, 'panelItems'));
                 }
             )
             .then(() => createOverviewPanel(req, persistence, hsEntity, entity))
