@@ -1,5 +1,30 @@
-<ul class="relationship-panel">
-	<li>{{entity.label}}:&nbsp;{{> ./_relationshipPanelRelationships relationships=this._embedded.relationships}}</li>
-</ul>
+{{#if (isCsvRelationship)}}
+    <div class="csv-container">
+        <ul class="csv-unorder-list">
+            <li class="csv-list-item">
+                {{entity.label}}:&nbsp;
+                {{#each entity._embedded.relationships}}
+                    {{#each this._embedded.references}}
+                        {{> ./_csv this}}
+                    {{/each}}
+                {{/each}}
+            </li>
+        </ul>
+    </div>
+{{/if}}
 
-
+{{#if (isPreviewRelationship)}}
+    {{#each entity._embedded.relationships}}
+        {{#each this._embedded.references}}
+            <div class="preview-container">
+                {{#if this._embedded}}
+                    {{#each this._embedded.overviews}}
+                        {{> ./_preview this}}
+                    {{/each}}
+                {{else}}
+                    {{> ./_preview this Heading=this.name Content=this.desc}}
+                {{/if}}
+            </div>
+        {{/each}}
+    {{/each}}
+{{/if}}
