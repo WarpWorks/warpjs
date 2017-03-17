@@ -1,10 +1,11 @@
+const _ = require('lodash');
+const debug = require('debug')('HS:extractPageView');
 const fs = require('fs');
 const path = require('path');
 const Promise = require('bluebird');
 const urlTemplate = require('url-template');
 
 const createObjResource = require('./create-obj-resource');
-const pathInfo = require('./../path-info');
 
 // FIXME: For debug only.
 const RANDOM_IMAGE = urlTemplate.parse('http://lorempixel.com/{Width}/{Height}/{ImageURL}/');
@@ -12,14 +13,25 @@ const IMAGE_PATH = urlTemplate.parse('/public/iic_images/{ImageURL}');
 
 function extractRelationship(resource, persistence, hsEntity, entity) {
     const relationship = hsEntity.getRelationship();
-    return relationship.getDocuments(persistence, entity)
+    const targetEntity = relationship.getTargetEntity();
+
+    return Promise.resolve()
+        .then(() => relationship.getDocuments(persistence, entity))
+        .then((references) => {
+            return Promise.map(references, (reference) => {
+                const referenceResource = createObjResource(reference, true);
+                if (hsEntity.style === 'Preview') {
+                    return targetEntity.getOverview(persistence, reference)
+                        .then((overview) => {
+                            return referenceResource;
+                        });
+                }
+                return referenceResource;
+            });
+        })
         .then((references) => {
             const relationshipResource = createObjResource(relationship, true);
-
-            relationshipResource.embed('references',
-                references.map((reference) => createObjResource(reference, true))
-            );
-
+            relationshipResource.embed('references', references);
             resource.embed('relationships', relationshipResource);
             return relationshipResource;
         });
@@ -41,86 +53,53 @@ function imagePath(req, image) {
     }
 }
 
-function entityResource(req, persistence, hsEntity, instance) {
-    const resource = createObjResource(instance, true);
-
-    if (instance.type === 'ImageArea') {
-        const targets = instance.Target;
-
-        if (targets.length) {
-            resource.link('target', {
-                title: targets[0].label,
-                href: pathInfo(pathInfo.ENTITY, 'self', {id: targets[0].id, type: targets[0].type})
-            });
-        } else {
-            resource.link('target', {
-                title: instance.Title,
-                href: instance.HRef || '/???'
-            });
-        }
-        delete resource.Target;
+function convertToResource(req, data) {
+    if (data.type === 'Image') {
+        imagePath(req, data);
     }
 
-    const relationships = [];
-
-    return Promise.each(hsEntity.getRelationships(/*true*/),
-            (relationship) => {
-                const p = relationship.getDocuments(persistence, instance);
-                relationships.push({
-                    name: relationship.name,
-                    targetEntity: relationship.getTargetEntity(),
-                    p
+    const basicProperties = _.reduce(
+        data,
+        (memo, value, key) => {
+            if (!_.isArray(value)) {
+                return _.extend(memo, {
+                    [key]: value
                 });
-                return p;
             }
-        )
-        .then(() => {
-            return Promise.each(relationships,
-                (relationship) => {
-                    const images = relationship.p.value();
-                    return Promise.each(images,
-                        (image) => {
-                            // FIXME: This should not be kept for prod.
-                            if (image.type === 'Image') {
-                                imagePath(req, image);
-                            }
+            return memo;
+        },
+        {}
+    );
 
-                            return entityResource(req, persistence, relationship.targetEntity, image)
-                                .then((imageAreaResource) => {
-                                    if (imageAreaResource.type === 'ImageArea') {
-                                        imageAreaResource.Shape = imageAreaResource.Shape || 'rect';
-                                    }
-                                    resource.embed(relationship.name, imageAreaResource);
-                                });
-                        });
-                });
-        })
-        .then(() => resource);
-}
+    const resource = createObjResource(basicProperties, true);
 
-function resourcesByRelationship(req, persistence, instance, relationship) {
-    return Promise.resolve()
-        .then(() => relationship.getDocuments(persistence, instance))
-        .then((docs) => docs[0])
-        .then((doc) => {
-            if (doc) {
-                return entityResource(req, persistence, relationship.getTargetEntity(), doc);
-            }
-        });
+    _.forEach(data, (value, key) => {
+        if (_.isArray(value)) {
+            resource.embed(key, value.map(convertToResource.bind(null, req)));
+        }
+    });
+
+    if (resource.type === 'ImageArea') {
+        if (resource.HRef) {
+            resource.link('target', resource.HRef);
+        } else if (resource._embedded && resource._embedded.Targets && resource._embedded.Targets.length) {
+            resource.link('target', resource._embedded.Targets[0]._links.self.href);
+        }
+    }
+
+    return resource;
 }
 
 function createOverviewPanel(req, persistence, hsCurrentEntity, currentInstance) {
     return Promise.resolve()
         // Find the overview.
-        .then(() => hsCurrentEntity.getRelationships())
-        .then((rels) => rels.find((rel) => rel.name === 'Overview'))
-        .then(resourcesByRelationship.bind(null, req, persistence, currentInstance))
-        ;
+        .then(() => hsCurrentEntity.getOverview(persistence, currentInstance))
+        .then(convertToResource.bind(null, req));
 }
 
 module.exports = (req, responseResource, persistence, hsEntity, entity) => {
     return Promise.resolve(hsEntity.getPageView('DefaultPortalView'))
-        .then((pageView) => pageView.panels)
+        .then((pageView) => pageView.getPanels())
         .then((panels) => {
             const embeddedPanels = [];
             return Promise.map(panels,
@@ -156,6 +135,7 @@ module.exports = (req, responseResource, persistence, hsEntity, entity) => {
                         .then(() => {
                             return panel.enumPanelItems.forEach((item) => {
                                 // TODO
+                                debug(`In panel.enumPanelItems...`);
                             });
                         })
                         .then(() => {

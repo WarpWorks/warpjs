@@ -9,6 +9,7 @@ const PROPS_TO_PICK = [
     'id',
     'name',
     'desc',
+    'style',
     'value',
     'style',
 
