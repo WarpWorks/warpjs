@@ -1,15 +1,13 @@
 {{#if (isCsvRelationship)}}
     <div class="csv-container">
-        <ul class="csv-unorder-list">
-            <li class="csv-list-item">
-                {{entity.label}}:&nbsp;
-                {{#each entity._embedded.relationships}}
-                    {{#each this._embedded.references}}
-                        {{> ./_csv this}}
-                    {{/each}}
+        <li class="csv-list-item">
+            {{entity.label}}:&nbsp;
+            {{#each entity._embedded.relationships}}
+                {{#each this._embedded.references}}
+                    {{> ./_csv this}}
                 {{/each}}
-            </li>
-        </ul>
+            {{/each}}
+        </li>
     </div>
 {{/if}}
 

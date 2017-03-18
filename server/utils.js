@@ -2,7 +2,10 @@ const _ = require('lodash');
 const hal = require('hal');
 const url = require('url');
 
+const I3CError = require('./error');
+const mongoData = require('./map/mongo-data');
 const pathInfo = require('./path-info');
+const Persistence = require('./persistence');
 
 const HAL_CONTENT_TYPE = 'application/hal+json';
 
@@ -75,10 +78,47 @@ function wrapWith406(res, formats) {
     }));
 }
 
+function sendError(req, res, err) {
+    // TODO: Log this.
+    let resource;
+    console.log("Catch(err)=", err);
+
+    if (err instanceof mongoData.MapError) {
+        if (err.originalError instanceof Persistence.PersistenceError) {
+            resource = createResource(req, {
+                message: "Error accessing database.",
+                details: err.message
+            });
+        } else if (err.originalError instanceof I3CError) {
+            resource = createResource(req, {
+                message: "General application error.",
+                details: err.message
+            });
+        } else {
+            resource = createResource(req, {
+                message: "Map data processing error.",
+                details: err.message
+            });
+        }
+    } else if (err instanceof Persistence.PersistenceError) {
+        resource = createResource(req, {
+            message: "Error accessing database.",
+            details: err.message
+        });
+    } else {
+        resource = createResource(req, {
+            message: "Unknown error.",
+            details: err.message
+        });
+    }
+    sendHal(req, res, resource, 500);
+}
+
 module.exports = {
     HAL_CONTENT_TYPE,
     createResource,
     sendHal,
+    sendError,
     sendIndex,
     urlFormat,
     wrapWith406

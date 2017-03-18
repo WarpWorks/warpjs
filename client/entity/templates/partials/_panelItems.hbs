@@ -1,16 +1,16 @@
 <div class="panel-item-body panel-body">
-	{{#each panelItems}}
-		{{#if (isSeperator)}}
-			{{> ./_seperatorPanel}}
-		{{/if}}
-		{{#if (isRelationshipPanel)}}
-			{{> ./_relationshipPanel entity=this}}
-		{{/if}}
-		{{#if (isBasicProperty)}}
-			{{> ./_basicPropertyPanel basicProperty=this}}
-		{{/if}}
-		{{#if this.enumPanelItems}}
-			{{> ./_enumPanel}}
-		{{/if}}
-	{{/each}}
+    {{#each panelItems}}
+        {{#if (isSeperator)}}
+            {{> ./_seperatorPanel}}
+        {{/if}}
+        {{#if (isRelationshipPanel)}}
+            {{> ./_relationshipPanel entity=this}}
+        {{/if}}
+        {{#if (isBasicProperty)}}
+            {{> ./_basicPropertyPanel basicProperty=this}}
+        {{/if}}
+        {{#if this.enumPanelItems}}
+            {{> ./_enumPanel}}
+        {{/if}}
+    {{/each}}
 </div>

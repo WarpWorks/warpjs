@@ -1,7 +1,7 @@
 {{#each panels}}
     {{#if (isOverviewPanel)}}
-        {{> ./_overview this}}
+        {{> ./_overview}}
     {{else}}
-        {{> ./_panel panel=this}}
+        {{> ./_panel}}
     {{/if}}
 {{/each}}
