@@ -2,6 +2,9 @@ var mongoClient=require('mongodb').MongoClient;
 var fs = require('fs');
 var path = require('path');
 
+
+const config = require('./../config');
+
 //
 // Class "HSRuntime"
 //
@@ -12,28 +15,20 @@ function HSRuntime() {
     this.mongoDBs = {};
 }
 
-var hsRoot = process.cwd()+"/..";
-
 HSRuntime.prototype = {
     readFile: function (fn) {
         var txt = fs.readFileSync(fn, 'utf8');
         return txt;
     },
     getDir: function (name) {
-        var project   = path.join(hsRoot, this.getConfig().projectPath);
+        var project   = config.projectPath;
         switch (name) {
             // Project files
             case "domains": return path.join(project, "domains");
         }
     },
-    getConfig: function () {
-        if (this.config) return this.config;
-        var cfg = this.readFile(path.join(hsRoot, "config.json"));
-        this.config = JSON.parse(cfg);
-        return this.config;
-    },
     getMongoURL: function (dbName) {
-        return "mongodb://"+this.getConfig().mongoServer+"/"+dbName;
+        return "mongodb://"+config.mongoServer+"/"+dbName;
     },
     useDB: function (dbName, nextFunction) {
         var db = this.mongoDBs[dbName];
@@ -70,19 +65,20 @@ HSRuntime.prototype.getDomain = function (domainName) {
 }
 
 HSRuntime.prototype.getDomains = function () {
-    if (this.domains)
+    if (this.domains) {
         return this.domains;
-    else
-        this.domains = {};
-
-    var dir = this.getDir("domains");
-    var files = fs.readdirSync(dir);
-    for (var idx=0; idx<files.length; idx++) {
-        var fn = files[idx];
-        var file = this.readFile(path.join(dir, fn));
-        var domain = JSON.parse(file, 2);
-        this.domains[domain.name] = domain;
     }
+
+    const dir = this.getDir("domains");
+    const files = fs.readdirSync(dir);
+
+    this.domains = files.reduce((memo, fn) => {
+        const file = this.readFile(path.join(dir, fn));
+        const domain = JSON.parse(file, 2);
+        memo[domain.name] = domain;
+        return memo;
+    }, {});
+
     return this.domains;
 }
 

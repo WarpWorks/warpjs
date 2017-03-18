@@ -172,7 +172,7 @@ function {{js:this.name;/}}Admin() {
                 return;
             }
             var resList = [];
-            for (i in result.resultList[0].queryResult) {
+            for (var i in result.resultList[0].queryResult) {
                 var res = result.resultList[0].result[i];
                 var newEntity = get{{js:this.name;/}}Admin().findOrAddToEntityCache (res._id, res.type);
                 newEntity.updatePropertiesWithQueryResults(res);
@@ -270,7 +270,7 @@ function {{js:this.name;/}}Admin() {
     if (!changedEntities || changedEntities.length===0) return;
 
     var entitiesWithPropertiesOnly = [];
-    for (i in changedEntities) {
+    for (var i in changedEntities) {
         entitiesWithPropertiesOnly.push(changedEntities[i].propertiesOnly());
         changedEntities[i].changed = false;
     }
@@ -322,7 +322,7 @@ function {{js:this.name;/}}Admin() {
 
 {{js:this.name;/}}Admin.prototype.getChangedEntities = function () {
     var result = [];
-    for (i in this._entityCache) {
+    for (var i in this._entityCache) {
         if (this._entityCache[i].changed) result.push(this._entityCache[i]);
     }
     return result;
@@ -387,7 +387,7 @@ Relationship.prototype.setFilter = function (f) {
 
 Relationship.prototype.removeFromAssocTargets = function (id) {
     var newSelections = [];
-    for (i in this.assocTargets) {
+    for (var i in this.assocTargets) {
         if (this.assocTargets[i].id !== id)
             newSelections.push(this.assocTargets[i]);
     }
@@ -456,10 +456,10 @@ function {{js:this.name;/}} (type, parent, id, isEmptyShell) {
 {{js:this.name;/}}.prototype.getShorthand = function (qr) {
     var res = "undefined";
     {{js: (function () {
-        res='';
+        var res='';
         var bps = this.getBasicProperties();
         for (var i in bps) {
-            if (bps[i].propertyType === this.getHeadStart().BasicTypes.String)
+            if (bps[i].propertyType === BasicTypes.String)
                 return "res = this._"+bps[i].name+";";
         }
         return res;
@@ -509,7 +509,7 @@ function {{js:this.name;/}} (type, parent, id, isEmptyShell) {
         {{Relationship!*}}
         case "{{js:this.name;/}}":
             this.{{js:this.name;/}}.queryResultsCount=qr.queryResultsCount;
-            for (i in qr.queryResult) {
+            for (var i in qr.queryResult) {
                 target = get{{js:this.getParent_Entity().getParent_Domain().name;/}}Admin().findOrAddToEntityCache(qr.queryResult[i]._id, qr.queryResult[i].type, qr.queryResult[i]);
                 this.{{js:this.name;/}}.queryResults.push(target);
             }

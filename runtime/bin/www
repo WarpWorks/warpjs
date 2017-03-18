@@ -4,16 +4,17 @@
  * Module dependencies.
  */
 
-var app = require('../app');
 var debug = require('debug')('SimpleSite:server');
 var http = require('http');
-var $rt = require('./../server/src/HSRuntime.js');
+
+var app = require('../app');
+const config = require('./../server/config');
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort($rt.getConfig().port);
+var port = normalizePort(config.port);
 app.set('port', port);
 
 /**
