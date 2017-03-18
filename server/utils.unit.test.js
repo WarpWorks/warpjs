@@ -37,6 +37,9 @@ describe("server/utils", () => {
         expect(clone).to.have.property('wrapWith406');
         delete clone.wrapWith406;
 
+        expect(clone).to.have.property('sendError');
+        delete clone.sendError;
+
         expect(clone).to.deep.equal({});
     });
 
