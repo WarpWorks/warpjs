@@ -22,9 +22,15 @@ function extractRelationship(req, resource, persistence, hsEntity, entity) {
                 if (hsEntity.style === 'Preview') {
                     const referenceEntity = hsEntity.getRelationship().getTargetEntity();
                     return referenceEntity.getOverview(persistence, reference)
+                        .then((overviews) => {
+                            if (overviews && overviews.length) {
+                                return overviews[0];
+                            }
+                            return [];
+                        })
                         .then(convertToResource.bind(null, req))
                         .then((overview) => {
-                            if (overview) {
+                            if (!_.isArray(overview)) {
                                 referenceResource.embed('overview', overview);
                             }
                             return referenceResource;
@@ -70,6 +76,10 @@ function convertToResource(req, data) {
         return null;
     }
 
+    if (_.isArray(data)) {
+        return data.map(convertToResource.bind(null, req));
+    }
+
     if (data.type === 'Image') {
         imagePath(req, data);
     }
@@ -110,7 +120,15 @@ function createOverviewPanel(req, persistence, hsCurrentEntity, currentInstance)
     return Promise.resolve()
         // Find the overview.
         .then(() => hsCurrentEntity.getOverview(persistence, currentInstance))
-        .then(convertToResource.bind(null, req));
+        .then(convertToResource.bind(null, req))
+        .then((overviews) => {
+            const resource = createObjResource({
+                alternatingColors: false,
+                type: 'Overview'
+            });
+            resource.embed('overviews', overviews);
+            return resource;
+        });
 }
 
 function addSeparatorPanelItems(panel, items) {
@@ -183,7 +201,8 @@ module.exports = (req, responseResource, persistence, hsEntity, entity) => {
                     // We increment the position becase we will add the overview at
                     // the first position of the panels.
                     embeddedPanels.forEach((panel) => {
-                        panel.position = panel.position + 1;
+                        // It is some time a Number, some time a String.
+                        panel.position = Number(panel.position) + 1;
                     });
                     overviewPanel.position = 0;
                     embeddedPanels.unshift(overviewPanel);

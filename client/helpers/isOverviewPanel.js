@@ -1,3 +1,3 @@
 module.exports = function() {
-    return this.type === 'Paragraph';
+    return this.type === 'Overview';
 };
