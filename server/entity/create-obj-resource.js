@@ -16,6 +16,7 @@ const PROPS_TO_PICK = [
     // Paragraph
     'Heading',
     'Content',
+    'containsHTML',
 
     // Panel
     'label',

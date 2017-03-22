@@ -6,10 +6,34 @@ const Promise = require('bluebird');
 const urlTemplate = require('url-template');
 
 const createObjResource = require('./create-obj-resource');
+const pathInfo = require('./../path-info');
 
 // FIXME: For debug only.
 const RANDOM_IMAGE = urlTemplate.parse('http://lorempixel.com/{Width}/{Height}/{ImageURL}/');
 const IMAGE_PATH = urlTemplate.parse('/public/iic_images/{ImageURL}');
+const CONTENT_LINK_RE = /{{(.*?),(.*?),(.*?)}}/g;
+
+function contentLinkReplacer(match, label, type, id) {
+    const href = pathInfo(pathInfo.ENTITY, 'self', {id, type});
+    return `<a href="${href}">${label}</a>`;
+}
+
+function parseLinks(overviews) {
+    if (overviews) {
+        return overviews.map((overview) => {
+            if (overview && overview.Content && overview.Content.match(CONTENT_LINK_RE)) {
+                overview.containsHTML = true;
+                overview.Content = overview.Content
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(CONTENT_LINK_RE, contentLinkReplacer);
+            }
+            return overview;
+        });
+    }
+    return overviews;
+}
 
 function extractRelationship(req, resource, persistence, hsEntity, entity) {
     const relationship = hsEntity.getRelationship();
@@ -22,6 +46,7 @@ function extractRelationship(req, resource, persistence, hsEntity, entity) {
                 if (hsEntity.style === 'Preview') {
                     const referenceEntity = hsEntity.getRelationship().getTargetEntity();
                     return referenceEntity.getOverview(persistence, reference)
+                        .then(parseLinks)
                         .then((overviews) => {
                             if (overviews && overviews.length) {
                                 return overviews[0];
@@ -120,6 +145,7 @@ function createOverviewPanel(req, persistence, hsCurrentEntity, currentInstance)
     return Promise.resolve()
         // Find the overview.
         .then(() => hsCurrentEntity.getOverview(persistence, currentInstance))
+        .then(parseLinks)
         .then(convertToResource.bind(null, req))
         .then((overviews) => {
             const resource = createObjResource({
