@@ -6,19 +6,7 @@
                     <img class="preview-img-responsive"
                         src="{{ImageURL}}"
                         alt="{{AltText}}"
-                        {{#if _embedded.Maps}}
-                        usemap="#preview-map-{{@index}}"
-                        {{/if}}
                         />
-                    {{#if _embedded.Maps}}
-                        <map name="preview-map-{{@index}}">
-                            {{#each _embedded.Maps}}
-                                <area shape="{{Shape}}" coords="{{Coords}}"
-                                href="{{_links.target.href}}" alt="{{Alt}}" title="{{Title}}"
-                                />
-                            {{/each}}
-                        </map>
-                    {{/if}}
                 </figure>
             {{/each}}
         {{/if}}
