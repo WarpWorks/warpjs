@@ -1,7 +1,7 @@
 const _ = require('lodash');
 const hal = require('hal');
 const path = require('path');
-const testHelpers = require('node-test-helpers');
+const testHelpers = require('@quoin/node-test-helpers');
 
 const expect = testHelpers.expect;
 

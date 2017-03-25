@@ -1,4 +1,4 @@
-const testHelpers = require('node-test-helpers');
+const testHelpers = require('@quoin/node-test-helpers');
 const path = require('path');
 
 const expect = testHelpers.expect;
