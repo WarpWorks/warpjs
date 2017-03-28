@@ -370,7 +370,7 @@ function Relationship(id, name, parent) {
     this.id = id;
     this.parent = parent;
     this.currentPage = 0;
-    this.entitiesPerPage = 4;
+    this.entitiesPerPage = 10;
     this.maxNumberOfPages = 5;
     this.filter = null;
 

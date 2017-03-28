@@ -1,5 +1,5 @@
 {
-  "name": "HeadStart",
+  "name": "MonApp",
   "version": "0.6.1",
   "repository": {
     "type": "git",
@@ -9,6 +9,7 @@
     "node": ">=6.9.0"
   },
   "scripts": {
+    "eslint": "eslint --fix --ignore-pattern *.test.js server",
     "start": "node ./bin/www"
   },
   "dependencies": {
@@ -22,5 +23,11 @@
     "morgan": "~1.7.0",
     "rc": "1.1.7",
     "serve-favicon": "~2.3.0"
+  },
+  "devDependencies": {
+    "eslint": "3.18.0",
+    "eslint-config-standard": "7.1.0",
+    "eslint-plugin-promise": "3.5.0",
+    "eslint-plugin-standard": "2.1.1"
   }
 }
