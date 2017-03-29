@@ -1,0 +1,84 @@
+.pageview-container {
+    margin-top: 20px;
+}
+
+.breadcrumb-container {
+    &.row {
+        background-color: @row-bg-color;
+        height: 30px;
+    }
+    .no-padding {
+        padding-top: 3px;
+        padding-bottom: 0;
+    }
+}
+
+.breadcrumb-ordered-list {
+    margin-bottom: 0px;
+    padding: 0px;
+}
+
+.panel-item {
+    .panel-item-heading {
+        background-color: @heading-theme-bg-color;
+        color: @theme-font-color;
+        border-bottom: 1px solid #C0C0C5;
+        font-size: 16px;
+        font-family: @global-header-font;
+    }
+    .panel-item-body {
+        background-color: @container-bg-color;
+    }
+}
+
+.overview-image-container {
+    padding-bottom: 10px;
+}
+
+.csv-list-item-link {
+    color: @theme-font-color;
+}
+
+.csv-container {
+    color: @theme-font-color;
+    .csv-list-item-span {
+        &:first-child {
+            &:before {
+                padding: 0;
+                content: '';
+            }
+        }
+        &:before {
+            padding: 0 5px;
+            content: "/\00a0";
+        }
+    }
+}
+
+.preview-container {
+    background-color: @default-bg-color;
+    color: @dark-font-color;
+    font-size: medium;
+    margin-bottom: 10px;
+    .preview-heading {
+        font-size: 20px;
+        margin-bottom: 10px;
+        margin-top: 5px;
+    }
+    .preview-img-responsive {
+        width: 125px !important;
+        height: 125px !important;
+        border-radius: 63px;
+        padding-right: 5px;
+        padding-bottom: 5px;
+        margin: 10px;
+    }
+}
+
+.margin-right {
+    margin-right: 10px;
+}
+
+.preview-content {
+    padding: 10px;
+}
