@@ -2,8 +2,7 @@ const Promise = require('bluebird');
 const hs = require('HeadStart');
 
 const config = require('./../config');
-const extractBreadcrumbs = require('./extract-breadcrumbs');
-const extractPageView = require('./extract-page-view');
+const extractEntity = require('./extract-entity');
 const Persistence = require('./../persistence');
 const utils = require('./../utils');
 
@@ -33,8 +32,7 @@ function entity(req, res) {
                             });
 
                             return Promise.resolve()
-                                .then(extractBreadcrumbs.bind(null, responseResource, persistence, hsEntity, instance))
-                                .then(extractPageView.bind(null, req, responseResource, persistence, hsEntity, instance))
+                                .then(extractEntity.bind(null, req, responseResource, persistence, hsEntity, instance))
                                 .then(utils.sendHal.bind(null, req, res, responseResource, null));
                         });
                 })

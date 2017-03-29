@@ -1,8 +1,11 @@
 {{#partial "content"}}
     <div class="breadcrumb-container row">
         <div class="col-xs-1 left-right-margin" />
-        <div class="col-xs-10 no-padding">
+        <div class="col-xs-8 no-padding">
             {{> ./partials/_breadcrumb breadcrumbs=this._embedded.breadcrumbs}}
+        </div>
+        <div class="col-xs-2 no-padding">
+            {{> ./partials/_edit}}
         </div>
         <div class="col-xs-1 left-right-margin" />
     </div>
