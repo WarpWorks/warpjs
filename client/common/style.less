@@ -1,0 +1,130 @@
+@font-face {
+    font-family: 'Muli';
+    src: url('/public/fonts/muli/Muli.ttf');
+}
+
+@font-face {
+    font-family: 'Oswald';
+    src: url('/public/fonts/oswald/Oswald-Bold.ttf');
+}
+
+body {
+    background-color: @default-bg-color;
+    color: @default-font-color;
+    font-family: @global-main-font;
+    font-size: 13px;
+    line-height: 20px;
+    margin: 0;
+}
+
+a {
+    background-color: @default-link-bg-color;
+    color: @default-link-font-color;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+table {
+    &.table {
+        > thead {
+            > tr {
+                > th {
+                    vertical-align: top;
+                }
+            }
+        }
+    }    
+}
+
+.left-right-margin {
+    background-color: @debug-bg-color;
+}
+
+.page--top {
+    height: 10px;
+    background-color: @top-theme-bg-color;
+}
+
+.page--header {
+    background-color: @heading-theme-bg-color;
+    color: @contrast-font-color;
+    height: 90px;
+    img {
+        &.logo {
+            height: 90px;
+            padding: 10px 0;
+        }
+    }
+}
+
+.logo-container {
+    padding-left: 0px;
+}
+
+.page--body {
+    background-color: @default-bg-color;
+}
+
+.i3c-error {
+    margin: 20px 0;
+}
+
+.page--footer {
+    background-color: @bottom-theme-bg-color;
+    color: @contrast-font-color;
+    border-top: 1px solid #191919;
+    font-size: 11px;
+    padding: 20px 0;
+    a {
+        color: @light-font-color;
+    }
+    .social-links-wrapper {
+        .social-links {
+            display: inline-block;
+            vertical-align: middle;
+        }
+    } 
+}
+
+.social-links {
+    padding-left: 0;
+    list-style: none;
+    margin-left: -5px;
+    margin: 0;
+    > li {
+        padding-left: 4px;
+        padding-right: 3px;
+        vertical-align: top;
+        display: inline;
+        > a {
+            background-color: @social-badge-bg-color;
+            color: @default-font-color;
+            display: inline-block;
+            font-size: 14px;
+            width: 25px;
+            height: 25px;
+            text-align: center;
+            border-radius: 50%;
+            border: 1px solid #444444;
+            transition: none;
+            padding-top: 5px;
+        }
+    }
+}
+
+.container-fluid {
+    &.no-padding {
+        padding-left: 0px;
+        padding-right: 0px;
+        margin-left: auto;
+        margin-right: auto;
+        > .row {
+            margin-left: 0;
+            margin-right: 0;
+        }
+    }
+}
+
+.no-left-padding {
+    padding-left: 0px;
+}
