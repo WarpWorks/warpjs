@@ -5,7 +5,7 @@ const fs = require('fs');
 const path = require('path');
 
 const config = require('./config');
-const router = require('./router');
+const routesInfo = require('./routes-info');
 const session = require('./session');
 
 const app = express();
@@ -34,6 +34,6 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(session.middlewares.i3cUser);
 
-app.use(router);
+app.use(routesInfo('/', '/').router);
 
 module.exports = app;
