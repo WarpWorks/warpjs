@@ -3,10 +3,10 @@ const debug = require('debug')('HS:extractPageView');
 const fs = require('fs');
 const path = require('path');
 const Promise = require('bluebird');
+const routesInfo = require('@quoin/expressjs-routes-info');
 const urlTemplate = require('url-template');
 
 const createObjResource = require('./create-obj-resource');
-const pathInfo = require('./../path-info');
 
 // FIXME: For debug only.
 const RANDOM_IMAGE = urlTemplate.parse('http://lorempixel.com/{Width}/{Height}/{ImageURL}/');
@@ -14,7 +14,7 @@ const IMAGE_PATH = urlTemplate.parse('/public/iic_images/{ImageURL}');
 const CONTENT_LINK_RE = /{{(.*?),(.*?),(.*?)}}/g;
 
 function contentLinkReplacer(match, label, type, id) {
-    const href = pathInfo(pathInfo.ENTITY, 'self', {id, type});
+    const href = routesInfo.expand('entity', {id, type});
     return `<a href="${href}">${label}</a>`;
 }
 

@@ -1,12 +1,12 @@
+const routesInfo = require('@quoin/expressjs-routes-info');
 const testHelpers = require('@quoin/node-test-helpers');
 
-const pathInfo = require('./../path-info');
 const specUtils = require('./../utils.helpers.test');
 const utils = require('./../utils');
 
 const expect = testHelpers.expect;
 
-const baseUrl = pathInfo(pathInfo.ENTITY);
+const baseUrl = routesInfo.expand('entities');
 
 describe(`PATH ${baseUrl} --`, () => {
     describe.skip(`GET ${baseUrl} --`, () => {

@@ -6,7 +6,6 @@ const mapRoutesInfo = require('./map').routesInfo;
 const session = require('./session');
 
 // const adminRouter = require('./admin').router;
-// const pathInfo = require('./path-info');
 
 module.exports = (subPath, baseUrl) => {
     const routesInfo = new RoutesInfo(subPath, baseUrl);
