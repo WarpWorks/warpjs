@@ -13,9 +13,9 @@ function ensureHalHeader(settings) {
     return settings;
 }
 
-function getCurrentPageHAL($) {
+function getCurrentPageHAL($, url = null) {
     return new Promise((resolve, reject) => {
-        const settings = ensureHalHeader({
+        const defaultSettings = {
             method: 'GET',
             success(data, textStatus, jqXHR) {
                 resolve({data, textStatus, jqXHR});
@@ -29,7 +29,13 @@ function getCurrentPageHAL($) {
                     data: jqXHR.responseJSON
                 });
             }
-        });
+        };
+
+        if (url) {
+            defaultSettings.url = url;
+        }
+
+        const settings = ensureHalHeader(defaultSettings);
 
         $.ajax(settings);
     });
