@@ -12,11 +12,6 @@ const baseConfig = {
     persistence: {
         host: process.env.MONGODB_HOST || 'localhost',
         dbName: 'IIC',
-        columnType: 'IndustrySector',
-        columnSubType: 'IndustryVertical',
-        rowType: 'ApplicationArea',
-        rowSubType: 'UseCase',
-        hotspotType: 'HotSpot',
         usersType: 'Users'
     },
 
