@@ -8,13 +8,12 @@ const session = require('./session');
 // const adminRouter = require('./admin').router;
 
 module.exports = (subPath, baseUrl) => {
-    const routesInfo = new RoutesInfo(subPath, baseUrl);
-    const prefix = `${baseUrl}/${subPath}`;
+    const routesInfo = new RoutesInfo('/', baseUrl);
 
-    routesInfo.use(homepageRoutesInfo('/', prefix));
-    routesInfo.use(mapRoutesInfo('/map', prefix));
-    routesInfo.use(entityRoutesInfo('/entity', prefix));
-    routesInfo.use(session.routesInfo('/session', prefix));
+    routesInfo.use(homepageRoutesInfo('/', baseUrl));
+    routesInfo.use(mapRoutesInfo('/map', baseUrl));
+    routesInfo.use(entityRoutesInfo('/entity', baseUrl));
+    routesInfo.use(session.routesInfo('/session', baseUrl));
 
     /// / TODO: Change this to use HeadStart
     // router.use(pathInfo(pathInfo.ADMIN), session.middlewares.requiresI3cUser.bind(null, []), adminRouter);

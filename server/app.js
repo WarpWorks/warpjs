@@ -28,12 +28,26 @@ app.use(cookieParser(config.cookieSecret, {
     maxAge: 60 * 60, // 1 hour
     sameSite: true
 }));
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '10mb'}));
 app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(session.middlewares.i3cUser);
 
 app.use(routesInfo('/', '/').router);
+
+const hsApp = require('HeadStart/server/app');
+const hsMiddlewares = require('HeadStart/lib/middlewares');
+app.use('/admin',
+    // Authentication and authorization
+    session.middlewares.requiresI3cUser,
+    hsMiddlewares.canAccess.bind(null, 'i3cUser'),
+    session.middlewares.unauthorized,
+    // application
+    hsApp('/admin')
+);
+
+const RoutesInfo = require('@quoin/expressjs-routes-info');
+console.log("RoutesInfo.all()=", RoutesInfo.all());
 
 module.exports = app;
