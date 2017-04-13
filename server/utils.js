@@ -1,11 +1,11 @@
 const _ = require('lodash');
 const hal = require('hal');
+const Persistence = require('@dslama/mongo-persistence');
 const url = require('url');
 
 const I3CError = require('./error');
 const mongoData = require('./map/mongo-data');
 const pathInfo = require('./path-info');
-const Persistence = require('./persistence');
 
 const HAL_CONTENT_TYPE = 'application/hal+json';
 

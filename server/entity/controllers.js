@@ -1,9 +1,9 @@
-const Promise = require('bluebird');
 const hs = require('HeadStart');
+const Persistence = require('@dslama/mongo-persistence');
+const Promise = require('bluebird');
 
 const config = require('./../config');
 const extractEntity = require('./extract-entity');
-const Persistence = require('./../persistence');
 const utils = require('./../utils');
 
 function index(req, res) {
