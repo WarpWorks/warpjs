@@ -6,13 +6,13 @@ var pageRouter = express.Router();
 // ------------------------------------------------------------------
 
 pageRouter.get('/portal/:portal', function(req, res, next) {
-  res.render('portal'+req.params.portal, { title: 'test', layout: '_portalLayout' });
+    res.render('portal' + req.params.portal, { title: 'test', layout: '_portalLayout' });
 });
 
 pageRouter.get('/app/:app', function(req, res, next) {
-  res.render('app'+req.params.app, { title: 'test', layout: '_appLayout' });
+    res.render('app' + req.params.app, { title: 'test', layout: '_appLayout' });
 });
 
-module.exports = { 
-  router: pageRouter
+module.exports = {
+    router: pageRouter
 };
