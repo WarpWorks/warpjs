@@ -1,6 +1,7 @@
 # Node Modules
 npm-debug.log*
 node_modules
+/*.tgz
 
 # Temporary files
 attic/
