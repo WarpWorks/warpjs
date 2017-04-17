@@ -1,2 +1,2 @@
-# HeadStart
-HeadStart cartridge for MongoDB, NodeJS and Bootstrap
+# WarpWorks
+WarpWorks cartridge for MongoDB, NodeJS and Bootstrap
