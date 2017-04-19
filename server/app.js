@@ -36,18 +36,19 @@ app.use(session.middlewares.i3cUser);
 
 app.use(routesInfo('/', '/').router);
 
-const hsApp = require('HeadStart/server/app');
-const hsMiddlewares = require('HeadStart/lib/middlewares');
+const warpStudio = require('@warp-works/studio');
 app.use('/admin',
     // Authentication and authorization
     session.middlewares.requiresI3cUser,
-    hsMiddlewares.canAccess.bind(null, 'i3cUser'),
+    warpStudio.middlewares.canAccess.bind(null, 'i3cUser'),
     session.middlewares.unauthorized,
     // application
-    hsApp('/admin')
+    warpStudio.app('/admin')
 );
 
+// DEBUG
+const debug = require('debug')('I3C:Portal:app');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
-console.log("RoutesInfo.all()=", RoutesInfo.all());
+debug("RoutesInfo.all()=", RoutesInfo.all());
 
 module.exports = app;

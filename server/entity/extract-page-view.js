@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const debug = require('debug')('HS:extractPageView');
+const debug = require('debug')('I3C:Portal:extractPageView');
 const fs = require('fs');
 const path = require('path');
 const Promise = require('bluebird');
