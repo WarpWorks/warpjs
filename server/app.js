@@ -5,7 +5,7 @@ const fs = require('fs');
 const path = require('path');
 
 const config = require('./config');
-const router = require('./router');
+const routesInfo = require('./routes-info');
 const session = require('./session');
 
 const app = express();
@@ -28,12 +28,27 @@ app.use(cookieParser(config.cookieSecret, {
     maxAge: 60 * 60, // 1 hour
     sameSite: true
 }));
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '10mb'}));
 app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(session.middlewares.i3cUser);
 
-app.use(router);
+app.use(routesInfo('/', '/').router);
+
+const warpStudio = require('@warp-works/studio');
+app.use('/admin',
+    // Authentication and authorization
+    session.middlewares.requiresI3cUser,
+    warpStudio.middlewares.canAccess.bind(null, 'i3cUser'),
+    session.middlewares.unauthorized,
+    // application
+    warpStudio.app('/admin')
+);
+
+// DEBUG
+const debug = require('debug')('I3C:Portal:app');
+const RoutesInfo = require('@quoin/expressjs-routes-info');
+debug("RoutesInfo.all()=", RoutesInfo.all());
 
 module.exports = app;

@@ -1,11 +1,11 @@
 const _ = require('lodash');
 const hal = require('hal');
 const Persistence = require('@warp-works/warpjs-mongo-persistence');
+const RoutesInfo = require('@quoin/expressjs-routes-info');
 const url = require('url');
 
 const I3CError = require('./error');
 const mongoData = require('./map/mongo-data');
-const pathInfo = require('./path-info');
 
 const HAL_CONTENT_TYPE = 'application/hal+json';
 
@@ -39,21 +39,21 @@ function sendHal(req, res, resource, status) {
         // This is the login page, so we want to be sure that
         // both links are available.
         resource.link('i3c_login', {
-            href: pathInfo(pathInfo.SESSION),
+            href: RoutesInfo.expand('login'),
             title: "Login"
         });
         resource.link('i3c_logout', {
-            href: pathInfo(pathInfo.SESSION, 'logout', {}),
+            href: RoutesInfo.expand('logout'),
             title: "Logout"
         });
     } else if (req.i3cUser) {
         resource.link('i3c_logout', {
-            href: pathInfo(pathInfo.SESSION, 'logout', {}),
+            href: RoutesInfo.expand('logout'),
             title: "Logout"
         });
     } else {
         resource.link('i3c_login', {
-            href: pathInfo(pathInfo.SESSION),
+            href: RoutesInfo.expand('login'),
             title: "Login"
         });
     }

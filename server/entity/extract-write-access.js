@@ -1,4 +1,4 @@
-// const debug = require('debug')('HS:entity:extractWriteAccess');
+// const debug = require('debug')('I3C:Portal:entity:extractWriteAccess');
 const Promise = require('bluebird');
 const url = require('url');
 

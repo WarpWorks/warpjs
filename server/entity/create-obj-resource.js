@@ -1,6 +1,6 @@
 const _ = require('lodash');
+const routesInfo = require('@quoin/expressjs-routes-info');
 
-const pathInfo = require('./../path-info');
 const utils = require('./../utils');
 
 // FIXME: Use of BasicProperties instead of this.
@@ -40,7 +40,7 @@ const PROPS_TO_PICK = [
 module.exports = (obj, addSelfLink) => {
     return utils.createResource(
         (addSelfLink)
-            ? pathInfo(pathInfo.ENTITY, 'self', { id: obj.id, type: obj.type })
+            ? routesInfo.expand('entity', { id: obj.id, type: obj.type })
             : '',
         _.extend(_.pick(obj, PROPS_TO_PICK), {
             name: obj.Name || obj.name,

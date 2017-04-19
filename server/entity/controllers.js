@@ -6,12 +6,6 @@ const config = require('./../config');
 const extractEntity = require('./extract-entity');
 const utils = require('./../utils');
 
-function index(req, res) {
-    utils.wrapWith406(res, {
-        html: () => utils.sendIndex(res, 'Entity', 'entity')
-    });
-}
-
 function entity(req, res) {
     utils.wrapWith406(res, {
         html: () => utils.sendIndex(res, 'Entity', 'entity'),
@@ -63,6 +57,5 @@ function entity(req, res) {
 }
 
 module.exports = {
-    index,
     entity
 };

@@ -1,5 +1,5 @@
-const router = require('./router');
+const routesInfo = require('./routes-info');
 
 module.exports = {
-    router
+    routesInfo
 };
