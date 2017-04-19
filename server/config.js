@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const rc = require('rc');
+const rc = require('@quoin/node-rc');
 
 const packageJson = require('./../package.json');
 
@@ -20,12 +20,7 @@ const baseConfig = {
     }
 };
 
-const config = _.clone(rc(packageJson.name, baseConfig));
-
-// Remove extra properties added by `rc` module.
-delete config._;
-delete config.config;
-delete config.configs;
+const config = rc(packageJson.name, baseConfig);
 
 module.exports = _.extend(config, {
     serverVersion: packageJson.version,

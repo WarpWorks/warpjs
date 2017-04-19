@@ -1,5 +1,5 @@
-const hs = require('HeadStart');
-const Persistence = require('@dslama/mongo-persistence');
+const warpCore = require('@warp-works/core');
+const Persistence = require('@warp-works/warpjs-mongo-persistence');
 const Promise = require('bluebird');
 
 const config = require('./../config');
@@ -19,7 +19,7 @@ function entity(req, res) {
         [utils.HAL_CONTENT_TYPE]: () => {
             const persistence = new Persistence(config.persistence.host, config.domainName);
             Promise.resolve()
-                .then(() => hs.getDomainByName(config.domainName))
+                .then(() => warpCore.getDomainByName(config.domainName))
                 .then((domain) => domain.getEntityByName(req.params.type))
                 .then((hsEntity) => {
                     return hsEntity.getInstance(persistence, req.params.id)
