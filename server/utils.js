@@ -1,6 +1,6 @@
 const _ = require('lodash');
 const hal = require('hal');
-const Persistence = require('@dslama/mongo-persistence');
+const Persistence = require('@warp-works/warpjs-mongo-persistence');
 const url = require('url');
 
 const I3CError = require('./error');
@@ -72,7 +72,7 @@ function sendIndex(res, title, bundle) {
 
 function wrapWith406(res, formats) {
     res.format(_.extend({}, formats, {
-        'default': () => {
+        default: () => {
             res.status(406).send("Unknown Accept header");
         }
     }));
