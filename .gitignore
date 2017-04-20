@@ -1,14 +1,14 @@
 # Node Modules
-npm-debug.log
-runtime/node_modules/
+npm-debug.log*
+node_modules
 
 # Temporary files
 attic/
 
 # Generated Files
-app*.hbs
-portal*.hbs
-*WebAPI.js
+/views/app*.hbs
+/views/portal*.hbs
+/public/app/*_WebAPI.js
 
 # WebStorm IDE Config
 .idea/

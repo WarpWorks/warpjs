@@ -1,0 +1,6 @@
+{
+  "port": 3001,
+  "mongoServer": "localhost",
+  "projectPath": "../IIC-Data",
+  "public": "../IIC-Data/public"
+}

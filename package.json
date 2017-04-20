@@ -1,0 +1,49 @@
+{
+  "name": "@warp-works/warpjs",
+  "version": "0.6.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/WarpWorks/warpjs.git"
+  },
+  "engines": {
+    "node": ">=6.9.0"
+  },
+  "license": "SEE LICENSE IN LICENSE.txt",
+  "author": {
+    "name": "Dirk Slama",
+    "email": "dirk.slama@gmx.de"
+  },
+  "contributors": [
+    {
+      "name": "Hữu Ðà Trần",
+      "email": "huuda.tran@quoininc.com",
+      "url": "https://www.quoininc.com/staff/huu-da-tran/"
+    }
+  ],
+  "main": "lib/index.js",
+  "scripts": {
+    "lint": "eslint --fix --ignore-pattern *.test.js server.js lib"
+  },
+  "dependencies": {
+    "@quoin/node-rc": "0.1.0",
+    "body-parser": "1.17.1",
+    "cookie-parser": "~1.4.3",
+    "debug": "2.6.3",
+    "express": "4.15.2",
+    "hbs": "~4.0.0",
+    "hbs-utils": "0.0.4",
+    "mongodb": "2.2.26",
+    "serve-favicon": "2.4.2"
+  },
+  "devDependencies": {
+    "@quoin/eslint-config-quoin": "0.1.2",
+    "@quoin/node-test-helpers": "0.1.7",
+    "@warp-works/warpjs-mongo-persistence": "0.1.1",
+    "eslint": "3.19.0",
+    "mocha": "3.2.0",
+    "nyc": "10.2.0"
+  },
+  "peerDependencies": {
+    "express": ">=4.0.0"
+  }
+}
