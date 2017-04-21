@@ -1,0 +1,6 @@
+{
+  "port": 3001,
+  "mongoServer": "localhost",
+  "projectPath": "../w2projects",
+  "public": "../w2projects/public"
+}
