@@ -25,10 +25,10 @@
     "lint": "eslint --fix --ignore-pattern *.test.js server.js lib"
   },
   "dependencies": {
-    "@quoin/node-rc": "0.1.0",
+    "@quoin/node-rc": "0.1.1",
     "body-parser": "1.17.1",
     "cookie-parser": "~1.4.3",
-    "debug": "2.6.3",
+    "debug": "2.6.4",
     "express": "4.15.2",
     "hbs": "~4.0.0",
     "hbs-utils": "0.0.4",
