@@ -1,0 +1,8 @@
+/.eslintrc*
+/.npmignore
+/.warp-works-warpjsrc*
+/public/app/*_WebAPI.js
+/server.js
+/views/app*.hbs
+/views/portal*.hbs
+/*.tgz
