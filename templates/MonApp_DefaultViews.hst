@@ -4,23 +4,19 @@
 <script src="{{baseUrl}}/app/appUtilities.js"></script>
 <script>
     whenReady(function () {
-        console.log("whenReady()...");
         $("#breadcrumb").empty();
         if ($active.entity.isRootInstance) {
             var li = '<li class="breadcrumb-item"><a href="' + $active.entity._links.self.href + '">' + $active.entity.type + '</a></li>';
             $("#breadcrumb").append(li);
         } else {
-            var breadcrumb = $active.entity.breadcrumb;
-            for (var idx=0; idx<breadcrumb.length; idx++) {
-                var item=breadcrumb[idx];
-                var li = "<li class='breadcrumb-item'><a href='./"+item.type+"?oid="+item._id+"' data-toggle='tooltip' title='"+item.type+"'>"+item.shortHand+"</a></li>"
+            $active.entity.breadcrumb.forEach(function(item) {
+                var li = '<li class="breadcrumb-item"><a href="' + item._links.self.href + '" data-toggle="tooltip" title="' + item.type + '">' + item.shortHand + '</a></li>';
                 $("#breadcrumb").append(li);
-            }
+            });
         }
     });
 
     $(document).ready(function () {
-        console.log("document.ready()...");
         $active.entityTables = {};
 
         $.ajax({
