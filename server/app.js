@@ -3,6 +3,8 @@ const cookieParser = require('cookie-parser');
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
+const warpJs = require('@warp-works/warpjs');
+const warpStudio = require('@warp-works/studio');
 
 const config = require('./config');
 const routesInfo = require('./routes-info');
@@ -36,7 +38,6 @@ app.use(session.middlewares.i3cUser);
 
 app.use(routesInfo('/', '/').router);
 
-const warpStudio = require('@warp-works/studio');
 app.use('/admin',
     // Authentication and authorization
     session.middlewares.requiresI3cUser,
@@ -44,6 +45,10 @@ app.use('/admin',
     session.middlewares.unauthorized,
     // application
     warpStudio.app('/admin')
+);
+
+app.use('/content',
+    warpJs.app('/content')
 );
 
 // DEBUG
