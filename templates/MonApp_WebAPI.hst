@@ -96,7 +96,8 @@ function {{js:this.name;/}}Admin() {
             }
             var rootInstanceFromServer = result.resultList[0].rootInstance;
             console.log("RootInstanceID: " + rootInstanceFromServer._id);
-            var newRootInstance = new {{js:this.name;/}} ("{{js:this.name;/}}", null, rootInstanceFromServer._id, false);
+            var newRootInstance = new {{js:this.name;/}}("{{js:this.name;/}}", null, rootInstanceFromServer._id, false);
+            newRootInstance._links = rootInstanceFromServer._links;
             get{{js:this.name;/}}Admin()._rootInstance = newRootInstance;
             handleResult (newRootInstance);
         }
@@ -187,7 +188,7 @@ function {{js:this.name;/}}Admin() {
 }
 
 {{Entity*}}
-{{js:this.getParent_Domain().name;/}}Admin.prototype.addNew_{{js:this.name;/}} = function (parentID, relnID, relnName, parentBaseClassID, parentBaseClassName) {
+{{js:this.getParent_Domain().name;/}}Admin.prototype.addNew_{{js:this.name;/}} = function(parentID, relnID, relnName, parentBaseClassID, parentBaseClassName) {
     var new_{{js:this.name;/}} = new {{js:this.name;/}} ("{{js:this.name;/}}", null, null, false);
     new_{{js:this.name;/}}.parentID = parentID;
     new_{{js:this.name;/}}.parentRelnName = relnName;
@@ -301,7 +302,7 @@ function {{js:this.name;/}}Admin() {
 
     // Post to server
     $.ajax({
-        url: '/appApi/CRUD',
+        url: $active._links.crud.href,
         type: 'POST',
         data: reqData,
         contentType: 'application/json; charset=utf-8',
@@ -426,10 +427,9 @@ Base.prototype.compareToMyID = function (id) {
 //
 
 // Constructor
-function {{js:this.name;/}} (type, parent, id, isEmptyShell) {
+function {{js:this.name;/}}(type, parent, id, isEmptyShell) {
     // Initialize base class
-    {{if}}this.hasParentClass(){{then}}{{js:this.getParentClass().name/}}.call(this, type, parent, id, isEmptyShell);{{else}}
-    Base.call(this, type, parent, id, isEmptyShell);{{/if}}
+    {{if}}this.hasParentClass(){{then}}{{js:this.getParentClass().name/}}.call(this, type, parent, id, isEmptyShell);{{else}}Base.call(this, type, parent, id, isEmptyShell);{{/if}}
 
 {{BasicProperty?}}
     // Properties:{{BasicProperty*}}

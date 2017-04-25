@@ -1,74 +1,90 @@
 {{Domain*}}<!-- Domain: #{{js:this.name;/}} -->
 {{Entity*}}{{Options}} {"saveAs": ["views", "'app'+this.name+'.hbs'"] } {{/Options}}
-<script src="/app/{{js:this.getParent_Domain().name/}}_WebAPI.js"></script>
-<script src="/app/appUtilities.js"></script>
+<script src="{{baseUrl}}/app/{{js:this.getParent_Domain().name/}}_WebAPI.js"></script>
+<script src="{{baseUrl}}/app/appUtilities.js"></script>
 <script>
     whenReady(function () {
         $("#breadcrumb").empty();
         if ($active.entity.isRootInstance) {
-            var li = "<li class='breadcrumb-item'><a href='./"+$active.entity.type+"'>"+$active.entity.type+"</a></li>"
+            var li = '<li class="breadcrumb-item"><a href="' + $active.entity._links.self.href + '">' + $active.entity.type + '</a></li>';
             $("#breadcrumb").append(li);
-        }
-        else {
-            var breadcrumb = $active.entity.breadcrumb;
-            for (var idx=0; idx<breadcrumb.length; idx++) {
-                var item=breadcrumb[idx];
-                var li = "<li class='breadcrumb-item'><a href='./"+item.type+"?oid="+item._id+"' data-toggle='tooltip' title='"+item.type+"'>"+item.shortHand+"</a></li>"
+        } else {
+            $active.entity.breadcrumb.forEach(function(item) {
+                var li = '<li class="breadcrumb-item"><a href="' + item._links.self.href + '" data-toggle="tooltip" title="' + item.type + '">' + item.shortHand + '</a></li>';
                 $("#breadcrumb").append(li);
-            }
+            });
         }
     });
 
     $(document).ready(function () {
-        $("#monAppHome").html("<a href='./{{js:this.getParent_Domain().name/}}'><span class='glyphicon glyphicon-home'></span></a>");
         $active.entityTables = {};
-        function initViews () {
-            $active.initCalls.forEach(function (fct) {
-                fct.call();
-            });
-            $active.initialized = true;
-        }
-        {{if}}this.isRootInstance{{then}}
-        var pathSegments = window.location.pathname.split("/");
-        var domain = pathSegments[pathSegments.length-1];
-        get{{js:this.getParent_Domain().name;/}}Admin().getRootInstance (domain, function (rootInstance) {
-            $active.oid = rootInstance.id;
-            $active.entity = rootInstance;
-            $active.entity.isRootInstance = true;
-            initViews();
-        });
-        {{else}}
-        var oid = HeadStart_getURLParam("oid");
-        if (oid) {
-            $active.oid = oid;
-            $active.mode = "edit";
-            get{{js:this.getDomain().name;/}}Admin().getEntityByID("{{js:this.getParent_Domain().name;/}}", "{{js:this.name;/}}", oid, function(entity) {
-                // Set active entity for this page (i.e. the "toplevel" entity):
-                $active.entity=entity;
 
-                // And now initialize all views (call all function which have been registered via "whenReady()")
-                console.log("Initializing views...");
-                initViews();
-            });
-        }
-        else {
-            var parentID = HeadStart_getURLParam("parentID");
-            var relnID   = parseInt(HeadStart_getURLParam("relnID"));
-            var relnName = HeadStart_getURLParam("relnName");
-            var parentBaseClassName = HeadStart_getURLParam("parentBaseClassName");
-            var parentBaseClassID   = HeadStart_getURLParam("parentBaseClassID");
+        $.ajax({
+            headers: {
+                'Accept': 'application/hal+json'
+            },
+            success: function(result) {
+                $active._links = result._links;
 
-            if (!parentID || !relnID || !relnName || !parentBaseClassID || !parentBaseClassName) alert ("URL must contain valid oid OR parentID+relnID+relnName+parentBaseClassID/Name!");
-            else {
-                $active.parent = { parentID:parentID, relnID:relnID, relnName:relnName, parentBaseClassID:parentBaseClassID, parentBaseClassName:parentBaseClassName };
-                $active.mode = "create";
+                function initViews () {
+                    $active.initCalls.forEach(function(fct) {
+                        fct.call();
+                    });
+                    $active.initialized = true;
+                }
+                {{if}}this.isRootInstance{{then}}
+                var pathSegments = window.location.pathname.split("/");
+                var domain = pathSegments[pathSegments.length-1];
+                get{{js:this.getParent_Domain().name;/}}Admin().getRootInstance (domain, function (rootInstance) {
+                    $active.oid = rootInstance.id;
+                    $active.entity = rootInstance;
+                    $active.entity.isRootInstance = true;
+                    initViews();
+                });
+                {{else}}
+                var oid = HeadStart_getURLParam("oid");
+                if (oid) {
+                    $active.oid = oid;
+                    $active.mode = "edit";
+                    get{{js:this.getDomain().name;/}}Admin().getEntityByID("{{js:this.getParent_Domain().name;/}}", "{{js:this.name;/}}", oid, function(entity) {
+                        // Set active entity for this page (i.e. the "toplevel" entity):
+                        $active.entity=entity;
 
-                // Set breadcrump
-                var li = "<li class='breadcrumb-item'><a href='#'>Create new entity</a></li>"
-                $("#breadcrumb").append(li);
+                        // And now initialize all views (call all function which have been registered via "whenReady()")
+                        console.log("Initializing views...");
+                        initViews();
+                    });
+                } else {
+                    var parentID = HeadStart_getURLParam("parentID");
+                    var relnID   = parseInt(HeadStart_getURLParam("relnID"));
+                    var relnName = HeadStart_getURLParam("relnName");
+                    var parentBaseClassName = HeadStart_getURLParam("parentBaseClassName");
+                    var parentBaseClassID   = HeadStart_getURLParam("parentBaseClassID");
+
+                    if (!parentID || !relnID || !relnName || !parentBaseClassID || !parentBaseClassName) {
+                        alert ("URL must contain valid oid OR parentID+relnID+relnName+parentBaseClassID/Name!");
+                    } else {
+                        $active.parent = {
+                            parentID: parentID,
+                            relnID: relnID,
+                            relnName: relnName,
+                            parentBaseClassID: parentBaseClassID,
+                            parentBaseClassName: parentBaseClassName
+                        };
+                        $active.mode = "create";
+
+                        // Set breadcrump
+                        var li = "<li class='breadcrumb-item'><a href='#'>Create new entity</a></li>"
+                        $("#breadcrumb").append(li);
+                    }
+                }
+                {{/if}}
+            },
+            error: function(result) {
             }
-        }
-        {{/if}}
+
+        });
+
     });
 </script>
 <div class="container" role="main">

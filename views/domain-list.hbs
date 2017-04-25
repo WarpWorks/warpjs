@@ -1,0 +1,11 @@
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-xs-12">
+      <ol>
+        {{#each _embedded.domains}}
+          <li><a href="{{_links.self.href}}">{{name}}</a></li>
+        {{/each}}
+      </ol>
+    </div>
+  </div>
+</div>
