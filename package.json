@@ -34,7 +34,8 @@
     "hbs": "4.0.1",
     "hbs-utils": "0.0.4",
     "mongodb": "2.2.26",
-    "serve-favicon": "2.4.2"
+    "serve-favicon": "2.4.2",
+    "tinymce": "4.5.7"
   },
   "devDependencies": {
     "@quoin/eslint-config-quoin": "0.1.3",
