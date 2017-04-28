@@ -22,12 +22,11 @@ function parseLinks(overviews) {
     if (overviews) {
         return overviews.map((overview) => {
             if (overview && overview.Content && overview.Content.match(CONTENT_LINK_RE)) {
-                overview.containsHTML = true;
-                overview.Content = overview.Content
-                    .replace(/&/g, '&amp;')
-                    .replace(/</g, '&lt;')
-                    .replace(/>/g, '&gt;')
-                    .replace(CONTENT_LINK_RE, contentLinkReplacer);
+                let contentBasicProperty = _.filter(overview.basicProperties, (prop) => prop.name === 'Content');
+                overview.containsHTML = contentBasicProperty.length && contentBasicProperty[0].propertyType === 'text';
+                if (overview.containsHTML) {
+                    overview.Content = overview.Content.replace(CONTENT_LINK_RE, contentLinkReplacer);
+                }
             }
             return overview;
         });
@@ -122,7 +121,15 @@ function convertToResource(req, data) {
         {}
     );
 
-    const resource = createObjResource(basicProperties, true);
+    let propsToPick = null;
+    if (data.basicProperties && data.basicProperties.length) {
+        propsToPick = data.basicProperties.reduce((memo, value) => {
+            memo.push(value.name);
+            return memo;
+        }, []);
+    }
+
+    const resource = createObjResource(basicProperties, true, propsToPick);
 
     _.forEach(data, (value, key) => {
         if (_.isArray(value)) {
