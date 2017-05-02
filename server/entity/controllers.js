@@ -4,6 +4,7 @@ const Promise = require('bluebird');
 
 const config = require('./../config');
 const extractEntity = require('./extract-entity');
+const extractPreview = require('./extract-preview');
 const utils = require('./../utils');
 
 function entity(req, res) {
@@ -12,22 +13,31 @@ function entity(req, res) {
 
         [utils.HAL_CONTENT_TYPE]: () => {
             const persistence = new Persistence(config.persistence.host, config.domainName);
+
             Promise.resolve()
                 .then(() => warpCore.getDomainByName(config.domainName))
                 .then((domain) => domain.getEntityByName(req.params.type))
                 .then((hsEntity) => {
                     return hsEntity.getInstance(persistence, req.params.id)
                         .then((instance) => {
-                            const responseResource = utils.createResource(req, {
-                                Name: instance.Name,
-                                Desc: instance.desc,
-                                Heading: instance.Heading,
-                                Content: instance.Content
-                            });
+                            let responseResource, callback;
+
+                            if (req.query && req.query.preview === "true") {
+                                responseResource = utils.createResource(req, {});
+                                callback = extractPreview;
+                            } else {
+                                responseResource = utils.createResource(req, {
+                                    Name: instance.Name,
+                                    Desc: instance.desc,
+                                    Heading: instance.Heading,
+                                    Content: instance.Content
+                                });
+                                callback = extractEntity;
+                            }
 
                             return Promise.resolve()
-                                .then(extractEntity.bind(null, req, responseResource, persistence, hsEntity, instance))
-                                .then(utils.sendHal.bind(null, req, res, responseResource, null));
+                            .then(callback.bind(null, req, responseResource, persistence, hsEntity, instance))
+                            .then(utils.sendHal.bind(null, req, res, responseResource, null));
                         });
                 })
                 .finally(() => {
