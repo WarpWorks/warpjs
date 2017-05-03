@@ -84,6 +84,7 @@ getNonAbstractEntitiesByDomain = function(callback) {
                 callback();
                 return result;
             }
+            console.log("Failed to post CRUD commands: " + result.error);
         },
         error: function () {
             console.log("Error while posting CRUD commands!");
