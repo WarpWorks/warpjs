@@ -60,7 +60,7 @@ getNonAbstractEntitiesByDomain = function(callback) {
             {
                 domain: "{{js:this.getDomain().name;/}}",
                 targetType: $active.entity.type,
-                command: "FindDocsFromSearchTerm",
+                command: "SearchForTargetEntity",
                 filter: $active.relationship.filter
             }
         ]
@@ -83,9 +83,6 @@ getNonAbstractEntitiesByDomain = function(callback) {
                 });
                 callback();
                 return result;
-            }
-            else {
-                console.log("Failed to post CRUD commands: " + result.error);
             }
         },
         error: function () {

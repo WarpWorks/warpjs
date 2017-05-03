@@ -1,20 +1,19 @@
-CustomLinks_removeEntityFromSelectionList = function (relationship) {
-    console.log("Remove");
+function customLinksRemoveEntityFromSelectionList(relationship) {
     var id = $(this).attr('id').split(":")[1];
     $(this).remove();
     $active.entity.changed=true;
 }
 
-CustomLinks_addTargetToEntityModal = function (label, target) {
-    var elemID = "Content-DefaultTableView-Delete:"+target.id;
-    var elem = $("<li role='presentation' id='"+elemID+"'><a href='#'>"
-               +label+" <span class='glyphicon glyphicon-remove'></span></a></li>");
+function customLinksAddTargetToEntityModal(label, target) {
+    var elemID = "Content-DefaultTableView-Delete:" + target.id;
+    var elem = $('<li role="presentation" id="' + elemID + '"><a href="#">'
+               + label + ' <span class="glyphicon glyphicon-remove"></span></a></li>');
     $("#selectEntityM_selectionUL").append(elem);
-    elem.click(CustomLinks_removeEntityFromSelectionList);
+    elem.click(customLinksRemoveEntityFromSelectionList);
 }
 
 // Update modal for entity selection (create target list, paging, search, etc.)
-CustomLinks_updateSelectEntityModal = function (callback, clear) {
+function customLinksUpdateSelectEntityModal(callback, clear) {
     // Set title
     $("#selectEntityM_titleH").html("Select Content");
     if(clear) {
@@ -29,11 +28,11 @@ CustomLinks_updateSelectEntityModal = function (callback, clear) {
     $("#selectEntityM_selectionUL").empty();
 
     // Callbacks for pills representing selected entities
-    $("."+$active.entityTables[widgetID].table+"-row").click(function () {
+    $("." + $active.entityTables[widgetID].table + "-row").click(function () {
         var id = $(this).attr('id').split(":")[1];
         var target = getIICAdmin().findOrAddToEntityCache(id, "Content");
         var label = target.getShorthand();
-        CustomLinks_addTargetToEntityModal(label, target);
+        customLinksAddTargetToEntityModal(label, target);
     });
 
     // Callback to close Modal
@@ -49,7 +48,7 @@ CustomLinks_updateSelectEntityModal = function (callback, clear) {
                         entityType = resultObject.constructor.name;
                     }
                 });
-                content.push("\{\{"+name+","+entityType+","+id+"\}\}");
+                content.push("\{\{" + name + "," + entityType + "," + id + "\}\}");
             });
             $('#selectEntityM_searchInput').val('');
             callback(content);
