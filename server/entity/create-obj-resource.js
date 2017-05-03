@@ -3,7 +3,6 @@ const routesInfo = require('@quoin/expressjs-routes-info');
 
 const utils = require('./../utils');
 
-// FIXME: Use of BasicProperties instead of this.
 const PROPS_TO_PICK = [
     'type',
     'id',
@@ -14,35 +13,22 @@ const PROPS_TO_PICK = [
     'style',
 
     // Paragraph
-    'Heading',
-    'Content',
     'containsHTML',
 
     // Panel
     'label',
     'position',
-    'alternatingColors',
-
-    // Images
-    'ImageURL',
-    'Caption',
-    'AltText',
-    'Width',
-    'Height',
-
-    // ImageArea
-    'Coords',
-    'Alt',
-    'HRef',
-    'Title'
+    'alternatingColors'
 ];
 
-module.exports = (obj, addSelfLink) => {
+module.exports = (obj, addSelfLink, propsToPick) => {
+    let pickArray = propsToPick ? PROPS_TO_PICK.concat(propsToPick) : PROPS_TO_PICK;
+
     return utils.createResource(
         (addSelfLink)
             ? routesInfo.expand('entity', { id: obj.id, type: obj.type })
             : '',
-        _.extend(_.pick(obj, PROPS_TO_PICK), {
+        _.extend(_.pick(obj, pickArray), {
             name: obj.Name || obj.name,
             desc: obj.Desc || obj.desc
         })
