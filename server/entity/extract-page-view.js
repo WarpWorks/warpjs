@@ -22,7 +22,7 @@ function parseLinks(overviews) {
     if (overviews) {
         return overviews.map((overview) => {
             if (overview && overview.Content && overview.Content.match(CONTENT_LINK_RE)) {
-                let contentBasicProperty = _.filter(overview.basicProperties, (prop) => prop.name === 'Content');
+                const contentBasicProperty = _.filter(overview.basicProperties, (prop) => prop.name === 'Content');
                 overview.containsHTML = contentBasicProperty.length && contentBasicProperty[0].propertyType === 'text';
                 if (overview.containsHTML) {
                     overview.Content = overview.Content.replace(CONTENT_LINK_RE, contentLinkReplacer);
