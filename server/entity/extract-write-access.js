@@ -1,23 +1,14 @@
 // const debug = require('debug')('I3C:Portal:entity:extractWriteAccess');
 const Promise = require('bluebird');
-const url = require('url');
+const RoutesInfo = require('@quoin/expressjs-routes-info');
 
 module.exports = (req, responseResource, persistence, hsEntity, instance) => {
     return Promise.resolve()
         .then(() => hsEntity.canBeEditedBy(persistence, instance, req.i3cUser))
         .then((canWrite) => {
             if (canWrite) {
-                const href = url.format({
-                    protocol: req.protocol,
-                    port: 3001,
-                    hostname: req.hostname,
-                    pathname: `/app/${instance.type}`,
-                    query: {
-                        oid: instance.id
-                    }
-                });
                 responseResource.link('edit', {
-                    href,
+                    href: RoutesInfo.expand('w2-app:app', { type: instance.type, oid: instance.id }),
                     title: `Edit "${instance.Name}"`
                 });
             }

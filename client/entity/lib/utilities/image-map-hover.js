@@ -30,11 +30,9 @@ class HoverPreview {
     }
 
     mouseEnter(event) {
-        let href = $(event.currentTarget).data('targetHref');
+        const href = $(event.currentTarget).data('targetHref');
 
         if (href) {
-            href = `${href}?preview=true`;
-
             if (this._cache.length) {
                 const foundResult = {
                     found: false,

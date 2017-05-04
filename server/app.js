@@ -41,13 +41,17 @@ app.use(routesInfo('/', '/').router);
 app.use('/admin',
     // Authentication and authorization
     session.middlewares.requiresI3cUser,
-    warpStudio.middlewares.canAccess.bind(null, 'i3cUser'),
+    warpJs.middlewares.canAccessAsAdmin.bind(null, 'i3cUser'),
     session.middlewares.unauthorized,
     // application
     warpStudio.app('/admin')
 );
 
 app.use('/content',
+    // Authentication and authorization
+    session.middlewares.requiresI3cUser,
+    warpJs.middlewares.canAccessAsContentManager.bind(null, 'i3cUser'),
+    session.middlewares.unauthorized,
     warpJs.app('/content')
 );
 
