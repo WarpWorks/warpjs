@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const utils = require('./../../../utils');
 const modalTemplate = require('./../../templates/partials/map-area-modal.hbs');
 
@@ -7,9 +8,11 @@ class HoverPreview {
         this._pendingRequest = false;
     }
 
-    showModal(previewData) {
-        if (previewData._embedded.previews.length) {
-            $('#map-area-modal-container').html(modalTemplate(previewData));
+    showModal(resultData) {
+        let overViewData = _.filter(resultData._embedded.panels, (panel) => panel.type === "Overview");
+
+        if (overViewData[0]._embedded.overviews.length) {
+            $('#map-area-modal-container').html(modalTemplate(overViewData[0]));
             $('#map-area-modal-container').show();
         }
     }

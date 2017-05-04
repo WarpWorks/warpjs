@@ -4,7 +4,6 @@ const Promise = require('bluebird');
 
 const config = require('./../config');
 const extractEntity = require('./extract-entity');
-const extractPreview = require('./extract-preview');
 const utils = require('./../utils');
 
 function entity(req, res) {
@@ -20,23 +19,16 @@ function entity(req, res) {
                 .then((hsEntity) => {
                     return hsEntity.getInstance(persistence, req.params.id)
                         .then((instance) => {
-                            let responseResource, callback;
-
-                            if (req.query && req.query.preview === "true") {
-                                responseResource = utils.createResource(req, {});
-                                callback = extractPreview;
-                            } else {
-                                responseResource = utils.createResource(req, {
-                                    Name: instance.Name,
-                                    Desc: instance.desc,
-                                    Heading: instance.Heading,
-                                    Content: instance.Content
-                                });
-                                callback = extractEntity;
-                            }
+                            let isPreview = !!(req.query && req.query.preview === "true");
+                            let responseResource = utils.createResource(req, {
+                                Name: instance.Name,
+                                Desc: instance.desc,
+                                Heading: instance.Heading,
+                                Content: instance.Content
+                            });
 
                             return Promise.resolve()
-                            .then(callback.bind(null, req, responseResource, persistence, hsEntity, instance))
+                            .then(extractEntity.bind(null, req, responseResource, persistence, hsEntity, instance, isPreview))
                             .then(utils.sendHal.bind(null, req, res, responseResource, null));
                         });
                 })

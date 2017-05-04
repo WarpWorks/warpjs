@@ -34,7 +34,7 @@ function parseLinks(overviews) {
     return overviews;
 }
 
-function extractRelationship(req, resource, persistence, hsEntity, entity) {
+function extractRelationship(req, resource, persistence, hsEntity, entity, isPreview) {
     const relationship = hsEntity.getRelationship();
 
     return Promise.resolve()
@@ -44,7 +44,7 @@ function extractRelationship(req, resource, persistence, hsEntity, entity) {
                 const referenceResource = createObjResource(reference, true);
                 if (hsEntity.style === 'Preview') {
                     const referenceEntity = hsEntity.getRelationship().getTargetEntity();
-                    return referenceEntity.getOverview(persistence, reference)
+                    return referenceEntity.getOverview(persistence, reference, isPreview)
                         .then(parseLinks)
                         .then((overviews) => {
                             if (overviews && overviews.length) {
@@ -148,10 +148,10 @@ function convertToResource(req, data) {
     return resource;
 }
 
-function createOverviewPanel(req, persistence, hsCurrentEntity, currentInstance) {
+function createOverviewPanel(req, persistence, hsCurrentEntity, currentInstance, isPreview) {
     return Promise.resolve()
         // Find the overview.
-        .then(() => hsCurrentEntity.getOverview(persistence, currentInstance))
+        .then(() => hsCurrentEntity.getOverview(persistence, currentInstance, isPreview))
         .then(parseLinks)
         .then(convertToResource.bind(null, req))
         .then((overviews) => {
@@ -159,6 +159,17 @@ function createOverviewPanel(req, persistence, hsCurrentEntity, currentInstance)
                 alternatingColors: false,
                 type: 'Overview'
             });
+
+            if (isPreview && !overviews.length) {
+                let mockPreview = {
+                    id: currentInstance.id,
+                    type: currentInstance.type,
+                    name: currentInstance.Name ? currentInstance.Name : currentInstance.name
+                };
+
+                overviews.push(mockPreview);
+            }
+
             resource.embed('overviews', overviews);
             return resource;
         });
@@ -171,13 +182,13 @@ function addSeparatorPanelItems(panel, items) {
     return items;
 }
 
-function addRelationshipPanelItems(req, panel, persistence, entity, items) {
+function addRelationshipPanelItems(req, panel, persistence, entity, isPreview, items) {
     return Promise.map(
         panel.relationshipPanelItems,
         (item) => {
             const itemResource = createObjResource(item);
             items.push(itemResource);
-            return extractRelationship(req, itemResource, persistence, item, entity);
+            return extractRelationship(req, itemResource, persistence, item, entity, isPreview);
         }
     ).then(() => items);
 }
@@ -209,7 +220,7 @@ function embed(resource, key, items) {
     return resource;
 }
 
-module.exports = (req, responseResource, persistence, hsEntity, entity) => {
+module.exports = (req, responseResource, persistence, hsEntity, entity, isPreview) => {
     return Promise.resolve(hsEntity.getPageView('DefaultPortalView'))
         .then((pageView) => pageView.getPanels())
         .then((panels) => {
@@ -221,14 +232,14 @@ module.exports = (req, responseResource, persistence, hsEntity, entity) => {
 
                     return Promise.resolve([])
                         .then(addSeparatorPanelItems.bind(null, panel))
-                        .then(addRelationshipPanelItems.bind(null, req, panel, persistence, entity))
+                        .then(addRelationshipPanelItems.bind(null, req, panel, persistence, entity, isPreview))
                         .then(addBasicPropertyPanelItems.bind(null, panel, entity))
                         .then(addEnumPanelItems.bind(null, panel))
                         .then(sortItems)
                         .then(embed.bind(null, panelResource, 'panelItems'));
                 }
             )
-            .then(() => createOverviewPanel(req, persistence, hsEntity, entity))
+            .then(() => createOverviewPanel(req, persistence, hsEntity, entity, isPreview))
             .then((overviewPanel) => {
                 if (overviewPanel) {
                     // We increment the position becase we will add the overview at
