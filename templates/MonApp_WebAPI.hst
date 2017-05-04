@@ -51,6 +51,48 @@ $(document).ready(function () {
 });
 
 //
+//For the tinymce links button to populate modal
+//
+
+getNonAbstractEntitiesByDomain = function(callback) {
+    var cmdList = {
+        commandList: [
+            {
+                domain: "{{js:this.getDomain().name;/}}",
+                targetType: $active.entity.type,
+                command: "SearchForTargetEntity",
+                filter: $active.relationship.filter
+            }
+        ]
+    };
+    reqData = JSON.stringify(cmdList, null, 2);
+
+    $.ajax({
+        url: $active._links.crud.href,
+        type: 'POST',
+        data: reqData,
+        contentType: 'application/json; charset=utf-8',
+        dataType: "json",
+        success: function (result) {
+            if (result.success) {
+                $active.relationship.queryResults = [];
+                $active.relationship.queryResultsCount = result.resultList[0].queryResultsCount;
+                result.resultList[0].queryResult.forEach (function (queryResult) {
+                    var source = get{{js:this.getDomain().name;/}}Admin().findOrAddToEntityCache(queryResult["_id"], queryResult.type, queryResult);
+                    $active.relationship.queryResults.push(source);
+                });
+                callback();
+                return result;
+            }
+            console.log("Failed to post CRUD commands: " + result.error);
+        },
+        error: function () {
+            console.log("Error while posting CRUD commands!");
+        }
+    });
+}
+
+//
 // {{js:this.name;/}}Admin Interface
 //
 

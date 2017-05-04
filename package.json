@@ -28,13 +28,14 @@
   "dependencies": {
     "@quoin/expressjs-routes-info": "0.1.5",
     "@quoin/node-rc": "0.1.1",
-    "@warp-works/core": "0.8.3",
+    "@warp-works/core": "0.8.5",
     "debug": "2.6.4",
     "hal": "0.1.0",
     "hbs": "4.0.1",
     "hbs-utils": "0.0.4",
     "mongodb": "2.2.26",
-    "serve-favicon": "2.4.2"
+    "serve-favicon": "2.4.2",
+    "tinymce": "4.5.7"
   },
   "devDependencies": {
     "@quoin/eslint-config-quoin": "0.1.3",

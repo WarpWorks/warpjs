@@ -24,7 +24,11 @@
                                     </label>
                                     <div class="col-sm-10">
                                         <!-- TBD: Use unique names for IDs -->
-                                        <input type="text" class="form-control" id="{{js:this.name;/}}Input">
+                                        {{if}}this.basicProperty[0].propertyType == "text"{{then}}
+                                            <textarea class="form-control" id="{{js:this.name;/}}Input"></textarea>
+                                        {{else}}
+                                            <input type="text" class="form-control" id="{{js:this.name;/}}Input">
+                                        {{/if}}
                                     </div>
                                 </div>
                             {{/BasicPropertyPanelItem}}
@@ -43,6 +47,66 @@
                                 get{{js:this.getDomain().name;/}}Admin().getEntityByID("{{js:this.getDomain().name;/}}", "{{js:this.getParent_PageView().getParent_Entity().name;/}}", $active.oid, function (entity) {
                                     {{js:this.getDomain().name;/}}_{{js:this.getParent_PageView().getParent_Entity().name;/}}_entity2{{js:this.name;/}}(entity);
                                 });
+                                {{BasicPropertyPanelItem*}}
+                                    {{if}}this.basicProperty[0].propertyType == "text"{{then}}
+                                    tinyMCE.init({
+                                        selector: "#{{js:this.name;/}}Input",
+                                        height: 200,
+                                        menubar: false,
+                                        elementpath: false,
+                                        toolbar: 'bold italic linkbutton',
+                                        setup: function (editor) {
+                                            function updateContent(content) {
+                                                content.forEach((link) => {
+                                                    editor.insertContent(link);
+                                                });
+                                            }
+                                            editor.addButton('linkbutton', {
+                                                text: 'Link',
+                                                icon: false,
+                                                onclick: function () {
+                                                    $active.relationship = {
+                                                        assocTargets: [],
+                                                        name: '{{js:this.name;/}}',
+                                                        queryResults: [],
+                                                        setFilter: (searchTerm) => {
+                                                            $active.relationship.filter = searchTerm;
+                                                            $active.relationship.currentPage = 0;
+                                                        },
+                                                        entitiesPerPage: 10
+                                                    };
+                                                    var widgetID="{{js:this.name;/}}";
+                                                    if(!$active.entityTables[widgetID]) {
+                                                        var columns = ['Name'];
+                                                        var subtypes = [{{js: (function () {
+                                                                var domain = this.getDomain();
+                                                                var res = "";
+                                                                for(var idx = 0; idx < domain.entities.length; idx++){
+                                                                    if(!domain.entities[idx].isAbstract) {
+                                                                        res += (idx===0?"":", ") + "'"+domain.entities[idx].name+"'";
+                                                                    }
+                                                                }
+                                                                return res;
+                                                        }).call(this); /}}];
+
+                                                        var linkEntityTable = new EntityTable (widgetID, "selectEntityM", columns, subtypes, $active.relationship);
+
+                                                        linkEntityTable.updateRelationshipAndWidget = function () {
+                                                            getNonAbstractEntitiesByDomain(customLinksUpdateSelectEntityModal.bind(null, updateContent));
+                                                        }
+                                                    } else {
+                                                        $active.entityTables[widgetID].relationship = $active.relationship;
+                                                    }
+                                                    customLinksUpdateSelectEntityModal(updateContent, true);
+
+                                                    $("#selectEntityM").modal();
+                                                }
+                                            })
+                                        },
+                                        content_css: '//www.tinymce.com/css/codepen.min.css'
+                                    });
+                                    {{/if}}
+                                {{/BasicPropertyPanelItem}}
                             });
                             // Callback to update entity with form data (use newly created entity, if needed)
                             onSave (function () {
