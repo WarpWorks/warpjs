@@ -19,7 +19,7 @@ function entity(req, res) {
                 .then((hsEntity) => {
                     return hsEntity.getInstance(persistence, req.params.id)
                         .then((instance) => {
-                            let isPreview = !!(req.query && req.query.preview === "true");
+                            let isPreview = Boolean(req.query && req.query.preview === "true");
                             let responseResource = utils.createResource(req, {
                                 Name: instance.Name,
                                 Desc: instance.desc,

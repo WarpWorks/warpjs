@@ -41,7 +41,7 @@ class HoverPreview {
                     result: null
                 };
 
-                this._cache.map((result) => {
+                this._cache.forEach((result) => {
                     if (result.checkedHref === href) {
                         foundResult.found = true;
                         foundResult.result = result;
