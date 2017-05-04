@@ -9,6 +9,9 @@
 
 <div class="overview-image-container row">
     <div class="col-xs-12 {{#unless Content}}text-center{{/unless}}">
+        <div id="map-area-modal-container">
+            {{> map-area-modal}}
+        </div>
         {{#if _embedded.Images}}
             {{#each _embedded.Images}}
                 <figure class="{{#if ../Content}}pull-left{{/if}}">
@@ -23,12 +26,15 @@
                     {{#if _embedded.Maps}}
                         <map name="overview-map-{{@index}}">
                             {{#each _embedded.Maps}}
-                                <area
+                                <area class="map-hover-area"
                                     {{#if Shape}}shape="{{Shape}}"{{/if}}
                                     {{#if Coords}}coords="{{Coords}}"{{/if}}
                                     {{#if _links.target.href}}href="{{_links.target.href}}"{{/if}}
                                     {{#if Alt}}alt="{{Alt}}"{{/if}}
                                     {{#if Title}}title="{{Title}}"{{/if}}
+                                    {{#if _embedded.Targets.[0]}}
+                                        data-target-href="{{_embedded.Targets.[0]._links.self.href}}"
+                                    {{/if}}
                                 />
                             {{/each}}
                         </map>
