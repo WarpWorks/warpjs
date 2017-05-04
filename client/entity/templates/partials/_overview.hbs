@@ -31,9 +31,9 @@
                                     {{#if Coords}}coords="{{Coords}}"{{/if}}
                                     {{#if _links.target.href}}href="{{_links.target.href}}"{{/if}}
                                     {{#if Alt}}alt="{{Alt}}"{{/if}}
-                                    {{#if Title}}title="{{Title}}"{{/if}}
+                                    {{#if Title}}data-preview-title="{{Title}}"{{/if}}
                                     {{#if _embedded.Targets.[0]}}
-                                        data-target-href="{{_embedded.Targets.[0]._links.self.href}}"
+                                        data-target-href="{{_embedded.Targets.[0]._links.preview.href}}"
                                     {{/if}}
                                 />
                             {{/each}}

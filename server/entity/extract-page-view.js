@@ -95,6 +95,15 @@ function imagePath(req, image) {
     }
 }
 
+function customResource(req, key, item) {
+    const resource = convertToResource(req, item);
+    if (key === 'Target') {
+        debug(`customResource(): item=${JSON.stringify(item, null, 2)}`);
+        resource.link('preview', routesInfo.expand('entity', {type: item.type, id: item.id, preview: true}));
+    }
+    return resource;
+}
+
 function convertToResource(req, data) {
     if (!data) {
         return null;
@@ -133,7 +142,7 @@ function convertToResource(req, data) {
 
     _.forEach(data, (value, key) => {
         if (_.isArray(value)) {
-            resource.embed(key, value.map(convertToResource.bind(null, req)));
+            resource.embed(key, value.map(customResource.bind(null, req, key)));
         }
     });
 
@@ -142,6 +151,7 @@ function convertToResource(req, data) {
             resource.link('target', resource.HRef);
         } else if (resource._embedded && resource._embedded.Targets && resource._embedded.Targets.length) {
             resource.link('target', resource._embedded.Targets[0]._links.self.href);
+            resource.link('preview', resource._embedded.Targets[0]._links.preview.href);
         }
     }
 
