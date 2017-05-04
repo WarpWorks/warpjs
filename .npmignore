@@ -1,7 +1,10 @@
 /.eslintrc*
 /.npmignore
+/.nyc*
 /.warp-works-warpjsrc*
+/lib/**/*.test.js
 /public/app/*_WebAPI.js
+/reports
 /server.js
 /views/app*.hbs
 /views/portal*.hbs

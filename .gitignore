@@ -1,6 +1,9 @@
+/.nyc_output
+
 # Node Modules
-npm-debug.log*
-node_modules
+/npm-debug.log*
+/node_modules
+/reports
 /*.tgz
 
 # Temporary files
