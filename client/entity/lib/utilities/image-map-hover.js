@@ -12,11 +12,19 @@ class HoverPreview {
         let overViewData = _.filter(resultData._embedded.panels, (panel) => panel.type === "Overview");
 
         if (overViewData[0]._embedded.overviews.length) {
-            this.showModal($, overViewData[0]._embedded.overviews[0]);
+            const overview = overViewData[0]._embedded.overviews[0];
+
+            this.showModal($, overview.Heading || overview.name, overview.Content, overview.containsHTML);
         }
     }
 
-    showModal($, overViewData) {
+    showModal($, title, content, containsHTML) {
+        const overViewData = {
+            title,
+            content,
+            containsHTML
+        };
+
         $('#map-area-modal-container').html(modalTemplate(overViewData));
         $('#map-area-modal-container').show();
     }
@@ -63,11 +71,7 @@ class HoverPreview {
                 }
             }
         } else {
-            let resultData = {
-                name: $(event.currentTarget).data('previewTitle')
-            };
-
-            this.showModal($, resultData);
+            this.showModal($, $(event.currentTarget).data('previewTitle'));
         }
     }
 
