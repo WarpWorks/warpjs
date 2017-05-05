@@ -5,7 +5,6 @@ const modalTemplate = require('./../../templates/partials/map-area-modal.hbs');
 class HoverPreview {
     constructor() {
         this._cache = [];
-        this._pendingRequest = false;
     }
 
     extractDataAndShowModal($, resultData) {
@@ -29,53 +28,60 @@ class HoverPreview {
         $('#map-area-modal-container').show();
     }
 
-    getResults($, href) {
+    getResults($, href, cachedResult) {
         utils.getCurrentPageHAL($, href)
         .then((result) => {
-            this._cache.push({
-                checkedHref: href,
-                result: result.data
-            });
-            this._pendingRequest = false;
-            this.extractDataAndShowModal($, result.data);
+            cachedResult.pending = false;
+            cachedResult[href] = result.data;
+
+            if(cachedResult.canShowModal) {
+                this.extractDataAndShowModal($, result.data);
+            }
         });
     }
 
-    mouseEnter($, event) {
+    findCacheResultForHref(href) {
+        const result = _.filter(this._cache, (object) => object.hasOwnProperty(href));
+
+        return result;
+    }
+
+    onFocus($, event) {
         const href = $(event.currentTarget).data('targetHref');
 
         if (href) {
-            if (this._cache.length) {
-                const foundResult = {
-                    found: false,
-                    result: null
-                };
+            const cachedResult = this.findCacheResultForHref(href);
 
-                this._cache.forEach((result) => {
-                    if (result.checkedHref === href) {
-                        foundResult.found = true;
-                        foundResult.result = result;
-                    }
-                });
+            if(cachedResult.length) {
+                cachedResult[0].canShowModal = true;
 
-                if (foundResult.found) {
-                    this.extractDataAndShowModal($, foundResult.result.result);
-                } else {
-                    this._pendingRequest = true;
-                    this.getResults($, href);
+                if(!cachedResult[0].pending) {
+                    this.extractDataAndShowModal($, cachedResult[0][href]);
                 }
             } else {
-                if (!this._pendingRequest) {
-                    this._pendingRequest = true;
-                    this.getResults($, href);
-                }
+                const objectToCache = {
+                    pending: true,
+                    canShowModal: true
+                };
+
+                objectToCache[href] = null;
+
+                this._cache.push(objectToCache);
+                this.getResults($, href, objectToCache);
             }
         } else {
             this.showModal($, $(event.currentTarget).data('previewTitle'));
         }
     }
 
-    mouseLeave($, event) {
+    onBlur($, event) {
+        const href = $(event.currentTarget).data('targetHref');
+        const cachedResult = this.findCacheResultForHref(href);
+
+        if(cachedResult.length) {
+            cachedResult[0].canShowModal = false;
+        }
+
         $('#map-area-modal-container').hide();
     }
 }
