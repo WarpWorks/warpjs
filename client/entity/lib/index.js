@@ -21,8 +21,8 @@ const template = require("./../templates/index.hbs");
                 const hoverPreview = new HoverPreview();
 
                 $('.overview-image-container')
-                .on('mouseenter', '.map-hover-area', hoverPreview.mouseEnter.bind(hoverPreview))
-                .on('mouseleave', '.map-hover-area', hoverPreview.mouseLeave.bind(hoverPreview));
+                .on('mouseenter', '.map-hover-area', hoverPreview.mouseEnter.bind(hoverPreview, $))
+                .on('mouseleave', '.map-hover-area', hoverPreview.mouseLeave.bind(hoverPreview, $));
             });
     });
 })(jQuery);

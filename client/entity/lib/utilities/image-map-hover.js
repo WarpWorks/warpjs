@@ -3,21 +3,25 @@ const utils = require('./../../../utils');
 const modalTemplate = require('./../../templates/partials/map-area-modal.hbs');
 
 class HoverPreview {
-    constructor($) {
+    constructor() {
         this._cache = [];
         this._pendingRequest = false;
     }
 
-    showModal(resultData) {
+    extractDataAndShowModal($, resultData) {
         let overViewData = _.filter(resultData._embedded.panels, (panel) => panel.type === "Overview");
 
         if (overViewData[0]._embedded.overviews.length) {
-            $('#map-area-modal-container').html(modalTemplate(overViewData[0]));
-            $('#map-area-modal-container').show();
+            this.showModal($, overViewData[0]._embedded.overviews[0]);
         }
     }
 
-    getResults(href) {
+    showModal($, overViewData) {
+        $('#map-area-modal-container').html(modalTemplate(overViewData));
+        $('#map-area-modal-container').show();
+    }
+
+    getResults($, href) {
         utils.getCurrentPageHAL($, href)
         .then((result) => {
             this._cache.push({
@@ -25,11 +29,11 @@ class HoverPreview {
                 result: result.data
             });
             this._pendingRequest = false;
-            this.showModal(result.data);
+            this.extractDataAndShowModal($, result.data);
         });
     }
 
-    mouseEnter(event) {
+    mouseEnter($, event) {
         const href = $(event.currentTarget).data('targetHref');
 
         if (href) {
@@ -47,40 +51,27 @@ class HoverPreview {
                 });
 
                 if (foundResult.found) {
-                    this.showModal(foundResult.result.result);
+                    this.extractDataAndShowModal($, foundResult.result.result);
                 } else {
                     this._pendingRequest = true;
-                    this.getResults(href);
+                    this.getResults($, href);
                 }
             } else {
                 if (!this._pendingRequest) {
                     this._pendingRequest = true;
-                    this.getResults(href);
+                    this.getResults($, href);
                 }
             }
         } else {
-            let mockResponse = {
-                _embedded: {
-                    panels: [
-                        {
-                            type: "Overview",
-                            _embedded: {
-                                overviews: [
-                                    {
-                                        name: $(event.currentTarget).data('previewTitle')
-                                    }
-                                ]
-                            }
-                        }
-                    ]
-                }
+            let resultData = {
+                name: $(event.currentTarget).data('previewTitle')
             };
 
-            this.showModal(mockResponse);
+            this.showModal($, resultData);
         }
     }
 
-    mouseLeave(event) {
+    mouseLeave($, event) {
         $('#map-area-modal-container').hide();
     }
 }
