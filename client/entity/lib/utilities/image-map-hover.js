@@ -58,6 +58,25 @@ class HoverPreview {
                     this.getResults(href);
                 }
             }
+        } else {
+            let mockResponse = {
+                _embedded: {
+                    panels: [
+                        {
+                            type: "Overview",
+                            _embedded: {
+                                overviews: [
+                                    {
+                                        name: $(event.currentTarget).data('previewTitle')
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            };
+
+            this.showModal(mockResponse);
         }
     }
 
