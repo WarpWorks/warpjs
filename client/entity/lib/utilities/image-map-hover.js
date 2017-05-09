@@ -10,19 +10,15 @@ class HoverPreview {
     }
 
     getImageAreaCoord(coordinate) {
-        switch(coordinate) {
+        switch (coordinate) {
             case 'x1':
                 return this._currentImgAreaCoords[0];
-                break;
             case 'y1':
                 return this._currentImgAreaCoords[1];
-                break;
             case 'x2':
                 return this._currentImgAreaCoords[2];
-                break;
             case 'y2':
                 return this._currentImgAreaCoords[3];
-                break;
             default:
                 return 0;
         }
@@ -32,7 +28,7 @@ class HoverPreview {
         const bootstrapRowWidth = $(constants.FIGURE_CONTAINER).parent().width();
         const imgWidth = $(constants.FIGURE_CONTAINER).children().width();
 
-        if(!$(constants.FIGURE_CONTAINER).hasClass('pull-left') && (bootstrapRowWidth - imgWidth) >= 0) {
+        if (!$(constants.FIGURE_CONTAINER).hasClass('pull-left') && (bootstrapRowWidth - imgWidth) >= 0) {
             return (bootstrapRowWidth - imgWidth) / 2;
         }
 
@@ -77,22 +73,16 @@ class HoverPreview {
         this.calculateModalPosition($(constants.MAP_AREA_MODAL_CONTAINER).height());
     }
 
-    getResults($, href, cachedResult) {
+    getResults($, href) {
         utils.getCurrentPageHAL($, href)
         .then((result) => {
-            cachedResult.pending = false;
-            cachedResult[href] = result.data;
+            this._cache[href].pending = false;
+            this._cache[href].result = result.data;
 
-            if (cachedResult.canShowModal) {
+            if (this._cache[href].canShowModal) {
                 this.extractDataAndShowModal($, result.data);
             }
         });
-    }
-
-    findCacheResultForHref(href) {
-        const result = _.filter(this._cache, (object) => object.hasOwnProperty(href));
-
-        return result;
     }
 
     onFocus($, event) {
@@ -104,24 +94,23 @@ class HoverPreview {
         const href = $(event.currentTarget).data('targetHref');
 
         if (href) {
-            const cachedResult = this.findCacheResultForHref(href);
+            const cachedResult = this._cache[href];
 
-            if (cachedResult.length) {
-                cachedResult[0].canShowModal = true;
+            if (cachedResult) {
+                cachedResult.canShowModal = true;
 
-                if (!cachedResult[0].pending) {
-                    this.extractDataAndShowModal($, cachedResult[0][href]);
+                if (!cachedResult.pending) {
+                    this.extractDataAndShowModal($, cachedResult.result);
                 }
             } else {
                 const objectToCache = {
                     pending: true,
-                    canShowModal: true
+                    canShowModal: true,
+                    result: null
                 };
 
-                objectToCache[href] = null;
-
-                this._cache.push(objectToCache);
-                this.getResults($, href, objectToCache);
+                this._cache[href] = objectToCache;
+                this.getResults($, href);
             }
         } else {
             this.showModal($, $(event.currentTarget).data('previewTitle'));
@@ -133,10 +122,9 @@ class HoverPreview {
         this.updateModalCSS(0, 0, 0, 0);
 
         const href = $(event.currentTarget).data('targetHref');
-        const cachedResult = this.findCacheResultForHref(href);
 
-        if (cachedResult.length) {
-            cachedResult[0].canShowModal = false;
+        if (this._cache[href]) {
+            this._cache[href].canShowModal = false;
         }
 
         $(constants.MAP_AREA_MODAL_CONTAINER).hide();
