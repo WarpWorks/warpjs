@@ -1,5 +1,9 @@
 # Releases
 
+## 0.6.5 - 2017-05-10
+
+- Adding `mongoServer` in config.
+
 ## 0.6.4 - 2017-05-10
 
 - Using @warp-works/core@0.8.7
