@@ -17,28 +17,41 @@ function EntityProxy(type, mode, parentRelnProxy) {
 }
 
 EntityProxy.prototype.useData = function(callback) {
+    if (this.data) {
+        callback(this);
+        return;
+    }
+
+    var validateAndCall = function (data) {
+        if (data) {
+            this.data = data;
+            callback(this);
+        }
+        else
+            callback(null);
+    }.bind(this);
+
     switch (this.mode) {
         case "rootInstance":
-            this.useRootInstance(callback);
+            this.getDataViaRootInstance(validateAndCall);
             break;
         case "editEntity":
             if (this.oid) {
-                this.getEntityByOID (callback);
+                this.getDataViaOID(validateAndCall);
+                break;
             }
             else if (this.parentRelnProxy) {
-                this.parentRelnProxy.useRelationship(function (relnProxy) {
-                    var arg = relnProxy.queryResults && relnProxy.queryResults.length>0 ? relnProxy.queryResults[0] : null;
-                    callback (arg);
-                });
+                this.getDataViaParentReln(validateAndCall);
+                break;
             }
             else
-                throw "Currently not supported!";
+                throw "Currently not supported: editEntity must provide oid or parentReln!";
             break;
         case "addNewEntity":
-            callback(this);
+            throw "TBD!";
             break;
         default:
-            throw "Invalid mode for entity: '"+this.mode+"'";
+            throw "Invalid mode for entity: '" + this.mode + "'";
     }
 }
 
@@ -67,29 +80,25 @@ EntityProxy.prototype.getRelationship = function(relnID) {
 }
 
 EntityProxy.prototype.getDataViaOID = function(callback) {
+    throw "TBD!";
 }
 
 EntityProxy.prototype.getDataViaParentReln = function(callback) {
     this.parentRelnProxy.useRelationship(function (relnProxy) {
         // Try to use the first element in the relationship:
-        var arg = relnProxy.queryResults && relnProxy.queryResults.length>0 ? relnProxy.queryResults[0] : null;
-        if (!arg)
+        var arg = relnProxy.queryResults && relnProxy.queryResults.length > 0 ? relnProxy.queryResults[0] : null;
+        if (arg)
+            callback(arg.data);
+        else {
             console.log("Warning: getDataViaParentReln() with empty query result!");
-        callback (arg);
+            callback(null);
+        }
     });
 }
 
-EntityProxy.prototype.getEntityByOID = function(handleResult) {
+EntityProxy.prototype.getDataViaRootInstance = function(callback) {
     if (this.data) {
-        handleResult(this);
-        return;
-    }
-}
-
-EntityProxy.prototype.useRootInstance = function(handleResult) {
-    if (this.data) {
-        console.log("Re-using RootInstance data!");
-        handleResult(this);
+        callback(this);
         return;
     }
     if (!$warp.domain) throw "Can not use root instance without domain!";
@@ -115,9 +124,8 @@ EntityProxy.prototype.useRootInstance = function(handleResult) {
                 return;
             }
             var rootInstanceFromServer = result.resultList[0].rootInstance;
-            console.log("Loaded RootInstance with ID: " + rootInstanceFromServer._id);
-            $warp.getPageView().getActiveEntity().data = rootInstanceFromServer;
-            handleResult($warp.getPageView().getActiveEntity());
+            console.log("Got data for RootInstance with ID: " + rootInstanceFromServer._id);
+            callback(rootInstanceFromServer);
         }
         else {
             alert(result.err);
@@ -234,23 +242,31 @@ RelationshipProxy.prototype.useRelationship = function (callback) {
     };
     this.debugCommand = command;
     this.getParentEntity().useData(function(parentEntity) {
-        command.parentID = parentEntity.getValue('_id');
-        console.log("ParentEntity:"+command.parentID);
-        var reqData = {commandList: []};
-        reqData.commandList.push(command);
-        $warp.processCRUDcommands(reqData, function (result) {
-            if (result.success) {
-                entityDocs = result.resultList[0].queryResult;
-                this.queryResultsCount = entityDocs.length;
-                this.queryResults = [];
-                entityDocs .forEach (function (entityDoc) {
-                    var proxy = new EntityProxy(entityDoc.type, "editEntity");
-                    proxy.data = entityDoc;
-                    this.queryResults.push (proxy);
-                }.bind(this));
-                callback(this);
-            }
-        }.bind(this));
+        if (parentEntity) {
+            command.parentID = parentEntity.getValue('_id');
+            console.log("ParentEntity:" + command.parentID);
+            if (!command.parentID)
+                console.log("ERROR");
+            var reqData = {commandList: []};
+            reqData.commandList.push(command);
+            $warp.processCRUDcommands(reqData, function (result) {
+                if (result.success) {
+                    entityDocs = result.resultList[0].queryResult;
+                    this.queryResultsCount = entityDocs.length;
+                    this.queryResults = [];
+                    entityDocs.forEach(function (entityDoc) {
+                        var proxy = new EntityProxy(entityDoc.type, "editEntity");
+                        proxy.data = entityDoc;
+                        this.queryResults.push(proxy);
+                    }.bind(this));
+                    callback(this);
+                }
+            }.bind(this));
+        }
+        else {
+            console.log("Warning: Can not use relationship - parentEntity not found!");
+            callback(null);
+        }
     }.bind(this));
 }
 
@@ -325,11 +341,6 @@ function WarpJSClient() {
 
 WarpJSClient.prototype = Object.create(WarpWidget.prototype);
 WarpJSClient.prototype.constructor = WarpJSClient;
-
-// Overwrite default to handle special cases
-WarpJSClient.prototype.useActiveEntity = function(callback) {
-    this.getPageView().getActiveEntity().useData (callback);
-}
 
 WarpJSClient.prototype.getPageView = function() {
     return this.pageView;
@@ -633,24 +644,17 @@ WarpPageView.prototype.getActiveEntity = function() {
 
     return this._activeEntity;
 }
+
 WarpPageView.prototype.setActiveEntity = function(entity) {
     this._activeEntity = entity;
 }
 
 WarpPageView.prototype.useActiveEntity = function(callback) {
-    var entity = this.getActiveEntity.useData(callback);
-    if (entity.data) {
-        callback(entity);
-    }
-    else if (entity.oid) {
-        entity.getDataViaOID(callback);
-    }
-    else if (entity.parentRelnProxy) {
-        entity.getDataViaParentReln(callback);
-    }
-    else {
+    var entity = this.getActiveEntity();
+    if (entity)
+        entity.useData(callback);
+    else
         callback(null);
-    }
 }
 
 WarpPageView.prototype.readViewDataFromModel = function() {
