@@ -1,6 +1,6 @@
 {
   "name": "@warp-works/warpjs",
-  "version": "0.6.3",
+  "version": "0.6.4",
   "description": "Content management system for WarpWorks in javascript",
   "repository": {
     "type": "git",
@@ -36,7 +36,7 @@
   "dependencies": {
     "@quoin/expressjs-routes-info": "0.1.6",
     "@quoin/node-rc": "0.1.1",
-    "@warp-works/core": "0.8.6",
+    "@warp-works/core": "0.8.7",
     "debug": "2.6.6",
     "hal": "0.1.0",
     "hbs": "4.0.1",
@@ -53,14 +53,14 @@
     "body-parser": "1.17.1",
     "cookie-parser": "1.4.3",
     "eslint": "3.19.0",
-    "eslint-plugin-html": "2.0.1",
+    "eslint-plugin-html": "2.0.3",
     "eslint-plugin-import": "2.2.0",
     "eslint-plugin-node": "4.2.2",
     "eslint-plugin-promise": "3.5.0",
     "eslint-plugin-standard": "3.0.1",
     "express": "4.15.2",
     "mocha": "3.3.0",
-    "nyc": "10.3.0"
+    "nyc": "10.3.2"
   },
   "peerDependencies": {
     "body-parser": ">=1.17.0",

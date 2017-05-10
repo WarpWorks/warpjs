@@ -1,5 +1,9 @@
 # Releases
 
+## 0.6.4 - 2017-05-10
+
+- Using @warp-works/core@0.8.7
+
 ## 0.6.3 - 2017-05-04
 
 - Access management middleware for the role.
