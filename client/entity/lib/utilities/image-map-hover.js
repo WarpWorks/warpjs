@@ -17,7 +17,6 @@ class HoverPreview {
         $(constants.MAP_AREA_MODAL_FLAG).addClass(flagClassName);
     }
 
-
     getWidthOffset() {
         const bootstrapRowWidth = $(constants.FIGURE_CONTAINER).parent().width();
         const imgWidth = $(constants.FIGURE_CONTAINER).children().width();
@@ -37,7 +36,7 @@ class HoverPreview {
         const isZoneMiddle = zoneName === 'middle';
         const isZoneTopMiddle = zoneName === 'top-middle';
 
-        if(isZoneRight || isZoneLeft) {
+        if (isZoneRight || isZoneLeft) {
             let modalAdjustment;
             let adjustedWidthOffset;
             let adjustedModalHeight;
@@ -50,7 +49,7 @@ class HoverPreview {
             modalPosition.top = computedCoords.midY - adjustedModalHeight - 10;
             modalPosition.flagHeight = adjustedModalHeight;
             modalPosition.flagClass = isZoneLeft ? 'modal-flag-right' : 'modal-flag-left';
-        } else if(isZoneMiddle || isZoneTopMiddle) {
+        } else if (isZoneMiddle || isZoneTopMiddle) {
             modalPosition.left = computedCoords.midX - 100 + widthOffset;
             modalPosition.top = computedCoords.midY - modalHeight - 40;
             modalPosition.flagHeight = modalHeight + 20;
@@ -67,12 +66,12 @@ class HoverPreview {
     updateModalPosition(imageAreaReferenceKey, modalHeight, bottomMiddleFlagHeight) {
         const modalPositionData = this._imageAreaCache[imageAreaReferenceKey].modalPositionData;
 
-        if(!modalPositionData.modalHeight) {
+        if (!modalPositionData.modalHeight) {
             const modalWidth = modalPositionData.modalWidth;
             const zoneName = modalPositionData.imageAreaZoneName;
             const computedCoords = modalPositionData.imageAreaComputedCoordinates;
 
-            modalPositionData.modalHeight = modalHeight
+            modalPositionData.modalHeight = modalHeight;
             modalPositionData.modalPosition = this.generateModalPositionData(modalHeight, modalWidth, zoneName, computedCoords, bottomMiddleFlagHeight);
         }
 
@@ -108,11 +107,11 @@ class HoverPreview {
     }
 
     getResults($, href, cacheReferenceKey) {
-        if(this._resultDataCache[href]) {
+        if (this._resultDataCache[href]) {
             this._imageAreaCache[cacheReferenceKey].result = this._resultDataCache[href];
             this._imageAreaCache[cacheReferenceKey].pending = false;
 
-            if(this._imageAreaCache[cacheReferenceKey].canShowModal) {
+            if (this._imageAreaCache[cacheReferenceKey].canShowModal) {
                 this.extractDataAndShowModal($, this._resultDataCache[href], cacheReferenceKey);
             }
         } else {
@@ -132,16 +131,16 @@ class HoverPreview {
     getImagePartition(xCoord, yCoord) {
         const filtered = _.filter(this._imagePartition, (partition) => {
             return xCoord >= partition.minX && xCoord <= partition.maxX &&
-            yCoord >= partition.minY && yCoord <= partition.maxY
+            yCoord >= partition.minY && yCoord <= partition.maxY;
         });
 
         return filtered.length === 1 ? filtered[0].name : "";
     }
 
     sortCoordinatesAscending(a, b) {
-        if(a < b) {
+        if (a < b) {
             return -1;
-        } else if(a > b) {
+        } else if (a > b) {
             return 1;
         } else {
             return 0;
@@ -150,9 +149,9 @@ class HoverPreview {
 
     getCoordinatesByAxis(array, cardinalAxis) {
         return _.reduce(array, (memo, value, index) => {
-            if(cardinalAxis === 'x' && !(index % 2)) {
+            if (cardinalAxis === 'x' && !(index % 2)) {
                 memo.push(value);
-            } else if(cardinalAxis === 'y' && index % 2) {
+            } else if (cardinalAxis === 'y' && index % 2) {
                 memo.push(value);
             }
             return memo;
@@ -167,7 +166,7 @@ class HoverPreview {
         let midX = 0;
         let midY = 0;
 
-        if(shape === "circle") {
+        if (shape === "circle") {
             lowerBoundX = formatedCoordinateArray[0] - formatedCoordinateArray[2];
             upperBoundX = formatedCoordinateArray[0] + formatedCoordinateArray[2];
             lowerBoundY = formatedCoordinateArray[1] - formatedCoordinateArray[2];
@@ -200,7 +199,7 @@ class HoverPreview {
             maxX: upperBoundX,
             minY: lowerBoundY,
             maxY: upperBoundY
-        }
+        };
     }
 
     getFormattedCoordinateList(coordinateList) {
@@ -234,13 +233,13 @@ class HoverPreview {
 
     generatePartitionObject(partitionName, minX, minY, maxX, maxY) {
         return {
-            'name': partitionName,
-            'minX': minX,
-            'maxX': maxX,
-            'minY': minY,
-            'maxY': maxY,
-            'midX': Math.round((minX + maxX) / 2),
-            'midY': Math.round((minY + minY) / 2)
+            name: partitionName,
+            minX: minX,
+            maxX: maxX,
+            minY: minY,
+            maxY: maxY,
+            midX: Math.round((minX + maxX) / 2),
+            midY: Math.round((minY + minY) / 2)
 
         };
     }
@@ -252,19 +251,19 @@ class HoverPreview {
         const q1MinX = 0;
         const q1MaxX = partitionX;
 
-        const q2MinX = q1MaxX+1;
-        const q2MaxX = q1MaxX*2;
+        const q2MinX = q1MaxX + 1;
+        const q2MaxX = q1MaxX * 2;
 
-        const q3MinX = q2MaxX+1;
+        const q3MinX = q2MaxX + 1;
         const q3MaxX = width;
 
         const q1MinY = 0;
         const q1MaxY = partitionY;
 
-        const q2MinY = q1MaxY+1;
-        const q2MaxY = q1MaxY*2;
+        const q2MinY = q1MaxY + 1;
+        const q2MaxY = q1MaxY * 2;
 
-        const q3MinY = q2MaxY+1;
+        const q3MinY = q2MaxY + 1;
         const q3MaxY = height;
 
         this._imagePartition = [];
@@ -281,7 +280,7 @@ class HoverPreview {
     }
 
     onFocus($, event) {
-        if(!this._imagePartition) {
+        if (!this._imagePartition) {
             const imgHeight = Math.round($(constants.FIGURE_CONTAINER).children().height());
             const imgWidth = Math.round($(constants.FIGURE_CONTAINER).children().width());
 
@@ -291,7 +290,7 @@ class HoverPreview {
         const href = $(event.currentTarget).data('targetHref');
         const imageAreaShape = $(event.currentTarget).attr('shape');
         const coords = $(event.currentTarget).attr('coords');
-        const modalWidth = parseInt($(constants.MAP_AREA_MODAL_CONTAINER).css('width').split('px'),10);
+        const modalWidth = parseInt($(constants.MAP_AREA_MODAL_CONTAINER).css('width').split('px'), 10);
         const referenceKey = `${href}+${coords}`;
         const cachedImageArea = this._imageAreaCache[referenceKey];
 
