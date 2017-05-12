@@ -57,10 +57,15 @@ EntityProxy.prototype.useData = function(callback) {
 }
 
 EntityProxy.prototype.getValue = function(attrName) {
+    if (!this.data || !this.data[attrName])
+        warptrace(1, "EntityProxy.getValue():\n- Warning: Can not access value - "+attrName);
+    warptrace(2, "EntityProxy.getValue():\n- Getting value for "+attrName+": "+this.data[attrName])
     return this.data[attrName];
 }
 
 EntityProxy.prototype.setValue = function(attrName, val) {
+    if (!this.data || !this.data[attrName])
+        warptrace(1, "EntityProxy.setValue():\n Warning: Can not access value - "+attrName);
     if (this.data[attrName] !== val) {
         this.history.push({ date: new Date(), attribute: attrName, newVal: val });
         this.data[attrName] = val;
@@ -73,17 +78,14 @@ EntityProxy.prototype.displayName = function() {
     return this.type+": "+this.data._id;
 }
 
+EntityProxy.prototype.addRelationshipProxy = function(relnProxy) {
+    this.relationships[relnProxy.id] = relnProxy;
+}
 
 EntityProxy.prototype.getRelationshipProxy = function(relnID) {
-    if (this.relationships[relnID])
-        return this.relationships[relnID];
-    else {
-        var jsonEntity = $warp.model.getEntityByName(this.type);
-        var jsonReln = $warp.model.getRelationshipByID(relnID);
-        var newReln = new RelationshipProxy(jsonReln, this);
-        this.relationships[relnID] = newReln;
-        return newReln;
-    }
+    if (!this.relationships[relnID])
+        warptrace(1, "EntityProxy.getRelationshipProxy():\n- Warning: Can not get RelationshipProxy for id:"+relnID);
+    return this.relationships[relnID];
 }
 
 EntityProxy.prototype.getDataViaOID = function(callback) {
@@ -143,16 +145,16 @@ EntityProxy.prototype.getDataViaRootInstance = function(callback) {
 // Class "RelationshipProxy"
 //
 
-function RelationshipProxy(jsonReln, parent) {
-    this.parent = parent;
+function RelationshipProxy(jsonReln, parentEntityProxy) {
+    this.parentEntityProxy = parentEntityProxy;
     this.jsonReln = jsonReln;
 
     this.name = jsonReln.name;
     this.id = jsonReln.id;
     this.isAggregation = jsonReln.isAggregation;
-    this.targetEntity = $warp.model.getEntityByID (jsonReln.targetEntity[0]);
-    this.targetType = this.targetEntity.name;
-    this.targetIsDocument = this.targetEntity.entityType === "Document";
+    this.targetEntityDefinition = $warp.model.getEntityByID (jsonReln.targetEntity[0]);
+    this.targetType = this.targetEntityDefinition.name;
+    this.targetIsDocument = this.targetEntityDefinition.entityType === "Document";
     this.parentType = $warp.model.getRelnParentByID (jsonReln.id).name;
 
     this.requiresUpdate = true;
@@ -184,12 +186,12 @@ RelationshipProxy.prototype.setFilter = function (f) {
 }
 
 RelationshipProxy.prototype.getParentEntity = function () {
-    return this.parent;
+    return this.parentEntityProxy;
 }
 
-RelationshipProxy.prototype.setSelectedEntityIdx = function (idx) {
+RelationshipProxy.prototype.setSelectedEntity = function (idx) {
     if (idx<0 || idx>this.queryResults.length)
-        warptrace(3, "RelationshipProxy.setSelectedEntityIdx: Warning - SelectedEntityIdx is out of bounds!");
+        warptrace(3, "RelationshipProxy.setSelectedEntity: Warning - SelectedEntityIdx is out of bounds!");
     this.SelectedEntityIdx = idx;
 }
 
@@ -223,9 +225,8 @@ RelationshipProxy.prototype.selectPreviousEntity = function () {
 RelationshipProxy.prototype.getProxyForSelectedEntity = function () {
     if (this.queryResults[this.SelectedEntityIdx])
         return this.queryResults[this.SelectedEntityIdx];
-    else {
-        return new EntityProxy(this.targetType, this.targetIsDocument, "editEntity", this);
-    }
+    warptrace(1, "RelationshipProxy.getProxyForSelectedEntity():\n- Warning: Can´t get Porxy for selected entity!");
+    return null;
 }
 
 RelationshipProxy.prototype.removeFromAssocTargets = function (id) {
@@ -312,7 +313,7 @@ RelationshipProxy.prototype.useRelationship = function(callback) {
                         var entityDocs = result.resultList[0].queryResult;
                         this.queryResultsCount = entityDocs.length;
                         this.queryResults = [];
-                        this.setSelectedEntityIdx(0);
+                        this.setSelectedEntity(0);
                         entityDocs.forEach(function (entityDoc) {
                             var proxy = new EntityProxy(entityDoc.type, this.targetIsDocument, "editEntity");
                             proxy.data = entityDoc;
@@ -343,6 +344,7 @@ RelationshipProxy.prototype.useRelationship = function(callback) {
             }.bind(this));
             this.queryResultsCount = embeddedReln.entities.length;
             this.queryResults = [];
+            this.setSelectedEntity(0);
             embeddedReln.entities.forEach(function (entityDoc) {
                 var proxy = new EntityProxy(entityDoc.type, this.targetIsDocument, "editEntity");
                 proxy.data = entityDoc;
@@ -363,7 +365,7 @@ function WarpWidget(parent, config) {
     if (config === null || typeof config === "undefined")
         throw "Fatal: Can not add child to WarpWidget without 'config'!";
     if (config.localID !== "WarpJS" && (parent === null || typeof parent === "undefined"))
-        throw "Fatal: Can not add child to WarpWidget without 'parent'!";
+        throw "Fatal: Can not add child to WarpWidget without 'parentEntityProxy'!";
     if (config.localID === null || typeof config.localID === "undefined")
         throw parent.globalID()+": Can not add child with invalid localID!";
 
@@ -427,7 +429,7 @@ function WarpJSClient() {
 WarpJSClient.prototype = Object.create(WarpWidget.prototype);
 WarpJSClient.prototype.constructor = WarpJSClient;
 
-var warptracelevel = 1; // 0=ignore
+var warptracelevel = 2; // 0=ignore
 warptrace = function(level, message) {
     if (warptracelevel>=level)
         console.log(message);
@@ -454,63 +456,9 @@ WarpJSClient.prototype.addToViewCache = function(w1) {
     this.viewCache.push(w1);
 }
 
-WarpJSClient.prototype.loadData = function(callback) {
-    $warp.loadData = { idx:0, callback:callback };
-    this.loadNext();
-}
-
-WarpJSClient.prototype.loadNext = function() {
-    if ($warp.loadData.idx === $warp.viewCache.length) {
-        var cb = $warp.loadData.callback;
-        $warp.loadData = null;
-        cb();
-        return;
-    }
-
-    var v = $warp.viewCache[$warp.loadData.idx];
-    $warp.loadData.idx++;
-    switch (v.constructor.name) {
-        case "WarpPageView":
-            v.useEntityProxy(function (entity) {
-                if (entity)
-                    warptrace(2, "WarpJSClient.loadNext():\n-  got entity " + entity.data.type + ", id=" + entity.data._id);
-                else
-                    warptrace(2, "WarpJSClient.loadNext():\n-  failed to load entity");
-                $warp.loadNext();
-            });
-            break;
-        case "WarpRPI_Table":
-            var rp = v.getRelationshipProxy();
-            rp.useRelationship(function (relnProxy) {
-                if (relnProxy) {
-                    relnProxy.setSelectedEntityIdx(0);
-                    warptrace(2, "WarpJSClient.loadNext():\n-  ");
-                }
-                else
-                    warptrace(2, "WarpJSClient.loadNext():\n-  failed to load entity");
-                $warp.loadNext();
-            });
-            break;
-        default:
-            this.loadNext();
-    }
-}
-
 WarpJSClient.prototype.addBreadcrumb = function(config) {
     this.breadcrumb = new WarpBreadcrumb(this, config);
     return this.breadcrumb;
-}
-
-WarpJSClient.prototype.addPageView = function(config) {
-    this.pageView = new WarpPageView(this, config);
-
-    for (var idx=0; config.panels && idx<config.panels.length; idx++) {
-        var panel=config.panels[idx];
-        panel.localID = "panel"+idx;
-        this.pageView.addPanel(panel);
-    }
-
-    return this.pageView;
 }
 
 WarpJSClient.prototype.createViews = function() {
@@ -541,18 +489,7 @@ WarpJSClient.prototype.initialize = function(jsonData, config, callback) {
     // Remember domain for this client:
     $warp.domain = config.domainName;
 
-    // Get page view
-    this.model = new WarpModelParser(jsonData);
-    var entityDefn = this.model.getEntityByName(config.entityType);
-    if (!entityDefn) throw "Can`t find entity:"+config.entityType;
-    var defaultView = this.model.getPageView(entityDefn, config.viewName);
-    defaultView.entityType = config.entityType;
-
-    // Build WarpViews
-    defaultView.localID = "mainPV";
-    defaultView.style = "tabs";
-    this.addPageView(defaultView);
-    this.pageView.isToplevelPageView=true;
+    // Add a breadcrumb
     this.addBreadcrumb({ localID: "breadcrumb" });
 
     // Handle URL Arguments: editEntity || addEntity || rootInstance
@@ -575,17 +512,22 @@ WarpJSClient.prototype.initialize = function(jsonData, config, callback) {
         if (!entity.parentID || !entity.relnID || !this.relnName || !this.parentBaseClassName || !this.parentBaseClassID)
             alert ("Invalid URL!");
     }
+
+    // Get page view
+    this.model = new WarpModelParser(jsonData);
+    var entityDefn = this.model.getEntityByName(config.entityType);
+    if (!entityDefn) throw "Can`t find entity:"+config.entityType;
+    var defaultView = this.model.getPageView(entityDefn, config.viewName);
+    defaultView.entityType = config.entityType;
+
+    // Build WarpViews
+    defaultView.localID = "mainPV";
+    defaultView.style = "tabs";
+
+    // Create top-most PageView
+    this.pageView = new WarpPageView (this, defaultView);
     this.pageView.setEntityProxy(entity);
-
-    // Create HTML views (after "EntityProxy" was added!!!)
-    var htmlViews = this.createViews();
-    $("#"+config.htmlElements.rootElem).append(htmlViews);
-    warptrace(3, "---------------");
-    warptrace(3, htmlViews.html());
-    warptrace(3, "---------------");
-
-    // HTML Bindings
-    $("#"+config.htmlElements.saveButton).on("click", this.save.bind(this));
+    this.pageView.isToplevelPageView=true;
 
     // Prepare remote connection
     $.ajax({
@@ -596,8 +538,18 @@ WarpJSClient.prototype.initialize = function(jsonData, config, callback) {
             $warp.links = result._links;
 
             // Pre-load data for entities...
-            $warp.loadData(function(entity) {
-                // And now populate the views...
+            $warp.pageView.initialize(function() {
+                // Create HTML views
+                var htmlViews = $warp.createViews();
+                $("#"+config.htmlElements.rootElem).append(htmlViews);
+                warptrace(3, "---------------");
+                warptrace(3, htmlViews.html());
+                warptrace(3, "---------------");
+
+                // Add HTML Bindings
+                $("#"+config.htmlElements.saveButton).on("click", $warp.save.bind(this));
+
+                // And finally: populate the views...
                 $warp.updateViewWithDataFromModel();
 
                 if (callback)
@@ -756,12 +708,16 @@ function WarpPageView(parent, config) {
 
     WarpWidget.call(this, parent, config);
 
-    if (config.parentRelnProxy)
-        this.parentRelnProxy = config.parentRelnProxy;
+    this.config = config;
     this.label = config.label;
     this.style = config.style;
     this.panels = [];
-    this._EntityProxy = null;
+    this._entityProxy = null;
+    this._relnProxies = [];
+    this._relnProxyIdx = -1;
+    this._childPageViews = [];
+    this._childPageViewIdx = -1;
+    this._addPanelsRequired = true;
 }
 
 WarpPageView.prototype = Object.create(WarpWidget.prototype);
@@ -773,39 +729,79 @@ WarpPageView.prototype.getPageView = function() {
 }
 
 WarpPageView.prototype.getEntityProxy = function() {
-    if (!this._EntityProxy) {
-        // Try to get the first element of the parent relationship
-        var rpi = this.getParent(); // RelationshipPanelItem containing this PageView
-        var parentPV = rpi.getPageView(); // Parent PV of this PageView
-        var reln = parentPV.getEntityProxy().getRelationshipProxy (rpi.relationshipID);
-        this.setEntityProxy(reln.getProxyForSelectedEntity());
-    }
-
-    return this._EntityProxy;
+    return this._entityProxy;
 }
 
 WarpPageView.prototype.setEntityProxy = function(entity) {
-    this._EntityProxy = entity;
+    this._entityProxy = entity;
 }
 
-WarpPageView.prototype.useEntityProxy = function(callback) {
-    var entity = this.getEntityProxy();
-    if (entity)
-        entity.useData(callback);
-    else
-        callback(null);
+WarpPageView.prototype.initialize = function (callback) {
+    if (!this._entityProxy)
+        throw "Must set EntityProxy first before initializing PageView!";
+
+    if (this._addPanelsRequired) {
+        this._addPanelsRequired = false;
+        for (var idx = 0; this.config.panels && idx < this.config.panels.length; idx++) {
+            var panel = this.config.panels[idx];
+            panel.localID = "panel" + idx;
+            this.addPanel(panel);
+        }
+    }
+
+    if (!this._entityProxy.data) {
+        this._entityProxy.useData(function (entityProxy) {
+            this.initialize(callback);
+        }.bind(this));
+    }
+    else {
+        if (this._relnProxyIdx === -1)
+            this._relnProxyIdx = 0;
+        if (this._relnProxyIdx < this._relnProxies.length) {
+            this._relnProxies[this._relnProxyIdx++].useRelationship(function (relnProxy) {
+                this.getEntityProxy().addRelationshipProxy(relnProxy);
+                this.initialize(callback);
+            }.bind(this));
+        }
+        else {
+            if (this._childPageViewIdx === -1)
+                this._childPageViewIdx = 0;
+            if (this._childPageViewIdx < this._childPageViews.length) {
+                var childPageView =
+                    this._childPageViews[this._childPageViewIdx++];
+                var relnProxyForChildPV =
+                    this.getEntityProxy().getRelationshipProxy(childPageView.parentRelationshipID);
+                if (!relnProxyForChildPV.getProxyForSelectedEntity())
+                    console.log("Hmmm?");
+                childPageView.setEntityProxy(relnProxyForChildPV.getProxyForSelectedEntity());
+                childPageView.initialize(function() {
+                    this.initialize(callback);
+                }.bind(this));
+            }
+            else {
+                callback();
+            }
+
+        }
+    }
+}
+
+WarpPageView.prototype.addChildPageView = function (panelItem, config) {
+    var pv = new WarpPageView(panelItem, config);
+    pv.parentRelationshipID = panelItem.relationshipID;
+    this._childPageViews.push(pv);
+    return pv;
+}
+
+WarpPageView.prototype.addRelationship = function (relnID) {
+    var jsonReln = $warp.model.getRelationshipByID(relnID);
+    var newReln = new RelationshipProxy(jsonReln, this.getEntityProxy());
+    this._relnProxies.push(newReln);
+    return newReln;
 }
 
 WarpPageView.prototype.updateViewWithDataFromModel = function() {
-    if (this.parentRelnProxy) {
-        var selectedEntity = this.parentRelnProxy.getProxyForSelectedEntity();
-        this.pageView.setEntityProxy(selectedEntity);
-        this.panels.forEach(function (panel) {
-            panel.updateViewWithDataFromModel();
-        });
-    }
-    else
-        this.panels.forEach(function(panel) { panel.updateViewWithDataFromModel(); });
+    this.panels.forEach(function(panel) { panel.updateViewWithDataFromModel(); });
 }
 WarpPageView.prototype.updateModelWithDataFromView = function() {
     this.panels.forEach(function(panel) { panel.updateModelWithDataFromView(); });
@@ -934,7 +930,7 @@ WarpPanel.prototype.addRelationshipPanelItem = function(config) {
             }
             pv.localID = "pv";
             pv.entityType = targetEntity.name;
-            pi.addPageView(pv);
+            pi.pageView = this.getPageView().addChildPageView(pi, pv);
             break;
         case 'Table':
             // Special class to handle tables
@@ -1052,7 +1048,7 @@ WarpBasicPropertyPanelItem.prototype = Object.create(WarpPanelItem.prototype);
 WarpBasicPropertyPanelItem.prototype.constructor = WarpBasicPropertyPanelItem;
 
 WarpBasicPropertyPanelItem.prototype.updateViewWithDataFromModel = function() {
-    this.getPageView().useEntityProxy(function (entity) {
+    this.getPageView().getEntityProxy().useData(function (entity) {
         if (entity) {
             var input = $("#" + this.globalID());
             input.val(entity.getValue(this.propertyName));
@@ -1062,7 +1058,7 @@ WarpBasicPropertyPanelItem.prototype.updateViewWithDataFromModel = function() {
     }.bind(this));
 }
 WarpBasicPropertyPanelItem.prototype.updateModelWithDataFromView = function() {
-    this.getPageView().useEntityProxy(function (entity) {
+    this.getPageView().getEntityProxy().useData(function (entity) {
         var input = $("#"+this.globalID());
         entity.setValue(this.propertyName, input.val());
         warptrace(1, "WarpBasicPropertyPanelItem.updateModelWithDataFromView():\n-  Warning - could not update "+this.propertyName+"="+entity[this.propertyName]);
@@ -1136,19 +1132,19 @@ WarpEnumPanelItem.prototype = Object.create(WarpPanelItem.prototype);
 WarpEnumPanelItem.prototype.constructor = WarpEnumPanelItem;
 
 WarpEnumPanelItem.prototype.updateViewWithDataFromModel = function() {
-    this.getPageView().useEntityProxy(function (entity) {
+    this.getPageView().getEntityProxy().useData(function (entity) {
         if (entity) {
         var select = $("#"+this.globalID());
-        select.val(entity.getValue(this.propertyName));
+        // xxx select.val(entity.getValue(this.propertyName));
         }
         else
             warptrace(2, "WarpEnumPanelItem.updateViewWithDataFromModel():\n-  Warning - could not get data from model for EnumPanelItem, ID="+this.globalID());
     }.bind(this));
 }
 WarpEnumPanelItem.prototype.updateModelWithDataFromView = function() {
-    this.getPageView().useEntityProxy(function (entity) {
+    this.getPageView().getEntityProxy().useData(function (entity) {
         var select = $("#"+this.globalID());
-        entity.setValue(this.propertyName, select.val());
+        // xxx entity.setValue(this.propertyName, select.val());
         warptrace("WarpEnumPanelItem.updateModelWithDataFromView():\n-  Warning - could not update "+this.propertyName+"="+entity[this.propertyName]);
     }.bind(this));
 }
@@ -1193,6 +1189,8 @@ function WarpRelationshipPanelItem(parent, config) {
     this.relationshipID = config.relationship[0];
     this.style=config.style;
     this.view = null;
+
+    this.getPageView().addRelationship(this.relationshipID);
 }
 
 WarpRelationshipPanelItem.prototype = Object.create(WarpPanelItem.prototype);
@@ -1305,18 +1303,6 @@ function WarpRPI_Carousel(parent, config) {
 
 WarpRPI_Carousel.prototype = Object.create(WarpRelationshipPanelItem.prototype);
 WarpRPI_Carousel.prototype.constructor = WarpRPI_Carousel;
-
-WarpRPI_Carousel.prototype.addPageView = function(config) {
-    this.pageView = new WarpPageView(this, config);
-
-    for (var idx=0; config.panels && idx<config.panels.length; idx++) {
-        var panel=config.panels[idx];
-        panel.localID = "panel"+idx;
-        this.pageView.addPanel(panel);
-    }
-
-    return this.pageView;
-}
 
 WarpRPI_Carousel.prototype.createViews = function() {
     var panel =         $('<div class="panel panel-success"></div>');

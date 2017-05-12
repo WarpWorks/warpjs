@@ -87,7 +87,7 @@ EntityTable.prototype.updateTable = function() {
     $("#" + this.searchOptions).append(searchOptions);
     $("." + this.table + "_csearch").on("click", function() {
         var searchStr = $(this).text();
-        var w = $(this).parent().parent().data("widgetid");
+        var w = $(this).parentEntityProxy().parentEntityProxy().data("widgetid");
         w = $active.entityTables[w];
         searchStr = searchStr.replace("...", "");
         searchStr = searchStr.replace(/\s/g, '');
