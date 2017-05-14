@@ -5,16 +5,31 @@
 function EntityProxy(type, isDocument, mode, parentRelnProxy) {
     this.type = type;
     this.isDocument = isDocument;
+    if (this.isDocument)
+        this.isDirty = false;
     this.mode = mode ? mode : "undefined";
-    if (parentRelnProxy)
-        this.parentRelnProxy = parentRelnProxy;
 
-    this.isDocument = "undefined";
     this.data = null;
+    this.parentRelnProxy = parentRelnProxy;
     this.relationships = {};
     this.history = [];
 
     $warp.entityCache.push(this);
+}
+
+EntityProxy.prototype.getParentRelationship = function () {
+    return this.parentRelnProxy;
+}
+
+EntityProxy.prototype.getParentEntity = function () {
+    return this.getParentRelationship().getParentEntity();
+}
+
+EntityProxy.prototype.getDocument = function() {
+    if (this.isDocument)
+        return this;
+    else
+        return this.getParentEntity().getDocument();
 }
 
 EntityProxy.prototype.useData = function(callback) {
@@ -41,12 +56,8 @@ EntityProxy.prototype.useData = function(callback) {
                 this.getDataViaOID(validateAndCall);
                 break;
             }
-            else if (this.parentRelnProxy) {
-                this.getDataViaParentReln(validateAndCall);
-                break;
-            }
             else
-                throw "Currently not supported: editEntity must provide oid or parentReln!";
+                throw "'editEntity' must provide oid!";
             break;
         case "addNewEntity":
             throw "TBD!";
@@ -65,17 +76,19 @@ EntityProxy.prototype.getValue = function(attrName) {
 
 EntityProxy.prototype.setValue = function(attrName, val) {
     if (!this.data || !this.data[attrName])
-        warptrace(1, "EntityProxy.setValue():\n Warning: Can not access value - "+attrName);
+        warptrace(1, "EntityProxy.setValue():\n- Warning: Can not access value - "+attrName);
     if (this.data[attrName] !== val) {
         this.history.push({ date: new Date(), attribute: attrName, newVal: val });
         this.data[attrName] = val;
+        this.getDocument().isDirty = true;
     }
 }
+
 
 EntityProxy.prototype.displayName = function() {
     if (!this.data)
         return this.type+": No data available";
-    return this.type+": "+this.data._id;
+    return this.type + "[" + this.data._id + "]";
 }
 
 EntityProxy.prototype.addRelationshipProxy = function(relnProxy) {
@@ -94,19 +107,6 @@ EntityProxy.prototype.getRelationshipProxy = function(relnID) {
 
 EntityProxy.prototype.getDataViaOID = function(callback) {
     throw "TBD!";
-}
-
-EntityProxy.prototype.getDataViaParentReln = function(callback) {
-    this.parentRelnProxy.useRelationship(function (relnProxy) {
-        // Try to use the first element in the relationship:
-        var arg = relnProxy.queryResults && relnProxy.queryResults.length > 0 ? relnProxy.queryResults[0] : null;
-        if (arg)
-            callback(arg.data);
-        else {
-            warptrace(2, "EntityProxy.getDataViaParentReln():\n-  Warning - empty query result!");
-            callback(null);
-        }
-    });
 }
 
 EntityProxy.prototype.getDataViaRootInstance = function(callback) {
@@ -165,7 +165,7 @@ function RelationshipProxy(jsonReln, parentEntityProxy) {
     this.currentPage = 0;
     this.entitiesPerPage = 5;
     this.maxNumberOfPages = 5;
-    this.SelectedEntityIdx = -1;
+    this.selectedEntityIdx = -1;
     this.filter = null;
 
     this.queryResults = [];
@@ -180,7 +180,7 @@ function RelationshipProxy(jsonReln, parentEntityProxy) {
 RelationshipProxy.prototype.toString = function (spacing) {
     var spaces = "";
     for (var idx = 0; idx<spacing; idx++) spaces += " ";
-    var str = "\n" + spaces + " - RelnProxy [" + this.name+"/" + this.id+"]: len="+this.queryResults.length+", idx="+this.SelectedEntityIdx;
+    var str = "\n" + spaces + " - RelnProxy [" + this.name+"/" + this.id+"]: len="+this.queryResults.length+", idx="+this.selectedEntityIdx;
     return str;
 }
 
@@ -202,47 +202,64 @@ RelationshipProxy.prototype.getParentEntity = function () {
 
 RelationshipProxy.prototype.setSelectedEntity = function (idx) {
     if (idx<0 || idx>this.queryResults.length)
-        warptrace(3, "RelationshipProxy.setSelectedEntity: Warning - SelectedEntityIdx is out of bounds!");
-    this.SelectedEntityIdx = idx;
+        warptrace(3, "RelationshipProxy.setSelectedEntity: Warning - selectedEntityIdx is out of bounds!");
+    this.selectedEntityIdx = idx;
 }
 
-RelationshipProxy.prototype.selectNextEntity = function () {
-
-
-    if ((this.currentPage * this.entitiesPerPage) + this.SelectedEntityIdx + 1 === this.queryResultsCount) {
-        this.SelectedEntityIdx = 0;
-        this.currentPage = 0;
-        this.requiresUpdate=true;
+RelationshipProxy.prototype.selectEntity = function (selection) {
+    var absolutePos = this.currentPage * this.entitiesPerPage + this.selectedEntityIdx;
+    if (selection === "+1") {
+        if (absolutePos === this.queryResultsCount - 1) {
+            // We have reached the end, start at beginning
+            this.selectedEntityIdx = 0;
+            this.currentPage = 0;
+            this.requiresUpdate = true;
+        }
+        else if (this.selectedEntityIdx < this.entitiesPerPage - 1) {
+            // Next element on same page
+            this.selectedEntityIdx++;
+        }
+        else if (this.selectedEntityIdx === this.entitiesPerPage - 1) {
+            // End of this page, start with next page
+            this.currentPage++;
+            this.selectedEntityIdx = 0;
+            this.requiresUpdate = true;
+            if (this.currentPage > this.queryResultsCount / this.entitiesPerPage)
+                this.currentPage = 0;
+        }
+        else throw "RelationshipProxy.selectEntity(): Internal error - case not covered!"
     }
-    else if (this.SelectedEntityIdx < this.entitiesPerPage - 1) {
-        this.SelectedEntityIdx++;
+    else if (selection === "-1") {
+        if (absolutePos === 0) {
+            // We have reached the beginning, continue at the end
+            this.currentPage = Math.round(this.queryResultsCount / this.entitiesPerPage) - 1;
+            this.selectedEntityIdx = this.queryResultsCount - this.currentPage * this.entitiesPerPage - 1;
+            this.requiresUpdate = true;
+        }
+        else if (this.selectedEntityIdx > 0) {
+            // Previous element on same page
+            this.selectedEntityIdx--;
+        }
+        else if (this.selectedEntityIdx === 0) {
+            // Beginning of this page, continue on prev. page
+            this.currentPage--;
+            this.selectedEntityIdx = this.entitiesPerPage - 1;
+            this.requiresUpdate = true;
+        }
+        else throw "RelationshipProxy.selectEntity(): Internal error - case not covered!"
     }
-    else {
-        this.currentPage++;
-        if (this.currentPage + 1>this.maxNumberOfPages)
-            warptrace(1, "RelationshipProxy.selectNextEntity():\n-  TBD - deal with currentPage > max");
-        this.SelectedEntityIdx=0;
-        this.requiresUpdate=true;
+    else if (typeof selection === "number") {
+        if (selection < 0 || selection >= this.entitiesPerPage)
+            throw "RelationshipProxy.selectEntity() - Selection out of bounds: "+selection;
+        this.selectedEntityIdx = selection;
     }
+    else
+        throw "RelationshipProxy.selectEntity() - Not supported: "+selection;
 }
-
-RelationshipProxy.prototype.selectPreviousEntity = function () {
-    if (this.SelectedEntityIdx > 0) {
-        this.SelectedEntityIdx--;
-    }
-    else {
-        this.currentPage--;
-        if (this.currentPage <0)
-            warptrace(1, "RelationshipProxy.selectNextEntity():\n-  TBD - deal with currentPage < 0");
-        this.SelectedEntityIdx=this.entitiesPerPage-1;
-        this.requiresUpdate=true;
-    }
-}
-
 
 RelationshipProxy.prototype.getProxyForSelectedEntity = function () {
-    if (this.queryResults[this.SelectedEntityIdx])
-        return this.queryResults[this.SelectedEntityIdx];
+    if (this.queryResults[this.selectedEntityIdx])
+        return this.queryResults[this.selectedEntityIdx];
     warptrace(1, "RelationshipProxy.getProxyForSelectedEntity():\n- Warning: Can´t get Porxy for selected entity!");
     return null;
 }
@@ -333,7 +350,8 @@ RelationshipProxy.prototype.useRelationship = function(callback) {
                         this.queryResults = [];
                         this.setSelectedEntity(0);
                         entityDocs.forEach(function (entityDoc) {
-                            var proxy = new EntityProxy(entityDoc.type, this.targetIsDocument, "editEntity");
+                            var cachedProxy = $warp.entityCache_getEntityByID(entityDoc._id);
+                            var proxy = cachedProxy ? cachedProxy : new EntityProxy(entityDoc.type, this.targetIsDocument, "editEntity", this);
                             proxy.data = entityDoc;
                             this.queryResults.push(proxy);
                         }.bind(this));
@@ -364,7 +382,8 @@ RelationshipProxy.prototype.useRelationship = function(callback) {
             this.queryResults = [];
             this.setSelectedEntity(0);
             embeddedReln.entities.forEach(function (entityDoc) {
-                var proxy = new EntityProxy(entityDoc.type, this.targetIsDocument, "editEntity");
+                var cachedProxy = $warp.entityCache_getEntityByID(entityDoc._id);
+                var proxy = cachedProxy ? cachedProxy : new EntityProxy(entityDoc.type, this.targetIsDocument, "editEntity", this);
                 proxy.data = entityDoc;
                 this.queryResults.push(proxy);
             }.bind(this));
@@ -393,8 +412,6 @@ function WarpWidget(parent, config) {
 
     this._globalID = (this.hasParent() ? this.getParent().globalID()+"_" : "") + this._localID;
     this.widgetIdx = WarpWidget.prototype.widgetCouter++;
-
-    this.getWarpJSClient().addToViewCache(this);
 }
 
 WarpWidget.prototype.widgetCouter = 0;
@@ -436,7 +453,6 @@ WarpWidget.prototype.globalID = function() {
 //
 
 function WarpJSClient() {
-    this.viewCache = {}; // Must be initialized first!
     this.entityCache = [];
 
     WarpWidget.call(this, null, { localID: "WarpJS" });
@@ -468,10 +484,6 @@ WarpJSClient.prototype.updateModelWithDataFromView = function() {
     this.pageView.updateModelWithDataFromView();
 }
 
-WarpJSClient.prototype.addToViewCache = function(w1) {
-    this.viewCache[w1.globalID()] = w1;
-}
-
 WarpJSClient.prototype.addBreadcrumb = function(config) {
     this.breadcrumb = new WarpBreadcrumb(this, config);
     return this.breadcrumb;
@@ -491,9 +503,54 @@ WarpJSClient.prototype.createViews = function() {
     return container;
 }
 
+WarpJSClient.prototype.entityCache_getEntityByID = function(id) {
+    this.entityCache.forEach(function (entityProxy) {
+        if (entityProxy.data & entityProxy.data._id === id)
+            warptrace(1, "WarpJSClient.entityCache_getEntityByID():\n- Found entity in cache: "+id);
+            return entityProxy;
+    });
+    return null;
+}
+
 WarpJSClient.prototype.save = function() {
-    this.updateModelWithDataFromView();
-    warptrace(1, "WarpJSClient.save():\n-  TBD - Write to server!");
+    $warp.pageView.updateModelWithDataFromView();
+
+    warptrace(3, "\n-------------------------\nWarpJSClient.save():\n-------------------------");
+    $warp.entityCache.forEach(function(entityProxy) {
+        if (entityProxy.data) {
+            if (entityProxy.isDocument)
+                warptrace(3, "  * Document\n    - Name: " + entityProxy.displayName() + "\n    - isDirty: " + entityProxy.isDirty);
+            else
+                warptrace(3, "  * Embedded Entity\n    - Child of:" + entityProxy.getDocument().displayName() + "\n    - Name: " + entityProxy.displayName() + "\n    - isDirty: " + entityProxy.isDirty);
+        }
+    });
+    warptrace(3, "\n-------------------------");
+
+    $warp.entityCache.forEach(function(entityProxy) {
+        warptrace(1, "\n-------------------------\nWarpJSClient.save():\n-------------------------");
+        if (entityProxy.isDocument && entityProxy.isDirty && entityProxy.data) {
+            warptrace(1, "  * Saving Document\n    - Name: " + entityProxy.displayName() + "\n    - isDirty: " + entityProxy.isDirty);
+            var reqData = {
+                // The backend-API only supports update of a single document at the moment - TBD!!!
+                commandList: [
+                    {
+                        command: "Update",
+                        domain: $warp.domain,
+                        targetType: entityProxy.data.type,
+                        entities: [entityProxy.data]
+                    }
+                ]
+            };
+            $warp.processCRUDcommands(reqData, function (result) {
+                if (result.success) {
+                    console.log("Save: OK!");
+                }
+                else {
+                    alert(result.err);
+                }
+            });
+        }
+    });
 }
 
 function initializeWarpJS (jsonData, config, callback) {
@@ -563,7 +620,7 @@ WarpJSClient.prototype.initialize = function(jsonData, config, callback) {
                 warptrace(3, "---------------");
 
                 // Add HTML Bindings
-                $("#"+config.htmlElements.saveButton).on("click", $warp.save.bind(this));
+                $("#"+config.htmlElements.saveButton).on("click", $warp.save);
 
                 // And finally: populate the views...
                 $warp.updateViewWithDataFromModel();
@@ -1090,15 +1147,20 @@ WarpBasicPropertyPanelItem.prototype.updateViewWithDataFromModel = function() {
             var input = $("#" + this.globalID());
             input.val(entity.getValue(this.propertyName));
         }
-        else
-            warptrace(2, "WarpBasicPropertyPanelItem.updateViewWithDataFromModel():\n-  Warning - could not get data from model for BasicPropertyPanelItem, ID="+this.globalID());
+        else {
+            warptrace(2, "WarpBasicPropertyPanelItem.updateViewWithDataFromModel():\n-  Warning - could not get data from model for BasicPropertyPanelItem, ID=" + this.globalID());
+        }
     }.bind(this));
 }
 WarpBasicPropertyPanelItem.prototype.updateModelWithDataFromView = function() {
     this.getPageView().getEntityProxy().useData(function (entity) {
-        var input = $("#"+this.globalID());
-        entity.setValue(this.propertyName, input.val());
-        warptrace(1, "WarpBasicPropertyPanelItem.updateModelWithDataFromView():\n-  Warning - could not update "+this.propertyName+"="+entity[this.propertyName]);
+        if (entity.data) {
+            var input = $("#" + this.globalID());
+            entity.setValue(this.propertyName, input.val());
+        }
+        else {
+            warptrace(1, "WarpBasicPropertyPanelItem.updateModelWithDataFromView():\n-  Warning - could not update " + this.propertyName + "=" + entity[this.propertyName]);
+        }
     }.bind(this));
 }
 
@@ -1329,7 +1391,6 @@ WarpRPI_Table.prototype.updateViewWithDataFromModel = function() {
 }
 
 WarpRPI_Table.prototype.updateModelWithDataFromView = function() {
-    warptrace(2, "WarpRPI_Table.updateModelWithDataFromView():\n-  Warning - 'updateModelWithDataFromView' for 'WarpRPI_Table' currently not implemented!");
 }
 
 //
@@ -1396,23 +1457,28 @@ WarpRPI_Carousel.prototype.createViews = function() {
     return panel;
 }
 
-WarpRPI_Carousel.prototype.left = function() {
-    warptrace(1, "WarpRPI_Carousel.left():\n-  Left-Click for "+this.globalID());
+WarpRPI_Carousel.prototype.selectEntityAndUpdate = function(selection) {
+    this.updateModelWithDataFromView();
     this.getRelationshipProxy().useRelationship(function(relnProxy) {
-        relnProxy.selectPreviousEntity();
-        this.childPageView.setEntityProxy(relnProxy.getProxyForSelectedEntity());
-        this.updateViewWithDataFromModel();
-    }.bind(this));
-}
-WarpRPI_Carousel.prototype.right = function() {
-    warptrace(1, "WarpRPI_Carousel.right():\n-  Right-Click for "+this.globalID());
-    this.getRelationshipProxy().useRelationship(function(relnProxy) {
-        relnProxy.selectNextEntity();
-        this.childPageView.reset(this.childPageView.config, relnProxy.getProxyForSelectedEntity());
-        this.childPageView.initialize(function() {
-            this.updateViewWithDataFromModel();
+        relnProxy.selectEntity(selection);
+        relnProxy.useRelationship(function (relnProxy) {
+            var proxyForSelectedEntity = relnProxy.getProxyForSelectedEntity();
+            this.childPageView.reset(this.childPageView.config, proxyForSelectedEntity);
+            this.childPageView.initialize(function () {
+                this.updateViewWithDataFromModel();
+            }.bind(this));
         }.bind(this));
     }.bind(this));
+}
+
+WarpRPI_Carousel.prototype.left = function() {
+    warptrace(1, "WarpRPI_Carousel.left():\n-  Left-Click for "+this.globalID());
+    this.selectEntityAndUpdate ("-1");
+}
+
+WarpRPI_Carousel.prototype.right = function() {
+    warptrace(1, "WarpRPI_Carousel.right():\n-  Right-Click for " + this.globalID());
+    this.selectEntityAndUpdate ("+1");
 }
 WarpRPI_Carousel.prototype.add = function() {
     warptrace(3, "WarpRPI_Carousel.left():\n-  (+)-Click for "+this.globalID());
@@ -1421,34 +1487,41 @@ WarpRPI_Carousel.prototype.del = function() {
     warptrace(3, "WarpRPI_Carousel.left():\n-  (-)-Click for "+this.globalID());
 }
 WarpRPI_Carousel.prototype.select = function(e) {
-    var txt = $('#'+this.globalID() + '_select').val();
-    warptrace(3, "WarpRPI_Carousel.left():\n-  New selection for "+this.globalID()+" - "+txt);
+    warptrace(3, "WarpRPI_Carousel.select():\n-  New selection for "+this.globalID());
+    var idx = parseInt(e.target.value);
+    this.selectEntityAndUpdate (idx);
 }
 
 WarpRPI_Carousel.prototype.updateViewWithDataFromModel = function() {
-    var rp= this.getRelationshipProxy();
+    var rp = this.getRelationshipProxy();
     rp.useRelationship(function(relnProxy) {
-        // Update idx-field
-        var idx = 1 + relnProxy.SelectedEntityIdx + (relnProxy.currentPage * relnProxy.entitiesPerPage);
-        var idxStr = idx+"/" + relnProxy.queryResultsCount;
-        $('#'+this.globalID() + '_idx').html(idxStr);
+        var from = 1 + relnProxy.currentPage * relnProxy.entitiesPerPage;
+        var to = from + relnProxy.entitiesPerPage - 1;
+        var idx = relnProxy.selectedEntityIdx + from;
+        var idxStr = idx + "/" + relnProxy.queryResultsCount;
+
+        $('#' + this.globalID() + '_idx').html(idxStr);
 
         // Update selection list
-        $('#'+this.globalID() + '_select').empty();
-        relnProxy.queryResults.forEach(function(entity) {
+        var select = $('#'+this.globalID() + '_select');
+        select.empty();
+        var option = $('<option>Showing matches from ' + from + ' to ' + to + '</option>');
+        select.append(option);
+        var option = $('<option>---------------------</option>');
+        select.append(option);
+        relnProxy.queryResults.forEach(function(entity, idx) {
             if (entity && entity.data) {
-                var option = $('<option>' + entity.displayName() + '</option>');
-                $('#'+this.globalID() + '_select').append(option);
+                option = $('<option>' + entity.displayName() + '</option>');
+                option.prop('value', idx);
+                select.append(option);
             }
             else
                 warptrace(2, "WarpRPI_Carousel.updateViewWithDataFromModel():\n-  Warning - can't access query result!");
         }.bind(this));
+        select.val(relnProxy.selectedEntityIdx);
 
         // Now update the page contained within
-        if (this.childPageView)
-            this.childPageView.updateViewWithDataFromModel();
-        else
-            warptrace(3, "WarpRPI_Carousel.left():\n-  Warning - RelationshipPanelItem without PageView! (ID:"+this.globalID()+")");
+        this.childPageView.updateViewWithDataFromModel();
     }.bind(this));
 
 }
