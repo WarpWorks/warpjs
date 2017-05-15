@@ -137,25 +137,15 @@ class HoverPreview {
         return filtered.length === 1 ? filtered[0].name : "";
     }
 
-    sortCoordinatesAscending(a, b) {
-        if (a < b) {
-            return -1;
-        } else if (a > b) {
-            return 1;
-        } else {
-            return 0;
-        }
+    getCoords(array, isY) {
+        return array.filter((value, index) => isY === Boolean(index % 2));
     }
 
-    getCoordinatesByAxis(array, cardinalAxis) {
-        return _.reduce(array, (memo, value, index) => {
-            if (cardinalAxis === 'x' && !(index % 2)) {
-                memo.push(value);
-            } else if (cardinalAxis === 'y' && index % 2) {
-                memo.push(value);
-            }
-            return memo;
-        }, []);
+    getXCoords(array) {
+        return this.getCoords(array, false);
+    }
+    getYCoords(array) {
+        return this.getCoords(array, true);
     }
 
     getImageMapCenterCoordinates(shape, formatedCoordinateArray) {
@@ -174,8 +164,8 @@ class HoverPreview {
             midX = formatedCoordinateArray[0];
             midY = formatedCoordinateArray[1];
         } else if (shape === "poly") {
-            const xValues = this.getCoordinatesByAxis(formatedCoordinateArray, 'x').sort(this.sortCoordinatesAscending);
-            const yValues = this.getCoordinatesByAxis(formatedCoordinateArray, 'y').sort(this.sortCoordinatesAscending);
+            const xValues = this.getXCoords(formatedCoordinateArray).sort((a, b) => a - b);
+            const yValues = this.getYCoords(formatedCoordinateArray).sort((a, b) => a - b);
 
             lowerBoundX = xValues[0];
             upperBoundX = xValues[xValues.length - 1];
