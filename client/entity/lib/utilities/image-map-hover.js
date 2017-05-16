@@ -36,27 +36,35 @@ class HoverPreview {
         const isZoneMiddle = zoneName === 'middle';
         const isZoneTopMiddle = zoneName === 'top-middle';
 
-        if (isZoneRight || isZoneLeft) {
-            let modalAdjustment;
-            let adjustedWidthOffset;
-            let adjustedModalHeight;
+        const marginLeft = parseInt($("#map-area-modal-container").css("margin-left"), 10);
+        const marginRight = parseInt($("#map-area-modal-container").css("margin-right"), 10);
+        const marginTop = parseInt($("#map-area-modal-container").css("margin-top"), 10);
+        const marginBottom = parseInt($("#map-area-modal-container").css("margin-bottom"), 10);
 
-            modalAdjustment = isZoneLeft ? computedCoords.midX - modalWidth + 20 : computedCoords.midX + 30;
-            adjustedWidthOffset = isZoneLeft && widthOffset > 0 ? widthOffset - 25 : widthOffset;
-            adjustedModalHeight = Math.round(modalHeight / 2);
+        let adjustedModalHeight = Math.round(modalHeight / 2);
+        let adjustedModalWidth = Math.round(modalWidth / 2);
 
-            modalPosition.left = modalAdjustment + adjustedWidthOffset;
-            modalPosition.top = computedCoords.midY - adjustedModalHeight - 10;
+        if (isZoneLeft) {
+            let adjustedWidthOffset = isZoneLeft && widthOffset > 0 ? widthOffset - 25 : widthOffset + 10;
+            let left = computedCoords.midX - ((computedCoords.midX - computedCoords.minX) / 4) - modalWidth - marginRight + adjustedWidthOffset;
+
+            modalPosition.left = computedCoords.midX - ((computedCoords.midX - computedCoords.minX) / 4) - modalWidth - marginRight + adjustedWidthOffset;
+            modalPosition.top = computedCoords.midY - (modalHeight - adjustedModalHeight);
             modalPosition.flagHeight = adjustedModalHeight;
-            modalPosition.flagClass = isZoneLeft ? 'modal-flag-right' : 'modal-flag-left';
+            modalPosition.flagClass = 'modal-flag-right';
+        } else if(isZoneRight) {
+            modalPosition.left = computedCoords.midX + (computedCoords.maxX - computedCoords.midX) + marginLeft + widthOffset;
+            modalPosition.top = computedCoords.midY - (modalHeight - adjustedModalHeight);
+            modalPosition.flagHeight = adjustedModalHeight;
+            modalPosition.flagClass = 'modal-flag-left';
         } else if (isZoneMiddle || isZoneTopMiddle) {
-            modalPosition.left = computedCoords.midX - 100 + widthOffset;
-            modalPosition.top = computedCoords.midY - modalHeight - 40;
+            modalPosition.left = computedCoords.midX - adjustedModalWidth + widthOffset;
+            modalPosition.top = computedCoords.midY - (computedCoords.midY - computedCoords.minY) - modalHeight + marginBottom;
             modalPosition.flagHeight = modalHeight + 20;
             modalPosition.flagClass = 'modal-flag-bottom';
         } else {
-            modalPosition.left = computedCoords.midX - 100 + widthOffset;
-            modalPosition.top = computedCoords.midY + 30;
+            modalPosition.left = computedCoords.midX - adjustedModalWidth + widthOffset;
+            modalPosition.top = computedCoords.midY + (computedCoords.maxY - computedCoords.midY) + marginTop;
             modalPosition.flagHeight = bottomMiddleFlagHeight;
             modalPosition.flagClass = 'modal-flag-top';
         }
