@@ -36,7 +36,9 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(session.middlewares.i3cUser);
 
-app.use(routesInfo('/', '/').router);
+app.use('/session', session.routesInfo('/session', '/').router);
+
+app.use('/', session.middlewares.requiresI3cUser, routesInfo('/', '/').router);
 
 app.use('/admin',
     // Authentication and authorization
