@@ -31,36 +31,35 @@ class HoverPreview {
     generateModalPositionData(modalHeight, modalWidth, zoneName, computedCoords, bottomMiddleFlagHeight) {
         const modalPosition = {};
         const widthOffset = this.getWidthOffset();
-        const isZoneLeft = zoneName.indexOf('left') > -1;
-        const isZoneRight = zoneName.indexOf('right') > -1;
-        const isZoneMiddle = zoneName === 'middle';
-        const isZoneTopMiddle = zoneName === 'top-middle';
-
         const marginLeft = parseInt($("#map-area-modal-container").css("margin-left"), 10);
         const marginRight = parseInt($("#map-area-modal-container").css("margin-right"), 10);
         const marginTop = parseInt($("#map-area-modal-container").css("margin-top"), 10);
         const marginBottom = parseInt($("#map-area-modal-container").css("margin-bottom"), 10);
-
         let adjustedModalHeight = Math.round(modalHeight / 2);
         let adjustedModalWidth = Math.round(modalWidth / 2);
 
-        if (isZoneLeft) {
-            let adjustedWidthOffset = isZoneLeft && widthOffset > 0 ? widthOffset - 25 : widthOffset + 10;
-            let left = computedCoords.midX - ((computedCoords.midX - computedCoords.minX) / 4) - modalWidth - marginRight + adjustedWidthOffset;
+        if (zoneName === "zone-left") {
+            const imageCenteredPixelAdjustment = 25;
+            const imagePulledLeftPixelAdjustemnt = 10;
+            let adjustedWidthOffset = widthOffset > 0
+                                        ? widthOffset - imageCenteredPixelAdjustment
+                                        : widthOffset + imagePulledLeftPixelAdjustemnt;
 
             modalPosition.left = computedCoords.midX - ((computedCoords.midX - computedCoords.minX) / 4) - modalWidth - marginRight + adjustedWidthOffset;
             modalPosition.top = computedCoords.midY - (modalHeight - adjustedModalHeight);
             modalPosition.flagHeight = adjustedModalHeight;
             modalPosition.flagClass = 'modal-flag-right';
-        } else if(isZoneRight) {
+        } else if (zoneName === "zone-right") {
             modalPosition.left = computedCoords.midX + (computedCoords.maxX - computedCoords.midX) + marginLeft + widthOffset;
             modalPosition.top = computedCoords.midY - (modalHeight - adjustedModalHeight);
             modalPosition.flagHeight = adjustedModalHeight;
             modalPosition.flagClass = 'modal-flag-left';
-        } else if (isZoneMiddle || isZoneTopMiddle) {
+        } else if (zoneName === "zone-top") {
+            const pixelsToFixFlagToModalBottom = 20;
+
             modalPosition.left = computedCoords.midX - adjustedModalWidth + widthOffset;
             modalPosition.top = computedCoords.midY - (computedCoords.midY - computedCoords.minY) - modalHeight + marginBottom;
-            modalPosition.flagHeight = modalHeight + 20;
+            modalPosition.flagHeight = modalHeight + pixelsToFixFlagToModalBottom;
             modalPosition.flagClass = 'modal-flag-bottom';
         } else {
             modalPosition.left = computedCoords.midX - adjustedModalWidth + widthOffset;
@@ -68,6 +67,7 @@ class HoverPreview {
             modalPosition.flagHeight = bottomMiddleFlagHeight;
             modalPosition.flagClass = 'modal-flag-top';
         }
+
         return modalPosition;
     }
 
@@ -136,13 +136,19 @@ class HoverPreview {
         }
     }
 
-    getImagePartition(xCoord, yCoord) {
-        const filtered = _.filter(this._imagePartition, (partition) => {
-            return xCoord >= partition.minX && xCoord <= partition.maxX &&
-            yCoord >= partition.minY && yCoord <= partition.maxY;
-        });
+    getImageAreaZone(xCoord, yCoord) {
+        let zoneName = "";
 
-        return filtered.length === 1 ? filtered[0].name : "";
+        if (xCoord < this._imagePartition['left-zone']) {
+            zoneName = "zone-left";
+        } else if (xCoord > this._imagePartition['right-zone']) {
+            zoneName = "zone-right";
+        } else if (yCoord < this._imagePartition['center-divide']) {
+            zoneName = "zone-top";
+        } else {
+            zoneName = "zone-bottom";
+        }
+        return zoneName;
     }
 
     getCoords(array, isY) {
@@ -210,7 +216,7 @@ class HoverPreview {
     createImageAreaCacheObject(modalWidth, areaShape, imageAreaCoordinates) {
         const formattedCoordinates = this.getFormattedCoordinateList(imageAreaCoordinates);
         const computedCoordinates = this.getImageMapCenterCoordinates(areaShape, formattedCoordinates);
-        const zoneName = this.getImagePartition(computedCoordinates.midX, computedCoordinates.midY);
+        const zoneName = this.getImageAreaZone(computedCoordinates.midX, computedCoordinates.midY);
         const modalPositionObject = {};
 
         return {
@@ -229,52 +235,16 @@ class HoverPreview {
         };
     }
 
-    generatePartitionObject(partitionName, minX, minY, maxX, maxY) {
-        return {
-            name: partitionName,
-            minX: minX,
-            maxX: maxX,
-            minY: minY,
-            maxY: maxY,
-            midX: Math.round((minX + maxX) / 2),
-            midY: Math.round((minY + minY) / 2)
+    generateImageZone(width, height) {
+        const zoneRightXCoord = width - Math.floor(width / 3);
+        const zoneLeftXCoord = width - (2 * Math.floor(width / 3));
+        const zoneMiddleDivideY = height - (Math.round(height / 2));
 
+        this._imagePartition = {
+            'left-zone': zoneLeftXCoord,
+            'right-zone': zoneRightXCoord,
+            'center-divide': zoneMiddleDivideY
         };
-    }
-
-    generateImagePartitions(width, height) {
-        const partitionX = Math.floor(width / 3);
-        const partitionY = Math.floor(height / 3);
-
-        const q1MinX = 0;
-        const q1MaxX = partitionX;
-
-        const q2MinX = q1MaxX + 1;
-        const q2MaxX = q1MaxX * 2;
-
-        const q3MinX = q2MaxX + 1;
-        const q3MaxX = width;
-
-        const q1MinY = 0;
-        const q1MaxY = partitionY;
-
-        const q2MinY = q1MaxY + 1;
-        const q2MaxY = q1MaxY * 2;
-
-        const q3MinY = q2MaxY + 1;
-        const q3MaxY = height;
-
-        this._imagePartition = [];
-
-        this._imagePartition.push(this.generatePartitionObject("top-left", q1MinX, q1MinY, q1MaxX, q1MaxY));
-        this._imagePartition.push(this.generatePartitionObject("top-middle", q2MinX, q1MinY, q2MaxX, q1MaxY));
-        this._imagePartition.push(this.generatePartitionObject("top-right", q3MinX, q1MinY, q3MaxX, q1MaxY));
-        this._imagePartition.push(this.generatePartitionObject("middle-left", q1MinX, q2MinY, q1MaxX, q2MaxY));
-        this._imagePartition.push(this.generatePartitionObject("middle", q2MinX, q2MinY, q2MaxX, q2MaxY));
-        this._imagePartition.push(this.generatePartitionObject("middle-right", q3MinX, q2MinY, q3MaxX, q2MaxY));
-        this._imagePartition.push(this.generatePartitionObject("bottom-left", q1MinX, q3MinY, q1MaxX, q3MaxY));
-        this._imagePartition.push(this.generatePartitionObject("bottom-middle", q2MinX, q3MinY, q2MaxX, q3MaxY));
-        this._imagePartition.push(this.generatePartitionObject("bottom-right", q3MinX, q3MinY, q3MaxX, q3MaxY));
     }
 
     onFocus($, event) {
@@ -282,7 +252,7 @@ class HoverPreview {
             const imgHeight = Math.round($(constants.FIGURE_CONTAINER).children().height());
             const imgWidth = Math.round($(constants.FIGURE_CONTAINER).children().width());
 
-            this.generateImagePartitions(imgWidth, imgHeight);
+            this.generateImageZone(imgWidth, imgHeight);
         }
 
         const href = $(event.currentTarget).data('targetHref');
