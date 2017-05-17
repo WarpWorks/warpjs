@@ -1,23 +1,13 @@
-{{#each _embedded.overviews}}
-    {{#if Heading}}
-        <div class="row">
-            <div class="col-xs-12">
-                <p class="map-area-preview-heading">{{Heading}}</p>
-            </div>
-        </div>
-    {{/if}}
-    {{#if name}}
-        <div class="row">
-            <div class="col-xs-12">
-                <h3 class="map-area-preview-heading">{{name}}</h3>
-            </div>
-        </div>
-    {{/if}}
-    <div class="overview-image-container row">
-        <div class="col-xs-12 {{#unless Content}}text-center{{/unless}}">
-            {{#if Content}}
-                <p class="map-area-preview-content">{{#if containsHTML}}{{{Content}}}{{else}}{{Content}}{{/if}}</p>
-            {{/if}}
-        </div>
+<div class="row">
+    <div class="col-xs-12">
+        <p class="map-area-preview-heading">{{title}}</p>
     </div>
-{{/each}}
+</div>
+<div class="overview-image-container row">
+    <div class="col-xs-12 {{#unless content}}text-center{{/unless}}">
+        {{#if content}}
+            <p class="map-area-preview-content">{{#if containsHTML}}{{{content}}}{{else}}{{content}}{{/if}}</p>
+        {{/if}}
+    </div>
+</div>
+<div id="map-area-modal-flag" />

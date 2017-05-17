@@ -14,7 +14,7 @@
         </div>
         {{#if _embedded.Images}}
             {{#each _embedded.Images}}
-                <figure class="{{#if ../Content}}pull-left{{/if}}">
+                <figure class="figure-container {{#if ../Content}}pull-left{{/if}}">
                     <img {{#if ../Content}}class="margin-right"{{/if}}
                         {{#if ImageURL}}src="{{ImageURL}}"{{/if}}
                         {{#if Width}}width="{{Width}}"{{/if}}
