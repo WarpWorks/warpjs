@@ -453,7 +453,7 @@ RelationshipProxy.prototype.useRelationship = function(callback) {
                 $warp.processCRUDcommands(reqData, function (result) {
                     if (result.success) {
                         var entityDocs = result.resultList[0].queryResult;
-                        this._queryResultsCount = result.resultList[0].queryResultsCount;
+                        this._queryResultsCount = result.resultList[0].totalQueryResultsCount;
                         this._queryResults = [];
                         entityDocs.forEach(function (entityDoc) {
                             var cachedProxy = $warp.entityCache_getEntityByID(entityDoc._id);
@@ -461,8 +461,8 @@ RelationshipProxy.prototype.useRelationship = function(callback) {
                             proxy.data = entityDoc;
                             this._queryResults.push(proxy);
                         }.bind(this));
-                        this.ensureSelectedEntityIdxIsValid();
                         this.requiresUpdate = false;
+                        this.ensureSelectedEntityIdxIsValid();
                         warptrace(1, "RelationshipProxy.useRelationship", "Document: AggregationQuery for " + result.resultList[0].parentRelnName + " (found:" + this.totalQueryResultsCount() + ")");
                         callback(this);
                     }
@@ -487,13 +487,13 @@ RelationshipProxy.prototype.useRelationship = function(callback) {
             this._queryResultsCount = embeddedReln.entities.length;
             this._queryResults = [];
             this.requiresUpdate = false;
-            this.ensureSelectedEntityIdxIsValid();
             embeddedReln.entities.forEach(function (entityDoc) {
                 var cachedProxy = $warp.entityCache_getEntityByID(entityDoc._id);
                 var proxy = cachedProxy ? cachedProxy : new EntityProxy(entityDoc.type, this.targetIsDocument, "editEntity", this);
                 proxy.data = entityDoc;
                 this._queryResults.push(proxy);
             }.bind(this));
+            this.ensureSelectedEntityIdxIsValid();
             var desc = entity.path ? entity.path : entity.displayName();
             warptrace(1, "RelationshipProxy.useRelationship", "Embedded Entity: AggregationQuery for " + this.jsonReln.name + " (found:" + this.totalQueryResultsCount() + ")");
             callback(this);
@@ -804,7 +804,7 @@ WarpJSClient.prototype.processCRUDcommands = function (commandList, handleResult
             }
         },
         error: function () {
-            console.log(1, "WarpJSClient.processCRUDcommands():\n-  Error while posting CRUD commands!");
+            warptrace(1, "WarpJSClient.processCRUDcommands():\n-  Error while posting CRUD commands!");
         }
     });
 }
@@ -1145,7 +1145,7 @@ WarpPageView.prototype.createViews = function()
 
 function WarpPanel(parent, config) {
     WarpWidget.call(this, parent, config);
-    this.position = config.position;
+    this.position = parseInt('' + config.position);
     this.label = config.label;
     this.panelItems = [];
 }
@@ -1379,7 +1379,7 @@ WarpBasicPropertyPanelItem.prototype.createViews = function()
         label.text(this.label);
 
         var textDiv = $('<div></div>');
-        textDiv.prop('class', 'col-sm-12');
+        textDiv.prop('class', 'col-sm-10');
 
         var input = $('<textarea></textarea>');
         input.prop('class', 'form-control');
@@ -1495,6 +1495,7 @@ WarpRPI_CSV.prototype = Object.create(WarpRelationshipPanelItem.prototype);
 WarpRPI_CSV.prototype.constructor = WarpRPI_CSV;
 
 WarpRPI_CSV.prototype.createViews = function() {
+    var form = $('<form class="form-vertical"></form>');
     var formGroup = $('<div class="form-group"></div>');
 
     var label = $('<label></label>');
@@ -1502,11 +1503,15 @@ WarpRPI_CSV.prototype.createViews = function() {
     label.prop('class', 'col-sm-2 control-label');
     label.text(this.label);
 
-    var csvDiv = $('<div></div>');
-    csvDiv.prop('class', 'col-sm-10');
+    var csvEditorDiv = $('<div></div>');
+    csvEditorDiv.prop('class', 'col-sm-10');
 
+    var startEditorButton = $('<button type="button" class="btn btn-sm">Edit</button>');
+    csvEditorDiv.append(startEditorButton);
+
+    form.append(formGroup);
     formGroup.append(label);
-    formGroup.append(csvDiv);
+    formGroup.append(csvEditorDiv);
 
     return formGroup;
 }
@@ -1646,8 +1651,8 @@ WarpRPI_Table.prototype.add = function() {
 }
 WarpRPI_Table.prototype.rowSelected = function() {
     warptrace(1, "WarpRPI_Table.rowSelected():\n-  Click for " + this.type + ', id:' + this.id);
-//  TBD: var url = $warp.links.self.href + '/' + this.type + '?oid=' + this.id;
-    url = "http://localhost:3001/app/MyComplexShop/" + this.type + '?oid=' + this.id;
+    //  TBD: var url = $warp.links.self.href + '/' + this.type + '?oid=' + this.id;
+    url = "http://localhost:3001/app/" + $warp.domain + "/" + this.type + '?oid=' + this.id;
     window.location.href = url;
 }
 
@@ -1777,17 +1782,7 @@ WarpRPI_Carousel.prototype.updateModelWithDataFromView = function() {
         warptrace(1, "WarpRPI_Carousel.left():\n-  Warning - RelationshipPanelItem without PageView! (ID:"+this.globalID()+")");
 }
 
-WarpRPI_Carousel.prototype.select = function(e) {
-    warptrace(1, "WarpRPI_Carousel.select():\n-  New selection for "+this.globalID());
-    var idx = parseInt(e.target.value);
-    this.selectEntityAndUpdate (idx);
-}
-
 WarpRPI_Carousel.prototype.selectEntityAndUpdate = function(selection) {
-    warptrace(1, "--------------- View Hierarchy OLD ---------------");
-    warptrace(1, $warp.pageView.toString());
-    warptrace(1, "--------------- -------------- ---------------");
-
     this.updateModelWithDataFromView();
     this.getRelationshipProxy().useRelationship(function(relnProxy) {
         relnProxy.selectEntity(selection);
@@ -1796,23 +1791,30 @@ WarpRPI_Carousel.prototype.selectEntityAndUpdate = function(selection) {
             this.childPageView.reset(this.childPageView.config, proxyForSelectedEntity);
             this.childPageView.initialize(function () {
 
-                $warp.createViews();
-                $warp.updateViewWithDataFromModel();
+                var newViews = this.createViews();
+                var parentElem = $('#' + this.getParent().globalID());
+                parentElem.empty();
+                parentElem.append(newViews);
+                this.updateViewWithDataFromModel();
 
-                warptrace(1, "--------------- View Hierarchy NEW ---------------");
-                warptrace(1, $warp.pageView.toString());
-                warptrace(1, "--------------- -------------- ---------------");
+                warptrace(2, "--------------- Updated View Hierarchy ---------------");
+                warptrace(2, $warp.pageView.toString());
+                warptrace(2, "--------------- ---------------------- ---------------");
 
             }.bind(this));
         }.bind(this));
     }.bind(this));
 }
 
+WarpRPI_Carousel.prototype.select = function(e) {
+    warptrace(1, "WarpRPI_Carousel.select():\n-  New selection for "+this.globalID());
+    var idx = parseInt(e.target.value);
+    this.selectEntityAndUpdate (idx);
+}
 WarpRPI_Carousel.prototype.left = function() {
     warptrace(1, "WarpRPI_Carousel.left():\n-  Left-Click for "+this.globalID());
     this.selectEntityAndUpdate ("-1");
 }
-
 WarpRPI_Carousel.prototype.right = function() {
     warptrace(1, "WarpRPI_Carousel.right():\n-  Right-Click for " + this.globalID());
     this.selectEntityAndUpdate ("+1");
