@@ -115,12 +115,12 @@ EntityTable.prototype.updateTable = function() {
     });
 
     // Pagination
-    var totalPages = Math.ceil(this.relationship.totalQueryResultsCount / this.relationship.entitiesPerPage);
+    var totalPages = Math.ceil(this.relationship.noOfTotalQueryResults / this.relationship.entitiesPerPage);
     $("#" + this.pagination).empty();
     for (var cnt = 0; cnt < totalPages; cnt++) {
         // Add "..." if too many results
         if (cnt === this.relationship.maxNumberOfPages) {
-            var pageIcon = $("<li><a href='#' title='Too many search results: found " + this.relationship.totalQueryResultsCount + " matching elements. Please refine search query!'>...</a></li>");
+            var pageIcon = $("<li><a href='#' title='Too many search results: found " + this.relationship.noOfTotalQueryResults + " matching elements. Please refine search query!'>...</a></li>");
             $("#" + this.pagination).append(pageIcon);
             break;
         }

@@ -32,7 +32,7 @@
      Modal for selection of target associations
   -->
 <div class="container">
-    <div class="modal fade" id="selectEntityM" role="dialog">
+    <div class="modal fade" id="associationEditorM" role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
@@ -43,53 +43,23 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-10 col-md-offset-1">
-                            <div class="panel panel-default panel-table">
-                                <div class="panel-heading">
-                                    <div class="row">
-                                        <div class="col-xs-12">
-                                            <div class="input-group">
-                                                <div class="input-group-btn">
-                                                    <button class="btn btn-default entity-search" type="button" id="selectEntityM_searchButton">
-                                                        <span class="glyphicon glyphicon-search"></span>
-                                                    </button>
-                                                    <button type="button" class="btn btn-default dropdown-toggle entity-search" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        Search <span class="caret"></span>
-                                                    </button>
-                                                    <ul class="dropdown-menu" id="selectEntityM_searchOptions">
-                                                    </ul>
-                                                </div>
-                                                <input type="text" class="form-control entity-search" id="selectEntityM_searchInput">
-                                            </div>
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <form class="form-inline">
+                                        Select type:
+                                        <div class="form-group">
+                                            <select class="form-control" id="WarpJS_assocSelectionModal_selectFromType">
+                                            </select>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="panel-body">
-                                    <table class="table table-striped table-bordered table-list" id="selectEntityM_table">
-                                    </table>
-                                </div>
-                                <div class="panel-footer">
-                                    <div class="row">
-                                        <div class="col col-xs-7">
-                                            <ul class="pagination hidden-xs" id="selectEntityM_pagination">
-                                            </ul>
-                                        </div>
-                                        <div class="col col-xs-5">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <form class="form-horizontal" id="entityBasicsF">
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Selection:</label>
-                        <div class="col-sm-8">
-                            <ul class="nav nav-pills" id="selectEntityM_selectionUL">
+                                    </form>
+                                </li>
+                                <li class="list-group-item" id="WarpJS_assocSelectionModal_selectFromTable">Select Table</li>
+                                <li class="list-group-item" id="WarpJS_assocSelectionModal_selectionList">Selection List</li>
+                                <li class="list-group-item" id="WarpJS_assocSelectionModal_selectionDetails">Selection Details</li>
                             </ul>
                         </div>
                     </div>
-                </form>
+                </div>
                 <div class="modal-footer">
                     <button type="button" id="selectEntityM_selectB" class="btn btn-default" data-dismiss="modal">
                         OK
