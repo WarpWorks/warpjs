@@ -137,10 +137,10 @@ EntityProxy.prototype.historyToString = function() {
 EntityProxy.prototype.displayName = function() {
     if (!this.data)
         return this.type + ": No data available";
-    if (this.data.path)
+    if (this.data.path && warptracelevel > 1)
         return this.data.path;
-    if (this.data.name)
-        return this.data.name;
+    if (this.data.Name)
+        return this.data.Name;
     return this.type + "[" + this.data._id + "]";
 }
 
@@ -864,7 +864,10 @@ WarpJSClient.prototype.initialize = function(jsonData, config, callback) {
     // Get page view
     this.model = new WarpModelParser(jsonData);
     var entityDefn = this.model.getEntityByName(config.entityType);
-    if (!entityDefn) throw "Can`t find entity:"+config.entityType;
+    if (!entityDefn) {
+        alert ("Invalid entity type in URL: "+config.entityType);
+        throw "Can`t find entity:"+config.entityType;
+    }
     var defaultView = this.model.getPageView(entityDefn, config.viewName);
     defaultView.entityType = config.entityType;
 
@@ -1526,7 +1529,7 @@ WarpRPI_CSV.prototype = Object.create(WarpRelationshipPanelItem.prototype);
 WarpRPI_CSV.prototype.constructor = WarpRPI_CSV;
 
 WarpRPI_CSV.prototype.createViews = function() {
-    var form = $('<form class="form-vertical"></form>');
+    var form = $('<form class="form-horizontal"></form>');
     var formGroup = $('<div class="form-group"></div>');
 
     var label = $('<label></label>');
@@ -1545,7 +1548,7 @@ WarpRPI_CSV.prototype.createViews = function() {
     formGroup.append(label);
     formGroup.append(csvEditorDiv);
 
-    return formGroup;
+    return form;
 }
 
 WarpRPI_CSV.prototype.openAssociationEditor = function() {
@@ -1967,6 +1970,7 @@ WarpTable.prototype.right = function() {
 function WarpAssociationEditor (sourceEntityProxy, relationshipID, globalID) {
     this.sourceEntityProxy = sourceEntityProxy;
     this.relationshipID = relationshipID;
+    this.maxAssocs = 6;
     this._globalID = globalID;
 }
 
@@ -1999,6 +2003,7 @@ WarpAssociationEditor.prototype.init = function() {
 
     // Relationship proxy for selection targets:
     this.assocProxy = new AssociationProxy(this.relnJson, this.sourceEntityProxy);
+    this.assocProxy.entitiesPerPage = this.maxAssocs;
 
     // Table view for target
     var tv = $warp.model.getDefaultTableView(this.targetJson);
@@ -2020,6 +2025,9 @@ WarpAssociationEditor.prototype.init = function() {
     // Update selections
     this.updateSelections();
 
+    // Don't show selection details initially:
+    $('#WarpJS_assocSelectionModal_selectionDetails').hide();
+
     $("#associationEditorM").modal();
 }
 
@@ -2028,19 +2036,51 @@ WarpAssociationEditor.prototype.globalID = function() {
 }
 
 WarpAssociationEditor.prototype.updateSelections = function() {
+    var label = $('<li class="disabled"><a href="#">Selected:</a></li>');
     var ul = $('<ul class="nav nav-pills"></ul>');
+    ul.append(label);
     $("#WarpJS_assocSelectionModal_selectionList").empty().append(ul);
     this.assocProxy.useRelationship(function(assocProxy) {
         for (var idx = 0; idx < this.assocProxy.noOfResultsOnCurrentPage(); idx++) {
             this.assocProxy.queryResult(idx).useData (function (proxy) {
-                var li = $('<li><a href="#">' + proxy.displayName() + '</a></li>');
+                var name = proxy.displayName();
+                var li = $('<li><a href="#">' + name + '</a></li>');
+                li.on('click', function() {
+                    this.context.editDetails (this.id, this.name);
+                }.bind({id: proxy.id, name: name, context:this }));
                 ul.append(li);
-            });
+            }.bind(this));
         }
     }.bind(this));
 }
 
+var formInline =        $('<form    class="form-inline"></form>');
+var formGroup =         $('<div     class="form-group"></div>');
+
+
+WarpAssociationEditor.prototype.editDetails = function(id, name) {
+    var edit =      $('#WarpJS_assocSelectionModal_selectionDetails');
+    var fg = $('<div class="form-group"></div>');
+    var lbl = $('<label for="comment">Description for selection \'' + name + '\':</label>');
+    var txt = $('<textarea class="form-control" rows="3" id="WarpJS_assocSelectionModal_selectionDetails_input"></textarea>');
+
+    var btnGrp = $('<div class="btn-group-sm" role="group" aria-label="Basic example" style="margin-top: 5px;">');
+    var button1 =   $('<button type="button" class="btn btn-secondary">Confirm</button>');
+    var button2 =   $('<button type="button" class="btn btn-secondary">Remove from Selection</button>');
+    btnGrp.append(button1).append(button2);
+    fg.append(lbl).append(txt).append(btnGrp);
+
+    edit.empty().append(fg);
+    $('#WarpJS_assocSelectionModal_selectionDetails').show();
+}
+
 WarpAssociationEditor.prototype.addSelection = function(id, type) {
-    this.assocProxy.addToAssocTargets(id, type);
-    this.updateSelections();
+    this.assocProxy.useRelationship(function (assocProxy) {
+        if (assocProxy.noOfTotalQueryResults() >= this.maxAssocs) {
+            alert ("Reached max no. of associations currently supported: " + this.maxAssocs);
+            return;
+        }
+        this.assocProxy.addToAssocTargets(id, type);
+        this.updateSelections();
+    }.bind(this));
 }
