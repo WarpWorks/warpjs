@@ -8,6 +8,7 @@ const baseConfig = {
     jwtSecret: 'cannotGuessThi$',
     jwtCookieName: 'i3cPortalJWT',
     domainName: 'IIC',
+    mapBrowserMarker: "HotSpot",
     mapTypes: ["IndustrySector", "ApplicationArea", "StandardsOrganization", "TechnologyArea"],
     persistence: {
         host: process.env.MONGODB_HOST || 'localhost',
