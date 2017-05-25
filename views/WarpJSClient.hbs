@@ -1,0 +1,26 @@
+<script src="{{baseUrl}}/app/WarpJSClientLib.js"></script>
+<script src="{{baseUrl}}/app/MyComplexShopViews.js"></script>
+<script src="{{baseUrl}}/app/IIC.js"></script>
+
+<style>
+    .tab-pane.active {
+        padding-top: 10px;
+    }
+</style>
+
+<script>
+    $(document).ready(function () {
+        var config = {
+            viewName: "DefaultPageView",
+            htmlElements: {
+                rootElem: "warpPageRoot",
+                saveButton: "NavButtonSaveA"
+            }
+        };
+        initializeWarpJS (warpViews_IIC, config, function () {
+            console.log("MyComplex Shop: Initialization successful!");
+        });
+    });
+</script>
+<div id="warpPageRoot">
+</div>
