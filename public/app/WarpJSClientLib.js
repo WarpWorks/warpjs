@@ -495,7 +495,7 @@ AggregationProxy.prototype.useRelationship = function(callback) {
         this.getParentEntity().useData(function (entity) {
             var embeddedReln = null;
             entity.data.embedded.forEach(function(e) {
-                if (e.parentRelnId === this.jsonReln.id)
+                if (e.parentRelnID === this.jsonReln.id)
                     embeddedReln = e;
             }.bind(this));
             this._queryResultsCount = embeddedReln.entities.length;
@@ -538,15 +538,7 @@ AssociationProxy.prototype.getAssocTargetsProxy = function() {
 }
 
 AssociationProxy.prototype.noOfTotalQueryResults = function () {
-    if (this.requiresUpdate)
-        throw "noOfTotalQueryResults() called on invalid RelationshipProxy!";
-    if (!this.parentEntityProxy.data)
-        throw "noOfTotalQueryResults() called on proxy with invalid parent!";
-
-    if (this.parentEntityProxy.data.associations)
-        return this.parentEntityProxy.data.associations[this.id].length;
-    else
-        return 0;
+    return this.getAssocs().data.length;
 }
 
 AssociationProxy.prototype.useRelationship = function(callback) {
@@ -556,24 +548,15 @@ AssociationProxy.prototype.useRelationship = function(callback) {
     }
 
     this.parentEntityProxy.useData(function(sourceProxy) {
-        var first = this.currentPage * this.entitiesPerPage;
-        var sourceData = sourceProxy.data;
-        if (!sourceData.associations || !sourceData.associations[this.id] || sourceData.associations[this.id].length < first) {
-            this.requiresUpdate = false;
-            callback(this);
-            return;
-        }
-        var last = Math.min(
-            (1 + this.currentPage) * this.entitiesPerPage - 1,
-            sourceData.associations[this.id].length - 1);
+        var assocs = this.getAssocs ();
         this._queryResults = [];
-        for (var idx = first; idx <= last; idx++) {
-            var target = sourceData.associations[this.id][idx];
+        for (var idx = 0; idx < assocs.data.length; idx++) {
+            var target = assocs.data[idx];
             entityConfig = {
                 type: target.type,
-                isDocument: target.isDocument,
+                isDocument: true,
                 mode: "editEntity",
-                oid: target.id,
+                oid: target._id,
                 parentRelnProxy: this
             }
             var proxy = $warp.entityCache_findOrAddNewEntityProxy(entityConfig);
@@ -587,34 +570,63 @@ AssociationProxy.prototype.useRelationship = function(callback) {
 AssociationProxy.prototype.addToAssocTargets = function(id, targetType, desc) {
     if (!this.parentEntityProxy.data)
         throw "Can not access data for " + this.parentEntityProxy.toString();
-    if (!this.parentEntityProxy.data.associations)
-        this.parentEntityProxy.data.associations = {};
-    if (!this.parentEntityProxy.data.associations[this.id])
-        this.parentEntityProxy.data.associations[this.id] = [];
-    this.parentEntityProxy.data.associations[this.id].push(
+
+    var assocs = this.getAssocs();
+    assocs.data.push(
         {
-            "id":id,
+            "_id":id,
             "type":targetType,
-            "isDocument": true, // TBD: Currently only documents as assoc targets...
             "desc": desc
         });
     this.parentEntityProxy.isDirty = true;
     this.requiresUpdate = true;
 }
 
-AssociationProxy.prototype.updateAssocData = function(id, desc) {
+AssociationProxy.prototype.getAssocs = function() {
     if (!this.parentEntityProxy.data)
         throw "Can not access data for " + this.parentEntityProxy.toString();
     if (!this.parentEntityProxy.data.associations)
-        this.parentEntityProxy.data.associations = {};
-    if (!this.parentEntityProxy.data.associations[this.id])
-        this.parentEntityProxy.data.associations[this.id] = [];
+        this.parentEntityProxy.data.associations = [];
 
-    var assocs = this.parentEntityProxy.data.associations[this.id];
+    var allAssocs = this.parentEntityProxy.data.associations;
+    var result = null;
+    allAssocs.forEach(function(assocObj) {
+        if (assocObj.relnID === this.id)
+            result = assocObj;
+    }.bind(this));
+    if (!result) {
+        result = {
+            relnID: this.id,
+            relnName: this.name,
+            data: []
+        };
+        this.parentEntityProxy.data.associations.push(result);
+        this.parentEntityProxy.isDirty = true;
+        this.requiresUpdate = true;
+    }
+    return result;
+}
 
-    var ok=false;
-    assocs.forEach(function(assoc) {
-        if (assoc.id === id) {
+AssociationProxy.prototype.getAssocDataByTargetID = function(id) {
+    var result = null;
+    var assocArray = this.getAssocs().data;
+    assocArray.forEach(function(assoc) {
+        if (assoc._id === id) {
+            result = assoc;
+        }
+    });
+    if (result)
+        return result;
+    else
+        throw "Could not find association target with id=" + id + " in " + this.toString();
+}
+
+AssociationProxy.prototype.updateAssocData = function(id, desc) {
+    var assocArray = this.getAssocs().data;
+
+    var ok = false;
+    assocArray.forEach(function(assoc) {
+        if (assoc._id === id) {
             ok = true;
             assoc.desc = desc;
         }
@@ -629,13 +641,27 @@ AssociationProxy.prototype.updateAssocData = function(id, desc) {
 AssociationProxy.prototype.removeFromAssocTargets = function(id) {
     if (this.requiresUpdate)
         throw "Invalid use of 'removeFromAssocTargets()'";
-    var assocs = this.parentEntityProxy.data.associations[this.id];
-    var assocsNew = [];
-    for (var idx in assocs) {
-        if (assocs[idx].id !== id)
-            assocsNew.push(assocs[idx]);
+
+    // Create new array without element 'id'
+    var assocArray = this.getAssocs().data;
+    var assocArrayNew = [];
+    for (var idx in assocArray) {
+        if (assocArray[idx]._id !== id)
+            assocArrayNew.push(assocArray[idx]);
     }
-    this.parentEntityProxy.data.associations[this.id] = assocsNew;
+
+    // Find assocObject and replace current assocArray
+    var allAssocs = this.parentEntityProxy.data.associations;
+    var ok = false;
+    allAssocs.forEach(function(assocObj) {
+        if (assocObj.relnID === this.id) {
+            ok = true;
+            assocObj.data = assocArrayNew;
+        }
+    }.bind(this));
+    if (!ok)
+        throw "Could not remove association from target list!";
+
     this.requiresUpdate = true;
 }
 
@@ -836,6 +862,35 @@ WarpJSClient.prototype.addBreadcrumb = function(config) {
     return this.breadcrumb;
 }
 
+WarpJSClient.prototype.progressBarOn = function(percent) {
+    if (!$warp.progressBarModal) {
+        var modal = $('<div class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true" style="padding-top:15%; overflow-y:visible;"></div>');
+        var modalDialog = $('<div class="modal-dialog modal-m"></div>');
+        var modalContent = $('<div class="modal-content"></div>');
+        var modalHeader = $('<div class="modal-header"><h3 style="margin:0;">Loading</h3></div>');
+        var modalBody = $('<div class="modal-body"></div>');
+        var progress = $('<div class="progress progress-striped active" style="margin-bottom:0;"></div>');
+        var progressBar = $('<div class="progress-bar" aria-valuemin="0" aria-valuemax="100"></div>');
+
+        modal.append(modalDialog);
+        modalDialog.append(modalContent);
+        modalContent.append(modalHeader);
+        modalContent.append(modalBody);
+        modalBody.append(progress);
+        progress.append(progressBar);
+
+        $warp.progressBar = progressBar;
+        $warp.progressBarModal = modal;
+    }
+    $warp.progressBar.prop('aria-valuenow', "" + percent);
+    $warp.progressBar.prop('style', "width:" + percent + "%");
+    $warp.progressBarModal.modal('show');
+}
+
+WarpJSClient.prototype.progressBarOff = function() {
+    $warp.progressBarModal.modal('hide');
+}
+
 WarpJSClient.prototype.createViews = function() {
     var container = null;
     if ($("#" + this.globalID()).length)  {
@@ -918,7 +973,9 @@ WarpJSClient.prototype.save = function() {
 }
 
 function initializeWarpJS (config, callback) {
+    // Create client + show load progress
     $warp = new WarpJSClient;
+    $warp.progressBarOn(25);
 
     // Prepare remote connection
     $.ajax({
@@ -928,13 +985,15 @@ function initializeWarpJS (config, callback) {
         success: function (result) {
             $warp.links = result._links;
 
-            // ------------------
+            $warp.progressBarOn(50);
+
             $.ajax({
                 url: $warp.links.domain.href,
                 type: 'GET',
                 dataType: "json",
                 success: function (result) {
                     if (result.success) {
+                        $warp.progressBarOn(75);
                         $warp.initialize(result.domain, config, callback);
                     }
                     else {
@@ -1025,6 +1084,9 @@ WarpJSClient.prototype.initialize = function (jsonData, pageConfig, callback) {
         warptrace(1, "--------------- View Hierarchy ---------------");
         warptrace(1, $warp.pageView.toString());
         warptrace(1, "--------------- -------------- ---------------");
+
+        $warp.progressBarOn(100);
+        $warp.progressBarOff();
 
         if (callback)
             callback();
@@ -1858,7 +1920,10 @@ WarpRPI_Carousel.prototype.updateViewWithDataFromModel = function() {
         $("#" + this.globalID() + '_alert').hide();
 
         var from = 1 + relnProxy.currentPage * relnProxy.entitiesPerPage;
-        var to = from + relnProxy.entitiesPerPage - 1;
+        var to = Math.min(
+            from + relnProxy.entitiesPerPage - 1,
+            relnProxy.noOfTotalQueryResults());
+
         var idx = relnProxy.selectedEntityIdx + from;
         var idxStr = idx + "/" + relnProxy.noOfTotalQueryResults();
 
@@ -2054,7 +2119,9 @@ WarpTable.prototype.updateViewWithDataFromModel = function() {
 
         // Update pagination menu:
         var from = relnProxy.currentPage * relnProxy.entitiesPerPage + 1;
-        var to = from + relnProxy.entitiesPerPage - 1;
+        var to = Math.min(
+            from + relnProxy.entitiesPerPage - 1,
+            relnProxy.noOfTotalQueryResults());
         var idxStr = from + '-' + to + '/' + relnProxy.noOfTotalQueryResults();
         $('#' + this.globalID() + '_idx').html(idxStr);
     }.bind(this));
@@ -2172,10 +2239,12 @@ WarpAssociationEditor.prototype.updateSelections = function() {
         for (var idx = 0; idx < this.assocProxy.noOfResultsOnCurrentPage(); idx++) {
             this.assocProxy.queryResult(idx).useData (function (proxy) {
                 var name = proxy.displayName();
+                var targetID = proxy.data._id;
+                var desc = this.assocProxy.getAssocDataByTargetID(targetID).desc;
                 var li = $('<li><a href="#">' + name + '</a></li>');
                 li.on('click', function() {
-                    this.context.editDetails (this.id, this.name);
-                }.bind({ id: proxy.data._id, name: name, context:this }));
+                    this.context.editDetails (this.id, this.name, this.desc);
+                }.bind({ id: targetID, name: name, desc:desc, context:this }));
                 ul.append(li);
             }.bind(this));
         }
@@ -2185,13 +2254,14 @@ WarpAssociationEditor.prototype.updateSelections = function() {
 var formInline =        $('<form    class="form-inline"></form>');
 var formGroup =         $('<div     class="form-group"></div>');
 
-WarpAssociationEditor.prototype.editDetails = function(id, name) {
+WarpAssociationEditor.prototype.editDetails = function(id, name, desc) {
     var edit = $('#WarpJS_assocSelectionModal_selectionDetails');
     var fg = $('<div class="form-group"></div>');
     var lbl = $('<label for="comment">Description for selection \'' + name + '\':</label>');
     var txt = $('<textarea class="form-control" rows="3" id="WarpJS_assocSelectionModal_selectionDetails_input"></textarea>');
-
     var btnGrp = $('<div class="btn-group-sm" role="group" aria-label="Basic example" style="margin-top: 5px;">');
+
+    txt.val(desc);
 
     var button1 =   $('<button type="button" class="btn btn-secondary">Confirm</button>');
     button1.on('click', function () {
