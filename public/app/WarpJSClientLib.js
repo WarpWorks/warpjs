@@ -145,6 +145,75 @@ EntityProxy.prototype.useData = function(callback) {
     }
 }
 
+EntityProxy.prototype.save = function() {
+    if (this.isDocument) {
+        if (this.isDirty && !this.data) throw "Can not save 'dirty' entity without data!";
+
+        // The backend-API only supports update of a single document at the moment - TBD!
+        switch (this.mode) {
+            case "editEntity":
+                if (this.isDirty) {
+                    var reqData = {
+                        commandList: [
+                            {
+                                command: "Update",
+                                domain: $warp.domain,
+                                targetType: this.data.type,
+                                entities: [this.data]
+                            }
+                        ]
+                    };
+                    $warp.processCRUDcommands(reqData, function (result) {
+                        if (result.success) {
+                            this.isDirty = false;
+                            warptrace(1, "WarpJSClient.save():\n - Successfully saved " + this.displayName());
+                        }
+                        else {
+                            $warp.alert(result.err);
+                        }
+                    }.bind(this));
+                }
+                break;
+            case "addNewEntity":
+                if (!this.isDirty) {
+                    $warp.alert ("Can not save new entity: at least one field must be set with new value!");
+                }
+                else {
+                    var reqData = {
+                        commandList: [
+                            {
+                                command: "Create",
+                                domain: $warp.domain,
+                                targetType: this.data.type,
+                                entity: this.data
+                            }
+                        ]
+                    };
+                    $warp.processCRUDcommands(reqData, function (result) {
+                        if (result.success) {
+                            this.isDirty = false;
+                            this.mode = "editEntity";
+                            this.data._id = result.newEntity._id;
+
+                            warptrace(1, "WarpJSClient.save():\n - Successfully created " + this.displayName());
+
+                            var url = $warp.links.domain.href +
+                                "/" + this.type +
+                                "?oid=" + this.data._id;
+                            window.location.href = url;
+                        }
+                        else {
+                            $warp.alert(result.err);
+                        }
+                    }.bind(this));
+                }
+                break;
+            default:
+                throw "Mode not supported: " + this.mode;
+        }
+    }
+}
+
 EntityProxy.prototype.getValue = function(attrName) {
     if (!this.data || this.data[attrName] === null) {
         throw "EntityProxy.getValue(): ERROR - Can not access value '" + attrName + "'";
@@ -156,6 +225,10 @@ EntityProxy.prototype.getValue = function(attrName) {
 EntityProxy.prototype.setValue = function(attrName, val) {
     if (!this.data)
         throw "EntityProxy.setValue(): ERROR - Can not set value '" + attrName + "'";
+    if (!this.data[attrName] && val+"" === "") {
+        warptrace(1, "EntityProxy.setValue", "Ignoring empty fields for new entities!");
+        return;
+    }
     if (this.data[attrName] !== val) {
         this.data[attrName] = val;
         this.history.push({ date: new Date(), attribute: attrName, newVal: val });
@@ -204,12 +277,12 @@ EntityProxy.prototype.getDataViaOID = function(callback) {
     $warp.processCRUDcommands(reqData, function (result) {
         if (result.success) {
             if (!result.resultList || result.resultList.length != 1) {
-                alert("Could not find entity!");
+                $warp.alert("Could not find entity!");
                 handleResult(null);
                 return;
             }
             if (result.resultList[0].error) {
-                alert(result.resultList[0].status);
+                $warp.alert(result.resultList[0].status);
                 handleResult(null);
                 return;
             }
@@ -217,7 +290,7 @@ EntityProxy.prototype.getDataViaOID = function(callback) {
             callback (result);
         }
         else {
-            alert(result.err);
+            $warp.alert(result.err);
         }
     }.bind(this));
 }
@@ -242,18 +315,18 @@ EntityProxy.prototype.getDataViaRootInstance = function(callback) {
     $warp.processCRUDcommands(reqData, function (result) {
         if (result.success) {
             if (!result.resultList || result.resultList.length != 1) {
-                alert("Could not find RootInstance - potential Server error");
+                $warp.alert("Could not find RootInstance - potential Server error");
                 return;
             }
             if (result.resultList[0].error) {
-                alert(result.resultList[0].status);
+                $warp.alert(result.resultList[0].status);
                 return;
             }
             var rootInstanceFromServer = result.resultList[0].rootInstance;
             callback(rootInstanceFromServer);
         }
         else {
-            alert(result.err);
+            $warp.alert(result.err);
         }
     });
 }
@@ -628,8 +701,8 @@ AssociationProxy.prototype.getAssocs = function() {
             relnName: this.name,
             data: []
         };
+        // Push, but don`t mark as dirty - we can lose this change without problem, if not needed
         this.parentEntityProxy.data.associations.push(result);
-        this.parentEntityProxy.isDirty = true;
         this.requiresUpdate = true;
     }
     return result;
@@ -919,6 +992,35 @@ WarpJSClient.prototype.progressBarOff = function() {
     $warp.progressBarModal.modal('hide');
 }
 
+WarpJSClient.prototype.alert = function(msg) {
+    this.createModal("Warning", msg, "danger",
+        [{ label: "OK", callback: function() {
+            $("#genericModalM").modal("hide");
+        }}]);
+}
+
+WarpJSClient.prototype.createModal = function(title, message, messageType, actions) {
+    var mType = messageType || "info"; // Can be "success", "info", "warning" or "danger"
+    $("#genericModalMessageD").prop ('class', 'alert alert-'+mType);
+
+    $("#genericModalTitleH").text(title);
+    $("#genericModalMessageD").html(message);
+
+    $("#genericModalButtonsD").empty();
+    if (!actions) {
+        $("#genericModalButtonsD").html("<button type='button' class='btn btn-default' data-dismiss='modal'>OK</button>");
+    } else {
+        actions.forEach(function(action) {
+            var dismiss = action.close ? "data-dismiss='modal'" : "";
+            var button = $("<button type='button' class='btn btn-default' " + dismiss + ">" + action.label + "</button>");
+            button.on("click", action.callback);
+            $("#genericModalButtonsD").append(button);
+        });
+    }
+    $("#genericModalM").modal();
+}
+
+
 WarpJSClient.prototype.createViews = function() {
     var container = null;
     if ($("#" + this.globalID()).length)  {
@@ -974,64 +1076,11 @@ WarpJSClient.prototype.save = function () {
     warptrace(1, "<<< WarpJSClient.save()");
 
     $warp.entityCache.forEach(function (entityProxy) {
-        if (entityProxy.isDocument && entityProxy.isDirty) {
-            if (!entityProxy.data) throw "Can not save 'dirty' entity without data!";
-
-            // The backend-API only supports update of a single document at the moment - TBD!
-            switch (entityProxy.mode) {
-                case "editEntity":
-                    var reqData = {
-                        commandList: [
-                            {
-                                command: "Update",
-                                domain: $warp.domain,
-                                targetType: entityProxy.data.type,
-                                entities: [entityProxy.data]
-                            }
-                        ]
-                    };
-                    $warp.processCRUDcommands(reqData, function (result) {
-                        if (result.success) {
-                            this.isDirty = false;
-                            warptrace(1, "WarpJSClient.save():\n - Successfully saved " + this.displayName());
-                        }
-                        else {
-                            alert(result.err);
-                        }
-                    }.bind(entityProxy));
-                    break;
-                case "addNewEntity":
-                    var reqData = {
-                        commandList: [
-                            {
-                                command: "Create",
-                                domain: $warp.domain,
-                                targetType: entityProxy.data.type,
-                                entity: entityProxy.data
-                            }
-                        ]
-                    };
-                    $warp.processCRUDcommands(reqData, function (result) {
-                        if (result.success) {
-                            this.isDirty = false;
-                            this.mode = "editEntity";
-                            this.data._id = result.newEntity._id;
-
-                            warptrace(1, "WarpJSClient.save():\n - Successfully created " + this.displayName());
-
-                            var url = $warp.links.domain.href +
-                                    "/" + this.type +
-                                    "?oid=" + this.data._id;
-                            window.location.href = url;
-                        }
-                        else {
-                            alert(result.err);
-                        }
-                    }.bind(entityProxy));
-                    break;
-                default:
-                    throw "Mode not supported: " + entityProxy.mode;
-            }
+        try {
+            entityProxy.save();
+        }
+        catch (err) {
+            $warp.alert ("Error saving entity: "+err);
         }
     });
 }
@@ -1052,7 +1101,7 @@ function initializeWarpJS (config, callback) {
             $warp.progressBarOn(50);
 
             $.ajax({
-                url: $warp.links.domain.href,
+                url: $warp.links.schemaDomain.href,
                 type: 'GET',
                 dataType: "json",
                 success: function (result) {
@@ -1071,7 +1120,7 @@ function initializeWarpJS (config, callback) {
 
         },
         error: function (result) {
-            alert("Initialize WarpJSClient: remote connection failure!");
+            $warp.alert("Initialize WarpJSClient: remote connection failure!");
         }
     });
 }
@@ -1079,6 +1128,7 @@ function initializeWarpJS (config, callback) {
 WarpJSClient.prototype.initialize = function (jsonData, pageConfig, callback) {
     // Get Type + Domain
     $warp.domain = this.getDomainFromURL();
+    $("#warpjsNavbarName").text($warp.domain);
     pageConfig.entityType = this.getEntityTypeFromURL();
 
     var entityConfig = {
@@ -1091,7 +1141,7 @@ WarpJSClient.prototype.initialize = function (jsonData, pageConfig, callback) {
     var urlHasArgs = window.location.search.split('?').length !== 1;
     if (!urlHasArgs) {
         if (pageConfig.entityType !== $warp.domain)
-            alert ("Can not load root instance: '" + pageConfig.entityType + "' from URL is not the required root instance type!");
+            $warp.alert ("Can not load root instance: '" + pageConfig.entityType + "' from URL is not the required root instance type!");
         entityConfig.mode = "rootInstance";
     } else if (oid) {
         entityConfig.mode = "editEntity";
@@ -1104,7 +1154,7 @@ WarpJSClient.prototype.initialize = function (jsonData, pageConfig, callback) {
         entityConfig.parentBaseClassName = this.getURLParam("parentBaseClassName");
         entityConfig.parentBaseClassID = this.getURLParam("parentBaseClassID");
         if (!entityConfig.parentID || !entityConfig.relnID || !entityConfig.relnName || !entityConfig.parentBaseClassName || !entityConfig.parentBaseClassID)
-            alert("Invalid URL!");
+            $warp.alert("Invalid URL!");
     }
 
     // Create toplevel EntityProxy
@@ -1114,7 +1164,7 @@ WarpJSClient.prototype.initialize = function (jsonData, pageConfig, callback) {
     this.model = new WarpModelParser(jsonData);
     var entityDefn = this.model.getEntityByName(pageConfig.entityType);
     if (!entityDefn) {
-        alert("Invalid entity type in URL: " + pageConfig.entityType);
+        $warp.alert("Invalid entity type in URL: " + pageConfig.entityType);
         throw "Can`t find entity:" + pageConfig.entityType;
     }
     var defaultView = this.model.getPageView(entityDefn, pageConfig.viewName);
@@ -1865,11 +1915,30 @@ WarpRPI_Table.prototype.init = function() {
 }
 
 WarpRPI_Table.prototype.createViews = function() {
-    return this.warpTable.createViews();
+    // Alert to be shown in case parent is new:
+    this.alertNew = $('<div class="alert alert-warning">Save new element first before adding to \'' + this.label + '\'!</div>');
+    this.alertNew.prop('id', this.globalID() + '_alertNew');
+
+    var elem = $("<div></div>");
+    this.table = this.warpTable.createViews();
+    elem.append(this.table);
+    elem.append(this.alertNew);
+
+    return elem;
 }
 
 WarpRPI_Table.prototype.updateViewWithDataFromModel = function() {
-    this.warpTable.updateViewWithDataFromModel();
+    var ep = this.getPageView().getEntityProxy();
+    if (ep.mode === "addNewEntity") {
+        var t = $("#" + this.globalID() );
+        this.table.hide();
+        this.alertNew.show();
+    }
+    else {
+        this.table.show();
+        this.alertNew.hide();
+        this.warpTable.updateViewWithDataFromModel();
+    }
 }
 
 WarpRPI_Table.prototype.updateModelWithDataFromView = function() {
@@ -1940,10 +2009,13 @@ WarpRPI_Carousel.prototype.init = function() {
     this.childPageView = this.getPageView().addChildPageView(this, pv);
 }
 WarpRPI_Carousel.prototype.createViews = function() {
-    var mainElem =      $('<div></div>');
-    var panel =         $('<div class="panel panel-success"></div>');
-    var panelHeading =  $('<div class="panel-heading"></div>');
-    var panelBody =     $('<div class="panel-body"></div>');
+    var mainElem =          $('<div></div>');
+
+    this.panel =            $('<div class="panel panel-success"></div>');
+    this.panel.prop('id', this.globalID() + '_panel');
+
+    var panelHeading =      $('<div class="panel-heading"></div>');
+    var panelBody =         $('<div class="panel-body"></div>');
 
     var formInline =        $('<form    class="form-inline"></form>');
     var formGroup =         $('<div     class="form-group"></div>');
@@ -1967,7 +2039,6 @@ WarpRPI_Carousel.prototype.createViews = function() {
     hrefDel.click(this.del.bind(this));
 
     // Misc
-    panel.prop('id', this.globalID() + '_panel');
     inputGrpSelect.prop('id', this.globalID() + '_select');
     inputGrpAddonIdx.prop('id', this.globalID() + '_idx');
     inputGrpSelect.change(this.select.bind(this));
@@ -1986,19 +2057,24 @@ WarpRPI_Carousel.prototype.createViews = function() {
     formGroup.append(inputGrp);
     formInline.append(formGroup);
     panelHeading.append(formInline);
-    panel.append(panelHeading);
-    panel.append(this.childPageView.createViews());
+    this.panel.append(panelHeading);
+    this.panel.append(this.childPageView.createViews());
 
-    mainElem.append(panel);
+    mainElem.append(this.panel);
 
-    // Also prepare alert to be shown in case relationship has no elements:
-    var hrefAdd2 = $('<a href="#"><span class="glyphicon glyphicon-plus-sign"></span></a>');
-    hrefAdd2.click(this.add.bind(this));
-    var alert = $('<div class="alert alert-success">Click here to add new element to ' + this.label + ': </div>');
-    alert.prop('id', this.globalID() + '_alert');
-    alert.append(hrefAdd2);
+    // Alert to be shown in case relationship has no elements:
+    var hrefAddAlert1 = $('<a href="#"><span class="glyphicon glyphicon-plus-sign"></span></a>');
+    hrefAddAlert1.click(this.add.bind(this));
+    this.alertEmpty = $('<div class="alert alert-info">Click here to add new element to \'' + this.label + '\': </div>');
+    this.alertEmpty.prop('id', this.globalID() + '_alertEmpty');
+    this.alertEmpty.append(hrefAddAlert1);
 
-    mainElem.append(alert);
+    // Alert to be shown in case parent is new:
+    this.alertNew = $('<div class="alert alert-warning">Save new element first before adding to \'' + this.label + '\'!</div>');
+    this.alertNew.prop('id', this.globalID() + '_alertNew');
+
+    mainElem.append(this.alertEmpty);
+    mainElem.append(this.alertNew);
 
     return mainElem;
 }
@@ -2006,13 +2082,18 @@ WarpRPI_Carousel.prototype.createViews = function() {
 WarpRPI_Carousel.prototype.updateViewWithDataFromModel = function() {
     var rp = this.getRelationshipProxy();
     rp.useRelationship(function(relnProxy) {
+        this.alertEmpty.hide();
+        this.alertNew.hide();
+        this.panel.hide();
         if (relnProxy.noOfTotalQueryResults() === 0) {
-            $("#" + this.globalID() + '_panel').hide();
-            $("#" + this.globalID() + '_alert').show();
+            var ep = this.getPageView().getEntityProxy();
+            if (ep.mode === "addNewEntity")
+                this.alertNew.show();
+            else
+                this.alertEmpty.show();
             return;
         }
-        $("#" + this.globalID() + '_panel').show();
-        $("#" + this.globalID() + '_alert').hide();
+        this.panel.show();
 
         var from = 1 + relnProxy.currentPage * relnProxy.entitiesPerPage;
         var to = Math.min(
@@ -2131,10 +2212,11 @@ WarpTable.prototype.globalID = function() {
 
 WarpTable.prototype.createViews = function() {
     var mainElem = $('<div></div>');
+    mainElem.prop('id', this.globalID());
 
     // Table
     var table = $('<table class="table table-sm table-hover"></table>');
-    table.prop('id', this.globalID());
+    table.prop('id', this.globalID() + "_table");
 
     // Pagination
     var formInline =        $('<form    class="form-inline"></form>');
@@ -2208,7 +2290,7 @@ WarpTable.prototype.updateViewWithDataFromModel = function() {
         }.bind(this));
 
         // Putting it together:
-        var table = $('#' + this.globalID());
+        var table = $('#' + this.globalID() + "_table");
         table.empty();
         table.append(thead);
         table.append(body);
@@ -2379,7 +2461,7 @@ WarpAssociationEditor.prototype.editDetails = function(id, name, desc) {
 WarpAssociationEditor.prototype.addSelection = function(id, type) {
     this.assocProxy.useRelationship(function (assocProxy) {
         if (assocProxy.noOfTotalQueryResults() >= this.maxAssocs) {
-            alert ("Reached max no. of associations currently supported: " + this.maxAssocs);
+            $warp.alert ("Reached max no. of associations currently supported: " + this.maxAssocs);
             return;
         }
         this.assocProxy.addToAssocTargets(id, type);
