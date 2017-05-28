@@ -6,13 +6,24 @@ function WarpModelParser(jsonData) {
     this.model = jsonData;
 }
 
+WarpModelParser.prototype.getRelationshipDetails = function(relationshipID) {
+    var result = {};
+    result.relnJson = this.getRelationshipByID(relationshipID);
+    result.targetJson = this.getEntityByID(result.relnJson.targetEntity[0]);
+    result.parentJson = this.getRelnParentByID(relationshipID);
+    result.parentBaseClassJson = this.getBaseClass(result.parentJson);
+    return result;
+}
+
 WarpModelParser.prototype.getBaseClass = function(entity) {
     // BaseClass = Topmost, non-abstract class in the inheritance hierarchy
-    if (entity.parentClass) {
+    if (entity.parentClass && entity.parentClass.length>0) {
         var parent = this.getEntityByID(entity.parentClass[0]);
         if (!parent.isAbstract)
             return this.getBaseClass(parent);
     }
+    if (entity.isAbstract)
+        return null;
     return entity;
 }
 
