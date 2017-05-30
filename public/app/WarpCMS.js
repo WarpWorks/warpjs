@@ -23,10 +23,10 @@ function warpCMS_editImageMap(context) {
             var modalFooter = $('<div class="modal-footer"></div>');
             var alertInfo = $('<div class="alert alert-info" id="warpCMS_alertInfoD"></div>');
             var btnSave = $('<button type="button" class="btn btn-default" data-dismiss="modal">Save <span class="glyphicon glyphicon-ok"></span></button>');
-            var btnBack = $('<button type="button" class="btn btn-default">Undo <span class="glyphicon glyphicon-step-backward"></span></button>');
             var btnCancel = $('<button type="button" class="btn btn-default" data-dismiss="modal">Cancel <span class="glyphicon glyphicon-remove"></span></button>');
+            // TBD: var btnBack = $('<button type="button" class="btn btn-default">Undo <span class="glyphicon glyphicon-step-backward"></span></button>');
 
-            modalFooter.append(btnSave).append(btnBack).append(btnCancel);
+            modalFooter.append(btnSave).append(btnCancel);
             modalHeader.append(btnClose).append(modalTitle);
             modalContent.append(modalHeader);
             modalContent.append(modalBody);
@@ -163,7 +163,7 @@ function warpCMS_editImageMap(context) {
                             newImageMap = {
                                 "Coords": elem.x1 + "," + elem.y1 + "," + elem.x2 + "," + elem.y2
                             }
-                            activeEntityProxy.addNewEmbeddedEntity(imageMapRelnID, newImageMap, function (newIM) {
+                            activeImageMapReln.addNewEmbeddedEntity(newImageMap, function (newIM) {
                                 console.log("Added new ImageMap: " + newIM._id);
                                 createNewImageMap();
                             });

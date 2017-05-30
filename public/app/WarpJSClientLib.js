@@ -169,49 +169,6 @@ EntityProxy.prototype.addNewDocument = function(relationshipID) {
     });
 }
 
-EntityProxy.prototype.addNewEmbeddedEntity = function(relationshipID, newEntity, callback) {
-    this.useData(function (ep) {
-        var rd = $warp.model.getRelationshipDetails(relationshipID);
-        if (rd.targetJson.entityType !== "Embedded")
-            throw "addNewEmbeddedEntity can not create 'Document'!";
-
-        if (!newEntity) {
-            newEntity = {};
-        }
-        else {
-            if (newEntity.type && newEntity.type !== rd.targetJson.name)
-                throw "addNewEmbeddedEntity: type mismatch - " + newEntity.type + " != " + rd.targetJson.name;
-        }
-        newEntity.type = rd.targetJson.name;
-        newEntity._id = $warp.generateID();
-
-        var entityContainer = null;
-
-        if (ep.data.embedded) {
-            for (var idx = 0; idx < ep.data.embedded.length; idx++) {
-                if (ep.data.embedded[idx].parentRelnID === relationshipID) {
-                    entityContainer = ep.data.embedded[idx];
-                }
-            }
-        }
-        if (entityContainer === null) {
-            entityContainer = {
-                parentRelnID: rd.relnJson.id,
-                parentRelnName: rd.relnJson.name,
-                entities: []
-            }
-            ep.data.embedded.push(entityContainer);
-        }
-        entityContainer.entities.push(newEntity);
-
-        ep.getDocumentProxy().isDirty = true;
-
-        warptrace(1, "EntityProxy.addNewEmbeddedEntity", "Adding new embedded entity!");
-
-        callback(newEntity);
-    });
-}
-
 EntityProxy.prototype.save = function() {
     if (this.isDocument) {
         if (this.isDirty && !this.data) throw "Can not save 'dirty' entity without data!";
@@ -298,7 +255,12 @@ EntityProxy.prototype.setValue = function(attrName, val) {
     }
     if (this.data[attrName] !== val) {
         this.data[attrName] = val;
-        this.history.push({ date: new Date(), attribute: attrName, newVal: val });
+        this.addToHistory(
+            {
+                type: "setValue",
+                attribute: attrName,
+                newVal: val
+            });
         this.isDirty = true;
         this.getDocumentProxy().isDirty = true;
         warptrace(1, "EntityProxy.setValue():");
@@ -306,6 +268,15 @@ EntityProxy.prototype.setValue = function(attrName, val) {
             "  * Document\n    - Name: " + this.displayName() + "\n    - isDirty: " + this.isDirty+
             "\n    - Changes: " + this.historyToString());
     }
+}
+
+EntityProxy.prototype.addToHistory = function(action) {
+    // TBD - move old history entries to separate document if history gets too long
+    this.history.push({
+        date: new Date(),
+        user: "TBD",
+        action: action
+    });
 }
 
 EntityProxy.prototype.historyToString = function() {
@@ -406,6 +377,7 @@ function RelationshipProxy(jsonReln, parentEntityProxy) {
     this.parentEntityProxy = parentEntityProxy;
     this.jsonReln = jsonReln;
 
+    // TBD - clean this up and use "WarpJSModelParser.getRelationshipDetails()" instead
     this.name = jsonReln.name;
     this.id = jsonReln.id;
     this.isAggregation = jsonReln.isAggregation;
@@ -583,6 +555,56 @@ RelationshipProxy.prototype.getProxyForSelectedEntity = function() {
         // Embedded documents always have the complete array as query result:
         return this.queryResult(this.absolutePos());
     }
+}
+
+RelationshipProxy.prototype.addNewEmbeddedEntity = function(newEntity, callback) {
+    this.getParentEntity().useData(function (ep) {
+        if (this.targetIsDocument)
+            throw "addNewEmbeddedEntity can not create 'Document'!";
+
+        if (!newEntity) {
+            newEntity = {};
+        }
+        else {
+            if (newEntity.type && newEntity.type !== this.targetType)
+                throw "addNewEmbeddedEntity: type mismatch - " + newEntity.type + " != " + this.targetType;
+        }
+        newEntity.type = this.targetType;
+        newEntity._id = $warp.generateID();
+
+        var entityContainer = null;
+
+        if (ep.data.embedded) {
+            for (var idx = 0; idx < ep.data.embedded.length; idx++) {
+                if (ep.data.embedded[idx].parentRelnID === this.id) {
+                    entityContainer = ep.data.embedded[idx];
+                }
+            }
+        }
+        if (entityContainer === null) {
+            entityContainer = {
+                parentRelnID: this.id,
+                parentRelnName: this.name,
+                entities: []
+            }
+            if (!ep.data.embedded)
+                ep.data.embedded = [];
+            ep.data.embedded.push(entityContainer);
+        }
+        entityContainer.entities.push(newEntity);
+
+        this.requiresUpdate = true;
+        ep.getDocumentProxy().isDirty = true;
+        ep.addToHistory(
+            {
+                type: "addNewEmbeddedEntity",
+                reln: this.type
+            });
+
+        warptrace(1, "EntityProxy.addNewEmbeddedEntity", "Adding new embedded entity!");
+
+        callback(newEntity);
+    }.bind(this));
 }
 
 //
@@ -2413,9 +2435,9 @@ WarpRPI_Carousel.prototype.add = function() {
         ep.addNewDocument(this.relationshipID);
     }
     else {
-        ep.addNewEmbeddedEntity(this.relationshipID, null, function() {
+        var rp = this.getRelationshipProxy();
+        rp.addNewEmbeddedEntity(null, function() {
             this.updateModelWithDataFromView(function() {
-                this.getRelationshipProxy().requiresUpdate = true;
                 this.selectEntityAndUpdate(("last"));
             }.bind(this));
         }.bind(this));
