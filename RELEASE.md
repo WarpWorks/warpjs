@@ -1,5 +1,9 @@
 # Releases
 
+## 0.6.6 - 2017-05-12
+
+- Added static path to access domain JSN files.
+
 ## 0.6.5 - 2017-05-10
 
 - Adding `mongoServer` in config.
