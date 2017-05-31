@@ -1,6 +1,6 @@
 {
   "name": "@warp-works/warpjs",
-  "version": "0.6.5",
+  "version": "1.0.0-rc1",
   "description": "Content management system for WarpWorks in javascript",
   "repository": {
     "type": "git",
@@ -36,7 +36,7 @@
   "dependencies": {
     "@quoin/expressjs-routes-info": "0.1.6",
     "@quoin/node-rc": "0.1.1",
-    "@warp-works/core": "0.8.7",
+    "@warp-works/core": "1.0.0-rc1",
     "debug": "2.6.8",
     "hal": "0.1.0",
     "hbs": "4.0.1",
