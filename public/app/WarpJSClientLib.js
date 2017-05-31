@@ -221,10 +221,8 @@ EntityProxy.prototype.save = function() {
 
                             warptrace(1, "WarpJSClient.save():\n - Successfully created " + this.displayName());
 
-                            var url = $warp.links.domain.href +
-                                "/" + this.type +
-                                "?oid=" + this.data._id;
-                            window.location.href = url;
+                            // Re-load after creation:
+                            $warp.openInNewPage(this.data._id, this.type);
                         }
                         else {
                             $warp.alert(result.err);
@@ -777,6 +775,15 @@ AssociationProxy.prototype.addToAssocTargets = function(id, targetType, desc) {
     if (!this.parentEntityProxy.data)
         throw "Can not access data for " + this.parentEntityProxy.toString();
 
+    try {
+        this.getAssocDataByTargetID(id);
+        // Should not work:
+        warptrace(1, "AssociationProxy.addToAssocTargets", "Warning: Can not add same target again (id:" + id + ")");
+        return;
+    } catch (err) {
+        warptrace(3, "AssociationProxy.addToAssocTargets", "Adding target (id:" + id + ")");
+    }
+
     var assocs = this.getAssocs();
     assocs.data.push(
         {
@@ -827,7 +834,7 @@ AssociationProxy.prototype.getAssocDataByTargetID = function(id) {
         throw "Could not find association target with id=" + id + " in " + this.toString();
 }
 
-AssociationProxy.prototype.updateAssocData = function(id, desc) {
+AssociationProxy.prototype.updateAssocDesc = function(id, desc) {
     var assocArray = this.getAssocs().data;
 
     var ok = false;
@@ -1025,6 +1032,11 @@ WarpJSClient.prototype.constructor = WarpJSClient;
 
 WarpJSClient.prototype.getPageView = function() {
     return this.pageView;
+}
+
+WarpJSClient.prototype.openInNewPage = function(oid, type) {
+    url = $warp.links.domain.href + "/" + type + '?oid=' + oid;
+    window.location.href = url;
 }
 
 WarpJSClient.prototype.entityCache_getEntityByID = function(id) {
@@ -2072,16 +2084,37 @@ WarpRPI_CSV.prototype.createViews = function() {
     label.prop('class', 'col-sm-2 control-label');
     label.text(this.label);
 
-    var csvEditorDiv = $('<div></div>');
-    csvEditorDiv.prop('class', 'col-sm-10');
+    var csv = $('<div></div>');
+    csv.prop('class', 'col-sm-10');
 
-    var startEditorButton = $('<button type="button" class="btn btn-sm">Edit</button>');
-    csvEditorDiv.append(startEditorButton);
-    csvEditorDiv.on('click', this.openAssociationEditor.bind(this));
+    var ul = $('<ul class="nav nav-pills" id="' + this.globalID() + '_csv"></ul>');
 
+    var rp = this.getRelationshipProxy();
+    rp.useRelationship(function(assocProxy) {
+        for (var idx = 0; idx < assocProxy.noOfResultsOnCurrentPage(); idx++) {
+            assocProxy.queryResult(idx).useData (function (proxy) {
+                var name = proxy.displayName();
+                var targetID = proxy.data._id;
+                var desc = assocProxy.getAssocDataByTargetID(targetID).desc;
+                var li = $('<li><a href="#">' + name + '</a></li>');
+                if (desc !== "")
+                    li.prop('title', desc);
+                li.on('click', function() {
+                    $warp.openInNewPage(this.targetID, this.targetType);
+                }.bind({ targetID: targetID, targetType:proxy.type }));
+                ul.append(li);
+            }.bind(this));
+        }
+    }.bind(this));
+
+    var liBtn = $('<li><a href="#" id="aggregationTargetNameItem"><span class="glyphicon glyphicon-list-alt"></span></a></li>');
+    liBtn.on('click', this.openAssociationEditor.bind(this));
+    ul.append(liBtn);
+
+    csv.append(ul);
     form.append(formGroup);
     formGroup.append(label);
-    formGroup.append(csvEditorDiv);
+    formGroup.append(csv);
 
     return form;
 }
@@ -2186,8 +2219,7 @@ WarpRPI_Table.prototype.add = function() {
 
 WarpRPI_Table.prototype.rowSelected = function() {
     warptrace(1, "WarpRPI_Table.rowSelected():\n-  Click for " + this.type + ', id:' + this.id);
-    url = $warp.links.domain.href + "/" + this.type + '?oid=' + this.id;
-    window.location.href = url;
+    $warp.openInNewPage(this.id, this.type);
 }
 
 //
@@ -2582,7 +2614,8 @@ WarpTable.prototype.selectPageAndUpdate = function(selection, callback) {
             }
             relnProxy.useRelationship(function (relnProxy) {
                 this.updateViewWithDataFromModel(function() {
-                    callback();
+                    if (callback)
+                        callback();
                 });
             }.bind(this));
         }.bind(this));
@@ -2647,7 +2680,8 @@ WarpAssociationEditor.prototype.init = function() {
         relationshipProxy: this.assocProxy.getAssocTargetsProxy(),
         globalID: this.globalID() + "_selectionTable",
         callbackRowSelected: function () {
-            this.context.addSelection(this.id, this.type); },
+                this.context.addSelection(this.id, this.type);
+            },
         callbackAdd: null,
         callbackContext: this,
         tableViewJson: tv
@@ -2659,10 +2693,14 @@ WarpAssociationEditor.prototype.init = function() {
         // Update selections
         this.updateSelections();
 
-        // Don't show selection details initially:
-        $('#WarpJS_assocSelectionModal_selectionDetails').hide();
-
         $("#associationEditorM").modal();
+    }.bind(this));
+
+    // Finally, the "ok" Button to close the modal
+    $('#selectEntityM_closeB').on('click', function() {
+        this.updateAssocWithDataFromEditor(function() {
+            $('#associationEditorM').modal('hide');
+        });
     }.bind(this));
 }
 
@@ -2675,49 +2713,80 @@ WarpAssociationEditor.prototype.updateSelections = function() {
     var ul = $('<ul class="nav nav-pills"></ul>');
     ul.append(label);
     $("#WarpJS_assocSelectionModal_selectionList").empty().append(ul);
-    this.assocProxy.useRelationship(function(assocProxy) {
-        for (var idx = 0; idx < this.assocProxy.noOfResultsOnCurrentPage(); idx++) {
-            this.assocProxy.queryResult(idx).useData (function (proxy) {
+    this.assocProxy.useRelationship(function (assocProxy) {
+        var resultCount = assocProxy.noOfResultsOnCurrentPage();
+        if (resultCount === 0) {
+            $('#WarpJS_assocSelectionModal_selectionDetails').hide();
+        }
+        else {
+            for (var idx = 0; idx < resultCount; idx++) {
+                assocProxy.queryResult(idx).useData(function (proxy) {
+                    var name = proxy.displayName();
+                    var targetID = proxy.data._id;
+                    var desc = assocProxy.getAssocDataByTargetID(targetID).desc;
+                    var li = $('<li><a href="#">' + name + '</a></li>');
+                    li.on('click', function () {
+                        this.assocEditor.updateAssocDetailEditor(this.targetID, this.targetName);
+                    }.bind({targetID: targetID, targetName: name, assocEditor: this}));
+                    ul.append(li);
+                }.bind(this));
+            }
+
+            // Do this last, since this might change the assocProxy:
+            assocProxy.queryResult(0).useData(function (proxy) {
                 var name = proxy.displayName();
                 var targetID = proxy.data._id;
-                var desc = this.assocProxy.getAssocDataByTargetID(targetID).desc;
-                var li = $('<li><a href="#">' + name + '</a></li>');
-                li.on('click', function() {
-                    this.context.editDetails (this.id, this.name, this.desc);
-                }.bind({ id: targetID, name: name, desc:desc, context:this }));
-                ul.append(li);
+                this.updateAssocDetailEditor(targetID, name);
             }.bind(this));
         }
     }.bind(this));
 }
 
-var formInline =        $('<form    class="form-inline"></form>');
-var formGroup =         $('<div     class="form-group"></div>');
+WarpAssociationEditor.prototype.updateAssocDetailEditor = function(id, name) {
+    // Save currently active values
+    this.updateAssocWithDataFromEditor(function() {
+        var edit = $('#WarpJS_assocSelectionModal_selectionDetails');
 
-WarpAssociationEditor.prototype.editDetails = function(id, name, desc) {
-    var edit = $('#WarpJS_assocSelectionModal_selectionDetails');
-    var fg = $('<div class="form-group"></div>');
-    var lbl = $('<label for="comment">Description for selection \'' + name + '\':</label>');
-    var txt = $('<textarea class="form-control" rows="3" id="WarpJS_assocSelectionModal_selectionDetails_input"></textarea>');
-    var btnGrp = $('<div class="btn-group-sm" role="group" aria-label="Basic example" style="margin-top: 5px;">');
+        // Remember new oid as 'active'
+        edit.data('oid', id);
 
-    txt.val(desc);
+        var fg = $('<div class="form-group"></div>');
+        var lbl = $('<label for="comment">Description for selection \'' + name + '\':</label>');
+        var txt = $('<textarea class="form-control" rows="3" id="WarpJS_assocSelectionModal_selectionDetails_input"></textarea>');
+        var btnGrp = $('<div class="btn-group-sm" role="group" aria-label="Basic example" style="margin-top: 5px;">');
 
-    var button1 =   $('<button type="button" class="btn btn-secondary">Confirm</button>');
-    button1.on('click', function () {
-        this.context.confirm(this.id);
-    }.bind({ context:this, id: id}));
+        var desc = this.assocProxy.getAssocDataByTargetID(id).desc;
+        txt.val(desc);
 
-    var button2 =   $('<button type="button" class="btn btn-secondary">Remove from Selection</button>');
-    button2.on('click', function () {
-        this.context.removeFromSelection(this.id);
-    }.bind({ context:this, id: id}));
+        var buttonRemove =   $('<button type="button" class="btn btn-secondary">Remove from Selection</button>');
+        buttonRemove.on('click', function () {
+            this.context.removeFromSelection(this.id);
+        }.bind({ context:this, id: id}));
 
-    btnGrp.append(button1).append(button2);
-    fg.append(lbl).append(txt).append(btnGrp);
+        btnGrp.append(buttonRemove);
+        fg.append(lbl).append(txt).append(btnGrp);
 
-    edit.empty().append(fg);
-    $('#WarpJS_assocSelectionModal_selectionDetails').show();
+        edit.empty().append(fg);
+        $('#WarpJS_assocSelectionModal_selectionDetails').show();
+    }.bind(this));
+}
+
+WarpAssociationEditor.prototype.updateAssocWithDataFromEditor = function(callback) {
+    var oid = $('#WarpJS_assocSelectionModal_selectionDetails').data('oid');
+    if (oid && oid !== "") {
+        this.assocProxy.useRelationship(function (assocProxy) {
+            var desc = $('#WarpJS_assocSelectionModal_selectionDetails_input').val();
+            try {
+                assocProxy.updateAssocDesc(oid, desc);
+            }
+            catch (err) {
+                warptrace(1, "WarpAssociationEditor.updateAssocWithDataFromEditor", "Can`t update assocData - assoc was probably removed before");
+            }
+            callback();
+        }.bind(this));
+    }
+    else
+        callback();
 }
 
 WarpAssociationEditor.prototype.addSelection = function(id, type) {
@@ -2738,10 +2807,3 @@ WarpAssociationEditor.prototype.removeFromSelection = function(id) {
     }.bind(this));
 }
 
-WarpAssociationEditor.prototype.confirm = function(id) {
-    this.assocProxy.useRelationship(function(assocProxy) {
-        var desc = $('#WarpJS_assocSelectionModal_selectionDetails_input').val();
-        assocProxy.updateAssocData(id, desc);
-        this.updateSelections();
-    }.bind(this));
-}
