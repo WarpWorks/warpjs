@@ -1,5 +1,9 @@
 # Releases
 
+## 1.0.0-rc1 - 2017-05-31
+
+- Full front-end rework for embedded documents.
+
 ## 0.6.6 - 2017-05-12
 
 - Added static path to access domain JSN files.
