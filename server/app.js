@@ -9,6 +9,7 @@ const warpStudio = require('@warp-works/studio');
 const config = require('./config');
 const routesInfo = require('./routes-info');
 const session = require('./session');
+const version = require('./version');
 
 const app = express();
 
@@ -34,7 +35,10 @@ app.use(bodyParser.json({limit: '10mb'}));
 app.use(bodyParser.urlencoded({
     extended: true
 }));
+
 app.use(session.middlewares.i3cUser);
+
+app.use('/__version', version.routesInfo('/__version', '/').router);
 
 app.use('/session', session.routesInfo('/session', '/').router);
 
