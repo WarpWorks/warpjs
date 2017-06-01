@@ -1921,8 +1921,6 @@ WarpBasicPropertyPanelItem.prototype.updateModelWithDataFromView = function(call
 }
 
 WarpBasicPropertyPanelItem.prototype.createTinyMCE = function(entityID) {
-
-    console.log("hey I got in this method");
     const contentModal = $(`.container #content-modal`);
 
     $(`.container #content-modal .modal-body`).html(`<textarea id="content-${entityID}"></textarea>`);
@@ -1951,11 +1949,6 @@ WarpBasicPropertyPanelItem.prototype.createTinyMCE = function(entityID) {
 
 
     $(`.container #content-modal`).modal("show");
-}
-
-WarpBasicPropertyPanelItem.prototype.createContentModal = function(entityID) {
-    return `
-        `;
 }
 
 WarpBasicPropertyPanelItem.prototype.createViews = function()
