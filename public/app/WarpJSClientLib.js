@@ -1994,10 +1994,9 @@ WarpBasicPropertyPanelItem.prototype.createViews = function()
         var textDiv = $('<div></div>');
         textDiv.prop('class', 'col-sm-10');
 
-        var button = $('<button></button>');
+        var button = $('<button>View</button>');
         button.prop('type', 'button');
         button.prop('class', 'btn btn-primary');
-        button.prop('text', "View");
         button.on('click', this.createTinyMCE.bind(null, this.globalID()));
 
         var input = $('<textarea></textarea>');
