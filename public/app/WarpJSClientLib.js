@@ -877,6 +877,15 @@ function AssociationTargetsProxy(jsonReln, parentEntityProxy) {
 AssociationTargetsProxy.prototype = Object.create(RelationshipProxy.prototype);
 AssociationTargetsProxy.prototype.constructor = AssociationTargetsProxy;
 
+AssociationTargetsProxy.prototype.setTargetType = function(newType) {
+    // TBD
+    // - Ensure that newType is either the original type or a derived type
+    // - Have to remember the original type for this...
+
+    this.targetType = newType;
+    this.requiresUpdate = true;
+}
+
 AssociationTargetsProxy.prototype.useRelationship = function(callback) {
     if (!this.requiresUpdate) {
         $warp.trace(2, "AssociationTargetsProxy.useRelationship", "Re-using data for " + this.jsonReln.name);
@@ -2501,8 +2510,8 @@ WarpRPI_Carousel.prototype.selectEntityAndUpdate = function(selection) {
                             $warp.trace(2, "--------------- Updated View Hierarchy ---------------");
                             $warp.trace(2, $warp.pageView.toString());
                             $warp.trace(2, "--------------- ---------------------- ---------------");
-                        });
-                    });
+                        }.bind(this));
+                    }.bind(this));
                 }.bind(this));
             }.bind(this));
         }.bind(this));
@@ -2514,6 +2523,7 @@ WarpRPI_Carousel.prototype.select = function(e) {
     var idx = parseInt(e.target.value);
     this.selectEntityAndUpdate (idx);
 }
+
 WarpRPI_Carousel.prototype.left = function() {
     $warp.trace(1, "WarpRPI_Carousel.left():\n-  Left-Click for "+this.globalID());
     this.selectEntityAndUpdate ("-1");
@@ -2715,19 +2725,30 @@ WarpAssociationEditor.prototype.init = function() {
     this.targetJson = $warp.model.getEntityByID(this.relnJson.targetEntity[0]);
 
     // List of derived entities
-    var targetEntites = $warp.model.getDerivedEntitiesByID(this.targetJson.id);
-    if (!this.targetJson.isAbstract)
-        targetEntites.unshift (this.targetJson); // Add to beginning of array
+    var targetEntites = null;
+    if (this.targetJson.isAbstract) {
+        targetEntites = $warp.model.getDerivedEntitiesByID(this.targetJson.id);
+    } else {
+        // TBD - find a way to actually really only show target class, excluding siblings
+        targetEntites = [$warp.model.getBaseClassByID(this.targetJson.id)];
+    }
 
     // Prepare selection list with real and derived entities:
-    $("#WarpJS_assocSelectionModal_selectFromType").empty();
+    var options = $("#WarpJS_assocSelectionModal_selectFromType").empty();
     targetEntites.forEach(function (entity, idx) {
         var option = $('<option></option>');
-        option.text (entity.name);
+        option.text(entity.name);
         option.prop('value', idx);
+        option.data('type', entity.name)
         if (idx===0)
             option.prop('selected', 'selected');
-        $("#WarpJS_assocSelectionModal_selectFromType").append(option);
+        options.append(option);
+    });
+    options.data('parent', this);
+    options.change(function(){
+        var parent = $(this).data('parent');
+        var type   = $(this).find(':selected').data('type');
+        parent.updateSelectionTargets(type, function () {});
     });
 
     // Relationship proxy for selection targets:
@@ -2757,19 +2778,25 @@ WarpAssociationEditor.prototype.init = function() {
         }.bind(this));
     }.bind(this));
 
-    var entitySelectionTable = new WarpTable(tableConfig);
+    this.entitySelectionTable = new WarpTable(tableConfig);
     var selectFromTable = $("#WarpJS_assocSelectionModal_selectFromTable").empty()
-    entitySelectionTable.createViews(selectFromTable, function() {
-        entitySelectionTable.updateViewWithDataFromModel(function() {
-            // Update selections
-            this.updateSelections();
-            $("#associationEditorM").modal();
+    this.entitySelectionTable.createViews(selectFromTable, function() {
+        this.entitySelectionTable.updateViewWithDataFromModel(function() {
+            this.updateSelectionTargets(targetEntites[0].name, function() {
+                this.updateSelections();
+                $("#associationEditorM").modal();
+            }.bind(this));
         }.bind(this));
     }.bind(this));
 }
 
 WarpAssociationEditor.prototype.globalID = function() {
     return this._globalID;
+}
+
+WarpAssociationEditor.prototype.updateSelectionTargets = function(newType, callback) {
+    this.assocProxy.getAssocTargetsProxy().setTargetType(newType);
+    this.entitySelectionTable.updateViewWithDataFromModel(callback);
 }
 
 WarpAssociationEditor.prototype.updateSelections = function() {
@@ -2801,7 +2828,7 @@ WarpAssociationEditor.prototype.updateSelections = function() {
                 }.bind(this));
             }
 
-            // Do this last, since this might change the assocProxy!!!
+            // TBD - Potential race Condition? Must do this last, since this might change the assocProxy!!!
             assocProxy.queryResult(0).useData(function (proxy) {
                 var name = proxy.displayName();
                 var targetID = proxy.data._id;

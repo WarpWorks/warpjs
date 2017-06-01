@@ -15,6 +15,10 @@ WarpModelParser.prototype.getRelationshipDetails = function(relationshipID) {
     return result;
 }
 
+WarpModelParser.prototype.getBaseClassByID = function(entityID) {
+    return this.getBaseClass(this.getEntityByID(entityID));
+}
+
 WarpModelParser.prototype.getBaseClass = function(entity) {
     // BaseClass = Topmost, non-abstract class in the inheritance hierarchy
     if (entity.parentClass && entity.parentClass.length>0) {
