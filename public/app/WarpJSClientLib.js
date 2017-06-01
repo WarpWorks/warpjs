@@ -1920,6 +1920,37 @@ WarpBasicPropertyPanelItem.prototype.updateModelWithDataFromView = function(call
     }.bind(this));
 }
 
+WarpBasicPropertyPanelItem.prototype.createTinyMCE = function(entityID) {
+    const contentModal = $(`.container #content-modal`);
+
+    $(`.container #content-modal .modal-body`).html(`<textarea id="content-${entityID}"></textarea>`);
+    tinyMCE.init({
+        selector: `#content-${entityID}`,
+        height: 200,
+        menubar: false,
+        elementpath: false,
+        toolbar: 'bold italic linkbutton',
+        setup: function (editor) {
+            function updateContent(content) {
+                content.forEach((link) => {
+                    editor.insertContent(link);
+                });
+            }
+            editor.addButton('linkbutton', {
+                text: 'Link',
+                icon: false,
+                onclick: function () {
+                    console.log("got in the tiny mce");
+                }
+            })
+        },
+        content_css: '//www.tinymce.com/css/codepen.min.css'
+    });
+
+
+    $(`.container #content-modal`).modal("show");
+}
+
 WarpBasicPropertyPanelItem.prototype.createViews = function()
 {
     if (this.propertyType !== "text") {
@@ -1956,12 +1987,18 @@ WarpBasicPropertyPanelItem.prototype.createViews = function()
         var textDiv = $('<div></div>');
         textDiv.prop('class', 'col-sm-10');
 
+        var button = $('<button>View</button>');
+        button.prop('type', 'button');
+        button.prop('class', 'btn btn-primary');
+        button.on('click', this.createTinyMCE.bind(null, this.globalID()));
+
         var input = $('<textarea></textarea>');
         input.prop('class', 'form-control');
         input.prop('id', this.globalID());
 
         form.append(formGroup);
         formGroup.append(label);
+        formGroup.append(button);
         formGroup.append(textDiv);
         textDiv.append(input);
 
