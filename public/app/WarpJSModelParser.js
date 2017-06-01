@@ -38,19 +38,21 @@ WarpModelParser.prototype.getEntityByID = function(entityID) {
     });
 }
 
-WarpModelParser.prototype.getDerivedEntitiesByID = function(entityID) {
+WarpModelParser.prototype.getDerivedEntitiesByID = function(entityID, includeAbstractEntities, includeChildrensChildren) {
     var results = [];
     this.model.entities.forEach(function(entity) {
         if (entity.parentClass.length > 0)
             if (entity.parentClass[0] === entityID)
-                results.push(this.getEntityByID(entity.id));
+                if (includeAbstractEntities || !entity.isAbstract)
+                    results.push(this.getEntityByID(entity.id));
     }.bind(this));
-    results.forEach(function(derivedEntity) {
-        var childChildren = this.getDerivedEntitiesByID(derivedEntity.id);
-        if (childChildren.length > 0)
-            results.push (childChildren);
-    }.bind(this));
-
+    if (includeChildrensChildren) {
+        results.forEach(function (derivedEntity) {
+            var childChildren = this.getDerivedEntitiesByID(derivedEntity.id);
+            if (childChildren.length > 0)
+                results.push(childChildren);
+        }.bind(this));
+    }
     return results;
 }
 
