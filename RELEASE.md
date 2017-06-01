@@ -1,5 +1,9 @@
 # Releases
 
+## 1.0.0-rc2 - 2017-06-01
+
+- Image editor
+
 ## 1.0.0-rc1 - 2017-05-31
 
 - Full front-end rework for embedded documents.
