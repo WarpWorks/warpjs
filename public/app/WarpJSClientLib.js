@@ -1953,10 +1953,22 @@ WarpBasicPropertyPanelItem.prototype.updateModelWithDataFromView = function(call
     }.bind(this));
 }
 
-WarpBasicPropertyPanelItem.prototype.createTinyMCE = function(entityID) {
-    const contentModal = $(`.container #content-modal`);
+WarpBasicPropertyPanelItem.prototype.saveTinyMCEContent = function(entityID) {
+    const editorContent = tinyMCE.activeEditor.getContent();
+    $(`#${entityID}`).val(editorContent);
+    $warp.save();
 
-    $(`.container #content-modal .modal-body`).html(`<textarea id="content-${entityID}"></textarea>`);
+    $(`.container #content-modal`).modal("hide");
+}
+
+WarpBasicPropertyPanelItem.prototype.showContentModal = function(entityID) {
+    tinyMCE.activeEditor.setContent($(`#${entityID}`).val());
+    $("#content-editor-save").on("click", this.saveTinyMCEContent.bind(null, entityID));
+    $(`.container #content-modal`).modal("show");
+}
+
+WarpBasicPropertyPanelItem.prototype.createTinyMCE = function(entityID) {
+    $(`.container #content-modal .modal-body`).html(`<textarea name="content-${entityID}" id="content-${entityID}"></textarea>`);
     tinyMCE.init({
         selector: `#content-${entityID}`,
         height: 200,
@@ -1979,14 +1991,10 @@ WarpBasicPropertyPanelItem.prototype.createTinyMCE = function(entityID) {
         },
         content_css: '//www.tinymce.com/css/codepen.min.css'
     });
-
-
-    $(`.container #content-modal`).modal("show");
 }
 
 WarpBasicPropertyPanelItem.prototype.createViews = function(parentHtml, callback) {
     var formGroup = $('<div class="form-group"></div>');
-
     var label = $('<label></label>');
     label.prop('for', this.globalID());
     label.prop('class', 'col-sm-2 control-label');
@@ -1994,23 +2002,28 @@ WarpBasicPropertyPanelItem.prototype.createViews = function(parentHtml, callback
 
     var inputDiv = $('<div></div>');
     inputDiv.prop('class', 'col-sm-10');
-
+    var input;
     if (this.propertyType !== "text") {
+        input = $('<input></input>');
+    } else { // Text
+        input = $('<input readonly></input>');
 
-        var input = $('<input></input>');
-        input.prop('type', 'text');
-        input.prop('class', 'form-control');
-        input.prop('id', this.globalID());
-        inputDiv.append(input);
+        var button = $('<button>View</button>');
+        button.prop('type', 'button');
+        button.prop('class', 'btn btn-primary');
+        button.on('click', this.showContentModal.bind(this, this.globalID()));
+
+        formGroup.append(button);
+        this.createTinyMCE(this.globalID());
     }
-    else { // Text
-        var button = $('<button type="button" class="btn btn-link"><span class="glyphicon glyphicon-list-alt"></span></button>');
-        button.on('click', this.createTinyMCE.bind(null, this.globalID()));
-        inputDiv.append(button);
-    }
+
+    input.prop('type', 'text');
+    input.prop('class', 'form-control');
+    input.prop('id', this.globalID());
 
     formGroup.append(label);
     formGroup.append(inputDiv);
+    inputDiv.append(input);
 
     parentHtml.append(formGroup);
     callback();
