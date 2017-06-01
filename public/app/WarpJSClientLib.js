@@ -1952,10 +1952,22 @@ WarpBasicPropertyPanelItem.prototype.updateModelWithDataFromView = function(call
     }.bind(this));
 }
 
-WarpBasicPropertyPanelItem.prototype.createTinyMCE = function(entityID) {
-    const contentModal = $(`.container #content-modal`);
+WarpBasicPropertyPanelItem.prototype.saveTinyMCEContent = function(entityID) {
+    const editorContent = tinyMCE.activeEditor.getContent();
+    $(`#${entityID}`).val(editorContent);
+    $warp.save();
 
-    $(`.container #content-modal .modal-body`).html(`<textarea id="content-${entityID}"></textarea>`);
+    $(`.container #content-modal`).modal("hide");
+}
+
+WarpBasicPropertyPanelItem.prototype.showContentModal = function(entityID) {
+    tinyMCE.activeEditor.setContent($(`#${entityID}`).val());
+    $("#content-editor-save").on("click", this.saveTinyMCEContent.bind(null, entityID));
+    $(`.container #content-modal`).modal("show");
+}
+
+WarpBasicPropertyPanelItem.prototype.createTinyMCE = function(entityID) {
+    $(`.container #content-modal .modal-body`).html(`<textarea name="content-${entityID}" id="content-${entityID}"></textarea>`);
     tinyMCE.init({
         selector: `#content-${entityID}`,
         height: 200,
@@ -1978,9 +1990,6 @@ WarpBasicPropertyPanelItem.prototype.createTinyMCE = function(entityID) {
         },
         content_css: '//www.tinymce.com/css/codepen.min.css'
     });
-
-
-    $(`.container #content-modal`).modal("show");
 }
 
 WarpBasicPropertyPanelItem.prototype.createViews = function(parentHtml, callback)
@@ -2020,7 +2029,7 @@ WarpBasicPropertyPanelItem.prototype.createViews = function(parentHtml, callback
         var button = $('<button>View</button>');
         button.prop('type', 'button');
         button.prop('class', 'btn btn-primary');
-        button.on('click', this.createTinyMCE.bind(null, this.globalID()));
+        button.on('click', this.showContentModal.bind(this, this.globalID()));
 
         var input = $('<textarea></textarea>');
         input.prop('class', 'form-control');
@@ -2031,6 +2040,8 @@ WarpBasicPropertyPanelItem.prototype.createViews = function(parentHtml, callback
         formGroup.append(button);
         formGroup.append(textDiv);
         textDiv.append(input);
+
+        this.createTinyMCE(this.globalID());
     }
 
     parentHtml.append(formGroup);
