@@ -1,5 +1,10 @@
 # Releases
 
+## 1.0.0-rc3 - 2017-06-02
+
+- Fixed bug in FireFox.
+- More UI improvements.
+
 ## 1.0.0-rc2 - 2017-06-01
 
 - Image editor

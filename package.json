@@ -1,6 +1,6 @@
 {
   "name": "@warp-works/warpjs",
-  "version": "1.0.0-rc2",
+  "version": "1.0.0-rc3",
   "description": "Content management system for WarpWorks in javascript",
   "repository": {
     "type": "git",
@@ -29,6 +29,7 @@
     "test:integration": "mocha \"lib/**/*.integration.test.js\"",
     "test:unit": "mocha \"lib/**/*.unit.test.js\"",
     "test": "npm run -s test:unit && npm run -s test:integration",
+    "lint:client": "eslint --fix --config=.eslintrc.client.json --ignore-pattern='*.test.js' public/app",
     "lint:node": "eslint --fix --ignore-pattern='*.test.js' server.js lib",
     "lint:test": "eslint --fix --config=.eslintrc.test.json \"lib/**/*.test.js\"",
     "lint": "npm run -s lint:node && npm run -s lint:test"
