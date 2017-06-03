@@ -1,3 +1,3 @@
 module.exports = function(array, compareValue) {
-    return (array.length > compareValue);
+    return (compareValue < 0) ? false : (array.length > compareValue);
 };
