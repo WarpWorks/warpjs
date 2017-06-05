@@ -13,7 +13,7 @@ function ensureHalHeader(settings) {
     return settings;
 }
 
-function getCurrentPageHAL($, url = null) {
+function getCurrentPageHAL($, url) {
     return new Promise((resolve, reject) => {
         const defaultSettings = {
             method: 'GET',
