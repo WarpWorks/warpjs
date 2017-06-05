@@ -260,7 +260,7 @@ EntityProxy.prototype.addToHistory = function(action) {
     // TBD - move old history entries to separate document if history gets too long
     this.history.push({
         date: new Date(),
-        user: "TBD",
+        user: $warp.user,
         action: action
     });
 }
@@ -1258,6 +1258,7 @@ function initializeWarpJS (config, callback) {
         },
         success: function (result) {
             $warp.links = result._links;
+            $warp.user = result.warpjsUser ? result.warpjsUser : "undefined";
 
             $warp.progressBarOn(50);
 
@@ -1428,8 +1429,8 @@ WarpBreadcrumb.prototype.updateViewWithDataFromModel = function(callback) {
     ep.useData(function (ep) {
         var bc = $("#" + this.globalID()).empty();
         if (ep.data.isRootInstance) {
-            var href = $warp.links.domain.href + '/' + ep.data.type;
-            var li = "<li class='breadcrumb-item'><a href='" + href + "'>" + ep.data.type + "</a></li>"
+            var href = $warp.links.domain.href + '/' + ep.type;
+            var li = "<li class='breadcrumb-item'><a href='" + href + "'>" + ep.type + "</a></li>"
             bc.append(li);
         }
         else if (ep.mode === "addNewEntity") {
@@ -1891,7 +1892,7 @@ WarpPanelItem.prototype.constructor = WarpPanelItem;
 
 WarpPanelItem.prototype.isFormItem = function() {
     return this.type  === "Enum"
-        || (this.type === "BasicProperty" && this.propertyType !== "text")
+        || this.type === "BasicProperty"
         || (this.type === "Relationship" && this.style === "csv");
 }
 
@@ -1983,55 +1984,33 @@ WarpBasicPropertyPanelItem.prototype.createTinyMCE = function(entityID) {
     $(`.container #content-modal`).modal("show");
 }
 
-WarpBasicPropertyPanelItem.prototype.createViews = function(parentHtml, callback)
-{
+WarpBasicPropertyPanelItem.prototype.createViews = function(parentHtml, callback) {
+    var formGroup = $('<div class="form-group"></div>');
+
+    var label = $('<label></label>');
+    label.prop('for', this.globalID());
+    label.prop('class', 'col-sm-2 control-label');
+    label.text(this.label);
+
+    var inputDiv = $('<div></div>');
+    inputDiv.prop('class', 'col-sm-10');
+
     if (this.propertyType !== "text") {
-        var formGroup = $('<div class="form-group"></div>');
-
-        var label = $('<label></label>');
-        label.prop('for', this.globalID());
-        label.prop('class', 'col-sm-2 control-label');
-        label.text(this.label);
-
-        var inputDiv = $('<div></div>');
-        inputDiv.prop('class', 'col-sm-10');
 
         var input = $('<input></input>');
         input.prop('type', 'text');
         input.prop('class', 'form-control');
         input.prop('id', this.globalID());
-
-        formGroup.append(label);
-        formGroup.append(inputDiv);
         inputDiv.append(input);
     }
     else { // Text
-        var form = $('<form class="form-vertical"></form>');
-        var formGroup = $('<div class="form-group"></div>');
-
-        var label = $('<label></label>');
-        label.prop('for', this.globalID());
-        label.prop('class', 'col-sm-2 control-label');
-        label.text(this.label);
-
-        var textDiv = $('<div></div>');
-        textDiv.prop('class', 'col-sm-10');
-
-        var button = $('<button>View</button>');
-        button.prop('type', 'button');
-        button.prop('class', 'btn btn-primary');
+        var button = $('<button type="button" class="btn btn-link"><span class="glyphicon glyphicon-list-alt"></span></button>');
         button.on('click', this.createTinyMCE.bind(null, this.globalID()));
-
-        var input = $('<textarea></textarea>');
-        input.prop('class', 'form-control');
-        input.prop('id', this.globalID());
-
-        form.append(formGroup);
-        formGroup.append(label);
-        formGroup.append(button);
-        formGroup.append(textDiv);
-        textDiv.append(input);
+        inputDiv.append(button);
     }
+
+    formGroup.append(label);
+    formGroup.append(inputDiv);
 
     parentHtml.append(formGroup);
     callback();
