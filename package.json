@@ -1,6 +1,6 @@
 {
   "name": "@warp-works/warpjs",
-  "version": "0.6.6",
+  "version": "1.0.0-rc6",
   "description": "Content management system for WarpWorks in javascript",
   "repository": {
     "type": "git",
@@ -29,38 +29,39 @@
     "test:integration": "mocha \"lib/**/*.integration.test.js\"",
     "test:unit": "mocha \"lib/**/*.unit.test.js\"",
     "test": "npm run -s test:unit && npm run -s test:integration",
+    "lint:client": "eslint --fix --config=.eslintrc.client.json --ignore-pattern='*.test.js' public/app",
     "lint:node": "eslint --fix --ignore-pattern='*.test.js' server.js lib",
     "lint:test": "eslint --fix --config=.eslintrc.test.json \"lib/**/*.test.js\"",
     "lint": "npm run -s lint:node && npm run -s lint:test"
   },
   "dependencies": {
-    "@quoin/expressjs-routes-info": "0.1.6",
+    "@quoin/expressjs-routes-info": "0.1.7",
     "@quoin/node-rc": "0.1.1",
-    "@warp-works/core": "0.8.7",
-    "debug": "2.6.6",
+    "@warp-works/core": "1.0.0-rc2",
+    "debug": "2.6.8",
     "hal": "0.1.0",
     "hbs": "4.0.1",
     "hbs-utils": "0.0.4",
     "lodash": "4.17.4",
-    "mongodb": "2.2.26",
-    "serve-favicon": "2.4.2",
-    "tinymce": "4.5.7"
+    "mongodb": "2.2.28",
+    "serve-favicon": "2.4.3",
+    "tinymce": "4.6.3"
   },
   "devDependencies": {
     "@quoin/eslint-config-quoin": "0.1.4",
     "@quoin/node-test-helpers": "0.2.1",
     "@warp-works/warpjs-mongo-persistence": "0.1.1",
-    "body-parser": "1.17.1",
+    "body-parser": "1.17.2",
     "cookie-parser": "1.4.3",
     "eslint": "3.19.0",
     "eslint-plugin-html": "2.0.3",
-    "eslint-plugin-import": "2.2.0",
-    "eslint-plugin-node": "4.2.2",
+    "eslint-plugin-import": "2.3.0",
+    "eslint-plugin-node": "5.0.0",
     "eslint-plugin-promise": "3.5.0",
     "eslint-plugin-standard": "3.0.1",
-    "express": "4.15.2",
-    "mocha": "3.3.0",
-    "nyc": "10.3.2"
+    "express": "4.15.3",
+    "mocha": "3.4.2",
+    "nyc": "11.0.2"
   },
   "peerDependencies": {
     "body-parser": ">=1.17.0",

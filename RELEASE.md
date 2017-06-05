@@ -1,5 +1,32 @@
 # Releases
 
+## 1.0.0-rc6 - 2017-06-05
+
+- Fixed breadcrumb.
+- Fixed style and the create view.
+
+## 1.0.0-rc5 - 2017-06-05
+
+ - Added implementation for TinyMCE.
+ - Updated @quoin/express-routes-info
+
+## 1.0.0-rc4 - 2017-06-04
+
+- Updated core@1.0.0-rc2
+
+## 1.0.0-rc3 - 2017-06-02
+
+- Fixed bug in FireFox.
+- More UI improvements.
+
+## 1.0.0-rc2 - 2017-06-01
+
+- Image editor
+
+## 1.0.0-rc1 - 2017-05-31
+
+- Full front-end rework for embedded documents.
+
 ## 0.6.6 - 2017-05-12
 
 - Added static path to access domain JSN files.
