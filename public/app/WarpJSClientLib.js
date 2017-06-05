@@ -1952,22 +1952,131 @@ WarpBasicPropertyPanelItem.prototype.updateModelWithDataFromView = function(call
     }.bind(this));
 }
 
-WarpBasicPropertyPanelItem.prototype.saveTinyMCEContent = function(entityID) {
-    const editorContent = tinyMCE.activeEditor.getContent();
-    $(`#${entityID}`).val(editorContent);
-    $warp.save();
+WarpBasicPropertyPanelItem.prototype.fetchLinkSelectionModalData = function() {
+    const contentEntity = $warp.model.model.entities.filter((object) => object.name === "Content");
 
-    $(`.container #content-modal`).modal("hide");
+    if(contentEntity.length) {
+        return listOfEntities = $warp.model.model.entities.filter((object) => {
+            if(object.parentClass.length) {
+                return object.parentClass[0] === contentEntity[0].id;
+            }
+            return;
+        });
+    } else {
+        //throw and error because content entity not found
+    }
 }
 
-WarpBasicPropertyPanelItem.prototype.showContentModal = function(entityID) {
-    tinyMCE.activeEditor.setContent($(`#${entityID}`).val());
-    $("#content-editor-save").on("click", this.saveTinyMCEContent.bind(null, entityID));
-    $(`.container #content-modal`).modal("show");
+WarpBasicPropertyPanelItem.prototype.fetchEntitySelectionDocuments = function(type, updateSelectionTableView) {
+    var cmdList = {
+        commandList: [
+            {
+                domain: $warp.domain,
+                targetType: "Content",
+                command: "FetchListOfContentChildrenEntities",
+                filter: type
+            }
+        ]
+    };
+    $warp.processCRUDcommands(cmdList, updateSelectionTableView.bind(this));
+}
+
+WarpBasicPropertyPanelItem.prototype.updateSelectionTable = function(documents) {
+    const listItems = $("#link-selection-modal-table").empty();
+    const ul = $('<ul class="list-group"></ul>')
+
+    if(documents.success) {
+        documents.resultList[0].queryResult.forEach((doc) => {
+            const listItem = $('<li class="list-group-item"></li>');
+            listItem.text(doc.Name);
+            listItem.data("name", doc.Name);
+            listItem.data("id", doc._id);
+            listItem.data("type", doc.type);
+            listItem.on("click", this.addToSelectedLinks);
+            ul.append(listItem);
+        });
+
+        if(!ul.children().get().length) {
+            ul.append($('<li class="list-group-item">No Documents For This Collection</li>'));
+        }
+
+        listItems.append(ul);
+
+    } else {
+        //throw and error
+    }
+}
+
+WarpBasicPropertyPanelItem.prototype.addToSelectedLinks = function(event) {
+    const name = $(event.currentTarget).data("name");
+    const type = $(event.currentTarget).data("type");
+    const id = $(event.currentTarget).data("id");
+    const addedLink = `{{${name},${type},${id}}}`;
+
+    $('.link-selection-added-links').append(`<li class="pending-selection-link list-group-item">${addedLink}</li>`);
+}
+
+WarpBasicPropertyPanelItem.prototype.removeLinkFromList = function(event) {
+    $(event.currentTarget).remove();
+}
+
+WarpBasicPropertyPanelItem.prototype.addLinksToContentAndCloseSelectionModal = function() {
+    const arrayOfLinks = $('.link-selection-added-links').children().get();
+
+    arrayOfLinks.map((linkElement) => {
+        const link = $(linkElement).text();
+
+        tinyMCE.activeEditor.execCommand('mceInsertContent',false,link);
+    });
+
+    this.closeLinkSelectionModal();
+}
+
+WarpBasicPropertyPanelItem.prototype.closeLinkSelectionModal = function() {
+    $("#link-selection-modal-selector").empty();
+    $("#link-selection-modal-table").empty();
+    $('.link-selection-added-links').empty();
+    $('#link-selection-modal').modal("hide");
+}
+
+WarpBasicPropertyPanelItem.prototype.showLinkSelectionModal = function() {
+    const listOfEntities = this.fetchLinkSelectionModalData();
+    const options = $("#link-selection-modal-selector").empty();
+    const defaultOption = $('<option></option>');
+
+    defaultOption.text('--Select Entity--');
+    defaultOption.prop('selected', 'selected');
+
+    options.append(defaultOption);
+
+    listOfEntities.forEach(function (entity, idx) {
+        var option = $('<option></option>');
+        option.text(entity.name);
+        option.prop('value', idx);
+        option.data('type', entity.name);
+
+        options.append(option);
+    });
+    options.data('parent', this);
+    options.change(function(){
+        var parent = $(this).data('parent');
+        var type   = $(this).find(':selected').data('type');
+
+        parent.fetchEntitySelectionDocuments(type, parent.updateSelectionTable);
+    });
+
+    $(`#link-selection-modal`).modal({backdrop: 'static', keyboard: false});
+    $(`#link-selection-modal`).modal("show");
 }
 
 WarpBasicPropertyPanelItem.prototype.createTinyMCE = function(entityID) {
-    $(`.container #content-modal .modal-body`).html(`<textarea name="content-${entityID}" id="content-${entityID}"></textarea>`);
+    const basicPropertyContext = this;
+
+    $(`#content-modal .modal-body`).html(`<textarea name="content-${entityID}" id="content-${entityID}"></textarea>`);
+    $('.link-selection-added-links').on("click", '.pending-selection-link', this.removeLinkFromList);
+    $('#link-selection-add').on("click", this.addLinksToContentAndCloseSelectionModal.bind(this));
+    $('.link-selection-close').on("click", this.closeLinkSelectionModal);
+
     tinyMCE.init({
         selector: `#content-${entityID}`,
         height: 200,
@@ -1984,7 +2093,7 @@ WarpBasicPropertyPanelItem.prototype.createTinyMCE = function(entityID) {
                 text: 'Link',
                 icon: false,
                 onclick: function () {
-                    console.log("got in the tiny mce");
+                    basicPropertyContext.showLinkSelectionModal();
                 }
             })
         },
@@ -1992,57 +2101,53 @@ WarpBasicPropertyPanelItem.prototype.createTinyMCE = function(entityID) {
     });
 }
 
+WarpBasicPropertyPanelItem.prototype.saveTinyMCEContent = function(entityID) {
+    const editorContent = tinyMCE.activeEditor.getContent();
+    $(`#${entityID}`).val(editorContent);
+    $warp.save();
+
+    $(`.container #content-modal`).modal("hide");
+}
+
+WarpBasicPropertyPanelItem.prototype.showContentModal = function(entityID) {
+    tinyMCE.activeEditor.setContent($(`#${entityID}`).val());
+    $("#content-editor-save").on("click", this.saveTinyMCEContent.bind(null, entityID));
+    $(`#content-modal`).modal("show");
+}
+
 WarpBasicPropertyPanelItem.prototype.createViews = function(parentHtml, callback)
 {
+    var formGroup = $('<div class="form-group"></div>');
+    var label = $('<label></label>');
+    label.prop('for', this.globalID());
+    label.prop('class', 'col-sm-2 control-label');
+    label.text(this.label);
+
+    var button = $('<button>View</button>');
+    button.prop('type', 'button');
+    button.prop('class', 'btn btn-primary');
+    button.on('click', this.showContentModal.bind(this, this.globalID()));
+
+    var inputDiv = $('<div></div>');
+    inputDiv.prop('class', 'col-sm-10');
+
     if (this.propertyType !== "text") {
-        var formGroup = $('<div class="form-group"></div>');
-
-        var label = $('<label></label>');
-        label.prop('for', this.globalID());
-        label.prop('class', 'col-sm-2 control-label');
-        label.text(this.label);
-
-        var inputDiv = $('<div></div>');
-        inputDiv.prop('class', 'col-sm-10');
-
         var input = $('<input></input>');
-        input.prop('type', 'text');
-        input.prop('class', 'form-control');
-        input.prop('id', this.globalID());
-
-        formGroup.append(label);
-        formGroup.append(inputDiv);
-        inputDiv.append(input);
     }
     else { // Text
-        var form = $('<form class="form-vertical"></form>');
-        var formGroup = $('<div class="form-group"></div>');
+        var input = $('<input readonly></input>');
 
-        var label = $('<label></label>');
-        label.prop('for', this.globalID());
-        label.prop('class', 'col-sm-2 control-label');
-        label.text(this.label);
-
-        var textDiv = $('<div></div>');
-        textDiv.prop('class', 'col-sm-10');
-
-        var button = $('<button>View</button>');
-        button.prop('type', 'button');
-        button.prop('class', 'btn btn-primary');
-        button.on('click', this.showContentModal.bind(this, this.globalID()));
-
-        var input = $('<textarea></textarea>');
-        input.prop('class', 'form-control');
-        input.prop('id', this.globalID());
-
-        form.append(formGroup);
-        formGroup.append(label);
         formGroup.append(button);
-        formGroup.append(textDiv);
-        textDiv.append(input);
-
         this.createTinyMCE(this.globalID());
     }
+
+    input.prop('type', 'text');
+    input.prop('class', 'form-control');
+    input.prop('id', this.globalID());
+
+    formGroup.append(label);
+    formGroup.append(inputDiv);
+    inputDiv.append(input);
 
     parentHtml.append(formGroup);
     callback();
