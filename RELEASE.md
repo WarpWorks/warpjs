@@ -1,5 +1,10 @@
 # Releases
 
+## 1.0.0-rc6 - 2017-06-05
+
+- Fixed breadcrumb.
+- Fixed style and the create view.
+
 ## 1.0.0-rc5 - 2017-06-05
 
  - Added implementation for TinyMCE.
