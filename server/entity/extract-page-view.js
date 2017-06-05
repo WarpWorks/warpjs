@@ -80,12 +80,21 @@ function extractRelationship(req, resource, persistence, hsEntity, entity, isPre
 }
 
 function imagePath(req, image) {
-    const filePath = path.join(req.app.get('public-folder'), 'iic_images', image.ImageURL);
+    const publicFolder = req.app.get('public-folder');
+    const publicFolderPath = req.app.get('public-folder-path');
+
+    let filePath;
+
+    if (image.ImageURL.indexOf(publicFolderPath) === 0) {
+        filePath = path.join(publicFolder, image.ImageURL.substring(publicFolderPath.length));
+    } else {
+        filePath = path.join(publicFolder, 'iic_images', image.ImageURL);
+        image.ImageURL = IMAGE_PATH.expand(image);
+    }
+
     try {
         const stats = fs.lstatSync(filePath);
-        if (stats.isFile()) {
-            image.ImageURL = IMAGE_PATH.expand(image);
-        } else if (!/^(http|\?)/.test(image.ImageURL)) {
+        if (!stats.isFile() && !/^(http|\?)/.test(image.ImageURL)) {
             image.ImageURL = image.ImageURL.replace(/\W/g, '');
             image.ImageURL = RANDOM_IMAGE.expand(image);
         }

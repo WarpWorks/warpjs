@@ -15,16 +15,21 @@ const app = express();
 
 const buildDir = path.resolve(path.join(__dirname, '..', 'build'));
 
+const PUBLIC_FOLDER_KEY = 'public-folder';
+const PUBLIC_FOLDER_PATH_KEY = 'public-folder-path';
+
 app.set('view engine', 'hbs');
 app.set('views', './server/views');
 app.set('sendfile-options', {root: buildDir});
-app.set('public-folder', path.join(config.folders.iicData, 'public'));
+app.set(PUBLIC_FOLDER_KEY, path.join(config.folders.iicData, 'public'));
+app.set(PUBLIC_FOLDER_PATH_KEY, '/public');
+
 // Make sure folder exists.
-fs.lstatSync(app.get('public-folder'));
+fs.lstatSync(app.get(PUBLIC_FOLDER_KEY));
 
 // Make sure to serve static assets first so we don't go in middlewares.
 app.use('/static', express.static(buildDir));
-app.use('/public', express.static(app.get('public-folder')));
+app.use(app.get(PUBLIC_FOLDER_PATH_KEY), express.static(app.get(PUBLIC_FOLDER_KEY)));
 
 app.use(cookieParser(config.cookieSecret, {
     httpOnly: true,
