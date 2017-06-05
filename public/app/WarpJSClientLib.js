@@ -801,7 +801,7 @@ AssociationProxy.prototype.getAssocs = function() {
             relnName: this.name,
             data: []
         };
-        // Push, but don`t mark as dirty - we can lose this change without problem, if not needed
+        // Push, but don't mark as dirty - we can lose this change without problem, if not needed
         this.parentEntityProxy.data.associations.push(result);
         this.requiresUpdate = true;
     }
@@ -1327,7 +1327,7 @@ WarpJSClient.prototype.initialize = function (jsonData, pageConfig, callback) {
     var entityDefn = this.model.getEntityByName(pageConfig.entityType);
     if (!entityDefn) {
         $warp.alert("Invalid entity type in URL: " + pageConfig.entityType);
-        throw "Can`t find entity:" + pageConfig.entityType;
+        throw "Can't find entity:" + pageConfig.entityType;
     }
     var defaultView = this.model.getPageView(entityDefn, pageConfig.viewName);
     defaultView.entityType = pageConfig.entityType;
@@ -1531,7 +1531,7 @@ WarpPageView.prototype.initialize = function (callback) {
             this._relnProxyIdx = 0;
         if (this._relnProxyIdx < this._relnProxies.length) {
             this._relnProxies[this._relnProxyIdx++].useRelationship(function (relnProxy) {
-                // Don`t need to do anything; just ensure the data is loaded
+                // Don't need to do anything; just ensure the data is loaded
                 $warp.trace (1, "WarpPageView.initialize", "Loading relationship data for: "+this.getEntityProxy().displayName() + ', ' + relnProxy.name);
                 this.initialize(callback);
             }.bind(this));
@@ -1956,14 +1956,9 @@ WarpBasicPropertyPanelItem.prototype.fetchLinkSelectionModalData = function() {
     const contentEntity = $warp.model.model.entities.filter((object) => object.name === "Content");
 
     if(contentEntity.length) {
-        return listOfEntities = $warp.model.model.entities.filter((object) => {
-            if(object.parentClass.length) {
-                return object.parentClass[0] === contentEntity[0].id;
-            }
-            return;
-        });
-    } else {
-        //throw and error because content entity not found
+        return listOfEntities = $warp.model.model.entities.filter(
+            (object) => (object.parentClass.length && object.parentClass[0] === contentEntity[0].id)
+        );
     }
 }
 
@@ -2001,9 +1996,6 @@ WarpBasicPropertyPanelItem.prototype.updateSelectionTable = function(documents) 
         }
 
         listItems.append(ul);
-
-    } else {
-        //throw and error
     }
 }
 
@@ -2011,9 +2003,9 @@ WarpBasicPropertyPanelItem.prototype.addToSelectedLinks = function(event) {
     const name = $(event.currentTarget).data("name");
     const type = $(event.currentTarget).data("type");
     const id = $(event.currentTarget).data("id");
-    const addedLink = `{{${name},${type},${id}}}`;
+    const addedLink = '{{' + name + ',' + type + ',' + id + '}}';
 
-    $('.link-selection-added-links').append(`<li class="pending-selection-link list-group-item">${addedLink}</li>`);
+    $('.link-selection-added-links').append('<li class="pending-selection-link list-group-item">' + addedLink + '</li>');
 }
 
 WarpBasicPropertyPanelItem.prototype.removeLinkFromList = function(event) {
@@ -2065,20 +2057,20 @@ WarpBasicPropertyPanelItem.prototype.showLinkSelectionModal = function() {
         parent.fetchEntitySelectionDocuments(type, parent.updateSelectionTable);
     });
 
-    $(`#link-selection-modal`).modal({backdrop: 'static', keyboard: false});
-    $(`#link-selection-modal`).modal("show");
+    $('#link-selection-modal').modal({backdrop: 'static', keyboard: false});
+    $('#link-selection-modal').modal("show");
 }
 
 WarpBasicPropertyPanelItem.prototype.createTinyMCE = function(entityID) {
     const basicPropertyContext = this;
 
-    $(`#content-modal .modal-body`).html(`<textarea name="content-${entityID}" id="content-${entityID}"></textarea>`);
+    $('#content-modal .modal-body').html('<textarea name="content-' + entityID + '" id="content-' + entityID + '"></textarea>');
     $('.link-selection-added-links').on("click", '.pending-selection-link', this.removeLinkFromList);
     $('#link-selection-add').on("click", this.addLinksToContentAndCloseSelectionModal.bind(this));
     $('.link-selection-close').on("click", this.closeLinkSelectionModal);
 
     tinyMCE.init({
-        selector: `#content-${entityID}`,
+        selector: '#content-' + entityID,
         height: 200,
         menubar: false,
         elementpath: false,
@@ -2103,16 +2095,16 @@ WarpBasicPropertyPanelItem.prototype.createTinyMCE = function(entityID) {
 
 WarpBasicPropertyPanelItem.prototype.saveTinyMCEContent = function(entityID) {
     const editorContent = tinyMCE.activeEditor.getContent();
-    $(`#${entityID}`).val(editorContent);
+    $('#' + entityID).val(editorContent);
     $warp.save();
 
-    $(`.container #content-modal`).modal("hide");
+    $('.container #content-modal').modal("hide");
 }
 
 WarpBasicPropertyPanelItem.prototype.showContentModal = function(entityID) {
-    tinyMCE.activeEditor.setContent($(`#${entityID}`).val());
+    tinyMCE.activeEditor.setContent($('#' + entityID).val());
     $("#content-editor-save").on("click", this.saveTinyMCEContent.bind(null, entityID));
-    $(`#content-modal`).modal("show");
+    $('#content-modal').modal("show");
 }
 
 WarpBasicPropertyPanelItem.prototype.createViews = function(parentHtml, callback)
@@ -2123,19 +2115,19 @@ WarpBasicPropertyPanelItem.prototype.createViews = function(parentHtml, callback
     label.prop('class', 'col-sm-2 control-label');
     label.text(this.label);
 
-    var button = $('<button>View</button>');
-    button.prop('type', 'button');
-    button.prop('class', 'btn btn-primary');
-    button.on('click', this.showContentModal.bind(this, this.globalID()));
-
     var inputDiv = $('<div></div>');
     inputDiv.prop('class', 'col-sm-10');
 
+    var input;
     if (this.propertyType !== "text") {
-        var input = $('<input></input>');
-    }
-    else { // Text
-        var input = $('<input readonly></input>');
+        input = $('<input></input>');
+    } else { // Text
+        input = $('<input readonly></input>');
+
+        var button = $('<button>View</button>');
+        button.prop('type', 'button');
+        button.prop('class', 'btn btn-primary');
+        button.on('click', this.showContentModal.bind(this, this.globalID()));
 
         formGroup.append(button);
         this.createTinyMCE(this.globalID());
@@ -3069,7 +3061,7 @@ WarpAssociationEditor.prototype.updateAssocWithDataFromEditor = function(callbac
                 assocProxy.updateAssocDesc(oid, desc);
             }
             catch (err) {
-                $warp.trace(1, "WarpAssociationEditor.updateAssocWithDataFromEditor", "Can`t update assocData - assoc was probably removed before");
+                $warp.trace(1, "WarpAssociationEditor.updateAssocWithDataFromEditor", "Can't update assocData - assoc was probably removed before");
             }
             callback();
         }.bind(this));

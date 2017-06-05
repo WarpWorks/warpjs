@@ -1,5 +1,10 @@
 # Releases
 
+## 1.0.0-rc5 - 2017-06-05
+
+- Added implementation for TinyMCE.
+- Updated @quoin/express-routes-info
+
 ## 1.0.0-rc4 - 2017-06-04
 
 - Updated core@1.0.0-rc2
