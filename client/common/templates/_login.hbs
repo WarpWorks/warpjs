@@ -1,7 +1,8 @@
 {{#if user}}
-    Hi {{user.Name}}
-    <a href="{{_links.i3c_logout.href}}"><span title="Log out" class="glyphicon
-    glyphicon-log-out" /></a>
+    <p>
+        Hi {{user.Name}}
+        <a href="{{_links.i3c_logout.href}}"><span title="Log out" class="glyphicon glyphicon-log-out" /></a>
+    </p>
 {{^}}
     {{#unless hideLoginHeader}}
         <form class="hidden-xs hidden-sm form-horizontal" role="form"
