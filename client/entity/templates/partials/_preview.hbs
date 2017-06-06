@@ -13,8 +13,10 @@
     </div>
     <div class="col-md-10 col-lg-10">
         <div class="preview-heading"><a href="{{self.href}}">{{Heading}}</a></div>
-        <div class="preview-content">
-            <span>{{#if containsHTML}}{{{Content}}}{{else}}{{Content}}{{/if}}</span>
-        </div>
+        {{#if Content}}
+             <div class="preview-content">
+                <span>{{{Content}}}</span>
+            </div>
+        {{/if}}
     </div>
 </div>

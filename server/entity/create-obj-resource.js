@@ -13,6 +13,7 @@ const PROPS_TO_PICK = [
     'style',
 
     // Paragraph
+    'propertyType',
     'containsHTML',
 
     // Panel

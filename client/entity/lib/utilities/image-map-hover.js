@@ -88,11 +88,10 @@ class HoverPreview {
         this.updateModalCSS(modalPosition.left, modalPosition.top, modalPosition.flagHeight, modalPosition.flagClass);
     }
 
-    showModal($, title, content, containsHTML, imageAreaReferenceKey) {
+    showModal($, title, content, imageAreaReferenceKey) {
         const overViewData = {
             title,
-            content,
-            containsHTML
+            content
         };
 
         $(constants.MAP_AREA_MODAL_CONTAINER).html(modalTemplate(overViewData));
@@ -110,7 +109,7 @@ class HoverPreview {
         if (overViewData[0]._embedded.overviews.length) {
             const overview = overViewData[0]._embedded.overviews[0];
 
-            this.showModal($, overview.Heading || overview.name, overview.Content, overview.containsHTML, imageAreaReferenceKey);
+            this.showModal($, overview.Heading || overview.name, overview.Content, imageAreaReferenceKey);
         }
     }
 
@@ -277,7 +276,7 @@ class HoverPreview {
             if (!cachedImageArea) {
                 this._imageAreaCache[referenceKey] = this.createImageAreaCacheObject(modalWidth, imageAreaShape, coords);
             }
-            this.showModal($, $(event.currentTarget).data('previewTitle'), null, null, referenceKey);
+            this.showModal($, $(event.currentTarget).data('previewTitle'), null, referenceKey);
         }
     }
 
