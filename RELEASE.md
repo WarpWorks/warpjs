@@ -1,5 +1,9 @@
 # Releases
 
+## 1.0.0-rc7 - 2017-06-06
+
+- Updated core@1.0.0-rc3
+
 ## 1.0.0-rc6 - 2017-06-05
 
 - Fixed breadcrumb.
