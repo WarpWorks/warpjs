@@ -2895,7 +2895,7 @@ function WarpAssociationEditor (warpWidget, sourceEntityProxy, relationshipID, g
     this.warpWidget = warpWidget;
     this.sourceEntityProxy = sourceEntityProxy;
     this.relationshipID = relationshipID;
-    this.maxAssocs = 6;
+    this.maxAssocs = 100;
     this._globalID = globalID;
 }
 

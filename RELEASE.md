@@ -1,5 +1,10 @@
 # Releases
 
+## 1.0.0-rc8 - 2017-06-06
+
+- Fixed the breadcrumb.
+- Increased maxAssocs to 100.
+
 ## 1.0.0-rc7 - 2017-06-06
 
 - Updated core@1.0.0-rc3
