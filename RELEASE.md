@@ -1,5 +1,9 @@
 # Releases
 
+## 1.0.0-rc10 - 2017-06-07
+
+- Fixed creation/update of new root instance.
+
 ## 1.0.0-rc9 - 2017-06-07
 
 - Fixed problem with embedded data on rootInstance
