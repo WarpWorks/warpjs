@@ -2157,28 +2157,25 @@ WarpBasicPropertyPanelItem.prototype.createViews = function(parentHtml, callback
     var inputDiv = $('<div></div>');
     inputDiv.prop('class', 'col-sm-10');
 
-    var input;
-    if (this.propertyType !== "text") {
-        input = $('<input></input>');
-    } else { // Text
-        input = $('<input readonly></input>');
+    var input = $('<input></input>');
+    input.prop('type', 'text');
+    input.prop('class', 'form-control');
+    input.prop('id', this.globalID());
+    inputDiv.append(input);
 
-        var button = $('<button style="float: right;">View</button>');
+    if (this.propertyType === "text") {
+        input.prop("readonly", true);
+        var button = $('<button style="float: right;"><span class="glyphicon glyphicon-list-alt"></span></button>');
         button.prop('type', 'button');
-        button.prop('class', 'btn btn-primary');
+        button.prop('class', 'btn btn-link');
         button.on('click', this.showContentModal.bind(this, this.globalID()));
 
         inputDiv.append(button);
         this.createTinyMCE(this.globalID());
     }
 
-    input.prop('type', 'text');
-    input.prop('class', 'form-control');
-    input.prop('id', this.globalID());
-
     formGroup.append(label);
     formGroup.append(inputDiv);
-    inputDiv.append(input);
 
     parentHtml.append(formGroup);
     callback();
