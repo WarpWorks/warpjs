@@ -26,12 +26,16 @@
 </head>
 
 <body>
+
+<!--
+    Modal for editing content using a tinymce
+-->
 <div class="container">
     <div class="modal fade" id="content-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Modal title</h5>
+                    <h5 class="modal-title">Content Editor</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -40,8 +44,52 @@
                     <p>Modal body text goes here.</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button id="content-editor-save" type="button" class="btn btn-primary">Save changes</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--
+    Modal for creating links to entities to put in content text
+-->
+<div class="container">
+    <div class="modal fade" id="link-selection-modal" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Link Editor</h5>
+                    <button type="button" class="link-selection-close close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-10 col-md-offset-1">
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <form class="form-inline">
+                                        Select type:
+                                        <div class="form-group">
+                                            <select class="form-control" id="link-selection-modal-selector">
+                                            </select>
+                                        </div>
+                                    </form>
+                                </li>
+                                <li id="link-selection-modal-table" class="list-group-item" ></li>
+                                <li class="list-group-item" id="link-selection-modal-links">
+                                    Selection List:
+                                    <ul class="link-selection-added-links list-group"></ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="link-selection-add" type="button" class="btn btn-primary">Add Links</button>
+                    <button type="button" class="link-selection-close btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>

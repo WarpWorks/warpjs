@@ -1,6 +1,6 @@
 {
   "name": "@warp-works/warpjs",
-  "version": "1.0.0-rc4",
+  "version": "1.0.0-rc9",
   "description": "Content management system for WarpWorks in javascript",
   "repository": {
     "type": "git",
@@ -35,9 +35,9 @@
     "lint": "npm run -s lint:node && npm run -s lint:test"
   },
   "dependencies": {
-    "@quoin/expressjs-routes-info": "0.1.6",
+    "@quoin/expressjs-routes-info": "0.1.7",
     "@quoin/node-rc": "0.1.1",
-    "@warp-works/core": "1.0.0-rc2",
+    "@warp-works/core": "1.0.0-rc3",
     "debug": "2.6.8",
     "hal": "0.1.0",
     "hbs": "4.0.1",

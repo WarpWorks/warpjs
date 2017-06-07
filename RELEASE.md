@@ -1,5 +1,30 @@
 # Releases
 
+## 1.0.0-rc9 - 2017-06-07
+
+- Fixed problem with embedded data on rootInstance
+- Fixed problem with new entities and dafault values for enums
+- Added "Add Sibling" function
+
+## 1.0.0-rc8 - 2017-06-06
+
+- Fixed the breadcrumb.
+- Increased maxAssocs to 100.
+
+## 1.0.0-rc7 - 2017-06-06
+
+- Updated core@1.0.0-rc3
+
+## 1.0.0-rc6 - 2017-06-05
+
+- Fixed breadcrumb.
+- Fixed style and the create view.
+
+## 1.0.0-rc5 - 2017-06-05
+
+ - Added implementation for TinyMCE.
+ - Updated @quoin/express-routes-info
+
 ## 1.0.0-rc4 - 2017-06-04
 
 - Updated core@1.0.0-rc2
