@@ -1,5 +1,11 @@
 # Releases
 
+## 1.0.0-rc9 - 2017-06-07
+
+- Fixed problem with embedded data on rootInstance
+- Fixed problem with new entities and dafault values for enums
+- Added "Add Sibling" function
+
 ## 1.0.0-rc8 - 2017-06-06
 
 - Fixed the breadcrumb.
