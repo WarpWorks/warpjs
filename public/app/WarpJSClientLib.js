@@ -188,8 +188,11 @@ EntityProxy.prototype.save = function(ignoreReloadForNewEntities) {
 
         // The backend-API only supports update of a single document at the moment - TBD!
         switch (this.mode) {
-            case "editEntity":
             case "rootInstance":
+                if (!this.data.type) {
+                    this.data.type = $warp.domain;
+                }
+            case "editEntity":
                 if (this.isDirty) {
                     if (this.data._links) {
                         delete this.data._links;
