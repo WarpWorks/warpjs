@@ -134,7 +134,7 @@ EntityProxy.prototype.useData = function(callback) {
 }
 
 EntityProxy.prototype.addNewDocument = function(relationshipID) {
-    $warp.save();
+    $warp.save(true);
 
     this.useData(function (ep) {
         var rd = $warp.model.getRelationshipDetails(relationshipID);
@@ -157,14 +157,43 @@ EntityProxy.prototype.addNewDocument = function(relationshipID) {
     });
 }
 
-EntityProxy.prototype.save = function() {
+EntityProxy.prototype.addSibling = function() {
+    $warp.save(true);
+
+    this.useData(function (ep) {
+        var relationshipID = ep.data.parentRelnID;
+        var rd = $warp.model.getRelationshipDetails(relationshipID);
+        var targetName = rd.targetJson.name;
+        var parentID = ep.data.parentID;
+        var relnID = rd.relnJson.id;
+        var relnName = rd.relnJson.name;
+        var parentBaseClassName = rd.parentBaseClassJson.name;
+        var parentBaseClassID = rd.parentBaseClassJson.id;
+
+        var url = $warp.links.domain.href +
+            "/" + targetName +
+            "?" + "parentID=" + parentID +
+            "&" + "relnID=" + relnID +
+            "&" + "relnName=" + relnName +
+            "&" + "parentBaseClassName=" + parentBaseClassName +
+            "&" + "parentBaseClassID=" + parentBaseClassID;
+
+        window.location.href = url;
+    });
+}
+
+EntityProxy.prototype.save = function(ignoreReloadForNewEntities) {
     if (this.isDocument) {
         if (this.isDirty && !this.data) throw "Can not save 'dirty' entity without data!";
 
         // The backend-API only supports update of a single document at the moment - TBD!
         switch (this.mode) {
             case "editEntity":
+            case "rootInstance":
                 if (this.isDirty) {
+                    if (this.data._links) {
+                        delete this.data._links;
+                    }
                     var reqData = {
                         commandList: [
                             {
@@ -209,8 +238,10 @@ EntityProxy.prototype.save = function() {
 
                             $warp.trace(1, "WarpJSClient.save():\n - Successfully created " + this.displayName());
 
-                            // Re-load after creation:
-                            $warp.openInNewPage(this.data._id, this.type);
+                            // Re-load after creation?
+                            if (!ignoreReloadForNewEntities) {
+                                $warp.openInNewPage(this.data._id, this.type);
+                            }
                         }
                         else {
                             $warp.alert(result.err);
@@ -1198,7 +1229,7 @@ WarpJSClient.prototype.createViews = function(parentHtml, callback) {
     }.bind(this));
 }
 
-WarpJSClient.prototype.save = function () {
+WarpJSClient.prototype.save = function (ignoreReloadForNewEntities) {
     $warp.trace(1, "--------------- View Hierarchy ---------------");
     $warp.trace(1, $warp.pageView.toString());
     $warp.trace(1, "--------------- -------------- ---------------");
@@ -1230,7 +1261,7 @@ WarpJSClient.prototype.save = function () {
 
         $warp.entityCache.forEach(function (entityProxy) {
             try {
-                entityProxy.save();
+                entityProxy.save(ignoreReloadForNewEntities);
             }
             catch (err) {
                 $warp.alert("Error saving entity: " + err);
@@ -1246,9 +1277,7 @@ function initializeWarpJS (config, callback) {
 
     // Event handlers
     $(window).on('beforeunload', function(){
-        if (!$warp.toplevelEntityIsRootInstance) {
-            $warp.save();
-        }
+        $warp.save(false);
     });
 
     // Prepare remote connection
@@ -1351,7 +1380,9 @@ WarpJSClient.prototype.initialize = function (jsonData, pageConfig, callback) {
         var htmlParent = $("#" + pageConfig.htmlElements.rootElem);
         $warp.createViews(htmlParent, function () {
             // Add HTML Bindings
-            $("#" + pageConfig.htmlElements.saveButton).on("click", $warp.save);
+            $("#" + pageConfig.htmlElements.saveButton).on("click", function() {
+                $warp.save(false);
+            });
 
             // And finally: populate the views...
             $warp.updateViewWithDataFromModel(function () {
@@ -1710,6 +1741,11 @@ WarpPageView.prototype.createViews = function(parentHtml, callback) {
 
                     var panelHeading = $('<div class="panel-heading"></div>');
                     panelHeading.html(headingTxt);
+                    addSibbling = $('<a href="#" id="addEntityA" data-toggle="tooltip" title="Add sibling"><span class="glyphicon glyphicon-share pull-right"></span></a>');
+                    addSibbling.on('click', function () {
+                        this.getEntityProxy().addSibling();
+                    }.bind(this));
+                    panelHeading.append(addSibbling);
 
                     var panelBody = $('<div class="panel-body"></div>');
                     panelBody.append(bodyContent);
@@ -2167,12 +2203,17 @@ WarpEnumPanelItem.prototype.updateViewWithDataFromModel = function(callback) {
 }
 
 WarpEnumPanelItem.prototype.updateModelWithDataFromView = function(callback) {
-    this.getPageView().getEntityProxy().useData(function (entity) {
-        var select = $("#"+this.globalID());
-        var selection = select.find(':selected').data('literal');
-        entity.setValue(this.propertyName, selection);
+    var select = $("#"+this.globalID());
+    var selection = select.find(':selected').data('literal');
+    if (selection != 'WarpJS_Enum_noSelection') {
+        this.getPageView().getEntityProxy().useData(function (entity) {
+            entity.setValue(this.propertyName, selection);
+            callback();
+        }.bind(this));
+    }
+    else {
         callback();
-    }.bind(this));
+    }
 }
 
 WarpEnumPanelItem.prototype.createViews = function(parentHtml, callback) {
@@ -2191,6 +2232,14 @@ WarpEnumPanelItem.prototype.createViews = function(parentHtml, callback) {
         var select = $('<select></select>');
         select.prop('class', 'form-control');
         select.prop('id', this.globalID());
+
+        // No selection:
+        var noOption = $('<option></option>');
+        noOption.text('-----------');
+        noOption.data('literal', 'WarpJS_Enum_noSelection')
+        if (!selected)
+            noOption.prop('selected', 'selected');
+        select.append(noOption);
 
         if (this.literals) {
             this.literals.forEach(function (literal) {
@@ -2346,16 +2395,18 @@ WarpRPI_CSV.prototype.updateAggregationCSVs = function(callback) {
                 }.bind(this));
             }
             else {
-                var targetMax = parseInt(aggProxy.jsonReln.targetMax);
-                var aggCount = aggProxy.noOfTotalQueryResults();
-                if (isNaN(targetMax) || aggCount < targetMax) {
-                    var liBtn = $('<li><a href="#" id="aggregationTargetNameItem"><span class="glyphicon glyphicon-plus-sign"></span></a></li>');
-                    liBtn.on('click', function () {
-                        var pv = this._parent.getPageView();
-                        var ep = pv.getEntityProxy();
-                        ep.addNewDocument(this.relationshipID);
-                    }.bind(this));
-                    this.csv.append(liBtn);
+                if (aggProxy.targetEntityDefinition.entityType === 'Document') {
+                    var targetMax = parseInt(aggProxy.jsonReln.targetMax);
+                    var aggCount = aggProxy.noOfTotalQueryResults();
+                    if (isNaN(targetMax) || aggCount < targetMax) {
+                        var liBtn = $('<li><a href="#" id="aggregationTargetNameItem"><span class="glyphicon glyphicon-plus-sign"></span></a></li>');
+                        liBtn.on('click', function () {
+                            var pv = this._parent.getPageView();
+                            var ep = pv.getEntityProxy();
+                            ep.addNewDocument(this.relationshipID);
+                        }.bind(this));
+                        this.csv.append(liBtn);
+                    }
                 }
                 callback();
             }
