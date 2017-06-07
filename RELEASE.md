@@ -1,5 +1,9 @@
 # Releases
 
+## 1.0.0-rc11 - 2017-06-07
+
+- minor fix for the layout of TinyMCE content.
+
 ## 1.0.0-rc10 - 2017-06-07
 
 - Fixed creation/update of new root instance.
