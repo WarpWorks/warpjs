@@ -7,10 +7,11 @@ function WarpModelParser(jsonData) {
 }
 
 WarpModelParser.prototype.getRelationshipDetails = function(relationshipID) {
+    var relnID = parseInt(relationshipID);
     var result = {};
-    result.relnJson = this.getRelationshipByID(relationshipID);
+    result.relnJson = this.getRelationshipByID(relnID);
     result.targetJson = this.getEntityByID(result.relnJson.targetEntity[0]);
-    result.parentJson = this.getRelnParentByID(relationshipID);
+    result.parentJson = this.getRelnParentByID(relnID);
     result.parentBaseClassJson = this.getBaseClass(result.parentJson);
     return result;
 }
