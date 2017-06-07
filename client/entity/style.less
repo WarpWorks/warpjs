@@ -20,14 +20,15 @@
 
 .panel-item {
     .panel-item-heading {
-        background-color: @heading-theme-bg-color;
+        background-color: @row-bg-color;
         color: @theme-font-color;
         border-bottom: 1px solid #C0C0C5;
         font-size: 16px;
         font-family: @global-header-font;
+	font-weight: bold;
     }
     .panel-item-body {
-        background-color: @container-bg-color;
+        background-color: @default-bg-color;
     }
 }
 
@@ -40,14 +41,20 @@
 }
 
 .csv-list-item-link {
-    color: @theme-font-color;
+    color: @default-link-font-color;
 }
 
 .csv-container {
-    list-style-type: none;
-    padding-bottom: 5px;
     color: @theme-font-color;
+
+    li {
+        list-style-type: none;
+	padding-bottom: 5px;
+    }
+
     .csv-list-item-span {
+        font-weight: normal;
+
         &:first-child {
             &:before {
                 padding: 0;
@@ -98,15 +105,13 @@
     display: none;
     pointer-events: none;
     width: 200px;
-    padding: 10px;
-    margin-top: 0;
-    margin-left: 0;
-    margin-bottom: 0;
-    margin-right: 0;
+    padding: 15px;
+    margin: 0 auto;
 
-    -webkit-box-shadow: 0px 0px 5px 0px rgba(164, 164, 164, 1);
-    box-shadow: 0px 0px 5px 0px rgba(164, 164, 164, 1);
-    background-color: @container-bg-color;
+    -webkit-box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.25);
+    box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.25);
+    background-color: @default-bg-color;
+    border-radius: 5px;
     border: 1px solid #4D4F53;
     color: @dark-font-color;
 }
@@ -129,6 +134,7 @@
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
     border-top: 10px solid black;
+    top: 71px !important;
 }
 
 .modal-flag-left {
