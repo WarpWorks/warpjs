@@ -1,7 +1,7 @@
 {{#if (isCsvRelationship)}}
     <div class="csv-container">
         <li class="csv-list-item">
-            {{entity.label}}:&nbsp;
+            <span class="list-item-label" title="{{entity.desc}}">{{entity.label}}:</span>&nbsp;
             {{#each entity._embedded.relationships}}
                 {{#each this._embedded.references}}
                     {{> ./_csv this}}
