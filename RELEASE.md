@@ -1,5 +1,9 @@
 # Releases
 
+## 1.0.0-rc12 - 2017-06-08
+
+- Change the page title.
+
 ## 1.0.0-rc11 - 2017-06-07
 
 - minor fix for the layout of TinyMCE content.

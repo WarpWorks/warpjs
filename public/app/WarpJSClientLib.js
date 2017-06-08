@@ -344,8 +344,11 @@ EntityProxy.prototype.getDataViaOID = function(callback) {
                 callback(null);
                 return;
             }
-            var result = result.resultList[0];
-            callback (result);
+            var resultObj = result.resultList[0];
+            if (resultObj && resultObj.matchingEntity) {
+                document.title = resultObj.matchingEntity.Name;
+            }
+            callback(resultObj);
         }
         else {
             $warp.alert("Server error:" + result.err);
