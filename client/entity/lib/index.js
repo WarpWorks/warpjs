@@ -8,14 +8,11 @@ const template = require("./../templates/index.hbs");
     $(document).ready(() => {
         utils.getCurrentPageHAL($)
             .then((result) => {
-                let content;
-
-                if (result.error) {
-                    content = errorTemplate(result.data);
-                } else {
-                    console.log("initial load: data=", result.data);
-                    content = template(result.data);
+                const content = (result.error) ? errorTemplate(result.data) : template(result.data);
+                if (!result.error && result.data && result.data.Name) {
+                    document.title = result.data.Name;
                 }
+
                 $('#i3c-portal-placeholder').html(content);
 
                 const hoverPreview = new HoverPreview();
