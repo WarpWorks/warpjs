@@ -1983,9 +1983,11 @@ WarpBasicPropertyPanelItem.prototype.updateViewWithDataFromModel = function(call
 }
 WarpBasicPropertyPanelItem.prototype.updateModelWithDataFromView = function(callback) {
     var ep = this.getPageView().getEntityProxy();
+
     ep.useData(function (entity) {
         if (entity.data) {
             var input = $("#" + this.globalID());
+
             entity.setValue(this.propertyName, input.val());
         }
         else {
@@ -2103,48 +2105,48 @@ WarpBasicPropertyPanelItem.prototype.showLinkSelectionModal = function() {
 }
 
 WarpBasicPropertyPanelItem.prototype.createTinyMCE = function(entityID) {
-    const basicPropertyContext = this;
+    if(tinyMCE.editors.length === 0) {
+        const basicPropertyContext = this;
 
-    $('#content-modal .modal-body').html('<textarea name="content-' + entityID + '" id="content-' + entityID + '"></textarea>');
-    $('.link-selection-added-links').on("click", '.pending-selection-link', this.removeLinkFromList);
-    $('#link-selection-add').on("click", this.addLinksToContentAndCloseSelectionModal.bind(this));
-    $('.link-selection-close').on("click", this.closeLinkSelectionModal);
+        $('#content-modal .modal-body').html('<textarea name="content-' + entityID + '" class="content-tinymce" id="content-' + entityID + '"></textarea>');
+        $('.link-selection-added-links').on("click", '.pending-selection-link', this.removeLinkFromList);
+        $('#link-selection-add').on("click", this.addLinksToContentAndCloseSelectionModal.bind(this));
+        $('.link-selection-close').on("click", this.closeLinkSelectionModal);
 
-    tinyMCE.init({
-        selector: '#content-' + entityID,
-        height: 200,
-        menubar: false,
-        elementpath: false,
-        toolbar: 'bold italic linkbutton',
-        setup: function (editor) {
-            function updateContent(content) {
-                content.forEach((link) => {
-                    editor.insertContent(link);
-                });
-            }
-            editor.addButton('linkbutton', {
-                text: 'Link',
-                icon: false,
-                onclick: function () {
-                    basicPropertyContext.showLinkSelectionModal();
-                }
-            })
-        },
-        content_css: '//www.tinymce.com/css/codepen.min.css'
-    });
+        tinyMCE.init({
+            // selector: '#content-' + entityID,
+            selector: '.content-tinymce',
+            height: 200,
+            menubar: false,
+            elementpath: false,
+            toolbar: 'bold italic linkbutton',
+            setup: function (editor) {
+                editor.addButton('linkbutton', {
+                    text: 'Link',
+                    icon: false,
+                    onclick: function () {
+                        basicPropertyContext.showLinkSelectionModal();
+                    }
+                })
+            },
+            content_css: '//www.tinymce.com/css/codepen.min.css'
+        });
+    }
+
 }
 
 WarpBasicPropertyPanelItem.prototype.saveTinyMCEContent = function(entityID) {
     const editorContent = tinyMCE.activeEditor.getContent();
     $('#' + entityID).val(editorContent);
-    $warp.save();
+
+    // $warp.save();
 
     $('.container #content-modal').modal("hide");
 }
 
 WarpBasicPropertyPanelItem.prototype.showContentModal = function(entityID) {
     tinyMCE.activeEditor.setContent($('#' + entityID).val());
-    $("#content-editor-save").on("click", this.saveTinyMCEContent.bind(null, entityID));
+    $("#content-editor-save").on("click", this.saveTinyMCEContent.bind(this, entityID));
     $('#content-modal').modal("show");
 }
 
