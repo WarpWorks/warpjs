@@ -55,7 +55,7 @@ class HoverPreview {
             modalPosition.flagHeight = adjustedModalHeight;
             modalPosition.flagClass = 'modal-flag-left';
         } else if (zoneName === "zone-top") {
-            const pixelsToFixFlagToModalBottom = 20;
+            const pixelsToFixFlagToModalBottom = 0;
 
             modalPosition.left = computedCoords.midX - adjustedModalWidth + widthOffset;
             modalPosition.top = computedCoords.midY - (computedCoords.midY - computedCoords.minY) - modalHeight + marginBottom;
@@ -93,6 +93,10 @@ class HoverPreview {
             title,
             content
         };
+
+        if(!overViewData.title && overViewData.content === '') {
+            overViewData.content = "No Preview Available...";
+        }
 
         $(constants.MAP_AREA_MODAL_CONTAINER).html(modalTemplate(overViewData));
         $(constants.MAP_AREA_MODAL_CONTAINER).show();
