@@ -1,5 +1,9 @@
 # Releases
 
+## 1.0.0-rc14 - 2017-06-09
+
+- Fixed TinyMCE multi-instance issue.
+
 ## 1.0.0-rc13 - 2017-06-09
 
 - Updated core for relationship description in association documents.
