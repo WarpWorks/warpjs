@@ -2122,7 +2122,7 @@ WarpBasicPropertyPanelItem.prototype.createTinyMCE = function(entityID) {
             anchor_bottom: false,
             force_br_newlines: false,
             force_p_newlines: false,
-            forced_root_blocks: '',
+            forced_root_block: '',
             paste_as_text: true,
             extended_valid_elements: 'span[!class]',
             plugins: "lists link paste",

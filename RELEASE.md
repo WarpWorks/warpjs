@@ -1,5 +1,9 @@
 # Releases
 
+## 1.0.0-rc16 - 2017-06-09
+
+- Fixed typo.
+
 ## 1.0.0-rc15 - 2017-06-09
 
 - More configuration for TinyMCE.
