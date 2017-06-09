@@ -2139,13 +2139,14 @@ WarpBasicPropertyPanelItem.prototype.saveTinyMCEContent = function(entityID) {
     const editorContent = tinyMCE.activeEditor.getContent();
     $('#' + entityID).val(editorContent);
 
-    // $warp.save();
+    $warp.save();
 
     $('.container #content-modal').modal("hide");
 }
 
 WarpBasicPropertyPanelItem.prototype.showContentModal = function(entityID) {
     tinyMCE.activeEditor.setContent($('#' + entityID).val());
+    $("#content-editor-save").unbind();
     $("#content-editor-save").on("click", this.saveTinyMCEContent.bind(this, entityID));
     $('#content-modal').modal("show");
 }
