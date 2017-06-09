@@ -2119,10 +2119,13 @@ WarpBasicPropertyPanelItem.prototype.createTinyMCE = function(entityID) {
             height: 200,
             menubar: false,
             elementpath: false,
-            toolbar: 'bold italic linkbutton',
+            anchor_top: false,
+            anchor_bottom: false,
+            plugins: "lists link",
+            toolbar: 'bold italic numlist bullist link linkbutton',
             setup: function (editor) {
                 editor.addButton('linkbutton', {
-                    text: 'Link',
+                    text: 'Custom Link',
                     icon: false,
                     onclick: function () {
                         basicPropertyContext.showLinkSelectionModal();
@@ -2149,6 +2152,8 @@ WarpBasicPropertyPanelItem.prototype.showContentModal = function(entityID) {
     $("#content-editor-save").unbind();
     $("#content-editor-save").on("click", this.saveTinyMCEContent.bind(this, entityID));
     $('#content-modal').modal("show");
+    $('#link-selection-modal').modal("show");
+    $('#link-selection-modal').modal("hide");
 }
 
 WarpBasicPropertyPanelItem.prototype.createViews = function(parentHtml, callback)
