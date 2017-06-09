@@ -2114,14 +2114,18 @@ WarpBasicPropertyPanelItem.prototype.createTinyMCE = function(entityID) {
         $('.link-selection-close').on("click", this.closeLinkSelectionModal);
 
         tinyMCE.init({
-            // selector: '#content-' + entityID,
             selector: '.content-tinymce',
             height: 200,
             menubar: false,
             elementpath: false,
             anchor_top: false,
             anchor_bottom: false,
-            plugins: "lists link",
+            force_br_newlines: false,
+            force_p_newlines: false,
+            forced_root_blocks: '',
+            paste_as_text: true,
+            extended_valid_elements: 'span[!class]',
+            plugins: "lists link paste",
             toolbar: 'bold italic numlist bullist link linkbutton',
             setup: function (editor) {
                 editor.addButton('linkbutton', {
