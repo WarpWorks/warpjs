@@ -94,7 +94,7 @@ class HoverPreview {
             content
         };
 
-        if(!overViewData.title && overViewData.content === '') {
+        if (!overViewData.title && overViewData.content === '') {
             overViewData.content = "No Preview Available...";
         }
 
