@@ -19,7 +19,10 @@ const PROPS_TO_PICK = [
     // Panel
     'label',
     'position',
-    'alternatingColors'
+    'alternatingColors',
+
+    // Panel item relationship description
+    'relnDesc'
 ];
 
 module.exports = (obj, addSelfLink, propsToPick) => {

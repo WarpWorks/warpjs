@@ -1,1 +1,3 @@
-<span class="csv-list-item-span"><a class="csv-list-item-link" href="{{this._links.self.href}}">{{this.name}}</a></span>
+<span class="csv-list-item-span" {{#if relnDesc}}title="{{relnDesc}}"{{/if}}>
+    <a class="csv-list-item-link" href="{{this._links.self.href}}">{{this.name}}</a>
+</span>
