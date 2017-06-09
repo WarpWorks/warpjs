@@ -130,6 +130,14 @@ describe("server/utils", () => {
                     i3c_login: {
                         href: '/session',
                         title: "Login"
+                    },
+                    mapBrowser: {
+                        href: '/map',
+                        title: "Map Browser"
+                    },
+                    mapBrowserImage: {
+                        href: '/public/iic_images/map-browser-icon.png',
+                        title: "Map Browser Icon"
                     }
                 }
             });
@@ -167,6 +175,14 @@ describe("server/utils", () => {
                     i3c_logout: {
                         href: '/session/logout',
                         title: "Logout"
+                    },
+                    mapBrowser: {
+                        href: '/map',
+                        title: "Map Browser"
+                    },
+                    mapBrowserImage: {
+                        href: '/public/iic_images/map-browser-icon.png',
+                        title: "Map Browser Icon"
                     }
                 }
             });
@@ -208,6 +224,14 @@ describe("server/utils", () => {
                     i3c_logout: {
                         href: '/session/logout',
                         title: "Logout"
+                    },
+                    mapBrowser: {
+                        href: '/map',
+                        title: "Map Browser"
+                    },
+                    mapBrowserImage: {
+                        href: '/public/iic_images/map-browser-icon.png',
+                        title: "Map Browser Icon"
                     }
                 }
             });

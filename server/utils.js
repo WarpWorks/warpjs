@@ -58,6 +58,17 @@ function sendHal(req, res, resource, status) {
         });
     }
 
+    resource.link('mapBrowser', {
+        href: RoutesInfo.expand('map'),
+        title: "Map Browser"
+    });
+    resource.link('mapBrowserImage', {
+        // TODO: Cannot use this because tests will fail.
+        //href: `${req.app.get('public-folder-path')}/iic_images/map-browser-icon.png`,
+        href: `/public/iic_images/map-browser-icon.png`,
+        title: "Map Browser Icon"
+    });
+
     res.status(status || 200)
         .header('Content-Type', HAL_CONTENT_TYPE)
         .send(resource.toJSON());

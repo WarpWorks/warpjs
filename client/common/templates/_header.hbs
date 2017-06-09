@@ -10,10 +10,14 @@
     <div class="col-xs-4">
     </div>
 
-    <div class="session-info col-xs-4 pull-right">
+    <div class="session-info col-xs-2 pull-right">
         {{#if user}}
             {{> _login}}
         {{/if}}
+    </div>
+
+    <div class="map-browser-header col-xs-2 pull-right">
+        <a href="{{_links.mapBrowser.href}}"><img src="{{_links.mapBrowserImage.href}}" /></a>
     </div>
 
     <div class="col-xs-1 left-right-margin" />
