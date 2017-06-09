@@ -64,7 +64,7 @@ function sendHal(req, res, resource, status) {
     });
     resource.link('mapBrowserImage', {
         // TODO: Cannot use this because tests will fail.
-        //href: `${req.app.get('public-folder-path')}/iic_images/map-browser-icon.png`,
+        // href: `${req.app.get('public-folder-path')}/iic_images/map-browser-icon.png`,
         href: `/public/iic_images/map-browser-icon.png`,
         title: "Map Browser Icon"
     });

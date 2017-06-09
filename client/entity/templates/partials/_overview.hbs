@@ -1,50 +1,61 @@
-{{#each _embedded.overviews}}
-{{#if Heading}}
-    <div class="row">
-        <div class="col-xs-12">
-            <h1 class="overview-heading">{{Heading}}</h1>
-        </div>
-    </div>
-{{/if}}
+{{#if _embedded.overviews.length}}
+  <div class="panel-item panel panel-default">
+    <div class="panel-item-heading panel-heading">Overview</div>
+    <div class="panel-item-body panel-body">
+      {{#each _embedded.overviews}}
+        {{#if Heading}}
+          <div class="row">
+            <div class="col-xs-12">
+              <h1 class="overview-heading">{{Heading}}</h1>
+            </div>
+          </div>
+        {{/if}}
 
-<div class="overview-image-container row">
-    <div class="col-xs-12 {{#unless Content}}text-center{{/unless}}">
-        <div id="map-area-modal-container">
-            {{> map-area-modal}}
-        </div>
-        {{#if _embedded.Images}}
-            {{#each _embedded.Images}}
-                <figure class="figure-container {{#if ../Content}}pull-left{{/if}}">
-                    <img {{#if ../Content}}class="margin-right"{{/if}}
-                        {{#if ImageURL}}src="{{ImageURL}}"{{/if}}
-                        {{#if Width}}width="{{Width}}"{{/if}}
-                        {{#if Height}}height="{{Height}}"{{/if}}
-                        {{#if AltText}}alt="{{AltText}}"{{/if}}
-                        {{#if _embedded.Maps}}usemap="#overview-map-{{@index}}"{{/if}}
-                        />
-                    {{#if Caption}}<figcaption class="figure-caption">{{Caption}}</figcaption>{{/if}}
-                    {{#if _embedded.Maps}}
-                        <map name="overview-map-{{@index}}">
-                            {{#each _embedded.Maps}}
-                                <area class="map-hover-area"
-                                    {{#if Shape}}shape="{{Shape}}"{{/if}}
-                                    {{#if Coords}}coords="{{Coords}}"{{/if}}
-                                    {{#if _links.target.href}}href="{{_links.target.href}}"{{/if}}
-                                    {{#if Alt}}alt="{{Alt}}"{{/if}}
-                                    {{#if Title}}data-preview-title="{{Title}}"{{/if}}
-                                    {{#if _embedded.Targets.[0]}}
-                                        data-target-href="{{_embedded.Targets.[0]._links.preview.href}}"
-                                    {{/if}}
-                                />
-                            {{/each}}
-                        </map>
-                    {{/if}}
+        {{#if _embedded.Images.length}}
+          <div class="overview-image-container row">
+            <div class="col-xs-12 text-center">
+              <div id="map-area-modal-container">
+                {{> map-area-modal}}
+              </div>
+
+              {{#each _embedded.Images}}
+                <figure class="figure-container">
+                  <img class="margin-right"
+                      {{#if ImageURL}}src="{{ImageURL}}"{{/if}}
+                      {{#if Width}}width="{{Width}}"{{/if}}
+                      {{#if Height}}height="{{Height}}"{{/if}}
+                      {{#if AltText}}alt="{{AltText}}"{{/if}}
+                      {{#if _embedded.Maps}}usemap="#overview-map-{{@index}}"{{/if}}
+                      />
+                  {{#if Caption}}<figcaption class="figure-caption">{{Caption}}</figcaption>{{/if}}
+                  {{#if _embedded.Maps}}
+                    <map name="overview-map-{{@index}}">
+                      {{#each _embedded.Maps}}
+                        <area class="map-hover-area"
+                            {{#if Shape}}shape="{{Shape}}"{{/if}}
+                            {{#if Coords}}coords="{{Coords}}"{{/if}}
+                            {{#if _links.target.href}}href="{{_links.target.href}}"{{/if}}
+                            {{#if Alt}}alt="{{Alt}}"{{/if}}
+                            {{#if Title}}data-preview-title="{{Title}}"{{/if}}
+                            {{#if _embedded.Targets.[0]}}
+                                data-target-href="{{_embedded.Targets.[0]._links.preview.href}}"
+                            {{/if}}
+                            />
+                      {{/each}}
+                    </map>
+                  {{/if}}
                 </figure>
-            {{/each}}
+              {{/each}}
+            </div>
+          </div>
         {{/if}}
+
         {{#if Content}}
-            <p class="overview-content">{{{Content}}}</p>
+            <div class="row">
+                <div class="col-xs-12 overview-content">{{{Content}}}</div>
+            </div>
         {{/if}}
+      {{/each}}
     </div>
-</div>
-{{/each}}
+  </div>
+{{/if}}
