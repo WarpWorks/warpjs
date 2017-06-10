@@ -17,7 +17,7 @@
             <div class="preview-container">
                 {{#if this._embedded}}
                     {{#each this._embedded.overviews}}
-                        {{> ./_preview this self=../_links.self}}
+                        {{> ./_preview this self=../_links.self name=../name}}
                     {{/each}}
                 {{else}}
                     {{> ./_preview this Heading=this.name Content=this.desc self=_links.self}}
