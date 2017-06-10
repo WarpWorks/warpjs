@@ -8,8 +8,6 @@ const urlTemplate = require('url-template');
 
 const createObjResource = require('./create-obj-resource');
 
-// FIXME: For debug only.
-const RANDOM_IMAGE = urlTemplate.parse('http://lorempixel.com/{Width}/{Height}/{ImageURL}/');
 const IMAGE_PATH = urlTemplate.parse('/public/iic_images/{ImageURL}');
 const CONTENT_LINK_RE = /{{(.*?),(.*?),(.*?)}}/g;
 
@@ -95,12 +93,10 @@ function imagePath(req, image) {
     try {
         const stats = fs.lstatSync(filePath);
         if (!stats.isFile() && !/^(http|\?)/.test(image.ImageURL)) {
-            image.ImageURL = image.ImageURL.replace(/\W/g, '');
-            image.ImageURL = RANDOM_IMAGE.expand(image);
+            image.ImageURL = '';
         }
     } catch (e) {
-        image.ImageURL = image.ImageURL.replace(/\W/g, '');
-        image.ImageURL = RANDOM_IMAGE.expand(image);
+        image.ImageURL = '';
     }
 }
 

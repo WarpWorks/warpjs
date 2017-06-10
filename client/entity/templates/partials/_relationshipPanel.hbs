@@ -14,7 +14,6 @@
 {{#if (isPreviewRelationship)}}
     {{#each entity._embedded.relationships}}
         {{#each this._embedded.references}}
-            <div class="preview-container">
                 {{#if this._embedded}}
                     {{#each this._embedded.overviews}}
                         {{> ./_preview this self=../_links.self name=../name}}
@@ -22,7 +21,6 @@
                 {{else}}
                     {{> ./_preview this Heading=this.name Content=this.desc self=_links.self}}
                 {{/if}}
-            </div>
         {{/each}}
     {{/each}}
 {{/if}}

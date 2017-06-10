@@ -137,7 +137,7 @@ describe("server/utils", () => {
                     },
                     mapBrowserImage: {
                         href: '/public/iic_images/map-browser-icon.png',
-                        title: "Map Browser Icon"
+                        title: "I3C Map"
                     }
                 }
             });
@@ -182,7 +182,7 @@ describe("server/utils", () => {
                     },
                     mapBrowserImage: {
                         href: '/public/iic_images/map-browser-icon.png',
-                        title: "Map Browser Icon"
+                        title: "I3C Map"
                     }
                 }
             });
@@ -231,7 +231,7 @@ describe("server/utils", () => {
                     },
                     mapBrowserImage: {
                         href: '/public/iic_images/map-browser-icon.png',
-                        title: "Map Browser Icon"
+                        title: "I3C Map"
                     }
                 }
             });
