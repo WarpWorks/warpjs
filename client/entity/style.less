@@ -35,6 +35,26 @@ h1.overview-heading {
     .panel-item-body {
         background-color: @default-bg-color;
 
+        .panel-item-body-item {
+            margin-bottom: 15px;
+
+            &:last-child {
+                margin-bottom: -15px;
+            }
+
+            .overview-image-container {
+                padding-bottom: 10px;
+            }
+
+            .overview-content-container {
+                .overview-content {
+                    p:last-child {
+                        margin-bottom: 0px;
+                    }
+                }
+            }
+        }
+
         .panel-item-body-heading {
             font-size: 16px;
             font-weight: bold;
@@ -42,10 +62,6 @@ h1.overview-heading {
             margin-top: 5px;
         }
     }
-}
-
-.overview-image-container {
-    padding-bottom: 10px;
 }
 
 .csv-list-item {

@@ -2,11 +2,13 @@
     <div class="csv-container">
         <li class="csv-list-item">
             <span class="list-item-label" title="{{entity.desc}}">{{entity.label}}:</span>&nbsp;
-            {{#each entity._embedded.relationships}}
-                {{#each this._embedded.references}}
-                    {{> ./_csv this}}
+            <span class="list-item-value">
+                {{#each entity._embedded.relationships}}
+                    {{#each this._embedded.references}}
+                        {{> ./_csv this}}
+                    {{/each}}
                 {{/each}}
-            {{/each}}
+            </span>
         </li>
     </div>
 {{/if}}
