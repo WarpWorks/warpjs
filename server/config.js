@@ -9,7 +9,7 @@ const baseConfig = {
     jwtCookieName: 'i3cPortalJWT',
     domainName: 'IIC',
     mapMarkerType: "UseCase",
-    mapTypes: ["IndustrySector", "ApplicationArea", "StandardsOrganization", "TechnologyArea"],
+    mapTypes: ["IndustrySector", "StandardsOrganization", "ApplicationArea", "TechnologyArea"],
     persistence: {
         host: process.env.MONGODB_HOST || 'localhost',
         dbName: 'IIC',
