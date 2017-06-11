@@ -104,6 +104,7 @@ EntityProxy.prototype.useData = function(callback) {
                         if (result) {
                             this.data = result.matchingEntity;
                             this.breadcrumb = result.breadcrumb;
+                            this.viewUrl = result.portalView;
                             callback(this);
                         }
                         else
@@ -1564,6 +1565,9 @@ WarpPageView.prototype.initialize = function (callback) {
         }.bind(this));
     }
     else {
+        if (this.isToplevelPageView) {
+            $('#NavButtonView').attr('href', this._entityProxy.viewUrl);
+        }
         // Load data for all relationships used by this PageView
         if (this._relnProxyIdx === -1)
             this._relnProxyIdx = 0;
