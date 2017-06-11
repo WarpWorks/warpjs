@@ -1326,7 +1326,7 @@ function initializeWarpJS (config, callback) {
 WarpJSClient.prototype.initialize = function (jsonData, pageConfig, callback) {
     // Get Type + Domain
     $warp.domain = this.getDomainFromURL();
-    $("#warpjsNavbarName").text($warp.domain);
+    // $("#warpjsNavbarName").text($warp.domain);
     pageConfig.entityType = this.getEntityTypeFromURL();
 
     var entityConfig = {

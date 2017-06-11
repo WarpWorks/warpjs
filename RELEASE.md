@@ -1,5 +1,10 @@
 # Releases
 
+## 1.0.0-rc17 - 2017-06-10
+
+- Link back to portal from WarpJS.
+- Replace logo.
+
 ## 1.0.0-rc16 - 2017-06-09
 
 - Fixed typo.
