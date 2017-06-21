@@ -5,8 +5,7 @@ module.exports = {
             dest: 'public/libs/bootstrap',
             flatten: true,
             src: [
-                'node_modules/bootstrap/dist/css/bootstrap*',
-                'node_modules/bootstrap/dist/js/bootstrap*'
+                'node_modules/bootstrap/dist/css/bootstrap*'
             ]
         }, {
             expand: true,
