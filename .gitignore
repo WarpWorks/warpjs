@@ -13,6 +13,12 @@ attic/
 /views/app*.hbs
 /views/portal*.hbs
 /public/app/*_WebAPI.js
+/public/app/*.js.map
+/public/app/content.js
+/public/app/vendor.js
+
 
 # WebStorm IDE Config
 .idea/
+
+/dist

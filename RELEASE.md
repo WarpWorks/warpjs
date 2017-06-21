@@ -1,5 +1,9 @@
 # Releases
 
+## 2.0.0-rc1
+
+- Linting client-side files (work in progress).
+
 ## 1.0.0-rc17 - 2017-06-10
 
 - Link back to portal from WarpJS.

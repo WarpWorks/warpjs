@@ -7,10 +7,10 @@ function warpCMS_info(message) {
 }
 
 function warpCMS_editImageMap(context) {
-    context.entityProxy.useData(function (entityProxy) {
+    context.entityProxy.useData(function(entityProxy) {
         activeEntityProxy = entityProxy;
         var rp = activeEntityProxy.getRelationshipProxy(imageMapRelnID);
-        rp.useRelationship(function (relnProxy) {
+        rp.useRelationship(function(relnProxy) {
             activeImageMapReln = relnProxy;
 
             var modal = $('<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"></div>');
@@ -44,7 +44,7 @@ function warpCMS_editImageMap(context) {
 
             // Need to get the natural width/height of image first; hence the following hack...
             var img = new Image();
-            img.onload = function () {
+            img.onload = function() {
                 var naturalWidth = this.width;
                 var naturalHeight = this.height;
 
@@ -67,16 +67,13 @@ function warpCMS_editImageMap(context) {
                 if (hasHeight && hasWidth) {
                     newHeight = h;
                     newWidth = w;
-                }
-                else if (hasHeight) {
+                } else if (hasHeight) {
                     newHeight = h;
                     newWidth = h * (naturalWidth / naturalHeight);
-                }
-                else if (hasWidth) {
+                } else if (hasWidth) {
                     newWidth = w;
                     newHeight = w * (naturalHeight / naturalWidth);
-                }
-                else {
+                } else {
                     newHeight = naturalHeight;
                     newWidth = naturalWidth;
                     warpCMS_info("Warning: Width/Height not defined, using natural width/height from image!");
@@ -90,30 +87,25 @@ function warpCMS_editImageMap(context) {
                 draw.rect(newWidth, newHeight).move(0, 0).attr({style: 'fill:none;stroke-width:1;stroke:gray'});
 
                 var imageAreas = activeImageMapReln.allQueryResults();
-                imageAreas.forEach(function (imageArea) {
+                imageAreas.forEach(function(imageArea) {
                     if (!imageArea.data.Coords) {
                         warpCMS_info("Warning: ImageArea without Coords!");
-                    }
-                    else {
+                    } else {
                         var coordsArray = imageArea.data.Coords.split(',');
                         if (coordsArray.length !== 4) {
                             warpCMS_info("Warning: ImageArea without invalid Coords (must have exactly 4, e.g. '1,1,10,10'): " + imageArea.data.Coords);
-                        }
-                        else {
+                        } else {
                             var x1 = parseInt(coordsArray[0]);
                             var y1 = parseInt(coordsArray[1]);
                             var x2 = parseInt(coordsArray[2]);
                             var y2 = parseInt(coordsArray[3]);
                             if (x1 > x2 || y1 > y2) {
                                 warpCMS_info("Warning: ImageArea Coords invalid (x1>x2 or y1>y2): " + imageArea.data.Coords);
-                            }
-                            else if (x2 > newWidth) {
+                            } else if (x2 > newWidth) {
                                 warpCMS_info("Warning: ImageArea x-Coord (" + x2 + ") larger than Image width (" + newWidth + ")");
-                            }
-                            else if (y2 > newHeight) {
+                            } else if (y2 > newHeight) {
                                 warpCMS_info("Warning: ImageArea y-Coord (" + y2 + ") larger than Image height(" + newHeight + ")");
-                            }
-                            else {
+                            } else {
                                 var w = x2 - x1;
                                 var h = y2 - y1;
                                 draw.rect(w, h).move(x1, y1).attr({style: 'fill:none;stroke-width:1;stroke:blue'});
@@ -129,7 +121,7 @@ function warpCMS_editImageMap(context) {
                 //
                 var currentElem = null;
                 var newElems = [];
-                draw.click(function (evt) {
+                draw.click(function(evt) {
                     if (!currentElem) {
                         var rect = draw.rect(5, 5).move(evt.offsetX, evt.offsetY).attr({style: 'fill:none;stroke-width:1;stroke:orange'});
                         currentElem = {
@@ -137,50 +129,52 @@ function warpCMS_editImageMap(context) {
                             y1: evt.offsetY,
                             rect: rect
                         };
-                    }
-                    else {
-                        if (evt.offsetX > currentElem.x1 && evt.offsetY > currentElem.y1)
+                    } else {
+                        if (evt.offsetX > currentElem.x1 && evt.offsetY > currentElem.y1) {
                             currentElem.x2 = evt.offsetX;
+                        }
                         currentElem.y2 = evt.offsetY;
                         newElems.push(currentElem);
                         currentElem = null;
                     }
                 });
 
-                draw.mousemove(function (evt) {
-                    if (!currentElem) return;
+                draw.mousemove(function(evt) {
+                    if (!currentElem) {
+                        return;
+                    }
                     var w = Math.max(5, evt.offsetX - currentElem.x1);
                     var h = Math.max(5, evt.offsetY - currentElem.y1);
                     currentElem.rect.height(h);
                     currentElem.rect.width(w);
                 });
 
-                btnSave.click(function () {
+                btnSave.click(function() {
                     var idx = 0;
-                    var createNewImageMap = function () {
+                    var createNewImageMap = function() {
                         if (idx < newElems.length) {
                             var elem = newElems[idx++];
-                            newImageMap = {
-                                "Coords": elem.x1 + "," + elem.y1 + "," + elem.x2 + "," + elem.y2
-                            }
-                            activeImageMapReln.addNewEmbeddedEntity(newImageMap, function (newIM) {
+                            var newImageMap = {
+                                Coords: elem.x1 + "," + elem.y1 + "," + elem.x2 + "," + elem.y2
+                            };
+                            activeImageMapReln.addNewEmbeddedEntity(newImageMap, function(newIM) {
                                 console.log("Added new ImageMap: " + newIM._id);
                                 createNewImageMap();
                             });
                         } else {
                             activeImageMapReln.requiresUpdate = true;
-                            context.warpPanel.getPageView().updateViewWithDataFromModel(function () {
+                            context.warpPanel.getPageView().updateViewWithDataFromModel(function() {
                                 console.log("Finally updating view!");
                             });
                         }
-                    }
+                    };
                     createNewImageMap();
                 });
 
                 // Create modal
                 modal.modal();
-            }
-            img.onerror = function () {
+            };
+            img.onerror = function() {
                 $warp.alert("Could not load image: " + activeEntityProxy.data.ImageURL);
             };
             img.src = activeEntityProxy.data.ImageURL;
