@@ -4,7 +4,7 @@ const moduleToTest = require('./config');
 
 const expect = testHelpers.expect;
 
-describe("lib/config", () => {
+describe("server/content/config", () => {
     it("should expose an object", () => {
         expect(moduleToTest).to.be.an('object');
     });

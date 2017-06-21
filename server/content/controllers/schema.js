@@ -1,4 +1,4 @@
-const warpCore = require('@warp-works/core');
+const warpCore = require('./../../../lib/core');
 
 const utils = require('./../utils');
 

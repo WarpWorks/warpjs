@@ -1,7 +1,7 @@
 const RoutesInfo = require('@quoin/expressjs-routes-info');
-const warpCore = require('@warp-works/core');
 
 const utils = require('./../utils');
+const warpCore = require('./../../../lib/core');
 
 function common(req, res) {
     const resource = utils.createResource(req, {
