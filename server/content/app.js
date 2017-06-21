@@ -14,7 +14,7 @@ var bodyParser = require('body-parser');
 const config = require('./config');
 const routes = require('./routes');
 
-const ROOT_DIR = path.dirname(require.resolve('./../package.json'));
+const ROOT_DIR = path.dirname(require.resolve('./../../package.json'));
 const VIEWS_DIR = path.join(ROOT_DIR, 'views');
 const PARTIAL_DIR = path.join(config.projectPath, 'views');
 

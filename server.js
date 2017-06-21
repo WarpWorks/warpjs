@@ -7,9 +7,9 @@
 const debug = require('debug')('W2:WarpJS');
 const express = require('express');
 
-const warpJs = require('./lib');
+const warpJs = require('./server/content');
 
-const config = require('./lib/config');
+const config = require('./server/content/config');
 
 /**
  * Get port from environment and store in Express.

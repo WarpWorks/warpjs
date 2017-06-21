@@ -2,7 +2,7 @@ const debug = require('debug')('W2:WarpJS:utils');
 const hal = require('hal');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 
-const constants = require('./constants');
+const constants = require('./../../lib/constants');
 
 function createResource(reqOrPath, data) {
     if (typeof reqOrPath === 'string') {

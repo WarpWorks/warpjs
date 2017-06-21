@@ -1,6 +1,6 @@
 const app = require('./app');
 const middlewares = require('./middlewares');
-const packageJson = require('./../package.json');
+const packageJson = require('./../../package.json');
 
 module.exports = {
     app,
