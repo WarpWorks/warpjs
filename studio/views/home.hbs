@@ -1,0 +1,18 @@
+<div class="container" role="main">
+    <div class="list-group" id="domainOverviewLG">
+        <a href='#' class="list-group-item active">
+            <h4 class="list-group-item-heading">Available Domains</h4>
+        </a>
+    </div>
+    <div class='btn-group'>
+        <button type='button' class='btn btn-primary' data-url="{{_links.newDomain.href}}"
+            ><span class="glyphicon glyphicon-plus-sign"></span> New Domain</button>
+        <button type='button' class='btn btn-primary' id="domainWizardB"><span class="glyphicon glyphicon-forward"></span> Domain Wizard</button>
+        <button type='button' class='btn btn-primary' data-url="{{_links.marketPlace.href}}"
+            ><span class="glyphicon glyphicon-th-list"></span> Marketplace</button>
+    </div>
+</div>
+
+<script src="{{baseUrl}}/WarpWorks/WarpWorks_WebAPI.js"></script>
+<script src="{{baseUrl}}/WarpWorks/home.js"></script>
+

@@ -1,0 +1,26 @@
+<div class="container" role="main">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-success">
+                <div class="panel-heading">Quantity Structure
+                    <a href="#" id="entityGraphA" data-toggle="tooltip" title="Update calculated quantities"><span
+                            class="glyphicon glyphicon-refresh pull-right"></span></a>
+                </div>
+                <div class="panel-body" id="qsTableD">
+                </div>
+            </div>
+        </div>
+    </div>
+    <button type="button" class="btn btn-primary" onclick="handleUpdateEvent()" data-toggle="tooltip" title="Update calculated quantities">
+        <span class="glyphicon glyphicon-refresh"></span> Update Quantities</button>
+    <button type="button" class="btn btn-primary" onclick="optimizeClustering()" data-toggle="tooltip" title="Update Entity Type for each entity: Document or Embedded? Algorithm uses data from quantitative model!">
+        <span class="glyphicon glyphicon-cog"></span> Optimize Clustering</button>
+</div>
+
+<script src="{{baseUrl}}/WarpWorks/WarpWorks_WebAPI.js"></script>
+<script src="{{baseUrl}}/WarpWorks/WarpWorks_WebAPIExtensions.js"></script>
+<script src="{{baseUrl}}/WarpWorks/quantityStructure.js"></script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.min.css" rel="stylesheet" type="text/css"/>
+
