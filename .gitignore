@@ -26,4 +26,5 @@ attic/
 /public/app/vendor.js
 # Copied from NPM
 /public/libs/bootstrap/bootstrap*
+/public/libs/bootstrap/jquery*
 /public/libs/fonts
