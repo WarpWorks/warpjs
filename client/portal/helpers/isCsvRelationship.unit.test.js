@@ -4,7 +4,7 @@ const moduleToTest = require('./isCsvRelationship');
 
 const expect = testHelpers.expect;
 
-describe("client/helpers/isCsvRelationship", () => {
+describe("client/portal/helpers/isCsvRelationship", () => {
     it("should expose a function with 0 params", () => {
         expect(moduleToTest).to.be.a('function').to.have.lengthOf(0);
     });

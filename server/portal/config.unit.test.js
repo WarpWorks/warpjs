@@ -3,7 +3,7 @@ const path = require('path');
 
 const expect = testHelpers.expect;
 
-describe("server/config", () => {
+describe("server/portal/config", () => {
     let moduleToTest;
 
     beforeEach(() => {

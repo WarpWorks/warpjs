@@ -42,8 +42,8 @@ class HoverPreview {
             const imageCenteredPixelAdjustment = 25;
             const imagePulledLeftPixelAdjustemnt = 10;
             let adjustedWidthOffset = widthOffset > 0
-                                        ? widthOffset - imageCenteredPixelAdjustment
-                                        : widthOffset + imagePulledLeftPixelAdjustemnt;
+                ? widthOffset - imageCenteredPixelAdjustment
+                : widthOffset + imagePulledLeftPixelAdjustemnt;
 
             modalPosition.left = computedCoords.midX - ((computedCoords.midX - computedCoords.minX) / 4) - modalWidth - marginRight + adjustedWidthOffset;
             modalPosition.top = computedCoords.midY - (modalHeight - adjustedModalHeight);
@@ -127,15 +127,15 @@ class HoverPreview {
             }
         } else {
             utils.getCurrentPageHAL($, href)
-            .then((result) => {
-                this._resultDataCache[href] = result.data;
-                this._imageAreaCache[cacheReferenceKey].result = this._resultDataCache[href];
-                this._imageAreaCache[cacheReferenceKey].pending = false;
+                .then((result) => {
+                    this._resultDataCache[href] = result.data;
+                    this._imageAreaCache[cacheReferenceKey].result = this._resultDataCache[href];
+                    this._imageAreaCache[cacheReferenceKey].pending = false;
 
-                if (this._imageAreaCache[cacheReferenceKey].canShowModal) {
-                    this.extractDataAndShowModal($, this._resultDataCache[href], cacheReferenceKey);
-                }
-            });
+                    if (this._imageAreaCache[cacheReferenceKey].canShowModal) {
+                        this.extractDataAndShowModal($, this._resultDataCache[href], cacheReferenceKey);
+                    }
+                });
         }
     }
 

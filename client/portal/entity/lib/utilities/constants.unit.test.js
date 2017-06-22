@@ -5,7 +5,7 @@ const moduleToTest = require('./constants');
 
 const expect = testHelpers.expect;
 
-describe("client/entity/lib/utilities/constants", () => {
+describe("client/portal/entity/lib/utilities/constants", () => {
     it("should expose an object", () => {
         expect(moduleToTest).to.be.an('object');
     });

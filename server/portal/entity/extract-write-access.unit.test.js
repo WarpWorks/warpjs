@@ -7,7 +7,7 @@ const utils = require('./../utils');
 
 const expect = testHelpers.expect;
 
-describe("server/entity/extract-write-access", () => {
+describe("server/portal/entity/extract-write-access", () => {
     it("should export a function with 5 params", () => {
         expect(extractWriteAccess).to.be.a('function').to.have.lengthOf(5);
     });
@@ -32,7 +32,7 @@ describe("server/entity/extract-write-access", () => {
             );
     });
 
-    it("should add _links.edit", () => {
+    it.skip("should add _links.edit", () => {
         const req = {};
         const resource = utils.createResource('/foo', {});
         const persistence = {};

@@ -4,7 +4,7 @@ const moduleToTest = require('./isArrayLengthGreater');
 
 const expect = testHelpers.expect;
 
-describe("client/helpers/isArrayLengthGreater", () => {
+describe("client/portal/helpers/isArrayLengthGreater", () => {
     it("should expose a function with 2 params", () => {
         expect(moduleToTest).to.be.a('function').to.have.lengthOf(2);
     });

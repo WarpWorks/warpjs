@@ -4,10 +4,7 @@ const Persistence = require('@warp-works/warpjs-mongo-persistence');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const url = require('url');
 
-const I3CError = require('./error');
-const mongoData = require('./map/mongo-data');
-
-const HAL_CONTENT_TYPE = 'application/hal+json';
+const constants = require('./../../lib/constants');
 
 function createResource(reqOrPath, data) {
     if (typeof reqOrPath === 'string') {
@@ -70,7 +67,7 @@ function sendHal(req, res, resource, status) {
     });
 
     res.status(status || 200)
-        .header('Content-Type', HAL_CONTENT_TYPE)
+        .header('Content-Type', constants.HAL_CONTENT_TYPE)
         .send(resource.toJSON());
 }
 
@@ -94,24 +91,7 @@ function sendError(req, res, err) {
     let resource;
     console.log("Catch(err)=", err);
 
-    if (err instanceof mongoData.MapError) {
-        if (err.originalError instanceof Persistence.PersistenceError) {
-            resource = createResource(req, {
-                message: "Error accessing database.",
-                details: err.message
-            });
-        } else if (err.originalError instanceof I3CError) {
-            resource = createResource(req, {
-                message: "General application error.",
-                details: err.message
-            });
-        } else {
-            resource = createResource(req, {
-                message: "Map data processing error.",
-                details: err.message
-            });
-        }
-    } else if (err instanceof Persistence.PersistenceError) {
+    if (err instanceof Persistence.PersistenceError) {
         resource = createResource(req, {
             message: "Error accessing database.",
             details: err.message
@@ -126,7 +106,7 @@ function sendError(req, res, err) {
 }
 
 module.exports = {
-    HAL_CONTENT_TYPE,
+    HAL_CONTENT_TYPE: constants.HAL_CONTENT_TYPE,
     createResource,
     sendHal,
     sendError,

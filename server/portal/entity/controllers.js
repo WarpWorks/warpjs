@@ -28,8 +28,8 @@ function entity(req, res) {
                             });
 
                             return Promise.resolve()
-                            .then(extractEntity.bind(null, req, responseResource, persistence, hsEntity, instance, isPreview))
-                            .then(utils.sendHal.bind(null, req, res, responseResource, null));
+                                .then(extractEntity.bind(null, req, responseResource, persistence, hsEntity, instance, isPreview))
+                                .then(utils.sendHal.bind(null, req, res, responseResource, null));
                         });
                 })
                 .finally(() => {

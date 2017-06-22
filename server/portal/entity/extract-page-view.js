@@ -254,21 +254,21 @@ module.exports = (req, responseResource, persistence, hsEntity, entity, isPrevie
                         .then(embed.bind(null, panelResource, 'panelItems'));
                 }
             )
-            .then(() => createOverviewPanel(req, persistence, hsEntity, entity, isPreview))
-            .then((overviewPanel) => {
-                if (overviewPanel) {
+                .then(() => createOverviewPanel(req, persistence, hsEntity, entity, isPreview))
+                .then((overviewPanel) => {
+                    if (overviewPanel) {
                     // We increment the position becase we will add the overview at
                     // the first position of the panels.
-                    embeddedPanels.forEach((panel) => {
+                        embeddedPanels.forEach((panel) => {
                         // It is some time a Number, some time a String.
-                        panel.position = Number(panel.position) + 1;
-                    });
-                    overviewPanel.position = 0;
-                    embeddedPanels.unshift(overviewPanel);
-                    embeddedPanels.sort((a, b) => a.position - b.position);
-                }
-                return embeddedPanels;
-            });
+                            panel.position = Number(panel.position) + 1;
+                        });
+                        overviewPanel.position = 0;
+                        embeddedPanels.unshift(overviewPanel);
+                        embeddedPanels.sort((a, b) => a.position - b.position);
+                    }
+                    return embeddedPanels;
+                });
         })
         .then((panels) => {
             responseResource.embed('panels', panels);

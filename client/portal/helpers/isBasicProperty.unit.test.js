@@ -4,7 +4,7 @@ const moduleToTest = require('./isBasicProperty');
 
 const expect = testHelpers.expect;
 
-describe("client/helpers/isBasicProperty", () => {
+describe("client/portal/helpers/isBasicProperty", () => {
     it("should expose a function with no params", () => {
         expect(moduleToTest).to.be.a('function').to.have.lengthOf(0);
     });

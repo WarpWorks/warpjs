@@ -2,17 +2,17 @@ const _ = require('lodash');
 const testHelpers = require('@quoin/node-test-helpers');
 
 const moduleToTest = require('./utils');
-const utils = require('./../server/utils');
+const constants = require('./../../lib/constants');
 
 const expect = testHelpers.expect;
 
 function verifySettings(settings) {
     expect(settings).to.have.property('headers').to.be.an('object');
-    expect(settings.headers).to.have.property('Accept').to.equal(utils.HAL_CONTENT_TYPE);
+    expect(settings.headers).to.have.property('Accept').to.equal(constants.HAL_CONTENT_TYPE);
     expect(settings).to.have.property('dataType').to.be.a('string');
 }
 
-describe("client/utils", () => {
+describe("client/portal/utils", () => {
     it("should expose an object", () => {
         expect(moduleToTest).to.be.an('object');
     });

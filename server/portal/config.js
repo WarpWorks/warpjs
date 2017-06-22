@@ -1,7 +1,7 @@
 const _ = require('lodash');
 const rc = require('@quoin/node-rc');
 
-const packageJson = require('./../package.json');
+const packageJson = require('./../../package.json');
 
 const baseConfig = {
     cookieSecret: 'ThisC00k1eISsw33t',

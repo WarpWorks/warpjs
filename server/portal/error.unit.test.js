@@ -4,7 +4,7 @@ const I3CError = require('./error');
 
 const expect = testHelpers.expect;
 
-describe("server/error", () => {
+describe("server/portal/error", () => {
     it("should export a class", () => {
         expect(I3CError).to.be.a('function')
             .to.have.property('name').to.equal('I3CError');
