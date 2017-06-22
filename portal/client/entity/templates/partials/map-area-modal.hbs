@@ -1,0 +1,15 @@
+<div class="panel-item panel panel-default">
+    {{#if title}}
+        <div class="panel-item-heading panel-heading">{{title}}</div>
+    {{/if}}
+    {{#if content}}
+        <div class="panel-body">
+            <div class="overview-image-container">
+                <div id="hover-body-content" class="col-xs-12 {{#unless content}}text-center{{/unless}}">
+                        <p class="map-area-preview-content">{{{content}}}</p>
+                </div>
+            </div>
+        </div>
+    {{/if}}
+</div>
+<div id="map-area-modal-flag" />

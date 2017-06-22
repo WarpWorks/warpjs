@@ -1,0 +1,20 @@
+<header class="header i3c-portal--header row">
+    <div class="col-xs-1 left-right-margin" />
+
+    <div class="logo-container col-xs-5 no-padding">
+        <a href="{{_links.i3c_homepage.href}}"><img class="logo"
+           src="/public/iic_images/IIC-logo-4.png"
+           alt="[LOGO]" /></a>
+    </div>
+
+    <div class="map-browser-header col-xs-5">
+        {{#if user}}
+            Hi {{user.Name}}
+            <a href="{{_links.i3c_logout.href}}"><span title="Log out" class="glyphicon glyphicon-log-out" /></a>
+            &nbsp;&nbsp;&nbsp;
+        {{/if}}
+        <a href="{{_links.mapBrowser.href}}"><img align="right" title="{{_links.mapBrowserImage.title}}" src="{{_links.mapBrowserImage.href}}" /></a>
+    </div>
+
+    <div class="col-xs-1 left-right-margin" />
+</header>
