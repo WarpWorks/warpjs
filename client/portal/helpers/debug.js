@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 module.exports = function debug(value) {
     console.log("[DEBUG] ==================================================");
     console.log("        == Context (this)                               ==");

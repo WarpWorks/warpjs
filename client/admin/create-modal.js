@@ -1,5 +1,5 @@
-function createModal(title, message, messageType, actions) {
-    var mType = messageType || "info";
+module.exports = (title, message, messageType, actions) => {
+    // var mType = messageType || "info";
 
     $("#genericModalTitleH").text(title);
     $("#genericModalMessageD").html(message);
@@ -16,4 +16,4 @@ function createModal(title, message, messageType, actions) {
         });
     }
     $("#genericModalM").modal();
-}
+};

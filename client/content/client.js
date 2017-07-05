@@ -194,8 +194,6 @@ class WarpJSClient extends WarpWidget {
     }
 
     save(ignoreReloadForNewEntities) {
-        console.log("calling save...");
-
         utils.trace(1, "--------------- View Hierarchy ---------------");
         utils.trace(1, this.pageView.toString());
         utils.trace(1, "--------------- -------------- ---------------");
@@ -237,7 +235,6 @@ class WarpJSClient extends WarpWidget {
     }
 
     initialize(jsonData, pageConfig, callback) {
-        console.log("client: initialize()...");
         // Get Type + Domain
         this.domain = getDomainFromURL();
         // $("#warpjsNavbarName").text(this.domain);

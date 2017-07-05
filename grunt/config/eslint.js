@@ -36,8 +36,9 @@ module.exports = {
                 '$warp'
             ],
             rules: {
-                'no-console': 'warn',
-                'standard/no-callback-literal': 'warn'
+                'no-console': 'off', // DEBUG
+                'standard/no-callback-literal': 'off', // DEBUG
+                'camelcase': 'off' // DEBUG
             }
         },
         src: [

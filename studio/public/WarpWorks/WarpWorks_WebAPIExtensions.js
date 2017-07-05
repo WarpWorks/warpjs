@@ -466,10 +466,6 @@ hsGetURLParam = function(argName) {
     return arg[1].split("&")[0];
 };
 
-hsCompareIDs = function(id1, id2) {
-    return "" + id1 === "" + id2;
-};
-
 hsSortByPosition = function(arr) {
     return arr.sort(function(a, b) {
         a = Number(a.position);

@@ -8,7 +8,8 @@ module.exports = {
         target: 'web',
         devtool: 'source-map',
         entry: {
-            content: './client/content/index.js'
+            'admin-domain': './client/admin/domain/index.js',
+            'content': './client/content/index.js'
         },
         node: {
             fs: 'empty'

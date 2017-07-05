@@ -43,6 +43,7 @@ function getCurrentPageHAL($, url) {
     });
 }
 
+/* eslint-disable no-console */
 function trace(level, arg1, arg2, arg3, arg4) {
     var tracelevel = 1; // 0=ignore
     if (tracelevel >= level && arg1 && arg2) {
@@ -56,6 +57,7 @@ function trace(level, arg1, arg2, arg3, arg4) {
         }
     }
 }
+/* eslint-enable no-console */
 
 module.exports = {
     ensureHalHeader,
