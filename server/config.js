@@ -1,9 +1,9 @@
 const path = require('path');
 const rc = require('@quoin/node-rc');
 
-const packageJson = require('./../../package.json');
+const packageJson = require('./../package.json');
 
-const processCwd = path.dirname(require.resolve('./../../package.json'));
+const processCwd = path.dirname(require.resolve('./../package.json'));
 
 const baseConfig = {
     mongoServer: process.env.MONGODB_HOST || 'localhost',

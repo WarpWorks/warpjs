@@ -1,6 +1,9 @@
 {
-  "port": 3001,
+  "port": 8080,
   "mongoServer": "localhost",
   "projectPath": "../w2projects",
-  "public": "../w2projects/public"
+  "public": "../w2projects/public",
+  "folders": {
+    "w2projects": "../w2projects"
+  }
 }

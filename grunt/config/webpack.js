@@ -9,7 +9,8 @@ module.exports = {
         devtool: 'source-map',
         entry: {
             'admin-domain': './client/admin/domain/index.js',
-            'content': './client/content/index.js'
+            'content': './client/content/index.js',
+            'portal': './client/portal/entity/lib/index.js'
         },
         node: {
             fs: 'empty'

@@ -6,28 +6,34 @@
 
 const debug = require('debug')('W2:WarpJS');
 const express = require('express');
+const path = require('path');
 
-const warpJs = require('./server/content');
-
-const config = require('./server/content/config');
+const config = require('./server/config');
 
 /**
  * Get port from environment and store in Express.
  */
 
-const port = normalizePort(process.env.PORT || config.port || 3001);
+const port = normalizePort(process.env.PORT || config.port || 8080);
 
 const server = express();
 
-server.use('/', warpJs.app('/'));
+const staticUrlPath = '/static';
+server.use(staticUrlPath, express.static(path.join(__dirname, 'public')));
+
+// --- BEGIN WARPJS ---
+const app = require('./server/app');
+server.use('/', app('/', staticUrlPath));
+// --- END WARPJS ---
 
 /**
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(port);
+server.listen(port, () => {
+    debug(`Server started on port ${port}.`);
+});
 server.on('error', onError);
-server.on('listening', onListening);
 
 /**
  * Normalize a port into a number, string, or false.
@@ -75,16 +81,4 @@ function onError(error) {
         default:
             throw error;
     }
-}
-
-/**
- * Event listener for HTTP server "listening" event.
- */
-
-function onListening() {
-    const addr = server.address();
-    const bind = typeof addr === 'string'
-        ? 'pipe ' + addr
-        : 'port ' + addr.port;
-    debug('Listening on ' + bind);
 }

@@ -51,7 +51,8 @@
     "lodash": "4.17.4",
     "mongodb": "2.2.29",
     "serve-favicon": "2.4.3",
-    "tinymce": "4.6.4"
+    "tinymce": "4.6.4",
+    "url-template": "2.0.8"
   },
   "devDependencies": {
     "@quoin/eslint-config-quoin": "0.2.0",
@@ -72,12 +73,16 @@
     "eslint-plugin-promise": "3.5.0",
     "eslint-plugin-standard": "3.0.1",
     "express": "4.15.3",
+    "font-awesome": "4.7.0",
     "grunt": "1.0.1",
     "grunt-cli": "1.2.0",
     "grunt-contrib-clean": "1.1.0",
     "grunt-contrib-copy": "1.0.0",
+    "grunt-contrib-less": "1.4.1",
     "grunt-eslint": "20.0.0",
     "grunt-webpack": "3.0.0",
+    "handlebars": "4.0.10",
+    "handlebars-loader": "1.5.0",
     "jquery": "1.12.4",
     "load-grunt-config": "0.19.2",
     "mocha": "3.4.2",

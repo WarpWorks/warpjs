@@ -17,7 +17,7 @@ const baseConfig = {
     },
 
     folders: {
-        iicData: 'REPLACE_THIS'
+        w2projects: 'REPLACE_THIS'
     }
 };
 

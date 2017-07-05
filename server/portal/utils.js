@@ -1,7 +1,7 @@
 const _ = require('lodash');
 const hal = require('hal');
 const Persistence = require('@warp-works/warpjs-mongo-persistence');
-const RoutesInfo = require('@quoin/expressjs-routes-info');
+// const RoutesInfo = require('@quoin/expressjs-routes-info');
 const url = require('url');
 
 const constants = require('./../../lib/constants');
@@ -35,30 +35,30 @@ function sendHal(req, res, resource, status) {
     if (resource.hideLoginHeader) {
         // This is the login page, so we want to be sure that
         // both links are available.
-        resource.link('i3c_login', {
-            href: RoutesInfo.expand('login'),
-            title: "Login"
-        });
-        resource.link('i3c_logout', {
-            href: RoutesInfo.expand('logout'),
-            title: "Logout"
-        });
+        // resource.link('i3c_login', {
+        //     href: RoutesInfo.expand('login'),
+        //     title: "Login"
+        // });
+        // resource.link('i3c_logout', {
+        //     href: RoutesInfo.expand('logout'),
+        //     title: "Logout"
+        // });
     } else if (req.i3cUser) {
-        resource.link('i3c_logout', {
-            href: RoutesInfo.expand('logout'),
-            title: "Logout"
-        });
+        // resource.link('i3c_logout', {
+        //     href: RoutesInfo.expand('logout'),
+        //     title: "Logout"
+        // });
     } else {
-        resource.link('i3c_login', {
-            href: RoutesInfo.expand('login'),
-            title: "Login"
-        });
+        // resource.link('i3c_login', {
+        //     href: RoutesInfo.expand('login'),
+        //     title: "Login"
+        // });
     }
 
-    resource.link('mapBrowser', {
-        href: RoutesInfo.expand('map'),
-        title: "Map Browser"
-    });
+    // resource.link('mapBrowser', {
+    //     href: RoutesInfo.expand('map'),
+    //     title: "Map Browser"
+    // });
     resource.link('mapBrowserImage', {
         // TODO: Cannot use this because tests will fail.
         // href: `${req.app.get('public-folder-path')}/iic_images/map-browser-icon.png`,
@@ -74,7 +74,9 @@ function sendHal(req, res, resource, status) {
 function sendIndex(res, title, bundle) {
     res.status(200).render('index', {
         title,
-        bundle
+        bundle,
+        baseUrl: res.app.get('base-url'),
+        staticUrl: res.app.get('static-url')
     });
 }
 
@@ -91,7 +93,7 @@ function sendError(req, res, err) {
     let resource;
     console.log("Catch(err)=", err);
 
-    if (err instanceof Persistence.PersistenceError) {
+    if (err instanceof Persistence.Error) {
         resource = createResource(req, {
             message: "Error accessing database.",
             details: err.message

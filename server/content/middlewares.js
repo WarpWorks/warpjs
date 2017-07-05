@@ -1,5 +1,5 @@
 const WarpJSError = require('./error');
-const config = require('./config');
+const config = require('./../config');
 
 function hasAdminRole(role) {
     return role.label === config.roles.admin;

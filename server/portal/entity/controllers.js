@@ -1,14 +1,14 @@
-const warpCore = require('@warp-works/core');
 const Persistence = require('@warp-works/warpjs-mongo-persistence');
 const Promise = require('bluebird');
 
 const config = require('./../config');
 const extractEntity = require('./extract-entity');
 const utils = require('./../utils');
+const warpCore = require('./../../../lib/core');
 
 function entity(req, res) {
     utils.wrapWith406(res, {
-        html: () => utils.sendIndex(res, 'Entity', 'entity'),
+        html: () => utils.sendIndex(res, 'Entity', 'portal'),
 
         [utils.HAL_CONTENT_TYPE]: () => {
             const persistence = new Persistence(config.persistence.host, config.domainName);

@@ -13,6 +13,9 @@ You can configure the different path by creating `.warp-works-warpjsrc`:
     {
       "projectPath": "../where-are-my-data",
       "public": "../where-are-my-data/public",
+      "folders": {
+        "w2projects": "../where-are-my-data"
+      },
       "roles": {
         "admin": "admin",
         "content": "content"
@@ -22,7 +25,7 @@ You can configure the different path by creating `.warp-works-warpjsrc`:
 If you are running it locally, you will want to also define:
 
     {
-      "port": 3001,
+      "port": 8080,
       "mongoServer": "localhost"
     }
 

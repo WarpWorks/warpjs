@@ -11,14 +11,14 @@ var favicon = require('serve-favicon');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-const config = require('./config');
+const config = require('./../config');
 const routes = require('./routes');
 
 const ROOT_DIR = path.dirname(require.resolve('./../../package.json'));
 const VIEWS_DIR = path.join(ROOT_DIR, 'views');
 const PARTIAL_DIR = path.join(config.projectPath, 'views');
 
-module.exports = (baseUrl) => {
+module.exports = (baseUrl, staticUrlPath) => {
     var app = express();
 
     // view engine setup
@@ -32,6 +32,7 @@ module.exports = (baseUrl) => {
     app.set('views', viewFolders);
     app.set('view engine', 'hbs');
     app.set('w2-app:baseUrl', baseUrl === '/' ? '' : baseUrl);
+    app.set('static-url', staticUrlPath === '/' ? '' : staticUrlPath);
 
     app.use(favicon(path.join(ROOT_DIR, 'public', 'images', 'favicon.ico')));
     app.use(bodyParser.json());
