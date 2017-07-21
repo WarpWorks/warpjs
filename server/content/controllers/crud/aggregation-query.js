@@ -1,7 +1,7 @@
 const debug = require('debug')('W2:WarpJS:crud:AggregationQuery');
 var ObjectID = require('mongodb').ObjectID;
 
-const WarpJSError = require('./../../error');
+const { WarpJSError } = require('@warp-works/warpjs-utils');
 
 function implementation(domain, db, collection, currentCommand, done) {
     if (!currentCommand.parentID || currentCommand.parentID === null) {

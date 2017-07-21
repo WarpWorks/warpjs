@@ -2,8 +2,7 @@ const debug = require('debug')('W2:WarpJS:crud:FindByID');
 var ObjectID = require('mongodb').ObjectID;
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 
-const utils = require('./../../utils');
-const WarpJSError = require('./../../error');
+const warpjsUtils = require('@warp-works/warpjs-utils');
 
 function findOneCB(done, domain, db, collection, id, currentCommand, error, results) {
     if (results) {
@@ -21,7 +20,7 @@ function findOneCB(done, domain, db, collection, id, currentCommand, error, resu
                 err = true;
                 msg = mongoError;
             } else if (mongoResult) {
-                const resource = utils.createResource(
+                const resource = warpjsUtils.createResource(
                     RoutesInfo.expand('w2-app:app', {
                         domain,
                         type: mongoResult.type || mongoResult.domainName,
@@ -72,7 +71,7 @@ function findOneCB(done, domain, db, collection, id, currentCommand, error, resu
 function implementation(domain, db, collection, currentCommand, done) {
     const id = currentCommand.targetID;
     if (!id) {
-        throw new WarpJSError(`FindByID-Query must contain 'targetID'!`);
+        throw new warpjsUtils.WarpJSError(`FindByID-Query must contain 'targetID'!`);
     }
 
     collection.findOne({_id: ObjectID(id)}, findOneCB.bind(null, done, domain, db, collection, id, currentCommand));

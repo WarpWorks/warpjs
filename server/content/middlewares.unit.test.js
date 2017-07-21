@@ -2,7 +2,7 @@ const _ = require('lodash');
 const testHelpers = require('@quoin/node-test-helpers');
 
 const moduleToTest = require('./middlewares');
-const WarpJSError = require('./error');
+const {WarpJSError} = require('@warp-works/warpjs-utils');
 
 const expect = testHelpers.expect;
 

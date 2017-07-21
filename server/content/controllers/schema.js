@@ -1,11 +1,10 @@
 const warpCore = require('./../../../lib/core');
-
-const utils = require('./../utils');
+const warpjsUtils = require('@warp-works/warpjs-utils');
 
 function domain(req, res) {
     const domainName = req.params.domain;
 
-    const resource = utils.createResource(req, {
+    const resource = warpjsUtils.createResource(req, {
         domainName
     });
 
@@ -19,14 +18,14 @@ function domain(req, res) {
         resource.success = false;
     }
 
-    utils.sendHal(req, res, resource);
+    warpjsUtils.sendHal(req, res, resource);
 }
 
 function type(req, res) {
     const domainName = req.params.domain;
     const typeName = req.params.type;
 
-    const resource = utils.createResource(req, {
+    const resource = warpjsUtils.createResource(req, {
         domainName,
         typeName
     });
@@ -41,7 +40,7 @@ function type(req, res) {
         resource.success = false;
     }
 
-    utils.sendHal(req, res, resource);
+    warpjsUtils.sendHal(req, res, resource);
 }
 
 module.exports = {

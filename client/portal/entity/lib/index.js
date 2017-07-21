@@ -1,4 +1,5 @@
-const utils = require('./../../utils');
+const warpjsUtils = require('@warp-works/warpjs-utils');
+
 const HoverPreview = require('./utilities/image-map-hover.js');
 
 const errorTemplate = require('./../../common/templates/_error.hbs');
@@ -6,7 +7,7 @@ const template = require("./../templates/index.hbs");
 
 (($) => {
     $(document).ready(() => {
-        utils.getCurrentPageHAL($)
+        warpjsUtils.getCurrentPageHAL($)
             .then((result) => {
                 const content = (result.error) ? errorTemplate(result.data) : template(result.data);
                 if (!result.error && result.data && result.data.Name) {

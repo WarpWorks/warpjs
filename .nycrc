@@ -4,8 +4,13 @@
   "check-coverage": false,
   "exclude": [
     "**/*.*.test.js",
+    "Gruntfile.js",
+    "grunt/**/*.js",
+    "public/3rd-party",
     "public/libs",
-    "reports"
+    "reports",
+    "server.js",
+    "studio"
   ],
   "reporter": [
     "cobertura",

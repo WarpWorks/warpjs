@@ -2,7 +2,7 @@ var mongoClient = require('mongodb').MongoClient;
 var fs = require('fs');
 var path = require('path');
 
-const MonAppError = require('./error');
+const { WarpJSError } = require('@warp-works/warpjs-utils');
 const config = require('./../config');
 
 //
@@ -100,7 +100,7 @@ W2Runtime.prototype.getParentClass = function(domainName, entity) {
     }
     var parent = this.findElementByID(domainName, entity.parentClass[0]);
     if (!parent) {
-        throw new MonAppError("Invalide parentClass ID: " + entity.parentClass[0]);
+        throw new WarpJSError("Invalide parentClass ID: " + entity.parentClass[0]);
     }
     return parent;
 };
@@ -109,7 +109,7 @@ W2Runtime.prototype.getParentEntity = function(domainName, parentRelnID) {
     // Return definition of entity which is the parentEntityProxy in this aggregation
     var domain = this.getDomain(domainName);
     if (!domain) {
-        throw new MonAppError("Invalid domain name: " + domainName);
+        throw new WarpJSError("Invalid domain name: " + domainName);
     }
     for (var idx = 0; idx < domain.entities.length; idx++) {
         var entity = domain.entities[idx];
@@ -125,7 +125,7 @@ W2Runtime.prototype.getParentEntity = function(domainName, parentRelnID) {
 W2Runtime.prototype.findEntityByName = function(domainName, entityName) {
     var domain = this.getDomain(domainName);
     if (!domain) {
-        throw new MonAppError("Invalid domain name: " + domainName);
+        throw new WarpJSError("Invalid domain name: " + domainName);
     }
     for (var idx = 0; idx < domain.entities.length; idx++) {
         var entity = domain.entities[idx];
@@ -141,7 +141,7 @@ W2Runtime.prototype.findElementByID = function(domainName, id) {
     // TBD: Currently only finds entities and relationships
     var domain = this.getDomain(domainName);
     if (!domain) {
-        throw new MonAppError("Invalid domain name: " + domainName);
+        throw new WarpJSError("Invalid domain name: " + domainName);
     }
     for (var idx = 0; idx < domain.entities.length; idx++) {
         var entity = domain.entities[idx];

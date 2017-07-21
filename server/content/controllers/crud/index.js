@@ -2,7 +2,7 @@ const debug = require('debug')('W2:WarpJS:crud:index');
 var ObjectID = require('mongodb').ObjectID;
 
 var $rt = require('./../../W2Runtime.js');
-const WarpJSError = require('./../../error');
+const WarpJSError = require('@warp-works/warpjs-utils');
 
 const aggregationQuery = require('./aggregation-query');
 const findAssocTargetOptions = require('./find-association-target-options');

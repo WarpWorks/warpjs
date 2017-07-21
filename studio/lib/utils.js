@@ -2,6 +2,9 @@ const debug = require('debug')('W2:Studio:utils');
 const hal = require('hal');
 const path = require('path');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
+const {
+    createResource
+} = require('@warp-works/warpjs-utils');
 
 const BASE_PATH = path.dirname(require.resolve('./../package.json'));
 const HAL_CONTENT_TYPE = 'application/hal+json';
@@ -36,13 +39,6 @@ function debugReq(m, req) {
 // ***************************************************************************
 //      HAL stuff
 // ***************************************************************************
-
-function createResource(reqOrPath, data) {
-    if (typeof reqOrPath === 'string') {
-        return new hal.Resource(data, reqOrPath || null);
-    }
-    return new hal.Resource(data, (reqOrPath && reqOrPath.originalUrl) || null);
-}
 
 function sendHal(req, res, resource, status) {
     res.status(status || 200)

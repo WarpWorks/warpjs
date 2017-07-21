@@ -1,12 +1,11 @@
 const Promise = require('bluebird');
-
-const constants = require('./../lib/constants');
+const warpjsUtils = require('@warp-works/warpjs-utils');
 
 function ensureHalHeader(settings) {
     if (!settings.headers) {
         settings.headers = {};
     }
-    settings.headers.Accept = constants.HAL_CONTENT_TYPE;
+    settings.headers.Accept = warpjsUtils.constants.HAL_CONTENT_TYPE;
 
     if (!settings.dataType) {
         settings.dataType = 'json';
@@ -62,6 +61,6 @@ function trace(level, arg1, arg2, arg3, arg4) {
 module.exports = {
     ensureHalHeader,
     getCurrentPageHAL,
-    HAL_CONTENT_TYPE: constants.HAL_CONTENT_TYPE,
+    HAL_CONTENT_TYPE: warpjsUtils.constants.HAL_CONTENT_TYPE,
     trace
 };

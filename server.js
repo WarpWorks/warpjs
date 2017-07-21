@@ -23,7 +23,7 @@ server.use(staticUrlPath, express.static(path.join(__dirname, 'public')));
 
 // --- BEGIN WARPJS ---
 const app = require('./server/app');
-server.use('/', app('/', staticUrlPath, config.folders.w2projects));
+server.use('/', app('/', staticUrlPath));
 // --- END WARPJS ---
 
 /**

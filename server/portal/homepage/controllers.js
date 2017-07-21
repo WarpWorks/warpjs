@@ -3,14 +3,14 @@ const Promise = require('bluebird');
 
 const config = require('./../config');
 const extractEntity = require('./../entity/extract-entity');
-const utils = require('./../utils');
+const warpjsUtils = require('@warp-works/warpjs-utils');
 const warpCore = require('./../../../lib/core');
 
 function index(req, res) {
-    utils.wrapWith406(res, {
-        html: () => utils.sendIndex(res, 'Entity', 'portal'),
+    warpjsUtils.wrapWith406(res, {
+        html: () => warpjsUtils.sendIndex(res, 'Entity', 'portal'),
 
-        [utils.HAL_CONTENT_TYPE]: () => {
+        [warpjsUtils.constants.HAL_CONTENT_TYPE]: () => {
             const persistence = new Persistence(config.persistence.host, config.domainName);
 
             Promise.resolve()
@@ -20,7 +20,7 @@ function index(req, res) {
                     return rootEntity.getDocuments(persistence)
                         .then((docs) => docs[0])
                         .then((doc) => {
-                            const responseResource = utils.createResource(req, {
+                            const responseResource = warpjsUtils.createResource(req, {
                                 id: doc.id,
                                 type: doc.type,
                                 name: doc.Name,
@@ -30,10 +30,10 @@ function index(req, res) {
 
                             return Promise.resolve()
                                 .then(extractEntity.bind(null, req, responseResource, persistence, rootEntity, doc))
-                                .then(utils.sendHal.bind(null, req, res, responseResource, null));
+                                .then(warpjsUtils.sendHal.bind(null, req, res, responseResource, null));
                         });
                 })
-                .catch(utils.sendError.bind(null, req, res))
+                .catch(warpjsUtils.sendError.bind(null, req, res))
                 .finally(() => {
                     persistence.close();
                 });

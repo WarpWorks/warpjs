@@ -5,7 +5,7 @@ module.exports = () => {
                 compress: true
             },
             files: [{
-                dest: 'public/app/portal.min.css',
+                dest: 'public/app/warpjs.min.css',
                 src: 'client/portal/less/main.less'
             }]
         }

@@ -1,7 +1,7 @@
 const _ = require('lodash');
 const routesInfo = require('@quoin/expressjs-routes-info');
 
-const utils = require('./../utils');
+const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const PROPS_TO_PICK = [
     'type',
@@ -28,7 +28,7 @@ const PROPS_TO_PICK = [
 module.exports = (obj, addSelfLink, propsToPick) => {
     let pickArray = propsToPick ? PROPS_TO_PICK.concat(propsToPick) : PROPS_TO_PICK;
 
-    return utils.createResource(
+    return warpjsUtils.createResource(
         (addSelfLink)
             ? routesInfo.expand('entity', { id: obj.id, type: obj.type })
             : '',

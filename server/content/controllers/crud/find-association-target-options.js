@@ -1,7 +1,7 @@
 const debug = require('debug')('W2:WarpJS:crud:FindAssocTargetOptions');
 
 var $rt = require('./../../W2Runtime.js');
-const WarpJSError = require('./../../error');
+const { WarpJSError } = require('@warp-works/warpjs-utils');
 
 function implementation(domain, db, collection, currentCommand, done) {
     const currentPage = currentCommand.currentPage || 0;

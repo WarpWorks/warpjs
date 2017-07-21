@@ -1,16 +1,16 @@
 const Persistence = require('@warp-works/warpjs-mongo-persistence');
 const Promise = require('bluebird');
+const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const config = require('./../config');
 const extractEntity = require('./extract-entity');
-const utils = require('./../utils');
 const warpCore = require('./../../../lib/core');
 
 function entity(req, res) {
-    utils.wrapWith406(res, {
-        html: () => utils.sendIndex(res, 'Entity', 'portal'),
+    warpjsUtils.wrapWith406(res, {
+        html: () => warpjsUtils.sendIndex(res, 'Entity', 'portal'),
 
-        [utils.HAL_CONTENT_TYPE]: () => {
+        [warpjsUtils.constants.HAL_CONTENT_TYPE]: () => {
             const persistence = new Persistence(config.persistence.host, config.domainName);
 
             Promise.resolve()
@@ -20,7 +20,7 @@ function entity(req, res) {
                     return hsEntity.getInstance(persistence, req.params.id)
                         .then((instance) => {
                             const isPreview = Boolean(req.query && req.query.preview === "true");
-                            const responseResource = utils.createResource(req, {
+                            const responseResource = warpjsUtils.createResource(req, {
                                 Name: instance.Name,
                                 Desc: instance.desc,
                                 Heading: instance.Heading,
@@ -29,7 +29,7 @@ function entity(req, res) {
 
                             return Promise.resolve()
                                 .then(extractEntity.bind(null, req, responseResource, persistence, hsEntity, instance, isPreview))
-                                .then(utils.sendHal.bind(null, req, res, responseResource, null));
+                                .then(warpjsUtils.sendHal.bind(null, req, res, responseResource, null));
                         });
                 })
                 .finally(() => {
@@ -49,10 +49,10 @@ function entity(req, res) {
                         statusCode = 500;
                     }
 
-                    const resource = utils.createResource(req, {
+                    const resource = warpjsUtils.createResource(req, {
                         message
                     });
-                    utils.sendHal(req, res, resource, statusCode);
+                    warpjsUtils.sendHal(req, res, resource, statusCode);
                 });
         }
     });

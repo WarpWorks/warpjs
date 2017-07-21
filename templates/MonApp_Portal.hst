@@ -1,7 +1,6 @@
 {{Domain*}}<!-- Domain: #{{js:this.name;/}} -->
 {{Entity*}}{{Options}} {"saveAs": ["views", "'portal'+this.name+'.hbs'"] } {{/Options}}
 <script src="/app/{{js:this.getParent_Domain().name/}}_WebAPI.js"></script>
-<script src="/app/appUtilities.js"></script>
 <script>
     whenReady(function () {
         $("#breadcrumb").empty();

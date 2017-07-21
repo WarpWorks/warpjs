@@ -1,4 +1,4 @@
-const WarpJSError = require('./error');
+const {WarpJSError} = require('@warp-works/warpjs-utils');
 const config = require('./../config');
 
 function hasAdminRole(role) {

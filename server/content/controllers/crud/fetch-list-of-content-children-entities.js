@@ -1,7 +1,7 @@
 const debug = require('debug')('W2:WarpJS:crud:FetchListOfContentChildrenEntities');
 
 const $rt = require('./../../W2Runtime.js');
-const WarpJSError = require('./../../error');
+const { WarpJSError } = require('@warp-works/warpjs-utils');
 
 function implementation(domain, db, collection, currentCommand, done) {
     // // Always use the base type (i.e. the topmost non-abstract class in the inheritance hierarchy):

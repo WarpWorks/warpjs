@@ -5,5 +5,29 @@
   "public": "../w2projects/public",
   "folders": {
     "w2projects": "../w2projects"
-  }
+  },
+  "plugins": [{
+    "name": "@warp-works/warpjs-map-plugin",
+    "path": "/map",
+    "config": {
+      "domainName": "IIC",
+      "persistence": {
+        "host": "localhost",
+        "dbName": "IIC"
+      },
+      "mapMarkerType": "UseCase",
+      "mapTypes": [
+        "IndustrySector",
+        "StandardsOrganization",
+        "ApplicationArea",
+        "TechnologyArea"
+      ],
+      "paginationSettings": {
+        "xs": 3,
+        "sm": 4,
+        "md": 5,
+        "lg": 5
+      }
+    }
+  }]
 }

@@ -1,10 +1,10 @@
 const _ = require('lodash');
 const path = require('path');
 const testHelpers = require('@quoin/node-test-helpers');
+const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const config = require('./../config');
 const controllers = require('./controllers');
-const utils = require('./../utils');
 
 const expect = testHelpers.expect;
 
@@ -49,7 +49,7 @@ describe("server/homepage/controllers", () => {
                 get(key) {
                     return key;
                 }
-            }
+            };
 
             controllers.index(req, res);
 
@@ -57,7 +57,11 @@ describe("server/homepage/controllers", () => {
             expect(res._getRenderView()).to.equal('index');
             expect(res._getRenderData()).to.deep.equal({
                 title: 'Entity',
-                bundle: 'portal',
+                bundles: [
+                    'static-url/app/vendor.js',
+                    'static-url/app/portal.js'
+                ],
+                cssFile: undefined,
                 baseUrl: 'base-url',
                 staticUrl: 'static-url'
             });
@@ -68,7 +72,7 @@ describe("server/homepage/controllers", () => {
             const reqOptions = {
                 url: '/some/original/url',
                 headers: {
-                    Accept: utils.HAL_CONTENT_TYPE
+                    Accept: warpjsUtils.constants.HAL_CONTENT_TYPE
                 }
             };
 

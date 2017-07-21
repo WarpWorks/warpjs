@@ -12,7 +12,8 @@ const baseConfig = {
     roles: {
         admin: 'admin',
         content: 'content'
-    }
+    },
+    plugins: []
 };
 
 const config = rc(packageJson.name, baseConfig, {

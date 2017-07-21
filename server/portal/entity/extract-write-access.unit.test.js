@@ -1,9 +1,9 @@
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const testHelpers = require('@quoin/node-test-helpers');
+const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const config = require('./../config');
 const extractWriteAccess = require('./extract-write-access');
-const utils = require('./../utils');
 
 const expect = testHelpers.expect;
 
@@ -14,7 +14,7 @@ describe("server/portal/entity/extract-write-access", () => {
 
     it("should not add _link.edit", () => {
         const req = {};
-        const resource = utils.createResource('/foo', {});
+        const resource = warpjsUtils.createResource('/foo', {});
         const persistence = {};
         const entity = {
             canBeEditedBy() {
@@ -34,7 +34,7 @@ describe("server/portal/entity/extract-write-access", () => {
 
     it.skip("should add _links.edit", () => {
         const req = {};
-        const resource = utils.createResource('/foo', {});
+        const resource = warpjsUtils.createResource('/foo', {});
         const persistence = {};
         const entity = {
             canBeEditedBy() {

@@ -4,7 +4,11 @@
     <title>I3C Portal - {{title}}</title>
     <link rel="stylesheet" href="{{staticUrl}}/3rd-party/css/bootstrap.min.css" />
     <link rel="stylesheet" href="{{staticUrl}}/3rd-party/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="{{staticUrl}}/app/portal.min.css" />
+    <link rel="stylesheet" href="{{staticUrl}}/app/warpjs.min.css" />
+
+{{#if cssFile}}
+    <link rel="stylesheet" href="{{cssFile}}" />
+{{/if}}
 
     <link rel="shortcut icon" href="/public/favicon.ico" />
     <link rel="icon" href="/public/favicon.ico" />
@@ -15,8 +19,10 @@
 
     <script src="{{staticUrl}}/3rd-party/js/jquery.min.js"></script>
     <script src="{{staticUrl}}/3rd-party/js/bootstrap.min.js"></script>
-    <script src="{{staticUrl}}/app/vendor.js"></script>
-    <script src="{{staticUrl}}/app/{{bundle}}.js"></script>
+{{#each bundles}}
+    <script src="{{this}}"></script>
+{{/each}}
+
 </body>
 
 </html>

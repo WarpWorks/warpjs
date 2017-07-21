@@ -1,15 +1,8 @@
+const {constants} = require('@warp-works/warpjs-utils');
 const debug = require('debug')('W2:WarpJS:utils');
 const hal = require('hal');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
-
-const constants = require('./../../lib/constants');
-
-function createResource(reqOrPath, data) {
-    if (typeof reqOrPath === 'string') {
-        return new hal.Resource(data, reqOrPath || null);
-    }
-    return new hal.Resource(data, (reqOrPath && reqOrPath.originalUrl) || null);
-}
+const { createResource } = require('@warp-works/warpjs-utils');
 
 function createResourceFromDocument(instance) {
     const data = {
@@ -45,7 +38,6 @@ function sendHal(req, res, resource, status) {
 
 module.exports = {
     basicRender,
-    createResource,
     createResourceFromDocument,
     HAL_CONTENT_TYPE: constants.HAL_CONTENT_TYPE,
     sendHal

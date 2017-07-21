@@ -1,5 +1,4 @@
 const _ = require('lodash');
-const routesInfo = require('@quoin/expressjs-routes-info');
 const testHelpers = require('@quoin/node-test-helpers');
 
 const app = require('./app');

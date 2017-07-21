@@ -17,7 +17,7 @@ module.exports = (baseUrl, staticUrlPath) => {
     const PUBLIC_FOLDER_PATH_KEY = 'public-folder-path';
 
     app.set('view engine', 'hbs');
-    app.set('views', path.join(__dirname, 'views'));
+    // app.set('views', path.join(__dirname, 'views'));
     app.set('sendfile-options', {root: buildDir});
     app.set('base-url', baseUrl);
     app.set('static-url', staticPath);

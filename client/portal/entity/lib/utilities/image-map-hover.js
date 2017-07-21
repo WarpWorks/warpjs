@@ -1,5 +1,6 @@
 const _ = require('lodash');
-const utils = require('./../../../utils');
+const warpjsUtils = require('@warp-works/warpjs-utils');
+
 const modalTemplate = require('./../../templates/partials/map-area-modal.hbs');
 const constants = require('./constants.js');
 
@@ -126,7 +127,7 @@ class HoverPreview {
                 this.extractDataAndShowModal($, this._resultDataCache[href], cacheReferenceKey);
             }
         } else {
-            utils.getCurrentPageHAL($, href)
+            warpjsUtils.getCurrentPageHAL($, href)
                 .then((result) => {
                     this._resultDataCache[href] = result.data;
                     this._imageAreaCache[cacheReferenceKey].result = this._resultDataCache[href];

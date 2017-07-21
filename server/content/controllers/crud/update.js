@@ -1,7 +1,7 @@
 const debug = require('debug')('W2:WarpJS:crud:Update');
 var ObjectID = require('mongodb').ObjectID;
 
-const WarpJSError = require('./../../error');
+const { WarpJSError } = require('@warp-works/warpjs-utils');
 
 function implementation(domain, db, collection, currentCommand, done) {
     // TBD - hack: This must process all values in "entities", not only the first element!

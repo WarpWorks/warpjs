@@ -1,4 +1,5 @@
 const RoutesInfo = require('@quoin/expressjs-routes-info');
+const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const utils = require('./../utils');
 
@@ -6,7 +7,7 @@ module.exports = (req, res) => {
     const type = req.params.type;
     const domain = req.params.domain;
 
-    const resource = utils.createResource(req, {
+    const resource = warpjsUtils.createResource(req, {
         type,
         domain,
         title: 'test',
