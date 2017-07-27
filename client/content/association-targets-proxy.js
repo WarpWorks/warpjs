@@ -1,5 +1,6 @@
+const warpjsUtils = require('@warp-works/warpjs-utils');
+
 const RelationshipProxy = require('./relationship-proxy');
-const utils = require('./../utils');
 
 class AssociationTargetsProxy extends RelationshipProxy {
     // constructor(jsonReln, parentEntityProxy) {
@@ -17,11 +18,11 @@ class AssociationTargetsProxy extends RelationshipProxy {
 
     useRelationship(callback) {
         if (!this.requiresUpdate) {
-            utils.trace(2, "AssociationTargetsProxy.useRelationship", "Re-using data for " + this.jsonReln.name);
+            warpjsUtils.trace(2, "AssociationTargetsProxy.useRelationship", "Re-using data for " + this.jsonReln.name);
             callback(this);
             return;
         } else {
-            utils.trace(2, "AssociationTargetsProxy.useRelationship", "Loading Relationship data for " + this.jsonReln.name);
+            warpjsUtils.trace(2, "AssociationTargetsProxy.useRelationship", "Loading Relationship data for " + this.jsonReln.name);
         }
 
         if (this.targetIsDocument) {
@@ -63,14 +64,14 @@ class AssociationTargetsProxy extends RelationshipProxy {
                             }.bind(this));
                             this.requiresUpdate = false;
                             this.ensureSelectedEntityIdxIsValid();
-                            utils.trace(1, "AssociationTargetsProxy.useRelationship", "Document: AssociationQuery for " + result.resultList[0].sourceRelnName + " (found:" + this.noOfTotalQueryResults() + ")");
+                            warpjsUtils.trace(1, "AssociationTargetsProxy.useRelationship", "Document: AssociationQuery for " + result.resultList[0].sourceRelnName + " (found:" + this.noOfTotalQueryResults() + ")");
                             callback(this);
                         } else {
-                            utils.trace(1, "AssociationTargetsProxy.useRelationship():\n-  Warning - could not execute AssociationQuery");
+                            warpjsUtils.trace(1, "AssociationTargetsProxy.useRelationship():\n-  Warning - could not execute AssociationQuery");
                         }
                     }.bind(this));
                 } else {
-                    utils.trace(1, "AssociationTargetsProxy.useRelationship():\n-  Warning - can not use relationship - parentEntity not found!");
+                    warpjsUtils.trace(1, "AssociationTargetsProxy.useRelationship():\n-  Warning - can not use relationship - parentEntity not found!");
                 }
             }.bind(this));
         } else {

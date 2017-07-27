@@ -1,4 +1,5 @@
-const utils = require('./../utils');
+const warpjsUtils = require('@warp-works/warpjs-utils');
+
 const WarpRelationshipPanelItem = require('./relationship-panel-item');
 const WarpTable = require('./table');
 
@@ -68,7 +69,7 @@ class RpiTable extends WarpRelationshipPanelItem {
     }
 
     add() {
-        utils.trace(1, "RpiTable.add():\n-  Add-Click for " + this.globalID());
+        warpjsUtils.trace(1, "RpiTable.add():\n-  Add-Click for " + this.globalID());
         if (this.relnDetails.targetJson.entityType === "Document") {
             var pv = this.getPageView();
             var ep = pv.getEntityProxy();
@@ -79,7 +80,7 @@ class RpiTable extends WarpRelationshipPanelItem {
     }
 
     rowSelected() {
-        utils.trace(1, "RpiTable.rowSelected():\n-  Click for " + this.type + ', id:' + this.id);
+        warpjsUtils.trace(1, "RpiTable.rowSelected():\n-  Click for " + this.type + ', id:' + this.id);
         $warp.openInNewPage(this.id, this.type);
     }
 }

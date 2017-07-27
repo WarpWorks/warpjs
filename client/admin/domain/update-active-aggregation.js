@@ -1,7 +1,8 @@
+const warpjsUtils = require('@warp-works/warpjs-utils');
+
 const addNewAggregation = require('./add-new-aggregation');
 const saveAggregationFormValues = require('./save-aggregation-form-values');
 const updateActiveAggregation = require('./update-active-aggregation');
-const utils = require('./../utils');
 const warpGlobals = require('./../warp-globals');
 
 module.exports = (argActiveAggregationID) => {
@@ -17,7 +18,7 @@ module.exports = (argActiveAggregationID) => {
     $("#aggregationNP").empty();
     if (aggs.length > 0) {
         aggs.forEach(function(aggregation, i) {
-            var active = utils.compareIDs(aggregation.id, activeAggregationID) ? " class='active'" : "";
+            var active = warpjsUtils.compareIDs(aggregation.id, activeAggregationID) ? " class='active'" : "";
             var elem = $("<li" + active + "><a href='#' id='" + aggregation.id + "'data-toggle='tab'>" + aggregation.name + "</a></li>");
             $("#aggregationNP").append(elem).append(" ");
             elem.click(function(event) {

@@ -1,6 +1,9 @@
 {
   "port": 8080,
-  "mongoServer": "localhost",
+  "persistence": {
+    "host": "localhost",
+    "name": "IIC"
+  },
   "projectPath": "../w2projects",
   "public": "../w2projects/public",
   "folders": {
@@ -11,10 +14,6 @@
     "path": "/map",
     "config": {
       "domainName": "IIC",
-      "persistence": {
-        "host": "localhost",
-        "dbName": "IIC"
-      },
       "mapMarkerType": "UseCase",
       "mapTypes": [
         "IndustrySector",

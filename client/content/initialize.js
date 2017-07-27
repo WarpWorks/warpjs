@@ -1,4 +1,5 @@
-const utils = require('./../utils');
+const warpjsUtils = require('@warp-works/warpjs-utils');
+
 const WarpJSClient = require('./client');
 
 function beforeUnload(event) {
@@ -10,12 +11,12 @@ function onSchemaSuccess(config, callback, result) {
         $warp.progressBarOn(75);
         $warp.initialize(result.domain, config, callback);
     } else {
-        utils.trace(1, "initializeWarpJS", "Failed to get domain data - " + result.error);
+        warpjsUtils.trace(1, "initializeWarpJS", "Failed to get domain data - " + result.error);
     }
 }
 
 function onSchemaError(jqXHR, textStatus, errorThrown) {
-    utils.trace(1, "initializeWarpJS", "Failed to get domain data - " + textStatus);
+    warpjsUtils.trace(1, "initializeWarpJS", "Failed to get domain data - " + textStatus);
 }
 
 function onCurrentPageSuccess(config, callback, result) {
@@ -49,7 +50,7 @@ module.exports = (config, callback) => {
     // Prepare remote connection
     $.ajax({
         headers: {
-            Accept: utils.HAL_CONTENT_TYPE
+            Accept: warpjsUtils.constants.HAL_CONTENT_TYPE
         },
         success: onCurrentPageSuccess.bind(null, config, callback),
         error: onCurrentPageError

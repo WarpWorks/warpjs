@@ -1,6 +1,7 @@
+const warpjsUtils = require('@warp-works/warpjs-utils');
+
 const AggregationProxy = require('./aggregation-proxy');
 const AssociationProxy = require('./association-proxy');
-const utils = require('./../utils');
 
 class EntityProxy {
     constructor(entityConfig) {
@@ -215,7 +216,7 @@ class EntityProxy {
                         $warp.processCRUDcommands(reqData, function(result) {
                             if (result.success) {
                                 this.isDirty = false;
-                                utils.trace(1, "WarpJSClient.save():\n - Successfully saved " + this.displayName());
+                                warpjsUtils.trace(1, "WarpJSClient.save():\n - Successfully saved " + this.displayName());
                             } else {
                                 $warp.alert(result.err);
                             }
@@ -242,7 +243,7 @@ class EntityProxy {
                                 this.mode = "editEntity";
                                 this.data._id = result.newEntity._id;
 
-                                utils.trace(1, "WarpJSClient.save():\n - Successfully created " + this.displayName());
+                                warpjsUtils.trace(1, "WarpJSClient.save():\n - Successfully created " + this.displayName());
 
                                 // Re-load after creation?
                                 if (!ignoreReloadForNewEntities) {
@@ -264,7 +265,7 @@ class EntityProxy {
         if (!this.data || this.data[attrName] === null) {
             throw new Error("EntityProxy.getValue(): ERROR - Can not access value '" + attrName + "'");
         }
-        utils.trace(2, "EntityProxy.getValue", "Getting value for " + attrName + ": " + this.data[attrName]);
+        warpjsUtils.trace(2, "EntityProxy.getValue", "Getting value for " + attrName + ": " + this.data[attrName]);
         return this.data[attrName];
     }
 
@@ -273,7 +274,7 @@ class EntityProxy {
             throw new Error("EntityProxy.setValue(): ERROR - Can not set value '" + attrName + "'");
         }
         if (!this.data[attrName] && val + "" === "") {
-            utils.trace(1, "EntityProxy.setValue", "Ignoring empty fields for new entities!");
+            warpjsUtils.trace(1, "EntityProxy.setValue", "Ignoring empty fields for new entities!");
             return;
         }
         if (this.data[attrName] !== val) {
@@ -286,8 +287,8 @@ class EntityProxy {
                 });
             this.isDirty = true;
             this.getDocumentProxy().isDirty = true;
-            utils.trace(1, "EntityProxy.setValue():");
-            utils.trace(1,
+            warpjsUtils.trace(1, "EntityProxy.setValue():");
+            warpjsUtils.trace(1,
                 "  * Document\n    - Name: " + this.displayName() + "\n    - isDirty: " + this.isDirty +
             "\n    - Changes: " + this.historyToString());
         }

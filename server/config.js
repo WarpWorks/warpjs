@@ -6,7 +6,10 @@ const packageJson = require('./../package.json');
 const processCwd = path.dirname(require.resolve('./../package.json'));
 
 const baseConfig = {
-    mongoServer: process.env.MONGODB_HOST || 'localhost',
+    persistence: {
+        host: process.env.MONGODB_HOST || 'localhost',
+        name: 'REPLACE_ME'
+    },
     projectPath: process.env.PROJECT_PATH || path.join(processCwd, '..', 'w2projects'),
     public: process.env.PUBLIC_PATH || path.join(processCwd, '..', 'w2projects', 'public'),
     roles: {

@@ -1,5 +1,7 @@
-const warpCore = require('./../../../lib/core');
+const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
+
+const warpCore = require('./../../../lib/core');
 
 function domain(req, res) {
     const domainName = req.params.domain;
@@ -18,7 +20,7 @@ function domain(req, res) {
         resource.success = false;
     }
 
-    warpjsUtils.sendHal(req, res, resource);
+    warpjsUtils.sendHal(req, res, resource, RoutesInfo);
 }
 
 function type(req, res) {
@@ -40,7 +42,7 @@ function type(req, res) {
         resource.success = false;
     }
 
-    warpjsUtils.sendHal(req, res, resource);
+    warpjsUtils.sendHal(req, res, resource, RoutesInfo);
 }
 
 module.exports = {

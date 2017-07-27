@@ -1,7 +1,8 @@
+const warpjsUtils = require('@warp-works/warpjs-utils');
+
 const addNewEnum = require('./add-new-enum');
 const saveEnumFormValues = require('./save-enum-form-values');
 const updateActiveEnum = require('./update-active-enum');
-const utils = require('./../utils');
 const warpGlobals = require('./../warp-globals');
 
 module.exports = (argActiveEnumID) => {
@@ -19,7 +20,7 @@ module.exports = (argActiveEnumID) => {
     $("#enumsNP").empty();
     if (sortedEnumList.length > 0) {
         sortedEnumList.forEach(function(enumeration, i) {
-            var active = utils.compareIDs(enumeration.id, activeEnumID) ? " class='active'" : "";
+            var active = warpjsUtils.compareIDs(enumeration.id, activeEnumID) ? " class='active'" : "";
             var elem = $("<li" + active + "><a href='#' id='" + enumeration.id + "'data-toggle='tab'>" + enumeration.name + "</a></li>");
             $("#enumsNP").append(elem).append(" ");
             elem.click(function(event) {

@@ -1,6 +1,6 @@
 const tinyMCE = require('tinymce');
+const warpjsUtils = require('@warp-works/warpjs-utils');
 
-const utils = require('./../utils');
 const WarpPanelItem = require('./panel-item');
 
 class WarpBasicPropertyPanelItem extends WarpPanelItem {
@@ -20,7 +20,7 @@ class WarpBasicPropertyPanelItem extends WarpPanelItem {
                 var input = $("#" + this.globalID());
                 input.val(entity.getValue(this.propertyName));
             } else {
-                utils.trace(2, "WarpBasicPropertyPanelItem.updateViewWithDataFromModel():\n-  Warning - could not get data from model for BasicPropertyPanelItem, ID=" + this.globalID());
+                warpjsUtils.trace(2, "WarpBasicPropertyPanelItem.updateViewWithDataFromModel():\n-  Warning - could not get data from model for BasicPropertyPanelItem, ID=" + this.globalID());
             }
             callback();
         }.bind(this));
@@ -35,7 +35,7 @@ class WarpBasicPropertyPanelItem extends WarpPanelItem {
 
                 entity.setValue(this.propertyName, input.val());
             } else {
-                utils.trace(1, "WarpBasicPropertyPanelItem.updateModelWithDataFromView():\n-  Warning - could not update " + this.propertyName + "=" + entity[this.propertyName]);
+                warpjsUtils.trace(1, "WarpBasicPropertyPanelItem.updateModelWithDataFromView():\n-  Warning - could not update " + this.propertyName + "=" + entity[this.propertyName]);
             }
             callback();
         }.bind(this));

@@ -1,4 +1,4 @@
-const utils = require('./../utils');
+const warpjsUtils = require('@warp-works/warpjs-utils');
 
 class WarpTable {
     constructor(tableConfig) {
@@ -142,12 +142,12 @@ class WarpTable {
     }
 
     left() {
-        utils.trace(1, "WarpTable.left():\n-  Left-Click for " + this.globalID());
+        warpjsUtils.trace(1, "WarpTable.left():\n-  Left-Click for " + this.globalID());
         this.selectPageAndUpdate("-1");
     }
 
     right() {
-        utils.trace(1, "WarpTable.right():\n-  Right-Click for " + this.globalID());
+        warpjsUtils.trace(1, "WarpTable.right():\n-  Right-Click for " + this.globalID());
         this.selectPageAndUpdate("+1");
     }
 }

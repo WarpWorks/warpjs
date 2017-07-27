@@ -1,4 +1,5 @@
-const utils = require('./../utils');
+const warpjsUtils = require('@warp-works/warpjs-utils');
+
 const WarpAssociationEditor = require('./association-editor');
 const WarpRelationshipPanelItem = require('./relationship-panel-item');
 
@@ -138,7 +139,7 @@ class rpiCSV extends WarpRelationshipPanelItem {
     }
 
     updateModelWithDataFromView(callback) {
-        utils.trace(2, "rpiCSV.updateModelWithDataFromView():\n-  Warning - 'updateModelWithDataFromView' for 'rpiCSV' currently not implemented!");
+        warpjsUtils.trace(2, "rpiCSV.updateModelWithDataFromView():\n-  Warning - 'updateModelWithDataFromView' for 'rpiCSV' currently not implemented!");
         callback();
     }
 }

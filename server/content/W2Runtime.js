@@ -28,7 +28,7 @@ W2Runtime.prototype = {
         }
     },
     getMongoURL: function(dbName) {
-        return "mongodb://" + config.mongoServer + "/" + dbName;
+        return "mongodb://" + config.persistence.host + "/" + dbName;
     },
     useDB: function(dbName, nextFunction) {
         var db = this.mongoDBs[dbName];

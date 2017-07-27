@@ -1,4 +1,5 @@
-const utils = require('./../utils');
+const warpjsUtils = require('@warp-works/warpjs-utils');
+
 const WarpTable = require('./table');
 
 class WarpAssociationEditor {
@@ -171,7 +172,7 @@ class WarpAssociationEditor {
                 try {
                     assocProxy.updateAssocDesc(oid, desc);
                 } catch (err) {
-                    utils.trace(1, "WarpAssociationEditor.updateAssocWithDataFromEditor", "Can't update assocData - assoc was probably removed before");
+                    warpjsUtils.trace(1, "WarpAssociationEditor.updateAssocWithDataFromEditor", "Can't update assocData - assoc was probably removed before");
                 }
                 callback();
             });

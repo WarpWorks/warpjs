@@ -9,8 +9,10 @@ describe("server/content/config", () => {
         expect(moduleToTest).to.be.an('object');
     });
 
-    it("should expose 'mongoServer'", () => {
-        expect(moduleToTest).to.have.property('mongoServer').to.be.a('string');
+    it("should expose 'persistence'", () => {
+        expect(moduleToTest).to.have.property('persistence').to.be.an('object');
+        expect(moduleToTest.persistence).to.have.property('host').to.be.a('string');
+        expect(moduleToTest.persistence).to.have.property('name').to.be.a('string');
     });
 
     it("should expose 'projectPath'", () => {

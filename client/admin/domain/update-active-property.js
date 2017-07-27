@@ -1,7 +1,8 @@
+const warpjsUtils = require('@warp-works/warpjs-utils');
+
 const addNewProperty = require('./add-new-property');
 const savePropertyFormValues = require('./save-property-form-values');
 const updateActiveProperty = require('./update-active-property');
-const utils = require('./../utils');
 const warpGlobals = require('./../warp-globals');
 
 module.exports = (argActivePropertyID) => {
@@ -19,7 +20,7 @@ module.exports = (argActivePropertyID) => {
     $("#propertiesNP").empty();
     if (sortedPropertyList.length > 0) {
         sortedPropertyList.forEach(function(property, i) {
-            var active = utils.compareIDs(property.id, activePropertyID) ? " class='active'" : "";
+            var active = warpjsUtils.compareIDs(property.id, activePropertyID) ? " class='active'" : "";
             var elem = $("<li" + active + "><a href='#' id='" + property.id + "' data-toggle='tab'>" + property.name + "</a></li>");
             $("#propertiesNP").append(elem).append(" ");
             elem.click(function(event) {

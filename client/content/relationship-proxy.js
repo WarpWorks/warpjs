@@ -1,4 +1,4 @@
-const utils = require('./../utils');
+const warpjsUtils = require('@warp-works/warpjs-utils');
 
 // TBD - replace with a proper solution
 function generateID() {
@@ -35,7 +35,7 @@ class RelationshipProxy {
         this._queryResults = [];
         this._queryResultsCount = -1;
 
-        utils.trace(2, "RelationshipProxy():\n-  New proxy for " + this.jsonReln.name);
+        warpjsUtils.trace(2, "RelationshipProxy():\n-  New proxy for " + this.jsonReln.name);
     }
 
     noOfResultsOnCurrentPage() {
@@ -252,7 +252,7 @@ class RelationshipProxy {
                     reln: this.type
                 });
 
-            utils.trace(1, "EntityProxy.addNewEmbeddedEntity", "Adding new embedded entity!");
+            warpjsUtils.trace(1, "EntityProxy.addNewEmbeddedEntity", "Adding new embedded entity!");
 
             callback(newEntity);
         }.bind(this));

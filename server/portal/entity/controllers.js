@@ -1,5 +1,6 @@
 const Persistence = require('@warp-works/warpjs-mongo-persistence');
 const Promise = require('bluebird');
+const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const config = require('./../config');
@@ -29,7 +30,7 @@ function entity(req, res) {
 
                             return Promise.resolve()
                                 .then(extractEntity.bind(null, req, responseResource, persistence, hsEntity, instance, isPreview))
-                                .then(warpjsUtils.sendHal.bind(null, req, res, responseResource, null));
+                                .then(warpjsUtils.sendHal.bind(null, req, res, responseResource, RoutesInfo, null));
                         });
                 })
                 .finally(() => {
@@ -52,7 +53,7 @@ function entity(req, res) {
                     const resource = warpjsUtils.createResource(req, {
                         message
                     });
-                    warpjsUtils.sendHal(req, res, resource, statusCode);
+                    warpjsUtils.sendHal(req, res, resource, RoutesInfo, statusCode);
                 });
         }
     });

@@ -1,4 +1,5 @@
-const utils = require('./../utils');
+const warpjsUtils = require('@warp-works/warpjs-utils');
+
 const WarpPanel = require('./panel');
 const WarpWidget = require('./widget');
 
@@ -59,7 +60,7 @@ class WarpPageView extends WarpWidget {
         // Load data for own Entity Proxy
         if (!this._entityProxy.data) {
             this._entityProxy.useData(function(entityProxy) {
-                utils.trace(1, "WarpPageView.initialize", "Loaded data for: " + this.getEntityProxy().displayName());
+                warpjsUtils.trace(1, "WarpPageView.initialize", "Loaded data for: " + this.getEntityProxy().displayName());
                 this.initialize(callback);
             }.bind(this));
         } else {
@@ -73,7 +74,7 @@ class WarpPageView extends WarpWidget {
             if (this._relnProxyIdx < this._relnProxies.length) {
                 this._relnProxies[this._relnProxyIdx++].useRelationship(function(relnProxy) {
                 // Don't need to do anything; just ensure the data is loaded
-                    utils.trace(1, "WarpPageView.initialize", "Loading relationship data for: " + this.getEntityProxy().displayName() + ', ' + relnProxy.name);
+                    warpjsUtils.trace(1, "WarpPageView.initialize", "Loading relationship data for: " + this.getEntityProxy().displayName() + ', ' + relnProxy.name);
                     this.initialize(callback);
                 }.bind(this));
             } else {
@@ -87,7 +88,7 @@ class WarpPageView extends WarpWidget {
                     var relnProxyForChildPV =
                     this.getEntityProxy().getRelationshipProxy(childPageView.parentRelationshipID);
                     if (relnProxyForChildPV.noOfResultsOnCurrentPage() === 0) {
-                        utils.trace(1, "WarpPageView.initialize():\n- No elements found in relationship '" + relnProxyForChildPV.name + "'");
+                        warpjsUtils.trace(1, "WarpPageView.initialize():\n- No elements found in relationship '" + relnProxyForChildPV.name + "'");
                         this.initialize(callback);
                     } else {
                         childPageView.setEntityProxy(relnProxyForChildPV.getProxyForSelectedEntity());
@@ -97,7 +98,7 @@ class WarpPageView extends WarpWidget {
                     }
                 } else {
                     // Done!
-                    utils.trace(1, "WarpPageView.initialize", "Final callback for: " + this.getEntityProxy().displayName());
+                    warpjsUtils.trace(1, "WarpPageView.initialize", "Final callback for: " + this.getEntityProxy().displayName());
                     callback();
                 }
             }

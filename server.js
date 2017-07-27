@@ -7,6 +7,7 @@
 const debug = require('debug')('W2:WarpJS');
 const express = require('express');
 const path = require('path');
+const Persistence = require('@warp-works/warpjs-mongo-persistence');
 
 const config = require('./server/config');
 
@@ -23,7 +24,7 @@ server.use(staticUrlPath, express.static(path.join(__dirname, 'public')));
 
 // --- BEGIN WARPJS ---
 const app = require('./server/app');
-server.use('/', app('/', staticUrlPath));
+server.use('/', app(Persistence, '/', staticUrlPath));
 // --- END WARPJS ---
 
 /**

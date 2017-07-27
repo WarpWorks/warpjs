@@ -25,8 +25,8 @@ module.exports = (req, res) => {
             utils.basicRender(`warpJSClient`, resource, req, res);
         },
 
-        [utils.HAL_CONTENT_TYPE]: () => {
-            utils.sendHal(req, res, resource);
+        [warpjsUtils.constants.HAL_CONTENT_TYPE]: () => {
+            warpjsUtils.sendHal(req, res, resource, RoutesInfo);
         }
     });
 };

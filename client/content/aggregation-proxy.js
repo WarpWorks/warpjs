@@ -1,5 +1,6 @@
+const warpjsUtils = require('@warp-works/warpjs-utils');
+
 const RelationshipProxy = require('./relationship-proxy');
-const utils = require('./../utils');
 
 class AggregationProxy extends RelationshipProxy {
     // constructor(jsonReln, parentEntityProxy) {
@@ -8,7 +9,7 @@ class AggregationProxy extends RelationshipProxy {
 
     useRelationship(callback) {
         if (!this.requiresUpdate) {
-            utils.trace(2, "AggregationProxy.useRelationship", "Re-using data for " + this.jsonReln.name);
+            warpjsUtils.trace(2, "AggregationProxy.useRelationship", "Re-using data for " + this.jsonReln.name);
             callback(this);
             return;
         }
@@ -16,7 +17,7 @@ class AggregationProxy extends RelationshipProxy {
         var parentEntity = this.getParentEntity();
 
         if (parentEntity.mode === "addNewEntity") {
-            utils.trace(2, "AggregationProxy.useRelationship", "Creating empty aggregation for new parent entity" + this.jsonReln.name);
+            warpjsUtils.trace(2, "AggregationProxy.useRelationship", "Creating empty aggregation for new parent entity" + this.jsonReln.name);
             this._queryResultsCount = 0;
             this.selectedEntityIdx = -1;
             this.requiresUpdate = false;
@@ -24,7 +25,7 @@ class AggregationProxy extends RelationshipProxy {
             return;
         }
 
-        utils.trace(2, "AggregationProxy.useRelationship", "Loading Relationship data for " + this.jsonReln.name);
+        warpjsUtils.trace(2, "AggregationProxy.useRelationship", "Loading Relationship data for " + this.jsonReln.name);
 
         if (this.targetIsDocument) {
             var command = {
@@ -62,14 +63,14 @@ class AggregationProxy extends RelationshipProxy {
                             }.bind(this));
                             this.requiresUpdate = false;
                             this.ensureSelectedEntityIdxIsValid();
-                            utils.trace(1, "AggregationProxy.useRelationship", "Document: AggregationQuery for " + result.resultList[0].parentRelnName + " (found:" + this.noOfTotalQueryResults() + ")");
+                            warpjsUtils.trace(1, "AggregationProxy.useRelationship", "Document: AggregationQuery for " + result.resultList[0].parentRelnName + " (found:" + this.noOfTotalQueryResults() + ")");
                             callback(this);
                         } else {
-                            utils.trace(1, "AggregationProxy.useRelationship():\n-  Warning - could not execute AggregationQuery");
+                            warpjsUtils.trace(1, "AggregationProxy.useRelationship():\n-  Warning - could not execute AggregationQuery");
                         }
                     }.bind(this));
                 } else {
-                    utils.trace(1, "AggregationProxy.useRelationship():\n-  Warning - can not use relationship - parentEntity not found!");
+                    warpjsUtils.trace(1, "AggregationProxy.useRelationship():\n-  Warning - can not use relationship - parentEntity not found!");
                 }
             }.bind(this));
         } else {
@@ -106,7 +107,7 @@ class AggregationProxy extends RelationshipProxy {
                     this.selectedEntityIdx = -1;
                 }
                 // var desc = entity.path ? entity.path : entity.displayName();
-                utils.trace(1, "AggregationProxy.useRelationship", "Embedded Entity: AggregationQuery for " + this.jsonReln.name + " (found:" + this.noOfTotalQueryResults() + ")");
+                warpjsUtils.trace(1, "AggregationProxy.useRelationship", "Embedded Entity: AggregationQuery for " + this.jsonReln.name + " (found:" + this.noOfTotalQueryResults() + ")");
                 callback(this);
             }.bind(this));
         }

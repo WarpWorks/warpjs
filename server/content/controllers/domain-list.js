@@ -26,7 +26,7 @@ module.exports = (req, res) => {
 
         [warpjsUtils.constants.HAL_CONTENT_TYPE]: () => {
             const resource = common(req, res);
-            warpjsUtils.sendHal(req, res, resource);
+            warpjsUtils.sendHal(req, res, resource, RoutesInfo);
         }
     });
 };

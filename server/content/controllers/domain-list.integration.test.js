@@ -1,18 +1,23 @@
 const testHelpers = require('@quoin/node-test-helpers');
+const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const RoutesInfo = require('@quoin/expressjs-routes-info');
-const testUtilsHelpers = require('./../utils.helpers.test');
-const utils = require('./../utils');
+const testUtilsHelpers = require('./../../utils.helpers.test');
 
 const expect = testHelpers.expect;
 
-describe("lib/controllers/domain-list", () => {
+describe("server/content/controllers/domain-list", () => {
     describe('home', () => {
-        const url = RoutesInfo.expand('w2-app:home');
+        let app;
+        let url;
+
+        beforeEach(() => {
+            app = testUtilsHelpers.requestApp();
+            url = RoutesInfo.expand('w2-app:home');
+        });
 
         it("should not accept unknown type", () => {
-            return testUtilsHelpers.requestApp()
-                .get(url)
+            return app.get(url)
                 .set('Accept', 'unknown')
                 .then(() => {
                     throw new Error("Should have failed");
@@ -23,8 +28,7 @@ describe("lib/controllers/domain-list", () => {
         });
 
         it("should accept html GET", () => {
-            return testUtilsHelpers.requestApp()
-                .get(url)
+            return app.get(url)
                 .set('Accept', 'text/html')
                 .then((result) => {
                     expect(result.statusCode).to.equal(200);
@@ -32,9 +36,8 @@ describe("lib/controllers/domain-list", () => {
         });
 
         it("should accept HAL GET", () => {
-            return testUtilsHelpers.requestApp()
-                .get(url)
-                .set('Accept', utils.HAL_CONTENT_TYPE)
+            return app.get(url)
+                .set('Accept', warpjsUtils.constants.HAL_CONTENT_TYPE)
                 .then((result) => {
                     const body = result.body;
                     expect(result.statusCode).to.equal(200);

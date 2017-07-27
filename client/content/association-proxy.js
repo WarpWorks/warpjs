@@ -1,6 +1,7 @@
+const warpjsUtils = require('@warp-works/warpjs-utils');
+
 const AssociationTargetsProxy = require('./association-targets-proxy');
 const RelationshipProxy = require('./relationship-proxy');
-const utils = require('./../utils');
 
 class AssociationProxy extends RelationshipProxy {
     constructor(jsonReln, parentEntityProxy) {
@@ -50,10 +51,10 @@ class AssociationProxy extends RelationshipProxy {
         try {
             this.getAssocDataByTargetID(id);
             // Should not work:
-            utils.trace(1, "AssociationProxy.addToAssocTargets", "Warning: Can not add same target again (id:" + id + ")");
+            warpjsUtils.trace(1, "AssociationProxy.addToAssocTargets", "Warning: Can not add same target again (id:" + id + ")");
             return;
         } catch (err) {
-            utils.trace(3, "AssociationProxy.addToAssocTargets", "Adding target (id:" + id + ")");
+            warpjsUtils.trace(3, "AssociationProxy.addToAssocTargets", "Adding target (id:" + id + ")");
         }
 
         var assocs = this.getAssocs();

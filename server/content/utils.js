@@ -1,4 +1,3 @@
-const {constants} = require('@warp-works/warpjs-utils');
 const debug = require('debug')('W2:WarpJS:utils');
 const hal = require('hal');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
@@ -27,18 +26,7 @@ function basicRender(name, data, req, res) {
     res.render(name, resource.toJSON());
 }
 
-function sendHal(req, res, resource, status) {
-    // This `req.warpjsUser` is set in `lib/middlewares.js`.
-    resource.warpjsUser = req.warpjsUser || null;
-
-    res.status(status || 200)
-        .header('Content-Type', constants.HAL_CONTENT_TYPE)
-        .json(resource);
-}
-
 module.exports = {
     basicRender,
-    createResourceFromDocument,
-    HAL_CONTENT_TYPE: constants.HAL_CONTENT_TYPE,
-    sendHal
+    createResourceFromDocument
 };

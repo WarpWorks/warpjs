@@ -1,4 +1,5 @@
-const utils = require('./../utils');
+const warpjsUtils = require('@warp-works/warpjs-utils');
+
 const WarpRelationshipPanelItem = require('./relationship-panel-item');
 
 class RpiCarousel extends WarpRelationshipPanelItem {
@@ -149,7 +150,7 @@ class RpiCarousel extends WarpRelationshipPanelItem {
                         option.prop('value', idx);
                         select.append(option);
                     } else {
-                        utils.trace(2, "RpiCarousel.updateViewWithDataFromModel():\n-  Warning - can't access query result!");
+                        warpjsUtils.trace(2, "RpiCarousel.updateViewWithDataFromModel():\n-  Warning - can't access query result!");
                     }
                 });
                 if (relnProxy.targetIsDocument) {
@@ -168,7 +169,7 @@ class RpiCarousel extends WarpRelationshipPanelItem {
         if (this.childPageView) {
             this.childPageView.updateModelWithDataFromView(callback);
         } else {
-            utils.trace(1, "RpiCarousel.left():\n-  Warning - RelationshipPanelItem without PageView! (ID:" + this.globalID() + ")");
+            warpjsUtils.trace(1, "RpiCarousel.left():\n-  Warning - RelationshipPanelItem without PageView! (ID:" + this.globalID() + ")");
             callback();
         }
     }
@@ -208,9 +209,9 @@ class RpiCarousel extends WarpRelationshipPanelItem {
                         parentElem.empty();
                         this.createViews(parentElem, function() {
                             this.getParent().updateViewWithDataFromModel(function() {
-                                utils.trace(2, "--------------- Updated View Hierarchy ---------------");
-                                utils.trace(2, $warp.pageView.toString());
-                                utils.trace(2, "--------------- ---------------------- ---------------");
+                                warpjsUtils.trace(2, "--------------- Updated View Hierarchy ---------------");
+                                warpjsUtils.trace(2, $warp.pageView.toString());
+                                warpjsUtils.trace(2, "--------------- ---------------------- ---------------");
                             });
                         }.bind(this));
                     }.bind(this));
@@ -220,23 +221,23 @@ class RpiCarousel extends WarpRelationshipPanelItem {
     }
 
     select(e) {
-        utils.trace(1, "RpiCarousel.select():\n-  New selection for " + this.globalID());
+        warpjsUtils.trace(1, "RpiCarousel.select():\n-  New selection for " + this.globalID());
         var idx = parseInt(e.target.value);
         this.selectEntityAndUpdate(idx);
     }
 
     left() {
-        utils.trace(1, "RpiCarousel.left():\n-  Left-Click for " + this.globalID());
+        warpjsUtils.trace(1, "RpiCarousel.left():\n-  Left-Click for " + this.globalID());
         this.selectEntityAndUpdate("-1");
     }
 
     right() {
-        utils.trace(1, "RpiCarousel.right():\n-  Right-Click for " + this.globalID());
+        warpjsUtils.trace(1, "RpiCarousel.right():\n-  Right-Click for " + this.globalID());
         this.selectEntityAndUpdate("+1");
     }
 
     add() {
-        utils.trace(1, "RpiCarousel.add():\n-  (+)-Click for " + this.globalID());
+        warpjsUtils.trace(1, "RpiCarousel.add():\n-  (+)-Click for " + this.globalID());
         var pv = this.getPageView();
         var ep = pv.getEntityProxy();
         if (this.relnDetails.targetJson.entityType === "Document") {
@@ -252,7 +253,7 @@ class RpiCarousel extends WarpRelationshipPanelItem {
     }
 
     del() {
-        utils.trace(1, "RpiCarousel.del():\n-  (-)-Click for " + this.globalID());
+        warpjsUtils.trace(1, "RpiCarousel.del():\n-  (-)-Click for " + this.globalID());
     }
 }
 

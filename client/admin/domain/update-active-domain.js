@@ -1,6 +1,7 @@
+const warpjsUtils = require('@warp-works/warpjs-utils');
+
 const updateActiveEntity = require('./update-active-entity');
 const updateMyNavBar = require('./update-my-nav-bar');
-const utils = require('./../utils');
 const warpGlobals = require('./../warp-globals');
 
 module.exports = (activeEntityArg) => {
@@ -28,7 +29,7 @@ module.exports = (activeEntityArg) => {
         sortedEntityList.forEach(function(entity, i) {
             var active = "";
             if (activeEntity) {
-                active = utils.compareIDs(entity.id, activeEntity) ? "class='active'" : "";
+                active = warpjsUtils.compareIDs(entity.id, activeEntity) ? "class='active'" : "";
             }
 
             var name = entity.name.substring(0, 15);

@@ -1,7 +1,8 @@
+const warpjsUtils = require('@warp-works/warpjs-utils');
+
 const addNewAssociation = require('./add-new-association');
 const saveAssociationFormValues = require('./save-association-form-values');
 const updateActiveAssociation = require('./update-active-association');
-const utils = require('./../utils');
 const warpGlobals = require('./../warp-globals');
 
 module.exports = (argActiveAssociationID) => {
@@ -17,7 +18,7 @@ module.exports = (argActiveAssociationID) => {
     $("#associationNP").empty();
     if (assocs.length > 0) {
         assocs.forEach(function(association, i) {
-            var active = utils.compareIDs(association.id, activeAssociationID) ? " class='active'" : "";
+            var active = warpjsUtils.compareIDs(association.id, activeAssociationID) ? " class='active'" : "";
             var elem = $("<li" + active + "><a href='#' id='" + association.id + "'data-toggle='tab'>" + association.name + "</a></li>");
             $("#associationNP").append(elem).append(" ");
             elem.click(function(event) {

@@ -8,12 +8,14 @@
     </div>
 
     <div class="map-browser-header col-xs-5">
-        {{#if user}}
+{{#if user}}
             Hi {{user.Name}}
-            <a href="{{_links.i3c_logout.href}}"><span title="Log out" class="glyphicon glyphicon-log-out" /></a>
+            <a href="{{_links.sessionLogout.href}}"><span title="Log out" class="glyphicon glyphicon-log-out" /></a>
             &nbsp;&nbsp;&nbsp;
-        {{/if}}
+{{/if}}
+{{#if _links.mapBrowser}}
         <a href="{{_links.mapBrowser.href}}"><img align="right" title="{{_links.mapBrowserImage.title}}" src="{{_links.mapBrowserImage.href}}" /></a>
+{{/if}}
     </div>
 
     <div class="col-xs-1 left-right-margin" />

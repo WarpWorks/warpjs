@@ -1,8 +1,9 @@
+const warpjsUtils = require('@warp-works/warpjs-utils');
+
 const EntityProxy = require('./entity-proxy');
 const WarpBreadcrumb = require('./breadcrumb');
 const WarpModelParser = require('./model-parser');
 const WarpPageView = require('./page-view');
-const utils = require('./../utils');
 const WarpWidget = require('./widget');
 
 function getDomainFromURL() {
@@ -49,7 +50,7 @@ class WarpJSClient extends WarpWidget {
         var res = null;
         this.entityCache.forEach((entityProxy) => {
             if (entityProxy.data && entityProxy.data._id === id) {
-                utils.trace(1, "WarpJSClient.entityCacheGetEntityByID", "Found entity in cache: " + id);
+                warpjsUtils.trace(1, "WarpJSClient.entityCacheGetEntityByID", "Found entity in cache: " + id);
                 res = entityProxy;
             }
         });
@@ -194,35 +195,35 @@ class WarpJSClient extends WarpWidget {
     }
 
     save(ignoreReloadForNewEntities) {
-        utils.trace(1, "--------------- View Hierarchy ---------------");
-        utils.trace(1, this.pageView.toString());
-        utils.trace(1, "--------------- -------------- ---------------");
+        warpjsUtils.trace(1, "--------------- View Hierarchy ---------------");
+        warpjsUtils.trace(1, this.pageView.toString());
+        warpjsUtils.trace(1, "--------------- -------------- ---------------");
 
         this.pageView.updateModelWithDataFromView(() => {
-            utils.trace(1, "--------------- View Hierarchy ---------------");
-            utils.trace(1, this.pageView.toString());
-            utils.trace(1, "--------------- -------------- ---------------");
+            warpjsUtils.trace(1, "--------------- View Hierarchy ---------------");
+            warpjsUtils.trace(1, this.pageView.toString());
+            warpjsUtils.trace(1, "--------------- -------------- ---------------");
 
-            utils.trace(1, ">>> WarpJSClient.save()");
+            warpjsUtils.trace(1, ">>> WarpJSClient.save()");
             this.entityCache.forEach((entityProxy) => {
                 if (entityProxy.isDirty) {
                     if (!entityProxy.data) {
                         throw new Error("Can not save 'dirty' entity without data!");
                     }
                     if (entityProxy.isDocument) {
-                        utils.trace(
+                        warpjsUtils.trace(
                             1, "* Document\n    - Name: " + entityProxy.displayName() + "\n    - isDirty: " + entityProxy.isDirty +
                         "\n    - Changes: " + entityProxy.historyToString());
-                        utils.trace(1, "JSON:");
+                        warpjsUtils.trace(1, "JSON:");
                         var jsonData = JSON.stringify(entityProxy.data, null, 2);
-                        utils.trace(1, jsonData);
+                        warpjsUtils.trace(1, jsonData);
                     } else {
-                        utils.trace(1, "* Embedded Entity\n    - Child of:" + entityProxy.getDocumentProxy().displayName() + "\n    - Name: " + entityProxy.displayName() + "\n    - isDirty: " + entityProxy.isDirty);
-                        utils.trace(1, "- Changes: " + entityProxy.historyToString());
+                        warpjsUtils.trace(1, "* Embedded Entity\n    - Child of:" + entityProxy.getDocumentProxy().displayName() + "\n    - Name: " + entityProxy.displayName() + "\n    - isDirty: " + entityProxy.isDirty);
+                        warpjsUtils.trace(1, "- Changes: " + entityProxy.historyToString());
                     }
                 }
             });
-            utils.trace(1, "<<< WarpJSClient.save()");
+            warpjsUtils.trace(1, "<<< WarpJSClient.save()");
 
             this.entityCache.forEach(function(entityProxy) {
                 try {
@@ -304,9 +305,9 @@ class WarpJSClient extends WarpWidget {
 
                 // And finally: populate the views...
                 this.updateViewWithDataFromModel(() => {
-                    utils.trace(1, "--------------- View Hierarchy ---------------");
-                    utils.trace(1, this.pageView.toString());
-                    utils.trace(1, "--------------- -------------- ---------------");
+                    warpjsUtils.trace(1, "--------------- View Hierarchy ---------------");
+                    warpjsUtils.trace(1, this.pageView.toString());
+                    warpjsUtils.trace(1, "--------------- -------------- ---------------");
 
                     this.progressBarOn(100);
                     this.progressBarOff();
@@ -334,11 +335,11 @@ class WarpJSClient extends WarpWidget {
                 if (result.success) {
                     handleResult(result);
                 } else {
-                    utils.trace(1, "WarpJSClient.processCRUDcommands():\n-  Failed to post CRUD commands - " + result.error);
+                    warpjsUtils.trace(1, "WarpJSClient.processCRUDcommands():\n-  Failed to post CRUD commands - " + result.error);
                 }
             },
             error: () => {
-                utils.trace(1, "WarpJSClient.processCRUDcommands():\n-  Error while posting CRUD commands!");
+                warpjsUtils.trace(1, "WarpJSClient.processCRUDcommands():\n-  Error while posting CRUD commands!");
             }
         });
     }
