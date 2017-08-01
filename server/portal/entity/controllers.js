@@ -1,4 +1,3 @@
-const Persistence = require('@warp-works/warpjs-mongo-persistence');
 const Promise = require('bluebird');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
@@ -12,6 +11,7 @@ function entity(req, res) {
         html: () => warpjsUtils.sendIndex(res, 'Entity', 'portal'),
 
         [warpjsUtils.constants.HAL_CONTENT_TYPE]: () => {
+            const Persistence = require(config.persistence.module);
             const persistence = new Persistence(config.persistence.host, config.domainName);
 
             Promise.resolve()

@@ -1,6 +1,5 @@
 const _ = require('lodash');
 const testHelpers = require('@quoin/node-test-helpers');
-const Persistence = require('@warp-works/warpjs-mongo-persistence'); // FIXME: Create a mock-persistence
 
 const app = require('./app');
 
@@ -21,6 +20,7 @@ function verifyHal(expect, data) {
 
 function requestApp() {
     require('@quoin/expressjs-routes-info/lib/cache').reset();
+    const Persistence = require('@warp-works/warpjs-mongo-persistence'); // FIXME: Create a mock-persistence
     return testHelpers.request(app(Persistence, '/test', '/static-test'));
 }
 

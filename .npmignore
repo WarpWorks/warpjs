@@ -1,11 +1,14 @@
-/.eslintrc*
+/.*rc
 /.npmignore
 /.nyc*
 /.warp-works-warpjsrc*
+/*.tgz
+/client
+/grunt
+/Gruntfile.js
 /lib/**/*.test.js
 /public/app/*_WebAPI.js
 /reports
 /server.js
 /views/app*.hbs
 /views/portal*.hbs
-/*.tgz

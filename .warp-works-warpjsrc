@@ -1,6 +1,8 @@
 {
   "port": 8080,
+  "domainName": "IIC",
   "persistence": {
+    "module": "@warp-works/warpjs-mongo-persistence",
     "host": "localhost",
     "name": "IIC"
   },
@@ -9,11 +11,12 @@
   "folders": {
     "w2projects": "../w2projects"
   },
+  "cookieSecret": "ThisC00k1eISsw33t",
+  "auth-plugin": "@warp-works/warpjs-session-plugin",
   "plugins": [{
     "name": "@warp-works/warpjs-map-plugin",
     "path": "/map",
     "config": {
-      "domainName": "IIC",
       "mapMarkerType": "UseCase",
       "mapTypes": [
         "IndustrySector",
@@ -26,6 +29,21 @@
         "sm": 4,
         "md": 5,
         "lg": 5
+      }
+    }
+  }, {
+    "name": "@warp-works/warpjs-session-plugin",
+    "path": "/session",
+    "config": {
+      "jwtSecret": "cannotGuessThi$",
+      "jwtCookieName": "w2jwt",
+      "roles": {
+        "admin": "admin",
+        "content": "content"
+      },
+      "admin": {
+        "username": "admin",
+        "password": "$2a$10$5/b3MizUy3CEkjzLNIqrB.kS2p6ZeiMvlZPQ82/ZE1W/exiesMvCa"
       }
     }
   }]

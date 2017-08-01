@@ -14,7 +14,7 @@ const template = require("./../templates/index.hbs");
                     document.title = result.data.Name;
                 }
 
-                $('#i3c-portal-placeholder').html(content);
+                $('#warpjs-content-placeholder').html(content);
 
                 const hoverPreview = new HoverPreview();
 
