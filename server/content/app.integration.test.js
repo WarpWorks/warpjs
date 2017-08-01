@@ -5,7 +5,7 @@ const testUtilsHelpers = require('./../utils.helpers.test');
 
 const expect = testHelpers.expect;
 
-describe("lib/app", () => {
+describe.skip("server/content/app", () => {
     let app;
 
     beforeEach(() => {

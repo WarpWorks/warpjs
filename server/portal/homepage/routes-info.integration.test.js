@@ -5,7 +5,7 @@ const specUtils = require('./../../utils.helpers.test');
 
 const expect = testHelpers.expect;
 
-describe(`PATH homepage --`, () => {
+describe.skip(`PATH homepage --`, () => {
     describe(`GET homepage --`, () => {
         it("should not recognize unknown Accept", () => {
             return specUtils.requestApp()
