@@ -21,7 +21,7 @@ function findOneCB(done, domain, db, collection, id, currentCommand, error, resu
                 msg = mongoError;
             } else if (mongoResult) {
                 const resource = warpjsUtils.createResource(
-                    RoutesInfo.expand('w2-app:app', {
+                    RoutesInfo.expand('W2:content:app', {
                         domain,
                         type: mongoResult.type || mongoResult.domainName,
                         oid: mongoResult._id.toString()

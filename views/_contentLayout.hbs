@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{title}}</title>
+    <title>WarpJS - {{title}}</title>
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
@@ -11,10 +11,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <!-- Bootstrap core CSS -->
-    <link href="{{baseUrl}}/libs/bootstrap/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap theme -->
-    <link href="{{baseUrl}}/libs/bootstrap/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="{{baseUrl}}/3rd-party/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{baseUrl}}/3rd-party/css/bootstrap-theme.min.css" rel="stylesheet">
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <link href="{{baseUrl}}/libs/bootstrap/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
@@ -22,35 +20,15 @@
     <link href="{{baseUrl}}/libs/bootstrap/theme.css" rel="stylesheet">
 
     <!-- HeadStart specific styles -->
-    <link href="{{baseUrl}}/stylesheets/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{baseUrl}}/app/warpjs-content.min.css" />
+
+    <link rel="shortcut icon" href="{{baseUrl}}/favicon.ico" />
+    <link rel="icon" href="{{baseUrl}}/favicon.ico" />
 </head>
 
 <body>
 
-<!--
-    Modal for editing content using a tinymce
--->
-<div class="container">
-    <div class="modal fade" id="content-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Content Editor</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>Modal body text goes here.</p>
-                </div>
-                <div class="modal-footer">
-                    <button id="content-editor-save" type="button" class="btn btn-primary">Save changes</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+    {{> text_editor}}
 
 <!--
     Modal for creating links to entities to put in content text
@@ -188,9 +166,8 @@
 
 <!-- Bootstrap core JavaScript -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="{{baseUrl}}/libs/bootstrap/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="{{baseUrl}}/assets/js/vendor/jquery.min.js"><\/script>')</script>
-<script src="{{baseUrl}}/libs/bootstrap/bootstrap.min.js"></script>
+<script src="{{baseUrl}}/3rd-party/js/jquery.min.js"></script>
+<script src="{{baseUrl}}/3rd-party/js/bootstrap.min.js"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="{{baseUrl}}/libs/bootstrap/ie10-viewport-bug-workaround.js"></script>
 <script src="{{baseUrl}}/assets/tinymce.min.js"></script>

@@ -30,7 +30,7 @@
         saveHandler("IIC");
         });
 
-        // Handler for Nav elements from _appLayout.hbs
+        // Handler for Nav elements from _contentLayout.hbs
         $(document).ready(function () {
         $("#NavButtonSaveA").on("click", saveHandler);
         $("#NavButtonDeleteA").on("click", deleteHandler);

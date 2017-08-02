@@ -13,7 +13,7 @@ describe.skip("server/content/app", () => {
     });
 
     it("should start", () => {
-        const url = RoutesInfo.expand('w2-app:home');
+        const url = RoutesInfo.expand('W2:content:home');
         return app.get(url)
             .then((result) => {
                 expect(result.headers['content-type']).to.match(/text\/html/);

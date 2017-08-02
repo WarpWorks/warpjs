@@ -13,7 +13,7 @@ describe.skip("server/content/controllers/domain-list", () => {
 
         beforeEach(() => {
             app = testUtilsHelpers.requestApp();
-            url = RoutesInfo.expand('w2-app:home');
+            url = RoutesInfo.expand('W2:content:home');
         });
 
         it("should not accept unknown type", () => {

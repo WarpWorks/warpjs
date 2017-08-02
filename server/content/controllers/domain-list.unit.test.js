@@ -12,8 +12,8 @@ describe("lib/controllers/domain-list", () => {
 
         // Because it's needed by the utils basicRender()
         const routesInfo = new RoutesInfo('/foo', '/bar');
-        routesInfo.route('w2-app:app', '/');
-        routesInfo.route('w2-app:home', '/home');
+        routesInfo.route('W2:content:app', '/');
+        routesInfo.route('W2:content:home', '/home');
     });
 
     afterEach(() => {
@@ -43,7 +43,7 @@ describe("lib/controllers/domain-list", () => {
             originalUrl: '/foo/',
             app: {
                 get(key) {
-                    if (key === 'w2-app:baseUrl') {
+                    if (key === 'W2:content:baseUrl') {
                         return '/bar';
                     }
                 }

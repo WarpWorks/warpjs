@@ -14,7 +14,7 @@ describe.skip("lib/controllers/domain", () => {
     });
 
     it("should return error when unknown", () => {
-        const url = RoutesInfo.expand('w2-app:domain', { domain: 'FOO-BAR' });
+        const url = RoutesInfo.expand('W2:content:domain', { domain: 'FOO-BAR' });
         return app.get(url)
             .set('Accept', warpjsUtils.constants.HAL_CONTENT_TYPE)
             .then(

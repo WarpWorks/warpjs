@@ -5,22 +5,22 @@ const controllers = require('./controllers');
 module.exports = (baseUrl) => {
     const routesInfo = new RoutesInfo('/', baseUrl);
 
-    routesInfo.route('w2-app:home', '/')
+    routesInfo.route('W2:content:home', '/')
         .get(controllers.domainList);
 
-    routesInfo.route('w2-app:domain', '/{domain}')
+    routesInfo.route('W2:content:domain', '/{domain}')
         .get(controllers.domain);
 
-    routesInfo.route('w2-app:schema-domain', '/schema/{domain}')
+    routesInfo.route('W2:content:schema-domain', '/schema/{domain}')
         .get(controllers.schema.domain);
 
-    routesInfo.route('w2-app:schema-type', '/schema/{domain}/{type}')
+    routesInfo.route('W2:content:schema-type', '/schema/{domain}/{type}')
         .get(controllers.schema.type);
 
-    routesInfo.route('w2-app:app', '/{domain}/{type}{?oid}')
+    routesInfo.route('W2:content:app', '/{domain}/{type}{?oid}')
         .get(controllers.app);
 
-    routesInfo.route('w2-app:crud', '/api/CRUD')
+    routesInfo.route('W2:content:crud', '/api/CRUD')
         .post(controllers.crud);
 
     return routesInfo;

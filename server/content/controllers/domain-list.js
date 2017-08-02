@@ -7,11 +7,11 @@ const warpCore = require('./../../../lib/core');
 function common(req, res) {
     const resource = warpjsUtils.createResource(req, {
         title: "WarpJS domain list",
-        layout: '_appLayout'
+        layout: '_contentLayout'
     });
 
     warpCore.domainFiles().forEach((domain) => {
-        resource.embed('domain', warpjsUtils.createResource(RoutesInfo.expand('w2-app:app', {domain: domain.name, type: domain.name}), domain));
+        resource.embed('domain', warpjsUtils.createResource(RoutesInfo.expand('W2:content:app', {domain: domain.name, type: domain.name}), domain));
     });
 
     return resource;

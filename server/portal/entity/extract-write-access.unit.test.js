@@ -53,7 +53,7 @@ describe("server/portal/entity/extract-write-access", () => {
                     expect(resource._links).to.have.property('edit');
                     expect(resource._links.edit.toJSON()).to.deep.equal({
                         rel: 'edit',
-                        href: RoutesInfo.expand('w2-app:app', {
+                        href: RoutesInfo.expand('W2:content:app', {
                             domain: config.domainName,
                             type: instance.type,
                             oid: instance.id
