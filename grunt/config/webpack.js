@@ -10,6 +10,7 @@ module.exports = {
         entry: {
             'admin-domain': './client/admin/domain/index.js',
             'content': './client/content/index.js',
+            'domain-list': './client/content/domain-list/index.js',
             'portal': './client/portal/entity/lib/index.js'
         },
         node: {

@@ -49,5 +49,16 @@ module.exports = {
                 'node_modules/font-awesome/fonts/*'
             ]
         }]
+    },
+
+    'tinymce': {
+        files: [{
+            expand: true,
+            dest: 'public/3rd-party/js',
+            flatten: true,
+            src: [
+                'node_modules/tinymce/tinymce*'
+            ]
+        }]
     }
 };

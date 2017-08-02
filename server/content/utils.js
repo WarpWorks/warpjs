@@ -15,16 +15,15 @@ function createResourceFromDocument(instance) {
     return createResource(RoutesInfo.expand('W2:content:app', data), instance);
 }
 
-function basicRender(name, data, req, res) {
+function basicRender(bundles, data, req, res) {
     const resource = (data instanceof hal.Resource) ? data : createResource(req, data);
-    resource.baseUrl = req.app.get('W2:content:baseUrl');
-    resource.staticUrl = req.app.get('W2:content:baseUrl');
+    resource.baseUrl = req.app.get('base-url');
+    resource.staticUrl = req.app.get('static-url');
 
-    resource.link('w2WarpJSHome', RoutesInfo.expand('W2:content:home'));
-    resource.link('w2WarpJSDomain', RoutesInfo.expand('W2:content:app', data));
+    resource.bundles = bundles;
 
     // debug("resource=", JSON.stringify(resource, null, 2));
-    res.render(name, resource.toJSON());
+    res.render('content', resource.toJSON());
 }
 
 module.exports = {
