@@ -12,6 +12,7 @@ module.exports = {
             'content': './client/content/index.js',
             'domains': './client/content/domains/index.js',
             'domain-types': './client/content/domain-types/index.js',
+            'entities': './client/content/entities/index.js',
             'portal': './client/portal/entity/lib/index.js'
         },
         node: {

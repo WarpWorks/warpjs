@@ -13,7 +13,10 @@
 {{#if _links.w2WarpJSDomain}}
             <li id="monAppHome"><a href="{{_links.w2WarpJSDomain.href}}"><span class="glyphicon glyphicon-home"></span></a></li>
 {{/if}}
-            <li><a href="{{baseUrl}}/"><span class="glyphicon glyphicon-search"></span></a></li>
+
+{{#if _links.w2WarpjsSearch}}
+            <li><a href="{{_links.w2WarpjsSearch.href}}"><span class="glyphicon glyphicon-search"></span></a></li>
+{{/if}}
         </ul>
         <ul class="nav navbar-nav navbar-right">
 {{#if _links.preview.href}}

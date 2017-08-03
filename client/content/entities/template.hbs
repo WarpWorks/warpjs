@@ -2,14 +2,16 @@
   <div class="container" role="main">
     <div class="row">
       <div class="col-xs-12">
-          Available entity types for
+          Available entities for
           <a href="{{_links.domain.href}}">{{_links.domain.title}}</a>
+          /
+          {{_links.type.title}}
           :
-        <ol class="domain-types">
+        <ol class="entities">
 {{#each _embedded.entities}}
           <li>
-              <a href="{{_links.self.href}}">{{type}}</a>
-              {{#if isDefault}}<span title="Default Entity Type">*</span>{{/if}}
+              <a href="{{_links.self.href}}">{{name}}</a>
+              {{#if isRootInstance}}[isRootInstance]{{/if}}
           </li>
 {{/each}}
         </ol>
@@ -19,3 +21,4 @@
 {{/partial}}
 
 {{> ../templates/page}}
+

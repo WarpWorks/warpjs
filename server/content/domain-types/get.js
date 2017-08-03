@@ -16,15 +16,14 @@ function entityMap(domain, entity) {
         isDefault: entity.isRootInstance || undefined
     };
 
-    const entityUrl = RoutesInfo.expand('W2:content:app', entityData);
-    const resource = warpjsUtils.createResource(entityUrl, entityData);
-    return resource;
+    const entityUrl = RoutesInfo.expand('W2:content:entities', entityData);
+    return warpjsUtils.createResource(entityUrl, entityData);
 }
 
 module.exports = (req, res) => {
-    const domainName = req.params.domain;
+    const domain = req.params.domain;
     const resource = warpjsUtils.createResource(req, {
-        title: `Domain ${domainName} - Types`
+        title: `Domain ${domain} - Types`
     });
     resource.link('w2WarpJSHome', RoutesInfo.expand('W2:content:home'));
 
@@ -42,10 +41,22 @@ module.exports = (req, res) => {
         },
 
         [warpjsUtils.constants.HAL_CONTENT_TYPE]: () => {
-            const domain = warpCore.getDomainByName(domainName);
-            const entities = domain.getEntities()
+            const schema = warpCore.getDomainByName(domain);
+            const entities = schema.getEntities()
                 .filter(nonAbstractOnly)
-                .map(entityMap.bind(null, domainName));
+                .map(entityMap.bind(null, domain));
+
+            resource.link('w2WarpJSHome', RoutesInfo.expand('W2:content:home'));
+            resource.link('w2WarpJSDomain', RoutesInfo.expand('W2:content:domain', {
+                domain
+            }));
+
+            resource.link('domain', {
+                title: domain,
+                href: RoutesInfo.expand('W2:content:domain', {
+                    domain
+                })
+            });
 
             resource.embed('entities', entities);
             warpjsUtils.sendHal(req, res, resource, RoutesInfo);
