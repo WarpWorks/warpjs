@@ -40,8 +40,6 @@ module.exports = (baseUrl, staticUrlPath) => {
     app.use(cookieParser());
 
     // Public/static
-    app.use(express.static(path.join(ROOT_DIR, 'public')));
-    app.use('/assets', express.static(path.dirname(require.resolve('tinymce/tinymce.min.js'))));
     app.use('/domain-assets', express.static(path.join(config.projectPath, 'domains')));
     app.use(express.static(config.public));
 

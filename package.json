@@ -41,7 +41,6 @@
     "lint": "grunt eslint"
   },
   "dependencies": {
-    "@quoin/expressjs-routes-info": "0.1.7",
     "@quoin/node-rc": "0.1.1",
     "bluebird": "3.5.0",
     "debug": "2.6.8",
@@ -56,6 +55,7 @@
   },
   "devDependencies": {
     "@quoin/eslint-config-quoin": "latest",
+    "@quoin/expressjs-routes-info": "latest",
     "@quoin/node-test-helpers": "latest",
     "@warp-works/warpjs-map-plugin": "latest",
     "@warp-works/warpjs-mongo-persistence": "latest",
@@ -94,6 +94,7 @@
     "webpack": "2.7.0"
   },
   "peerDependencies": {
+    "@quoin/expressjs-routes-info": ">=0.1.8",
     "@warp-works/warpjs-utils": ">=0.1.12",
     "body-parser": ">=1.17.0",
     "cookie-parser": ">=1.4.0",

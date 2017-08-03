@@ -6,7 +6,7 @@ const testUtilsHelpers = require('./../../utils.helpers.test');
 
 const expect = testHelpers.expect;
 
-describe.skip("lib/controllers/domain", () => {
+describe.skip("server/content/domain-types/get", () => {
     let app;
 
     beforeEach(() => {

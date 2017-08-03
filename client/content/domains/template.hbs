@@ -1,0 +1,19 @@
+{{#partial "content"}}
+  <div class="container" role="main">
+    <div class="row">
+      <div class="col-xs-12">
+          Available domains:
+        <ol class="domains">
+{{#each _embedded.domains}}
+          <li>
+              <a href="{{_links.self.href}}">{{name}}</a>
+              {{#if isDefaultDomain}}<span title="Default Domain">*</span>{{/if}}
+          </li>
+{{/each}}
+        </ol>
+      </div>
+    </div>
+  </div>
+{{/partial}}
+
+{{> ../templates/page}}

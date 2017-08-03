@@ -2,11 +2,12 @@
   <div class="container" role="main">
     <div class="row">
       <div class="col-xs-12">
-        <ol class="domain-list">
-{{#each _embedded.domains}}
+          Available entity types:
+        <ol class="domain-types">
+{{#each _embedded.entities}}
           <li>
-              <a href="{{_links.self.href}}">{{name}}</a>
-              {{#if isDefaultDomain}}<span title="Default Domain">*</span>{{/if}}
+              <a href="{{_links.self.href}}">{{type}}</a>
+              {{#if isDefault}}<span title="Default Entity Type">*</span>{{/if}}
           </li>
 {{/each}}
         </ol>

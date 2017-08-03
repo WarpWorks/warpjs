@@ -4,15 +4,16 @@ const RoutesInfo = require('@quoin/expressjs-routes-info');
 const { createResource } = require('@warp-works/warpjs-utils');
 
 function createResourceFromDocument(instance) {
+    // FIXME: missing domain
     const data = {
         type: instance.type
     };
 
     if (!instance.isRootInstance) {
-        data.oid = instance._id;
+        data.id = instance._id;
     }
 
-    return createResource(RoutesInfo.expand('W2:content:app', data), instance);
+    return createResource(RoutesInfo.expand('W2:content:entity', data), instance);
 }
 
 function basicRender(bundles, data, req, res) {

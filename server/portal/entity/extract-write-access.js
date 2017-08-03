@@ -10,7 +10,11 @@ module.exports = (req, responseResource, persistence, hsEntity, instance) => {
         .then((canWrite) => {
             if (canWrite) {
                 responseResource.link('edit', {
-                    href: RoutesInfo.expand('W2:content:app', { domain: config.domainName, type: instance.type, oid: instance.id }),
+                    href: RoutesInfo.expand('W2:content:entity', {
+                        domain: config.domainName,
+                        type: instance.type,
+                        id: instance.id
+                    }),
                     title: `Edit "${instance.Name}"`
                 });
             }

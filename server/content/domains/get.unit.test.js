@@ -2,11 +2,11 @@ const RoutesInfo = require('@quoin/expressjs-routes-info');
 const routesInfoCache = require('@quoin/expressjs-routes-info/lib/cache');
 const testHelpers = require('@quoin/node-test-helpers');
 
-const moduleToTest = require('./domain-list');
+const moduleToTest = require('./get');
 
 const expect = testHelpers.expect;
 
-describe("lib/controllers/domain-list", () => {
+describe("lib/controllers/domains/get", () => {
     beforeEach(() => {
         routesInfoCache.reset();
 

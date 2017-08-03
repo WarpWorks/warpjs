@@ -18,7 +18,11 @@ module.exports = (Persistence, baseUrl, staticUrl) => {
 
     baseUrl = (baseUrl === '/') ? '' : baseUrl;
 
-    app.use(`${baseUrl}/public`, express.static(path.join(config.folders.w2projects, 'public')));
+    app.set('base-url', baseUrl);
+    app.set('static-url', staticUrl);
+
+    RoutesInfo.staticPath('W2:app:public', app, baseUrl, '/public', path.join(config.folders.w2projects, 'public'));
+    RoutesInfo.staticPath('W2:app:static', app, baseUrl, '/static', 'public');
 
     app.use(cookieParser(config.cookieSecret, {
         httpOnly: true,

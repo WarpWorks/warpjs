@@ -10,8 +10,7 @@ module.exports = (req, res) => {
     const resource = warpjsUtils.createResource(req, {
         type,
         domain,
-        title: 'test',
-        layout: '_contentLayout'
+        title: 'Type'
     });
 
     resource.link('crud', RoutesInfo.expand('W2:content:crud'));

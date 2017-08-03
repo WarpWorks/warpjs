@@ -13,12 +13,11 @@ function common(req, res) {
     resource.link('w2WarpJSHome', RoutesInfo.expand('W2:content:home'));
 
     warpCore.domainFiles().forEach((domain) => {
-        const domainURL = RoutesInfo.expand('W2:content:app', {
-            domain: domain.name,
-            type: domain.name
+        const domainURL = RoutesInfo.expand('W2:content:domain', {
+            domain: domain.name
         });
         const domainResource = warpjsUtils.createResource(domainURL, domain);
-        domainResource.isDefaultDomain = (domain.name === config.domainName);
+        domainResource.isDefaultDomain = (domain.name === config.domainName) || undefined;
 
         resource.embed('domain', domainResource);
     });
@@ -27,19 +26,18 @@ function common(req, res) {
 }
 
 module.exports = (req, res) => {
+    const resource = common(req, res);
     res.format({
         html: () => {
-            const resource = common(req, res);
             utils.basicRender(
                 [
-                    `/content/app/vendor.js`,
-                    `/content/app/domain-list.js`
+                    `${RoutesInfo.expand('W2:app:static')}/app/vendor.js`,
+                    `${RoutesInfo.expand('W2:app:static')}/app/domains.js`
                 ],
                 resource, req, res);
         },
 
         [warpjsUtils.constants.HAL_CONTENT_TYPE]: () => {
-            const resource = common(req, res);
             warpjsUtils.sendHal(req, res, resource, RoutesInfo);
         }
     });
