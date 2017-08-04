@@ -1,9 +1,4 @@
-const warpjsUtils = require('@warp-works/warpjs-utils');
+const documentReady = require('./../document-ready');
+const template = require('./template.hbs');
 
-const renderer = require('./renderer');
-
-(($) => {
-    $(document).ready(() => {
-        warpjsUtils.getCurrentPageHAL($).then(renderer);
-    });
-})(jQuery);
+documentReady(jQuery, template);

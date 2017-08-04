@@ -42,11 +42,6 @@ module.exports = (req, res) => {
         },
 
         [warpjsUtils.constants.HAL_CONTENT_TYPE]: () => {
-            resource.link('w2WarpJSHome', RoutesInfo.expand('W2:content:home'));
-            resource.link('w2WarpJSDomain', RoutesInfo.expand('W2:content:domain', {
-                domain
-            }));
-
             resource.link('domain', {
                 title: domain,
                 href: RoutesInfo.expand('W2:content:domain', {
@@ -73,8 +68,8 @@ module.exports = (req, res) => {
                     debug('documents=', JSON.stringify(documents, null, 2));
                     const embedded = documents.map(documentMapper.bind(null, domain));
                     resource.embed('entities', embedded);
-                    warpjsUtils.sendHal(req, res, resource, RoutesInfo);
                 })
+                .then(() => utils.sendHal(req, res, resource))
                 .finally(() => {
                     persistence.close();
                 });

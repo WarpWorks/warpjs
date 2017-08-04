@@ -1,6 +1,8 @@
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const utils = require('./../utils');
+
 module.exports = (req, res) => {
     const domainsUrl = RoutesInfo.expand('W2:content:domains');
 
@@ -15,7 +17,7 @@ module.exports = (req, res) => {
                 redirect: domainsUrl
             });
 
-            warpjsUtils.sendHal(req, res, resource, RoutesInfo);
+            utils.sendHal(req, res, resource);
         }
     });
 };

@@ -5,28 +5,21 @@ const config = require('./../../config');
 const utils = require('./../utils');
 const warpCore = require('./../../../lib/core');
 
-function common(req, res) {
-    const resource = warpjsUtils.createResource(req, {
-        title: "WarpJS domain list"
+function domainMapper(domain) {
+    const domainURL = RoutesInfo.expand('W2:content:domain', {
+        domain: domain.name
     });
-
-    resource.link('w2WarpJSHome', RoutesInfo.expand('W2:content:home'));
-
-    warpCore.domainFiles().forEach((domain) => {
-        const domainURL = RoutesInfo.expand('W2:content:domain', {
-            domain: domain.name
-        });
-        const domainResource = warpjsUtils.createResource(domainURL, domain);
-        domainResource.isDefaultDomain = (domain.name === config.domainName) || undefined;
-
-        resource.embed('domain', domainResource);
-    });
+    const resource = warpjsUtils.createResource(domainURL, domain);
+    resource.isDefaultDomain = (domain.name === config.domainName) || undefined;
 
     return resource;
 }
 
 module.exports = (req, res) => {
-    const resource = common(req, res);
+    const resource = warpjsUtils.createResource(req, {
+        title: "WarpJS domain list"
+    });
+
     res.format({
         html: () => {
             utils.basicRender(
@@ -38,7 +31,10 @@ module.exports = (req, res) => {
         },
 
         [warpjsUtils.constants.HAL_CONTENT_TYPE]: () => {
-            warpjsUtils.sendHal(req, res, resource, RoutesInfo);
+            const domains = warpCore.domainFiles().map(domainMapper);
+            resource.embed('domains', domains);
+
+            utils.sendHal(req, res, resource);
         }
     });
 };

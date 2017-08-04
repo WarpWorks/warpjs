@@ -25,7 +25,6 @@ module.exports = (req, res) => {
     const resource = warpjsUtils.createResource(req, {
         title: `Domain ${domain} - Types`
     });
-    resource.link('w2WarpJSHome', RoutesInfo.expand('W2:content:home'));
 
     res.format({
         html: () => {
@@ -46,11 +45,6 @@ module.exports = (req, res) => {
                 .filter(nonAbstractOnly)
                 .map(entityMap.bind(null, domain));
 
-            resource.link('w2WarpJSHome', RoutesInfo.expand('W2:content:home'));
-            resource.link('w2WarpJSDomain', RoutesInfo.expand('W2:content:domain', {
-                domain
-            }));
-
             resource.link('domain', {
                 title: domain,
                 href: RoutesInfo.expand('W2:content:domain', {
@@ -59,7 +53,7 @@ module.exports = (req, res) => {
             });
 
             resource.embed('entities', entities);
-            warpjsUtils.sendHal(req, res, resource, RoutesInfo);
+            utils.sendHal(req, res, resource);
         }
     });
 };
