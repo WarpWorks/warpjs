@@ -12,7 +12,7 @@ module.exports = (req, res) => {
         domain,
         title: 'Entity',
         layout: '_contentLayout',
-        baseUrl: '/static',
+        baseUrl: '/static'
     });
 
     resource.link('crud', RoutesInfo.expand('W2:content:crud'));

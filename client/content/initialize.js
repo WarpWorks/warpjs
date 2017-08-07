@@ -1,6 +1,7 @@
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const WarpJSClient = require('./client');
+const progressBarModal = require('./progress-bar-modal');
 
 function beforeUnload(event) {
     $warp.save(false);
@@ -8,7 +9,7 @@ function beforeUnload(event) {
 
 function onSchemaSuccess(config, callback, result) {
     if (result.success) {
-        $warp.progressBarOn(75);
+        progressBarModal.show($, 75);
         $warp.initialize(result.domain, config, callback);
     } else {
         warpjsUtils.trace(1, "initializeWarpJS", "Failed to get domain data - " + result.error);
@@ -23,7 +24,7 @@ function onCurrentPageSuccess(config, callback, result) {
     $warp.links = result._links;
     $warp.user = result.warpjsUser ? result.warpjsUser : "undefined";
 
-    $warp.progressBarOn(50);
+    progressBarModal.show($, 50);
 
     $.ajax({
         url: $warp.links.schemaDomain.href,
@@ -42,7 +43,7 @@ module.exports = (config, callback) => {
     // Create client + show load progress
     // eslint-disable-next-line no-global-assign
     window.$warp = new WarpJSClient();
-    $warp.progressBarOn(25);
+    progressBarModal.show($, 25);
 
     // Event handlers
     $(window).on('beforeunload', beforeUnload);
@@ -52,7 +53,9 @@ module.exports = (config, callback) => {
         headers: {
             Accept: warpjsUtils.constants.HAL_CONTENT_TYPE
         },
-        success: onCurrentPageSuccess.bind(null, config, callback),
+        success(result) {
+            onCurrentPageSuccess(config, callback, result);
+        },
         error: onCurrentPageError
     });
 };

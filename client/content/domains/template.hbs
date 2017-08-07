@@ -1,19 +1,40 @@
 {{#partial "content"}}
-  <div class="container" role="main">
+<div class="container" role="main">
+
+  <div class="container">
     <div class="row">
       <div class="col-xs-12">
-          Available domains:
-        <ol class="domains">
-{{#each _embedded.domains}}
-          <li>
-              <a href="{{_links.self.href}}">{{name}}</a>
-              {{#if isDefaultDomain}}<span title="Default Domain">*</span>{{/if}}
-          </li>
-{{/each}}
-        </ol>
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="title">Available domains</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
+
+  <div class="container">
+{{#each _embedded.domains}}
+    <div class="row">
+      <div class="col-xs-12">
+        <a href="{{_links.self.href}}"><span class="glyphicon glyphicon-info-sign"></span></a>
+        <a href="{{_links.domainTypes.href}}"
+           title="{{_links.domainTypes.title}}"
+           ><span class="glyphicon glyphicon-list"></span></a>
+        <span class="glyphicon glyphicon-pencil"
+              title="TODO: link to studio if admin"></span>
+
+        &nbsp;&nbsp;&nbsp;
+
+        <a href="{{_links.domainTypes.href}}">{{name}}</a>
+        {{#if isDefaultDomain}}<span title="Default Domain">*</span>{{/if}}
+      </div>
+
+    </div>
+{{/each}}
+
+  </div>
+</div>
 {{/partial}}
 
 {{> ../templates/page}}

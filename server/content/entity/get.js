@@ -30,6 +30,9 @@ module.exports = (req, res) => {
 
         [warpjsUtils.constants.HAL_CONTENT_TYPE]: () => {
             return Promise.resolve()
+                .then(() => {
+                    resource.embed('breadcrumbs', breadcrumbs);
+                })
                 .then(() => utils.sendHal(req, res, resource))
                 .finally(() => {
                 });

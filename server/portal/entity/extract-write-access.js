@@ -13,6 +13,7 @@ module.exports = (req, responseResource, persistence, hsEntity, instance) => {
                     href: RoutesInfo.expand('W2:content:entity', {
                         domain: config.domainName,
                         type: instance.type,
+                        oid: instance.id, // FIXME: debug
                         id: instance.id
                     }),
                     title: `Edit "${instance.Name}"`

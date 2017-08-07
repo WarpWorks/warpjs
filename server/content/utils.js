@@ -10,6 +10,7 @@ function createResourceFromDocument(instance) {
     };
 
     if (!instance.isRootInstance) {
+        data.oid = instance._id; // FIXME: debug
         data.id = instance._id;
     }
 
@@ -38,8 +39,19 @@ function sendHal(req, res, resource) {
     warpjsUtils.sendHal(req, res, resource, RoutesInfo);
 }
 
+function basicRenderOld(name, data, req, res) {
+    const resource = (data instanceof hal.Resource) ? data : warpjsUtils.createResource(req, data);
+    resource.baseUrl = '/static';
+
+    resource.link('w2WarpJSHome', RoutesInfo.expand('W2:content:home'));
+    resource.link('w2WarpJSDomain', RoutesInfo.expand('W2:content:entities', data));
+
+    res.render(name, resource.toJSON());
+}
+
 module.exports = {
     basicRender,
+    basicRenderOld,
     createResourceFromDocument,
     sendHal
 };

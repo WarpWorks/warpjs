@@ -11,6 +11,7 @@ module.exports = {
             'admin-domain': './client/admin/domain/index.js',
             'content': './client/content/index.js',
             'domains': './client/content/domains/index.js',
+            'domain': './client/content/domain/index.js',
             'domain-types': './client/content/domain-types/index.js',
             'entities': './client/content/entities/index.js',
             'entity': './client/content/entity/index.js',

@@ -20,17 +20,18 @@ function findOneCB(done, domain, db, collection, id, currentCommand, error, resu
                 err = true;
                 msg = mongoError;
             } else if (mongoResult) {
-                const resource = warpjsUtils.createResource(
-                    RoutesInfo.expand('W2:content:entity', {
-                        domain,
-                        type: mongoResult.type || mongoResult.domainName,
-                        id: mongoResult._id.toString()
-                    }), {
-                        _id: mongoResult._id,
-                        type: mongoResult.type || mongoResult.domainName,
-                        shortHand: mongoResult.Name || mongoResult.type || mongoResult.domainName
-                    }
-                );
+                const resourceUrl = RoutesInfo.expand('W2:content:entity', {
+                    domain,
+                    type: mongoResult.type || mongoResult.domainName,
+                    id: mongoResult._id.toString(),
+                    oid: mongoResult._id.toString()
+                });
+
+                const resource = warpjsUtils.createResource(resourceUrl, {
+                    _id: mongoResult._id,
+                    type: mongoResult.type || mongoResult.domainName,
+                    shortHand: mongoResult.Name || mongoResult.type || mongoResult.domainName
+                });
 
                 breadcrumb.unshift(resource.toJSON());
             }

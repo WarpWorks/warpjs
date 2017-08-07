@@ -12,6 +12,13 @@ function domainMapper(domain) {
     const resource = warpjsUtils.createResource(domainURL, domain);
     resource.isDefaultDomain = (domain.name === config.domainName) || undefined;
 
+    resource.link('domainTypes', {
+        href: RoutesInfo.expand('W2:content:domain-types', {
+            domain: domain.name
+        }),
+        title: "List of types"
+    });
+
     return resource;
 }
 

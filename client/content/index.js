@@ -1,5 +1,7 @@
 const initializeWarpJS = require('./initialize');
 
+const documentReady = require('./document-ready');
+
 function initialized() {
     // eslint-disable-next-line no-console
     console.log("index.initialized(): Initialization successful!");

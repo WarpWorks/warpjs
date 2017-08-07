@@ -1,5 +1,5 @@
 const Promise = require('bluebird');
-const debug = require('debug')('W2:content:entities:get');
+// const debug = require('debug')('W2:content:entities:get');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
@@ -11,6 +11,7 @@ function documentMapper(domain, document) {
     const documentUrl = RoutesInfo.expand('W2:content:entity', {
         domain,
         type: document.type,
+        oid: document.id, // FIXME: debug
         id: document.id
     });
     return warpjsUtils.createResource(documentUrl, {
@@ -65,7 +66,7 @@ module.exports = (req, res) => {
                 .then((schema) => schema.getEntityByName(type))
                 .then((entity) => entity.getDocuments(persistence))
                 .then((documents) => {
-                    debug('documents=', JSON.stringify(documents, null, 2));
+                    // debug('documents=', JSON.stringify(documents, null, 2));
                     const embedded = documents.map(documentMapper.bind(null, domain));
                     resource.embed('entities', embedded);
                 })
