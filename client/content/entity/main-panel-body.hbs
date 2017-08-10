@@ -1,0 +1,17 @@
+{{#if panels }}
+    <div class="tab-content">
+        <ul class="nav nav-tabs">
+            {{#each panels}}
+                <li {{#unless @index}}class="active"{{/unless}}>
+                        <a data-toggle="tab" href="#WarpJS_mainPV_panel_{{name}}">{{label}}</a>
+                </li>
+            {{/each}}
+        </ul>
+
+        {{#each panels}}
+            {{> panel this tab=true tabindex=@index}}
+        {{/each}}
+    </div>
+{{else}}
+    {{> panel this.panel instance=instance tab=false tabindex=0}}
+{{/if}}

@@ -1,9 +1,9 @@
 <div class="panel-item-body panel-body">
     {{#each panelItems}}
-        {{#if (isSeperator)}}
-            {{> ./_seperatorPanel}}
+        {{#if (isSeparator)}}
+            {{> ./_separatorPanel}}
         {{/if}}
-        {{#if (isRelationshipPanel)}}
+        {{#if (isRelationshipPanelItem)}}
             {{> ./_relationshipPanel entity=this}}
         {{/if}}
         {{#if (isBasicProperty)}}

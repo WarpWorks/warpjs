@@ -1,11 +1,13 @@
 const initializeWarpJS = require('./initialize');
-
-const documentReady = require('./document-ready');
+const loadingTemplate = require('./templates/loading.hbs');
+const renderer = require('./template-renderer');
 
 function initialized() {
     // eslint-disable-next-line no-console
     console.log("index.initialized(): Initialization successful!");
 }
+
+renderer(loadingTemplate, {});
 
 (($) => {
     $(document).ready(() => {

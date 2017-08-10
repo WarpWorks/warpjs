@@ -1,5 +1,6 @@
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const pageViewTemplate = require('./templates/page-view.hbs');
 const WarpPanel = require('./panel');
 const WarpWidget = require('./widget');
 
@@ -244,25 +245,20 @@ class WarpPageView extends WarpWidget {
                 });
             } else {
                 if (this.isToplevelPageView) {
-                    this.getEntityProxy().useData(function(entityProxy) {
-                        var headingTxt = entityProxy.type + ": " + entityProxy.displayName();
+                    this.getEntityProxy().useData((entityProxy) => {
+                        const content = pageViewTemplate({
+                            globalID: this.globalID(),
+                            type: entityProxy.type,
+                            displayName: entityProxy.displayName(),
+                            bodyContent: bodyContent.html()
+                        });
 
-                        var panel = $('<div class="panel panel-success"></div>');
-                        panel.prop('id', this.globalID() + '_panel');
-
-                        var panelHeading = $('<div class="panel-heading"></div>');
-                        panelHeading.html(headingTxt);
-                        var addSibbling = $('<a href="#" id="addEntityA" data-toggle="tooltip" title="Add sibling"><span class="glyphicon glyphicon-share pull-right"></span></a>');
-                        addSibbling.on('click', function() {
+                        parentHtml.append($(content));
+                        $('html').on('click', '#addEntityA', () => {
+                            console.log('addEntityA clicked');
                             this.getEntityProxy().addSibling();
-                        }.bind(this));
-                        panelHeading.append(addSibbling);
-
-                        var panelBody = $('<div class="panel-body"></div>');
-                        panelBody.append(bodyContent);
-                        panel.append(panelHeading).append(panelBody);
-                        parentHtml.append(panel);
-                    }.bind(this));
+                        });
+                    });
                 } else {
                     parentHtml.append(bodyContent);
                 }

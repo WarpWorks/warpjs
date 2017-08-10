@@ -1,6 +1,7 @@
 const tinyMCE = require('tinymce');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const basicPropertyPanelItemTemplate = require('./templates/basic-property-panel-item.hbs');
 const WarpPanelItem = require('./panel-item');
 
 class WarpBasicPropertyPanelItem extends WarpPanelItem {
@@ -205,10 +206,6 @@ class WarpBasicPropertyPanelItem extends WarpPanelItem {
 
     createViews(parentHtml, callback) {
         var formGroup = $('<div class="form-group"></div>');
-        var label = $('<label></label>');
-        label.prop('for', this.globalID());
-        label.prop('class', 'col-sm-2 control-label');
-        label.text(this.label);
 
         var inputDiv = $('<div></div>');
         inputDiv.prop('class', 'col-sm-10');
@@ -230,10 +227,15 @@ class WarpBasicPropertyPanelItem extends WarpPanelItem {
             this.createTinyMCE(this.globalID());
         }
 
-        formGroup.append(label);
         formGroup.append(inputDiv);
 
-        parentHtml.append(formGroup);
+        const content = basicPropertyPanelItemTemplate({
+            globalID: this.globalID(),
+            label: this.label,
+            isTextPropertyType: this.propertyType === 'text'
+        });
+
+        parentHtml.append($(content));
         callback();
     }
 }

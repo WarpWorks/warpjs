@@ -1,0 +1,8 @@
+{{#if (isCsvRelationship)}}
+    {{> relationship-panel-item-csv this instance=instance}}
+{{else if (isTableRelationshipPanelItem)}}
+    {{> relationship-panel-item-table this instance=instance}}
+{{else if (isPreviewRelationship)}}
+{{else}}
+    TODO: Unknown relationship-panel-item style '{{style}}'.
+{{/if}}
