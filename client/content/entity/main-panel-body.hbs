@@ -1,4 +1,4 @@
-{{#if panels }}
+{{#if multiPanels }}
     <div class="tab-content">
         <ul class="nav nav-tabs">
             {{#each panels}}
@@ -13,5 +13,5 @@
         {{/each}}
     </div>
 {{else}}
-    {{> panel this.panel instance=instance tab=false tabindex=0}}
+    {{> panel panels.[0] tab=false tabindex=0}}
 {{/if}}

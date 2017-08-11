@@ -10,7 +10,7 @@ module.exports = ($, result) => {
     // Fetching the schema
     const instance = result.data._embedded.instances[0];
 
-    return warpjsUtils.getCurrentPageHAL($, instance._links.schema.href)
+    return warpjsUtils.getCurrentPageHAL($, result.data._links.schema.href)
         .then((schemaResult) => {
             const pageView = schemaResult.data.pageView;
             console.log("pageView=", pageView);

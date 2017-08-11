@@ -1,5 +1,5 @@
 <div id="WarpJS_mainPV_panel_{{name}}" {{#if tab}}class="tab-pane fade in {{#unless tabindex}}active{{/unless}}"{{/if}}>
-    {{#each children}}
-        {{> panel-item this instance=instance}}
+    {{#each items}}
+        {{> panel-item }}
     {{/each}}
 </div>

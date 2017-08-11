@@ -3,17 +3,20 @@ const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const config = require('./../../config');
+const serverUtils = require('./../../utils');
 const utils = require('./../utils');
-const warpCore = require('./../../../lib/core');
 
 function breadcrumbMapper(domain, breadcrumb) {
-    const url = RoutesInfo.expand('W2:content:entity2', {
+    const url = RoutesInfo.expand('W2:content:entity', {
         domain,
         type: breadcrumb.type,
         id: breadcrumb.id
     });
-    breadcrumb.shortHand = breadcrumb.Name || breadcrumb.name || breadcrumb.type;
-    return warpjsUtils.createResource(url, breadcrumb);
+    const resource = warpjsUtils.createResource(url, breadcrumb);
+
+    resource._links.self.title = breadcrumb.Name || breadcrumb.name || breadcrumb.type;
+
+    return resource;
 }
 
 module.exports = (req, res) => {
@@ -22,66 +25,53 @@ module.exports = (req, res) => {
     const id = req.params.id;
 
     const resource = warpjsUtils.createResource(req, {
-        title: `Domain ${domain} - Type ${type} - Id ${id}`
+        title: `Domain ${domain} - Type ${type} - Id ${id}`,
+        domain,
+        type,
+        id
     });
+
+    resource.link('schema', RoutesInfo.expand('W2:content:schema-type', {
+        domain,
+        type
+    }));
 
     res.format({
         html() {
-            utils.basicRender(
-                [
-                    `${RoutesInfo.expand('W2:app:static')}/libs/svg/svg.js`,
-                    `${RoutesInfo.expand('W2:app:static')}/app/WarpCMS.js`,
-                    `${RoutesInfo.expand('W2:app:static')}/app/vendor.js`,
-                    `${RoutesInfo.expand('W2:app:static')}/app/entity.js`
-                ],
-                resource,
-                req,
-                res
-            );
+            const bundles = [
+                `${RoutesInfo.expand('W2:app:static')}/libs/svg/svg.js`,
+                `${RoutesInfo.expand('W2:app:static')}/app/WarpCMS.js`,
+                `${RoutesInfo.expand('W2:app:static')}/app/vendor.js`,
+                `${RoutesInfo.expand('W2:app:static')}/app/entity.js`
+            ];
+
+            utils.basicRender(bundles, resource, req, res);
         },
 
         [warpjsUtils.constants.HAL_CONTENT_TYPE]: () => {
-            const Persistence = require(config.persistence.module);
-            const persistence = new Persistence(config.persistence.host, domain);
+            const persistence = serverUtils.getPersistence(domain);
+            const entity = serverUtils.getEntity(domain, type);
+            const pageViewEntity = entity.getPageView(config.views.content);
 
             return Promise.resolve()
-                .then(() => warpCore.getDomainByName(domain))
-                .then((schema) => schema.getEntityByName(type))
-                .then((entity) => {
+                .then(() => entity.getInstance(persistence, id))
+                .then((instance) => {
+                    resource.displayName = instance.Name || instance.name || `${instance.type}[${instance.id}]`;
+
                     return Promise.resolve()
-                        .then(() => entity.getInstance(persistence, id))
-                        .then((instance) => {
-                            console.log("instance=", instance);
-
-                            const instanceUrl = RoutesInfo.expand('W2:content:entity2', {
-                                domain,
-                                type: instance.type,
-                                id: instance.id
-                            });
-
-                            instance.displayName = instance.Name || instance.name || `${instance.type}[${instance.id}]`;
-
-                            const instanceResource = warpjsUtils.createResource(instanceUrl, instance);
-                            instanceResource.link('schema', {
-                                href: RoutesInfo.expand('W2:content:schema-type', {
-                                    domain,
-                                    type
-                                })
-                            });
-
-                            resource.embed('instance', instanceResource);
-                            return Promise.resolve()
-                                .then(() => entity.getInstancePath(persistence, instance))
-                                .then((breadcrumbs) => breadcrumbs.map(breadcrumbMapper.bind(null, domain)))
-                                .then((breadcrumbs) => resource.embed('breadcrumbs', breadcrumbs))
-                            ;
+                        .then(() => entity.getInstancePath(persistence, instance))
+                        .then((breadcrumbs) => breadcrumbs.map(breadcrumbMapper.bind(null, domain)))
+                        .then((breadcrumbs) => {
+                            resource.breadcrumbs = breadcrumbs;
+                        })
+                        .then(() => pageViewEntity.toFormResource(persistence, instance))
+                        .then((formResource) => {
+                            resource.formResource = formResource;
                         });
-                })
-                .then(() => {
-                    // resource.embed('breadcrumbs', breadcrumbs);
                 })
                 .then(() => utils.sendHal(req, res, resource))
                 .finally(() => {
+                    persistence.close();
                 });
         }
     });

@@ -7,9 +7,10 @@
 const debug = require('debug')('W2:WarpJS');
 const express = require('express');
 const path = require('path');
-const Persistence = require('@warp-works/warpjs-mongo-persistence');
 
 const config = require('./server/config');
+
+const Persistence = require(config.persistence.module);
 
 /**
  * Get port from environment and store in Express.

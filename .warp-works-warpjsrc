@@ -17,6 +17,7 @@
     "content": "DefaultPageView",
     "portal": "DefaultPortalView"
   },
+  "paginationSize": 5,
   "plugins": [{
     "name": "@warp-works/warpjs-map-plugin",
     "path": "/map",

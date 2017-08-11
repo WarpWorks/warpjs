@@ -3,8 +3,8 @@
         <span class="col-xs-2 control-label">{{label}}</span>
         <div class="col-xs-10">
             <ul class="nav nav-pills">
-                {{!-- TODO: Add the selected values --}}
-                {{#each something}}
+                {{#each relationship.model.data}}
+                    <li><a href="{{this.[0]}}">{{this.[1]}}</a></li>
                 {{/each}}
                 <li><a href="#"><span class="glyphicon glyphicon-list-alt"></span></a></li>
                 {{!-- TODO: Add click event on icon --}}

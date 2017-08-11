@@ -7,6 +7,7 @@ const processCwd = path.dirname(require.resolve('./../package.json'));
 
 const baseConfig = {
     persistence: {
+        module: 'REPLACE_ME',
         host: process.env.MONGODB_HOST || 'localhost',
         name: 'REPLACE_ME'
     },

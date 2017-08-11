@@ -6,7 +6,7 @@
 {{else}}
     {{#each breadcrumbs}}
         <li class="breadcrumb-item">
-            <a href="{{_links.self.href}}" data-toggle="tooltip" title="{{type}}">{{shortHand}}</a>
+            <a href="{{_links.self.href}}" data-toggle="tooltip" title="{{type}}">{{_links.self.title}}</a>
         </li>
     {{/each}}
 {{/if}}

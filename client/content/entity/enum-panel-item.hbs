@@ -6,7 +6,7 @@
                 <option data-literal="WarpJS_Enum_noSelection">------------</option>
                 {{#each model.literals}}
                     {{!-- FIXME: Add the selected attribute --}}
-                    <option data-literal="{{name}}">{{name}}</option>
+                    <option data-literal="{{name}}" {{#if selected}}selected{{/if}}>{{name}}</option>
                 {{/each}}
             </select>
         </div>

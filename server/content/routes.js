@@ -19,12 +19,13 @@ module.exports = (baseUrl) => {
     routesInfo.route('W2:content:domain', '/domains/{domain}', domain);
     routesInfo.route('W2:content:domain-types', '/domains/{domain}/types', domainTypes);
     routesInfo.route('W2:content:domain-type', '/domains/{domain}/types/{type}', domainType);
+    routesInfo.route('W2:content:schema-type', '/domains/{domain}/types/{type}/schema', schemaType);
     routesInfo.route('W2:content:entities', '/domains/{domain}/types/{type}/instances', entities);
-    routesInfo.route('W2:content:entity2', '/domains/{domain}/types/{type}/instances/{id}', entity);
-    routesInfo.route('W2:content:schema-type', '/schema/{domain}/{type}', schemaType);
+    routesInfo.route('W2:content:entity', '/domains/{domain}/types/{type}/instances/{id}', entity);
+    routesInfo.route('W2:content:entity-relationship-page', '/domains/{domain}/types/{type}/instances/{id}/relationships/{relationship}/pages/{page}', entity);
 
-    routesInfo.route('W2:content:entity', '/entity/{domain}/{type}{?oid}')
-        .get(controllers.app);
+    // routesInfo.route('W2:content:entity', '/entity/{domain}/{type}{?oid}')
+    //     .get(controllers.app);
 
     routesInfo.route('W2:content:schema-domain', '/schema/{domain}')
         .get(controllers.schema.domain);

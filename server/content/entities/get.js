@@ -3,9 +3,8 @@ const Promise = require('bluebird');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
-const config = require('./../../config');
+const serverUtils = require('./../../utils');
 const utils = require('./../utils');
-const warpCore = require('./../../../lib/core');
 
 function documentMapper(domain, document) {
     const documentUrl = RoutesInfo.expand('W2:content:entity', {
@@ -58,13 +57,11 @@ module.exports = (req, res) => {
                 })
             });
 
-            const Persistence = require(config.persistence.module);
-            const persistence = new Persistence(config.persistence.host, domain);
+            const persistence = serverUtils.getPersistence(domain);
+            const entity = serverUtils.getEntity(domain, type);
 
             return Promise.resolve()
-                .then(() => warpCore.getDomainByName(domain))
-                .then((schema) => schema.getEntityByName(type))
-                .then((entity) => entity.getDocuments(persistence))
+                .then(() => entity.getDocuments(persistence))
                 .then((documents) => {
                     // debug('documents=', JSON.stringify(documents, null, 2));
                     const embedded = documents.map(documentMapper.bind(null, domain));
