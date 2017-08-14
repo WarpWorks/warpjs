@@ -3,13 +3,13 @@
         <table class="table table-sm table-hover">
             <thead>
                 <tr>
-                    {{#each relationship.model.basicProperties}}
+                    {{#each relationship.model.tableView.basicProperties}}
                         <th>{{this}}</th>
                     {{/each}}
                 </tr>
             </thead>
             <tbody>
-                {{#each relationship.model.data as |row|}}
+                {{#each relationship.model.tableView.data as |row|}}
                     <tr data-url="{{row.[0]}}">
                         {{#each row as |col|}}
                             {{#if @index}} {{!-- first is url --}}

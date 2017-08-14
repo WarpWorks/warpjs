@@ -3,13 +3,13 @@ const warpjsUtils = require('@warp-works/warpjs-utils');
 const progressBarModal = require('./progress-bar-modal');
 const renderer = require('./template-renderer');
 
-function defaultPostRender(result) {
+function defaultPostRender($, result) {
     console.log("no post-renderer defined");
     progressBarModal.show($, 100);
     progressBarModal.hide();
 }
 
-function defaultOnError(err) {
+function defaultOnError($, err) {
     console.log("ERROR:", err);
 }
 
@@ -22,7 +22,7 @@ module.exports = ($, template, postRender = defaultPostRender, onError = default
             .then((result) => {
                 progressBarModal.show($, 50);
                 if (result.error) {
-                    return onError(result);
+                    return onError($, result);
                 }
                 renderer(template, result);
                 return result;

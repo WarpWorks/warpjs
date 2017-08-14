@@ -9,10 +9,17 @@
                         </div>
 
                         <div class="input-group-addon">
-                            TODO: IDX
+                            {{relationship.pageStart}} / {{relationship.totalSize}}
                         </div>
 
                         <select class="form-control">
+                            <option value="">Showing matches from {{relationship.pageStart}} to {{relationship.pageEnd}}</option>
+                            <option value="">---------------------</option>
+                            {{#each relationship.model.data as |data|}}
+                                <option {{#unless @index}}selected{{/unless}}>
+                                    {{data.label}}
+                                </option>
+                            {{/each}}
                         </select>
 
                         <div class="input-group-addon">
@@ -32,6 +39,9 @@
         </div>
 
         <div class="panel-body">
+            {{#each relationship.model.data}}
+                {{> panel-body}}
+            {{/each}}
         </div>
     </div>
 
