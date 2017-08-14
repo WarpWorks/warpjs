@@ -10,7 +10,7 @@ class RpiCarousel extends WarpRelationshipPanelItem {
     }
 
     init() {
-    // Carousel needs a a PageView:
+        // Carousel needs a a PageView:
         var relnID = this.config.relationship[0];
         var reln = this.getWarpJSClient().model.getRelationshipByID(relnID);
         var targetEntity = this.getWarpJSClient().model.getEntityByID(reln.targetEntity[0]);

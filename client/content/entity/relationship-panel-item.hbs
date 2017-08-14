@@ -1,7 +1,9 @@
 {{#if (isCsvRelationship)}}
-    {{> relationship-panel-item-csv this instance=instance}}
+    {{> relationship-panel-item-csv}}
 {{else if (isTableRelationshipPanelItem)}}
-    {{> relationship-panel-item-table this instance=instance}}
+    {{> relationship-panel-item-table}}
+{{else if (isCarouselRelationshipPanelItem)}}
+    {{> relationship-panel-item-carousel}}
 {{else if (isPreviewRelationship)}}
 {{else}}
     TODO: Unknown relationship-panel-item style '{{style}}'.
