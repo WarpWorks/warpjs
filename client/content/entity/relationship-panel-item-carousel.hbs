@@ -1,56 +1,61 @@
-<div>
-    <div class="panel panel-success">
-        <div class="panel-heading">
-            <form class="form-inline">
-                <div class="form-group">
-                    <div class="input-group">
-                        <div class="input-group-addon">
-                            <a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a>
-                        </div>
+<div class="carousel-container">
+  <div class="panel panel-success">
+    <div class="panel-heading">
+      <form class="form-inline">
+        <div class="form-group">
+          <div class="input-group pagination-group" data-pagination-total="{{relationship.totalSize}}">
+            <div class="input-group-addon">
+              {{>../templates/chevron this direction='left' pageLimit=relationship.limitLeft}}
+            </div>
 
-                        <div class="input-group-addon">
-                            {{relationship.pageStart}} / {{relationship.totalSize}}
-                        </div>
+            <div class="input-group-addon pagination-info">
+              <span class="pagination-info-start">{{relationship.pageStart}}</span> / {{relationship.totalSize}}
+            </div>
 
-                        <select class="form-control">
-                            <option value="">Showing matches from {{relationship.pageStart}} to {{relationship.pageEnd}}</option>
-                            <option value="">---------------------</option>
-                            {{#each relationship.model.data as |data|}}
-                                <option {{#unless @index}}selected{{/unless}}>
-                                    {{data.label}}
-                                </option>
-                            {{/each}}
-                        </select>
+            <select class="form-control pagination-select">
+              <option disabled>Showing matches from {{relationship.pageStart}} to {{relationship.pageEnd}}</option>
+              <option disabled>---------------------</option>
+              {{#each relationship.model.data as |option optionIndex|}}
+                  <option
+                    value="{{optionIndex}}"
+                    {{#unless optionIndex}}selected{{/unless}}
+                    >{{option.label}}</option>
+              {{/each}}
+            </select>
 
-                        <div class="input-group-addon">
-                            <a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a>
-                        </div>
+            <div class="input-group-addon">
+              {{>../templates/chevron this direction='right' pageLimit=relationship.limitRight}}
+            </div>
 
-                        <div class="input-group-addon">
-                            <a href="#"><span class="glyphicon glyphicon-plus-sign"></span></a>
-                        </div>
+            <div class="input-group-addon">
+                <a href="#"><span class="glyphicon glyphicon-plus-sign"></span></a>
+            </div>
 
-                        <div class="input-group-addon">
-                            <a href="#"><span class="glyphicon glyphicon-minus-sign"></span></a>
-                        </div>
-                    </div>
-                </div>
-            </form>
+            <div class="input-group-addon">
+                <a href="#"><span class="glyphicon glyphicon-minus-sign"></span></a>
+            </div>
+          </div>
         </div>
-
-        <div class="panel-body">
-            {{#each relationship.model.data}}
-                {{> panel-body}}
-            {{/each}}
-        </div>
+      </form>
     </div>
 
-    <div class="alert alert-info">
-        Click here to add new element to '{{label}}':
+    <div class="panel-body">
+        {{#each relationship.model.data as |option optionIndex|}}
+            <div
+              data-option-index="{{optionIndex}}"
+              {{#if @index}}class="hidden"{{/if}}
+              >
+            {{> panel-body option}}
+            </div>
+        {{/each}}
     </div>
+  </div>
 
-    <div class="alert alert-warning">
-        Save new element first before adding to '{{label}}'!
-    </div>
+  <div class="alert alert-info">
+      Click here to add new element to '{{label}}':
+  </div>
 
+  <div class="alert alert-warning">
+      Save new element first before adding to '{{label}}'!
+  </div>
 </div>
