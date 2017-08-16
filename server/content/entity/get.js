@@ -28,12 +28,20 @@ module.exports = (req, res) => {
         title: `Domain ${domain} - Type ${type} - Id ${id}`,
         domain,
         type,
-        id
+        id,
+        _meta: {
+            editable: true
+        }
     });
 
     resource.link('schema', RoutesInfo.expand('W2:content:schema-type', {
         domain,
         type
+    }));
+
+    resource.link('preview', RoutesInfo.expand('entity', {
+        type,
+        id
     }));
 
     res.format({
@@ -64,7 +72,7 @@ module.exports = (req, res) => {
                         .then((breadcrumbs) => {
                             resource.breadcrumbs = breadcrumbs;
                         })
-                        .then(() => pageViewEntity.toFormResource(persistence, instance))
+                        .then(() => pageViewEntity.toFormResource(persistence, instance, []))
                         .then((formResource) => {
                             resource.formResource = formResource;
                         });

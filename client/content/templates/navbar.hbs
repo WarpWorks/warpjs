@@ -1,32 +1,30 @@
-<!--
-     NavBar
-  -->
 <nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a href="#" class="navbar-left"></a>
-            <a class="navbar-brand" href="{{_links.warpjsContentHome.href}}" id="warpjsNavbarName">
-                <img src="/public/logo.png">
-            </a>
-        </div>
-        <ul class="nav navbar-nav">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a href="#" class="navbar-left"></a>
+      <a class="navbar-brand" href="{{_links.warpjsContentHome.href}}" id="warpjsNavbarName">
+        <img src="/public/logo.png">
+      </a>
+    </div>
+    <ul class="nav navbar-nav">
 {{#if _links.warpjsContentDomain}}
-            <li id="monAppHome"><a href="{{_links.warpjsContentDomain.href}}"><span class="glyphicon glyphicon-home"></span></a></li>
+      <li id="monAppHome"><a href="{{_links.warpjsContentDomain.href}}"><span class="glyphicon glyphicon-home"></span></a></li>
 {{/if}}
 
 {{#if _links.w2WarpjsSearch}}
-            <li><a href="{{_links.w2WarpjsSearch.href}}"><span class="glyphicon glyphicon-search"></span></a></li>
+      <li><a href="{{_links.w2WarpjsSearch.href}}"><span class="glyphicon glyphicon-search"></span></a></li>
 {{/if}}
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
+    </ul>
+
+    <ul class="nav navbar-nav navbar-right">
 {{#if _links.preview.href}}
-            <li><a href="{{_links.view.href}}" id="NavButtonView"><span class="glyphicon glyphicon-eye-open"></span></a></li>
+      <li><a href="{{_links.preview.href}}"><span class="glyphicon glyphicon-eye-open"></span></a></li>
 {{/if}}
 {{#if _meta.editable}}
-            <li><a href="#" id="NavButtonSaveA"><span class="glyphicon glyphicon-ok"></span></a></li>
-            <li><a href="#" id="NavButtonCancelA"><span class="glyphicon glyphicon-remove"></span></a></li>
-            <li><a href="#" id="NavButtonDeleteA"><span class="glyphicon glyphicon-trash"></span></a></li>
+      <li><a href="#" id="NavButtonSaveA"><span class="glyphicon glyphicon-ok"></span></a></li>
+      <li><a href="#" id="NavButtonCancelA"><span class="glyphicon glyphicon-remove"></span></a></li>
+      <li><a href="#"><span class="glyphicon glyphicon-trash" data-action="delete-entity" data-url="{{_links.self.href}}"></span></a></li>
 {{/if}}
-        </ul>
-    </div>
+    </ul>
+  </div>
 </nav>

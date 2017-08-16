@@ -1,5 +1,9 @@
+const deleteMethod = require('./delete');
 const get = require('./get');
+const patch = require('./patch');
 
 module.exports = {
-    get
+    delete: deleteMethod,
+    get,
+    patch
 };

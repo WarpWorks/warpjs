@@ -1,16 +1,20 @@
-const progressBarModal = require('./../progress-bar-modal');
+const Promise = require('bluebird');
+
 const carouselPagination = require('./carousel-pagination');
+const deleteEntity = require('./delete-entity');
+const patchEntity = require('./patch-entity');
+const progressBarModal = require('./../progress-bar-modal');
+const tabContentNavigation = require('./tab-content-navigation');
 
 module.exports = ($, result) => {
     progressBarModal.show($, 100);
     progressBarModal.hide();
 
-    // This simulate the click on tabs because we don't have IDs to link to.
-    $('.tab-content').on('click', '.nav.nav-tabs > li', function() {
-        const tabindex = $(this).data('tabindex');
-        $(this).closest('.tab-content').children('.tab-pane').removeClass('active');
-        $(this).closest('.tab-content').children(`.tab-pane[data-tabindex="${tabindex}"]`).addClass('active');
-    });
-
+    tabContentNavigation($);
     carouselPagination($);
+    deleteEntity($);
+    patchEntity($);
+
+    // TODO: add a sibling
+
 };

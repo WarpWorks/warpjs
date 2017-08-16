@@ -2,7 +2,7 @@
     <label class="col-xs-12">
         <span class="col-xs-2 control-label">{{label}}</span>
         <div class="col-xs-10">
-            <select class="form-control">
+            <select class="form-control" data-doc-level="{{model.docLevel}}">
                 <option data-literal="WarpJS_Enum_noSelection">------------</option>
                 {{#each model.literals}}
                     {{!-- FIXME: Add the selected attribute --}}
