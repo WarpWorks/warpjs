@@ -5,5 +5,4 @@ module.exports = ($) => {
         $(this).closest('.tab-content').children('.tab-pane').removeClass('active');
         $(this).closest('.tab-content').children(`.tab-pane[data-tabindex="${tabindex}"]`).addClass('active');
     });
-
 };

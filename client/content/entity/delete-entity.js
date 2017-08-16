@@ -16,6 +16,6 @@ module.exports = ($) => {
                 console.log("res ERRORS=", err);
             })
             .finally(() => {
-            })
+            });
     });
 };

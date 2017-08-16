@@ -1,5 +1,3 @@
-const Promise = require('bluebird');
-
 const carouselPagination = require('./carousel-pagination');
 const deleteEntity = require('./delete-entity');
 const patchEntity = require('./patch-entity');
@@ -16,5 +14,4 @@ module.exports = ($, result) => {
     patchEntity($);
 
     // TODO: add a sibling
-
 };

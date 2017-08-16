@@ -11,6 +11,10 @@ const entity = require('./entity');
 const home = require('./home');
 const schemaType = require('./schema-type');
 
+const ROUTE_OPTIONS = {
+    allowPatch: 'application/json'
+};
+
 module.exports = (baseUrl) => {
     const routesInfo = new RoutesInfo('/', baseUrl);
 
@@ -21,7 +25,7 @@ module.exports = (baseUrl) => {
     routesInfo.route('W2:content:domain-type', '/domains/{domain}/types/{type}', domainType);
     routesInfo.route('W2:content:schema-type', '/domains/{domain}/types/{type}/schema', schemaType);
     routesInfo.route('W2:content:entities', '/domains/{domain}/types/{type}/instances', entities);
-    routesInfo.route('W2:content:entity', '/domains/{domain}/types/{type}/instances/{id}', entity);
+    routesInfo.route('W2:content:entity', '/domains/{domain}/types/{type}/instances/{id}', entity, ROUTE_OPTIONS);
     routesInfo.route('W2:content:entity-relationship-page', '/domains/{domain}/types/{type}/instances/{id}/relationships/{relationship}/pages/{page}', entity);
 
     // routesInfo.route('W2:content:entity', '/entity/{domain}/{type}{?oid}')
