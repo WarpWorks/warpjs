@@ -7,6 +7,10 @@
           /
           {{_links.type.title}}
           :
+          <span class="glyphicon glyphicon-plus-sign"
+            data-action="create-new-entity"
+            data-url="{{_links.self.href}}"
+            ></span>
         <ol class="entities">
 {{#each _embedded.entities}}
           <li>

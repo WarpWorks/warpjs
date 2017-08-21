@@ -1,3 +1,4 @@
+<div class="relationship-panel-item" data-relationship-model="{{relationship.model.name}}">
 {{#if (isCsvRelationship)}}
     {{> relationship-panel-item-csv}}
 {{else if (isTableRelationshipPanelItem)}}
@@ -5,6 +6,8 @@
 {{else if (isCarouselRelationshipPanelItem)}}
     {{> relationship-panel-item-carousel}}
 {{else if (isPreviewRelationship)}}
+    TODO: How to do Preview Relationship?
 {{else}}
     TODO: Unknown relationship-panel-item style '{{style}}'.
 {{/if}}
+</div>

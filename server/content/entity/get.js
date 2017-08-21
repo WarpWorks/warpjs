@@ -34,10 +34,10 @@ module.exports = (req, res) => {
         }
     });
 
-    resource.link('schema', RoutesInfo.expand('W2:content:schema-type', {
-        domain,
-        type
-    }));
+    // resource.link('schema', RoutesInfo.expand('W2:content:schema-type', {
+    //     domain,
+    //     type
+    // }));
 
     resource.link('preview', RoutesInfo.expand('entity', {
         type,

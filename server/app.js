@@ -9,6 +9,7 @@ const content = require('./content');
 const extractAuthMiddlewares = require('./extract-auth-middlewares');
 const plugins = require('./plugins');
 const portal = require('./portal');
+const requestToken = require('./middlewares/request-token');
 
 module.exports = (Persistence, baseUrl, staticUrl) => {
     const app = express();
@@ -29,6 +30,8 @@ module.exports = (Persistence, baseUrl, staticUrl) => {
         maxAge: 3 * 60 * 60, // 3 hours
         sameSite: true
     }));
+
+    app.use(requestToken);
 
     const authMiddlewares = extractAuthMiddlewares(config);
 

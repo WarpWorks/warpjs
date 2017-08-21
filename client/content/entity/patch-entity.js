@@ -9,10 +9,12 @@ module.exports = ($) => {
 
         const ajaxOptions = {
             method: 'PATCH',
-            data: {
+            contentType: 'application/json',
+            data: JSON.stringify({
                 updatePath,
                 updateValue
-            }
+            }),
+            dataType: 'json'
         };
 
         return Promise.resolve()

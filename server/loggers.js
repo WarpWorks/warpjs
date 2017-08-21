@@ -13,4 +13,6 @@ winston.loggers.add('W2:content:entity:patch', {
     }
 });
 
-module.exports = winston.loggers;
+module.exports = (loggerName, level, req, message, data) => {
+    winston.loggers.get(loggerName)[level](`[User:${req.warpjsUser}][Token:${req.warpjsRequestToken}]: ${message}`, data);
+};

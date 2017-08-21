@@ -20,33 +20,8 @@
                 {{/each}}
             </tbody>
         </table>
-        <form class="form-inline">
-            <div class="form-group">
-                <div class="input-group">
-                    <div class="input-group-addon">
-                        {{#if relationship._links.previousPage}}
-                            <a href="#" data-direction="left" data-url="{{relationship._links.previousPage.href}}">
-                                <span class="glyphicon glyphicon-chevron-left"></span>
-                            </a>
-                        {{else}}
-                            <span class="glyphicon glyphicon-chevron-left"></span>
-                        {{/if}}
-                    </div>
-                    <div class="input-group-addon">
-                        {{relationship.pageStart}} - {{relationship.pageEnd}} / {{relationship.totalSize}}
-                    </div>
-                    <div class="input-group-addon">
-                        {{#if relationship._links.nextPage}}
-                            <a href="#" data-direction="right" data-url="{{relationship._links.nextPage.href}}">
-                                <span class="glyphicon glyphicon-chevron-right"></span>
-                            </a>
-                        {{else}}
-                            <span class="glyphicon glyphicon-chevron-right"></span>
-                        {{/if}}
-                    </div>
-                </div>
-            </div>
-        </form>
+
+        {{> table-navigation}}
     </div>
 
     <div class="alert alert-warning">

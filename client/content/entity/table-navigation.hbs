@@ -1,0 +1,25 @@
+<form class="form-inline">
+  <div class="form-group table-pagination"
+       data-pagination-page-start="{{relationship.pageStart}}"
+       data-pagination-total="{{relationship.totalSize}}"
+       >
+    <div class="input-group">
+      <div class="input-group-addon">
+        {{> ../templates/chevron this direction="left" pageLimit=relationship.pageStart action="paginate-table" url=relationship._links.previousPage.href}}
+      </div>
+      <div class="input-group-addon">
+        <span class="table-pagination-page-start">{{relationship.pageStart}}</span>
+        -
+        <span class="table-pagination-page-end">{{relationship.pageEnd}}</span>
+        /
+        <span class="table-pagination-total-size">{{relationship.totalSize}}</span>
+      </div>
+      <div class="input-group-addon">
+        {{> ../templates/chevron this direction="right" pageLimit=relationship.totalSize action="paginate-table" url=relationship._links.nextPage.href}}
+      </div>
+      <div class="input-group-addon">
+        <span class="glyphicon glyphicon-plus-sign"></span>
+      </div>
+    </div>
+  </div>
+</form>
