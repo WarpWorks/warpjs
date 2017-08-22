@@ -1,3 +1,5 @@
+const Promise = require('bluebird');
+
 const createModal = require('./../create-modal');
 const quantityStructure = require('./../domain/quantity-structure');
 const setDefaultAveragesAndGenerateTestData = require('./../domain/set-default-averages-and-generate-test-data');
@@ -23,21 +25,24 @@ module.exports = () => {
     reqData = JSON.stringify(reqData, null, 2);
 
     // Post to server
-    $.ajax({
+    const ajaxOptions = {
         url: warpGlobals.$active._links.generateTestData.href,
         type: 'POST',
         data: reqData,
         contentType: 'application/json; charset=utf-8',
-        dataType: "json",
-        success: function(result) {
+        dataType: "json"
+    };
+
+    return Promise.resolve()
+        .then(() => $.ajax(ajaxOptions))
+        .then((result) => {
             if (result.success) {
                 $("#testAppStatusD").html("<div class='alert alert-info'><strong>OK:</strong> Successfully started generation of test data (" + cnt + " entities)</div>");
             } else {
                 $("#testAppStatusD").html("<div class='alert alert-danger'><strong>Error:</strong> Failed to generate test data!</div>");
             }
-        },
-        error: function() {
+        })
+        .catch(() => {
             console.log("Error while generate test data!");
-        }
-    });
+        });
 };

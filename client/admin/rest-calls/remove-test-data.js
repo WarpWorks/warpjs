@@ -1,3 +1,5 @@
+const Promise = require('bluebird');
+
 const warpGlobals = require('./../warp-globals');
 
 module.exports = () => {
@@ -6,22 +8,25 @@ module.exports = () => {
     console.log("removeTestData for: " + reqData.domainName);
     reqData = JSON.stringify(reqData, null, 2);
 
-    // Post to server
-    $.ajax({
+    const ajaxOptions = {
         url: warpGlobals.$active._links.removeTestData.href,
         type: 'POST',
         data: reqData,
         contentType: 'application/json; charset=utf-8',
-        dataType: "json",
-        success: function(result) {
+        dataType: "json"
+    };
+
+    // Post to server
+    return Promise.resolve()
+        .then(() => $.ajax(ajaxOptions))
+        .then((result) => {
             if (result.success) {
                 $("#testAppStatusD").html("<div class='alert alert-info'><strong>OK:</strong> Successfully removed test data</div>");
             } else {
                 $("#testAppStatusD").html("<div class='alert alert-danger'><strong>Error:</strong> Failed to remove test data!</div>");
             }
-        },
-        error: function() {
+        })
+        .catch(() => {
             console.log("Error while removing test data!");
-        }
-    });
+        });
 };

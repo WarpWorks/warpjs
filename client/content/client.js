@@ -1,3 +1,4 @@
+const Promise = require('bluebird');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const EntityProxy = require('./entity-proxy');
@@ -296,24 +297,27 @@ class WarpJSClient extends WarpWidget {
         // Create JSON Data
         var reqData = JSON.stringify(commandList, null, 2);
 
-        // Post to server
-        $.ajax({
+        const ajaxOptions = {
             url: this.links.crud.href,
             type: 'POST',
             data: reqData,
             contentType: 'application/json; charset=utf-8',
-            dataType: "json",
-            success: (result) => {
+            dataType: "json"
+        };
+
+        // Post to server
+        return Promise.resolve()
+            .then(() => $.ajax(ajaxOptions))
+            .then((result) => {
                 if (result.success) {
                     handleResult(result);
                 } else {
                     warpjsUtils.trace(1, "WarpJSClient.processCRUDcommands():\n-  Failed to post CRUD commands - " + result.error);
                 }
-            },
-            error: () => {
+            })
+            .catch(() => {
                 warpjsUtils.trace(1, "WarpJSClient.processCRUDcommands():\n-  Error while posting CRUD commands!");
-            }
-        });
+            });
     }
 }
 
