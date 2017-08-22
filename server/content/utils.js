@@ -28,7 +28,7 @@ function basicRender(bundles, data, req, res) {
     res.render('content', resource.toJSON());
 }
 
-function sendHal(req, res, resource) {
+function sendHal(req, res, resource, status) {
     resource.link('warpjsContentHome', RoutesInfo.expand('W2:content:home'));
     if (req.params.domain) {
         resource.link('warpjsContentDomain', RoutesInfo.expand('W2:content:domain', {
@@ -36,7 +36,7 @@ function sendHal(req, res, resource) {
         }));
     }
 
-    warpjsUtils.sendHal(req, res, resource, RoutesInfo);
+    warpjsUtils.sendHal(req, res, resource, RoutesInfo, status);
 }
 
 function sendHalOnly(req, res, resource, status) {

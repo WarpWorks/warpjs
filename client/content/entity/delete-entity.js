@@ -1,3 +1,5 @@
+const Promise = require('bluebird');
+
 module.exports = ($) => {
     $(document).on('click', '[data-action="delete-entity"]', function() {
         console.log("delete:", $(this).data('url'));

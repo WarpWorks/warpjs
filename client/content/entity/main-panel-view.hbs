@@ -1,15 +1,17 @@
 <div id="WarpJS_mainPV_panel" class="panel panel-success">
-    <div class="panel-heading">
-        {{type}}: {{displayName}}
+  <div class="panel-heading">
+    {{type}}: {{displayName}}
 
-        <span id="addEntityA"
-            class="glyphicon glyphicon-share pull-right"
-            data-toggle="tooltip"
-            data-action="add-sibling"
-            title="Add sibling"></span>
-    </div>
+    {{#unless isRootInstance}}
+    <span class="glyphicon glyphicon-share pull-right"
+        data-toggle="tooltip"
+        data-warpjs-action="add-sibling"
+        data-warpjs-url="{{_links.sibling.href}}"
+        title="Add sibling"></span>
+    {{/unless}}
+  </div>
 
-    <div class="panel-body">
-        {{> panel-body formResource}}
-    </div>
+  <div class="panel-body">
+      {{> panel-body formResource}}
+  </div>
 </div>

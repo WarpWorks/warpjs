@@ -34,12 +34,12 @@ module.exports = (req, res) => {
         }
     });
 
-    // resource.link('schema', RoutesInfo.expand('W2:content:schema-type', {
-    //     domain,
-    //     type
-    // }));
-
     resource.link('preview', RoutesInfo.expand('entity', {
+        type,
+        id
+    }));
+    resource.link('sibling', RoutesInfo.expand('W2:content:entity-sibling', {
+        domain,
         type,
         id
     }));
@@ -64,7 +64,8 @@ module.exports = (req, res) => {
             return Promise.resolve()
                 .then(() => entity.getInstance(persistence, id))
                 .then((instance) => {
-                    resource.displayName = instance.Name || instance.name || `${instance.type}[${instance.id}]`;
+                    resource.displayName = entity.getDisplayName(instance);
+                    resource.isRootInstance = instance.isRootInstance;
 
                     return Promise.resolve()
                         .then(() => entity.getInstancePath(persistence, instance))
@@ -78,9 +79,7 @@ module.exports = (req, res) => {
                         });
                 })
                 .then(() => utils.sendHal(req, res, resource))
-                .finally(() => {
-                    persistence.close();
-                });
+                .finally(() => persistence.close());
         }
     });
 };

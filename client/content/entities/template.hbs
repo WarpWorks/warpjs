@@ -1,27 +1,31 @@
 {{#partial "content"}}
-  <div class="container" role="main">
-    <div class="row">
-      <div class="col-xs-12">
+<div class="container" role="main" data-warpjs-status="instances">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="panel panel-success">
+        <div class="panel-heading">
           Available entities for
           <a href="{{_links.domain.href}}">{{_links.domain.title}}</a>
           /
           {{_links.type.title}}
           :
-          <span class="glyphicon glyphicon-plus-sign"
-            data-action="create-new-entity"
-            data-url="{{_links.self.href}}"
-            ></span>
-        <ol class="entities">
-{{#each _embedded.entities}}
-          <li>
-              <a href="{{_links.self.href}}">{{name}}</a>
-              {{#if isRootInstance}}[isRootInstance]{{/if}}
-          </li>
-{{/each}}
-        </ol>
-      </div>
+        </div>
+
+    <div class="panel-body">
+     {{#each _embedded.entities}}
+       <div class="row">
+         <div class="col-xs-12" data-warpjs-url="{{_links.self.href}}">
+           <span class="glyphicon glyphicon-pencil" data-warpjs-action="edit"></span>
+           <span class="glyphicon glyphicon-trash" data-warpjs-action="delete"></span>
+           &nbsp;&nbsp;&nbsp;
+           <a href="{{_links.self.href}}">{{name}}</a>
+           {{#if isRootInstance}}[isRootInstance]{{/if}}
+         </div>
+       </div>
+     {{/each}}
     </div>
   </div>
+</div>
 {{/partial}}
 
 {{> ../templates/page}}

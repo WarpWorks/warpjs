@@ -1,3 +1,4 @@
+const addSibling = require('./add-sibling');
 const carouselPagination = require('./carousel-pagination');
 const deleteEntity = require('./delete-entity');
 const patchEntity = require('./patch-entity');
@@ -12,8 +13,7 @@ module.exports = ($, result) => {
     tabContentNavigation($);
     carouselPagination($);
     deleteEntity($);
+    addSibling($);
     patchEntity($);
     tablePanelItem($);
-
-    // TODO: add a sibling
 };
