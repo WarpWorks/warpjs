@@ -3,16 +3,25 @@ const winston = require('winston');
 
 const config = require('./config');
 
-winston.loggers.add('W2:content:entity:patch', {
+winston.loggers.add('W2:content:entity', {
     console: {
         level: 'info',
         colorize: true
     },
     file: {
-        filename: path.join(config.folders.w2projects, 'logs', 'patch.log')
+        filename: path.join(config.folders.w2projects, 'logs', 'actions.log')
     }
 });
 
-module.exports = (loggerName, level, req, message, data) => {
-    winston.loggers.get(loggerName)[level](`[User:${req.warpjsUser}][Token:${req.warpjsRequestToken}]: ${message}`, data);
+module.exports = (req, message, data) => {
+    const dataToLog = {
+        data,
+        req: {
+            method: req.method,
+            url: req.originalUrl,
+            user: req.warpjsUser,
+            token: req.warpjsRequestToken
+        }
+    };
+    winston.loggers.get('W2:content:entity').info(message, dataToLog);
 };

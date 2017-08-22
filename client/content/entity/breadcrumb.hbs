@@ -1,13 +1,15 @@
-<ol id="WarpJS-breadcrumb" class="breadcrumb">
-{{#if isRootInstance}}
+<ol class="breadcrumb">
+  {{#if isRootInstance}}
     <li class="breadcrumb-item"><a href="{{_links.self.href}}">{{type}}</a></li>
-{{else if isAddNewEntity}}
-    <li class="breadcrumb-item">Create new {{type}}</li>
-{{else}}
+  {{else}}
     {{#each breadcrumbs}}
+      {{#if @last}}
+        <li class="active">{{_links.self.title}}</li>
+      {{else}}
         <li class="breadcrumb-item">
-            <a href="{{_links.self.href}}" data-toggle="tooltip" title="{{type}}">{{_links.self.title}}</a>
+          <a href="{{_links.self.href}}" data-toggle="tooltip" title="{{type}}">{{_links.self.title}}</a>
         </li>
+      {{/if}}
     {{/each}}
-{{/if}}
+  {{/if}}
 </ol>

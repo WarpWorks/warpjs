@@ -1,7 +1,7 @@
 const Promise = require('bluebird');
 
 module.exports = ($) => {
-    $(document).on('click', '[data-action="delete-entity"]', function() {
+    $(document).on('click', '[data-warpjs-action="delete"][data-warpjs-url]', function() {
         console.log("delete:", $(this).data('url'));
 
         const ajaxConfig = {

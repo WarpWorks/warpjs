@@ -1,4 +1,9 @@
 const addChild = require('./add-child');
+
+const actionDeleteRow = require('./action-delete-row');
+const actionLink = require('./action-link');
+const actionPreview = require('./action-preview');
+
 const addSibling = require('./add-sibling');
 const associationModal = require('./association-modal');
 const carouselPagination = require('./carousel-pagination');
@@ -11,6 +16,12 @@ const tablePanelItem = require('./table-panel-item');
 module.exports = ($, result) => {
     progressBarModal.show($, 100);
     progressBarModal.hide();
+
+    const instanceDoc = $('[data-warpjs-status="instance"]');
+
+    actionDeleteRow($, instanceDoc);
+    actionLink($, instanceDoc);
+    actionPreview($, instanceDoc);
 
     associationModal($);
     tabContentNavigation($);

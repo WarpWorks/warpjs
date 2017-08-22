@@ -1,7 +1,6 @@
-const debug = require('debug')('W2:content:entity:patch');
 const Promise = require('bluebird');
 
-const logger = require('./../../loggers').bind(null, 'W2:content:entity:patch', 'info');
+const logger = require('./../../loggers');
 const serverUtils = require('./../../utils');
 
 function updateDocument(persistence, entity, instance, req, res) {
@@ -10,24 +9,15 @@ function updateDocument(persistence, entity, instance, req, res) {
     const id = req.params.id;
     const payload = req.body;
 
-    debug('payload=', payload);
-
     return Promise.resolve()
         .then(() => entity.patch(payload.updatePath, 0, instance, payload.updateValue))
-        .then((oldValue) => logger(req, `Updating ${domain}/${type}/${id}`, {
+        .then((oldValue) => logger(req, `${domain}/${type}/${id}`, {
             updatePath: payload.updatePath,
             newValue: payload.updateValue,
             oldValue
         }))
         .then(() => entity.updateDocument(persistence, instance))
-        .then(() => res.status(204).send())
-        .catch((err) => res.status(500).send(err.message))
-        .finally(() => persistence.close());
-}
-
-function documentDoesNotExist(error, req, res) {
-    console.log("error=", error);
-    res.status(404).send();
+        .then(() => res.status(204).send());
 }
 
 module.exports = (req, res) => {
@@ -35,7 +25,10 @@ module.exports = (req, res) => {
     const type = req.params.type;
     const id = req.params.id;
 
-    console.log("TODO: apply action");
+    // FIXME: What happens for a password? The password should not be managed
+    // with the "content" side of things, and should not, be using this
+    // end-point.
+    logger(req, "Trying to patch", req.body);
 
     const persistence = serverUtils.getPersistence(domain);
     const entity = serverUtils.getEntity(domain, type);
@@ -44,11 +37,11 @@ module.exports = (req, res) => {
         .then(() => entity.getInstance(persistence, id))
         .then(
             (instance) => updateDocument(persistence, entity, instance, req, res),
-            (err) => documentDoesNotExist(err, req, res)
+            () => serverUtils.documentDoesNotExist(req, res)
         )
         .catch((err) => {
-            console.log(`PATCH ${req.originalUrl}: ERROR=`, err);
-            throw err;
+            logger(req, "Failed patch", {err});
+            res.status(500).send(err.message); // FIXME: Don't send the err.
         })
-    ;
+        .finally(() => persistence.close());
 };

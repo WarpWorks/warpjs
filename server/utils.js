@@ -14,7 +14,12 @@ function getRootEntity(domain) {
     return warpCore.getDomainByName(domain || config.domainName).getRootInstance();
 }
 
+function documentDoesNotExist(req, res) {
+    res.status(404).send();
+}
+
 module.exports = {
+    documentDoesNotExist,
     getEntity,
     getPersistence,
     getRootEntity
