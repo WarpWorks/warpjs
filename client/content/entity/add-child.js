@@ -1,7 +1,7 @@
 const postAndRedirect = require('./post-and-redirect');
 
 module.exports = ($) => {
-    $('[data-warpjs-status="instance"] [data-warpjs-action="add-sibling"]').on('click', function() {
+    $('[data-warpjs-status="instance"]').on('click', '[data-warpjs-action="add-child"]', function() {
         postAndRedirect($, this);
     });
 };

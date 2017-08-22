@@ -3,10 +3,15 @@
         <span class="col-xs-2 control-label">{{label}}</span>
         <div class="col-xs-10">
             <ul class="nav nav-pills">
+                <li>
+                    <span class="glyphicon glyphicon-list-alt"
+                        data-warpjs-action="relationship-csv-modal"
+                        data-warpjs-url="{{relationship.model._links.self.href}}"
+                        ></span>
+                </li>
                 {{#each relationship.model.data}}
                     <li><a href="{{this.[0]}}">{{this.[1]}}</a></li>
                 {{/each}}
-                <li><a href="#"><span class="glyphicon glyphicon-list-alt"></span></a></li>
                 {{!-- TODO: Add click event on icon --}}
             </ul>
         </div>

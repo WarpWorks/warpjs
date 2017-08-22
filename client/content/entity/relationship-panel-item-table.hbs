@@ -1,4 +1,4 @@
-<div class="form-group">
+<div class="form-group" data-warpjs-relationship-url="{{relationship._links.self.href}}">
     <div>
         <table class="table table-sm table-hover">
             <thead>
@@ -21,7 +21,7 @@
             </tbody>
         </table>
 
-        {{> table-navigation}}
+        {{> table-navigation addUrl=relationship._links.self.href}}
     </div>
 
     <div class="alert alert-warning">

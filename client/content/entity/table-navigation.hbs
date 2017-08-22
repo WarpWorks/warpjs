@@ -18,7 +18,10 @@
         {{> ../templates/chevron this direction="right" pageLimit=relationship.totalSize action="paginate-table" url=relationship._links.nextPage.href}}
       </div>
       <div class="input-group-addon">
-        <span class="glyphicon glyphicon-plus-sign"></span>
+        <span class="glyphicon glyphicon-plus-sign"
+          data-warpjs-action="add-child"
+          data-warpjs-url="{{addUrl}}"
+          ></span>
       </div>
     </div>
   </div>

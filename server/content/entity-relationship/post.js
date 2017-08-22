@@ -9,12 +9,16 @@ module.exports = (req, res) => {
     const domain = req.params.domain;
     const type = req.params.type;
     const id = req.params.id;
+    const relationship = req.params.relationship;
 
     const persistence = serverUtils.getPersistence(domain);
     const entity = serverUtils.getEntity(domain, type);
+    const relationshipEntity = entity.getRelationships()
+        .filter((relationshipEntity) => relationshipEntity.name === relationship)[0];
+    const targetEntity = relationshipEntity.getTargetEntity();
 
     const resource = warpjsUtils.createResource(req, {
-        title: `Sibling for domain ${domain} - Type ${type} - Id ${id}`,
+        title: `Child for domain ${domain} - Type ${type} - Id ${id}`,
         domain,
         type,
         id
@@ -22,13 +26,13 @@ module.exports = (req, res) => {
 
     return Promise.resolve()
         .then(() => entity.getInstance(persistence, id))
-        .then((instance) => entity.createSiblingForInstance(instance))
-        .then((sibling) => entity.createDocument(persistence, sibling))
+        .then((instance) => entity.createChildForInstance(instance, relationshipEntity))
+        .then((child) => targetEntity.createDocument(persistence, child))
         .then((newDoc) => newDoc.id)
         .then((newId) => {
             const redirectUrl = RoutesInfo.expand('W2:content:entity', {
                 domain,
-                type,
+                type: targetEntity.name,
                 id: newId
             });
 
@@ -43,7 +47,7 @@ module.exports = (req, res) => {
             }
         })
         .catch((err) => {
-            console.log("entity-sibling(): err=", err);
+            console.log("entity-child(): err=", err);
             resource.message = err.message;
             utils.sendHal(req, res, resource, 500);
         })
