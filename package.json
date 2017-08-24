@@ -62,7 +62,7 @@
     "@warp-works/warpjs-session-plugin": "latest",
     "@warp-works/warpjs-utils": "latest",
     "babel-core": "6.26.0",
-    "babel-loader": "7.1.1",
+    "babel-loader": "7.1.2",
     "babel-preset-es2015": "6.24.1",
     "babel-preset-stage-0": "6.24.1",
     "body-parser": "1.17.2",

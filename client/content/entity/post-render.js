@@ -12,6 +12,7 @@ const patchEntity = require('./patch-entity');
 const progressBarModal = require('./../progress-bar-modal');
 const tabContentNavigation = require('./tab-content-navigation');
 const tablePanelItem = require('./table-panel-item');
+const wysiwygEditor = require('./wysiwyg-editor');
 
 module.exports = ($, result) => {
     progressBarModal.show($, 100);
@@ -22,6 +23,7 @@ module.exports = ($, result) => {
     actionDeleteRow($, instanceDoc);
     actionLink($, instanceDoc);
     actionPreview($, instanceDoc);
+    wysiwygEditor($, instanceDoc);
 
     associationModal($);
     tabContentNavigation($);

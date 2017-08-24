@@ -3,32 +3,15 @@ const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const utils = require('./../utils');
-const warpCore = require('./../../../lib/core');
-
-function nonAbstractOnly(entity) {
-    return !entity.isAbstract;
-}
-
-function entityMap(domain, entity) {
-    const entityData = {
-        domain,
-        type: entity.name,
-        isDefault: entity.isRootInstance || undefined
-    };
-
-    const typeUrl = RoutesInfo.expand('W2:content:domain-type', entityData);
-    const resource = warpjsUtils.createResource(typeUrl, entityData);
-
-    resource.link('instances', {
-        href: RoutesInfo.expand('W2:content:entities', entityData),
-        title: `List of instances for ${entity.name}`
-    });
-
-    return resource;
-}
+const entityMap = require('./entity-map');
+const linkableEntity = require('./linkable-entity');
+const nonAbstractOnly = require('./non-abstract-only');
+const serverUtils = require('./../../utils');
 
 module.exports = (req, res) => {
     const domain = req.params.domain;
+    const profile = req.query.profile;
+
     const resource = warpjsUtils.createResource(req, {
         title: `Domain ${domain} - Types`
     });
@@ -47,10 +30,13 @@ module.exports = (req, res) => {
         },
 
         [warpjsUtils.constants.HAL_CONTENT_TYPE]: () => {
-            const schema = warpCore.getDomainByName(domain);
+            const schema = serverUtils.getDomain(domain);
+
             const entities = schema.getEntities()
                 .filter(nonAbstractOnly)
-                .map(entityMap.bind(null, domain));
+                .filter((entity) => linkableEntity(profile, entity))
+                .sort(warpjsUtils.byPositionThenName)
+                .map((entity) => entityMap(domain, entity));
 
             resource.link('domain', {
                 title: domain,

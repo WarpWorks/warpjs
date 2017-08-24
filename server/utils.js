@@ -6,8 +6,12 @@ function getPersistence(domain) {
     return new Persistence(config.persistence.host, domain || config.domainName);
 }
 
+function getDomain(domain) {
+    return warpCore.getDomainByName(domain || config.domainName);
+}
+
 function getEntity(domain, type) {
-    return warpCore.getDomainByName(domain || config.domainName).getEntityByName(type);
+    return getDomain(domain).getEntityByName(type);
 }
 
 function getRootEntity(domain) {
@@ -20,6 +24,7 @@ function documentDoesNotExist(req, res) {
 
 module.exports = {
     documentDoesNotExist,
+    getDomain,
     getEntity,
     getPersistence,
     getRootEntity

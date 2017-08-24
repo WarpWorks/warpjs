@@ -5,7 +5,7 @@ const warpjsUtils = require('@warp-works/warpjs-utils');
 const serverUtils = require('./../../utils');
 const utils = require('./../utils');
 
-function documentMapper(domain, instance) {
+function documentMapper(entity, domain, instance) {
     const documentUrl = RoutesInfo.expand('W2:content:entity', {
         domain,
         type: instance.type,
@@ -16,7 +16,7 @@ function documentMapper(domain, instance) {
         isRootInstance: instance.isRootInstance || undefined,
         id: instance.id,
         type: instance.type,
-        name: instance.name || instance.Name || `${instance.type}[${instance.id}]`
+        name: entity.getDisplayName(instance)
     });
 }
 
@@ -62,7 +62,7 @@ module.exports = (req, res) => {
             return Promise.resolve()
                 .then(() => entity.getDocuments(persistence))
                 .then((documents) => {
-                    const embedded = documents.map(documentMapper.bind(null, domain));
+                    const embedded = documents.map((instance) => documentMapper(entity, domain, instance));
                     resource.embed('entities', embedded);
                 })
                 .then(() => utils.sendHal(req, res, resource))

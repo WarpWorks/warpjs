@@ -6,7 +6,6 @@ const WarpJSError = require('@warp-works/warpjs-utils');
 
 const aggregationQuery = require('./aggregation-query');
 const findAssocTargetOptions = require('./find-association-target-options');
-const FetchListOfContentChildrenEntities = require('./fetch-list-of-content-children-entities');
 const findById = require('./find-by-id');
 const getRootInstance = require('./get-root-instance');
 const update = require('./update');
@@ -19,7 +18,6 @@ function register(implementations, implementation) {
 const IMPLEMENTATIONS = [
     aggregationQuery,
     findAssocTargetOptions,
-    FetchListOfContentChildrenEntities,
     findById,
     getRootInstance,
     update

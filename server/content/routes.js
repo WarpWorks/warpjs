@@ -23,7 +23,7 @@ module.exports = (baseUrl) => {
     routesInfo.route('W2:content:home', '/', home);
     routesInfo.route('W2:content:domains', '/domain', domains);
     routesInfo.route('W2:content:domain', '/domain/{domain}', domain);
-    routesInfo.route('W2:content:domain-types', '/domain/{domain}/type', domainTypes);
+    routesInfo.route('W2:content:domain-types', '/domain/{domain}/type{?profile}', domainTypes);
     routesInfo.route('W2:content:domain-type', '/domain/{domain}/type/{type}', domainType);
     // routesInfo.route('W2:content:schema-type', '/domain/{domain}/type/{type}/schema', schemaType);
     routesInfo.route('W2:content:entities', '/domain/{domain}/type/{type}/instance', entities);

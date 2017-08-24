@@ -43,6 +43,10 @@ module.exports = (req, res) => {
         type,
         id
     }));
+    resource.link('types', RoutesInfo.expand('W2:content:domain-types', {
+        domain,
+        profile: 'linkable'
+    }));
 
     res.format({
         html() {
