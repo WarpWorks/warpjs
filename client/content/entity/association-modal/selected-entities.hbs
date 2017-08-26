@@ -1,11 +1,5 @@
 {{#each entities as |entity idx|}}
-    <li {{#unless idx}}class="active"{{/unless}}
-      data-warpjs-type="{{entity.type}}"
-      data-warpjs-id="{{entity.id}}"
-      data-warpjs-display-name="{{entity.displayName}}"
-      data-warpjs-relationship-description="{{entity.relnDesc}}"
-      data-warpjs-doc-level="{{entity.docLevel}}"
-      ><a href="#">{{entity.displayName}}</a></li>
+    {{> selected-entity entity idx=idx}}
 {{else}}
     <li class="alert alert-warning">None selected</li>
 {{/each}}

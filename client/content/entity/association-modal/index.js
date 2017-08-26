@@ -6,6 +6,7 @@ const constants = require('./constants');
 const initializeSelectedEntities = require('./initialize-selected-entities');
 const progressBarModal = require('./../../progress-bar-modal');
 const relationshipDescriptionModified = require('./relationship-description-modified');
+const removeSelectionEntities = require('./remove-selection-entities');
 const template = require('./template.hbs');
 const updateSelectedDetails = require('./update-selected-details');
 const updateSelectionTypes = require('./update-selection-types');
@@ -23,6 +24,7 @@ module.exports = ($, instanceDoc) => {
                     browseSelectedEntities($, instanceDoc);
                     relationshipDescriptionModified($, instanceDoc);
                     addSelectionEntities($, instanceDoc, this);
+                    removeSelectionEntities($, instanceDoc, this);
                 }
             })
             .then(() => progressBarModal.show($, 40))

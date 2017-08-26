@@ -4,6 +4,7 @@ const template = require('./selected-details.hbs');
 module.exports = ($, instanceDoc) => {
     const entities = $(`${constants.DIALOG_SELECTOR} .warpjs-selected-entities li.active`, instanceDoc)
         .map((idx, element) => ({
+            type: $(element).data('warpjsType'),
             id: $(element).data('warpjsId'),
             displayName: $(element).data('warpjsDisplayName'),
             relationshipDescription: $(element).data('warpjsRelationshipDescription'),

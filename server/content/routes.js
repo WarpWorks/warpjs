@@ -6,9 +6,9 @@ const domain = require('./domain');
 const domains = require('./domains');
 const domainType = require('./domain-type');
 const domainTypes = require('./domain-types');
-const entities = require('./entities');
+const instances = require('./instances');
 const entity = require('./entity');
-const entityRelationship = require('./entity-relationship');
+const instanceRelationship = require('./instance-relationship');
 const entitySibling = require('./entity-sibling');
 const home = require('./home');
 // const schemaType = require('./schema-type');
@@ -26,10 +26,10 @@ module.exports = (baseUrl) => {
     routesInfo.route('W2:content:entities', '/domain/{domain}/type{?profile}', domainTypes);
     routesInfo.route('W2:content:entity', '/domain/{domain}/type/{type}{?profile}', domainType);
     // routesInfo.route('W2:content:schema-type', '/domain/{domain}/type/{type}/schema', schemaType);
-    routesInfo.route('W2:content:instances', '/domain/{domain}/type/{type}/instance', entities);
+    routesInfo.route('W2:content:instances', '/domain/{domain}/type/{type}/instance', instances);
     routesInfo.route('W2:content:instance', '/domain/{domain}/type/{type}/instance/{id}', entity, ROUTE_OPTIONS);
     routesInfo.route('W2:content:instance-sibling', '/domain/{domain}/type/{type}/instance/{id}/sibling', entitySibling);
-    routesInfo.route('W2:content:instance-relationship', '/domain/{domain}/type/{type}/instance/{id}/relationship/{relationship}', entityRelationship);
+    routesInfo.route('W2:content:instance-relationship', '/domain/{domain}/type/{type}/instance/{id}/relationship/{relationship}', instanceRelationship, ROUTE_OPTIONS);
     routesInfo.route('W2:content:instance-relationship-page', '/domain/{domain}/type/{type}/instance/{id}/relationship/{relationship}/page/{page}', entity);
 
     routesInfo.route('W2:content:schema-domain', '/schema/{domain}')

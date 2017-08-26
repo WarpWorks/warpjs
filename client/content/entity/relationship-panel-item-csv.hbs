@@ -11,6 +11,7 @@
           <span class="glyphicon glyphicon-list-alt"
               data-warpjs-action="relationship-csv-modal"
               data-warpjs-url="{{relationship._links.self.href}}"
+              data-warpjs-type="{{relationship.model.name}}"
               data-warpjs-types-url="{{relationship._links.types.href}}"
               data-warpjs-doc-level="{{relationship.docLevel}}"
               data-warpjs-doc-name="{{name}}"
@@ -18,16 +19,7 @@
               ></span>
         </li>
         {{#each relationship.model._embedded.entities as |entity|}}
-          <li class="warpjs-selected-item"
-              data-warpjs-type="{{entity.type}}"
-              data-warpjs-id="{{entity.id}}"
-              data-warpjs-display-name="{{entity.displayName}}"
-              data-warpjs-url="{{entity._links.self.href}}"
-              data-warpjs-relationship-description="{{entity.relnDesc}}"
-              data-warpjs-doc-level="{{entity.docLevel}}"
-              >
-            <a href="{{entity._links.self.href}}" title="{{entity.relnDesc}}">{{entity.displayName}}</a>
-          </li>
+          {{> relationship-panel-item-csv-item entity}}
         {{/each}}
       </ul>
     </div>

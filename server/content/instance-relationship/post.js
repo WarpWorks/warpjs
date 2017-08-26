@@ -2,6 +2,7 @@ const Promise = require('bluebird');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const logger = require('./../../loggers');
 const serverUtils = require('./../../utils');
 const utils = require('./../utils');
 
@@ -10,15 +11,34 @@ module.exports = (req, res) => {
     const type = req.params.type;
     const id = req.params.id;
     const relationship = req.params.relationship;
+    const payload = req.body;
 
     const persistence = serverUtils.getPersistence(domain);
     const entity = serverUtils.getEntity(domain, type);
-    const relationshipEntity = entity.getRelationships()
-        .filter((relationshipEntity) => relationshipEntity.name === relationship)[0];
+    const relationshipEntity = entity.getRelationshipByName(relationship);
+
+    if (payload.id && payload.type) {
+        // Create a new association
+        logger(req, "Trying to create new association", req.body);
+        return Promise.resolve()
+            .then(() => entity.getInstance(persistence, id))
+            .then((instance) => relationshipEntity.addAssociation(instance, payload))
+            .then((instance) => entity.updateDocument(persistence, instance))
+            .then(() => logger(req, "New association added"))
+            .then(() => res.status(204).send())
+            .catch((err) => {
+                logger(req, "Failed create new association", {err});
+                res.status(500).send(err.message); // FIXME: Don't send the err.
+            })
+            .finally(() => persistence.close())
+        ;
+    }
+
+    // Create a new aggregation
     const targetEntity = relationshipEntity.getTargetEntity();
 
     const resource = warpjsUtils.createResource(req, {
-        title: `Child for domain ${domain} - Type ${type} - Id ${id}`,
+        title: `Child for domain ${domain} - Type ${type} - Id ${id} - Relationship ${relationship}`,
         domain,
         type,
         id
