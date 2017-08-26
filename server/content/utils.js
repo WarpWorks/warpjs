@@ -14,7 +14,7 @@ function createResourceFromDocument(instance) {
         data.id = instance._id;
     }
 
-    return warpjsUtils.createResource(RoutesInfo.expand('W2:content:entity', data), instance);
+    return warpjsUtils.createResource(RoutesInfo.expand('W2:content:instance', data), instance);
 }
 
 function basicRender(bundles, data, req, res) {
@@ -50,7 +50,7 @@ function basicRenderOld(name, data, req, res) {
     resource.baseUrl = '/static';
 
     resource.link('w2WarpJSHome', RoutesInfo.expand('W2:content:home'));
-    resource.link('w2WarpJSDomain', RoutesInfo.expand('W2:content:entities', data));
+    resource.link('w2WarpJSDomain', RoutesInfo.expand('W2:content:instances', data));
 
     res.render(name, resource.toJSON());
 }

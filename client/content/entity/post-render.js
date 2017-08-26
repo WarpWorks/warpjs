@@ -23,9 +23,9 @@ module.exports = ($, result) => {
     actionDeleteRow($, instanceDoc);
     actionLink($, instanceDoc);
     actionPreview($, instanceDoc);
+    associationModal($, instanceDoc);
     wysiwygEditor($, instanceDoc);
 
-    associationModal($);
     tabContentNavigation($);
     carouselPagination($);
     deleteEntity($);

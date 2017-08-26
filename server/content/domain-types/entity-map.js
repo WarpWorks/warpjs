@@ -8,11 +8,11 @@ module.exports = (domain, entity) => {
         isDefault: entity.isRootInstance || undefined
     };
 
-    const typeUrl = RoutesInfo.expand('W2:content:domain-type', entityData);
+    const typeUrl = RoutesInfo.expand('W2:content:entity', entityData);
     const resource = warpjsUtils.createResource(typeUrl, entityData);
 
     resource.link('instances', {
-        href: RoutesInfo.expand('W2:content:entities', entityData),
+        href: RoutesInfo.expand('W2:content:instances', entityData),
         title: `List of instances for ${entity.name}`
     });
 

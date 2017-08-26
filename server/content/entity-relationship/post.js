@@ -30,7 +30,7 @@ module.exports = (req, res) => {
         .then((child) => targetEntity.createDocument(persistence, child))
         .then((newDoc) => newDoc.id)
         .then((newId) => {
-            const redirectUrl = RoutesInfo.expand('W2:content:entity', {
+            const redirectUrl = RoutesInfo.expand('W2:content:instance', {
                 domain,
                 type: targetEntity.name,
                 id: newId

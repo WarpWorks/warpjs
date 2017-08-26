@@ -3,7 +3,7 @@ const winston = require('winston');
 
 const config = require('./config');
 
-winston.loggers.add('W2:content:entity', {
+winston.loggers.add('W2:content:instance', {
     console: {
         level: 'info',
         colorize: true
@@ -23,5 +23,5 @@ module.exports = (req, message, data) => {
             token: req.warpjsRequestToken
         }
     };
-    winston.loggers.get('W2:content:entity').info(message, dataToLog);
+    winston.loggers.get('W2:content:instance').info(message, dataToLog);
 };

@@ -12,7 +12,7 @@ describe("lib/controllers/domains/get", () => {
 
         // Because it's needed by the utils basicRender()
         const routesInfo = new RoutesInfo('/foo', '/bar');
-        routesInfo.route('W2:content:entity', '/');
+        routesInfo.route('W2:content:instance', '/');
         routesInfo.route('W2:content:home', '/home');
     });
 

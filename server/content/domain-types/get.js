@@ -13,7 +13,8 @@ module.exports = (req, res) => {
     const profile = req.query.profile;
 
     const resource = warpjsUtils.createResource(req, {
-        title: `Domain ${domain} - Types`
+        title: `Domain ${domain} - Types`,
+        domain
     });
 
     res.format({

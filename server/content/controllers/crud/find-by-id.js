@@ -20,7 +20,7 @@ function findOneCB(done, domain, db, collection, id, currentCommand, error, resu
                 err = true;
                 msg = mongoError;
             } else if (mongoResult) {
-                const resourceUrl = RoutesInfo.expand('W2:content:entity', {
+                const resourceUrl = RoutesInfo.expand('W2:content:instance', {
                     domain,
                     type: mongoResult.type || mongoResult.domainName,
                     id: mongoResult._id.toString(),

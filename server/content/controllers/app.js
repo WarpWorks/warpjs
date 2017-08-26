@@ -16,7 +16,7 @@ module.exports = (req, res) => {
     });
 
     resource.link('crud', RoutesInfo.expand('W2:content:crud'));
-    resource.link('home', RoutesInfo.expand('W2:content:entities', resource));
+    resource.link('home', RoutesInfo.expand('W2:content:instances', resource));
     resource.link('domain', RoutesInfo.expand('W2:content:domain', resource));
     resource.link('schemaDomain', RoutesInfo.expand('W2:content:schema-domain', resource));
     resource.link('schemaType', RoutesInfo.expand('W2:content:schema-type', resource));

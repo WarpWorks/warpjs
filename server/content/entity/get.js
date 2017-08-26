@@ -7,7 +7,7 @@ const serverUtils = require('./../../utils');
 const utils = require('./../utils');
 
 function breadcrumbMapper(domain, breadcrumb) {
-    const url = RoutesInfo.expand('W2:content:entity', {
+    const url = RoutesInfo.expand('W2:content:instance', {
         domain,
         type: breadcrumb.type,
         id: breadcrumb.id
@@ -38,12 +38,12 @@ module.exports = (req, res) => {
         type,
         id
     }));
-    resource.link('sibling', RoutesInfo.expand('W2:content:entity-sibling', {
+    resource.link('sibling', RoutesInfo.expand('W2:content:instance-sibling', {
         domain,
         type,
         id
     }));
-    resource.link('types', RoutesInfo.expand('W2:content:domain-types', {
+    resource.link('types', RoutesInfo.expand('W2:content:entities', {
         domain,
         profile: 'linkable'
     }));

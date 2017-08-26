@@ -13,7 +13,7 @@ function domainMapper(domain) {
     resource.isDefaultDomain = (domain.name === config.domainName) || undefined;
 
     resource.link('domainTypes', {
-        href: RoutesInfo.expand('W2:content:domain-types', {
+        href: RoutesInfo.expand('W2:content:entities', {
             domain: domain.name
         }),
         title: "List of types"

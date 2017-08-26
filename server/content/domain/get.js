@@ -24,7 +24,7 @@ module.exports = (req, res) => {
 
         [warpjsUtils.constants.HAL_CONTENT_TYPE]: () => {
             resource.link('domainTypes', {
-                href: RoutesInfo.expand('W2:content:domain-types', {
+                href: RoutesInfo.expand('W2:content:entities', {
                     domain
                 }),
                 title: "List of types"

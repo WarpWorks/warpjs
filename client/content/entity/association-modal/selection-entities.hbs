@@ -1,0 +1,13 @@
+{{#each entities as |entity|}}
+    <li class="list-group-item warpjs-selection-entity clickable"
+        data-warpjs-id="{{entity.id}}"
+        data-warpjs-type="{{entity.type}}"
+        data-warpjs-name="{{entity.name}}"
+        >
+      <span class="glyphicon glyphicon-plus pull-right"></span>
+      {{entity.name}}
+    </li>
+{{else}}
+    <li class="list-group-item alert alert-warning"
+        >No entities available</li>
+{{/each}}

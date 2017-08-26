@@ -6,7 +6,7 @@ const serverUtils = require('./../../utils');
 const utils = require('./../utils');
 
 function documentMapper(entity, domain, instance) {
-    const documentUrl = RoutesInfo.expand('W2:content:entity', {
+    const documentUrl = RoutesInfo.expand('W2:content:instance', {
         domain,
         type: instance.type,
         oid: instance.id, // FIXME: debug
@@ -50,7 +50,7 @@ module.exports = (req, res) => {
 
             resource.link('type', {
                 title: type,
-                href: RoutesInfo.expand('W2:content:entities', {
+                href: RoutesInfo.expand('W2:content:instances', {
                     domain,
                     type
                 })
