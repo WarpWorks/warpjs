@@ -8,8 +8,10 @@ const query = require('./../../../query');
 const template = require('./selected-entity.hbs');
 const csvTemplate = require('./../relationship-panel-item-csv-item.hbs');
 
-module.exports = ($, instanceDoc, element) => {
+module.exports = ($, instanceDoc) => {
     instanceDoc.on('click', `${constants.DIALOG_SELECTOR} .warpjs-selection-entities .warpjs-selection-entity`, function() {
+        const element = $(constants.DIALOG_SELECTOR).data(constants.CURRENT_ELEMENT_KEY);
+
         const id = $(this).data('warpjsId');
         const type = $(this).data('warpjsType');
 
@@ -26,22 +28,20 @@ module.exports = ($, instanceDoc, element) => {
             docLevel
         };
 
-        return Promise.resolve()
-            .then(() => {
-                // Check if it's already added.
-                const added = $(selector, instanceDoc);
-                if (!added.length) {
-                    return Promise.resolve()
-                        .then(() => query($, 'POST', {id, type}, $(element).data('warpjsUrl')))
-                        .then(() => template(templateData))
-                        .then((content) => $(groupSelector, instanceDoc).append(content))
-                        .then(() => $(`${groupSelector} .alert.alert-warning`, instanceDoc).remove())
-                        .then(() => csvTemplate(templateData))
-                        .then((content) => $(element).closest('.warpjs-selected-entities').append(content))
-                    ;
-                }
-            })
-            .then(() => $(`${selector} a`, instanceDoc).trigger('click'))
-        ;
+        const added = $(selector, instanceDoc);
+        if (!added.length) {
+            $(`${groupSelector} .alert.alert-warning`, instanceDoc).remove();
+            $(groupSelector, instanceDoc).append(template(templateData));
+            $(element).closest('.warpjs-selected-entities').append(csvTemplate(templateData));
+
+            // Call this async
+            Promise.resolve()
+                .then(() => query($, 'POST', {id, type}, $(element).data('warpjsUrl')))
+                .catch((err) => {
+                    // TODO: give UI feedback.
+                    console.log("Error adding data to server:", err);
+                });
+        }
+        $(`${selector} a`, instanceDoc).trigger('click');
     });
 };

@@ -18,13 +18,17 @@
                 <form class="form-inline">
                   Select type:
                   <div class="form-group">
-                    <select class="form-control warpjs-selection-types"></select>
+                    <select class="form-control warpjs-selection-types">
+                      {{> types-option-loading}}
+                    </select>
                   </div>
                 </form>
               </li>
 
               <li class="list-group-item">
-                <ul class="list-group warpjs-selection-entities"></ul>
+                <ul class="list-group warpjs-selection-entities">
+                  {{> selection-entities-loading}}
+                </ul>
               </li>
 
               <li class="list-group-item">

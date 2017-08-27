@@ -4,7 +4,6 @@ const addSelectionEntities = require('./add-selection-entities');
 const browseSelectedEntities = require('./browse-selected-entities');
 const constants = require('./constants');
 const initializeSelectedEntities = require('./initialize-selected-entities');
-const progressBarModal = require('./../../progress-bar-modal');
 const relationshipDescriptionModified = require('./relationship-description-modified');
 const removeSelectionEntities = require('./remove-selection-entities');
 const template = require('./template.hbs');
@@ -13,30 +12,23 @@ const updateSelectionTypes = require('./update-selection-types');
 
 module.exports = ($, instanceDoc) => {
     instanceDoc.on('click', '[data-warpjs-action="relationship-csv-modal"]', function() {
-        progressBarModal.show($, 20);
-        return Promise.resolve()
-            .then(() => {
-                progressBarModal.show($, 25);
-                if (!$(constants.DIALOG_SELECTOR, instanceDoc).length) {
-                    const content = template();
-                    instanceDoc.append(content);
+        // Only define the event handlers the first time we add the modal.
+        if (!$(constants.DIALOG_SELECTOR, instanceDoc).length) {
+            instanceDoc.append(template());
 
-                    browseSelectedEntities($, instanceDoc);
-                    relationshipDescriptionModified($, instanceDoc);
-                    addSelectionEntities($, instanceDoc, this);
-                    removeSelectionEntities($, instanceDoc, this);
-                }
-            })
-            .then(() => progressBarModal.show($, 40))
-            .then(() => initializeSelectedEntities($, instanceDoc, this))
-            .then(() => progressBarModal.show($, 50))
+            browseSelectedEntities($, instanceDoc);
+            relationshipDescriptionModified($, instanceDoc);
+            addSelectionEntities($, instanceDoc);
+            removeSelectionEntities($, instanceDoc);
+        }
+        $(constants.DIALOG_SELECTOR, instanceDoc).modal('show');
+
+        return Promise.resolve()
+            // Set the current element to be referenced by other event handlers.
+            .then(() => $(constants.DIALOG_SELECTOR, instanceDoc).data(constants.CURRENT_ELEMENT_KEY, this))
+            .then(() => initializeSelectedEntities($, instanceDoc))
             .then(() => updateSelectedDetails($, instanceDoc))
-            .then(() => progressBarModal.show($, 60))
-            .then(() => updateSelectionTypes($, instanceDoc, this))
-            .then(() => progressBarModal.show($, 90))
-            .then(() => $(constants.DIALOG_SELECTOR, instanceDoc).modal('show'))
-            .then(() => progressBarModal.show($, 100))
-            .finally(() => progressBarModal.hide())
+            .then(() => updateSelectionTypes($, instanceDoc))
         ;
     });
 };

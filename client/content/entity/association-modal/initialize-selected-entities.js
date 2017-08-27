@@ -1,14 +1,15 @@
 const constants = require('./constants');
 const template = require('./selected-entities.hbs');
 
-module.exports = ($, instanceDoc, element) => {
+module.exports = ($, instanceDoc) => {
+    const element = $(constants.DIALOG_SELECTOR, instanceDoc).data(constants.CURRENT_ELEMENT_KEY);
     const entities = $(element).closest('.warpjs-selected-entities').children('.warpjs-selected-item')
-        .map((idx, element) => ({
-            type: $(element).data('warpjsType'),
-            id: $(element).data('warpjsId'),
-            displayName: $(element).data('warpjsDisplayName'),
-            relnDesc: $(element).data('warpjsRelationshipDescription'),
-            docLevel: $(element).data('warpjsDocLevel')
+        .map((idx, el) => ({
+            type: $(el).data('warpjsType'),
+            id: $(el).data('warpjsId'),
+            displayName: $(el).data('warpjsDisplayName'),
+            relnDesc: $(el).data('warpjsRelationshipDescription'),
+            docLevel: $(el).data('warpjsDocLevel')
         }))
         .get();
 
