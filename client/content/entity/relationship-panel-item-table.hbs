@@ -1,43 +1,37 @@
 <div class="form-group" data-warpjs-relationship-url="{{relationship._links.self.href}}">
-    <div>
-        <table class="table table-sm table-hover">
-            <thead>
-                <tr>
-                    {{#each relationship.model.tableView.basicProperties}}
-                        <th>{{this}}</th>
-                    {{/each}}
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {{#each relationship.model.tableView.data as |row|}}
-                    <tr>
-                        {{#each row as |col|}}
-                            {{#if @index}} {{!-- first is url --}}
-                            <td data-warpjs-action="link" data-warpjs-url="{{row.[0]}}">{{col}}</td>
-                            {{/if}}
-                        {{/each}}
-                        <td>
-                          <span class="glyphicon glyphicon-pencil"
-                            data-warpjs-action="link"
-                            data-warpjs-url="{{row.[0]}}"
-                            tooltip="Edit document"
-                            ></span>
-                          <span class="glyphicon glyphicon-trash"
-                            data-warpjs-action="delete-row"
-                            data-warpjs-url="{{row.[0]}}"
-                            tooltip="Delete document"
-                            ></span>
-                        </td>
-                    </tr>
+    <table class="table table-sm table-hover">
+        <thead>
+            <tr>
+                {{#each relationship.model.tableView.basicProperties}}
+                    <th>{{this}}</th>
                 {{/each}}
-            </tbody>
-        </table>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each relationship.model.tableView.data as |row|}}
+                <tr>
+                    {{#each row as |col|}}
+                        {{#if @index}} {{!-- first is url --}}
+                        <td data-warpjs-action="link" data-warpjs-url="{{row.[0]}}">{{col}}</td>
+                        {{/if}}
+                    {{/each}}
+                    <td>
+                      <span class="glyphicon glyphicon-pencil"
+                        data-warpjs-action="link"
+                        data-warpjs-url="{{row.[0]}}"
+                        tooltip="Edit document"
+                        ></span>
+                      <span class="glyphicon glyphicon-trash"
+                        data-warpjs-action="delete-row"
+                        data-warpjs-url="{{row.[0]}}"
+                        tooltip="Delete document"
+                        ></span>
+                    </td>
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
 
-        {{> table-navigation addUrl=relationship._links.self.href}}
-    </div>
-
-    <div class="alert alert-warning">
-        Save new element first before adding to '{{label}}'!
-    </div>
+    {{> table-navigation addUrl=relationship._links.self.href}}
 </div>
