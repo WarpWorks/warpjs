@@ -1,6 +1,6 @@
-module.exports = ($) => {
+module.exports = ($, instanceDoc) => {
     // When a carousel drop-down is changed, move to that pane-body.
-    $(document).on('change', '.carousel-pagination .pagination-select', function() {
+    instanceDoc.on('change', '.carousel-pagination .pagination-select', function() {
         const tabindex = $(this).val();
         $(this).closest('.panel-heading').next().children().addClass('hidden');
         $(this).closest('.panel-heading').next().children(`[data-option-index="${tabindex}"]`).removeClass('hidden');
@@ -10,7 +10,7 @@ module.exports = ($) => {
             .text(parseInt($(this).val(), 10) + 1);
     });
 
-    $(document).on('click', '.carousel-pagination .pagination-left, .carousel-pagination .pagination-right', function() {
+    instanceDoc.on('click', '.carousel-pagination .pagination-left, .carousel-pagination .pagination-right', function() {
         const parent = $(this).closest('.pagination-group');
         const select = $('> .pagination-select', parent);
         const selectValue = parseInt(select.val(), 10);
@@ -21,5 +21,13 @@ module.exports = ($) => {
             const newIndex = selectValue + delta;
             select.val(newIndex).trigger('change');
         }
+    });
+
+    instanceDoc.on('click', '.carousel-pagination .pagination-add .glyphicon', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log("add new embedded", this);
+        const carouselPagination = $(this).closest('.carousel-pagination');
+        console.log("carousel-pagination=", carouselPagination);
     });
 };

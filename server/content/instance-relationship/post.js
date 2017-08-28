@@ -16,11 +16,12 @@ module.exports = (req, res) => {
     const persistence = serverUtils.getPersistence(domain);
     const entity = serverUtils.getEntity(domain, type);
     const relationshipEntity = entity.getRelationshipByName(relationship);
+    const targetEntity = relationshipEntity.getTargetEntity();
 
     if (payload.id && payload.type) {
         // Create a new association
-        logger(req, "Trying to create new association", req.body);
         return Promise.resolve()
+            .then(() => logger(req, "Trying to create new association", req.body))
             .then(() => entity.getInstance(persistence, id))
             .then((instance) => relationshipEntity.addAssociation(instance, payload))
             .then((instance) => entity.updateDocument(persistence, instance))
@@ -32,44 +33,67 @@ module.exports = (req, res) => {
             })
             .finally(() => persistence.close())
         ;
+    } else if (payload.docLevel) {
+        // Create a new embedded
+        const resource = warpjsUtils.createResource(req, {
+            title: `Child for domain ${domain} - Type ${type} - Id ${id} - Relationship ${relationship}`,
+            domain,
+            type,
+            id
+        });
+
+        Promise.resolve()
+            .then(() => logger(req, "Trying to create a new embedded", req.body))
+            .then(() => entity.getInstance(persistence, id))
+            .then((instance) => {})
+            .then(() => utils.sendHal(req, res, resource))
+            .catch((err) => {
+                logger(req, "Failed create new embedded", {err});
+                res.status(500).send(err.message); // FIXME: Don't send the err.
+            })
+            .finally(() => persistence.close())
+        ;
+        console.log("should create an embedded...", req.body);
+        res.status(204).send();
+    } else {
+        // Create a new aggregation
+
+        const resource = warpjsUtils.createResource(req, {
+            title: `Child for domain ${domain} - Type ${type} - Id ${id} - Relationship ${relationship}`,
+            domain,
+            type,
+            id
+        });
+
+        return Promise.resolve()
+            .then(() => logger(req, "Trying to create new aggregation"))
+            .then(() => entity.getInstance(persistence, id))
+            .then((instance) => entity.createChildForInstance(instance, relationshipEntity))
+            .then((child) => targetEntity.createDocument(persistence, child))
+            .then((newDoc) => newDoc.id)
+            .then((newId) => {
+                logger(req, "New aggregation added");
+                const redirectUrl = RoutesInfo.expand('W2:content:instance', {
+                    domain,
+                    type: targetEntity.name,
+                    id: newId
+                });
+
+                if (req.headers['x-requested-with']) {
+                    // Was ajax call. return a resource.
+                    resource.link('redirect', redirectUrl);
+
+                    utils.sendHal(req, res, resource);
+                } else {
+                    // Direct call.
+                    res.redirect(redirectUrl);
+                }
+            })
+            .catch((err) => {
+                console.log("entity-child(): err=", err);
+                resource.message = err.message;
+                utils.sendHal(req, res, resource, 500);
+            })
+            .finally(() => persistence.close());
     }
-
-    // Create a new aggregation
-    const targetEntity = relationshipEntity.getTargetEntity();
-
-    const resource = warpjsUtils.createResource(req, {
-        title: `Child for domain ${domain} - Type ${type} - Id ${id} - Relationship ${relationship}`,
-        domain,
-        type,
-        id
-    });
-
-    return Promise.resolve()
-        .then(() => entity.getInstance(persistence, id))
-        .then((instance) => entity.createChildForInstance(instance, relationshipEntity))
-        .then((child) => targetEntity.createDocument(persistence, child))
-        .then((newDoc) => newDoc.id)
-        .then((newId) => {
-            const redirectUrl = RoutesInfo.expand('W2:content:instance', {
-                domain,
-                type: targetEntity.name,
-                id: newId
-            });
-
-            if (req.headers['x-requested-with']) {
-                // Was ajax call. return a resource.
-                resource.link('redirect', redirectUrl);
-
-                utils.sendHal(req, res, resource);
-            } else {
-                // Direct call.
-                res.redirect(redirectUrl);
-            }
-        })
-        .catch((err) => {
-            console.log("entity-child(): err=", err);
-            resource.message = err.message;
-            utils.sendHal(req, res, resource, 500);
-        })
-        .finally(() => persistence.close());
 };

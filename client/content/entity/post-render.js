@@ -27,7 +27,7 @@ module.exports = ($, result) => {
     wysiwygEditor($, instanceDoc);
 
     tabContentNavigation($);
-    carouselPagination($);
+    carouselPagination($, instanceDoc);
     deleteEntity($);
     addSibling($);
     addChild($);
