@@ -18,30 +18,16 @@ module.exports = (req, res) => {
     const relationshipEntity = entity.getRelationshipByName(relationship);
     const targetEntity = relationshipEntity.getTargetEntity();
 
-    if (payload.id && payload.type) {
-        // Create a new association
-        return Promise.resolve()
-            .then(() => logger(req, "Trying to create new association", req.body))
-            .then(() => entity.getInstance(persistence, id))
-            .then((instance) => relationshipEntity.addAssociation(instance, payload))
-            .then((instance) => entity.updateDocument(persistence, instance))
-            .then(() => logger(req, "New association added"))
-            .then(() => res.status(204).send())
-            .catch((err) => {
-                logger(req, "Failed create new association", {err});
-                res.status(500).send(err.message); // FIXME: Don't send the err.
-            })
-            .finally(() => persistence.close())
-        ;
-    } else if (payload.docLevel) {
-        // Create a new embedded
-        const resource = warpjsUtils.createResource(req, {
-            title: `Child for domain ${domain} - Type ${type} - Id ${id} - Relationship ${relationship}`,
-            domain,
-            type,
-            id
-        });
+    const resource = warpjsUtils.createResource(req, {
+        title: `Child for domain ${domain} - Type ${type} - Id ${id} - Relationship ${relationship}`,
+        domain,
+        type,
+        id,
+        relationship
+    });
 
+    if (targetEntity.entityType === 'Embedded') {
+        // Create a new embedded
         Promise.resolve()
             .then(() => logger(req, "Trying to create a new embedded", req.body))
             .then(() => entity.getInstance(persistence, id))
@@ -55,17 +41,24 @@ module.exports = (req, res) => {
         ;
         console.log("should create an embedded...", req.body);
         res.status(204).send();
+    } else if (payload.id && payload.type) {
+        // Create a new association
+        Promise.resolve()
+            .then(() => logger(req, "Trying to create new association", req.body))
+            .then(() => entity.getInstance(persistence, id))
+            .then((instance) => relationshipEntity.addAssociation(instance, payload))
+            .then((instance) => entity.updateDocument(persistence, instance))
+            .then(() => logger(req, "New association added"))
+            .then(() => res.status(204).send())
+            .catch((err) => {
+                logger(req, "Failed create new association", {err});
+                res.status(500).send(err.message); // FIXME: Don't send the err.
+            })
+            .finally(() => persistence.close())
+        ;
     } else {
         // Create a new aggregation
-
-        const resource = warpjsUtils.createResource(req, {
-            title: `Child for domain ${domain} - Type ${type} - Id ${id} - Relationship ${relationship}`,
-            domain,
-            type,
-            id
-        });
-
-        return Promise.resolve()
+        Promise.resolve()
             .then(() => logger(req, "Trying to create new aggregation"))
             .then(() => entity.getInstance(persistence, id))
             .then((instance) => entity.createChildForInstance(instance, relationshipEntity))
