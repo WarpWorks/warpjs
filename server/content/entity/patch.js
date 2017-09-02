@@ -1,7 +1,9 @@
 const Promise = require('bluebird');
+const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const logger = require('./../../loggers');
 const serverUtils = require('./../../utils');
+const utils = require('./../utils');
 
 function updateDocument(persistence, entity, instance, req, res) {
     const domain = req.params.domain;
@@ -41,7 +43,14 @@ module.exports = (req, res) => {
         )
         .catch((err) => {
             logger(req, "Failed patch", {err});
-            res.status(500).send(err.message); // FIXME: Don't send the err.
+            const resource = warpjsUtils.createResource(req, {
+                domain,
+                type,
+                id,
+                body: req.body,
+                message: err.message
+            });
+            utils.sendHal(req, res, resource, 500);
         })
         .finally(() => persistence.close());
 };
