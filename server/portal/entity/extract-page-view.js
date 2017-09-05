@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const debug = require('debug')('I3C:Portal:extractPageView');
+const debug = require('debug')('W2:portal:extractPageView');
 const fs = require('fs');
 const path = require('path');
 const Promise = require('bluebird');
@@ -217,10 +217,11 @@ function addBasicPropertyPanelItems(panel, entity, items) {
     return items;
 }
 
-function addEnumPanelItems(panel, items) {
+function addEnumPanelItems(panel, entity, items) {
     panel.enumPanelItems.forEach((item) => {
-        // TODO
-        debug(`In panel.enumPanelItems...`);
+        item.value = entity[item.name];
+        const itemResource = createObjResource(item);
+        items.push(itemResource);
     });
     return items;
 }
@@ -246,12 +247,12 @@ module.exports = (req, responseResource, persistence, hsEntity, entity, isPrevie
                     embeddedPanels.push(panelResource);
 
                     return Promise.resolve([])
-                        .then(addSeparatorPanelItems.bind(null, panel))
-                        .then(addRelationshipPanelItems.bind(null, req, panel, persistence, entity, isPreview))
-                        .then(addBasicPropertyPanelItems.bind(null, panel, entity))
-                        .then(addEnumPanelItems.bind(null, panel))
-                        .then(sortItems)
-                        .then(embed.bind(null, panelResource, 'panelItems'));
+                        .then((items) => addSeparatorPanelItems(panel, items))
+                        .then((items) => addRelationshipPanelItems(req, panel, persistence, entity, isPreview, items))
+                        .then((items) => addBasicPropertyPanelItems(panel, entity, items))
+                        .then((items) => addEnumPanelItems(panel, entity, items))
+                        .then((items) => sortItems(items))
+                        .then((items) => embed(panelResource, 'panelItems', items));
                 }
             )
                 .then(() => createOverviewPanel(req, persistence, hsEntity, entity, isPreview))

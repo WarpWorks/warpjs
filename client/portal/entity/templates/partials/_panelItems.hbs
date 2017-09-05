@@ -2,14 +2,11 @@
     {{#each panelItems}}
         {{#if (isSeparator)}}
             {{> ./_separatorPanel}}
-        {{/if}}
-        {{#if (isRelationshipPanelItem)}}
+        {{else if (isRelationshipPanelItem)}}
             {{> ./_relationshipPanel entity=this}}
-        {{/if}}
-        {{#if (isBasicProperty)}}
+        {{else if (isBasicProperty)}}
             {{> ./_basicPropertyPanel basicProperty=this}}
-        {{/if}}
-        {{#if this.enumPanelItems}}
+        {{else if (isEnumPanelItem)}}
             {{> ./_enumPanel}}
         {{/if}}
     {{/each}}

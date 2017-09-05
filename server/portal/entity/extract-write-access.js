@@ -1,4 +1,4 @@
-// const debug = require('debug')('I3C:Portal:entity:extractWriteAccess');
+// const debug = require('debug')('W2:portal:entity:extractWriteAccess');
 const Promise = require('bluebird');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 
