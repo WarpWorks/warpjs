@@ -31,7 +31,8 @@ module.exports = (req, res) => {
         Promise.resolve()
             .then(() => logger(req, "Trying to create a new embedded", req.body))
             .then(() => entity.getInstance(persistence, id))
-            .then((instance) => {})
+            .then((instance) => relationshipEntity.addEmbedded(instance))
+            .then((instance) => entity.updateDocument(persistence, instance))
             .then(() => utils.sendHal(req, res, resource))
             .catch((err) => {
                 logger(req, "Failed create new embedded", {err});
@@ -39,8 +40,6 @@ module.exports = (req, res) => {
             })
             .finally(() => persistence.close())
         ;
-        console.log("should create an embedded...", req.body);
-        res.status(204).send();
     } else if (payload.id && payload.type) {
         // Create a new association
         Promise.resolve()

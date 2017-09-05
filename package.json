@@ -51,6 +51,7 @@
     "random-words": "0.0.1",
     "serve-favicon": "2.4.3",
     "url-template": "2.0.8",
+    "uuid": "3.1.0",
     "winston": "2.3.1"
   },
   "devDependencies": {

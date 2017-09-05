@@ -1,3 +1,5 @@
+const warpjsUtils = require('@warp-works/warpjs-utils');
+
 module.exports = ($, instanceDoc) => {
     // When a carousel drop-down is changed, move to that pane-body.
     instanceDoc.on('change', '.carousel-pagination .pagination-select', function() {
@@ -23,11 +25,41 @@ module.exports = ($, instanceDoc) => {
         }
     });
 
-    instanceDoc.on('click', '.carousel-pagination .pagination-add .glyphicon', function(e) {
+    instanceDoc.on('click', '.carousel-pagination .pagination-add .glyphicon.pagination-add', function(e) {
         e.preventDefault();
         e.stopPropagation();
-        console.log("add new embedded", this);
-        const carouselPagination = $(this).closest('.carousel-pagination');
-        console.log("carousel-pagination=", carouselPagination);
+
+        const ajaxOptions = {
+            method: 'POST',
+            url: $(this).data('warpjsUrl'),
+            headers: {
+                accept: warpjsUtils.constants.HAL_CONTENT_TYPE,
+                contentType: 'application/json'
+            },
+            data: JSON.stringify({
+                docLevel: $(this).data('warpjsDocLevel')
+            }),
+            dataType: 'json'
+        };
+
+        return Promise.resolve()
+            .then(() => $.ajax(ajaxOptions))
+            .then((res) => {
+                // TODO: This is temporary. It should get new content to be
+                // redisplayed.
+                document.location.reload();
+            })
+            .catch((err) => {
+                // TODO: Give UI feedback.
+                console.log("Error adding carousel:", err);
+            })
+        ;
+    });
+
+    instanceDoc.on('click', '.carousel-pagination .pagination-remove .glyphicon.pagination-remove', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        console.log("TODO: Remove current element", this);
     });
 };

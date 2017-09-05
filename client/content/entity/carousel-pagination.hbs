@@ -18,6 +18,8 @@
         <option
           value="{{optionIndex}}"
           {{#unless optionIndex}}selected{{/unless}}
+          data-warpjs-url="{{relationship._links.self.href}}"
+          data-warpjs-doc-level="{{option.docLevel}}"
           >{{option.label}}</option>
     {{/each}}
   </select>
@@ -27,10 +29,16 @@
   </div>
 
   <div class="input-group-addon pagination-add">
-      <a href="#"><span class="glyphicon glyphicon-plus-sign"></span></a>
+    <span class="clickable glyphicon glyphicon-plus-sign pagination-add"
+        title="Add new element to '{{label}}'"
+        data-warpjs-url="{{relationship._links.self.href}}"
+        data-warpjs-doc-level="{{relationship.docLevel}}"
+        ></span>
   </div>
 
   <div class="input-group-addon pagination-remove">
-      <a href="#"><span class="glyphicon glyphicon-minus-sign"></span></a>
+      <span class="clickable glyphicon glyphicon-minus-sign pagination-remove"
+        title="TODO: remove current element from '{{label}}'"
+        ></span>
   </div>
 </div>
