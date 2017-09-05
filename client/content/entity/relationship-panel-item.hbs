@@ -1,4 +1,9 @@
-<div class="relationship-panel-item" data-relationship-model="{{relationship.model.name}}">
+<div class="relationship-panel-item"
+  data-relationship-model="{{relationship.model.name}}"
+  data-warpjs-doc-level="{{relationship.docLevel}}"
+  data-warpjs-url="{{relationship._links.self.href}}"
+  data-warpjs-entity-type="{{relationship.model.entityType}}"
+  >
 {{#if (isCsvRelationship)}}
     {{> relationship-panel-item-csv}}
 {{else if (isTableRelationshipPanelItem)}}

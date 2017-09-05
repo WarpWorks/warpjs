@@ -28,13 +28,16 @@ module.exports = (req, res) => {
 
     if (targetEntity.entityType === 'Embedded') {
         // Create a new embedded
+        console.log("payload=", payload);
         Promise.resolve()
-            .then(() => logger(req, "Trying to create a new embedded", req.body))
+            .then(() => logger(req, "Trying to add embedded", req.body))
             .then(() => entity.getInstance(persistence, id))
-            .then((instance) => relationshipEntity.addEmbedded(instance))
+            .then((instance) => entity.addEmbedded(instance, payload.docLevel, 0))
             .then((instance) => entity.updateDocument(persistence, instance))
+            .then(() => logger(req, "Embedded added"))
             .then(() => utils.sendHal(req, res, resource))
             .catch((err) => {
+                console.log("ERROR:", err);
                 logger(req, "Failed create new embedded", {err});
                 res.status(500).send(err.message); // FIXME: Don't send the err.
             })
