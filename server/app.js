@@ -46,14 +46,14 @@ module.exports = (Persistence, baseUrl, staticUrl) => {
     const portalPrefix = `${baseUrl}/portal`;
     const portalParams = [portalPrefix];
 
-    if (authMiddlewares) {
-        contentParams.push(authMiddlewares.requiresWarpjsUser);
-        contentParams.push(authMiddlewares.canAccessAsContentManager);
-        contentParams.push(authMiddlewares.unauthorized);
+    // if (authMiddlewares) {
+    //     contentParams.push(authMiddlewares.requiresWarpjsUser);
+    //     contentParams.push(authMiddlewares.canAccessAsContentManager);
+    //     contentParams.push(authMiddlewares.unauthorized);
 
-        portalParams.push(authMiddlewares.requiresWarpjsUser);
-        portalParams.push(authMiddlewares.unauthorized);
-    }
+    //     portalParams.push(authMiddlewares.requiresWarpjsUser);
+    //     portalParams.push(authMiddlewares.unauthorized);
+    // }
     contentParams.push(content.app(contentPrefix, staticUrl));
     app.use.apply(app, contentParams);
 
