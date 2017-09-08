@@ -52,7 +52,6 @@ module.exports = (req, res) => {
         html() {
             const bundles = [
                 `${RoutesInfo.expand('W2:app:static')}/libs/svg/svg.js`,
-                `${RoutesInfo.expand('W2:app:static')}/app/WarpCMS.js`,
                 `${RoutesInfo.expand('W2:app:static')}/app/vendor.js`,
                 `${RoutesInfo.expand('W2:app:static')}/app/entity.js`
             ];

@@ -9,15 +9,22 @@ function documentMapper(entity, domain, instance) {
     const documentUrl = RoutesInfo.expand('W2:content:instance', {
         domain,
         type: instance.type,
-        oid: instance.id, // FIXME: debug
         id: instance.id
     });
-    return warpjsUtils.createResource(documentUrl, {
+
+    const resource = warpjsUtils.createResource(documentUrl, {
         isRootInstance: instance.isRootInstance || undefined,
         id: instance.id,
         type: instance.type,
         name: entity.getDisplayName(instance)
     });
+
+    resource.link('portal', RoutesInfo.expand('entity', {
+        type: instance.type,
+        id: instance.id
+    }));
+
+    return resource;
 }
 
 module.exports = (req, res) => {
@@ -32,7 +39,7 @@ module.exports = (req, res) => {
             utils.basicRender(
                 [
                     `${RoutesInfo.expand('W2:app:static')}/app/vendor.js`,
-                    `${RoutesInfo.expand('W2:app:static')}/app/entities.js`
+                    `${RoutesInfo.expand('W2:app:static')}/app/instances.js`
                 ],
                 resource,
                 req,
