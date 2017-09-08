@@ -16,11 +16,8 @@
 {{/if}}
     </ul>
 
-    <ul class="nav navbar-nav navbar-right">
-{{#if _meta.editable}}
-      <li><a href="#" id="NavButtonSaveA"><span class="glyphicon glyphicon-ok"></span></a></li>
-      <li><a href="#" id="NavButtonCancelA"><span class="glyphicon glyphicon-remove"></span></a></li>
-{{/if}}
-    </ul>
+    <p class="navbar-text navbar-right">
+        {{> ../../templates/login.hbs}}
+    </p>
   </div>
 </nav>
