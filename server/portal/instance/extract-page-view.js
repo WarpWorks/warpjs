@@ -13,7 +13,7 @@ const CONTENT_LINK_RE = /{{(.*?),(.*?),(.*?)}}/g;
 
 function contentLinkReplacer(match, label, type, id) {
     const href = routesInfo.expand('entity', {id, type});
-    return `<a href="${href}">${label}</a>`;
+    return `<a href="${href}">${label}<span class="glyphicon glyphicon-link"></span></a>`;
 }
 
 function parseLinks(overviews) {
