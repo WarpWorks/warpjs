@@ -2,7 +2,7 @@ const Promise = require('bluebird');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
-const extractEntity = require('./../entity/extract-entity');
+const extractEntity = require('./../instance/extract-entity');
 const serverUtils = require('./../../utils');
 
 function index(req, res) {

@@ -83,10 +83,10 @@ function imagePath(req, image) {
 
     let filePath;
 
-    if (image.ImageURL.indexOf(publicFolderPath) === 0) {
+    if (image && image.ImageURL && image.ImageURL.indexOf(publicFolderPath) === 0) {
         filePath = path.join(publicFolder, image.ImageURL.substring(publicFolderPath.length));
     } else {
-        filePath = path.join(publicFolder, 'iic_images', image.ImageURL);
+        filePath = path.join(publicFolder, 'iic_images', image.ImageURL || '');
         image.ImageURL = IMAGE_PATH.expand(image);
     }
 
