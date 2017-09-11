@@ -6,15 +6,13 @@ const Promise = require('bluebird');
 const routesInfo = require('@quoin/expressjs-routes-info');
 const urlTemplate = require('url-template');
 
+const contentLinkReplacer = require('./content-link-replacer');
 const createObjResource = require('./create-obj-resource');
+const embed = require('./embed');
+const sortItems = require('./sort-items');
 
 const IMAGE_PATH = urlTemplate.parse('/public/iic_images/{ImageURL}');
 const CONTENT_LINK_RE = /{{(.*?),(.*?),(.*?)}}/g;
-
-function contentLinkReplacer(match, label, type, id) {
-    const href = routesInfo.expand('entity', {id, type});
-    return `<a href="${href}">${label}<span class="glyphicon glyphicon-link"></span></a>`;
-}
 
 function parseLinks(overviews) {
     if (overviews) {
@@ -212,6 +210,9 @@ function addBasicPropertyPanelItems(panel, entity, items) {
     panel.basicPropertyPanelItems.forEach((item) => {
         item.value = entity[item.name];
         const itemResource = createObjResource(item);
+        itemResource.model = {
+            propertyType: item.basicProperty[0].propertyType
+        };
         items.push(itemResource);
     });
     return items;
@@ -224,16 +225,6 @@ function addEnumPanelItems(panel, entity, items) {
         items.push(itemResource);
     });
     return items;
-}
-
-function sortItems(items) {
-    items.sort((a, b) => a.position - b.position);
-    return items;
-}
-
-function embed(resource, key, items) {
-    resource.embed(key, items);
-    return resource;
 }
 
 module.exports = (req, responseResource, persistence, hsEntity, entity, isPreview) => {
