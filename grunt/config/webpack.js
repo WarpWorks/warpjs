@@ -10,10 +10,20 @@ module.exports = {
         entry: {
             'admin-domain': './client/admin/domain/index.js',
             'content': './client/content/index.js',
+            'domains': './client/content/domains/index.js',
+            'domain': './client/content/domain/index.js',
+            'domain-types': './client/content/domain-types/index.js',
+            'instances': './client/content/instances/index.js',
+            'entity': './client/content/entity/index.js',
             'portal': './client/portal/entity/lib/index.js'
         },
+        externals: {
+            jquery: true,
+            tinymce: true
+        },
         node: {
-            fs: 'empty'
+            fs: 'empty',
+            tinymce: 'empty'
         },
         output: {
             path: `${rootDir}/public/app`,
@@ -25,7 +35,10 @@ module.exports = {
                 minChunks: (module) => module.context && module.context.indexOf('node_modules') !== -1
             }),
             new webpack.optimize.UglifyJsPlugin({
-                compress: false
+                compress: false,
+                output: {
+                    ascii_only: true
+                }
             })
         ],
         module: {

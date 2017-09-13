@@ -1,0 +1,16 @@
+{{#partial "content"}}
+<div class="container" role="main" id="WarpJS"
+    data-warpjs-status="instance"
+    data-warpjs-url="{{_links.self.href}}"
+    data-warpjs-types-url="{{_links.types.href}}"
+    >
+  <div class="row">
+    <div class="col-xs-12">
+      {{> breadcrumb}}
+      {{> main-panel-view}}
+    </div>
+  </div>
+</div>
+{{/partial}}
+
+{{> ../templates/page}}

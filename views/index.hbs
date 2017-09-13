@@ -1,9 +1,21 @@
 <html>
 
 <head>
-    <title>I3C Portal - {{title}}</title>
+    <title>WarpJS - {{title}}</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="">
+    <meta name="author" content="">
+
     <link rel="stylesheet" href="{{staticUrl}}/3rd-party/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="{{staticUrl}}/3rd-party/css/bootstrap-theme.min.css" />
     <link rel="stylesheet" href="{{staticUrl}}/3rd-party/css/font-awesome.min.css" />
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link rel="stylesheet" href="{{staticUrl}}/libs/bootstrap/ie10-viewport-bug-workaround.css" />
     <link rel="stylesheet" href="{{staticUrl}}/app/warpjs.min.css" />
 
 {{#if cssFile}}
@@ -15,7 +27,7 @@
 </head>
 
 <body>
-    <div id="warpjs-content-placeholder" />
+    <div id="warpjs-content-placeholder"></div>
 
     <script src="{{staticUrl}}/3rd-party/js/jquery.min.js"></script>
     <script src="{{staticUrl}}/3rd-party/js/bootstrap.min.js"></script>
@@ -26,4 +38,3 @@
 </body>
 
 </html>
-

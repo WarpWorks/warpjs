@@ -10,19 +10,20 @@ module.exports = (req, res) => {
     const resource = warpjsUtils.createResource(req, {
         type,
         domain,
-        title: 'test',
-        layout: '_appLayout'
+        title: 'Entity',
+        layout: '_contentLayout',
+        baseUrl: '/static'
     });
 
-    resource.link('crud', RoutesInfo.expand('w2-app:crud'));
-    resource.link('home', RoutesInfo.expand('w2-app:app', resource));
-    resource.link('domain', RoutesInfo.expand('w2-app:domain', resource));
-    resource.link('schemaDomain', RoutesInfo.expand('w2-app:schema-domain', resource));
-    resource.link('schemaType', RoutesInfo.expand('w2-app:schema-type', resource));
+    resource.link('crud', RoutesInfo.expand('W2:content:crud'));
+    resource.link('home', RoutesInfo.expand('W2:content:instances', resource));
+    resource.link('domain', RoutesInfo.expand('W2:content:domain', resource));
+    resource.link('schemaDomain', RoutesInfo.expand('W2:content:schema-domain', resource));
+    resource.link('schemaType', RoutesInfo.expand('W2:content:schema-type', resource));
 
     res.format({
         html: () => {
-            utils.basicRender(`warpJSClient`, resource, req, res);
+            utils.basicRenderOld(`warpJSClient`, resource, req, res);
         },
 
         [warpjsUtils.constants.HAL_CONTENT_TYPE]: () => {

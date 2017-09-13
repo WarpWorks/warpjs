@@ -1,0 +1,27 @@
+<div class="form-group"
+    data-warpjs-style="{{style}}"
+    data-warpjs-name="{{name}}"
+    data-warpjs-doc-level="{{relationship.docLevel}}"
+    >
+  <label class="col-xs-12">
+    <span class="col-xs-2 control-label">{{label}}</span>
+    <div class="col-xs-10">
+      <ul class="nav nav-pills warpjs-selected-entities">
+        <li>
+          <span class="glyphicon glyphicon-list-alt"
+              data-warpjs-action="relationship-csv-modal"
+              data-warpjs-url="{{relationship._links.self.href}}"
+              data-warpjs-type="{{relationship.model.name}}"
+              data-warpjs-types-url="{{relationship._links.types.href}}"
+              data-warpjs-doc-level="{{relationship.docLevel}}"
+              data-warpjs-doc-name="{{name}}"
+              data-warpjs-style="{{style}}"
+              ></span>
+        </li>
+        {{#each relationship.model._embedded.entities as |entity|}}
+          {{> relationship-panel-item-csv-item entity}}
+        {{/each}}
+      </ul>
+    </div>
+  </label>
+</div>

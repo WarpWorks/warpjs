@@ -1,0 +1,44 @@
+<div class="input-group pagination-group carousel-pagination"
+  data-pagination-total="{{relationship.totalSize}}"
+  data-warpjs-url="{{relationship._links.self.href}}"
+  data-warpjs-doc-level="{{relationship.docLevel}}"
+  >
+  <div class="input-group-addon pagination-chevron-left">
+    {{>../templates/chevron this direction='left' pageLimit=relationship.limitLeft}}
+  </div>
+
+  <div class="input-group-addon pagination-info">
+    <span class="pagination-info-start">{{relationship.pageStart}}</span> / {{relationship.totalSize}}
+  </div>
+
+  <select class="form-control pagination-select">
+    <option disabled>Showing matches from {{relationship.pageStart}} to {{relationship.pageEnd}}</option>
+    <option disabled>---------------------</option>
+    {{#each relationship.model.data as |option optionIndex|}}
+        <option
+          value="{{optionIndex}}"
+          {{#unless optionIndex}}selected{{/unless}}
+          data-warpjs-url="{{relationship._links.self.href}}"
+          data-warpjs-doc-level="{{option.docLevel}}"
+          >{{option.label}}</option>
+    {{/each}}
+  </select>
+
+  <div class="input-group-addon pagination-chevron-right">
+    {{>../templates/chevron this direction='right' pageLimit=relationship.limitRight}}
+  </div>
+
+  <div class="input-group-addon pagination-add">
+    <span class="clickable glyphicon glyphicon-plus-sign pagination-add"
+        title="Add new element to '{{label}}'"
+        data-warpjs-url="{{relationship._links.self.href}}"
+        data-warpjs-doc-level="{{relationship.docLevel}}"
+        ></span>
+  </div>
+
+  <div class="input-group-addon pagination-remove">
+      <span class="clickable glyphicon glyphicon-minus-sign pagination-remove"
+        title="TODO: remove current element from '{{label}}'"
+        ></span>
+  </div>
+</div>

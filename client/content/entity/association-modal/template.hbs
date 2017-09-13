@@ -1,0 +1,57 @@
+<div class="modal fade" role="dialog" tabindex="-1"
+    data-warpjs-modal="target-association"
+    aria-hidden="true" aria-labelledby="Target-Association">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"
+            arial-label="Close" aria-hidden="true"
+            >&times;</button>
+        <div class="modal-title">Select Entities</div>
+      </div>
+
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-xs-10 col-xs-offset-1">
+            <ul class="list-group">
+              <li class="list-group-item">
+                <form class="form-inline">
+                  Select type:
+                  <div class="form-group">
+                    <select class="form-control warpjs-selection-types">
+                      {{> types-option-loading}}
+                    </select>
+                  </div>
+                </form>
+              </li>
+
+              <li class="list-group-item">
+                <ul class="list-group warpjs-selection-entities">
+                  {{> selection-entities-loading}}
+                </ul>
+              </li>
+
+              <li class="list-group-item">
+                <label>Selected entities:</label>
+                <ul class="nav nav-pills warpjs-selected-entities">
+                </ul>
+              </li>
+
+              <li class="list-group-item warpjs-selected-details">
+              </li>
+
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default warpjs-selection-save"
+            data-dismiss="modal"
+            aria-label="Close"
+            aria-hidden="true"
+            >Done</button>
+      </div>
+    </div>
+  </div>
+</div>

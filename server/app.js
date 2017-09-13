@@ -9,6 +9,7 @@ const content = require('./content');
 const extractAuthMiddlewares = require('./extract-auth-middlewares');
 const plugins = require('./plugins');
 const portal = require('./portal');
+const requestToken = require('./middlewares/request-token');
 
 module.exports = (Persistence, baseUrl, staticUrl) => {
     const app = express();
@@ -18,13 +19,19 @@ module.exports = (Persistence, baseUrl, staticUrl) => {
 
     baseUrl = (baseUrl === '/') ? '' : baseUrl;
 
-    app.use(`${baseUrl}/public`, express.static(path.join(config.folders.w2projects, 'public')));
+    app.set('base-url', baseUrl);
+    app.set('static-url', staticUrl);
+
+    RoutesInfo.staticPath('W2:app:public', app, baseUrl, '/public', path.join(config.folders.w2projects, 'public'));
+    RoutesInfo.staticPath('W2:app:static', app, baseUrl, '/static', 'public');
 
     app.use(cookieParser(config.cookieSecret, {
         httpOnly: true,
         maxAge: 3 * 60 * 60, // 3 hours
         sameSite: true
     }));
+
+    app.use(requestToken);
 
     const authMiddlewares = extractAuthMiddlewares(config);
 

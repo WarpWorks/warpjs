@@ -1,17 +1,23 @@
+const Promise = require('bluebird');
+
 const warpGlobals = require('./../warp-globals');
 const Domain = require('./../models/domain');
 
 module.exports = (afterLoad) => {
     var domain = window.location.pathname.split('/').pop();
 
-    $.ajax({
+    const ajaxOptions = {
         url: warpGlobals.$active._links.W2domain.href,
         method: 'GET',
         headers: {
             contentType: 'application/json; charset=utf-8',
             accept: 'application/hal+json'
-        },
-        success: function(result) {
+        }
+    };
+
+    return Promise.resolve()
+        .then(() => $.ajax(ajaxOptions))
+        .then((result) => {
             if (result.success) {
                 warpGlobals.$active = {}; // Remove old settings
                 warpGlobals.$active.domain = Domain.fromJSON(result.domain);
@@ -24,9 +30,8 @@ module.exports = (afterLoad) => {
             } else {
                 alert(result.err);
             }
-        },
-        error: function(result) {
+        })
+        .catch(() => {
             alert("GET: Error - could not load domain: " + domain);
-        }
-    });
+        });
 };

@@ -1,0 +1,32 @@
+<div class="carousel-container">
+  <div class="panel panel-success">
+    <div class="panel-heading">
+      <form class="form-inline">
+        <div class="form-group">
+          {{> carousel-pagination}}
+        </div>
+      </form>
+    </div>
+
+    <div class="panel-body">
+        {{#each relationship.model.data as |option optionIndex|}}
+            <div
+              data-option-index="{{optionIndex}}"
+              {{#if @index}}class="hidden"{{/if}}
+              >
+            {{> panel-body option}}
+            </div>
+        {{/each}}
+    </div>
+  </div>
+
+{{!--
+  <div class="alert alert-info">
+      Click here to add new element to '{{label}}':
+  </div>
+
+  <div class="alert alert-warning">
+      Save new element first before adding to '{{label}}'!
+  </div>
+--}}
+</div>

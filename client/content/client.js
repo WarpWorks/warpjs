@@ -1,6 +1,8 @@
+const Promise = require('bluebird');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const EntityProxy = require('./entity-proxy');
+const progressBarModal = require('./progress-bar-modal');
 const WarpBreadcrumb = require('./breadcrumb');
 const WarpModelParser = require('./model-parser');
 const WarpPageView = require('./page-view');
@@ -111,35 +113,6 @@ class WarpJSClient extends WarpWidget {
     addBreadcrumb(config) {
         this.breadcrumb = new WarpBreadcrumb(this, config);
         return this.breadcrumb;
-    }
-
-    progressBarOn(percent) {
-        if (!this.progressBarModal) {
-            var modal = $('<div class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true" style="padding-top:15%; overflow-y:visible;"></div>');
-            var modalDialog = $('<div class="modal-dialog modal-m"></div>');
-            var modalContent = $('<div class="modal-content"></div>');
-            var modalHeader = $('<div class="modal-header"><h3 style="margin:0;">Loading</h3></div>');
-            var modalBody = $('<div class="modal-body"></div>');
-            var progress = $('<div class="progress progress-striped active" style="margin-bottom:0;"></div>');
-            var progressBar = $('<div class="progress-bar" aria-valuemin="0" aria-valuemax="100"></div>');
-
-            modal.append(modalDialog);
-            modalDialog.append(modalContent);
-            modalContent.append(modalHeader);
-            modalContent.append(modalBody);
-            modalBody.append(progress);
-            progress.append(progressBar);
-
-            this.progressBar = progressBar;
-            this.progressBarModal = modal;
-        }
-        this.progressBar.prop('aria-valuenow', "" + percent);
-        this.progressBar.prop('style', "width:" + percent + "%");
-        this.progressBarModal.modal('show');
-    }
-
-    progressBarOff() {
-        this.progressBarModal.modal('hide');
     }
 
     alert(msg) {
@@ -309,8 +282,8 @@ class WarpJSClient extends WarpWidget {
                     warpjsUtils.trace(1, this.pageView.toString());
                     warpjsUtils.trace(1, "--------------- -------------- ---------------");
 
-                    this.progressBarOn(100);
-                    this.progressBarOff();
+                    progressBarModal.show($, 100);
+                    progressBarModal.hide();
 
                     if (callback) {
                         callback();
@@ -324,24 +297,27 @@ class WarpJSClient extends WarpWidget {
         // Create JSON Data
         var reqData = JSON.stringify(commandList, null, 2);
 
-        // Post to server
-        $.ajax({
+        const ajaxOptions = {
             url: this.links.crud.href,
             type: 'POST',
             data: reqData,
             contentType: 'application/json; charset=utf-8',
-            dataType: "json",
-            success: (result) => {
+            dataType: "json"
+        };
+
+        // Post to server
+        return Promise.resolve()
+            .then(() => $.ajax(ajaxOptions))
+            .then((result) => {
                 if (result.success) {
                     handleResult(result);
                 } else {
                     warpjsUtils.trace(1, "WarpJSClient.processCRUDcommands():\n-  Failed to post CRUD commands - " + result.error);
                 }
-            },
-            error: () => {
+            })
+            .catch(() => {
                 warpjsUtils.trace(1, "WarpJSClient.processCRUDcommands():\n-  Error while posting CRUD commands!");
-            }
-        });
+            });
     }
 }
 

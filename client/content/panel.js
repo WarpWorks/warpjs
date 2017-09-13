@@ -1,7 +1,6 @@
 const RpiCarousel = require('./rpi-carousel');
 const RpiCSV = require('./rpi-csv');
 const RpiTable = require('./rpi-table');
-const WarpBasicPropertyPanelItem = require('./basic-property-panel-item');
 const WarpEnumPanelItem = require('./enum-panel-item');
 const WarpPanelItem = require('./panel-item');
 const WarpWidget = require('./widget');
@@ -51,12 +50,6 @@ class WarpPanel extends WarpWidget {
 
     addSeparatorPanelItem(config) {
         var pi = new WarpPanelItem(this, "Separator", config);
-        this.panelItems.push(pi);
-        return pi;
-    }
-
-    addBasicPropertyPanelItem(config) {
-        var pi = new WarpBasicPropertyPanelItem(this, config);
         this.panelItems.push(pi);
         return pi;
     }

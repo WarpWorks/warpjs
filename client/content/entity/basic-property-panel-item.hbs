@@ -1,0 +1,22 @@
+<div class="form-group basic-property-pi">
+  <label class="col-xs-12">
+    <span class="col-xs-2 control-label">{{label}}</span>
+    <div class="col-xs-10">
+      {{#if (isPropertyTypeText)}}
+        <span class="glyphicon glyphicon-list-alt pull-right"
+          data-warpjs-action="open-wysiwyg"
+          ></span>
+      {{/if}}
+
+      <input
+        class="form-control"
+        type="{{model.inputType}}"
+        value="{{model.value}}"
+        data-doc-level="{{model.docLevel}}"
+        {{#if (isPropertyTypeText)}}
+          readonly
+        {{/if}}
+        />
+    </div>
+  </label>
+</div>

@@ -1,3 +1,5 @@
+const Promise = require('bluebird');
+
 const warpGlobals = require('./../warp-globals');
 
 module.exports = () => {
@@ -7,7 +9,7 @@ module.exports = () => {
     // console.log(reqData.domainData);
     reqData = JSON.stringify(reqData, null, 2);
 
-    $.ajax({
+    const ajaxOptions = {
         url: warpGlobals.$active._links.self.href,
         method: 'PUT',
         data: reqData,
@@ -15,8 +17,12 @@ module.exports = () => {
             'Content-Type': 'application/json; charset=utf-8',
             'Accept': 'application/hal+json'
         },
-        dataType: "json",
-        success: function(result) {
+        dataType: "json"
+    };
+
+    return Promise.resolve()
+        .then(() => $.ajax(ajaxOptions))
+        .then((result) => {
             if (result.success) {
                 console.log("Save: OK");
                 if (result.warnings) {
@@ -28,9 +34,8 @@ module.exports = () => {
             } else {
                 console.log("Failed to save Domain!");
             }
-        },
-        error: function() {
+        })
+        .catch(() => {
             console.log("Error while saving Domain!");
-        }
-    });
+        });
 };

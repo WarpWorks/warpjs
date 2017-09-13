@@ -31,7 +31,7 @@ module.exports = (baseUrl, staticUrlPath) => {
 
     app.set('views', viewFolders);
     app.set('view engine', 'hbs');
-    app.set('w2-app:baseUrl', baseUrl === '/' ? '' : baseUrl);
+    app.set('W2:content:baseUrl', baseUrl === '/' ? '' : baseUrl);
     app.set('static-url', staticUrlPath === '/' ? '' : staticUrlPath);
 
     app.use(favicon(path.join(ROOT_DIR, 'public', 'images', 'favicon.ico')));
@@ -40,12 +40,11 @@ module.exports = (baseUrl, staticUrlPath) => {
     app.use(cookieParser());
 
     // Public/static
-    app.use(express.static(path.join(ROOT_DIR, 'public')));
-    app.use('/assets', express.static(path.dirname(require.resolve('tinymce/tinymce.min.js'))));
     app.use('/domain-assets', express.static(path.join(config.projectPath, 'domains')));
     app.use(express.static(config.public));
 
     // Deal with Express / Handlebar Partials:
+    hbsutils.registerPartials(VIEWS_DIR);
     hbsutils.registerWatchedPartials(PARTIAL_DIR);
 
     app.use(routes(baseUrl).router);
@@ -59,17 +58,17 @@ module.exports = (baseUrl, staticUrlPath) => {
 
     // error handlers
 
-    // development error handler
-    // will print stacktrace
-    if (app.get('env') === 'development') {
-        app.use(function(err, req, res, next) {
-            res.status(err.status || 500);
-            res.render('_error', {
-                message: err.message,
-                error: err
-            });
-        });
-    }
+    // // development error handler
+    // // will print stacktrace
+    // if (app.get('env') === 'development') {
+    //     app.use(function(err, req, res, next) {
+    //         res.status(err.status || 500);
+    //         res.render('_error', {
+    //             message: err.message,
+    //             error: err
+    //         });
+    //     });
+    // }
 
     // production error handler
     // no stacktraces leaked to user

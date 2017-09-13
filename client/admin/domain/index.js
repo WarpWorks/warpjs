@@ -1,3 +1,5 @@
+const Promise = require('bluebird');
+
 const addNewEntity = require('./add-new-entity');
 const aggregationAverageChanged = require('./aggregation-average-changed');
 const aggregationNameChanged = require('./aggregation-name-changed');
@@ -44,19 +46,22 @@ const warpGlobals = require('./../warp-globals');
         $('#associationNameI').change(associationNameChanged);
         $('#associationTargetAvgI').change(associationAverageChanged);
 
-        $.ajax({
+        const ajaxOptions = {
             method: 'GET',
             headers: {
                 accept: 'application/hal+json'
-            },
-            success: function(result) {
+            }
+        };
+
+        return Promise.resolve()
+            .then(() => $.ajax(ajaxOptions))
+            .then((result) => {
                 warpGlobals.$active.domain = result.domain;
                 warpGlobals.$active._links = result._links;
                 loadOverview();
-            },
-            error: function(err) {
+            })
+            .catch((err) => {
                 console.log("INITIAL: err=", err);
-            }
-        });
+            });
     });
 })(jQuery);

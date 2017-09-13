@@ -1,5 +1,6 @@
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const associationDetailEditorTemplate = require('./templates/association-detail-editor.hbs');
 const WarpTable = require('./table');
 
 class WarpAssociationEditor {
@@ -12,7 +13,7 @@ class WarpAssociationEditor {
     }
 
     init() {
-    // Get relationship details:
+        // Get relationship details:
         this.relnJson = $warp.model.getRelationshipByID(this.relationshipID);
         this.sourceJson = $warp.model.getRelnParentByID(this.relationshipID);
         this.targetJson = $warp.model.getEntityByID(this.relnJson.targetEntity[0]);
@@ -22,7 +23,7 @@ class WarpAssociationEditor {
         if (this.targetJson.isAbstract) {
             targetEntites = $warp.model.getDerivedEntitiesByID(this.targetJson.id);
         } else {
-        // TBD - find a way to actually really only show target class, excluding siblings
+            // TBD - find a way to actually really only show target class, excluding siblings
             targetEntites = [$warp.model.getBaseClassByID(this.targetJson.id)];
         }
 
@@ -143,23 +144,22 @@ class WarpAssociationEditor {
             // Remember new oid as 'active'
             edit.data('oid', id);
 
-            var fg = $('<div class="form-group"></div>');
-            var lbl = $('<label for="comment">Description for selection \'' + name + '\':</label>');
-            var txt = $('<textarea class="form-control" rows="3" id="WarpJS_assocSelectionModal_selectionDetails_input"></textarea>');
-            var btnGrp = $('<div class="btn-group-sm" role="group" aria-label="Basic example" style="margin-top: 5px;">');
+            const desc = this.assocProxy.getAssocDataByTargetID(id).desc;
 
-            var desc = this.assocProxy.getAssocDataByTargetID(id).desc;
-            txt.val(desc);
+            const content = associationDetailEditorTemplate({
+                name,
+                desc
+            });
 
-            var buttonRemove = $('<button type="button" class="btn btn-secondary">Remove from Selection</button>');
-            buttonRemove.on('click', function() {
-                this.context.removeFromSelection(this.id);
-            }.bind({ context: this, id: id }));
+            edit.html(content);
 
-            btnGrp.append(buttonRemove);
-            fg.append(lbl).append(txt).append(btnGrp);
-
-            edit.empty().append(fg);
+            $('#WarpJS_assocSelectionModal_selectionDetails').on(
+                'click',
+                '.remove-button',
+                () => {
+                    this.removeFromSelection(this.id);
+                }
+            );
             $('#WarpJS_assocSelectionModal_selectionDetails').show();
         }.bind(this));
     }

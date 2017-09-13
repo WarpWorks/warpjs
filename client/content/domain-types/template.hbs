@@ -1,0 +1,39 @@
+{{#partial "content"}}
+  <div class="container" role="main">
+    <div class="row">
+      <div class="col-xs-12">
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            Available entity types for
+            <a href="{{_links.domain.href}}">{{_links.domain.title}}</a>
+            :
+          </div>
+
+          <div class="panel-body">
+            {{#each _embedded.entities}}
+              <div class="row">
+                <div class="col-xs-12">
+                    <a href="{{_links.self.href}}"><span class="glyphicon glyphicon-info-sign"></span></a>
+                    <a href="{{_links.instances.href}}"
+                      title="{{_links.instances.title}}"
+                      ><span class="glyphicon glyphicon-list"></span></a>
+                    <span class="glyphicon glyphicon-pencil"
+                      title="TODO: link to studio if admin"></span>
+                    &nbsp;&nbsp;&nbsp;
+                    <a href="{{_links.instances.href}}">{{type}}</a>
+                    {{#if isDefault}}<span title="Default Entity Type">*</span>{{/if}}
+                </div>
+              </div>
+            {{/each}}
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+{{/partial}}
+
+{{> ../templates/page}}

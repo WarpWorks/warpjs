@@ -1,0 +1,36 @@
+{{#partial "content"}}
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="panel panel-success">
+        <div class="panel-heading">
+          Available domains
+        </div>
+
+        <div class="panel-body">
+          {{#each _embedded.domains}}
+              <div class="row">
+                <div class="col-xs-12">
+                  <a href="{{_links.self.href}}"><span class="glyphicon glyphicon-info-sign"></span></a>
+                  <a href="{{_links.domainTypes.href}}"
+                     title="{{_links.domainTypes.title}}"
+                     ><span class="glyphicon glyphicon-list"></span></a>
+                  <span class="glyphicon glyphicon-pencil"
+                        title="TODO: link to studio if admin"></span>
+
+                  &nbsp;&nbsp;&nbsp;
+
+                  <a href="{{_links.domainTypes.href}}">{{name}}</a>
+                  {{#if isDefaultDomain}}<span title="Default Domain">*</span>{{/if}}
+                </div>
+
+              </div>
+          {{/each}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{{/partial}}
+
+{{> ../templates/page}}

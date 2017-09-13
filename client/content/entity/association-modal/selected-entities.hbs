@@ -1,0 +1,5 @@
+{{#each entities as |entity idx|}}
+    {{> selected-entity entity idx=idx}}
+{{else}}
+    <li class="alert alert-warning">None selected</li>
+{{/each}}

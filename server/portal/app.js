@@ -5,7 +5,7 @@ const fs = require('fs');
 const path = require('path');
 
 const config = require('./config');
-const routesInfo = require('./routes-info');
+const routes = require('./routes');
 
 module.exports = (baseUrl, staticUrlPath) => {
     const app = express();
@@ -41,7 +41,7 @@ module.exports = (baseUrl, staticUrlPath) => {
         extended: true
     }));
 
-    app.use(routesInfo(baseUrl).router);
+    app.use(routes(baseUrl).router);
 
     return app;
 };

@@ -2,7 +2,13 @@
     <li class="csv-list-item">
         <span class="list-item-label" title="{{basicProperty.desc}}">{{basicProperty.label}}:</span>&nbsp;
         <span class="list-item-value">
-            <span class="csv-list-item-span">{{basicProperty.value}}</span>
+            <span class="csv-list-item-span">
+                {{#if (isPropertyTypeText)}}
+                    {{{basicProperty.value}}}
+                {{else}}
+                    {{basicProperty.value}}
+                {{/if}}
+            </span>
         </span>
     </li>
 </div>

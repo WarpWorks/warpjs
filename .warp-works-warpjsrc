@@ -13,6 +13,11 @@
   },
   "cookieSecret": "ThisC00k1eISsw33t",
   "auth-plugin": "@warp-works/warpjs-session-plugin",
+  "views": {
+    "content": "DefaultPageView",
+    "portal": "DefaultPortalView"
+  },
+  "paginationSize": 5,
   "plugins": [{
     "name": "@warp-works/warpjs-map-plugin",
     "path": "/map",
