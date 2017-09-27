@@ -1,5 +1,5 @@
-const config = require('./config');
-const warpCore = require('./../lib/core');
+const config = require('./../config');
+const warpCore = require('./../../lib/core');
 
 function getPersistence(domain) {
     const Persistence = require(config.persistence.module);

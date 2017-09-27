@@ -1,5 +1,6 @@
 const Promise = require('bluebird');
 
+const ChangeLogs = require('./../../../lib/change-logs');
 const logger = require('./../../loggers');
 const serverUtils = require('./../../utils');
 
@@ -20,8 +21,9 @@ module.exports = (req, res) => {
             .then(() => logger(req, "Trying to remove embedded", req.body))
             .then(() => entity.getInstance(persistence, id))
             .then((instance) => entity.removeEmbedded(instance, payload.docLevel, 0))
+            .then((instance) => ChangeLogs.addLogFromReq(req, instance, ChangeLogs.constants.EMBEDDED_REMOVED, req.body.docLevel))
             .then((instance) => entity.updateDocument(persistence, instance))
-            .then(() => logger(req, "Embedded removed"))
+            .then(() => logger(req, ChangeLogs.constants.EMBEDDED_REMOVED))
             .then(() => res.status(204).send())
             .catch((err) => {
                 console.log("ERROR:", err);

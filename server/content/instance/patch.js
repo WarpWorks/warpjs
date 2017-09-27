@@ -1,6 +1,7 @@
 const Promise = require('bluebird');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const ChangeLogs = require('./../../../lib/change-logs');
 const logger = require('./../../loggers');
 const serverUtils = require('./../../utils');
 const utils = require('./../utils');
@@ -13,11 +14,14 @@ function updateDocument(persistence, entity, instance, req, res) {
 
     return Promise.resolve()
         .then(() => entity.patch(payload.updatePath, 0, instance, payload.updateValue))
-        .then((oldValue) => logger(req, `${domain}/${type}/${id}`, {
-            updatePath: payload.updatePath,
-            newValue: payload.updateValue,
-            oldValue
-        }))
+        .then((oldValue) => {
+            logger(req, `${domain}/${type}/${id}`, {
+                updatePath: payload.updatePath,
+                newValue: payload.updateValue,
+                oldValue
+            });
+            ChangeLogs.addLogFromReq(req, instance, ChangeLogs.constants.UPDATE_VALUE, payload.updatePath, oldValue, payload.updateValue);
+        })
         .then(() => entity.updateDocument(persistence, instance))
         .then(() => res.status(204).send());
 }

@@ -4,6 +4,7 @@
  */
 const Promise = require('bluebird');
 
+const ChangeLogs = require('./../../../lib/change-logs');
 const logger = require('./../../loggers');
 const serverUtils = require('./../../utils');
 
@@ -21,8 +22,9 @@ module.exports = (req, res) => {
         .then(() => logger(req, "Trying to remove an association", req.body))
         .then(() => entity.getInstance(persistence, id))
         .then((instance) => relationshipEntity.removeAssociation(instance, req.body))
+        .then((instance) => ChangeLogs.addLogFromReq(req, instance, ChangeLogs.constants.ASSOCIATION_REMOVED, req.body.updatePath))
         .then((instance) => entity.updateDocument(persistence, instance))
-        .then(() => logger(req, "Association removed"))
+        .then(() => logger(req, ChangeLogs.constants.ASSOCIATION_REMOVED))
         .then(() => res.status(204).send())
         .catch((err) => {
             logger(req, "Removing failed", {err});
