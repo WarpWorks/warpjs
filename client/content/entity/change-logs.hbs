@@ -1,0 +1,16 @@
+<div class="panel panel-success warpjs-change-logs">
+    <div class="panel-heading">Change Logs</div>
+    <div class="panel-body">
+        {{#if changeLogs.length}}
+            <ul>
+            {{#each changeLogs as |changeLog|}}
+                <li>
+                    {{> change-logs-item changeLog}}
+                </li>
+            {{/each}}
+            </ul>
+        {{else}}
+            No changes.
+        {{/if}}
+    </div>
+</div>

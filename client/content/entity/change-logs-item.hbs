@@ -1,0 +1,44 @@
+<span class="warpjs-change-log-action">{{action}}</span>
+
+<span class="warpjs-change-log-element">
+    [
+    <span class="warpjs-change-log-element-value"
+        {{#if element.help}}title="{{element.help}}"{{/if}}
+        >
+        {{element.label}}
+    </span>
+
+    {{#if value}}
+        :
+        <a href="{{value.href}}">{{value.label}}</a>
+    {{/if}}
+
+    ]
+</span>
+
+{{#if fromTo}}
+    <span class="warpjs-change-log-fromTo-label">from</span>
+    <span class="warpjs-change-log-from"
+        {{#if fromTo.fromHelp}}title="{{fromTo.fromHelp}}"{{/if}}
+        >
+        "<code>{{fromTo.fromValue}}</code>"
+    </span>
+    <span class="warpjs-change-log-fromTo-label">to</span>
+    <span class="warpjs-change-log-from"
+        {{#if fromTo.toHelp}}title="{{fromTo.toHelp}}"{{/if}}
+        >
+        "<code>{{fromTo.toValue}}</code>"
+    </span>
+{{/if}}
+
+<span class="warpjs-change-log-by">
+    <span class="warpjs-change-log-by-label">by</span>
+    <span class="warpjs-change-log-by-value">
+        <a href="{{user._links.self.href}}" title="{{user.name}}">{{user.username}}</a>
+    </span>
+</span>
+
+<span class="warpjs-change-log-date">
+    <span class="warpjs-change-log-date-label">on</span>
+    <span class="warpjs-change-log-date-value">{{date}}</span>
+</span>

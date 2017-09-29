@@ -2,6 +2,7 @@ const Promise = require('bluebird');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const ChangeLogs = require('./../../../lib/change-logs');
 const config = require('./../../config');
 const serverUtils = require('./../../utils');
 const utils = require('./../utils');
@@ -70,6 +71,8 @@ module.exports = (req, res) => {
                     resource.displayName = entity.getDisplayName(instance);
                     resource.isRootInstance = instance.isRootInstance;
 
+                    resource.embed('changeLogs', ChangeLogs.toFormResource(domain, instance));
+
                     return Promise.resolve()
                         .then(() => entity.getInstancePath(persistence, instance))
                         .then((breadcrumbs) => breadcrumbs.map(breadcrumbMapper.bind(null, domain)))
@@ -82,7 +85,13 @@ module.exports = (req, res) => {
                         });
                 })
                 .then(() => utils.sendHal(req, res, resource))
-                .finally(() => persistence.close());
+                .catch((err) => {
+                    resource.error = true;
+                    resource.message = err.message;
+                    utils.sendHal(req, res, resource, 500);
+                })
+                .finally(() => persistence.close())
+            ;
         }
     });
 };
