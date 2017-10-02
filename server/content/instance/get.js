@@ -73,6 +73,12 @@ module.exports = (req, res) => {
 
                     resource.embed('changeLogs', ChangeLogs.toFormResource(domain, instance));
 
+                    resource.link('history', RoutesInfo.expand('W2:content:instance-history', {
+                        domain,
+                        type,
+                        id
+                    }));
+
                     return Promise.resolve()
                         .then(() => entity.getInstancePath(persistence, instance))
                         .then((breadcrumbs) => breadcrumbs.map(breadcrumbMapper.bind(null, domain)))
