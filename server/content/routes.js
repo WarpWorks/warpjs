@@ -36,8 +36,8 @@ module.exports = (baseUrl) => {
     routesInfo.route('W2:content:schema-domain', '/schema/{domain}')
         .get(controllers.schema.domain);
 
-    routesInfo.route('W2:content:crud', '/api/CRUD')
-        .post(controllers.crud);
+    //     routesInfo.route('W2:content:crud', '/api/CRUD')
+    //         .post(controllers.crud);
 
     return routesInfo;
 };

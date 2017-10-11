@@ -9,8 +9,6 @@ const fileStreamRotator = require('file-stream-rotator');
 
 const config = require('./server/config');
 
-const Persistence = require(config.persistence.module);
-
 const port = normalizePort(process.env.PORT || config.port || 8080);
 
 const server = express();
@@ -34,7 +32,7 @@ server.use(staticUrlPath, express.static(path.join(__dirname, 'public')));
 
 // --- BEGIN WARPJS ---
 const app = require('./server/app');
-server.use('/', app(Persistence, '/', staticUrlPath));
+server.use('/', app('/', staticUrlPath));
 // --- END WARPJS ---
 
 /**

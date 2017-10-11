@@ -25,7 +25,7 @@ function basicRender(bundles, data, req, res) {
     resource.bundles = bundles;
 
     // debug("resource=", JSON.stringify(resource, null, 2));
-    res.render('content', resource.toJSON());
+    res.render('index-content', resource.toJSON());
 }
 
 function sendHal(req, res, resource, status) {

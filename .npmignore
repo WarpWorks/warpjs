@@ -1,14 +1,21 @@
 /.*rc
 /.npmignore
 /.nyc*
-/.warp-works-warpjsrc*
-/*.tgz
 /client
 /grunt
 /Gruntfile.js
-/lib/**/*.test.js
 /public/app/*_WebAPI.js
 /reports
 /server.js
 /views/app*.hbs
 /views/portal*.hbs
+
+/lib/**/*.test.js
+/server/**/*.test.js
+
+# in case 'npm pack' was run on this folder.
+/*.tgz
+
+# Because of refactoring temporary files.
+/studio
+/templates

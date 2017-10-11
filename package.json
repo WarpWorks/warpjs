@@ -26,7 +26,7 @@
       "url": "https://www.quoininc.com/staff/robert-jones/"
     }
   ],
-  "main": "lib/index.js",
+  "main": "index.js",
   "scripts": {
     "grunt": "grunt",
     "coverage:integration": "nyc --report-dir=reports/coverage/integration npm run -s test:integration",
@@ -39,6 +39,9 @@
     "lint:node": "grunt eslint:node",
     "lint:test": "grunt eslint:test",
     "lint": "grunt eslint"
+  },
+  "bin": {
+      "warpjs-backup": "./scripts/backup-data.js"
   },
   "dependencies": {
     "@quoin/node-rc": "0.1.1",
@@ -57,8 +60,8 @@
   "devDependencies": {
     "@quoin/eslint-config-quoin": "latest",
     "@quoin/expressjs-routes-info": "latest",
-    "@quoin/node-test-helpers": "latest",
-    "@warp-works/warpjs-map-plugin": "latest",
+    "@quoin/node-test-helpers": "0.2.x",
+    "@warp-works/warpjs-map-plugin": "/Users/htran/workspace/IIC/warpjs-map-plugin/warp-works-warpjs-map-plugin-0.2.0.tgz",
     "@warp-works/warpjs-mongo-persistence": "latest",
     "@warp-works/warpjs-session-plugin": "latest",
     "@warp-works/warpjs-utils": "latest",
@@ -100,7 +103,7 @@
   },
   "peerDependencies": {
     "@quoin/expressjs-routes-info": ">=0.1.10",
-    "@warp-works/warpjs-utils": ">=0.1.14",
+    "@warp-works/warpjs-utils": ">=0.2.x",
     "body-parser": ">=1.17.0",
     "cookie-parser": ">=1.4.0",
     "express": ">=4.0.0"

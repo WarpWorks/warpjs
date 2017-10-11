@@ -11,11 +11,10 @@ const plugins = require('./plugins');
 const portal = require('./portal');
 const requestToken = require('./middlewares/request-token');
 
-module.exports = (Persistence, baseUrl, staticUrl) => {
-    const app = express();
+const Persistence = require(config.persistence.module);
 
-    app.set('view engine', 'hbs');
-    app.set('views', './server/views');
+module.exports = (baseUrl, staticUrl) => {
+    const app = express();
 
     baseUrl = (baseUrl === '/') ? '' : baseUrl;
 
@@ -23,7 +22,7 @@ module.exports = (Persistence, baseUrl, staticUrl) => {
     app.set('static-url', staticUrl);
 
     RoutesInfo.staticPath('W2:app:public', app, baseUrl, '/public', path.join(config.folders.w2projects, 'public'));
-    RoutesInfo.staticPath('W2:app:static', app, baseUrl, '/static', 'public');
+    RoutesInfo.staticPath('W2:app:static', app, baseUrl, staticUrl, 'public');
 
     app.use(cookieParser(config.cookieSecret, {
         httpOnly: true,

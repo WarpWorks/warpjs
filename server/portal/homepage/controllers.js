@@ -29,7 +29,7 @@ function index(req, res) {
                         .then(extractEntity.bind(null, req, responseResource, persistence, rootEntity, doc))
                         .then(warpjsUtils.sendHal.bind(null, req, res, responseResource, RoutesInfo, null));
                 })
-                .catch(warpjsUtils.sendError.bind(null, req, res))
+                .catch((err) => warpjsUtils.sendError(req, res, RoutesInfo, err))
                 .finally(() => {
                     persistence.close();
                 });

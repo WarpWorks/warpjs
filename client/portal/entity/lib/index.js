@@ -2,8 +2,9 @@ const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const HoverPreview = require('./utilities/image-map-hover.js');
 
-const errorTemplate = require('./../../common/templates/_error.hbs');
 const template = require("./../templates/index.hbs");
+
+const errorTemplate = warpjsUtils.requirePartial('error-portal');
 
 (($) => {
     $(document).ready(() => {

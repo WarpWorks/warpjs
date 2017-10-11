@@ -3,6 +3,7 @@ const cookieParser = require('cookie-parser');
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
+const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const config = require('./config');
 const routes = require('./routes');
@@ -17,7 +18,8 @@ module.exports = (baseUrl, staticUrlPath) => {
     const PUBLIC_FOLDER_PATH_KEY = 'public-folder-path';
 
     app.set('view engine', 'hbs');
-    // app.set('views', path.join(__dirname, 'views'));
+    app.set('views', warpjsUtils.getHandlebarsViewsDir());
+
     app.set('sendfile-options', {root: buildDir});
     app.set('base-url', baseUrl);
     app.set('static-url', staticPath);
