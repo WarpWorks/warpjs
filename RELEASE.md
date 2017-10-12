@@ -1,8 +1,9 @@
 # Releases
 
-## 2.0.0-rc1
+## 1.2.0-rc1 - 2017-10-11
 
-- Linting client-side files (work in progress).
+- Refactored views and partials to be in other repos.
+- Updated dependencies.
 
 ## 1.0.0-rc17 - 2017-06-10
 

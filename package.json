@@ -1,6 +1,6 @@
 {
   "name": "@warp-works/warpjs",
-  "version": "1.1.0-rc2",
+  "version": "1.2.0-rc1",
   "description": "Content management system for WarpWorks in javascript",
   "repository": {
     "type": "git",
@@ -61,7 +61,7 @@
     "@quoin/eslint-config-quoin": "latest",
     "@quoin/expressjs-routes-info": "latest",
     "@quoin/node-test-helpers": "0.2.x",
-    "@warp-works/warpjs-map-plugin": "/Users/htran/workspace/IIC/warpjs-map-plugin/warp-works-warpjs-map-plugin-0.2.0.tgz",
+    "@warp-works/warpjs-map-plugin": "latest",
     "@warp-works/warpjs-mongo-persistence": "latest",
     "@warp-works/warpjs-session-plugin": "latest",
     "@warp-works/warpjs-utils": "latest",

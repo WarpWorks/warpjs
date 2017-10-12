@@ -2,7 +2,6 @@ const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const utils = require('./../utils');
-const warpCore = require('./../../../lib/core');
 
 module.exports = (req, res) => {
     const domain = req.params.domain;
@@ -29,9 +28,6 @@ module.exports = (req, res) => {
                 }),
                 title: "List of types"
             });
-
-            const domainModel = warpCore.getDomainByName(domain);
-            console.log("domainModel=", domainModel);
 
             utils.sendHal(req, res, resource);
         }

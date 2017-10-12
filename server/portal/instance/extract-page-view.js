@@ -101,7 +101,6 @@ function imagePath(req, image) {
 function customResource(req, key, item) {
     const resource = convertToResource(req, item);
     if (key === 'Target') {
-        debug(`customResource(): item=${JSON.stringify(item, null, 2)}`);
         resource.link('preview', routesInfo.expand('entity', {type: item.type, id: item.id, preview: true}));
     }
     return resource;
