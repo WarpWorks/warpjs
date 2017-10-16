@@ -8,6 +8,9 @@ const domainType = require('./domain-type');
 const domainTypes = require('./domain-types');
 const instances = require('./instances');
 const instance = require('./instance');
+const RESTinstances = require('./RESTinstances');
+const RESTinstance = require('./RESTinstance');
+
 const instanceRelationship = require('./instance-relationship');
 const entitySibling = require('./entity-sibling');
 const home = require('./home');
@@ -30,6 +33,10 @@ module.exports = (baseUrl) => {
     routesInfo.route('W2:content:instance-sibling', '/domain/{domain}/type/{type}/instance/{id}/sibling', entitySibling);
     routesInfo.route('W2:content:instance-relationship', '/domain/{domain}/type/{type}/instance/{id}/relationship/{relationship}', instanceRelationship, ROUTE_OPTIONS);
     routesInfo.route('W2:content:instance-relationship-page', '/domain/{domain}/type/{type}/instance/{id}/relationship/{relationship}/page/{page}', instance);
+	routesInfo.route('W2:content:RESTinstances', '/REST/{domain}/{type}/instance', RESTinstances);
+    routesInfo.route('W2:content:RESTinstance', '/REST/*', RESTinstance, ROUTE_OPTIONS);
+
+	routesInfo.route('W2:content:REST-relationship-REST-update', '/REST/{domain}/{type}', RESTinstance, ROUTE_OPTIONS);
 
     routesInfo.route('W2:content:schema-domain', '/schema/{domain}')
         .get(controllers.schema.domain);
