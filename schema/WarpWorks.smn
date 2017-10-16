@@ -11,6 +11,8 @@
 Domain:
 - definitionOfMany:number
 - {entities:Entity*}
+- {mainMenu:Menu*}
+- {mainActions:Action*}
 
 Entity:
 - isAbstract:boolean, namePlural:string, isRootEntity:boolean, isRootInstance:boolean, entityType:[Document|Embedded]
@@ -39,6 +41,7 @@ Literal:
 
 View:
 - label:string, isDefault:boolean
+- {viewActions:Action*}
 
 TableView(View):
 - {tableItems:TableItem*}
@@ -46,16 +49,18 @@ TableView(View):
 TableItem:
 - position:number, label:string
 - property=>Property
+- {tableItemActions:Action*}
 
 PageView(View):
 - {panels:Panel*}
 
 Panel:
 - position:number, label:string, columns:number, alternatingColors:boolean
-- {separatorPanelItems:SeparatorPanelItem*, relationshipPanelItems:RelationshipPanelItem*, basicPropertyPanelItems:BasicPropertyPanelItem*, enumPanelItems:EnumPanelItem*, actions:Action* }
+- {separatorPanelItems:SeparatorPanelItem*, relationshipPanelItems:RelationshipPanelItem*, basicPropertyPanelItems:BasicPropertyPanelItem*, enumPanelItems:EnumPanelItem*, panelActions:Action* }
 
 PanelItem:
-- position:number, label:string
+- position:number, label:string, readOnly:boolean
+- {panelItemActions:Action*}
 
 SeparatorPanelItem(PanelItem)
 
@@ -70,4 +75,8 @@ EnumPanelItem(PanelItem):
 - enumeration=>Enumeration
 
 Action:
-- icon:string, label:string, functionName:string
+- icon:string, label:string, functionName:string, position:number
+
+Menu:
+- icon:string, label:string, position:number
+- {menuItems:Action*}

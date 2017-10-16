@@ -2,8 +2,6 @@ const path = require('path');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 const webpack = require('webpack');
 
-const utilsRoot = path.dirname(require.resolve('@warp-works/warpjs-utils/package.json'));
-
 const rootDir = path.dirname(require.resolve('./../../package.json'));
 
 module.exports = {
