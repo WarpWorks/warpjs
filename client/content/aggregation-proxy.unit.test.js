@@ -6,6 +6,7 @@ const expect = testHelpers.expect;
 
 describe("client/content/aggregation-proxy", () => {
     it("should expose a class", () => {
-        expect(moduleToTest).to.be.a('function').to.have.property('name').to.equal('AggregationProxy');
+        expect(moduleToTest).to.be.a('function').to.have.property('name');
+        expect(moduleToTest.name).to.equal('AggregationProxy');
     });
 });

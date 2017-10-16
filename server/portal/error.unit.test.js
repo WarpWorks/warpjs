@@ -6,8 +6,8 @@ const expect = testHelpers.expect;
 
 describe("server/portal/error", () => {
     it("should export a class", () => {
-        expect(I3CError).to.be.a('function')
-            .to.have.property('name').to.equal('I3CError');
+        expect(I3CError).to.be.a('function').to.have.property('name');
+        expect(I3CError.name).to.equal('I3CError');
     });
 
     describe("new I3CError()", () => {
@@ -17,10 +17,17 @@ describe("server/portal/error", () => {
 
         it("should initialize", () => {
             const e = new I3CError("a message", {an: 'error'});
-            expect(e).to.have.property('name').to.equal('I3CPortal.I3CError');
-            expect(e).to.have.property('message').to.equal("a message");
+
+            expect(e).to.have.property('name');
+            expect(e.name).to.equal('I3CPortal.I3CError');
+
+            expect(e).to.have.property('message');
+            expect(e.message).to.equal("a message");
+
             expect(e).to.have.property('stack');
-            expect(e).to.have.property('originalError').to.deep.equal({an: 'error'});
+
+            expect(e).to.have.property('originalError');
+            expect(e.originalError).to.deep.equal({an: 'error'});
         });
     });
 
