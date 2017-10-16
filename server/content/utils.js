@@ -45,6 +45,12 @@ function sendHalOnly(req, res, resource, status) {
         .send(resource.toJSON());
 }
 
+function sendJSON(req, res, resource, status) {
+    res.status(status || 200)
+        .header('Content-Type', 'application/json')
+        .send(resource);
+}
+
 function basicRenderOld(name, data, req, res) {
     const resource = (data instanceof hal.Resource) ? data : warpjsUtils.createResource(req, data);
     resource.baseUrl = '/static';
@@ -60,5 +66,6 @@ module.exports = {
     basicRenderOld,
     createResourceFromDocument,
     sendHal,
-    sendHalOnly
+    sendHalOnly,
+	sendJSON
 };
