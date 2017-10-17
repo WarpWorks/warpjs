@@ -7,6 +7,7 @@ const actionPreview = require('./action-preview');
 const addSibling = require('./add-sibling');
 const associationModal = require('./association-modal');
 const carouselPagination = require('./carousel-pagination');
+const changeLogModal = require('./change-log-modal');
 const deleteEntity = require('./delete-entity');
 const patchEntity = require('./patch-entity');
 const progressBarModal = require('./../progress-bar-modal');
@@ -24,6 +25,7 @@ module.exports = ($, result) => {
     actionLink($, instanceDoc);
     actionPreview($, instanceDoc);
     associationModal($, instanceDoc);
+    changeLogModal($, instanceDoc);
     wysiwygEditor($, instanceDoc);
 
     tabContentNavigation($);
