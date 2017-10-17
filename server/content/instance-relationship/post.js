@@ -1,10 +1,10 @@
 const Promise = require('bluebird');
-const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
-const logger = require('./../../loggers');
+const postAggregation = require('./post-aggregation');
+const postAssociation = require('./post-association');
+const postEmbedded = require('./post-embedded');
 const serverUtils = require('./../../utils');
-const utils = require('./../utils');
 
 module.exports = (req, res) => {
     const domain = req.params.domain;
@@ -26,69 +26,17 @@ module.exports = (req, res) => {
         relationship
     });
 
-    if (targetEntity.entityType === 'Embedded') {
-        // Create a new embedded
-        console.log("payload=", payload);
-        Promise.resolve()
-            .then(() => logger(req, "Trying to add embedded", req.body))
-            .then(() => entity.getInstance(persistence, id))
-            .then((instance) => entity.addEmbedded(instance, payload.docLevel, 0))
-            .then((instance) => entity.updateDocument(persistence, instance))
-            .then(() => logger(req, "Embedded added"))
-            .then(() => utils.sendHal(req, res, resource))
-            .catch((err) => {
-                console.log("ERROR:", err);
-                logger(req, "Failed create new embedded", {err});
-                res.status(500).send(err.message); // FIXME: Don't send the err.
-            })
-            .finally(() => persistence.close())
-        ;
-    } else if (payload.id && payload.type) {
-        // Create a new association
-        Promise.resolve()
-            .then(() => logger(req, "Trying to create new association", req.body))
-            .then(() => entity.getInstance(persistence, id))
-            .then((instance) => relationshipEntity.addAssociation(instance, payload))
-            .then((instance) => entity.updateDocument(persistence, instance))
-            .then(() => logger(req, "New association added"))
-            .then(() => res.status(204).send())
-            .catch((err) => {
-                logger(req, "Failed create new association", {err});
-                res.status(500).send(err.message); // FIXME: Don't send the err.
-            })
-            .finally(() => persistence.close())
-        ;
-    } else {
-        // Create a new aggregation
-        Promise.resolve()
-            .then(() => logger(req, "Trying to create new aggregation"))
-            .then(() => entity.getInstance(persistence, id))
-            .then((instance) => entity.createChildForInstance(instance, relationshipEntity))
-            .then((child) => targetEntity.createDocument(persistence, child))
-            .then((newDoc) => newDoc.id)
-            .then((newId) => {
-                logger(req, "New aggregation added");
-                const redirectUrl = RoutesInfo.expand('W2:content:instance', {
-                    domain,
-                    type: targetEntity.name,
-                    id: newId
-                });
+    Promise.resolve()
+        .then(() => entity.getInstance(persistence, id))
+        .then((instance) => {
+            const impl = (targetEntity.entityType === 'Embedded')
+                ? postEmbedded
+                : (payload.id && payload.type)
+                    ? postAssociation
+                    : postAggregation;
 
-                if (req.headers['x-requested-with']) {
-                    // Was ajax call. return a resource.
-                    resource.link('redirect', redirectUrl);
-
-                    utils.sendHal(req, res, resource);
-                } else {
-                    // Direct call.
-                    res.redirect(redirectUrl);
-                }
-            })
-            .catch((err) => {
-                console.log("entity-child(): err=", err);
-                resource.message = err.message;
-                utils.sendHal(req, res, resource, 500);
-            })
-            .finally(() => persistence.close());
-    }
+            return impl(req, res, persistence, entity, instance, resource);
+        })
+        .finally(() => persistence.close())
+    ;
 };

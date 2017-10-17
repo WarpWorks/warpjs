@@ -8,6 +8,7 @@ const domainType = require('./domain-type');
 const domainTypes = require('./domain-types');
 const instances = require('./instances');
 const instance = require('./instance');
+const instanceHistory = require('./instance-history');
 const instanceRelationship = require('./instance-relationship');
 const entitySibling = require('./entity-sibling');
 const home = require('./home');
@@ -27,6 +28,7 @@ module.exports = (baseUrl) => {
     routesInfo.route('W2:content:entity', '/domain/{domain}/type/{type}{?profile}', domainType);
     routesInfo.route('W2:content:instances', '/domain/{domain}/type/{type}/instance', instances);
     routesInfo.route('W2:content:instance', '/domain/{domain}/type/{type}/instance/{id}', instance, ROUTE_OPTIONS);
+    routesInfo.route('W2:content:instance-history', '/domain/{domain}/type/{type}/instance/{id}/history', instanceHistory);
     routesInfo.route('W2:content:instance-sibling', '/domain/{domain}/type/{type}/instance/{id}/sibling', entitySibling);
     routesInfo.route('W2:content:instance-relationship', '/domain/{domain}/type/{type}/instance/{id}/relationship/{relationship}', instanceRelationship, ROUTE_OPTIONS);
     routesInfo.route('W2:content:instance-relationship-page', '/domain/{domain}/type/{type}/instance/{id}/relationship/{relationship}/page/{page}', instance);

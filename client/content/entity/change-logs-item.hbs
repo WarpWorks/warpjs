@@ -1,0 +1,50 @@
+<span class="warpjs-change-log-by">
+  <span class="warpjs-change-log-by-label">By</span>
+  <span class="warpjs-change-log-by-value">
+    <a href="{{user._links.self.href}}" title="{{user.name}}">{{user.username}}</a>
+  </span>
+</span>
+-
+<span class="warpjs-change-log-date">
+  <span class="warpjs-change-log-date-value" title="{{momentLongFormat timestamp}}"
+      >{{momentFromNow timestamp}}</span>
+</span>
+
+<br>
+
+<span class="warpjs-change-log-action">{{action}}</span>
+
+{{#if element}}
+  <span class="warpjs-change-log-element">
+    [
+    <span class="warpjs-change-log-element-value"
+        {{#if element.help}}title="{{element.help}}"{{/if}}
+        >{{element.label}}</span>
+
+    {{#if value}}
+      :
+      <a href="{{value.href}}">{{value.label}}</a>
+    {{/if}}
+
+    ]
+  </span>
+{{/if}}
+
+{{#if fromTo}}
+  <br>
+  <span class="warpjs-change-log-fromTo-from-label">from</span>
+  <span class="warpjs-change-log-fromTo-from-value"
+      {{#if fromTo.fromHelp}}title="{{fromTo.fromHelp}}"{{/if}}
+      >"<code>{{fromTo.fromValue}}</code>"</span>
+  <br>
+  <span class="warpjs-change-log-fromTo-to-label">to</span>
+  <span class="warpjs-change-log-fromTo-to-value"
+      {{#if fromTo.toHelp}}title="{{fromTo.toHelp}}"{{/if}}
+      >"<code>{{fromTo.toValue}}</code>"</span>
+{{else if from}}
+  <span class="warpjs-change-log-from-label">from parent</span>
+  <span class="warpjs-change-log-from-value">
+    <a href="{{from.href}}">{{from.label}}</a>
+  </span>
+{{/if}}
+
