@@ -3,6 +3,7 @@ const debug = require('debug')('W2:WarpJS:app');
 const express = require('express');
 const path = require('path');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
+const warpStudio = require('@warp-works/studio');
 
 const config = require('./config');
 const content = require('./content');
@@ -39,6 +40,9 @@ module.exports = (baseUrl, staticUrl) => {
         app.use(authMiddlewares.warpjsUser);
     }
 
+    const adminPrefix = `${baseUrl}/admin`;
+    const adminParams = [adminPrefix];
+
     const contentPrefix = `${baseUrl}/content`;
     const contentParams = [contentPrefix];
 
@@ -46,6 +50,10 @@ module.exports = (baseUrl, staticUrl) => {
     const portalParams = [portalPrefix];
 
     if (authMiddlewares) {
+        adminParams.push(authMiddlewares.requiresWarpjsUser);
+        adminParams.push(authMiddlewares.canAccessAsAdmin);
+        adminParams.push(authMiddlewares.unauthorized);
+
         contentParams.push(authMiddlewares.requiresWarpjsUser);
         contentParams.push(authMiddlewares.canAccessAsContentManager);
         contentParams.push(authMiddlewares.unauthorized);
@@ -53,6 +61,10 @@ module.exports = (baseUrl, staticUrl) => {
         portalParams.push(authMiddlewares.requiresWarpjsUser);
         portalParams.push(authMiddlewares.unauthorized);
     }
+
+    adminParams.push(warpStudio.app(adminPrefix, staticUrl));
+    app.use.apply(app, adminParams);
+
     contentParams.push(content.app(contentPrefix, staticUrl));
     app.use.apply(app, contentParams);
 

@@ -1,6 +1,6 @@
 {
   "name": "@warp-works/warpjs",
-  "version": "1.2.0-rc1",
+  "version": "1.2.0-rc2",
   "description": "Content management system for WarpWorks in javascript",
   "repository": {
     "type": "git",
@@ -41,10 +41,11 @@
     "lint": "grunt eslint"
   },
   "bin": {
-      "warpjs-backup": "./scripts/backup-data.js"
+    "warpjs-backup": "./scripts/backup-data.js"
   },
   "dependencies": {
     "@quoin/node-rc": "0.1.1",
+    "@warp-works/studio": "next",
     "bluebird": "3.5.1",
     "debug": "3.1.0",
     "hal": "0.1.0",

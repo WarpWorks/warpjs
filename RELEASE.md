@@ -1,5 +1,9 @@
 # Releases
 
+## 1.2.0-rc2 - 2017-10-18
+
+- Temporarily adding current Studio while refactoring is being done.
+
 ## 1.2.0-rc1 - 2017-10-11
 
 - Refactored views and partials to be in other repos.
