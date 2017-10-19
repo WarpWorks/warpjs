@@ -1,5 +1,9 @@
 # Releases
 
+## 1.2.0-rc5 - 2017-10-19
+
+- Fixed script shebang.
+
 ## 1.2.0-rc4 - 2017-10-19
 
 - Completed backup inside of the container.

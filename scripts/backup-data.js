@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const backup = require('./../lib/backup');
 const debug = require('debug')('W2:scripts:backup');
 
