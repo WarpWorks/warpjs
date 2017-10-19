@@ -1,5 +1,9 @@
 # Releases
 
+## 1.2.0-rc4 - 2017-10-19
+
+- Completed backup inside of the container.
+
 ## 1.2.0-rc3 - 2017-10-19
 
 - Fixed minor UI stuffs: double-line and empty panel items.

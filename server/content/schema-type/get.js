@@ -1,10 +1,11 @@
 const Promise = require('bluebird');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
-const config = require('./../../config');
 const serverUtils = require('./../../utils');
 const utils = require('./../utils');
 const warpCore = require('./../../../lib/core');
+
+const config = serverUtils.getConfig();
 
 module.exports = (req, res) => {
     const domain = req.params.domain;

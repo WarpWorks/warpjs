@@ -22,8 +22,13 @@ function documentDoesNotExist(req, res) {
     res.status(404).send();
 }
 
+function getConfig() {
+    return config;
+}
+
 module.exports = {
     documentDoesNotExist,
+    getConfig,
     getDomain,
     getEntity,
     getPersistence,

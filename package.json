@@ -1,6 +1,6 @@
 {
   "name": "@warp-works/warpjs",
-  "version": "1.2.0-rc3",
+  "version": "1.2.0-rc4",
   "description": "Content management system for WarpWorks in javascript",
   "repository": {
     "type": "git",
@@ -38,7 +38,8 @@
     "lint:client": "grunt eslint:client",
     "lint:node": "grunt eslint:node",
     "lint:test": "grunt eslint:test",
-    "lint": "grunt eslint"
+    "lint": "grunt eslint",
+    "backup": "backup-data.js"
   },
   "bin": {
     "warpjs-backup": "./scripts/backup-data.js"

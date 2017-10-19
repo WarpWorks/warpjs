@@ -3,9 +3,10 @@ const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const ChangeLogs = require('./../../../lib/change-logs');
-const config = require('./../../config');
 const serverUtils = require('./../../utils');
 const utils = require('./../utils');
+
+const config = serverUtils.getConfig();
 
 function breadcrumbMapper(domain, breadcrumb) {
     const url = RoutesInfo.expand('W2:content:instance', {

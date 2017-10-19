@@ -2,8 +2,9 @@ const debug = require('debug')('W2:content:domains:domainMapper');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
-const config = require('./../../config');
 const serverUtils = require('./../../utils');
+
+const config = serverUtils.getConfig();
 
 module.exports = (domain) => {
     debug("domain", domain);

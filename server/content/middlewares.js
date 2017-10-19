@@ -1,4 +1,5 @@
-const {WarpJSError} = require('@warp-works/warpjs-utils');
+const warpjsUtils = require('@warp-works/warpjs-utils');
+
 const config = require('./../config');
 
 function hasAdminRole(role) {
@@ -14,10 +15,10 @@ function canAccess(impl, userObjectProperty, req, res, next) {
     req.warpjsUser = req[userObjectProperty];
 
     if (!req.warpjsUser) {
-        next(new WarpJSError("Unauthenticated user."));
+        next(new warpjsUtils.WarpJSError("Unauthenticated user."));
     } else {
         const authorizedRoles = Boolean(req.warpjsUser.Roles && req.warpjsUser.Roles.filter(impl).length);
-        next(authorizedRoles ? undefined : new WarpJSError("Unauthorized user."));
+        next(authorizedRoles ? undefined : new warpjsUtils.WarpJSError("Unauthorized user."));
     }
 }
 

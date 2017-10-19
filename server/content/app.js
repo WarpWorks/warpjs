@@ -1,7 +1,3 @@
-//
-// Set up Express configuration
-//
-
 // const debug = require('debug')('W2:App:app');
 const express = require('express');
 const path = require('path');
