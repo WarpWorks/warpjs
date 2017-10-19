@@ -1,6 +1,6 @@
 {
   "name": "@warp-works/warpjs",
-  "version": "1.2.0-rc2",
+  "version": "1.2.0-rc3",
   "description": "Content management system for WarpWorks in javascript",
   "repository": {
     "type": "git",
@@ -75,7 +75,7 @@
     "cookie-parser": "1.4.3",
     "eslint": "4.9.0",
     "eslint-plugin-html": "3.2.2",
-    "eslint-plugin-import": "2.7.0",
+    "eslint-plugin-import": "2.8.0",
     "eslint-plugin-json": "1.2.0",
     "eslint-plugin-node": "5.2.0",
     "eslint-plugin-promise": "3.6.0",
@@ -90,7 +90,7 @@
     "grunt-contrib-less": "1.4.1",
     "grunt-eslint": "20.1.0",
     "grunt-webpack": "3.0.2",
-    "handlebars": "4.0.10",
+    "handlebars": "4.0.11",
     "handlebars-loader": "1.6.0",
     "jquery": "1.12.4",
     "load-grunt-config": "0.19.2",

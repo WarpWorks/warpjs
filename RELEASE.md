@@ -1,5 +1,9 @@
 # Releases
 
+## 1.2.0-rc3 - 2017-10-19
+
+- Fixed minor UI stuffs: double-line and empty panel items.
+
 ## 1.2.0-rc2 - 2017-10-18
 
 - Temporarily adding current Studio while refactoring is being done.

@@ -1,19 +1,18 @@
-{{#if (isCsvRelationship)}}
+{{#if entity._embedded.relationships.0._embedded.references.length}}
+  {{#if (isCsvRelationship)}}
     <div class="csv-container">
         <li class="csv-list-item">
             <span class="list-item-label" title="{{entity.desc}}">{{entity.label}}:</span>&nbsp;
             <span class="list-item-value">
-                {{#each entity._embedded.relationships}}
-                    {{#each this._embedded.references}}
-                        {{> ./_csv this}}
+                {{#each entity._embedded.relationships as |relationship|}}
+                    {{#each relationship._embedded.references as |reference|}}
+                        {{> ./_csv reference}}
                     {{/each}}
                 {{/each}}
             </span>
         </li>
     </div>
-{{/if}}
-
-{{#if (isPreviewRelationship)}}
+  {{else if (isPreviewRelationship)}}
     {{#each entity._embedded.relationships}}
         {{#each this._embedded.references}}
                 {{#if this._embedded}}
@@ -25,4 +24,5 @@
                 {{/if}}
         {{/each}}
     {{/each}}
+  {{/if}}
 {{/if}}

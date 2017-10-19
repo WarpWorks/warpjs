@@ -1,9 +1,11 @@
-<div class="csv-container">
-  <li class="csv-list-item">
+{{#if value}}
+  <div class="csv-container">
+    <li class="csv-list-item">
       <span class="list-item-label" title="{{desc}}">{{label}}:</span>
       &nbsp;
       <span class="list-item-value">
         <span class="csv-list-item-span">{{value}}</span>
       </span>
-  </li>
-</div>
+    </li>
+  </div>
+{{/if}}
