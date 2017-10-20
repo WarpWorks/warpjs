@@ -1,5 +1,10 @@
 # Releases
 
+## 1.2.0-rc6 - 2017-10-20
+
+- Using `.toISOString()` instead of `.now()` for date format in DB and on backup
+  filenames.
+
 ## 1.2.0-rc5 - 2017-10-19
 
 - Fixed script shebang.
