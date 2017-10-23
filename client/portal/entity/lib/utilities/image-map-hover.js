@@ -1,4 +1,5 @@
 const _ = require('lodash');
+const Promise = require('bluebird');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const modalTemplate = require('./../../templates/partials/map-area-modal.hbs');
@@ -119,24 +120,27 @@ class HoverPreview {
     }
 
     getResults($, href, cacheReferenceKey) {
-        if (this._resultDataCache[href]) {
-            this._imageAreaCache[cacheReferenceKey].result = this._resultDataCache[href];
-            this._imageAreaCache[cacheReferenceKey].pending = false;
+        Promise.resolve()
+            .then(() => this.cacheHref($, href))
+            .then(() => {
+                this._imageAreaCache[cacheReferenceKey].result = this._resultDataCache[href];
+                this._imageAreaCache[cacheReferenceKey].pending = false;
 
-            if (this._imageAreaCache[cacheReferenceKey].canShowModal) {
-                this.extractDataAndShowModal($, this._resultDataCache[href], cacheReferenceKey);
-            }
-        } else {
-            warpjsUtils.getCurrentPageHAL($, href)
+                if (this._imageAreaCache[cacheReferenceKey].canShowModal) {
+                    this.extractDataAndShowModal($, this._resultDataCache[href], cacheReferenceKey);
+                }
+            })
+        ;
+    }
+
+    cacheHref($, href) {
+        if (!this._resultDataCache[href]) {
+            return Promise.resolve()
+                .then(() => warpjsUtils.getCurrentPageHAL($, href))
                 .then((result) => {
                     this._resultDataCache[href] = result.data;
-                    this._imageAreaCache[cacheReferenceKey].result = this._resultDataCache[href];
-                    this._imageAreaCache[cacheReferenceKey].pending = false;
-
-                    if (this._imageAreaCache[cacheReferenceKey].canShowModal) {
-                        this.extractDataAndShowModal($, this._resultDataCache[href], cacheReferenceKey);
-                    }
-                });
+                })
+            ;
         }
     }
 
@@ -263,7 +267,7 @@ class HoverPreview {
         const imageAreaShape = $(event.currentTarget).attr('shape');
         const coords = $(event.currentTarget).attr('coords');
         const modalWidth = parseInt($(constants.MAP_AREA_MODAL_CONTAINER).css('width').split('px'), 10);
-        const referenceKey = `${href}+${coords}`;
+        const referenceKey = getReferenceKey(href, coords);
         const cachedImageArea = this._imageAreaCache[referenceKey];
 
         if (href) {
@@ -296,6 +300,10 @@ class HoverPreview {
 
         $(constants.MAP_AREA_MODAL_CONTAINER).hide();
     }
+}
+
+function getReferenceKey(href, coords) {
+    return `${href}+${coords}`;
 }
 
 module.exports = HoverPreview;

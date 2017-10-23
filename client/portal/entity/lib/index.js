@@ -1,6 +1,6 @@
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
-const HoverPreview = require('./utilities/image-map-hover.js');
+const HoverPreview = require('./utilities/image-map-hover');
 
 const template = require("./../templates/index.hbs");
 
@@ -22,6 +22,12 @@ const errorTemplate = warpjsUtils.requirePartial('error-portal');
                 $('.overview-image-container')
                     .on('mouseenter', '.map-hover-area', hoverPreview.onFocus.bind(hoverPreview, $))
                     .on('mouseleave', '.map-hover-area', hoverPreview.onBlur.bind(hoverPreview, $));
+
+                let delta = 500;
+                $('.overview-image-container .map-hover-area[data-target-href]').each((index, element) => {
+                    delta += 2000;
+                    setTimeout(() => hoverPreview.cacheHref($, $(element).data('targetHref')), delta);
+                });
             });
     });
 })(jQuery);

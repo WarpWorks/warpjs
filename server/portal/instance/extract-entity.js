@@ -6,7 +6,7 @@ const extractWriteAccess = require('./extract-write-access');
 
 module.exports = (req, responseResource, persistence, hsEntity, instance, isPreview) => {
     return Promise.resolve()
-        .then(extractBreadcrumbs.bind(null, responseResource, persistence, hsEntity, instance))
+        .then(extractBreadcrumbs.bind(null, responseResource, persistence, hsEntity, instance, isPreview))
         .then(extractPageView.bind(null, req, responseResource, persistence, hsEntity, instance, isPreview))
-        .then(extractWriteAccess.bind(null, req, responseResource, persistence, hsEntity, instance));
+        .then(extractWriteAccess.bind(null, req, responseResource, persistence, hsEntity, instance, isPreview));
 };
