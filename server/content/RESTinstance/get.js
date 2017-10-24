@@ -12,15 +12,18 @@ module.exports = (req, res) => {
     var params =  req.params[0].split("/");
 	const domain = params.splice(0,1)[0];
 	const relationship = params.splice(0,1)[0];
-	const type = params.splice(0,1)[0];
     const id = params.splice(0,1)[0];
+	
+	const domainInstance = serverUtils.getDomain(domain)
+
 	
 	const currentPath = "/"+domain+"/"+relationship
 	
-	
+	const parent = 	domainInstance.getParentEntityByRelationshipName(relationship);
+	const relationshipEntity = parent.getRelationshipByName(relationship);
+	const entity = relationshipEntity.getTargetEntity();
 	
 	const persistence = serverUtils.getPersistence(domain);
-	const entity = serverUtils.getEntity(domain, type);
 	return Promise.resolve()
 		.then(() => entity.getInstance(persistence, id))
 		.then((instance) => clean(instance,req,res,params,currentPath))
@@ -42,7 +45,7 @@ function clean (instance,req,res,params,currentPath){
 		{
 			
 			//TODO this is inefficient but ok for now
-			var cleanPath = rebuildPath(instance,currentPath+"/"+instance.type);
+			var cleanPath = rebuildPath(instance,currentPath);
 
 			var embeddedEntity = findEntity(cleanPath,params)
 			utils.sendJSON(req, res, embeddedEntity)
@@ -50,7 +53,7 @@ function clean (instance,req,res,params,currentPath){
 		}
 		else{
 
-		var cleanPath = rebuildPath(instance,currentPath+"/"+instance.type);
+		var cleanPath = rebuildPath(instance,currentPath);
 		utils.sendJSON(req, res, cleanPath)
 		}
 
@@ -61,7 +64,6 @@ function findEntity(instance,searchstring){
 	{
 	if (searchstring.length > 1){
 		var searchRel = searchstring.splice(0,1)[0];
-		var searchEntity = searchstring.splice(0,1)[0];
 		var searchID = searchstring.splice(0,1)[0];
 
 
@@ -122,7 +124,7 @@ function rebuildPath(obj,pathvariable) {
 						var temppath = priorpath;	
 											
 						Object.keys(relationship.entities).forEach(function(innerkey2){
-							priorpath = priorpath+"/"+relationship.parentRelnName+"/"+relationship.entities[innerkey2].type;
+							priorpath = priorpath+"/"+relationship.parentRelnName;
 							rebuildPath(relationship.entities[innerkey2],priorpath);
 							priorpath = temppath;
 						});		

@@ -12,20 +12,22 @@ module.exports = (req, res) => {
 	var params = req.params[0].split("/");
 
 
-	if(params.length <= 3){
+	if(params.length <= 2){
 		const domain = params.splice(0,1)[0];
+		const domainInstance = serverUtils.getDomain(domain)
 		const relationship = params.splice(0,1)[0];
-		const type = params.splice(0,1)[0];
+		const parent = 	domainInstance.getParentEntityByRelationshipName(relationship);
+		const relationshipEntity = parent.getRelationshipByName(relationship);
+		const targetEntity = relationshipEntity.getTargetEntity();
+		const entity = parent;
+		const type = targetEntity.name;
 
-		const parentName = serverUtils.getEntity(domain, type).parent.name;
-		const entity = serverUtils.getEntity(domain, parentName);
 		// FIXME: What happens for a password? The password should not be managed
 		// with the "content" side of things, and should not, be using this
 		// end-point.
 		const persistence = serverUtils.getPersistence(domain);	
 		//find the ID of the root
-		const relationshipEntity = entity.getRelationshipByName(relationship);
-		const targetEntity = relationshipEntity.getTargetEntity();
+
 		
 		
 		
@@ -43,17 +45,21 @@ module.exports = (req, res) => {
 		}))
 	}
 	else{
+		
 		const domain = params.splice(0,1)[0];
+		const domainInstance = serverUtils.getDomain(domain)
 		const relationship = params.splice(0,1)[0];
-		const collection = params.splice(0,1)[0];
-		const entity = serverUtils.getEntity(domain, collection);
+		const parent = 	domainInstance.getParentEntityByRelationshipName(relationship);
+		const relationshipEntity = parent.getRelationshipByName(relationship);
+		const entity = relationshipEntity.getTargetEntity();
+		const collection = entity.name;
 		const id  = params.splice(0,1)[0];
 		// FIXME: What happens for a password? The password should not be managed
 		// with the "content" side of things, and should not, be using this
 		// end-point.
 		const persistence = serverUtils.getPersistence(domain);	
 		console.log("Embedded")
-		return Promise.resolve(createEmbDoc(id,persistence,domain,collection,entity,req,res,params))
+		return Promise.resolve(createEmbDoc(id,persistence,domain,parent,entity,req,res,params))
 		}
 	
 }
@@ -173,9 +179,8 @@ function addObjectId(payload,firstEmbedded,persistence)
 
 function addEmbeddedEntity(searchstring,instance,payload,persistence)
 {
-	if (searchstring.length > 2){
+	if (searchstring.length > 1){
 		var searchRel = searchstring.splice(0,1)[0]
-		var searchEntity = searchstring.splice(0,1)[0]
 		var searchID = searchstring.splice(0,1)[0]
 
 

@@ -33,11 +33,18 @@ function updateDocument(persistence, entity, instance, searchstring, req,res,typ
 
 module.exports = (req, res) => {
 
-	var params =  req.params[0].split("/");
+    var params =  req.params[0].split("/");
 	const domain = params.splice(0,1)[0];
 	const relationship = params.splice(0,1)[0];
-	const type = params.splice(0,1)[0];
     const id = params.splice(0,1)[0];
+	
+	const domainInstance = serverUtils.getDomain(domain)
+
+		
+	const parent = 	domainInstance.getParentEntityByRelationshipName(relationship);
+	const relationshipEntity = parent.getRelationshipByName(relationship);
+	const entity = relationshipEntity.getTargetEntity();
+	const type = entity.name;
 
 	
 	
@@ -50,7 +57,6 @@ module.exports = (req, res) => {
     logger(req, "Trying to patch", req.body);
 
     const persistence = serverUtils.getPersistence(domain);
-    const entity = serverUtils.getEntity(domain, type);
     return Promise.resolve()
         .then(() => entity.getInstance(persistence, id))
         .then(
@@ -75,7 +81,6 @@ function patchNewValue(searchstring,instance,updateKey,updateValue)
 {
 	if (searchstring.length > 0){
 		var searchRel = searchstring.splice(0,1)[0]
-		var searchEntity = searchstring.splice(0,1)[0]
 		var searchID = searchstring.splice(0,1)[0]
 
 

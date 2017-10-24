@@ -7,11 +7,18 @@ module.exports = (req, res) => {
     var params =  req.params[0].split("/");
 	const domain = params.splice(0,1)[0];
 	const relationship = params.splice(0,1)[0];
-	const type = params.splice(0,1)[0];
     const id = params.splice(0,1)[0];
+	
+	const domainInstance = serverUtils.getDomain(domain)
+
+		
+	const parent = 	domainInstance.getParentEntityByRelationshipName(relationship);
+	const relationshipEntity = parent.getRelationshipByName(relationship);
+	const entity = relationshipEntity.getTargetEntity();
+	const type = entity.name;
+
 	payload = req.body;
 	const persistence = serverUtils.getPersistence(domain);
-	const entity = serverUtils.getEntity(domain, type);
 
 	if (params.length > 0){
 			const entity = serverUtils.getEntity(domain, type);
@@ -72,9 +79,8 @@ module.exports = (req, res) => {
 	
 	function deleteEmbedded(searchstring,instance)
 {
-	if (searchstring.length > 3){
+	if (searchstring.length > 2){
 		var searchRel = searchstring.splice(0,1)[0]
-		var searchEntity = searchstring.splice(0,1)[0]
 		var searchID = searchstring.splice(0,1)[0]
 		
 		// find the embedded ID
@@ -96,7 +102,7 @@ module.exports = (req, res) => {
 			
 			// Remove the entity from the relation
 			for (ent in instance.embedded[rel].entities){
-			if (instance.embedded[rel].entities[ent]["_id"].toString() === searchstring[2]){
+			if (instance.embedded[rel].entities[ent]["_id"].toString() === searchstring[1]){
 				
 				instance.embedded[rel].entities.splice(ent,1);
 			}
