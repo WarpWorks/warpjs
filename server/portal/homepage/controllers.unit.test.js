@@ -1,9 +1,6 @@
 const _ = require('lodash');
-const path = require('path');
 const testHelpers = require('@quoin/node-test-helpers');
-const warpjsUtils = require('@warp-works/warpjs-utils');
 
-const config = require('./../config');
 const controllers = require('./controllers');
 
 const expect = testHelpers.expect;
@@ -23,80 +20,17 @@ describe("server/homepage/controllers", () => {
     });
 
     describe("index(req, res)", () => {
-        it("should refuse unknown Accept header", () => {
-            const reqOptions = {
-                headers: {
-                    Accept: 'unknown'
-                }
-            };
-
-            const {req, res} = testHelpers.createMocks(reqOptions);
+        it("should redirect all requests", (done) => {
+            const {req, res} = testHelpers.createMocks();
 
             controllers.index(req, res);
-            expect(res._getStatusCode()).to.equal(406);
-        });
-
-        it("should render index for html", () => {
-            const reqOptions = {
-                url: '/some/original/url',
-                headers: {
-                    Accept: 'text/html'
-                }
-            };
-
-            const {req, res} = testHelpers.createMocks(reqOptions);
-            res.app = {
-                get(key) {
-                    return key;
-                }
-            };
-
-            controllers.index(req, res);
-
-            expect(res._getStatusCode()).to.equal(200);
-            expect(res._getRenderView()).to.equal('index');
-            expect(res._getRenderData()).to.deep.equal({
-                title: 'Entity',
-                bundles: [
-                    'static-url/app/vendor.js',
-                    'static-url/app/portal.js'
-                ],
-                cssFile: undefined,
-                baseUrl: 'base-url',
-                staticUrl: 'static-url'
-            });
-        });
-
-        // This now requires DB access.
-        it.skip("should render JSON for HAL", (done) => {
-            const reqOptions = {
-                url: '/some/original/url',
-                headers: {
-                    Accept: warpjsUtils.constants.HAL_CONTENT_TYPE
-                }
-            };
-
-            const {req, res} = testHelpers.createMocks(reqOptions);
-
-            controllers.index(req, res);
-            req.app = {
-                get(name) {
-                    if (name === 'public-folder') {
-                        return path.join(config.folders.iicData, 'public');
-                    }
-                    return '';
-                }
-            };
-
-            setTimeout(() => {
-                expect(res._getStatusCode()).to.equal(200);
-
-                const data = res._getData();
-
-                expect(data).to.have.property('_embedded').to.be.an('object');
-
-                done();
-            }, 1000);
+            setTimeout(
+                () => {
+                    expect(res._getStatusCode()).to.equal(302);
+                    done();
+                },
+                100
+            );
         });
     });
 });

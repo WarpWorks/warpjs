@@ -2,7 +2,7 @@ const RoutesInfo = require('@quoin/expressjs-routes-info');
 const testHelpers = require('@quoin/node-test-helpers');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
-const config = require('./../config');
+const config = require('./../../config');
 const extractWriteAccess = require('./extract-write-access');
 
 const expect = testHelpers.expect;

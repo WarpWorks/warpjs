@@ -1,14 +1,12 @@
-const _ = require('lodash');
 const Promise = require('bluebird');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
-const cache = require('./cache');
-// const progressBarModal = require('./../progress-bar-modal');
+const cache = require('./../../cache');
 
 module.exports = ($, url, overrideCache) => {
     return Promise.resolve()
         .then(() => {
-            if (overrideCache || !cache[url]) {
+            if (overrideCache || !cache.has(url)) {
                 const ajaxOptions = {
                     method: 'GET',
                     url,
@@ -18,18 +16,12 @@ module.exports = ($, url, overrideCache) => {
                 };
 
                 return Promise.resolve()
-                    // .then(() => progressBarModal.show($, 25))
                     .then(() => $.ajax(ajaxOptions))
-                    .then((res) => {
-                        // progressBarModal.show($, 75);
-                        cache[url] = res;
-                        // progressBarModal.show($, 100);
-                    })
-                    // .then(() => progressBarModal.hide())
+                    .then((res) => cache.set(url, res))
                 ;
             }
         })
-        .then(() => _.cloneDeep(cache[url]))
+        .then(() => cache.get(url))
         .catch(() => {
             throw new Error(`Cannot GET ${url}.`);
         });

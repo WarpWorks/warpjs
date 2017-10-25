@@ -3,25 +3,26 @@ const debug = require('debug')('W2:portal:extractPageView');
 const fs = require('fs');
 const path = require('path');
 const Promise = require('bluebird');
-const routesInfo = require('@quoin/expressjs-routes-info');
+const RoutesInfo = require('@quoin/expressjs-routes-info');
 const urlTemplate = require('url-template');
 
-const contentLinkReplacer = require('./content-link-replacer');
+const basicTypes = require('./../../../../lib/core/basic-types');
+const convertCustomLinks = require('./../convert-custom-links');
 const createObjResource = require('./create-obj-resource');
 const embed = require('./embed');
 const sortItems = require('./sort-items');
 
-const IMAGE_PATH = urlTemplate.parse('/public/iic_images/{ImageURL}');
-const CONTENT_LINK_RE = /{{(.*?),(.*?),(.*?)}}/g;
+const IMAGE_PATH = urlTemplate.parse('/public/iic_images/{ImageURL}'); // FIXME: Hard-coded path.
+const CONTENT_LINK_RE = require('./../../../../lib/core/content-link-re');
 
 function parseLinks(overviews) {
     if (overviews) {
         return overviews.map((overview) => {
             if (overview && overview.Content && overview.Content.match(CONTENT_LINK_RE)) {
-                const contentBasicProperty = _.filter(overview.basicProperties, (prop) => prop.name === 'Content');
-                overview.containsHTML = contentBasicProperty.length && contentBasicProperty[0].propertyType === 'text';
+                const contentBasicProperty = _.filter(overview.basicProperties, (prop) => prop.name === 'Content'); // FIXME: Hard-coded
+                overview.containsHTML = contentBasicProperty.length && contentBasicProperty[0].propertyType === basicTypes.Text;
                 if (overview.containsHTML) {
-                    overview.Content = overview.Content.replace(CONTENT_LINK_RE, contentLinkReplacer);
+                    overview.Content = convertCustomLinks(overview.Content);
                 }
             }
             return overview;
@@ -30,7 +31,7 @@ function parseLinks(overviews) {
     return overviews;
 }
 
-function extractRelationship(req, resource, persistence, hsEntity, entity, isPreview) {
+function extractRelationship(req, resource, persistence, hsEntity, entity) {
     const relationship = hsEntity.getRelationship();
 
     return Promise.resolve()
@@ -40,7 +41,7 @@ function extractRelationship(req, resource, persistence, hsEntity, entity, isPre
                 const referenceResource = createObjResource(reference, true);
                 if (hsEntity.style === 'Preview') {
                     const referenceEntity = hsEntity.getRelationship().getTargetEntity();
-                    return referenceEntity.getOverview(persistence, reference, isPreview)
+                    return referenceEntity.getOverview(persistence, reference)
                         .then(parseLinks)
                         .then((overviews) => {
                             if (overviews && overviews.length) {
@@ -101,7 +102,10 @@ function imagePath(req, image) {
 function customResource(req, key, item) {
     const resource = convertToResource(req, item);
     if (key === 'Target') {
-        resource.link('preview', routesInfo.expand('entity', {type: item.type, id: item.id, preview: true}));
+        resource.link('preview', RoutesInfo.expand('W2:portal:preview', {
+            type: item.type,
+            id: item.id
+        }));
     }
     return resource;
 }
@@ -160,10 +164,10 @@ function convertToResource(req, data) {
     return resource;
 }
 
-function createOverviewPanel(req, persistence, hsCurrentEntity, currentInstance, isPreview) {
+function createOverviewPanel(req, persistence, hsCurrentEntity, currentInstance) {
     return Promise.resolve()
         // Find the overview.
-        .then(() => hsCurrentEntity.getOverview(persistence, currentInstance, isPreview))
+        .then(() => hsCurrentEntity.getOverview(persistence, currentInstance))
         .then(parseLinks)
         .then(convertToResource.bind(null, req))
         .then((overviews) => {
@@ -171,16 +175,6 @@ function createOverviewPanel(req, persistence, hsCurrentEntity, currentInstance,
                 alternatingColors: false,
                 type: 'Overview'
             });
-
-            if (isPreview && !overviews.length) {
-                let mockPreview = {
-                    id: currentInstance.id,
-                    type: currentInstance.type,
-                    name: currentInstance.Name ? currentInstance.Name : currentInstance.name
-                };
-
-                overviews.push(mockPreview);
-            }
 
             resource.embed('overviews', overviews);
             return resource;
@@ -194,13 +188,13 @@ function addSeparatorPanelItems(panel, items) {
     return items;
 }
 
-function addRelationshipPanelItems(req, panel, persistence, entity, isPreview, items) {
+function addRelationshipPanelItems(req, panel, persistence, entity, items) {
     return Promise.map(
         panel.relationshipPanelItems,
         (item) => {
             const itemResource = createObjResource(item);
             items.push(itemResource);
-            return extractRelationship(req, itemResource, persistence, item, entity, isPreview);
+            return extractRelationship(req, itemResource, persistence, item, entity);
         }
     ).then(() => items);
 }
@@ -226,7 +220,7 @@ function addEnumPanelItems(panel, entity, items) {
     return items;
 }
 
-module.exports = (req, responseResource, persistence, hsEntity, entity, isPreview) => {
+module.exports = (req, responseResource, persistence, hsEntity, entity) => {
     return Promise.resolve(hsEntity.getPageView('DefaultPortalView'))
         .then((pageView) => pageView.getPanels())
         .then((panels) => {
@@ -238,14 +232,14 @@ module.exports = (req, responseResource, persistence, hsEntity, entity, isPrevie
 
                     return Promise.resolve([])
                         .then((items) => addSeparatorPanelItems(panel, items))
-                        .then((items) => addRelationshipPanelItems(req, panel, persistence, entity, isPreview, items))
+                        .then((items) => addRelationshipPanelItems(req, panel, persistence, entity, items))
                         .then((items) => addBasicPropertyPanelItems(panel, entity, items))
                         .then((items) => addEnumPanelItems(panel, entity, items))
                         .then((items) => sortItems(items))
                         .then((items) => embed(panelResource, 'panelItems', items));
                 }
             )
-                .then(() => createOverviewPanel(req, persistence, hsEntity, entity, isPreview))
+                .then(() => createOverviewPanel(req, persistence, hsEntity, entity))
                 .then((overviewPanel) => {
                     if (overviewPanel) {
                     // We increment the position becase we will add the overview at

@@ -13,6 +13,10 @@ const baseConfig = {
     },
     projectPath: process.env.PROJECT_PATH || path.join(processCwd, '..', 'w2projects'),
     public: process.env.PUBLIC_PATH || path.join(processCwd, '..', 'w2projects', 'public'),
+    previews: {
+        relationshipPath: [],
+        overviewPath: []
+    },
     roles: {
         admin: 'admin',
         content: 'content'

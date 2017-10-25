@@ -1,6 +1,7 @@
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
-const HoverPreview = require('./utilities/image-map-hover');
+const cache = require('./../../../cache');
+const preview = require('./../../preview');
 
 const template = require("./../templates/index.hbs");
 
@@ -15,19 +16,16 @@ const errorTemplate = warpjsUtils.requirePartial('error-portal');
                     document.title = result.data.Name;
                 }
 
+                result.data._embedded.previews.forEach((preview) => {
+                    cache.set(preview._links.preview.href, {
+                        title: preview.title,
+                        content: preview.content
+                    });
+                });
+
                 $('#warpjs-content-placeholder').html(content);
 
-                const hoverPreview = new HoverPreview();
-
-                $('.overview-image-container')
-                    .on('mouseenter', '.map-hover-area', hoverPreview.onFocus.bind(hoverPreview, $))
-                    .on('mouseleave', '.map-hover-area', hoverPreview.onBlur.bind(hoverPreview, $));
-
-                let delta = 500;
-                $('.overview-image-container .map-hover-area[data-target-href]').each((index, element) => {
-                    delta += 2000;
-                    setTimeout(() => hoverPreview.cacheHref($, $(element).data('targetHref')), delta);
-                });
+                preview($);
             });
     });
 })(jQuery);

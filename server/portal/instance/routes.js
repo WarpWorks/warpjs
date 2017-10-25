@@ -1,12 +1,11 @@
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 
-const controllers = require('./controllers');
+const page = require('./page');
 
 module.exports = (subPath, prefix) => {
     const routesInfo = new RoutesInfo(subPath, prefix);
 
-    routesInfo.route('entity', '/{type}/{id}{?preview}')
-        .get(controllers.entity);
+    routesInfo.route('entity', '/{type}/{id}', page);
 
     return routesInfo;
 };

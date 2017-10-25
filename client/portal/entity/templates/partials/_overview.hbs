@@ -15,10 +15,6 @@
           {{#if _embedded.Images.length}}
             <div class="overview-image-container row">
               <div class="col-xs-12 text-center">
-                <div id="map-area-modal-container">
-                  {{> map-area-modal}}
-                </div>
-
                 {{#each _embedded.Images}}
                   <figure class="figure-container">
                     <img class="margin-right"
@@ -33,6 +29,10 @@
                       <map name="overview-map-{{@index}}">
                         {{#each _embedded.Maps}}
                           <area class="map-hover-area"
+                              {{#if _links.preview.href}}
+                                  data-warpjs-action="preview"
+                                  data-warpjs-preview-url="{{_links.preview.href}}"
+                              {{/if}}
                               {{#if Shape}}shape="{{Shape}}"{{/if}}
                               {{#if Coords}}coords="{{Coords}}"{{/if}}
                               {{#if _links.target.href}}href="{{_links.target.href}}"{{/if}}
