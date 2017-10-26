@@ -1,6 +1,6 @@
 {
   "name": "@warp-works/warpjs",
-  "version": "1.2.0-rc6",
+  "version": "1.2.0-rc7",
   "description": "Content management system for WarpWorks in javascript",
   "repository": {
     "type": "git",
@@ -78,7 +78,7 @@
     "eslint-plugin-html": "3.2.2",
     "eslint-plugin-import": "2.8.0",
     "eslint-plugin-json": "1.2.0",
-    "eslint-plugin-node": "5.2.0",
+    "eslint-plugin-node": "5.2.1",
     "eslint-plugin-promise": "3.6.0",
     "eslint-plugin-standard": "3.0.1",
     "express": "4.16.2",

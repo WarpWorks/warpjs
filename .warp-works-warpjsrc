@@ -18,6 +18,10 @@
     "portal": "DefaultPortalView"
   },
   "paginationSize": 5,
+  "previews": {
+    "relationshipPath": ["Overview", "Images", "Map", "Target"],
+    "overviewPath": ["Overview"]
+  },
   "plugins": [{
     "name": "@warp-works/warpjs-map-plugin",
     "path": "/map",

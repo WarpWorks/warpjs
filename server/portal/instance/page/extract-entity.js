@@ -4,9 +4,9 @@ const extractBreadcrumbs = require('./extract-breadcrumbs');
 const extractPageView = require('./extract-page-view');
 const extractWriteAccess = require('./extract-write-access');
 
-module.exports = (req, responseResource, persistence, hsEntity, instance, isPreview) => {
+module.exports = (req, responseResource, persistence, hsEntity, instance) => {
     return Promise.resolve()
         .then(extractBreadcrumbs.bind(null, responseResource, persistence, hsEntity, instance))
-        .then(extractPageView.bind(null, req, responseResource, persistence, hsEntity, instance, isPreview))
+        .then(extractPageView.bind(null, req, responseResource, persistence, hsEntity, instance))
         .then(extractWriteAccess.bind(null, req, responseResource, persistence, hsEntity, instance));
 };

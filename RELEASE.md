@@ -1,5 +1,9 @@
 # Releases
 
+## 1.2.0-rc7 - 2017-10-25
+
+- Adding pre-loaded image target previews, and on-demand text target previews.
+
 ## 1.2.0-rc6 - 2017-10-20
 
 - Using `.toISOString()` instead of `.now()` for date format in DB and on backup

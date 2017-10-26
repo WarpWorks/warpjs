@@ -108,34 +108,6 @@ h1.overview-heading {
     margin-right: 10px;
 }
 
-
-#map-area-modal-container {
-    position: absolute;
-    z-index: 99999;
-    top: 0px;
-    left: 0px;
-    display: none;
-    pointer-events: none;
-    width: 300px;
-    padding-bottom: 0px;
-    margin: 0 auto;
-
-    -webkit-box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.25);
-    box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.25);
-    background-color: @default-bg-color;
-    border-radius: 5px;
-    border: 1px solid #4D4F53;
-    color: @dark-font-color;
-    .panel {
-        margin-bottom: 0px;
-    }
-}
-
-#map-area-modal-flag {
-    position: absolute;
-    z-index: 99999;
-}
-
 .modal-flag-top {
     top: -10px;
     left: 95px;
@@ -183,4 +155,12 @@ h1.overview-heading {
 
 .overview-image-container {
     text-align: left;
+}
+
+.popover.in {
+    .popover-content {
+        max-heigth: 200px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
 }

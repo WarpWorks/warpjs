@@ -1,7 +1,7 @@
 const Promise = require('bluebird');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 
-const config = require('./../config');
+const config = require('./../../config');
 
 module.exports = (req, responseResource, persistence, entity, instance) => {
     return Promise.resolve()
