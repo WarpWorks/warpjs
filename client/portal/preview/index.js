@@ -1,9 +1,21 @@
+const _ = require('lodash');
+
 const proxy = require('./../../content/proxy');
 
 module.exports = ($) => {
     $('[data-warpjs-action="preview"][data-warpjs-preview-url]')
         .on('mouseenter', function() {
             let popoverOffset;
+
+            const popoverOptions = {
+                html: true,
+                placement: 'top',
+                trigger: 'hover focus',
+                title: "Loading...",
+                content: '<span class="text-warning">Please wait while loading data...</span>'
+            };
+
+            $(this).data('toggle', 'popover');
 
             const coordsValue = $(this).attr('coords');
             if (coordsValue) {
@@ -18,16 +30,12 @@ module.exports = ($) => {
                     left: left + Math.floor(imageOffset.left),
                     top: top + Math.floor(imageOffset.top)
                 };
+
+                $(this).popover(popoverOptions);
+            } else {
+                $(this).popover(_.extend({}, popoverOptions, {placement: 'auto'}));
             }
 
-            const popoverOptions = {
-                html: true,
-                placement: 'top',
-                trigger: 'hover focus',
-                title: "Loading..."
-            };
-            $(this).data('toggle', 'popover');
-            $(this).popover(popoverOptions);
             $(this).popover('show');
 
             const popover = $('.popover.in');
@@ -36,15 +44,14 @@ module.exports = ($) => {
                 .then((result) => {
                     const chunks = (result.content || '').split('<br />'); // Tinymce dependent.
 
-                    $('.popover-title', popover).html(result.title);
-                    $('.popover-content', popover).html(chunks[0]);
-
                     $('.popover-content', popover).css({
                         maxHeight: '200px',
                         textOverflow: 'ellipsis',
-                        overflow: 'hidden',
-                        maxWidth: '250px'
+                        overflow: 'hidden'
                     });
+
+                    $('.popover-title', popover).html(result.title);
+                    $('.popover-content', popover).html(chunks[0]);
 
                     if (popoverOffset) {
                         const popoverLeft = Math.max(0, popoverOffset.left - Math.floor(popover.width() / 2));
@@ -53,7 +60,17 @@ module.exports = ($) => {
                             left: popoverLeft,
                             top: popoverTop
                         });
+                    } else {
+                        const thisOffset = $(this).offset();
+                        const popoverTop = Math.max(0, Math.floor(thisOffset.top) - Math.floor(popover.height()) - 25);
+                        popover.offset({
+                            top: popoverTop
+                        });
                     }
+                })
+                .catch(() => {
+                    $('.popover-title', popover).html("Trouble loading preview");
+                    $('.popover-content', popover).html(`<div class="alert alert-danger">Issue loading preview page</div>`);
                 })
             ;
         })
