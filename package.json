@@ -1,6 +1,6 @@
 {
   "name": "@warp-works/warpjs",
-  "version": "1.2.0-rc7",
+  "version": "1.2.0-rc8",
   "description": "Content management system for WarpWorks in javascript",
   "repository": {
     "type": "git",
@@ -47,6 +47,7 @@
   "dependencies": {
     "@quoin/node-rc": "0.1.1",
     "@warp-works/studio": "next",
+    "bcrypt-nodejs": "0.0.3",
     "bluebird": "3.5.1",
     "debug": "3.1.0",
     "hal": "0.1.0",
