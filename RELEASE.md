@@ -1,5 +1,9 @@
 # Releases
 
+## 1.2.0-rc8 - 2017-10-30
+
+- Converted password to encrypted. User authentication moved to session-plugin.
+
 ## 1.2.0-rc7 - 2017-10-25
 
 - Adding pre-loaded image target previews, and on-demand text target previews.

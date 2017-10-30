@@ -16,13 +16,13 @@ module.exports = (req, res, persistence, entity, instance) => {
     return Promise.resolve()
         .then(() => logger(req, `Trying ${action}`, req.body))
         .then(() => entity.patch(payload.updatePath, 0, instance, payload.updateValue))
-        .then((oldValue) => {
+        .then((valueInfo) => {
             logger(req, `Success ${action}`, {
                 updatePath: payload.updatePath,
-                newValue: payload.updateValue,
-                oldValue
+                newValue: valueInfo.newValue,
+                oldValue: valueInfo.oldValue
             });
-            ChangeLogs.updateValue(req, instance, payload.updatePath, oldValue, payload.updateValue);
+            ChangeLogs.updateValue(req, instance, payload.updatePath, valueInfo.oldValue, valueInfo.newValue);
         })
         .then(() => entity.updateDocument(persistence, instance))
         .then(() => res.status(204).send())

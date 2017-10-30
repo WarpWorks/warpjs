@@ -50,6 +50,11 @@
         "admin": "admin",
         "content": "content"
       },
+      "users": {
+        "entity": "Account",
+        "usernameField": "UserName",
+        "passwordField": "Password"
+      },
       "admin": {
         "username": "admin",
         "password": "$2a$10$5/b3MizUy3CEkjzLNIqrB.kS2p6ZeiMvlZPQ82/ZE1W/exiesMvCa"
