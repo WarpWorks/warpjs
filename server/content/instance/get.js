@@ -84,7 +84,10 @@ module.exports = (req, res) => {
                         .then(() => entity.getInstancePath(persistence, instance))
                         .then((breadcrumbs) => breadcrumbs.map(breadcrumbMapper.bind(null, domain)))
                         .then((breadcrumbs) => {
+                            // FIXME: This should be embedded, and change
+                            // front-end code too.
                             resource.breadcrumbs = breadcrumbs;
+                            // resource.embedded('breadcrumbs', breadcrumbs);
                         })
                         .then(() => pageViewEntity.toFormResource(persistence, instance, []))
                         .then((formResource) => {

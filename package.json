@@ -75,7 +75,7 @@
     "body-parser": "1.18.2",
     "bootstrap": "3.3.7",
     "cookie-parser": "1.4.3",
-    "eslint": "4.9.0",
+    "eslint": "4.10.0",
     "eslint-plugin-html": "3.2.2",
     "eslint-plugin-import": "2.8.0",
     "eslint-plugin-json": "1.2.0",
