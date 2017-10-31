@@ -1,7 +1,5 @@
 const _ = require('lodash');
 
-const warpCore = require('./../lib/core');
-
 class WarpjsPlugin {
     constructor(config, plugin) {
         this.name = plugin.name;
@@ -20,6 +18,9 @@ class WarpjsPlugin {
     }
 
     use(Persistence, app, baseUrl, staticUrl) {
+        // HACK: require() called here to prevent a circular dependency.
+        const warpCore = require('./../../lib/core');
+
         const pluginApp = this.module(this.config, warpCore, Persistence);
 
         app.use(this.path, pluginApp(baseUrl ? `${baseUrl}/${this.path}` : this.path, staticUrl));

@@ -1,5 +1,10 @@
 # Releases
 
+## 1.2.0-rc9 - 2017-10-31
+
+- Adding disabled fields for content edition when user doesn't have WriteAccess.
+  There is still some work to be done on other endpoints to secure the edition.
+
 ## 1.2.0-rc8 - 2017-10-30
 
 - Converted password to encrypted. User authentication moved to session-plugin.

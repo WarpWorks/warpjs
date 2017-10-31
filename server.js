@@ -5,9 +5,14 @@ const express = require('express');
 const fs = require('fs');
 const morgan = require('morgan');
 const path = require('path');
+const Promise = require('bluebird');
 const fileStreamRotator = require('file-stream-rotator');
 
 const config = require('./server/config');
+
+Promise.config({
+    longStackTraces: true
+});
 
 const port = normalizePort(process.env.PORT || config.port || 8080);
 

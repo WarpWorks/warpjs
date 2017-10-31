@@ -5,7 +5,7 @@
   data-warpjs-entity-type="{{relationship.model.entityType}}"
   >
 {{#if (isCsvRelationship)}}
-    {{> relationship-panel-item-csv}}
+    {{> relationship-panel-item-csv canEdit=canEdit}}
 {{else if (isTableRelationshipPanelItem)}}
     {{> relationship-panel-item-table}}
 {{else if (isCarouselRelationshipPanelItem)}}
