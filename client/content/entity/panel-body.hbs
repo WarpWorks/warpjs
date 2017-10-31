@@ -11,10 +11,10 @@
       </ul>
 
       {{#each panels as |panel tabindex|}}
-        {{> panel panel tab=true tabindex=tabindex}}
+        {{> panel panel tab=true tabindex=tabindex canEdit=../canEdit}}
       {{/each}}
     </div>
   {{else}}
-    {{> panel panels.[0] tab=false tabindex=0}}
+    {{> panel panels.[0] tab=false tabindex=0 canEdit=canEdit}}
   {{/if}}
 </div>

@@ -1,17 +1,12 @@
 const warpCore = require('./../lib/core');
-
-function authPlugin(name, plugin) {
-    return plugin.name === name;
-}
+const getAuthPlugin = require('./plugins/get-auth-plugin');
 
 module.exports = (config) => {
-    const pluginName = config['auth-plugin'];
-    if (pluginName) {
-        const plugins = config.plugins.filter(authPlugin.bind(null, pluginName));
-        if (plugins.length) {
-            const Persistence = require(config.persistence.module);
-            return require(pluginName).middlewares(plugins[0].config, warpCore, Persistence);
-        }
+    const plugin = getAuthPlugin(config);
+    if (plugin) {
+        const Persistence = require(config.persistence.module);
+        return require(plugin.name).middlewares(plugin.config, warpCore, Persistence);
+    } else {
+        return null;
     }
-    return null;
 };

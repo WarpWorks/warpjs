@@ -16,6 +16,9 @@
         {{#if (isPropertyTypeText)}}
           readonly
         {{/if}}
+        {{#unless canEdit}}
+          disabled
+        {{/unless}}
         />
     </div>
   </label>

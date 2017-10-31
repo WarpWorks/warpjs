@@ -81,6 +81,10 @@ module.exports = (req, res) => {
                     }));
 
                     return Promise.resolve()
+                        .then(() => entity.canBeEditedBy(persistence, instance, req.warpjsUser))
+                        .then((canEdit) => {
+                            resource.canEdit = canEdit;
+                        })
                         .then(() => entity.getInstancePath(persistence, instance))
                         .then((breadcrumbs) => breadcrumbs.map(breadcrumbMapper.bind(null, domain)))
                         .then((breadcrumbs) => {
@@ -96,6 +100,7 @@ module.exports = (req, res) => {
                 })
                 .then(() => utils.sendHal(req, res, resource))
                 .catch((err) => {
+                    console.log("Error in GET: err=", err);
                     resource.error = true;
                     resource.message = err.message;
                     utils.sendHal(req, res, resource, 500);
