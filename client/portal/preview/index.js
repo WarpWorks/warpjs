@@ -1,6 +1,6 @@
 const _ = require('lodash');
 
-const proxy = require('./../../content/proxy');
+const proxy = require('./../../proxy');
 
 module.exports = ($) => {
     $('[data-warpjs-action="preview"][data-warpjs-preview-url]')

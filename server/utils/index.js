@@ -1,7 +1,5 @@
-const RoutesInfo = require('@quoin/expressjs-routes-info');
-const warpjsUtils = require('@warp-works/warpjs-utils');
-
 const config = require('./../config');
+const sendError = require('./send-error');
 const warpCore = require('./../../lib/core');
 
 function getDomainName(domain) {
@@ -31,15 +29,6 @@ function documentDoesNotExist(req, res) {
 
 function getConfig() {
     return config;
-}
-
-function sendError(req, res, err) {
-    console.log("sendError(): err=", err);
-    const resource = warpjsUtils.createResource(req, {
-        message: "Error during processing content.",
-        Errmessage: err.message
-    });
-    warpjsUtils.sendHal(req, res, resource, RoutesInfo, 500);
 }
 
 module.exports = {
