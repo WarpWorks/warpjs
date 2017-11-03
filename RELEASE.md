@@ -1,5 +1,6 @@
 # Releases
 
+## 1.2.0-rc11 - 2017-11-03
 ## 1.2.0-rc10 - 2017-11-03
 
 - Secure all endpoints and UI to disable WriteAccess.
