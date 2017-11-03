@@ -14,7 +14,9 @@ module.exports = ($, instanceDoc) => {
     instanceDoc.on('click', '[data-warpjs-action="relationship-csv-modal"]', function() {
         // Only define the event handlers the first time we add the modal.
         if (!$(constants.DIALOG_SELECTOR, instanceDoc).length) {
-            instanceDoc.append(template());
+            instanceDoc.append(template({
+                canEdit: $(this).data('warpjsCanEdit') === 'true'
+            }));
 
             browseSelectedEntities($, instanceDoc);
             relationshipDescriptionModified($, instanceDoc);

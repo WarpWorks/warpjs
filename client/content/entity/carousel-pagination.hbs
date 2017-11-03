@@ -29,16 +29,22 @@
   </div>
 
   <div class="input-group-addon pagination-add">
-    <span class="clickable glyphicon glyphicon-plus-sign pagination-add"
+    <span class="glyphicon glyphicon-plus-sign pagination-add"
         title="Add new element to '{{label}}'"
+        data-warpjs-action="add-child"
         data-warpjs-url="{{relationship._links.self.href}}"
         data-warpjs-doc-level="{{relationship.docLevel}}"
+        {{#unless canEdit}}disabled{{/unless}}
         ></span>
   </div>
 
   <div class="input-group-addon pagination-remove">
-      <span class="clickable glyphicon glyphicon-minus-sign pagination-remove"
-        title="TODO: remove current element from '{{label}}'"
+      <span class="glyphicon glyphicon-minus-sign pagination-remove"
+        title="Remove current element from '{{label}}'"
+        data-warpjs-action="remove-child"
+        data-warpjs-url="{{relationship._links.self.href}}"
+        data-warpjs-doc-level="{{relationship.docLevel}}"
+        {{#unless canEdit}}disabled{{/unless}}
         ></span>
   </div>
 </div>

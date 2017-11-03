@@ -1,5 +1,9 @@
 # Releases
 
+## 1.2.0-rc10 - 2017-11-03
+
+- Secure all endpoints and UI to disable WriteAccess.
+
 ## 1.2.0-rc9 - 2017-10-31
 
 - Adding disabled fields for content edition when user doesn't have WriteAccess.

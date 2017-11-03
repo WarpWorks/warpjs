@@ -1,5 +1,7 @@
 const Promise = require('bluebird');
 
+const proxy = require('./../../proxy');
+
 module.exports = ($) => {
     // When clicking on a table row, go to that page.
     $(document).on('click', 'tr td[data-warpjs-action="link"][data-warpjs-url]', function() {
@@ -13,13 +15,9 @@ module.exports = ($) => {
 
     $(document).on('click', 'tr td .glyphicon[data-warpjs-action="delete"][data-warpjs-url]', function() {
         console.log("TODO: delete item", this);
-        const ajaxOptions = {
-            url: $(this).data('warpjsUrl'),
-            method: 'DELETE'
-        };
 
         return Promise.resolve()
-            .then(() => $.ajax(ajaxOptions))
+            .then(() => proxy.del($, $(this).data('warpjsUrl')))
             .then((result) => {
                 console.log("Deleting done...", result);
             })

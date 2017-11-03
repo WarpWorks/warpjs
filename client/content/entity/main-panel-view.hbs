@@ -21,6 +21,7 @@
         data-warpjs-action="delete"
         data-warpjs-url="{{_links.self.href}}"
         title="Remove document"
+        {{#unless canEdit}}disabled{{/unless}}
         ></span>
 
       {{#unless isRootInstance}}
@@ -30,6 +31,7 @@
           data-warpjs-action="add-sibling"
           data-warpjs-url="{{_links.sibling.href}}"
           title="Add sibling"
+          {{#unless canEdit}}disabled{{/unless}}
           ></span>
       {{/unless}}
   </div>

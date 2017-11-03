@@ -1,10 +1,12 @@
 const Promise = require('bluebird');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const logger = require('./../../loggers');
 const postAggregation = require('./post-aggregation');
 const postAssociation = require('./post-association');
 const postEmbedded = require('./post-embedded');
 const serverUtils = require('./../../utils');
+const WarpWorksError = require('./../../../lib/core/error');
 
 module.exports = (req, res) => {
     const domain = req.params.domain;
@@ -27,15 +29,29 @@ module.exports = (req, res) => {
     });
 
     Promise.resolve()
+        .then(() => logger(req, "Trying to create relationship"))
         .then(() => entity.getInstance(persistence, id))
-        .then((instance) => {
-            const impl = (targetEntity.entityType === 'Embedded')
-                ? postEmbedded
-                : (payload.id && payload.type)
-                    ? postAssociation
-                    : postAggregation;
-
-            return impl(req, res, persistence, entity, instance, resource);
+        .then(
+            (instance) => Promise.resolve()
+                .then(() => entity.canBeEditedBy(persistence, instance, req.warpjsUser))
+                .then((canEdit) => {
+                    if (!canEdit) {
+                        throw new WarpWorksError(`You do not have permission to create this entry.`);
+                    }
+                })
+                .then(() => (targetEntity.entityType === 'Embedded')
+                    ? postEmbedded
+                    : (payload.id && payload.type)
+                        ? postAssociation
+                        : postAggregation
+                )
+                .then((impl) => impl(req, res, persistence, entity, instance, resource))
+            ,
+            () => serverUtils.documentDoesNotExist(req, res)
+        )
+        .catch((err) => {
+            logger(req, "Failed", {err});
+            serverUtils.sendError(req, res, err);
         })
         .finally(() => persistence.close())
     ;

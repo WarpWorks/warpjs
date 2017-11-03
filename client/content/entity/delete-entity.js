@@ -1,16 +1,13 @@
 const Promise = require('bluebird');
 
+const proxy = require('./../../proxy');
+
 module.exports = ($) => {
-    $(document).on('click', '[data-warpjs-action="delete"][data-warpjs-url]', function() {
+    $(document).on('click', '[data-warpjs-action="delete"][data-warpjs-url]:not([disabled])', function() {
         console.log("delete:", $(this).data('url'));
 
-        const ajaxConfig = {
-            url: $(this).data('url'),
-            method: 'DELETE'
-        };
-
         return Promise.resolve()
-            .then(() => $.ajax(ajaxConfig))
+            .then(() => proxy.del($, $(this).data('url')))
             .then((res) => {
                 console.log("res=", res);
             })

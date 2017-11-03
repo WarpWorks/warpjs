@@ -1,12 +1,9 @@
 const Promise = require('bluebird');
 
-module.exports = ($, instanceDoc) => {
-    instanceDoc.on('click', '[data-warpjs-action="delete-row"][data-warpjs-url]', function() {
-        const ajaxOptions = {
-            method: 'DELETE',
-            url: $(this).data('warpjsUrl')
-        };
+const proxy = require('./../../proxy');
 
+module.exports = ($, instanceDoc) => {
+    instanceDoc.on('click', '[data-warpjs-action="delete-row"][data-warpjs-url]:not([disabled])', function() {
         // Immediate UI feedback
 
         // Updating table counters
@@ -29,7 +26,8 @@ module.exports = ($, instanceDoc) => {
 
         // async server delete.
         Promise.resolve()
-            .then(() => $.ajax(ajaxOptions))
+            .then(() => proxy.del($, $(this).data('warpjsUrl')))
+            .then((res) => console.log("TODO: Give UI feedback?"))
             // TODO: Give UI feedback on error
             .catch((err) => console.log("Error delete-row on server:", err));
     });

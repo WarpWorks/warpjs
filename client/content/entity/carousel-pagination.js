@@ -1,4 +1,4 @@
-const warpjsUtils = require('@warp-works/warpjs-utils');
+const proxy = require('./../../proxy');
 
 function findTopEmbedded(element) {
     return $(element).parents('[data-warpjs-entity-type="Embedded"]').last();
@@ -29,28 +29,21 @@ module.exports = ($, instanceDoc) => {
         }
     });
 
-    instanceDoc.on('click', '.carousel-pagination .pagination-add .glyphicon.pagination-add', function(e) {
+    instanceDoc.on('click', '.carousel-pagination .pagination-add .glyphicon.pagination-add:not([disabled])', function(e) {
         e.preventDefault();
         e.stopPropagation();
 
-        const topEmbedded = findTopEmbedded(this);
+        console.log("Am i here for real?");
 
-        const ajaxOptions = {
-            method: 'POST',
-            url: topEmbedded.data('warpjsUrl'),
-            headers: {
-                accept: warpjsUtils.constants.HAL_CONTENT_TYPE,
-                contentType: 'application/json'
-            },
-            data: {
-                docLevel: $(this).data('warpjsDocLevel')
-            },
-            dataType: 'json'
+        const topEmbedded = findTopEmbedded(this);
+        const url = topEmbedded.data('warpjsUrl');
+        const data = {
+            docLevel: $(this).data('warpjsDocLevel')
         };
 
         return Promise.resolve()
-            .then(() => $.ajax(ajaxOptions))
-            .then((res) => document.location.reload())
+            .then(() => proxy.post($, url, data))
+            .then(() => document.location.reload())
             .catch((err) => {
                 // TODO: Give UI feedback.
                 console.log("Error adding carousel:", err);
@@ -58,7 +51,7 @@ module.exports = ($, instanceDoc) => {
         ;
     });
 
-    instanceDoc.on('click', '.carousel-pagination .pagination-remove .glyphicon.pagination-remove', function(e) {
+    instanceDoc.on('click', '.carousel-pagination .pagination-remove .glyphicon.pagination-remove:not([disabled])', function(e) {
         e.preventDefault();
         e.stopPropagation();
 
@@ -68,22 +61,13 @@ module.exports = ($, instanceDoc) => {
 
         if (option.length) {
             const topEmbedded = findTopEmbedded(this);
-
-            const ajaxOptions = {
-                method: 'DELETE',
-                url: topEmbedded.data('warpjsUrl'),
-                headers: {
-                    'Accept': warpjsUtils.constants.HAL_CONTENT_TYPE,
-                    'Content-Type': 'application/json'
-                },
-                data: JSON.stringify({
-                    docLevel: $(option).data('warpjsDocLevel')
-                }, null, 2),
-                dataType: 'json'
+            const url = topEmbedded.data('warpjsUrl');
+            const data = {
+                docLevel: $(option).data('warpjsDocLevel')
             };
 
             Promise.resolve()
-                .then(() => $.ajax(ajaxOptions))
+                .then(() => proxy.del($, url, data))
                 .then((res) => document.location.reload())
                 .catch((err) => {
                     // TODO: Give UI feedback.

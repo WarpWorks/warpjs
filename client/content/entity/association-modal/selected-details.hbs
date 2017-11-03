@@ -3,16 +3,20 @@
 
   <label>Description{{#if entity.displayName}} for selection '{{entity.displayName}}'{{/if}}:</label>
   <textarea class="form-control warpjs-relationship-description" row="3"
-     data-warpjs-id="{{entity.id}}"
-     data-warpjs-type="{{entity.type}}"
-     data-warpjs-display-name="{{entity.displayName}}"
-     data-warpjs-relationship-description="{{entity.relationshipDescription}}"
-     data-warpjs-doc-level="{{entity.docLevel}}"
-     {{#unless entity.id}}readonly{{/unless}}
-      >{{entity.relationshipDescription}}</textarea>
-  <div class="btn-group-sm" role="group">
-    <button type="button" class="btn btn-secondary warpjs-remove"
-      {{#unless entity.id}}disabled{{/unless}}
-      >Remove from Selection</button>
-  </div>
+    data-warpjs-id="{{entity.id}}"
+    data-warpjs-type="{{entity.type}}"
+    data-warpjs-display-name="{{entity.displayName}}"
+    data-warpjs-relationship-description="{{entity.relationshipDescription}}"
+    data-warpjs-doc-level="{{entity.docLevel}}"
+    {{#unless entity.id}}readonly{{/unless}}
+    {{#unless canEdit}}disabled{{/unless}}
+    >{{entity.relationshipDescription}}</textarea>
+
+  {{#if canEdit}}
+    <div class="btn-group-sm" role="group">
+      <button type="button" class="btn btn-secondary warpjs-remove"
+        {{#unless entity.id}}disabled{{/unless}}
+        >Remove from Selection</button>
+    </div>
+  {{/if}}
 </div>

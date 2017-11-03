@@ -1,7 +1,7 @@
 const Promise = require('bluebird');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
-const cache = require('./../../cache');
+const cache = require('./../cache');
 
 module.exports = ($, url, overrideCache) => {
     return Promise.resolve()
