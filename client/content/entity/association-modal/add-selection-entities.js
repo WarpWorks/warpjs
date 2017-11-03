@@ -4,7 +4,7 @@
 const Promise = require('bluebird');
 
 const constants = require('./constants');
-const query = require('./../../../query');
+const proxy = require('./../../../proxy');
 const template = require('./selected-entity.hbs');
 const csvTemplate = require('./../relationship-panel-item-csv-item.hbs');
 
@@ -30,18 +30,21 @@ module.exports = ($, instanceDoc) => {
 
         const added = $(selector, instanceDoc);
         if (!added.length) {
-            $(`${groupSelector} .alert.alert-warning`, instanceDoc).remove();
-            $(groupSelector, instanceDoc).append(template(templateData));
-            $(element).closest('.warpjs-selected-entities').append(csvTemplate(templateData));
-
             // Call this async
             Promise.resolve()
-                .then(() => query($, 'POST', {id, type}, $(element).data('warpjsUrl')))
+                .then(() => proxy.post($, $(element).data('warpjsUrl'), {id, type}))
+                .then(() => {
+                    $(`${groupSelector} .alert.alert-warning`, instanceDoc).remove();
+                    $(groupSelector, instanceDoc).append(template(templateData));
+                    $(element).closest('.warpjs-selected-entities').append(csvTemplate(templateData));
+                    $(`${selector} a`, instanceDoc).trigger('click');
+                })
                 .catch((err) => {
                     // TODO: give UI feedback.
                     console.log("Error adding data to server:", err);
                 });
+        } else {
+            $(`${selector} a`, instanceDoc).trigger('click');
         }
-        $(`${selector} a`, instanceDoc).trigger('click');
     });
 };

@@ -1,19 +1,19 @@
-    {{#if (isSeparator)}}
-        {{> separator-panel-item}}
-    {{else if (isBasicProperty)}}
-        {{> basic-property-panel-item}}
-    {{else if (isEnumPanelItem)}}
-        {{> enum-panel-item}}
-    {{else if (isRelationshipPanelItem)}}
-        {{> relationship-panel-item}}
-    {{else}}
-        ***
-        TODO
-        ---
-        name:{{name}}
-        ---
-        label:{{label}}
-        ---
-        type:{{type}} / {{style}}
-        ***
-    {{/if}}
+{{#if (isSeparator)}}
+  {{> separator-panel-item canEdit=canEdit}}
+{{else if (isBasicProperty)}}
+  {{> basic-property-panel-item canEdit=canEdit}}
+{{else if (isEnumPanelItem)}}
+  {{> enum-panel-item canEdit=canEdit}}
+{{else if (isRelationshipPanelItem)}}
+  {{> relationship-panel-item canEdit=canEdit}}
+{{else}}
+  ***
+  TODO
+  ---
+  name:{{name}}
+  ---
+  label:{{label}}
+  ---
+  type:{{type}} / {{style}}
+  ***
+{{/if}}

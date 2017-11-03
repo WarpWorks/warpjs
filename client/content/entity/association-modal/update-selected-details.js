@@ -12,6 +12,12 @@ module.exports = ($, instanceDoc) => {
         }))
         .get();
     const entity = entities.length ? entities[0] : {};
-    const content = template({entity});
-    $(`${constants.DIALOG_SELECTOR} .warpjs-selected-details`, instanceDoc).html(content);
+
+    const selectedDetails = $(`${constants.DIALOG_SELECTOR} .warpjs-selected-details`, instanceDoc);
+    const content = template({
+        entity,
+        canEdit: selectedDetails.data('warpjsCanEdit') === 'true'
+    });
+
+    selectedDetails.html(content);
 };

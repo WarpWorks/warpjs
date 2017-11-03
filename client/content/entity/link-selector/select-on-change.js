@@ -1,7 +1,7 @@
 const Promise = require('bluebird');
 
 const constants = require('./constants');
-const proxy = require('./../../proxy');
+const proxy = require('./../../../proxy');
 const template = require('./entities.hbs');
 
 module.exports = ($, instanceDoc) => {

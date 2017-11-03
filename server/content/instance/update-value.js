@@ -15,6 +15,12 @@ module.exports = (req, res, persistence, entity, instance) => {
 
     return Promise.resolve()
         .then(() => logger(req, `Trying ${action}`, req.body))
+        .then(() => entity.canBeEditedBy(persistence, instance, req.warpjsUser))
+        .then((canEdit) => {
+            if (!canEdit) {
+                throw new warpjsUtils.WarpJSError(`Do not have write permission`);
+            }
+        })
         .then(() => entity.patch(payload.updatePath, 0, instance, payload.updateValue))
         .then((valueInfo) => {
             logger(req, `Success ${action}`, {

@@ -7,29 +7,33 @@
         <button type="button" class="close" data-dismiss="modal"
             aria-label="Close" aria-hidden="true"
             >&times;</button>
-        <div class="modal-title">Select Entities</div>
+        <div class="modal-title">Entities Selection</div>
       </div>
 
       <div class="modal-body">
         <div class="row">
           <div class="col-xs-10 col-xs-offset-1">
             <ul class="list-group">
-              <li class="list-group-item">
-                <form class="form-inline">
-                  Select type:
-                  <div class="form-group">
-                    <select class="form-control warpjs-selection-types">
-                      {{> types-option-loading}}
-                    </select>
-                  </div>
-                </form>
-              </li>
+              {{#if canEdit}}
+                <li class="list-group-item">
+                  <form class="form-inline">
+                    Select type:
+                    <div class="form-group">
+                      <select class="form-control warpjs-selection-types">
+                        {{> types-option-loading}}
+                      </select>
+                    </div>
+                  </form>
+                </li>
+              {{/if}}
 
-              <li class="list-group-item">
-                <ul class="list-group warpjs-selection-entities">
-                  {{> selection-entities-loading}}
-                </ul>
-              </li>
+              {{#if canEdit}}
+                <li class="list-group-item">
+                  <ul class="list-group warpjs-selection-entities">
+                    {{> selection-entities-loading}}
+                  </ul>
+                </li>
+              {{/if}}
 
               <li class="list-group-item">
                 <label>Selected entities:</label>
@@ -37,7 +41,8 @@
                 </ul>
               </li>
 
-              <li class="list-group-item warpjs-selected-details">
+              <li class="list-group-item warpjs-selected-details"
+                  data-warpjs-can-edit="{{canEdit}}">
               </li>
 
             </ul>

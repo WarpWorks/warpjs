@@ -1,7 +1,7 @@
 const Promise = require('bluebird');
 
 const constants = require('./constants');
-const proxy = require('./../../proxy');
+const proxy = require('./../../../proxy');
 const selectOptionsTemplate = require('./select-options.hbs');
 const selectionEntitiesLoadingTemplate = require('./selection-entities-loading.hbs');
 const typesOptionLoadingTemplate = require('./types-option-loading.hbs');

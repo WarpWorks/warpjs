@@ -16,10 +16,11 @@
               data-warpjs-doc-level="{{relationship.docLevel}}"
               data-warpjs-doc-name="{{name}}"
               data-warpjs-style="{{style}}"
+              data-warpjs-can-edit="{{canEdit}}"
               ></span>
         </li>
         {{#each relationship.model._embedded.entities as |entity|}}
-          {{> relationship-panel-item-csv-item entity}}
+          {{> relationship-panel-item-csv-item entity canEdit=../canEdit}}
         {{/each}}
       </ul>
     </div>
