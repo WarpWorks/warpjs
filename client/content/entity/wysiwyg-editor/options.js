@@ -1,7 +1,7 @@
 const constants = require('./constants');
 const optionsSetup = require('./options-setup');
 
-module.exports = ($, instanceDoc) => {
+module.exports = ($, instanceDoc, canEdit) => {
     return {
         selector: `.${constants.CONTENT_CLASS}`,
         height: 200,
@@ -19,6 +19,7 @@ module.exports = ($, instanceDoc) => {
         setup(editor) {
             optionsSetup($, instanceDoc, editor);
         },
-        content_css: '//www.tinymce.com/css/codepen.min.css'
+        content_css: '//www.tinymce.com/css/codepen.min.css',
+        readonly: !canEdit
     };
 };

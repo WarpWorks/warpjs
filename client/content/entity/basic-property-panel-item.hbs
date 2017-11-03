@@ -5,6 +5,7 @@
       {{#if (isPropertyTypeText)}}
         <span class="glyphicon glyphicon-list-alt pull-right"
           data-warpjs-action="open-wysiwyg"
+          data-warpjs-can-edit="{{canEdit}}"
           ></span>
       {{/if}}
 
@@ -13,12 +14,8 @@
         type="{{model.inputType}}"
         value="{{model.value}}"
         data-doc-level="{{model.docLevel}}"
-        {{#if (isPropertyTypeText)}}
-          readonly
-        {{/if}}
-        {{#unless canEdit}}
-          disabled
-        {{/unless}}
+        {{#if (isPropertyTypeText)}}readonly{{/if}}
+        {{#unless canEdit}}disabled{{/unless}}
         />
     </div>
   </label>

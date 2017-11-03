@@ -33,8 +33,6 @@ module.exports = ($, instanceDoc) => {
         e.preventDefault();
         e.stopPropagation();
 
-        console.log("Am i here for real?");
-
         const topEmbedded = findTopEmbedded(this);
         const url = topEmbedded.data('warpjsUrl');
         const data = {

@@ -7,6 +7,6 @@ module.exports = ($, url, data) => Promise.resolve()
     .then(() => $.ajax(_.extend({}, basicAjaxOptions, {
         method: 'POST',
         url,
-        data
+        data: data ? JSON.stringify(data, null, 2) : undefined
     })))
 ;

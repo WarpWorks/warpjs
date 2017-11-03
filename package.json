@@ -1,6 +1,6 @@
 {
   "name": "@warp-works/warpjs",
-  "version": "1.2.0-rc12",
+  "version": "1.2.0-rc13",
   "description": "Content management system for WarpWorks in javascript",
   "repository": {
     "type": "git",
@@ -100,7 +100,7 @@
     "mocha": "4.0.1",
     "mongodb": "2.2.33",
     "morgan": "1.9.0",
-    "nyc": "11.2.1",
+    "nyc": "11.3.0",
     "time-grunt": "1.4.0",
     "tinymce": "4.7.1",
     "webpack": "2.7.0"

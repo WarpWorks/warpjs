@@ -1,5 +1,9 @@
 # Releases
 
+## 1.2.0-rc13 - 2017-11-03
+
+- Handling WriteAccess on the text editor.
+
 ## 1.2.0-rc12 - 2017-11-03
 
 - Fixed error with the publish process.

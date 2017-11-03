@@ -14,7 +14,9 @@
         <textarea class="{{CONTENT_CLASS}}"></textarea>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-warpjs-action="save">Save changes</button>
+        {{#if canEdit}}
+          <button type="button" class="btn btn-primary" data-warpjs-action="save">Save changes</button>
+        {{/if}}
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
