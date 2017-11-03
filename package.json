@@ -1,6 +1,6 @@
 {
   "name": "@warp-works/warpjs",
-  "version": "1.2.0-rc11",
+  "version": "1.2.0-rc12",
   "description": "Content management system for WarpWorks in javascript",
   "repository": {
     "type": "git",
@@ -28,6 +28,7 @@
   ],
   "main": "index.js",
   "scripts": {
+    "prepublish": "grunt",
     "grunt": "grunt",
     "coverage:integration": "nyc --report-dir=reports/coverage/integration npm run -s test:integration",
     "coverage:unit": "nyc --report-dir=reports/coverage/unit npm run -s test:unit",
