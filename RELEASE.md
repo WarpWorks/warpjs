@@ -1,5 +1,9 @@
 # Releases
 
+## 1.2.0-rc14 - 2017-11-06
+
+- Fixing jQuery issue with data attributes.
+
 ## 1.2.0-rc13 - 2017-11-03
 
 - Handling WriteAccess on the text editor.
