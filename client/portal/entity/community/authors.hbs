@@ -1,0 +1,9 @@
+{{#if items}}
+  <div class="community-authors row">
+  {{#each items as |item|}}
+    <div class="col-md-6">
+      {{> authors-item item}}
+    </div>
+  {{/each}}
+  </div>
+{{/if}}

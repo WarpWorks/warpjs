@@ -1,0 +1,50 @@
+@author-background-color: #C10F10;
+@contributor-bg-color: #780C0A;
+
+.community {
+    .community-authors {
+        .panel.panel-default {
+            /* background-color: blue; /* DEBUG */
+                border-color: @author-background-color;
+
+            > .panel-heading {
+                background-color: @author-background-color;
+                background-image: none;
+                border-color: @author-background-color;
+                color: white;
+            }
+        }
+    }
+
+    .community-contributors.panel.panel-default {
+        /* background-color: green; /* DEBUG */
+        border-color: @contributor-bg-color;
+
+        > .panel-heading {
+            background-color: @contributor-bg-color;
+            background-image: none;
+            border-color: @contributor-bg-color;
+            color: white;
+        }
+    }
+
+    .community-spacer {
+        background-color: green;
+        height: 20px;
+    }
+
+    .community-image {
+        background-color: red; /* DEBUG */
+
+        .image-container {
+            width: 100%;
+            background-color: yellow; /* DEBUG */
+            border-radius: 50%;
+            overflow: hidden;
+        }
+    }
+
+    .community-details {
+        border: red thin dotted; /* DEBUG */
+    }
+}

@@ -1,0 +1,14 @@
+{{#if items}}
+  <div class="panel panel-default community-contributors">
+    <div class="panel-heading">
+      <div class="panel-title">Contributors</div>
+    </div>
+    <div class="panel-body">
+      {{#each items as |item|}}
+        <div class="col-xs-6">
+          {{> item-profile item imageSize=2 dataSize=8}}
+        </div>
+      {{/each}}
+    </div>
+  </div>
+{{/if}}
