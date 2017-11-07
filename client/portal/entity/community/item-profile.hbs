@@ -1,6 +1,10 @@
-<div class="row">
+<div class="row community-profile">
   <div class="col-xs-1 community-spacer">&nbsp;</div>
-  {{> item-image this size=imageSize}}
-  {{> item-data this size=dataSize}}
+    <div class="col-xs-{{imageSize}}">
+      {{> item-image this}}
+    </div>
+    <div class="col-xs-{{dataSize}}">
+      {{> item-data this}}
+    </div>
   <div class="col-xs-1 community-spacer">&nbsp;</div>
 </div>

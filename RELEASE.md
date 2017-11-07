@@ -1,5 +1,9 @@
 # Releases
 
+## 1.2.0-rc15 - 2017-11-07
+
+- Adding sample for community. Data is not hooked yet.
+
 ## 1.2.0-rc14 - 2017-11-06
 
 - Fixing jQuery issue with data attributes.

@@ -2,49 +2,108 @@
 @contributor-bg-color: #780C0A;
 
 .community {
-    .community-authors {
-        .panel.panel-default {
-            /* background-color: blue; /* DEBUG */
-                border-color: @author-background-color;
+  .community-authors {
+    .panel.panel-default {
+      /* background-color: blue; /* DEBUG */
+      border-color: @author-background-color;
 
-            > .panel-heading {
-                background-color: @author-background-color;
-                background-image: none;
-                border-color: @author-background-color;
-                color: white;
-            }
+      > .panel-heading {
+        background-color: @author-background-color;
+        background-image: none;
+        border-color: @author-background-color;
+        color: white;
+      }
+    }
+  }
+
+  .community-contributors.panel.panel-default {
+    /* background-color: green; /* DEBUG */
+    border-color: @contributor-bg-color;
+
+    > .panel-heading {
+      background-color: @contributor-bg-color;
+      background-image: none;
+      border-color: @contributor-bg-color;
+      color: white;
+    }
+
+    > .panel-body {
+        font-size: 95%;
+
+        /* This selector doesn't seem to work. */
+        .community-item:has(+ .community-item + .community-item) {
+          /* This item has at least 2 following siblings. We need to add a margin. */
+          /* padding-bottom: 2em; */
+        }
+
+        .community-item {
+          padding-bottom: 2em;
         }
     }
+  }
 
-    .community-contributors.panel.panel-default {
-        /* background-color: green; /* DEBUG */
-        border-color: @contributor-bg-color;
+  .community-spacer {
+    /* background-color: green; /* DEBUG */
+    height: 20px;
+  }
 
-        > .panel-heading {
-            background-color: @contributor-bg-color;
-            background-image: none;
-            border-color: @contributor-bg-color;
-            color: white;
+  .community-image {
+    /* background-color: red; /* DEBUG */
+    padding-left: 0px;
+    padding-right: 0px;
+
+    .image-container-parent {
+      position: relative;
+      width: 100%;
+      padding-bottom: 0%;
+      /* background-color: yellow; /* DEBUG */
+      border-radius: 50%;
+      overflow: hidden;
+
+      .image-container-child {
+        position: relative;
+        padding-bottom: calc(~"100%");
+
+        img {
+          width: 100%;
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          right: 0;
         }
+      }
+    }
+  }
+
+  .community-details {
+    /* border: red thin dotted; /* DEBUG */
+
+    .name {
+        font-size: 1.5em;
+        font-weight: bold;
+        color: @theme-font-color;
     }
 
-    .community-spacer {
-        background-color: green;
-        height: 20px;
+    .company {
+        font-style: italic;
     }
 
-    .community-image {
-        background-color: red; /* DEBUG */
-
-        .image-container {
-            width: 100%;
-            background-color: yellow; /* DEBUG */
-            border-radius: 50%;
-            overflow: hidden;
-        }
+    .label {
+        color: inherit;
+        font-weight: bold;
+        padding:0;
+        font-size: inherit;
     }
 
-    .community-details {
-        border: red thin dotted; /* DEBUG */
+    .separator {
+      padding-top: .5em;
+
+      & + .separator {
+        display: none;
+      }
     }
+  }
 }
+
+/* vim: set ai ts=2 sw=2 : */
