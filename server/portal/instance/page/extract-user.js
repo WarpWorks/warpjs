@@ -16,9 +16,10 @@ module.exports = (persistence, entity, user) => Promise.resolve()
         Name: user.Name
     }))
     .then((resource) => Promise.resolve()
-        .then(() => {
-            resource.link('image', user.ProfileImageUrl || '/static/images/default-user.gif'); // FIXME
-        })
+        .then(() => resource.link('image',
+            user.ProfileImageUrl || // FIXME
+                `${RoutesInfo.expand('W2:app:static')}/images/default-user.gif`)
+        )
         .then(() => extractWorkingFor(persistence, entity, user))
         .then((workingFors) => resource.embed('workingFor', workingFors))
         .then(() => extractUserGroups(persistence, entity, user, 'WGLead', true))

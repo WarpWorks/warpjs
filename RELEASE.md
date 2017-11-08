@@ -1,5 +1,9 @@
 # Releases
 
+## 1.2.0-rc18 - 2017-11-08
+
+- Fixed static path for default-user image.
+
 ## 1.2.0-rc17 - 2017-11-08
 
 - Fixed issue where the relationships where not defined.
