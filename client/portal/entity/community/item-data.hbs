@@ -1,22 +1,22 @@
 <div class="community-details">
-  <div class="name">David Smith</div>
-  <div class="company">Micro Technologies</div>
+  <div class="name">{{Name}}</div>
+
+  {{#if _embedded.workingFors.length}}
+    <div class="company">
+      {{#each _embedded.workingFors as |workingFor|}}
+          <a href="{{workingFor._links.self.href}}">{{workingFor.CompanyName}}</a>{{#unless @last}},{{/unless}}
+      {{/each}}
+    </div>
+  {{/if}}
 
   <div class="separator"></div>
 
-  <div class="work-groups">
-    <span class="label">Work Groups:</span>
-    <span class="value">WG1, WG2, etc...</span>
-  </div>
-
-  <div class="task-groups">
-    <span class="label">Task Groups:</span>
-    <span class="value">TG1, TG2, etc...</span>
-  </div>
+  {{> item-group groups=_embedded.workgroups className='work-groups' groupLabel="Work Groups"}}
+  {{> item-group groups=_embedded.taskgroups className='task-groups' groupLabel="Task Groups"}}
 
   <div class="separator"></div>
 
   <div class="view-profile">
-    <a href="">View Profile</a>
+      <a href="{{_links.self.href}}">View Profile</a>
   </div>
 </div>

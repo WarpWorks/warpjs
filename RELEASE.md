@@ -1,5 +1,9 @@
 # Releases
 
+## 1.2.0-rc16 - 2017-11-08
+
+- Connecting Authors and Contributors to data.
+
 ## 1.2.0-rc15 - 2017-11-07
 
 - Adding sample for community. Data is not hooked yet.
