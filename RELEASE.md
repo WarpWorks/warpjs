@@ -1,5 +1,9 @@
 # Releases
 
+## 1.2.0-rc17 - 2017-11-08
+
+- Fixed issue where the relationships where not defined.
+
 ## 1.2.0-rc16 - 2017-11-08
 
 - Connecting Authors and Contributors to data.
