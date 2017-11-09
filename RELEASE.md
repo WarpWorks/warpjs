@@ -1,5 +1,17 @@
 # Releases
 
+## 1.2.0-rc18 - 2017-11-08
+
+- Fixed static path for default-user image.
+
+## 1.2.0-rc17 - 2017-11-08
+
+- Fixed issue where the relationships where not defined.
+
+## 1.2.0-rc16 - 2017-11-08
+
+- Connecting Authors and Contributors to data.
+
 ## 1.2.0-rc15 - 2017-11-07
 
 - Adding sample for community. Data is not hooked yet.

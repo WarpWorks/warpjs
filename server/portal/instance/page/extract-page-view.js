@@ -220,42 +220,40 @@ function addEnumPanelItems(panel, entity, items) {
     return items;
 }
 
-module.exports = (req, responseResource, persistence, hsEntity, entity) => {
-    return Promise.resolve(hsEntity.getPageView('DefaultPortalView'))
-        .then((pageView) => pageView.getPanels())
-        .then((panels) => {
-            const embeddedPanels = [];
-            return Promise.map(panels,
-                (panel, panelIndex) => {
-                    const panelResource = createObjResource(panel);
-                    embeddedPanels.push(panelResource);
+module.exports = (req, responseResource, persistence, hsEntity, entity) => Promise.resolve()
+    .then(() => hsEntity.getPageView('DefaultPortalView'))
+    .then((pageView) => pageView.getPanels())
+    .then((panels) => {
+        const embeddedPanels = [];
+        return Promise.map(panels,
+            (panel, panelIndex) => {
+                const panelResource = createObjResource(panel);
+                embeddedPanels.push(panelResource);
 
-                    return Promise.resolve([])
-                        .then((items) => addSeparatorPanelItems(panel, items))
-                        .then((items) => addRelationshipPanelItems(req, panel, persistence, entity, items))
-                        .then((items) => addBasicPropertyPanelItems(panel, entity, items))
-                        .then((items) => addEnumPanelItems(panel, entity, items))
-                        .then((items) => sortItems(items))
-                        .then((items) => embed(panelResource, 'panelItems', items));
+                return Promise.resolve([])
+                    .then((items) => addSeparatorPanelItems(panel, items))
+                    .then((items) => addRelationshipPanelItems(req, panel, persistence, entity, items))
+                    .then((items) => addBasicPropertyPanelItems(panel, entity, items))
+                    .then((items) => addEnumPanelItems(panel, entity, items))
+                    .then((items) => sortItems(items))
+                    .then((items) => embed(panelResource, 'panelItems', items));
+            }
+        )
+            .then(() => createOverviewPanel(req, persistence, hsEntity, entity))
+            .then((overviewPanel) => {
+                if (overviewPanel) {
+                // We increment the position becase we will add the overview at
+                // the first position of the panels.
+                    embeddedPanels.forEach((panel) => {
+                    // It is some time a Number, some time a String.
+                        panel.position = Number(panel.position) + 1;
+                    });
+                    overviewPanel.position = 0;
+                    embeddedPanels.unshift(overviewPanel);
+                    embeddedPanels.sort((a, b) => a.position - b.position);
                 }
-            )
-                .then(() => createOverviewPanel(req, persistence, hsEntity, entity))
-                .then((overviewPanel) => {
-                    if (overviewPanel) {
-                    // We increment the position becase we will add the overview at
-                    // the first position of the panels.
-                        embeddedPanels.forEach((panel) => {
-                        // It is some time a Number, some time a String.
-                            panel.position = Number(panel.position) + 1;
-                        });
-                        overviewPanel.position = 0;
-                        embeddedPanels.unshift(overviewPanel);
-                        embeddedPanels.sort((a, b) => a.position - b.position);
-                    }
-                    return embeddedPanels;
-                });
-        })
-        .then((panels) => {
-            responseResource.embed('panels', panels);
-        });
-};
+                return embeddedPanels;
+            });
+    })
+    .then((panels) => responseResource.embed('panels', panels))
+;

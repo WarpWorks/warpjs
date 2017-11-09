@@ -4,11 +4,8 @@
 /client
 /grunt
 /Gruntfile.js
-/public/app/*_WebAPI.js
 /reports
 /server.js
-/views/app*.hbs
-/views/portal*.hbs
 
 /lib/**/*.test.js
 /server/**/*.test.js
