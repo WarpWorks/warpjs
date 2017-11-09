@@ -1,5 +1,9 @@
 # Releases
 
+## 1.2.0-rc19 - 2017-11-09
+
+- Centered image popover to the image area.
+
 ## 1.2.0-rc18 - 2017-11-08
 
 - Fixed static path for default-user image.
