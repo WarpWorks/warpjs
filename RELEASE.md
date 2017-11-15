@@ -1,5 +1,9 @@
 # Releases
 
+## 1.2.0-rc20 - 2017-11-15
+
+- Moving proxy and cache into warpjs-util to be used by other modules.
+
 ## 1.2.0-rc19 - 2017-11-09
 
 - Centered image popover to the image area.

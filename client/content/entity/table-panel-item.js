@@ -1,6 +1,5 @@
 const Promise = require('bluebird');
-
-const proxy = require('./../../proxy');
+const warpjsUtils = require('@warp-works/warpjs-utils');
 
 module.exports = ($) => {
     // When clicking on a table row, go to that page.
@@ -17,7 +16,7 @@ module.exports = ($) => {
         console.log("TODO: delete item", this);
 
         return Promise.resolve()
-            .then(() => proxy.del($, $(this).data('warpjsUrl')))
+            .then(() => warpjsUtils.proxy.del($, $(this).data('warpjsUrl')))
             .then((result) => {
                 console.log("Deleting done...", result);
             })

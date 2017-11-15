@@ -2,9 +2,9 @@
  *  When clicking on the entity in the selection list.
  */
 const Promise = require('bluebird');
+const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const constants = require('./constants');
-const proxy = require('./../../../proxy');
 const template = require('./selected-entity.hbs');
 const csvTemplate = require('./../relationship-panel-item-csv-item.hbs');
 
@@ -32,7 +32,7 @@ module.exports = ($, instanceDoc) => {
         if (!added.length) {
             // Call this async
             Promise.resolve()
-                .then(() => proxy.post($, $(element).data('warpjsUrl'), {id, type}))
+                .then(() => warpjsUtils.proxy.post($, $(element).data('warpjsUrl'), {id, type}))
                 .then(() => {
                     $(`${groupSelector} .alert.alert-warning`, instanceDoc).remove();
                     $(groupSelector, instanceDoc).append(template(templateData));

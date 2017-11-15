@@ -1,9 +1,8 @@
 const Promise = require('bluebird');
-
-const proxy = require('./../../proxy');
+const warpjsUtils = require('@warp-works/warpjs-utils');
 
 module.exports = ($, element) => Promise.resolve()
-    .then(() => proxy.post($, $(element).data('warpjsUrl')))
+    .then(() => warpjsUtils.proxy.post($, $(element).data('warpjsUrl')))
     .then((res) => {
         document.location.href = res._links.redirect.href;
     })

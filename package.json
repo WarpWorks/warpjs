@@ -1,6 +1,6 @@
 {
   "name": "@warp-works/warpjs",
-  "version": "1.2.0-rc19",
+  "version": "1.2.0-rc20",
   "description": "Content management system for WarpWorks in javascript",
   "repository": {
     "type": "git",
@@ -76,8 +76,8 @@
     "body-parser": "1.18.2",
     "bootstrap": "3.3.7",
     "cookie-parser": "1.4.3",
-    "eslint": "4.10.0",
-    "eslint-plugin-html": "3.2.2",
+    "eslint": "4.11.0",
+    "eslint-plugin-html": "4.0.0",
     "eslint-plugin-import": "2.8.0",
     "eslint-plugin-json": "1.2.0",
     "eslint-plugin-node": "5.2.1",
@@ -102,7 +102,7 @@
     "morgan": "1.9.0",
     "nyc": "11.3.0",
     "time-grunt": "1.4.0",
-    "tinymce": "4.7.1",
+    "tinymce": "4.7.2",
     "webpack": "2.7.0"
   },
   "peerDependencies": {

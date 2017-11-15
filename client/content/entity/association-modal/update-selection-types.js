@@ -1,7 +1,7 @@
 const Promise = require('bluebird');
+const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const constants = require('./constants');
-const proxy = require('./../../../proxy');
 const selectOptionsTemplate = require('./select-options.hbs');
 const selectionEntitiesLoadingTemplate = require('./selection-entities-loading.hbs');
 const typesOptionLoadingTemplate = require('./types-option-loading.hbs');
@@ -13,7 +13,7 @@ module.exports = ($, instanceDoc) => {
     $(`${constants.DIALOG_SELECTOR} .warpjs-selection-entities`, instanceDoc).html(selectionEntitiesLoadingTemplate());
 
     return Promise.resolve()
-        .then(() => proxy.get($, $(element).data('warpjsTypesUrl')))
+        .then(() => warpjsUtils.proxy.get($, $(element).data('warpjsTypesUrl')))
         .then((res) => {
             const content = selectOptionsTemplate({entities: res._embedded.entities});
             $(`${constants.DIALOG_SELECTOR} .warpjs-selection-types`, instanceDoc).html(content);

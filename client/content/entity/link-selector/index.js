@@ -1,9 +1,9 @@
 const Promise = require('bluebird');
+const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const addSelectedEntity = require('./add-selected-entity');
 const constants = require('./constants');
 const initializeSelect = require('./initialize-select');
-const proxy = require('./../../../proxy');
 const removeSelectedEntity = require('./remove-selected-entity');
 const saveSeletedEntities = require('./save-selected-entities');
 const selectOnChange = require('./select-on-change');
@@ -19,7 +19,7 @@ module.exports = ($, instanceDoc) => {
                 saveSeletedEntities($, instanceDoc);
 
                 return Promise.resolve()
-                    .then(() => proxy.get($, instanceDoc.data('warpjsTypesUrl')))
+                    .then(() => warpjsUtils.proxy.get($, instanceDoc.data('warpjsTypesUrl')))
                     .then((res) => {
                         const content = template({
                             SELECTION_MODAL_CLASS: constants.SELECTION_MODAL_CLASS,

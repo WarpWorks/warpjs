@@ -1,7 +1,7 @@
 const Promise = require('bluebird');
+const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const constants = require('./constants');
-const proxy = require('./../../../proxy');
 const template = require('./entities.hbs');
 
 module.exports = ($, instanceDoc) => {
@@ -9,7 +9,7 @@ module.exports = ($, instanceDoc) => {
         const url = $('option:selected', this).data('warpjsUrl');
 
         return Promise.resolve()
-            .then(() => proxy.get($, url))
+            .then(() => warpjsUtils.proxy.get($, url))
             .then((res) => {
                 const content = template({
                     entities: res._embedded.entities

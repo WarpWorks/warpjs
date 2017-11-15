@@ -1,4 +1,4 @@
-const proxy = require('./../../proxy');
+const warpjsUtils = require('@warp-works/warpjs-utils');
 
 function findTopEmbedded(element) {
     return $(element).parents('[data-warpjs-entity-type="Embedded"]').last();
@@ -40,7 +40,7 @@ module.exports = ($, instanceDoc) => {
         };
 
         return Promise.resolve()
-            .then(() => proxy.post($, url, data))
+            .then(() => warpjsUtils.proxy.post($, url, data))
             .then(() => document.location.reload())
             .catch((err) => {
                 // TODO: Give UI feedback.
@@ -65,7 +65,7 @@ module.exports = ($, instanceDoc) => {
             };
 
             Promise.resolve()
-                .then(() => proxy.del($, url, data))
+                .then(() => warpjsUtils.proxy.del($, url, data))
                 .then((res) => document.location.reload())
                 .catch((err) => {
                     // TODO: Give UI feedback.

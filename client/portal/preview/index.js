@@ -1,8 +1,8 @@
 const _ = require('lodash');
+const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const centerOfImageArea = require('./center-of-image-area');
 const position = require('./position');
-const proxy = require('./../../proxy');
 
 module.exports = ($) => {
     $('[data-warpjs-action="preview"][data-warpjs-preview-url]')
@@ -37,7 +37,7 @@ module.exports = ($) => {
 
             const popover = $('.popover.in');
 
-            proxy.get($, $(this).data('warpjsPreviewUrl'))
+            warpjsUtils.proxy.get($, $(this).data('warpjsPreviewUrl'))
                 .then((result) => position($, this, popover, result, popoverOffset))
                 .catch(() => {
                     $('.popover-title', popover).html("Trouble loading preview");
