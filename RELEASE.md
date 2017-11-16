@@ -1,5 +1,9 @@
 # Releases
 
+## 1.2.0-rc21 - 2017-11-16
+
+- Added style for dialog header title.
+
 ## 1.2.0-rc20 - 2017-11-15
 
 - Moving proxy and cache into warpjs-util to be used by other modules.
