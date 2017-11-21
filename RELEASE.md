@@ -1,5 +1,9 @@
 # Releases
 
+## 1.2.0-rc22 - 2017-11-21
+
+- Fixed missing button to remove association.
+
 ## 1.2.0-rc21 - 2017-11-16
 
 - Added style for dialog header title.
