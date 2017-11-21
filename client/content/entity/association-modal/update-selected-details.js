@@ -16,7 +16,7 @@ module.exports = ($, instanceDoc) => {
     const selectedDetails = $(`${constants.DIALOG_SELECTOR} .warpjs-selected-details`, instanceDoc);
     const content = template({
         entity,
-        canEdit: selectedDetails.data('warpjsCanEdit') === 'true'
+        canEdit: selectedDetails.data('warpjsCanEdit') === 'true' || selectedDetails.data('warpjsCanEdit') === true
     });
 
     selectedDetails.html(content);

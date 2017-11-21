@@ -18,7 +18,6 @@ module.exports = (req, res) => {
     const entity = serverUtils.getEntity(domain, type);
 
     return Promise.resolve()
-        .then(() => logger(req, "Trying remove embedded", req.body))
         .then(() => entity.getInstance(persistence, id))
         .then(
             (instance) => Promise.resolve()
@@ -32,8 +31,6 @@ module.exports = (req, res) => {
             ,
             () => serverUtils.documentDoesNotExist(req, res)
         )
-        .then(() => logger(req, "Success remove embedded"))
-        .then(() => res.status(204).send())
         .catch((err) => {
             logger(req, "Failed", {err});
             serverUtils.sendError(req, res, err);
