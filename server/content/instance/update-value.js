@@ -2,6 +2,7 @@ const Promise = require('bluebird');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const ChangeLogs = require('./../../../lib/change-logs');
+const indexDocument = require('./index-document');
 const logger = require('./../../loggers');
 const utils = require('./../utils');
 
@@ -31,6 +32,7 @@ module.exports = (req, res, persistence, entity, instance) => {
             ChangeLogs.updateValue(req, instance, payload.updatePath, valueInfo.oldValue, valueInfo.newValue);
         })
         .then(() => entity.updateDocument(persistence, instance))
+        .then(() => indexDocument(persistence, entity, instance))
         .then(() => res.status(204).send())
         .catch((err) => {
             logger(req, `Failed ${action}`, {err});

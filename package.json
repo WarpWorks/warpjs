@@ -66,6 +66,7 @@
     "@quoin/eslint-config-quoin": "latest",
     "@quoin/expressjs-routes-info": "latest",
     "@quoin/node-test-helpers": "0.2.x",
+    "@warp-works/warpjs-elasticsearch-plugin": "latest",
     "@warp-works/warpjs-map-plugin": "latest",
     "@warp-works/warpjs-mongo-persistence": "latest",
     "@warp-works/warpjs-session-plugin": "latest",
