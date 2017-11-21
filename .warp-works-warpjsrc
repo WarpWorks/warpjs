@@ -12,7 +12,6 @@
     "w2projects": "../w2projects"
   },
   "cookieSecret": "ThisC00k1eISsw33t",
-  "auth-plugin": "@warp-works/warpjs-session-plugin",
   "views": {
     "content": "DefaultPageView",
     "portal": "DefaultPortalView"
@@ -62,6 +61,15 @@
         "username": "admin",
         "password": "$2a$10$5/b3MizUy3CEkjzLNIqrB.kS2p6ZeiMvlZPQ82/ZE1W/exiesMvCa"
       }
+    }
+  }, {
+    "name": "ElasticSearch plugin",
+    "moduleName": "@warp-works/warpjs-elasticsearch-plugin",
+    "path": "/search",
+    "type": "search",
+    "config": {
+      "host": "http://localhost:9200",
+      "indexName": "warpjs"
     }
   }]
 }

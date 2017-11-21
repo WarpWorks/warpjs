@@ -85,8 +85,7 @@ module.exports = (baseUrl, staticUrl) => {
     app.get('/_status', status);
 
     // --- DEBUG ---
-    const _ = require('lodash');
-    debug("RoutesInfo.all()=", _.map(RoutesInfo.all(), (route, key) => `${route.name} => ${route.pathname}`));
+    debug("RoutesInfo.all()=", require('lodash').map(RoutesInfo.all(), (route, key) => `${route.name} => ${route.pathname}`));
     // --- /DEBUG ---
 
     return app;

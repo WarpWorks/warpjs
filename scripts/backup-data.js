@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 
-const backup = require('./../lib/backup');
 const debug = require('debug')('W2:scripts:backup');
+const Promise = require('bluebird');
+
+const backup = require('./../lib/backup');
 
 Promise.resolve()
     .then(() => debug("Start backup process"))
