@@ -1,5 +1,9 @@
 # Releases
 
+## 1.2.0-rc23 - 2017-11-22
+
+- Do not return the deleted references from the server.
+
 ## 1.2.0-rc22 - 2017-11-21
 
 - Fixed missing button to remove association.
