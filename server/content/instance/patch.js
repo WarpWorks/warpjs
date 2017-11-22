@@ -8,10 +8,6 @@ module.exports = (req, res) => {
     const type = req.params.type;
     const id = req.params.id;
 
-    // FIXME: What happens for a password? The password should not be managed
-    // with the "content" side of things, and should not be using this
-    // end-point.
-
     const persistence = serverUtils.getPersistence(domain);
     const entity = serverUtils.getEntity(domain, type);
 
