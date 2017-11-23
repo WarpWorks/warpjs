@@ -20,7 +20,8 @@ describe("server/homepage/controllers", () => {
     });
 
     describe("index(req, res)", () => {
-        it("should redirect all requests", (done) => {
+        it("should redirect all requests", function(done) {
+            this.timeout(2500);
             const {req, res} = testHelpers.createMocks();
 
             controllers.index(req, res);

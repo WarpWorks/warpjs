@@ -1,5 +1,9 @@
 # Releases
 
+## 1.2.0-rc24 - 2017-11-22
+
+- Adding status page.
+
 ## 1.2.0-rc23 - 2017-11-22
 
 - Do not return the deleted references from the server.

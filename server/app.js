@@ -11,6 +11,7 @@ const extractAuthMiddlewares = require('./extract-auth-middlewares');
 const plugins = require('./plugins');
 const portal = require('./portal');
 const requestToken = require('./middlewares/request-token');
+const status = require('./status');
 
 const Persistence = require(config.persistence.module);
 
@@ -77,6 +78,8 @@ module.exports = (baseUrl, staticUrl) => {
     app.get('/', (req, res) => {
         res.redirect(RoutesInfo.expand('homepage'));
     });
+
+    app.get('/_status', status);
 
     // --- DEBUG ---
     const _ = require('lodash');

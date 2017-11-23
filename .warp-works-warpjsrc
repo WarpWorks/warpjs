@@ -23,7 +23,8 @@
     "overviewPath": ["Overview"]
   },
   "plugins": [{
-    "name": "@warp-works/warpjs-map-plugin",
+    "name": "I3C MapBrowser plugin",
+    "moduleName": "@warp-works/warpjs-map-plugin",
     "path": "/map",
     "config": {
       "mapMarkerType": "UseCase",
@@ -41,8 +42,10 @@
       }
     }
   }, {
-    "name": "@warp-works/warpjs-session-plugin",
+    "name": "Session manager",
+    "moduleName": "@warp-works/warpjs-session-plugin",
     "path": "/session",
+    "type": "session",
     "config": {
       "jwtSecret": "cannotGuessThi$",
       "jwtCookieName": "w2jwt",

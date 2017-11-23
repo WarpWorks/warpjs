@@ -1,6 +1,5 @@
 const config = require('./../config');
 const sendError = require('./send-error');
-const warpCore = require('./../../lib/core');
 
 function getDomainName(domain) {
     return domain || config.domainName;
@@ -12,6 +11,7 @@ function getPersistence(domain) {
 }
 
 function getDomain(domain) {
+    const warpCore = require('./../../lib/core');
     return warpCore.getDomainByName(getDomainName(domain));
 }
 
@@ -20,7 +20,7 @@ function getEntity(domain, type) {
 }
 
 function getRootEntity(domain) {
-    return warpCore.getDomainByName(getDomainName(domain)).getRootInstance();
+    return getDomain(domain).getRootInstance();
 }
 
 function documentDoesNotExist(req, res) {

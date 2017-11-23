@@ -1,10 +1,12 @@
-const WarpjsPlugin = require('./model');
+const cache = require('./cache');
+const init = require('./init');
 
 module.exports = (app, config, Persistence, baseUrl, staticUrl) => {
+    init();
+
     baseUrl = (baseUrl === '/') ? '' : baseUrl;
 
-    config.plugins.forEach((plugin) => {
-        const warpjsPlugin = new WarpjsPlugin(config, plugin);
+    cache.forEach((warpjsPlugin) => {
         warpjsPlugin.use(Persistence, app, baseUrl, staticUrl);
     });
 };
