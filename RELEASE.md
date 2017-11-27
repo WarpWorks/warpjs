@@ -1,5 +1,9 @@
 # Releases
 
+## 1.2.0-rc25 - 2017-11-27
+
+- Refactored to use new warpjs-plugins package.
+
 ## 1.2.0-rc24 - 2017-11-22
 
 - Adding status page.

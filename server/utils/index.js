@@ -1,42 +1,17 @@
-const config = require('./../config');
+const documentDoesNotExist = require('./document-does-not-exist');
+const getConfig = require('./get-config');
+const getDomain = require('./get-domain');
+const getEntity = require('./get-entity');
+const getPersistence = require('./get-persistence');
+const getRootEntity = require('./get-root-entity');
 const sendError = require('./send-error');
 
-function getDomainName(domain) {
-    return domain || config.domainName;
-}
-
-function getPersistence(domain) {
-    const Persistence = require(config.persistence.module);
-    return new Persistence(config.persistence.host, getDomainName(domain));
-}
-
-function getDomain(domain) {
-    const warpCore = require('./../../lib/core');
-    return warpCore.getDomainByName(getDomainName(domain));
-}
-
-function getEntity(domain, type) {
-    return getDomain(getDomainName(domain)).getEntityByName(type);
-}
-
-function getRootEntity(domain) {
-    return getDomain(domain).getRootInstance();
-}
-
-function documentDoesNotExist(req, res) {
-    res.status(404).send();
-}
-
-function getConfig() {
-    return config;
-}
-
 module.exports = {
-    documentDoesNotExist,
-    getConfig,
-    getDomain,
-    getEntity,
-    getPersistence,
-    getRootEntity,
-    sendError
+    documentDoesNotExist: (req, res) => documentDoesNotExist(req, res),
+    getConfig: () => getConfig(),
+    getDomain: (domainName) => getDomain(domainName),
+    getEntity: (domainName, type) => getEntity(domainName, type),
+    getPersistence: (domainName) => getPersistence(domainName),
+    getRootEntity: (domainName) => getRootEntity(domainName),
+    sendError: (req, res, err) => sendError(req, res, err)
 };
