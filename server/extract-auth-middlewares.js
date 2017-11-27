@@ -1,11 +1,13 @@
-const warpCore = require('./../lib/core');
-const getAuthPlugin = require('./plugins/get-auth-plugin');
+const warpjsPlugins = require('@warp-works/warpjs-plugins');
 
-module.exports = (config) => {
-    const plugin = getAuthPlugin(config);
+const warpCore = require('./../lib/core');
+
+module.exports = () => {
+    const plugin = warpjsPlugins.getPlugin('session');
+
     if (plugin) {
-        const Persistence = require(config.persistence.module);
-        return require(plugin.name).middlewares(plugin.config, warpCore, Persistence);
+        const Persistence = require(plugin.config.persistence.module);
+        return plugin.module.middlewares(plugin.config, warpCore, Persistence);
     } else {
         return null;
     }

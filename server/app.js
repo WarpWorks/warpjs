@@ -3,19 +3,20 @@ const debug = require('debug')('W2:WarpJS:app');
 const express = require('express');
 const path = require('path');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
+const warpjsPlugins = require('@warp-works/warpjs-plugins');
 const warpStudio = require('@warp-works/studio');
 
-const config = require('./config');
 const content = require('./content');
 const extractAuthMiddlewares = require('./extract-auth-middlewares');
-const plugins = require('./plugins');
 const portal = require('./portal');
 const requestToken = require('./middlewares/request-token');
+const serverUtils = require('./utils');
 const status = require('./status');
-
-const Persistence = require(config.persistence.module);
+const warpjsCore = require('./../lib/core');
 
 module.exports = (baseUrl, staticUrl) => {
+    const config = serverUtils.getConfig();
+
     const app = express();
 
     baseUrl = (baseUrl === '/') ? '' : baseUrl;
@@ -34,7 +35,9 @@ module.exports = (baseUrl, staticUrl) => {
 
     app.use(requestToken);
 
-    const authMiddlewares = extractAuthMiddlewares(config);
+    warpjsPlugins.init(config.domainName, config.persistence, config.plugins);
+
+    const authMiddlewares = extractAuthMiddlewares();
 
     if (authMiddlewares) {
         debug(`auth middlewares detected`);
@@ -72,7 +75,7 @@ module.exports = (baseUrl, staticUrl) => {
     portalParams.push(portal.app(portalPrefix, staticUrl));
     app.use.apply(app, portalParams);
 
-    plugins.register(app, config, Persistence, baseUrl, staticUrl);
+    warpjsPlugins.register(warpjsCore, app, baseUrl, staticUrl);
 
     // Just send default to the portal.
     app.get('/', (req, res) => {
