@@ -1,5 +1,9 @@
 # Releases
 
+## 1.2.0-rc26 - 2017-11-28
+
+- Fixed small bug with tinymce (Content Editor) for the link modal.
+
 ## 1.2.0-rc25 - 2017-11-27
 
 - Refactored to use new warpjs-plugins package.
