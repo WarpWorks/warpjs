@@ -4,6 +4,7 @@ const Promise = require('bluebird');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const extractProfileImage = require('./extract-profile-image');
 const extractWorkingFor = require('./extract-working-for');
 const extractUserGroups = require('./extract-user-groups');
 
@@ -16,10 +17,8 @@ module.exports = (persistence, entity, user) => Promise.resolve()
         Name: user.Name
     }))
     .then((resource) => Promise.resolve()
-        .then(() => resource.link('image',
-            user.ProfileImageUrl || // FIXME
-                `${RoutesInfo.expand('W2:app:static')}/images/default-user.gif`)
-        )
+        .then(() => extractProfileImage(persistence, entity, user))
+        .then((image) => resource.link('image', image || `${RoutesInfo.expand('W2:app:static')}/images/default-user.gif`))
         .then(() => extractWorkingFor(persistence, entity, user))
         .then((workingFors) => resource.embed('workingFor', workingFors))
         .then(() => extractUserGroups(persistence, entity, user, 'WGLead', true))

@@ -1,5 +1,9 @@
 # Releases
 
+## 1.2.0-rc27 - 2017-11-28
+
+- Use the user's profile image from the overview.
+
 ## 1.2.0-rc26 - 2017-11-28
 
 - Fixed small bug with tinymce (Content Editor) for the link modal.
