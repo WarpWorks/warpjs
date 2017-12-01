@@ -2,13 +2,18 @@
 
 const debug = require('debug')('W2:scripts:reindex-data');
 const Promise = require('bluebird');
+const warpjsPlugins = require('@warp-works/warpjs-plugins');
 
-const plugins = require('./../server/plugins');
+const serverUtils = require('./../server/utils');
 const warpCore = require('./../lib/core');
+
+const config = serverUtils.getConfig();
 
 Promise.resolve()
     .then(() => debug("Starting re-index process..."))
-    .then(() => plugins.getTypedPlugin('search'))
+    .then(() => serverUtils.getConfig())
+    .then((config) => warpjsPlugins.init(config.domainName, config.persistence, config.plugins))
+    .then(() => warpjsPlugins.getPlugin('search'))
     .then((plugin) => plugin
         ? Promise.resolve()
             .then(() => plugin.module.initializeIndex(plugin.config))
