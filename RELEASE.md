@@ -1,5 +1,10 @@
 # Releases
 
+## 1.2.0-rc31 - 2017-12-01
+
+- Building with working search plugin.
+- Adding style for white input-group addon.
+
 ## 1.2.0-rc30 - 2017-11-30
 
 - Initial candidate with search.
