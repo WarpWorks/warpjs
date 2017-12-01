@@ -1,5 +1,9 @@
 # Releases
 
+## 1.2.0-rc30 - 2017-11-30
+
+- Initial candidate with search.
+
 ## 1.2.0-rc29 - 2017-11-28
 
 - Changed the default image for the community.

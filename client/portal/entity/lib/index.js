@@ -28,6 +28,7 @@ const errorTemplate = warpjsUtils.requirePartial('error-portal');
                     }
 
                     $('#warpjs-content-placeholder').html(content);
+                    warpjsUtils.documentReady($);
 
                     preview($);
                 }
