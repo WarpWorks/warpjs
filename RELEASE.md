@@ -1,5 +1,9 @@
 # Releases
 
+## 1.2.0-rc32 - 2017-12-01
+
+- Fix enumeration saving.
+
 ## 1.2.0-rc31 - 2017-12-01
 
 - Building with working search plugin.
