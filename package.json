@@ -1,6 +1,6 @@
 {
   "name": "@warp-works/warpjs",
-  "version": "1.2.0-rc32",
+  "version": "1.2.0-rc33",
   "description": "Content management system for WarpWorks in javascript",
   "repository": {
     "type": "git",
@@ -71,7 +71,7 @@
     "@warp-works/warpjs-elasticsearch-plugin": "latest",
     "@warp-works/warpjs-map-plugin": "latest",
     "@warp-works/warpjs-mongo-persistence": "latest",
-    "@warp-works/warpjs-session-plugin": "next",
+    "@warp-works/warpjs-session-plugin": "latest",
     "babel-core": "6.26.0",
     "babel-loader": "7.1.2",
     "babel-preset-env": "1.6.1",

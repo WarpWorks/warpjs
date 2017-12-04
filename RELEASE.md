@@ -1,5 +1,9 @@
 # Releases
 
+## 1.2.0-rc33 - 2017-12-03
+
+- Special display for single author.
+
 ## 1.2.0-rc32 - 2017-12-01
 
 - Fix enumeration saving.
