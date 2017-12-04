@@ -1,12 +1,14 @@
 const Promise = require('bluebird');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 
-const config = require('./../../config');
+const serverUtils = require('./../../../utils');
 
 module.exports = (req, responseResource, persistence, entity, instance) => Promise.resolve()
-    .then(() => entity.canBeEditedBy(persistence, instance, req.warpjsUser))
+    .then(() => serverUtils.canEdit(persistence, entity, instance, req.warpjsUser))
     .then((canWrite) => {
         if (canWrite) {
+            const config = serverUtils.getConfig();
+
             responseResource.link('edit', {
                 href: RoutesInfo.expand('W2:content:instance', {
                     domain: config.domainName,

@@ -12,7 +12,7 @@ describe("server/portal/entity/extract-write-access", () => {
         expect(extractWriteAccess).to.be.a('function').to.have.lengthOf(5);
     });
 
-    it("should not add _link.edit", () => {
+    it.skip("should not add _link.edit", () => {
         const req = {};
         const resource = warpjsUtils.createResource('/foo', {});
         const persistence = {};

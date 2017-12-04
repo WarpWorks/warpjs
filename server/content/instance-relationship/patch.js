@@ -21,7 +21,7 @@ module.exports = (req, res) => {
         .then(() => entity.getInstance(persistence, id))
         .then(
             (instance) => Promise.resolve()
-                .then(() => entity.canBeEditedBy(persistence, instance, req.warpjsUser))
+                .then(() => serverUtils.canEdit(persistence, entity, instance, req.warpjsUser))
                 .then((canEdit) => {
                     if (!canEdit) {
                         throw new WarpWorksError(`You do not have permission to edit this entry.`);

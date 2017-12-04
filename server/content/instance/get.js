@@ -81,7 +81,7 @@ module.exports = (req, res) => {
                     }));
 
                     return Promise.resolve()
-                        .then(() => entity.canBeEditedBy(persistence, instance, req.warpjsUser))
+                        .then(() => serverUtils.canEdit(persistence, entity, instance, req.warpjsUser))
                         .then((canEdit) => {
                             resource.canEdit = canEdit;
                         })

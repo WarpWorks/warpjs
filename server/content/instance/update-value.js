@@ -3,6 +3,8 @@ const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const ChangeLogs = require('./../../../lib/change-logs');
 const logger = require('./../../loggers');
+const search = require('./../../../lib/search');
+const serverUtils = require('./../../utils');
 const utils = require('./../utils');
 
 module.exports = (req, res, persistence, entity, instance) => {
@@ -15,7 +17,7 @@ module.exports = (req, res, persistence, entity, instance) => {
 
     return Promise.resolve()
         .then(() => logger(req, `Trying ${action}`, req.body))
-        .then(() => entity.canBeEditedBy(persistence, instance, req.warpjsUser))
+        .then(() => serverUtils.canEdit(persistence, entity, instance, req.warpjsUser))
         .then((canEdit) => {
             if (!canEdit) {
                 throw new warpjsUtils.WarpJSError(`Do not have write permission`);
@@ -31,8 +33,10 @@ module.exports = (req, res, persistence, entity, instance) => {
             ChangeLogs.updateValue(req, instance, payload.updatePath, valueInfo.oldValue, valueInfo.newValue);
         })
         .then(() => entity.updateDocument(persistence, instance))
+        .then(() => search.indexDocument(persistence, entity, instance))
         .then(() => res.status(204).send())
         .catch((err) => {
+            console.log("updateValue(): ERROR: err=", err);
             logger(req, `Failed ${action}`, {err});
             const resource = warpjsUtils.createResource(req, {
                 domain,
