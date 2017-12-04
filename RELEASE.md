@@ -1,5 +1,9 @@
 # Releases
 
+## 1.2.0-rc34 - 2017-12-03
+
+- Retrieve preview from search plugin first if available.
+
 ## 1.2.0-rc33 - 2017-12-03
 
 - Special display for single author.
