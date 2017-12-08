@@ -8,8 +8,9 @@ const warpStudio = require('@warp-works/studio');
 
 const content = require('./content');
 const extractAuthMiddlewares = require('./extract-auth-middlewares');
+const logFiles = require('./log-files');
 const portal = require('./portal');
-const requestToken = require('./middlewares/request-token');
+const middlewares = require('./middlewares');
 const serverUtils = require('./utils');
 const status = require('./status');
 const warpjsCore = require('./../lib/core');
@@ -24,6 +25,9 @@ module.exports = (baseUrl, staticUrl) => {
     app.set('base-url', baseUrl);
     app.set('static-url', staticUrl);
 
+    const logFolder = path.join(config.folders.w2projects, 'logs');
+    logFiles(app, logFolder);
+
     RoutesInfo.staticPath('W2:app:public', app, baseUrl, '/public', path.join(config.folders.w2projects, 'public'));
     RoutesInfo.staticPath('W2:app:static', app, baseUrl, staticUrl, 'public');
 
@@ -33,7 +37,7 @@ module.exports = (baseUrl, staticUrl) => {
         sameSite: true
     }));
 
-    app.use(requestToken);
+    app.use(middlewares.requestToken);
 
     warpjsPlugins.init(config.domainName, config.persistence, config.plugins);
 
@@ -87,6 +91,8 @@ module.exports = (baseUrl, staticUrl) => {
     // --- DEBUG ---
     debug("RoutesInfo.all()=", require('lodash').map(RoutesInfo.all(), (route, key) => `${route.name} => ${route.pathname}`));
     // --- /DEBUG ---
+
+    app.use(middlewares.error);
 
     return app;
 };
