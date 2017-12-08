@@ -1,7 +1,11 @@
+const packageJson = require('./../../package.json');
+
 module.exports = {
     default: {
         src: [
-            'dist'
+            'dist',
+            'public/3rd-party',
+            'public/app'
         ]
     },
     test: {
@@ -22,6 +26,11 @@ module.exports = {
     nyc: {
         src: [
             '.nyc_output'
+        ]
+    },
+    pack: {
+        src: [
+            `${packageJson.name.replace('@', '').replace('/', '-')}-*.tgz`
         ]
     }
 };

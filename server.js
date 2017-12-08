@@ -2,11 +2,8 @@
 
 const debug = require('debug')('W2:WarpJS');
 const express = require('express');
-const fs = require('fs');
-const morgan = require('morgan');
 const path = require('path');
 const Promise = require('bluebird');
-const fileStreamRotator = require('file-stream-rotator');
 
 const config = require('./server/config');
 
@@ -17,20 +14,6 @@ Promise.config({
 const port = normalizePort(process.env.PORT || config.port || 8080);
 
 const server = express();
-
-// Server log.
-const logFolder = path.join(config.folders.w2projects, 'logs');
-fs.existsSync(logFolder) || fs.mkdirSync(logFolder);
-const accessLogStream = fileStreamRotator.getStream({
-    filename: path.join(logFolder, 'access-%DATE%.log'),
-    frequency: 'custom',
-    verbose: false,
-    date_format: 'YYYYMMDD'
-});
-server.use(morgan('combined', {stream: accessLogStream}));
-// DEV is here just because i like to have a lot of output. I would not
-// recommend the next line in a prod environment.
-server.use(morgan('dev'));
 
 const staticUrlPath = '/static';
 server.use(staticUrlPath, express.static(path.join(__dirname, 'public')));

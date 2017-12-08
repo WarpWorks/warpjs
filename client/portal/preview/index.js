@@ -26,7 +26,7 @@ module.exports = ($) => {
 
                 popoverOffset = {
                     left: centerCoords.x + Math.floor(imageOffset.left),
-                    top: centerCoords.y + Math.floor(imageOffset.top)
+                    top: centerCoords.y + Math.floor(imageOffset.top) - 15
                 };
                 $(this).popover(popoverOptions);
             } else {

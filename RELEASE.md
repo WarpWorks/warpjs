@@ -1,5 +1,9 @@
 # Releases
 
+## 1.2.1 - 2017-12-08
+
+- Adding cache for the domain file.
+
 ## 1.2.0-rc34 - 2017-12-03
 
 - Retrieve preview from search plugin first if available.
