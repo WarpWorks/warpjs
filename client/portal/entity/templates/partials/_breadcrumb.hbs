@@ -1,11 +1,11 @@
 <ol class="breadcrumb-ordered-list breadcrumb no-padding">
-    {{#each breadcrumbs}}
-        <li class="breadcrumb-item">
-            {{#if @last}}
-                {{this.name}}
-            {{else}}
-                <a href="{{this._links.self.href}}" data-toggle='tooltip' title="{{this.name}}">{{this.name}}</a>
-            {{/if}}
-        </li>
-    {{/each}}
+  {{#each breadcrumbs}}
+    <li class="breadcrumb-item">
+      {{#if @last}}
+        {{name}} {{#if displayType}}[{{displayType}}]{{/if}}
+      {{else}}
+        <a href="{{_links.self.href}}" data-toggle='tooltip' title="{{name}}">{{name}}</a>
+      {{/if}}
+    </li>
+  {{/each}}
 </ol>

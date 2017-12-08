@@ -22,7 +22,10 @@ const PROPS_TO_PICK = [
     'alternatingColors',
 
     // Panel item relationship description
-    'relnDesc'
+    'relnDesc',
+
+    // breadcrumb
+    'displayType'
 ];
 
 module.exports = (obj, addSelfLink, propsToPick) => {
