@@ -1,9 +1,10 @@
+// const debug = require('debug')('W2:content:instance:patch');
 const Promise = require('bluebird');
 
 const serverUtils = require('./../../utils');
 const updateValue = require('./update-value');
 
-module.exports = (req, res) => {
+module.exports = (req, res, next) => {
     const domain = req.params.domain;
     const type = req.params.type;
     const id = req.params.id;
@@ -14,5 +15,9 @@ module.exports = (req, res) => {
     return Promise.resolve()
         .then(() => entity.getInstance(persistence, id))
         .then((instance) => updateValue(req, res, persistence, entity, instance))
+        .catch((err) => {
+            console.log("Error content.instance.patch():", err);
+            next(err);
+        })
         .finally(() => persistence.close());
 };

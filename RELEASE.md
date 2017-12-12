@@ -1,5 +1,9 @@
 # Releases
 
+## 1.2.2 - 2017-12-12
+
+- Fixed association on embedded entities.
+
 ## 1.2.1 - 2017-12-08
 
 - Adding cache for the domain file.

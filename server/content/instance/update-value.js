@@ -1,3 +1,4 @@
+// const debug = require('debug')('W2:content:instance:update-value');
 const Promise = require('bluebird');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
@@ -13,17 +14,22 @@ module.exports = (req, res, persistence, entity, instance) => {
     const id = req.params.id;
     const payload = req.body;
 
-    const action = ChangeLogs.constants.UPDATE_VALUE;
+    // debug(`payload=`, payload);
+
+    const deleteAssociation = Boolean(payload && payload.patchAction && payload.patchAction === 'remove');
+
+    const action = deleteAssociation ? ChangeLogs.constants.ASSOCIATION_REMOVED : ChangeLogs.constants.UPDATE_VALUE;
+    const patchAction = deleteAssociation ? [payload.patchAction, payload.type, payload.id].join(':') : null;
 
     return Promise.resolve()
-        .then(() => logger(req, `Trying ${action}`, req.body))
+        .then(() => logger(req, `Trying ${action}`, payload))
         .then(() => serverUtils.canEdit(persistence, entity, instance, req.warpjsUser))
         .then((canEdit) => {
             if (!canEdit) {
                 throw new warpjsUtils.WarpJSError(`Do not have write permission`);
             }
         })
-        .then(() => entity.patch(payload.updatePath, 0, instance, payload.updateValue))
+        .then(() => entity.patch(payload.updatePath, 0, instance, payload.updateValue, patchAction))
         .then((valueInfo) => {
             logger(req, `Success ${action}`, {
                 updatePath: payload.updatePath,

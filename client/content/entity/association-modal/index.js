@@ -6,6 +6,7 @@ const constants = require('./constants');
 const initializeSelectedEntities = require('./initialize-selected-entities');
 const relationshipDescriptionModified = require('./relationship-description-modified');
 const removeSelectionEntities = require('./remove-selection-entities');
+const selectionTypesOnChange = require('./selection-types-on-change');
 const template = require('./template.hbs');
 const updateSelectedDetails = require('./update-selected-details');
 const updateSelectionTypes = require('./update-selection-types');
@@ -22,6 +23,7 @@ module.exports = ($, instanceDoc) => {
             relationshipDescriptionModified($, instanceDoc);
             addSelectionEntities($, instanceDoc);
             removeSelectionEntities($, instanceDoc);
+            selectionTypesOnChange($, instanceDoc);
         }
         $(constants.DIALOG_SELECTOR, instanceDoc).modal('show');
 

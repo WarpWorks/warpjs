@@ -93,10 +93,11 @@ module.exports = (req, res) => {
                             resource.breadcrumbs = breadcrumbs;
                             // resource.embedded('breadcrumbs', breadcrumbs);
                         })
-                        .then(() => pageViewEntity.toFormResource(persistence, instance, []))
+                        .then(() => pageViewEntity.toFormResource(persistence, instance, [], resource._links.self.href))
                         .then((formResource) => {
                             resource.formResource = formResource;
-                        });
+                        })
+                    ;
                 })
                 .then(() => utils.sendHal(req, res, resource))
                 .catch((err) => {

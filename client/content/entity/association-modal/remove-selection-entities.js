@@ -10,6 +10,8 @@ module.exports = ($, instanceDoc) => {
 
         const id = textarea.data('warpjsId');
         const type = textarea.data('warpjsType');
+        const updatePath = textarea.data('warpjsDocLevel');
+        const patchAction = 'remove';
 
         // Remove from UI immediately
         const basic = `li[data-warpjs-type="${type}"][data-warpjs-id="${id}"]`;
@@ -20,7 +22,7 @@ module.exports = ($, instanceDoc) => {
 
         // Call server async
         Promise.resolve()
-            .then(() => query($, 'PATCH', {id, type}, $(element).data('warpjsUrl')))
+            .then(() => query($, 'PATCH', {id, type, updatePath, patchAction}, $(element).data('warpjsUrl')))
             .catch((err) => {
                 // TODO: Give UI feedback on error
                 console.log("Error removing association", err);

@@ -32,7 +32,7 @@ module.exports = ($, instanceDoc) => {
         if (!added.length) {
             // Call this async
             Promise.resolve()
-                .then(() => warpjsUtils.proxy.post($, $(element).data('warpjsUrl'), {id, type}))
+                .then(() => warpjsUtils.proxy.post($, $(element).data('warpjsUrl'), {id, type, docLevel}))
                 .then(() => {
                     $(`${groupSelector} .alert.alert-warning`, instanceDoc).remove();
                     $(groupSelector, instanceDoc).append(template(templateData));
