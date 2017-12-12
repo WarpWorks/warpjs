@@ -96,7 +96,8 @@ module.exports = (req, res) => {
                         .then(() => pageViewEntity.toFormResource(persistence, instance, [], resource._links.self.href))
                         .then((formResource) => {
                             resource.formResource = formResource;
-                        });
+                        })
+                    ;
                 })
                 .then(() => utils.sendHal(req, res, resource))
                 .catch((err) => {
