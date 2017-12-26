@@ -22,9 +22,7 @@ function breadcrumbMapper(domain, breadcrumb) {
 }
 
 module.exports = (req, res) => {
-    const domain = req.params.domain;
-    const type = req.params.type;
-    const id = req.params.id;
+    const {domain, type, id} = req.params;
 
     const resource = warpjsUtils.createResource(req, {
         title: `Domain ${domain} - Type ${type} - Id ${id}`,
@@ -93,7 +91,12 @@ module.exports = (req, res) => {
                             resource.breadcrumbs = breadcrumbs;
                             // resource.embedded('breadcrumbs', breadcrumbs);
                         })
-                        .then(() => pageViewEntity.toFormResource(persistence, instance, [], resource._links.self.href))
+                        .then((relativeToDocument) => pageViewEntity.toFormResource(persistence, instance, [], {
+                            domain,
+                            type,
+                            id,
+                            href: resource._links.self.href
+                        }))
                         .then((formResource) => {
                             resource.formResource = formResource;
                         })

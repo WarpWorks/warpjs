@@ -72,5 +72,14 @@
       "indexName": "warpjs",
       "pageSize": 10
     }
+  }, {
+    "name": "imagemap-editor",
+    "moduleName": "@warp-works/warpjs-imagemap-editor-plugin",
+    "path": "/imagemap-editor",
+    "type": "action",
+    "config": {
+      "glyphicon": "picture",
+      "label": "Edit ImageMap"
+    }
   }]
 }

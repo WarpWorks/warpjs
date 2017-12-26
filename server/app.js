@@ -1,3 +1,4 @@
+const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const debug = require('debug')('W2:WarpJS:app');
 const express = require('express');
@@ -31,6 +32,7 @@ module.exports = (baseUrl, staticUrl) => {
     RoutesInfo.staticPath('W2:app:public', app, baseUrl, '/public', path.join(config.folders.w2projects, 'public'));
     RoutesInfo.staticPath('W2:app:static', app, baseUrl, staticUrl, 'public');
 
+    app.use(bodyParser.json());
     app.use(cookieParser(config.cookieSecret, {
         httpOnly: true,
         maxAge: 3 * 60 * 60, // 3 hours

@@ -1,0 +1,34 @@
+{{#if actions.length}}
+  <div class="col-xs-12 warpjs-action-plugins">
+    {{#each actions as |action|}}
+      <button type="button" class="btn btn-default"
+          title="{{action.desc}}"
+          data-warpjs-can-edit="{{../canEdit}}"
+          data-warpjs-name="{{action.name}}"
+          data-warpjs-desc="{{action.desc}}"
+          data-warpjs-type="{{action.type}}"
+          data-warpjs-id="{{action.id}}"
+          data-warpjs-doc-level="{{action.docLevel}}"
+          data-warpjs-js-script-url="{{action._links.jsScript.href}}"
+          data-warpjs-plugin-identifier="{{action.pluginIdentifier}}"
+          data-warpjs-plugin-root-url="{{action._links.plugin.href}}"
+          data-warpjs-relative-to-document-domain="{{action.relativeToDocument.domain}}"
+          data-warpjs-relative-to-document-type="{{action.relativeToDocument.type}}"
+          data-warpjs-relative-to-document-id="{{action.relativeToDocument.id}}"
+          data-warpjs-relative-to-document-href="{{action.relativeToDocument.href}}"
+          >
+        <script type="application/javascript">
+          (function() {
+            var event = new CustomEvent('warpjs-add-action-plugin', {
+              detail: {
+                href: "{{action._links.jsScript.href}}"
+              }
+            });
+            document.dispatchEvent(event);
+          })();
+        </script>
+        <span class="glyphicon glyphicon-{{action.glyphicon}}"></span>&nbsp;{{action.label}}
+      </button>
+    {{/each}}
+  </div>
+{{/if}}
