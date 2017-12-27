@@ -1,5 +1,9 @@
 # Releases
 
+## 1.2.3 - 2017-12-27
+
+- Changes for `warpjs-imagemap-editor-plugin`.
+
 ## 1.2.2 - 2017-12-12
 
 - Fixed association on embedded entities.
