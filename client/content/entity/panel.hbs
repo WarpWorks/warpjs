@@ -1,5 +1,6 @@
 <div data-tabindex="{{tabindex}}" {{#if tab}}class="tab-pane fade in {{#unless tabindex}}active{{/unless}}"{{/if}}>
-  {{#each items}}
+  {{#each _embedded.items}}
     {{> panel-item canEdit=../canEdit}}
   {{/each}}
+  {{> panel-actions actions=_embedded.actions canEdit=canEdit}}
 </div>

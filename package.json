@@ -1,6 +1,6 @@
 {
   "name": "@warp-works/warpjs",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Content management system for WarpWorks in javascript",
   "repository": {
     "type": "git",
@@ -47,11 +47,9 @@
     "warpjs-reindex": "./scripts/reindex-data.js"
   },
   "dependencies": {
-    "@quoin/expressjs-routes-info": "0.1.10",
+    "@quoin/expressjs-routes-info": "0.2.0",
     "@quoin/node-rc": "0.1.1",
     "@warp-works/studio": "next",
-    "@warp-works/warpjs-plugins": "latest",
-    "@warp-works/warpjs-utils": "1.2.8",
     "bcrypt-nodejs": "0.0.3",
     "bluebird": "3.5.1",
     "debug": "3.1.0",
@@ -70,17 +68,15 @@
   "devDependencies": {
     "@quoin/eslint-config-quoin": "latest",
     "@quoin/node-test-helpers": "0.2.x",
-    "@warp-works/warpjs-elasticsearch-plugin": "latest",
-    "@warp-works/warpjs-map-plugin": "latest",
-    "@warp-works/warpjs-mongo-persistence": "latest",
-    "@warp-works/warpjs-session-plugin": "latest",
+    "@warp-works/warpjs-plugins": "latest",
+    "@warp-works/warpjs-utils": "latest",
     "babel-core": "6.26.0",
     "babel-loader": "7.1.2",
     "babel-preset-env": "1.6.1",
     "babel-preset-stage-0": "6.24.1",
     "body-parser": "1.18.2",
     "cookie-parser": "1.4.3",
-    "eslint": "4.13.x",
+    "eslint": "4.14.x",
     "eslint-plugin-html": "4.0.1",
     "eslint-plugin-import": "2.8.0",
     "eslint-plugin-json": "1.2.0",
@@ -99,14 +95,16 @@
     "handlebars-loader": "1.6.0",
     "load-grunt-config": "0.19.2",
     "mocha": "4.0.1",
-    "moment": "2.19.x",
+    "moment": "2.20.x",
     "mongodb": "2.2.33",
-    "nyc": "11.3.0",
+    "nyc": "11.4.x",
     "time-grunt": "1.4.0",
     "tinymce": "4.7.3",
     "webpack": "2.7.0"
   },
   "peerDependencies": {
+    "@warp-works/warpjs-plugins": ">=1.2.2",
+    "@warp-works/warpjs-utils": ">=1.2.9",
     "body-parser": ">=1.17.0",
     "cookie-parser": ">=1.4.0",
     "express": ">=4.0.0"

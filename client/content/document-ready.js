@@ -4,7 +4,6 @@ const progressBarModal = require('./progress-bar-modal');
 const renderer = require('./template-renderer');
 
 function defaultPostRender($, result) {
-    console.log("no post-renderer defined");
     progressBarModal.show($, 100);
     progressBarModal.hide();
 }
