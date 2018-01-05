@@ -7,8 +7,6 @@ const serverUtils = require('./../../../utils');
 const walkExtract = require('./walk-extract');
 const convertCustomLinks = require('./../convert-custom-links');
 
-const domain = serverUtils.getDomain();
-
 function alreadyCached(cachedItems, instance) {
     return cachedItems.filter((cachedItem) => cachedItem.type === instance.type && cachedItem.id === instance.id).length !== 0;
 }
@@ -16,7 +14,8 @@ function alreadyCached(cachedItems, instance) {
 function extractPreview(persistence, target, memo) {
     if (!alreadyCached(memo, target)) {
         return Promise.resolve()
-            .then(() => domain.getEntityByInstance(target))
+            .then(() => serverUtils.getDomain())
+            .then((domain) => domain.getEntityByInstance(target))
             .then((targetEntity) => walkExtract(persistence, targetEntity, target, [], config.previews.overviewPath))
             .then((overviews) => (overviews.length && overviews[0]) || null)
             .then((overview) => {

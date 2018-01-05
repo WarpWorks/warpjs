@@ -28,8 +28,7 @@ function documentMapper(entity, domain, instance) {
 }
 
 module.exports = (req, res) => {
-    const domain = req.params.domain;
-    const type = req.params.type;
+    const { domain, type } = req.params;
 
     const resource = warpjsUtils.createResource(req, {
         title: `Domain ${domain} - Type ${type} - Entities`
@@ -64,18 +63,21 @@ module.exports = (req, res) => {
             });
 
             const persistence = serverUtils.getPersistence(domain);
-            const entity = serverUtils.getEntity(domain, type);
 
             return Promise.resolve()
-                .then(() => entity.getDocuments(persistence))
-                .then((documents) => {
-                    const embedded = documents.map((instance) => documentMapper(entity, domain, instance));
-                    resource.embed('entities', embedded);
-                })
-                .then(() => utils.sendHal(req, res, resource))
+                .then(() => serverUtils.getEntity(domain, type))
+                .then((entity) => Promise.resolve()
+                    .then(() => entity.getDocuments(persistence))
+                    .then((documents) => {
+                        const embedded = documents.map((instance) => documentMapper(entity, domain, instance));
+                        resource.embed('entities', embedded);
+                    })
+                    .then(() => utils.sendHal(req, res, resource))
+                )
                 .finally(() => {
                     persistence.close();
-                });
+                })
+            ;
         }
     });
 };

@@ -1,3 +1,4 @@
+const Promise = require('bluebird');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
@@ -11,20 +12,17 @@ module.exports = (req, res) => {
     });
 
     res.format({
-        html: () => {
-            utils.basicRender(
-                [
-                    `${RoutesInfo.expand('W2:app:static')}/app/vendor.js`,
-                    `${RoutesInfo.expand('W2:app:static')}/app/domains.js`
-                ],
-                resource, req, res);
-        },
+        html: () => utils.basicRender(
+            [
+                `${RoutesInfo.expand('W2:app:static')}/app/vendor.js`,
+                `${RoutesInfo.expand('W2:app:static')}/app/domains.js`
+            ],
+            resource, req, res
+        ),
 
-        [warpjsUtils.constants.HAL_CONTENT_TYPE]: () => {
-            const domains = warpCore.domainFiles().map(domainMapper);
-            resource.embed('domains', domains);
-
-            utils.sendHal(req, res, resource);
-        }
+        [warpjsUtils.constants.HAL_CONTENT_TYPE]: () => Promise.resolve()
+            .then(() => Promise.map(warpCore.domainFiles(), (domain) => domainMapper(domain)))
+            .then((domains) => resource.embed('domains', domains))
+            .then(() => utils.sendHal(req, res, resource))
     });
 };

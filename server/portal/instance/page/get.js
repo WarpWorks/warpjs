@@ -12,26 +12,28 @@ module.exports = (req, res) => {
 
         [warpjsUtils.constants.HAL_CONTENT_TYPE]: () => {
             const persistence = serverUtils.getPersistence();
-            const entity = serverUtils.getEntity(null, req.params.type);
 
             Promise.resolve()
-                .then(() => entity.getInstance(persistence, req.params.id))
-                .then((instance) => {
-                    const responseResource = warpjsUtils.createResource(req, {
-                        Name: instance.Name,
-                        Desc: instance.desc,
-                        Heading: instance.Heading,
-                        Content: instance.Content
-                    });
+                .then(() => serverUtils.getEntity(null, req.params.type))
+                .then((entity) => Promise.resolve()
+                    .then(() => entity.getInstance(persistence, req.params.id))
+                    .then((instance) => {
+                        const responseResource = warpjsUtils.createResource(req, {
+                            Name: instance.Name,
+                            Desc: instance.desc,
+                            Heading: instance.Heading,
+                            Content: instance.Content
+                        });
 
-                    return Promise.resolve()
-                        .then(() => extractEntity(req, responseResource, persistence, entity, instance))
+                        return Promise.resolve()
+                            .then(() => extractEntity(req, responseResource, persistence, entity, instance))
 
-                        .then(() => extractPreviews(persistence, entity, instance))
-                        .then((previews) => responseResource.embed('previews', previews))
+                            .then(() => extractPreviews(persistence, entity, instance))
+                            .then((previews) => responseResource.embed('previews', previews))
 
-                        .then(() => warpjsUtils.sendHal(req, res, responseResource, RoutesInfo));
-                })
+                            .then(() => warpjsUtils.sendHal(req, res, responseResource, RoutesInfo));
+                    })
+                )
                 .catch((err) => serverUtils.sendError(req, res, err))
                 .finally(() => persistence.close())
             ;
