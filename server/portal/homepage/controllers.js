@@ -5,10 +5,10 @@ const serverUtils = require('./../../utils');
 
 function index(req, res) {
     const persistence = serverUtils.getPersistence();
-    const rootEntity = serverUtils.getRootEntity();
 
     Promise.resolve()
-        .then(() => rootEntity.getDocuments(persistence))
+        .then(() => serverUtils.getRootEntity())
+        .then((rootEntity) => rootEntity.getDocuments(persistence))
         .then((docs) => docs[0])
         .then((doc) => {
             const url = RoutesInfo.expand('entity', doc);

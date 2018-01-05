@@ -3,27 +3,28 @@ const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const serverUtils = require('./../../utils');
 const utils = require('./../utils');
-const warpCore = require('./../../../lib/core');
 
 const config = serverUtils.getConfig();
 
 module.exports = (req, res) => {
-    const domain = req.params.domain;
-    const type = req.params.type;
-    const entity = serverUtils.getEntity(domain, type);
-
-    const resource = warpjsUtils.createResource(req, {
-        title: `Schema ${domain}-${type}`,
-        name: entity.name
-    });
+    const { domain, type } = req.params;
 
     return Promise.resolve()
-        .then(() => warpCore.getDomainByName(domain))
-        .then((schema) => schema.getEntityByName(type))
-        .then((entity) => entity.getPageView(config.views.content))
-        .then((pageView) => pageView.toFormResource())
-        .then((pageView) => {
-            resource.pageView = pageView;
-            utils.sendHalOnly(req, res, resource);
-        });
+        .then(() => serverUtils.getEntity(domain, type))
+        .then((entity) => Promise.resolve()
+            .then(() => serverUtils.getDomain(domain))
+            .then((schema) => schema.getEntityByName(type))
+            .then((entity) => entity.getPageView(config.views.content))
+            .then((pageView) => pageView.toFormResource())
+            .then((pageView) => {
+                const resource = warpjsUtils.createResource(req, {
+                    title: `Schema ${domain}-${type}`,
+                    name: entity.name
+                });
+
+                resource.pageView = pageView;
+                utils.sendHalOnly(req, res, resource);
+            })
+        )
+    ;
 };

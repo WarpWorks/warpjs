@@ -6,16 +6,13 @@ const serverUtils = require('./../../utils');
 const utils = require('./../utils');
 
 module.exports = (req, res) => {
-    const domain = req.params.domain;
-    const type = req.params.type;
+    const { domain, type } = req.params;
 
     const persistence = serverUtils.getPersistence(domain);
-    const entity = serverUtils.getEntity(domain, type);
-
-    // Verify header HTTP_X_REQUESTED_WITH or 'x-requested-with'
 
     return Promise.resolve()
-        .then(() => entity.createDocument(persistence, {}))
+        .then(() => serverUtils.getEntity(domain, type))
+        .then((entity) => entity.createDocument(persistence, {}))
         .then((newDoc) => newDoc.insertedId)
         .then((id) => {
             const redirectUrl = RoutesInfo.expand('W2:content:instance', {

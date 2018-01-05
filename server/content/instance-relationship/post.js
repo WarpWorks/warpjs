@@ -9,16 +9,11 @@ const serverUtils = require('./../../utils');
 const WarpWorksError = require('./../../../lib/core/error');
 
 module.exports = (req, res) => {
-    const domain = req.params.domain;
-    const type = req.params.type;
-    const id = req.params.id;
-    const relationship = req.params.relationship;
+    const { domain, type, id, relationship } = req.params;
+
     const payload = req.body;
 
     const persistence = serverUtils.getPersistence(domain);
-    const entity = serverUtils.getEntity(domain, type);
-    const relationshipEntity = entity.getRelationshipByName(relationship);
-    const targetEntity = relationshipEntity.getTargetEntity();
 
     const resource = warpjsUtils.createResource(req, {
         title: `Child for domain ${domain} - Type ${type} - Id ${id} - Relationship ${relationship}`,
@@ -30,24 +25,31 @@ module.exports = (req, res) => {
 
     Promise.resolve()
         .then(() => logger(req, "Trying to create relationship"))
-        .then(() => entity.getInstance(persistence, id))
-        .then(
-            (instance) => Promise.resolve()
-                .then(() => serverUtils.canEdit(persistence, entity, instance, req.warpjsUser))
-                .then((canEdit) => {
-                    if (!canEdit) {
-                        throw new WarpWorksError(`You do not have permission to create this entry.`);
-                    }
-                })
-                .then(() => (targetEntity.entityType === 'Embedded')
-                    ? postEmbedded
-                    : (payload.id && payload.type)
-                        ? postAssociation
-                        : postAggregation
+        .then(() => serverUtils.getEntity(domain, type))
+        .then((entity) => Promise.resolve()
+            .then(() => entity.getRelationshipByName(relationship))
+            .then((relationshipEntity) => relationshipEntity.getTargetEntity())
+            .then((targetEntity) => Promise.resolve()
+                .then(() => entity.getInstance(persistence, id))
+                .then(
+                    (instance) => Promise.resolve()
+                        .then(() => serverUtils.canEdit(persistence, entity, instance, req.warpjsUser))
+                        .then((canEdit) => {
+                            if (!canEdit) {
+                                throw new WarpWorksError(`You do not have permission to create this entry.`);
+                            }
+                        })
+                        .then(() => (targetEntity.entityType === 'Embedded')
+                            ? postEmbedded
+                            : (payload.id && payload.type)
+                                ? postAssociation
+                                : postAggregation
+                        )
+                        .then((impl) => impl(req, res, persistence, entity, instance, resource))
+                    ,
+                    () => serverUtils.documentDoesNotExist(req, res)
                 )
-                .then((impl) => impl(req, res, persistence, entity, instance, resource))
-            ,
-            () => serverUtils.documentDoesNotExist(req, res)
+            )
         )
         .catch((err) => {
             logger(req, "Failed", {err});
