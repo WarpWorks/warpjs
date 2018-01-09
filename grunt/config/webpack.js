@@ -1,6 +1,7 @@
 const path = require('path');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 const webpack = require('webpack');
+const WebpackVisualizer = require('webpack-visualizer-plugin');
 
 const rootDir = path.dirname(require.resolve('./../../package.json'));
 
@@ -30,6 +31,7 @@ module.exports = {
             filename: '[name].js'
         },
         plugins: [
+            new WebpackVisualizer(),
             new webpack.optimize.CommonsChunkPlugin({
                 names: 'vendor',
                 minChunks: (module) => module.context && module.context.indexOf('node_modules') !== -1
