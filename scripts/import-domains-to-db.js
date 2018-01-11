@@ -4,36 +4,51 @@
 
 const _ = require('lodash');
 const debug = require('debug')('W2:scripts:import-domains-to-db');
+const path = require('path');
 const Promise = require('bluebird');
 
-const constants = require('./../lib/core/constants');
+const createDomainFromJSONString = require('./../lib/core/file-schema/create-domain-from-json-string');
 const models = require('./../lib/core/models');
-const serverUtils = require('./../server/utils');
 const warpCore = require('./../lib/core');
+
+Promise.config({
+    longStackTraces: true
+});
 
 function readDomainFromFile(domainInfo) {
     const content = warpCore.readFile(domainInfo.filePath);
-    return warpCore.createDomainFromJSONString(content);
+    return createDomainFromJSONString(content);
+}
+
+function domainFiles() {
+    const files = warpCore.readDir('domains');
+    const cwd = process.cwd();
+
+    return files.map((file) => ({
+        name: path.basename(file, '.jsn'),
+        desc: 'TBD: Description',
+        filePath: path.resolve(cwd, file)
+    }));
 }
 
 Promise.resolve()
-    .then(() => serverUtils.getPersistence(constants.DB_NAME))
+    .then(() => warpCore.getPersistence())
     .then((persistence) => Promise.resolve()
-        .then(() => models.Domain.list(persistence))
-        .then((domains) => domains.reduce(
+        .then(() => warpCore.listDomains(persistence))
+        .then((existingDomains) => existingDomains.reduce(
             (memo, domain) => _.extend(memo, {
                 [domain.name]: domain
             }),
             {}
         ))
-        .then((domains) => Promise.resolve()
-            .then(() => debug("Existing domains:", domains))
+        .then((existingDomains) => Promise.resolve()
+            .then(() => debug("Existing domains:", existingDomains))
             .then(() => Promise.each(
-                warpCore.domainFiles(),
+                domainFiles(),
                 (domainInfo, index, length) => Promise.resolve()
                     .then(() => debug("Trying to import:", domainInfo))
                     .then(() => {
-                        if (domains[domainInfo.name]) {
+                        if (existingDomains[domainInfo.name]) {
                             console.log(`Domain '${domainInfo.name}' already imported. Skipping...`);
                         } else {
                             return Promise.resolve()

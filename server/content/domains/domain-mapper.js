@@ -10,8 +10,12 @@ module.exports = (domain) => {
     const domainURL = RoutesInfo.expand('W2:content:domain', {
         domain: domain.name
     });
-    const resource = warpjsUtils.createResource(domainURL, domain);
-    resource.isDefaultDomain = (domain.name === config.domainName) || undefined;
+    const resource = warpjsUtils.createResource(domainURL, {
+        name: domain.name,
+        description: domain.description,
+        lastUpdated: domain.lastUpdated,
+        isDefaultDomain: (domain.name === config.domainName) || undefined
+    });
 
     resource.link('domainTypes', {
         href: RoutesInfo.expand('W2:content:entities', {
