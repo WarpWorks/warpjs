@@ -231,7 +231,8 @@ module.exports = (req, responseResource, persistence, hsEntity, entity) => Promi
                 const panelResource = createObjResource(panel);
                 embeddedPanels.push(panelResource);
 
-                return Promise.resolve([])
+                return Promise.resolve()
+                    .then(() => [])
                     .then((items) => addSeparatorPanelItems(panel, items))
                     .then((items) => addRelationshipPanelItems(req, panel, persistence, entity, items))
                     .then((items) => addBasicPropertyPanelItems(panel, entity, items))
