@@ -18,10 +18,13 @@
                     <a href="{{_links.instances.href}}"
                       title="{{_links.instances.title}}"
                       ><span class="glyphicon glyphicon-list"></span></a>
-                    <span class="glyphicon glyphicon-pencil"
-                      title="TODO: link to studio if admin"></span>
+                    {{#if _links.studio}}
+                      <a href="{{_links.studio.href}}"
+                          title="{{_links.studio.title}}"
+                          ><span class="glyphicon glyphicon-pencil"></span></a>
+                    {{/if}}
                     &nbsp;&nbsp;&nbsp;
-                    <a href="{{_links.instances.href}}">{{type}}</a>
+                    <a href="{{_links.label.href}}" title="{{_links.label.title}}">{{type}}</a>
                     {{#if isDefault}}<span title="Default Entity Type">*</span>{{/if}}
                 </div>
               </div>

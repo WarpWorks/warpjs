@@ -2,11 +2,12 @@ const Promise = require('bluebird');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const constants = require('./../constants');
 const serverUtils = require('./../../utils');
 const utils = require('./../utils');
 
 function documentMapper(entity, domain, instance) {
-    const documentUrl = RoutesInfo.expand('W2:content:instance', {
+    const documentUrl = RoutesInfo.expand(constants.routes.instance, {
         domain,
         type: instance.type,
         id: instance.id
@@ -49,14 +50,14 @@ module.exports = (req, res) => {
         [warpjsUtils.constants.HAL_CONTENT_TYPE]: () => {
             resource.link('domain', {
                 title: domain,
-                href: RoutesInfo.expand('W2:content:domain', {
+                href: RoutesInfo.expand(constants.routes.domain, {
                     domain
                 })
             });
 
             resource.link('type', {
                 title: type,
-                href: RoutesInfo.expand('W2:content:instances', {
+                href: RoutesInfo.expand(constants.routes.instances, {
                     domain,
                     type
                 })

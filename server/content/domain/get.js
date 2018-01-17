@@ -1,6 +1,7 @@
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const constants = require('./../constants');
 const utils = require('./../utils');
 
 module.exports = (req, res) => {
@@ -23,7 +24,7 @@ module.exports = (req, res) => {
 
         [warpjsUtils.constants.HAL_CONTENT_TYPE]: () => {
             resource.link('domainTypes', {
-                href: RoutesInfo.expand('W2:content:entities', {
+                href: RoutesInfo.expand(constants.routes.entities, {
                     domain
                 }),
                 title: "List of types"

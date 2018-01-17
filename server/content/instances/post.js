@@ -2,6 +2,7 @@ const Promise = require('bluebird');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const constants = require('./../constants');
 const serverUtils = require('./../../utils');
 const utils = require('./../utils');
 
@@ -15,7 +16,7 @@ module.exports = (req, res) => {
         .then((entity) => entity.createDocument(persistence, {}))
         .then((newDoc) => newDoc.insertedId)
         .then((id) => {
-            const redirectUrl = RoutesInfo.expand('W2:content:instance', {
+            const redirectUrl = RoutesInfo.expand(constants.routes.instance, {
                 domain,
                 type,
                 id

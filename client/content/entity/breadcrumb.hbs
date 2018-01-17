@@ -2,7 +2,7 @@
   {{#if isRootInstance}}
     <li class="breadcrumb-item"><a href="{{_links.self.href}}">{{type}}</a></li>
   {{else}}
-    {{#each breadcrumbs}}
+    {{#each _embedded.breadcrumbs}}
       {{#if @last}}
         <li class="active">{{_links.self.title}}</li>
       {{else}}

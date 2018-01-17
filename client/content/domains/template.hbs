@@ -15,12 +15,15 @@
                   <a href="{{_links.domainTypes.href}}"
                      title="{{_links.domainTypes.title}}"
                      ><span class="glyphicon glyphicon-list"></span></a>
-                  <span class="glyphicon glyphicon-pencil"
-                        title="TODO: link to studio if admin"></span>
+                  {{#if _links.studio.href}}
+                    <a href="{{_links.studio.href}}"
+                       title="{{_links.studio.title}}"
+                       ><span class="glyphicon glyphicon-pencil"></span></a>
+                  {{/if}}
 
                   &nbsp;&nbsp;&nbsp;
 
-                  <a href="{{_links.domainTypes.href}}">{{name}}</a>
+                  <a href="{{_links.label.href}}" title="{{_links.label.title}}">{{name}}</a>
                   {{#if isDefaultDomain}}<span title="Default Domain">*</span>{{/if}}
                 </div>
 

@@ -3,13 +3,14 @@ const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const ChangeLogs = require('./../../../lib/change-logs');
+const constants = require('./../constants');
 const serverUtils = require('./../../utils');
 const utils = require('./../utils');
 
 const config = serverUtils.getConfig();
 
 function breadcrumbMapper(domain, breadcrumb) {
-    const url = RoutesInfo.expand('W2:content:instance', {
+    const url = RoutesInfo.expand(constants.routes.instance, {
         domain,
         type: breadcrumb.type,
         id: breadcrumb.id
@@ -38,12 +39,12 @@ module.exports = (req, res) => {
         type,
         id
     }));
-    resource.link('sibling', RoutesInfo.expand('W2:content:instance-sibling', {
+    resource.link('sibling', RoutesInfo.expand(constants.routes.sibling, {
         domain,
         type,
         id
     }));
-    resource.link('types', RoutesInfo.expand('W2:content:entities', {
+    resource.link('types', RoutesInfo.expand(constants.routes.entities, {
         domain,
         profile: 'linkable'
     }));
@@ -68,42 +69,37 @@ module.exports = (req, res) => {
                     .then(() => entity.getPageView(config.views.content))
                     .then((pageViewEntity) => Promise.resolve()
                         .then(() => entity.getInstance(persistence, id))
-                        .then((instance) => {
-                            resource.displayName = entity.getDisplayName(instance);
-                            resource.isRootInstance = instance.isRootInstance;
+                        .then((instance) => Promise.resolve()
+                            .then(() => {
+                                resource.displayName = entity.getDisplayName(instance);
+                                resource.isRootInstance = instance.isRootInstance;
 
-                            resource.embed('changeLogs', ChangeLogs.toFormResource(domain, instance));
+                                resource.embed('changeLogs', ChangeLogs.toFormResource(domain, instance));
 
-                            resource.link('history', RoutesInfo.expand('W2:content:instance-history', {
-                                domain,
-                                type,
-                                id
-                            }));
-
-                            return Promise.resolve()
-                                .then(() => serverUtils.canEdit(persistence, entity, instance, req.warpjsUser))
-                                .then((canEdit) => {
-                                    resource.canEdit = canEdit;
-                                })
-                                .then(() => entity.getInstancePath(persistence, instance))
-                                .then((breadcrumbs) => breadcrumbs.map(breadcrumbMapper.bind(null, domain)))
-                                .then((breadcrumbs) => {
-                                    // FIXME: This should be embedded, and change
-                                    // front-end code too.
-                                    resource.breadcrumbs = breadcrumbs;
-                                    // resource.embedded('breadcrumbs', breadcrumbs);
-                                })
-                                .then((relativeToDocument) => pageViewEntity.toFormResource(persistence, instance, [], {
+                                resource.link('history', RoutesInfo.expand(constants.routes.history, {
                                     domain,
                                     type,
-                                    id,
-                                    href: resource._links.self.href
-                                }))
-                                .then((formResource) => {
-                                    resource.formResource = formResource;
-                                })
-                            ;
-                        })
+                                    id
+                                }));
+                            })
+                            .then(() => serverUtils.canEdit(persistence, entity, instance, req.warpjsUser))
+                            .then((canEdit) => {
+                                resource.canEdit = canEdit;
+                            })
+                            .then(() => entity.getInstancePath(persistence, instance))
+                            .then((breadcrumbs) => breadcrumbs.map(breadcrumbMapper.bind(null, domain)))
+                            .then((breadcrumbs) => resource.embed('breadcrumbs', breadcrumbs))
+
+                            .then((relativeToDocument) => pageViewEntity.toFormResource(persistence, instance, [], {
+                                domain,
+                                type,
+                                id,
+                                href: resource._links.self.href
+                            }))
+                            .then((formResource) => {
+                                resource.formResource = formResource;
+                            })
+                        )
                     )
                 )
                 .then(() => utils.sendHal(req, res, resource))
