@@ -2,6 +2,7 @@ const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const constants = require('./../constants');
+const editionConstants = require('./../../edition/constants');
 const utils = require('./../utils');
 
 module.exports = (req, res) => {
@@ -16,8 +17,8 @@ module.exports = (req, res) => {
         html() {
             utils.basicRender(
                 [
-                    `${RoutesInfo.expand('W2:app:static')}/app/vendor.js`,
-                    `${RoutesInfo.expand('W2:app:static')}/app/domain.js`
+                    `${RoutesInfo.expand('W2:app:static')}/app/${editionConstants.assets.vendor}`,
+                    `${RoutesInfo.expand('W2:app:static')}/app/${editionConstants.assets.domain}`
                 ],
                 resource, req, res);
         },

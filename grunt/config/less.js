@@ -1,11 +1,13 @@
+const constants = require('./../../server/edition/constants');
+
 module.exports = {
     options: {
         compress: true
     },
 
-    content: {
-        dest: 'public/app/warpjs-content.min.css',
-        src: 'client/content/style.less'
+    edition: {
+        dest: `public/app/${constants.assets.css}`,
+        src: 'client/edition/style.less'
     },
 
     portal: {

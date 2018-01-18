@@ -4,6 +4,7 @@ const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const constants = require('./../constants');
+const editionConstants = require('./../../edition/constants');
 const entityMap = require('./entity-map');
 const linkableEntity = require('./linkable-entity');
 const nonAbstractOnly = require('./non-abstract-only');
@@ -22,8 +23,8 @@ module.exports = (req, res) => {
     res.format({
         html: () => utils.basicRender(
             [
-                `${RoutesInfo.expand('W2:app:static')}/app/vendor.js`,
-                `${RoutesInfo.expand('W2:app:static')}/app/domain-types.js`
+                `${RoutesInfo.expand('W2:app:static')}/app/${editionConstants.assets.vendor}`,
+                `${RoutesInfo.expand('W2:app:static')}/app/${editionConstants.assets.domainTypes}`
             ],
             resource,
             req,

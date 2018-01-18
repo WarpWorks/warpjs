@@ -2,6 +2,7 @@ const Promise = require('bluebird');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const editionConstants = require('./../../edition/constants');
 const mapStudioDomain = require('./map-studio-domain');
 const utils = require('./../utils');
 const warpCore = require('./../../../lib/core');
@@ -14,8 +15,8 @@ module.exports = (req, res) => {
     warpjsUtils.wrapWith406(res, {
         html: () => utils.basicRender(
             [
-                `${RoutesInfo.expand('W2:app:static')}/app/vendor.js`,
-                `${RoutesInfo.expand('W2:app:static')}/app/domains.js`
+                `${RoutesInfo.expand('W2:app:static')}/app/${editionConstants.assets.vendor}`,
+                `${RoutesInfo.expand('W2:app:static')}/app/${editionConstants.assets.domains}`
             ],
             resource, req, res
         ),

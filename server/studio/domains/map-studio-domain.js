@@ -1,13 +1,16 @@
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const constants = require('./../constants');
 const serverUtils = require('./../../utils');
 
 const config = serverUtils.getConfig();
 
 module.exports = (domain) => {
+    console.log("domain=", domain);
+
     // Clicking on the info icon.
-    const domainUrl = RoutesInfo.expand('W2:studio:domain', {
+    const domainUrl = RoutesInfo.expand(constants.routes.domain, {
         domain: domain.name
     });
 
@@ -20,7 +23,7 @@ module.exports = (domain) => {
 
     // Clicking on the list icon.
     resource.link('domainTypes', {
-        href: RoutesInfo.expand('W2:studio:entities', {
+        href: RoutesInfo.expand(constants.routes.entities, {
             domain: domain.name
         }),
         title: "List of types"

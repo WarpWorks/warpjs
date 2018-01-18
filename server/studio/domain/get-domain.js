@@ -4,8 +4,13 @@ const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const ChangeLogs = require('./../../../lib/change-logs');
 const constants = require('./../constants');
+const editionInstance = require('./../../edition/instance');
+const toFormResource = require('./../form-resource');
 const utils = require('./../utils');
 const warpCore = require('./../../../lib/core');
+const serverUtils = require('./../../utils');
+
+const config = serverUtils.getConfig();
 
 module.exports = (req, res) => {
     const { domain } = req.params;
@@ -17,19 +22,18 @@ module.exports = (req, res) => {
     });
 
     warpjsUtils.wrapWith406(res, {
-        html: () => utils.basicRender(
-            [
-                `${RoutesInfo.expand('W2:app:static')}/app/vendor.js`,
-                `${RoutesInfo.expand('W2:app:static')}/app/entity.js`
-            ],
-            resource, req, res
-        ),
+        html: () => utils.basicRender(editionInstance.bundles, resource, req, res),
 
         [warpjsUtils.constants.HAL_CONTENT_TYPE]: () => Promise.resolve()
             .then(() => warpCore.getPersistence())
             .then((persistence) => Promise.resolve()
                 .then(() => utils.getDomain(persistence, domain))
                 .then((domainInfo) => Promise.resolve()
+                    .then(() => {
+                        if (!domainInfo || !domainInfo.entity || !domainInfo.instance) {
+                            throw new Error(`Unable to find domain '${domain}'.`);
+                        }
+                    })
                     .then(() => {
                         resource.displayName = domainInfo.entity.getDisplayName(domainInfo.instance);
                         resource.isRootInstance = Boolean(domainInfo.instance.isRootInstance);
@@ -38,6 +42,12 @@ module.exports = (req, res) => {
                     // Changelogs
                     .then(() => ChangeLogs.toFormResource(domain, domainInfo.instance))
                     .then((changeLogs) => resource.embed('changeLogs', changeLogs))
+
+                    // History
+                    .then(() => RoutesInfo.expand(constants.routes.domainHistory, {
+                        domain
+                    }))
+                    .then((historyUrl) => resource.link('history', historyUrl))
 
                     // Breadcrumbs
                     // The domain is only one level
@@ -53,12 +63,17 @@ module.exports = (req, res) => {
                         .then(() => resource.embed('breadcrumbs', breadcrumbResource))
                     )
 
+                    // Get the form resource
+                    .then(() => domainInfo.entity.getPageView(config.views.content))
+                    .then((pageView) => toFormResource(persistence, pageView, domainInfo.instance, [], {
+                        domain,
+                        href: resource._links.self.href
+                    }))
+                    .then((formResource) => resource.embed('formResources', formResource))
+
                 )
                 .then(() => utils.sendHal(req, res, resource))
-                .catch((err) => {
-                    console.error("ERROR getDomain(): err=", err);
-                    utils.sendErrorHal(req, res, resource, err);
-                })
+                .catch((err) => utils.sendErrorHal(req, res, resource, err))
                 .finally(() => persistence.close())
             )
     });

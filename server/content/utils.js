@@ -19,15 +19,16 @@ function createResourceFromDocument(instance) {
     return warpjsUtils.createResource(RoutesInfo.expand(constants.routes.instance, data), instance);
 }
 
-function basicRender(bundles, data, req, res) {
+function basicRender(bundles, data, req, res, isStudio) {
     const resource = (data instanceof hal.Resource) ? data : warpjsUtils.createResource(req, data);
     resource.baseUrl = req.app.get('base-url');
     resource.staticUrl = req.app.get('static-url');
+    resource.isStudio = isStudio;
 
     resource.bundles = bundles;
 
     // debug("resource=", JSON.stringify(resource, null, 2));
-    res.render('index-content', resource.toJSON());
+    res.render('index-edition', resource.toJSON());
 }
 
 function sendHal(req, res, resource, status) {

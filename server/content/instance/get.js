@@ -4,6 +4,7 @@ const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const ChangeLogs = require('./../../../lib/change-logs');
 const constants = require('./../constants');
+const editionInstance = require('./../../edition/instance');
 const serverUtils = require('./../../utils');
 const utils = require('./../utils');
 
@@ -50,15 +51,7 @@ module.exports = (req, res) => {
     }));
 
     res.format({
-        html() {
-            const bundles = [
-                `${RoutesInfo.expand('W2:app:static')}/libs/svg/svg.js`,
-                `${RoutesInfo.expand('W2:app:static')}/app/vendor.js`,
-                `${RoutesInfo.expand('W2:app:static')}/app/entity.js`
-            ];
-
-            utils.basicRender(bundles, resource, req, res);
-        },
+        html: () => utils.basicRender(editionInstance.bundles, resource, req, res),
 
         [warpjsUtils.constants.HAL_CONTENT_TYPE]: () => {
             const persistence = serverUtils.getPersistence(domain);
@@ -66,40 +59,45 @@ module.exports = (req, res) => {
             return Promise.resolve()
                 .then(() => serverUtils.getEntity(domain, type))
                 .then((entity) => Promise.resolve()
-                    .then(() => entity.getPageView(config.views.content))
-                    .then((pageViewEntity) => Promise.resolve()
-                        .then(() => entity.getInstance(persistence, id))
-                        .then((instance) => Promise.resolve()
-                            .then(() => {
-                                resource.displayName = entity.getDisplayName(instance);
-                                resource.isRootInstance = instance.isRootInstance;
+                    .then(() => entity.getInstance(persistence, id))
+                    .then((instance) => Promise.resolve()
+                        .then(() => {
+                            resource.displayName = entity.getDisplayName(instance);
+                            resource.isRootInstance = instance.isRootInstance;
+                        })
 
-                                resource.embed('changeLogs', ChangeLogs.toFormResource(domain, instance));
+                        // Changelogs
+                        .then(() => ChangeLogs.toFormResource(domain, instance))
+                        .then((changeLogs) => resource.embed('changeLogs', changeLogs))
 
-                                resource.link('history', RoutesInfo.expand(constants.routes.history, {
-                                    domain,
-                                    type,
-                                    id
-                                }));
-                            })
-                            .then(() => serverUtils.canEdit(persistence, entity, instance, req.warpjsUser))
-                            .then((canEdit) => {
-                                resource.canEdit = canEdit;
-                            })
-                            .then(() => entity.getInstancePath(persistence, instance))
-                            .then((breadcrumbs) => breadcrumbs.map(breadcrumbMapper.bind(null, domain)))
-                            .then((breadcrumbs) => resource.embed('breadcrumbs', breadcrumbs))
+                        // History link.
+                        .then(() => RoutesInfo.expand(constants.routes.history, {
+                            domain,
+                            type,
+                            id
+                        }))
+                        .then((historyUrl) => resource.link('history', historyUrl))
 
-                            .then((relativeToDocument) => pageViewEntity.toFormResource(persistence, instance, [], {
-                                domain,
-                                type,
-                                id,
-                                href: resource._links.self.href
-                            }))
-                            .then((formResource) => {
-                                resource.formResource = formResource;
-                            })
-                        )
+                        // can edit the page?
+                        .then(() => serverUtils.canEdit(persistence, entity, instance, req.warpjsUser))
+                        .then((canEdit) => {
+                            resource.canEdit = canEdit;
+                        })
+
+                        // Breadcrumbs
+                        .then(() => entity.getInstancePath(persistence, instance))
+                        .then((breadcrumbs) => breadcrumbs.map(breadcrumbMapper.bind(null, domain)))
+                        .then((breadcrumbs) => resource.embed('breadcrumbs', breadcrumbs))
+
+                        // Get the form resource
+                        .then(() => entity.getPageView(config.views.content))
+                        .then((pageViewEntity) => pageViewEntity.toFormResource(persistence, instance, [], {
+                            domain,
+                            type,
+                            id,
+                            href: resource._links.self.href
+                        }))
+                        .then((formResource) => resource.embed('formResources', formResource))
                     )
                 )
                 .then(() => utils.sendHal(req, res, resource))
