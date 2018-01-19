@@ -1,5 +1,9 @@
 # Releases
 
+## 1.2.5 - 2018-01-19
+
+- Fixed missing link for studio/{domain}.
+
 ## 1.2.4 - 2018-01-19
 
 - Conversion to use level1 documents in database.
