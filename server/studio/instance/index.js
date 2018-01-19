@@ -1,5 +1,5 @@
-const getDomain = require('./get-domain');
+const getInstance = require('./get-instance');
 
 module.exports = {
-    get: (req, res) => getDomain(req, res)
+    get: (req, res) => getInstance(req, res)
 };

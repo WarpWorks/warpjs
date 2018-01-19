@@ -9,6 +9,5 @@ module.exports = {
             `${RoutesInfo.expand('W2:app:static')}/app/${constants.assets.vendor}`,
             `${RoutesInfo.expand('W2:app:static')}/app/${constants.assets.instance}`
         ];
-    },
-
+    }
 };

@@ -7,7 +7,7 @@ module.exports = (persistence, entity, instance, docLevel, relativeToDocument) =
     .then(() => warpjsUtils.createResource('', {
         name: entity.name,
         desc: entity.desc,
-        type:  entity.type,
+        type: entity.type,
         id: entity.idToJSON(),
         position: entity.position,
         label: entity.label,

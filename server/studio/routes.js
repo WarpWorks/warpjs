@@ -11,11 +11,8 @@ module.exports = (baseUrl) => {
     routesInfo.route(constants.routes.instance, '/{domain}/{type}/{id}', instance);
     routesInfo.route(constants.routes.history, '/{domain}/{type}/{id}/history', {});
     routesInfo.route(constants.routes.entities, '/{domain}/{type}/{id}/entities', {});
-
-    // routesInfo.route(constants.routes.domain, '/{domain}', domain);
-    // routesInfo.route(constants.routes.domainHistory, '/{domain}/history', {});
-    // routesInfo.route(constants.routes.entities, '/{domain}/type', {});
-    // routesInfo.route(constants.routes.entity, '/{domain}/type/{type}', {});
+    routesInfo.route(constants.routes.relationship, '/{domain}/{type}/{id}/relationship/{relationship}', {});
+    routesInfo.route(constants.routes.relationshipPage, '/{domain}/{type}/{id}/relationship/{relationship}/{page}', {});
 
     return routesInfo;
 };
