@@ -1,5 +1,10 @@
 # Releases
 
+## 1.2.4 - 2018-01-19
+
+- Conversion to use level1 documents in database.
+- First steps for refactoring of studio.
+
 ## 1.2.3 - 2017-12-27
 
 - Changes for `warpjs-imagemap-editor-plugin`.

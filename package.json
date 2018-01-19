@@ -74,7 +74,7 @@
     "@warp-works/warpjs-mongo-persistence": "0.1.5",
     "@warp-works/warpjs-plugins": "latest",
     "@warp-works/warpjs-session-plugin": "release-1.2",
-    "@warp-works/warpjs-utils": "latest",
+    "@warp-works/warpjs-utils": "next",
     "babel-core": "6.26.0",
     "babel-loader": "7.1.2",
     "babel-preset-env": "1.6.1",
