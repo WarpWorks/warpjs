@@ -7,11 +7,11 @@ const serverUtils = require('./../../utils');
 const config = serverUtils.getConfig();
 
 module.exports = (domain) => {
-    console.log("domain=", domain);
-
     // Clicking on the info icon.
-    const domainUrl = RoutesInfo.expand(constants.routes.domain, {
-        domain: domain.name
+    const domainUrl = RoutesInfo.expand(constants.routes.instance, {
+        domain: domain.name,
+        type: domain.type,
+        id: domain.id
     });
 
     const resource = warpjsUtils.createResource(domainUrl, {
@@ -24,7 +24,9 @@ module.exports = (domain) => {
     // Clicking on the list icon.
     resource.link('domainTypes', {
         href: RoutesInfo.expand(constants.routes.entities, {
-            domain: domain.name
+            domain: domain.name,
+            type: domain.type,
+            id: domain.id
         }),
         title: "List of types"
     });

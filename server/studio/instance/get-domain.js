@@ -13,7 +13,7 @@ const serverUtils = require('./../../utils');
 const config = serverUtils.getConfig();
 
 module.exports = (req, res) => {
-    const { domain } = req.params;
+    const { domain, type, id } = req.params;
 
     const resource = warpjsUtils.createResource(req, {
         title: `WarpJS Studio: domain '${domain}'`,
@@ -44,7 +44,7 @@ module.exports = (req, res) => {
                     .then((changeLogs) => resource.embed('changeLogs', changeLogs))
 
                     // History
-                    .then(() => RoutesInfo.expand(constants.routes.domainHistory, {
+                    .then(() => RoutesInfo.expand(constants.routes.history, {
                         domain
                     }))
                     .then((historyUrl) => resource.link('history', historyUrl))

@@ -1,9 +1,12 @@
 module.exports = {
     routes: {
-        domain: 'W2:studio:domain',
-        domains: 'W2:studio:domains',
-        domainHistory: 'W2:studio:domain-history',
-        entities: 'W2:studio:entities',
-        entity: 'W2:studio:entity'
+        home: 'W2:studio:home',
+        instance: 'W2:studio:instance',
+        history: 'W2:studio:instance-history',
+        entities: 'W2:studio:domain-entities',
+
+        // domain: 'W2:studio:domain',
+        // entities: 'W2:studio:entities',
+        // entity: 'W2:studio:entity'
     }
 };
