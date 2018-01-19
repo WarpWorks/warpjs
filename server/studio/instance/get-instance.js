@@ -2,6 +2,7 @@ const Promise = require('bluebird');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const breadcrumbMapper = require('./../../edition/instance/breadcrumb-mapper');
 const ChangeLogs = require('./../../../lib/change-logs');
 const constants = require('./../constants');
 const editionInstance = require('./../../edition/instance');
@@ -53,25 +54,24 @@ module.exports = (req, res) => {
                     .then((historyUrl) => resource.link('history', historyUrl))
 
                     // Breadcrumbs
-                    // TODO: How to find the whole path?
-                    .then(() => RoutesInfo.expand(constants.routes.instance, { domain, type, id }))
-                    .then((href) => warpjsUtils.createResource(href, {
-                        type: instanceData.entity.name,
-                        name: instanceData.instance.name
-                    }))
-                    .then((breadcrumbResource) => Promise.resolve()
-                        .then(() => {
-                            breadcrumbResource._links.self.title = instanceData.instance.name;
-                        })
-                        .then(() => resource.embed('breadcrumbs', breadcrumbResource))
-                    )
+                    .then(() => instanceData.entity.getInstancePath(persistence, instanceData.instance))
+                    .then((breadcrumbs) => breadcrumbs.map(
+                        (breadcrumb) => breadcrumbMapper(domain, breadcrumb, constants.routes)
+                    ))
+                    .then((breadcrumbResource) => resource.embed('breadcrumbs', breadcrumbResource))
 
                     // Get the form resource
                     .then(() => instanceData.entity.getPageView(config.views.content))
-                    .then((pageView) => pageView.toStudioResource(persistence, instanceData.instance, [], {
-                        domain,
-                        href: resource._links.self.href
-                    }))
+                    .then((pageView) => pageView.toStudioResource(
+                        persistence,
+                        instanceData.instance,
+                        [],
+                        {
+                            domain,
+                            href: resource._links.self.href
+                        },
+                        constants.routes
+                    ))
                     .then((formResource) => resource.embed('formResources', formResource))
 
                 )
