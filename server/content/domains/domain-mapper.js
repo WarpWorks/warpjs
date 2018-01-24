@@ -2,6 +2,7 @@
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const ComplexTypes = require('./../../../lib/core/complex-types');
 const constants = require('./../constants');
 const serverUtils = require('./../../utils');
 const studioConstants = require('./../../studio/constants');
@@ -31,8 +32,10 @@ module.exports = (domain) => {
     // Clicking on the pencil icon.
     // TODO: Only available for admin users.
     resource.link('studio', {
-        href: RoutesInfo.expand(studioConstants.routes.domain, {
-            domain: domain.name
+        href: RoutesInfo.expand(studioConstants.routes.instance, {
+            domain: domain.name,
+            type: ComplexTypes.Domain,
+            id: domain.id
         }),
         title: "Edit in Studio"
     });

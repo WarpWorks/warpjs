@@ -24,7 +24,10 @@ module.exports = (req, res) => {
         [warpjsUtils.constants.HAL_CONTENT_TYPE]: () => Promise.resolve()
             .then(() => warpCore.getPersistence())
             .then((persistence) => Promise.resolve()
-                .then(() => Promise.map(warpCore.listDomains(persistence), (domain) => domainMapper(domain)))
+                .then(() => Promise.map(
+                    warpCore.listDomains(persistence),
+                    (domain) => domainMapper(domain)
+                ))
                 .finally(() => persistence.close())
             )
             .then((domains) => resource.embed('domains', domains))

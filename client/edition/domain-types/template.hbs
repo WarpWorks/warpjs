@@ -15,9 +15,13 @@
               <div class="row">
                 <div class="col-xs-12">
                     <a href="{{_links.self.href}}"><span class="glyphicon glyphicon-info-sign"></span></a>
-                    <a href="{{_links.instances.href}}"
-                      title="{{_links.instances.title}}"
-                      ><span class="glyphicon glyphicon-list"></span></a>
+
+                    {{#if _links.instances}}
+                      <a href="{{_links.instances.href}}"
+                        title="{{_links.instances.title}}"
+                        ><span class="glyphicon glyphicon-list"></span></a>
+                    {{/if}}
+
                     {{#if _links.studio}}
                       <a href="{{_links.studio.href}}"
                           title="{{_links.studio.title}}"

@@ -1,6 +1,5 @@
 module.exports = {
     routes: {
-        domain: 'W2:studio:domain',
         entities: 'W2:studio:domain-entities',
         history: 'W2:studio:instance-history',
         home: 'W2:studio:home',

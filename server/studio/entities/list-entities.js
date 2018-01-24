@@ -1,4 +1,3 @@
-// const debug = require('debug')('W2:WarpJS:controllers:domain');
 const Promise = require('bluebird');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
@@ -12,32 +11,29 @@ const serverUtils = require('./../../utils');
 const utils = require('./../utils');
 
 module.exports = (req, res) => {
-    const domain = req.params.domain;
-    const profile = req.query.profile;
+    const { domain } = req.params;
+    const { profile } = req.query;
 
     const resource = warpjsUtils.createResource(req, {
         title: `Domain ${domain} - Types`,
         domain
     });
 
-    res.format({
+    resource.link('domain', {
+        title: domain,
+        href: RoutesInfo.expand(constants.routes.domain, { domain })
+    });
+
+    warpjsUtils.wrapWith406(res, {
         html: () => utils.basicRender(
             [
                 `${RoutesInfo.expand('W2:app:static')}/app/${editionConstants.assets.vendor}`,
                 `${RoutesInfo.expand('W2:app:static')}/app/${editionConstants.assets.domainTypes}`
             ],
-            resource,
-            req,
-            res
+            resource, req, res
         ),
 
         [warpjsUtils.constants.HAL_CONTENT_TYPE]: () => Promise.resolve()
-            .then(() => resource.link('domain', {
-                title: domain,
-                href: RoutesInfo.expand(constants.routes.domain, {
-                    domain
-                })
-            }))
             .then(() => serverUtils.getDomain(domain))
             .then((schema) => schema.getEntities()
                 .filter(nonAbstractOnly)
