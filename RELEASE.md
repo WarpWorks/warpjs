@@ -1,5 +1,9 @@
 # Releases
 
+## 1.2.6 - 2018-01-24
+
+- studio work to display the Carousel for page & table views.
+
 ## 1.2.5 - 2018-01-19
 
 - Fixed missing link for studio/{domain}.
