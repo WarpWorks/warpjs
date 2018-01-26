@@ -1,5 +1,13 @@
 # Releases
 
+## 1.2.7 - 2018-01-25
+
+- WarpWorks V6 schema
+- Added missing Property model
+- Studio: Hack to handle parentClass and targetEntity relationship-panel-items.
+- Studio: Refactorying with new DocLevel model.
+- Studio: Allow updating BasicProperty or Enum instance.
+
 ## 1.2.6 - 2018-01-24
 
 - studio work to display the Carousel for page & table views.
