@@ -5,6 +5,7 @@ const warpjsUtils = require('@warp-works/warpjs-utils');
 const breadcrumbMapper = require('./../../edition/instance/breadcrumb-mapper');
 const ChangeLogs = require('./../../../lib/change-logs');
 const constants = require('./../constants');
+const DocLevel = require('./../../../lib/doc-level');
 const editionInstance = require('./../../edition/instance');
 const utils = require('./../utils');
 const warpCore = require('./../../../lib/core');
@@ -65,7 +66,7 @@ module.exports = (req, res) => {
                     .then((pageView) => pageView.toStudioResource(
                         persistence,
                         instanceData.instance,
-                        [],
+                        new DocLevel(),
                         {
                             domain,
                             href: resource._links.self.href
