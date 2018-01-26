@@ -1,5 +1,9 @@
 # Releases
 
+## 1.2.8 - 2018-01-26
+
+- Allow creation of Embedded and Aggregations. Need to work on Association.
+
 ## 1.2.7 - 2018-01-25
 
 - WarpWorks V6 schema

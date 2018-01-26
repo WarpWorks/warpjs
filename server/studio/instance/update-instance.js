@@ -5,7 +5,6 @@ const DocLevel = require('./../../../lib/doc-level');
 const utils = require('./../utils');
 const warpCore = require('./../../../lib/core');
 
-
 module.exports = (req, res) => {
     const { domain, type, id } = req.params;
     const { body } = req;
@@ -42,18 +41,18 @@ module.exports = (req, res) => {
                 )
             )
             .then(() => res.status(204).send())
-            .catch((err) => {
-                console.log(`update-instance(): ERROR: err=r`, err);
-                // TODO: Add logger
-                const resource = warpjsUtils.createResource(req, {
-                    domain,
-                    type,
-                    id,
-                    body: req.body
-                });
-                utils.sendErrorHal(req, res, resource, err);
-            })
             .finally(() => persistence.close())
         )
+        .catch((err) => {
+            console.error(`update-instance(): ERROR: err=r`, err);
+            // TODO: Add logger
+            const resource = warpjsUtils.createResource(req, {
+                domain,
+                type,
+                id,
+                body: req.body
+            });
+            utils.sendErrorHal(req, res, resource, err);
+        })
     ;
 };
