@@ -9,7 +9,7 @@
 //
 
 %Base:
-- name, description
+- name, desc
 
 Domain (Base):
 - definitionOfMany:number
