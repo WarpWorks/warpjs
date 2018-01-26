@@ -75,4 +75,4 @@ EnumPanelItem(PanelItem):
 - enumeration=>Enumeration
 
 Action (Base):
-- icon:string, label:string, functionName:string, position: number
+- icon:string, label:string, pluginName:string, position:number
