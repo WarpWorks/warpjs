@@ -1,5 +1,9 @@
 # Releases
 
+## 1.2.9 -
+
+- Added script [`warpjs-stats`](./scripts/stats.js).
+
 ## 1.2.8 - 2018-01-26
 
 - Allow creation of Embedded and Aggregations. Need to work on Association.
