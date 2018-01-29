@@ -8,7 +8,13 @@ module.exports = (domain, entity) => {
     const entityData = {
         domain,
         type: entity.name,
-        isDefault: entity.isRootInstance || undefined
+        id: entity.id,
+        name: entity.name,
+        desc: entity.desc,
+        isDefault: entity.isRootInstance || undefined,
+        isAbstract: entity.isAbstract,
+        isRootEntity: entity.isRootEntity,
+        isRootInstance: entity.isRootInstance
     };
 
     // Clicking on the info icon.

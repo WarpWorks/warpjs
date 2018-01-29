@@ -32,7 +32,18 @@ module.exports = (req, res) => {
                 })
 
                 .then(() => {
-                    if (body.docLevel) {
+                    if (body.id && body.type && body.docLevel) {
+                        // Association
+                        return Promise.resolve()
+                            .then(() => DocLevel.fromString(body.docLevel))
+                            .then((docLevel) => docLevel.getData(persistence, instanceData.entity, instanceData.instance))
+                            .then((docLevelData) => docLevelData.model.addValue(persistence, body.type, body.id, docLevelData.instance))
+                            .then(() => instanceData.entity.updateDocument(persistence, instanceData.instance))
+                            .then(() => {
+                                // TODO: logger
+                            })
+                        ;
+                    } else if (body.docLevel) {
                         // Embedded!
                         return Promise.resolve()
                             .then(() => DocLevel.fromString(body.docLevel))
@@ -53,9 +64,6 @@ module.exports = (req, res) => {
                                 // TODO: logger
                             })
                         ;
-                    } else if (body.id && body.type) {
-                        // Association
-                        throw new Error(`TODO: Implement association.`);
                     } else {
                         // Aggregation
                         return Promise.resolve()

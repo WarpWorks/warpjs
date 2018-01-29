@@ -1,8 +1,9 @@
 # Releases
 
-## 1.2.9 -
+## 1.2.9 - 2018-01-29
 
 - Added script [`warpjs-stats`](./scripts/stats.js).
+- Small hack for the parentClass.
 
 ## 1.2.8 - 2018-01-26
 

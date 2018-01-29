@@ -21,7 +21,7 @@ module.exports = (req, res) => {
 
     resource.link('domain', {
         title: domain,
-        href: RoutesInfo.expand(constants.routes.domain, { domain })
+        href: RoutesInfo.expand(constants.routes.home, { domain })
     });
 
     warpjsUtils.wrapWith406(res, {
