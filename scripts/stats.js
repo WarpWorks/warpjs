@@ -32,7 +32,7 @@ return Promise.resolve()
             entities,
             (entity) => Promise.resolve()
                 .then(() => entity.getDocuments(persistence))
-                .then((docs) => `${entity.name}: ${docs.length}`)
+                .then((docs) => [entity.name, docs.length].join(','))
         ))
         .finally(() => persistence.close())
     )
