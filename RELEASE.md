@@ -1,5 +1,9 @@
 # Releases
 
+## 1.2.10 - 2018-01-29
+
+- Small chack for the targetEntity.
+
 ## 1.2.9 - 2018-01-29
 
 - Added script [`warpjs-stats`](./scripts/stats.js).
