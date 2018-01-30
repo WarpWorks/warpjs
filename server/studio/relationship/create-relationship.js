@@ -59,7 +59,7 @@ module.exports = (req, res) => {
                             .then((docLevelData) => Promise.resolve()
                                 .then(() => docLevelData.model.getTargetReferences(docLevelData.instance))
                                 .then((references) => {
-                                    const newInstance = docLevelData.model.getTargetEntity().newInstance();
+                                    const newInstance = docLevelData.model.getTargetEntity().newInstance(null, domainEntity.createNewID());
                                     references.push(newInstance);
                                     return newInstance;
                                 })
