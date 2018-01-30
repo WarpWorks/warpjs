@@ -6,7 +6,7 @@ const constants = require('./../constants');
 const editionConstants = require('./../../edition/constants');
 const entityMap = require('./entity-map');
 const linkableEntity = require('./../../edition/utils/linkable-entity');
-const nonAbstractOnly = require('./../../edition/utils/non-abstract-only');
+// const nonAbstractOnly = require('./../../edition/utils/non-abstract-only');
 const serverUtils = require('./../../utils');
 const utils = require('./../utils');
 
@@ -36,7 +36,7 @@ module.exports = (req, res) => {
         [warpjsUtils.constants.HAL_CONTENT_TYPE]: () => Promise.resolve()
             .then(() => serverUtils.getDomain(domain))
             .then((schema) => schema.getEntities()
-                .filter(nonAbstractOnly)
+                // .filter(nonAbstractOnly)
                 .filter((entity) => linkableEntity(profile, entity))
                 .sort(warpjsUtils.byPositionThenName)
                 .map((entity) => entityMap(domain, entity))

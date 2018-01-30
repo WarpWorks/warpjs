@@ -1,3 +1,4 @@
+// const debug = require('debug')('W2:studio:create-relationship');
 const Promise = require('bluebird');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
@@ -19,10 +20,17 @@ module.exports = (req, res) => {
         relationship
     });
 
+    let domainEntity;
+
     return Promise.resolve()
-        // TOD: Add logger
+        // TODO: Add logger
         .then(() => warpCore.getPersistence())
         .then((persistence) => Promise.resolve()
+            .then(() => warpCore.getDomainByName(domain))
+            .then((de) => {
+                domainEntity = de;
+            })
+
             .then(() => utils.getInstance(persistence, type, id))
             .then((instanceData) => Promise.resolve()
                 .then(() => {
@@ -69,7 +77,7 @@ module.exports = (req, res) => {
                         return Promise.resolve()
                             .then(() => instanceData.entity.getRelationshipByName(relationship))
                             .then((relationshipModel) => Promise.resolve()
-                                .then(() => instanceData.entity.createChildForInstance(instanceData.instance, relationshipModel))
+                                .then(() => instanceData.entity.createChildForInstance(instanceData.instance, relationshipModel, domainEntity.createNewID()))
                                 .then((child) => Promise.resolve()
                                     // TODO: Changelog createEntity()
                                     .then(() => relationshipModel.getTargetEntity())
