@@ -1,5 +1,13 @@
 # Releases
 
+## 1.2.11 - 2018-01-30
+
+- Added missing warpjsId to new entity.
+- Sort list of entities.
+- Show item name in carousel drop-down.
+- Added missing warpjsId to new relationship.
+- Allow remove of embedded.
+
 ## 1.2.10 - 2018-01-29
 
 - Small chack for the targetEntity.
