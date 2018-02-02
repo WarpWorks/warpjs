@@ -1,5 +1,5 @@
 {{#if entity._embedded.relationships.0._embedded.references.length}}
-  {{#if isTileStyle}}
+  {{#if styles.Tile}}
     <div class="row warpjs-tile-container">
       {{#each entity._embedded.relationships as |relationship|}}
         {{#each relationship._embedded.references as |reference|}}
