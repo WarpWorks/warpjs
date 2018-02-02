@@ -27,7 +27,7 @@ module.exports = {
         },
         output: {
             path: `${rootDir}/public/app`,
-            filename: '[name].js'
+            filename: '[name].min.js'
         },
         plugins: [
             new webpack.optimize.CommonsChunkPlugin({

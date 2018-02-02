@@ -4,7 +4,7 @@ module.exports = {
     },
 
     content: {
-        dest: 'public/app/warpjs-content.min.css',
+        dest: 'public/app/warpjs-edition.min.css',
         src: 'client/content/style.less'
     },
 
