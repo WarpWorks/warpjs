@@ -40,6 +40,7 @@ function extractRelationship(req, resource, persistence, hsEntity, entity) {
             const onlyExistingReferences = references.filter((reference) => reference.id && reference.type);
             return Promise.map(onlyExistingReferences, (reference) => {
                 const referenceResource = createObjResource(reference, true);
+                resource.isTileStyle = (hsEntity.style === 'Tile');
                 if (hsEntity.style === 'Preview') {
                     const referenceEntity = hsEntity.getRelationship().getTargetEntity();
                     return referenceEntity.getOverview(persistence, reference)
