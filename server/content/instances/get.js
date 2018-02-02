@@ -37,8 +37,8 @@ module.exports = (req, res) => {
         html() {
             utils.basicRender(
                 [
-                    `${RoutesInfo.expand('W2:app:static')}/app/vendor.js`,
-                    `${RoutesInfo.expand('W2:app:static')}/app/instances.js`
+                    `${RoutesInfo.expand('W2:app:static')}/app/vendor.min.js`,
+                    `${RoutesInfo.expand('W2:app:static')}/app/instances.min.js`
                 ],
                 resource,
                 req,
