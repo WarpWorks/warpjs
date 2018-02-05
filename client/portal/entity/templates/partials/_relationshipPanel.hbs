@@ -1,5 +1,18 @@
 {{#if entity._embedded.relationships.0._embedded.references.length}}
-  {{#if (isCsvRelationship)}}
+  {{#if styles.Tile}}
+    <div class="row warpjs-tile-container">
+      {{#each entity._embedded.relationships as |relationship|}}
+        {{#each relationship._embedded.references as |reference|}}
+          <div class="col-xs-3 warpjs-tile-item">
+            <div class="warpjs-tile-item-content">
+              <a href="{{reference._links.self.href}}">{{reference.name}}</a>
+            </div>
+          </div>
+        {{/each}}
+      {{/each}}
+    </div>
+
+  {{else if (isCsvRelationship)}}
     <div class="csv-container">
         <li class="csv-list-item">
             <span class="list-item-label" title="{{entity.desc}}">{{entity.label}}:</span>&nbsp;

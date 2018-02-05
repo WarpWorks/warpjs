@@ -14,8 +14,8 @@ module.exports = (req, res) => {
     res.format({
         html: () => utils.basicRender(
             [
-                `${RoutesInfo.expand('W2:app:static')}/app/vendor.js`,
-                `${RoutesInfo.expand('W2:app:static')}/app/domains.js`
+                `${RoutesInfo.expand('W2:app:static')}/app/vendor.min.js`,
+                `${RoutesInfo.expand('W2:app:static')}/app/domains.min.js`
             ],
             resource, req, res
         ),
