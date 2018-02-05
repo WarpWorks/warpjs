@@ -619,7 +619,7 @@
       "type": "Entity",
       "id": 34,
       "isAbstract": false,
-      "entityType": "Embedded",
+      "entityType": "Document",
       "namePlural": "BasicPropertys",
       "parentClass": [
         33
@@ -2587,7 +2587,7 @@
       "type": "Entity",
       "id": 44,
       "isAbstract": false,
-      "entityType": "Embedded",
+      "entityType": "Document",
       "namePlural": "Enumerations",
       "parentClass": [
         33
@@ -4387,7 +4387,7 @@
       "type": "Entity",
       "id": 33,
       "isAbstract": true,
-      "entityType": "Embedded",
+      "entityType": "Document",
       "namePlural": "Propertys",
       "parentClass": [
         3
@@ -4534,7 +4534,7 @@
       "type": "Entity",
       "id": 23,
       "isAbstract": false,
-      "entityType": "Embedded",
+      "entityType": "Document",
       "namePlural": "Relationships",
       "parentClass": [
         3
