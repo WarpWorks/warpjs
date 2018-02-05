@@ -1,5 +1,11 @@
 # Releases
 
+## 1.2.12 - 2018-02-02
+
+- Added Tile panel-item style (GH #59).
+- Fixed missing search plugin icon due to multiple search packages installed.
+- Changed portal breadcrumb to use type.name instead of type.desc.
+
 ## 1.2.11 - 2018-01-30
 
 - Added missing warpjsId to new entity.
