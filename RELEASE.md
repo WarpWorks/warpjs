@@ -1,5 +1,10 @@
 # Releases
 
+## 1.2.13 - 2018-02-05
+
+- Fixed Overview order by Position (GH #61).
+- Fixed map plugin API calls.
+
 ## 1.2.12 - 2018-02-02
 
 - Added Tile panel-item style (GH #59).

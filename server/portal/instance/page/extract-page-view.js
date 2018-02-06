@@ -5,6 +5,7 @@ const path = require('path');
 const Promise = require('bluebird');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const urlTemplate = require('url-template');
+const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const basicTypes = require('./../../../../lib/core/basic-types');
 const convertCustomLinks = require('./../convert-custom-links');
@@ -177,6 +178,7 @@ function createOverviewPanel(req, persistence, hsCurrentEntity, currentInstance)
         .then(() => hsCurrentEntity.getOverview(persistence, currentInstance))
         .then(parseLinks)
         .then(convertToResource.bind(null, req))
+        .then((overviews) => overviews.sort(warpjsUtils.byPositionThenName))
         .then((overviews) => {
             const resource = createObjResource({
                 alternatingColors: false,
