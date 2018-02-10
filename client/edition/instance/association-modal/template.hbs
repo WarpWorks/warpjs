@@ -1,6 +1,7 @@
 <div class="modal fade" role="dialog" tabindex="-1"
-    data-warpjs-modal="target-association"
-    aria-hidden="true" aria-labelledby="Target-Association">
+    aria-hidden="true" aria-labelledby="Target-Association"
+    data-warpjs-modal="{{modalName}}"
+    >
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -19,7 +20,7 @@
                   <form class="form-inline">
                     Select type:
                     <div class="form-group">
-                      <select class="form-control warpjs-selection-types">
+                      <select class="form-control {{selectionTypes}}">
                         {{> types-option-loading}}
                       </select>
                     </div>
@@ -29,7 +30,7 @@
 
               {{#if canEdit}}
                 <li class="list-group-item">
-                  <ul class="list-group warpjs-selection-entities">
+                  <ul class="list-group {{selectionEntities}}">
                     {{> selection-entities-loading}}
                   </ul>
                 </li>
@@ -37,12 +38,11 @@
 
               <li class="list-group-item">
                 <label>Selected entities:</label>
-                <ul class="nav nav-pills warpjs-selected-entities">
+                <ul class="nav nav-pills {{selectedEntities}}">
                 </ul>
               </li>
 
-              <li class="list-group-item warpjs-selected-details"
-                  data-warpjs-can-edit="{{canEdit}}">
+              <li class="list-group-item {{selectedDetails}}" data-warpjs-can-edit="{{canEdit}}">
               </li>
 
             </ul>
@@ -51,7 +51,7 @@
       </div>
 
       <div class="modal-footer">
-        <button type="button" class="btn btn-default warpjs-selection-save"
+        <button type="button" class="btn btn-default {{selectionSave}}"
             data-dismiss="modal"
             aria-label="Close"
             aria-hidden="true"

@@ -16,7 +16,13 @@ module.exports = ($, instanceDoc) => {
         // Only define the event handlers the first time we add the modal.
         if (!$(constants.DIALOG_SELECTOR, instanceDoc).length) {
             instanceDoc.append(template({
-                canEdit: $(this).data('warpjsCanEdit') === 'true' || $(this).data('warpjsCanEdit') === true
+                canEdit: $(this).data('warpjsCanEdit') === 'true' || $(this).data('warpjsCanEdit') === true,
+                modalName: constants.MODAL_NAME,
+                selectedDetails: constants.SELECTED_DETAILS,
+                selectedEntities: constants.SELECTED_ENTITIES,
+                selectionEntities: constants.SELECTION_ENTITIES,
+                selectionSave: constants.SELECTION_SAVE,
+                selectionTypes: constants.SELECTION_TYPES
             }));
 
             browseSelectedEntities($, instanceDoc);

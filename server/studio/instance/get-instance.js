@@ -69,6 +69,8 @@ module.exports = (req, res) => {
                         new DocLevel(),
                         {
                             domain,
+                            type,
+                            id,
                             href: resource._links.self.href
                         },
                         constants.routes
