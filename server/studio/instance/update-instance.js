@@ -1,3 +1,4 @@
+const debug = require('debug')('W2:studio:server/studio/instance/update-instance');
 const Promise = require('bluebird');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
@@ -25,8 +26,26 @@ module.exports = (req, res) => {
                 // TODO: Add logger
 
                 .then(() => DocLevel.fromString(body.updatePath))
-                .then((docLevel) => docLevel.getData(persistence, instanceData.entity, instanceData.instance))
-                .then((docLevelData) => docLevelData.model.setValue(docLevelData.instance, body.updateValue))
+                .then((docLevel) => {
+                    if (body && body.patchAction && body.patchAction === 'remove') { // FIXME: Use a constant.
+                        return Promise.resolve()
+                            .then(() => docLevel.getData(persistence, instanceData.entity, instanceData.instance, 1))
+                            .then((docLevelData) => {
+                                if (docLevelData.model.type === ComplexTypes.Relationship && docLevelData.instance.type === ComplexTypes.RelationshipPanelItem) {
+                                    // We should not delete this.
+                                    throw new Error(`Unexpected delete of a relationship of a relationship-panel-item.`);
+                                } else {
+                                    throw new Error(`TODO: See what is this case!`);
+                                }
+                            })
+                        ;
+                    } else {
+                        return Promise.resolve()
+                            .then(() => docLevel.getData(persistence, instanceData.entity, instanceData.instance))
+                            .then((docLevelData) => docLevelData.model.setValue(docLevelData.instance, body.updateValue))
+                        ;
+                    }
+                })
                 .then((updateData) => Promise.resolve()
                     .then(() => {
                         // console.log("updateData=", updateData);
