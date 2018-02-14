@@ -1,6 +1,8 @@
+// const debug = require('debug')('W2:studio:instance/add-association-to-embedded');
 const Promise = require('bluebird');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const ComplexTypes = require('./../../../lib/core/complex-types');
 const DocLevel = require('./../../../lib/doc-level');
 const utils = require('./../utils');
 const warpCore = require('./../../../lib/core');
@@ -34,8 +36,14 @@ module.exports = (req, res) => {
                     if (body.docLevel && body.type && body.id) {
                         return Promise.resolve()
                             .then(() => DocLevel.fromString(body.docLevel))
-                            .then((docLevel) => docLevel.getData(persistence, instanceData.entity, instanceData.instance))
-                            .then((docLevelData) => docLevelData.model.addValue(persistence, body.type, body.id, docLevelData.instance))
+                            .then((docLevel) => docLevel.getData(persistence, instanceData.entity, instanceData.instance, 1))
+                            .then((docLevelData) => {
+                                if (docLevelData.model.type === ComplexTypes.Relationship && docLevelData.instance.type === ComplexTypes.RelationshipPanelItem) {
+                                    docLevelData.instance.relationship = parseInt(body.id, 10);
+                                } else {
+                                    throw new Error(`TODO: What to do with this? docLevelData=`, docLevelData);
+                                }
+                            })
                             .then(() => {
                                 // TODO: Changelog
                             })

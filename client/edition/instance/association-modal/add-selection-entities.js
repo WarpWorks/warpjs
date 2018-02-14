@@ -40,8 +40,8 @@ module.exports = ($, instanceDoc) => {
                     $(`${selector} a`, instanceDoc).trigger('click');
                 })
                 .catch((err) => {
-                    // TODO: give UI feedback.
-                    console.log("Error adding data to server:", err);
+                    console.error("Error adding data to server:", err);
+                    warpjsUtils.toast.error($, err.message, "Error adding association");
                 });
         } else {
             $(`${selector} a`, instanceDoc).trigger('click');

@@ -1,4 +1,5 @@
 const Promise = require('bluebird');
+const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const constants = require('./constants');
 const query = require('./../../../query');
@@ -24,8 +25,8 @@ module.exports = ($, instanceDoc) => {
         Promise.resolve()
             .then(() => query($, 'PATCH', {id, type, updatePath, patchAction}, $(element).data('warpjsUrl')))
             .catch((err) => {
-                // TODO: Give UI feedback on error
-                console.log("Error removing association", err);
+                console.error("Error removing association", err);
+                warpjsUtils.toast.error($, err.message, "Error removing association");
             })
         ;
     });

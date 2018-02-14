@@ -1,5 +1,7 @@
 const Promise = require('bluebird');
+const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const formFeedback = require('./../form-feedback');
 const patch = require('./../../patch');
 
 module.exports = ($) => {
@@ -8,12 +10,13 @@ module.exports = ($) => {
         const updateValue = $(this).val();
 
         return Promise.resolve()
+            .then(() => formFeedback.start($, this))
             .then(() => patch($, updatePath, updateValue))
-            .then((res) => {
-                console.log("---OK:", res);
-            })
+            .then(() => formFeedback.success($, this))
             .catch((err) => {
-                console.log("***ERROR:", err);
+                formFeedback.error($, this);
+                console.error("***ERROR:", err);
+                warpjsUtils.toast.error($, err.message, "Error updating field");
             });
     });
 };
