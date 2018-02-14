@@ -1,7 +1,8 @@
-const debug = require('debug')('W2:studio:server/studio/instance/update-instance');
+// const debug = require('debug')('W2:studio:server/studio/instance/update-instance');
 const Promise = require('bluebird');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const ComplexTypes = require('./../../../lib/core/complex-types');
 const DocLevel = require('./../../../lib/doc-level');
 const utils = require('./../utils');
 const warpCore = require('./../../../lib/core');
