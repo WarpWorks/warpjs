@@ -1,4 +1,4 @@
-// const debug = require('debug')('W2:studio:instance/add-association-to-embedded');
+const debug = require('debug')('W2:studio:instance/add-association-to-embedded');
 const Promise = require('bluebird');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
@@ -33,15 +33,28 @@ module.exports = (req, res) => {
                 })
 
                 .then(() => {
-                    if (body.docLevel && body.type && body.id) {
+                    if (body.docLevel) {
                         return Promise.resolve()
                             .then(() => DocLevel.fromString(body.docLevel))
                             .then((docLevel) => docLevel.getData(persistence, instanceData.entity, instanceData.instance, 1))
                             .then((docLevelData) => {
-                                if (docLevelData.model.type === ComplexTypes.Relationship && docLevelData.instance.type === ComplexTypes.RelationshipPanelItem) {
-                                    docLevelData.instance.relationship = parseInt(body.id, 10);
+                                if (body.type && body.id) {
+                                    if (docLevelData.model.type === ComplexTypes.Relationship && docLevelData.instance.type === ComplexTypes.RelationshipPanelItem) {
+                                        docLevelData.instance.relationship = parseInt(body.id, 10);
+                                    } else {
+                                        throw new Error(`TODO: What to do with this? docLevelData=`, docLevelData);
+                                    }
                                 } else {
-                                    throw new Error(`TODO: What to do with this? docLevelData=`, docLevelData);
+                                    const { value } = docLevelData.docLevel.first();
+                                    debug(`docLevelData=`, docLevelData);
+                                    debug(`docLevelData.docLevel=`, docLevelData.docLevel);
+
+                                    const relationship = docLevelData.model.getRelationshipByName(value);
+
+                                    return Promise.resolve()
+                                        .then(() => warpCore.getDomainByName(domain))
+                                        .then((domainEntity) => docLevelData.model.createStudioChild(persistence, docLevelData.instance, relationship, domainEntity.createNewID()))
+                                    ;
                                 }
                             })
                             .then(() => {

@@ -36,6 +36,7 @@ module.exports = ($, instanceDoc) => {
         const topEmbedded = findTopEmbedded(this);
         const url = topEmbedded.data('warpjsUrl');
         const data = {
+            action: $(this).data('warpjsAction'),
             docLevel: $(this).data('warpjsDocLevel')
         };
 
@@ -43,8 +44,8 @@ module.exports = ($, instanceDoc) => {
             .then(() => warpjsUtils.proxy.post($, url, data))
             .then(() => document.location.reload())
             .catch((err) => {
-                // TODO: Give UI feedback.
-                console.log("Error adding carousel:", err);
+                console.error("Error adding carousel:", err);
+                warpjsUtils.toast.error($, err.message, "Error adding child document");
             })
         ;
     });
@@ -68,8 +69,8 @@ module.exports = ($, instanceDoc) => {
                 .then(() => warpjsUtils.proxy.del($, url, data))
                 .then((res) => document.location.reload())
                 .catch((err) => {
-                    // TODO: Give UI feedback.
-                    console.log("Error adding carousel:", err);
+                    console.error("Error removing carousel:", err);
+                    warpjsUtils.toast.error($, err.message, "Error removing child document");
                 })
             ;
         }

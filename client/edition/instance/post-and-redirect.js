@@ -7,6 +7,7 @@ module.exports = ($, element) => Promise.resolve()
         document.location.href = res._links.redirect.href;
     })
     .catch((err) => {
-        console.log("failed: err=", err);
+        console.error("failed: err=", err);
+        warpjsUtils.toast.error($, err.message, "Action error");
     });
 ;
