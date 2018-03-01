@@ -11,12 +11,13 @@ module.exports = ($) => {
 
         return Promise.resolve()
             .then(() => formFeedback.start($, this))
-            .then(() => patch($, updatePath, updateValue))
+            .then(() => patch($, updatePath, updateValue, $(this).data('warpjsUrl')))
             .then(() => formFeedback.success($, this))
             .catch((err) => {
                 formFeedback.error($, this);
                 console.error("***ERROR:", err);
                 warpjsUtils.toast.error($, err.message, "Error updating field");
-            });
+            })
+        ;
     });
 };
