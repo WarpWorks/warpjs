@@ -62,11 +62,6 @@ module.exports = (req, res) => {
                 .then((persistence) => Promise.resolve()
                     .then(() => utils.getInstance(persistence, type, id))
                     .then((instanceData) => Promise.resolve()
-                        .then(() => {
-                            if (!instanceData || !instanceData.entity || !instanceData.instance) {
-                                throw new Error(`Unable to find '${type}/${id}'.`);
-                            }
-                        })
                         .then(() => instanceData.entity.getParent(persistence, instanceData.instance))
                         .then((parent) => parent.entity.getRelationshipByName('relationships').getDocuments(persistence, parent.instance))
                         .then((docs) => docs.map((doc) => {

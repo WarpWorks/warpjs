@@ -18,12 +18,6 @@ module.exports = (req, res) => {
         .then((persistence) => Promise.resolve()
             .then(() => utils.getInstance(persistence, type, id))
             .then((instanceData) => Promise.resolve()
-                .then(() => {
-                    if (!instanceData || !instanceData.entity || !instanceData.instance) {
-                        throw new Error(`Unable to find '${type}/${id}'.`);
-                    }
-                })
-
                 // TODO: Add logger
 
                 .then(() => DocLevel.fromString(body.updatePath))

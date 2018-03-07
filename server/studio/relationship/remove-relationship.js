@@ -26,11 +26,6 @@ module.exports = (req, res) => {
         .then((persistence) => Promise.resolve()
             .then(() => utils.getInstance(persistence, type, id))
             .then((instanceData) => Promise.resolve()
-                .then(() => {
-                    if (!instanceData || !instanceData.entity || !instanceData.instance) {
-                        throw new Error(`Unable to find '${type}/${id}'.`);
-                    }
-                })
                 .then(() => DocLevel.fromString(body.docLevel))
                 .then((docLevel) => docLevel.getData(persistence, instanceData.entity, instanceData.instance, 1))
                 .then((docLevelData) => Promise.resolve()

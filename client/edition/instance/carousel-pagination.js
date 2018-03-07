@@ -1,4 +1,4 @@
-const warpjsUtils = require('@warp-works/warpjs-utils');
+const { proxy, toast } = require('@warp-works/warpjs-utils');
 
 function findTopEmbedded(element) {
     return $(element).parents('[data-warpjs-entity-type="Embedded"]').last();
@@ -41,13 +41,16 @@ module.exports = ($, instanceDoc) => {
         };
 
         return Promise.resolve()
-            .then(() => warpjsUtils.toast.warning($, "This can take few seconds. Page will reload when done", "Creating..."))
-            .then(() => warpjsUtils.proxy.post($, url, data))
-            .then(() => document.location.reload())
-            .catch((err) => {
-                console.error("Error adding carousel:", err);
-                warpjsUtils.toast.error($, err.message, "Error adding child document");
-            })
+            .then(() => toast.warning($, "This can take few seconds. Page will reload when done", "Creating..."))
+            .then((toastWarning) => Promise.resolve()
+                .then(() => proxy.post($, url, data))
+                .then(() => document.location.reload())
+                .catch((err) => {
+                    console.error("Error adding carousel:", err);
+                    toast.close($, toastWarning);
+                    toast.error($, err.message, "Error adding child document");
+                })
+            )
         ;
     });
 
@@ -67,13 +70,16 @@ module.exports = ($, instanceDoc) => {
             };
 
             Promise.resolve()
-                .then(() => warpjsUtils.toast.warning($, "This can take few seconds. Page will reload when done", "Deleting..."))
-                .then(() => warpjsUtils.proxy.del($, url, data))
-                .then((res) => document.location.reload())
-                .catch((err) => {
-                    console.error("Error removing carousel:", err);
-                    warpjsUtils.toast.error($, err.message, "Error removing child document");
-                })
+                .then(() => toast.warning($, "This can take few seconds. Page will reload when done", "Deleting..."))
+                .then((toastWarning) => Promise.resolve()
+                    .then(() => proxy.del($, url, data))
+                    .then((res) => document.location.reload())
+                    .catch((err) => {
+                        console.error("Error removing carousel:", err);
+                        toast.close($, toastWarning);
+                        toast.error($, err.message, "Error removing child document");
+                    })
+                )
             ;
         }
     });

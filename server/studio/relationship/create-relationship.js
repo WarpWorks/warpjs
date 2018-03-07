@@ -34,12 +34,6 @@ module.exports = (req, res) => {
             .then(() => utils.getInstance(persistence, type, id))
             .then((instanceData) => Promise.resolve()
                 .then(() => {
-                    if (!instanceData || !instanceData.entity || !instanceData.instance) {
-                        throw new Error(`Unable to find '${type}/${id}'.`);
-                    }
-                })
-
-                .then(() => {
                     if (body.id && body.type && body.docLevel) {
                         // Association
                         return Promise.resolve()

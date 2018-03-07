@@ -33,11 +33,6 @@ module.exports = (req, res) => {
                 .then(() => utils.getInstance(persistence, type, id))
                 .then((instanceData) => Promise.resolve()
                     .then(() => {
-                        if (!instanceData || !instanceData.entity || !instanceData.instance) {
-                            throw new Error(`Unable to find '${type}/${id}'.`);
-                        }
-                    })
-                    .then(() => {
                         resource.displayName = instanceData.entity.getDisplayName(instanceData.instance);
                         resource.isRootInstance = Boolean(instanceData.instance.isRootInstance);
                     })

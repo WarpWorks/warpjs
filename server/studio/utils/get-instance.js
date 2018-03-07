@@ -7,9 +7,15 @@ module.exports = (persistence, type, id) => Promise.resolve()
     .then((entity) => Promise.resolve()
         .then(() => entity.getDocuments(persistence, { _id: id }, true))
         .then((documents) => documents.pop())
-        .then((instance) => ({
-            entity,
-            instance
-        }))
+        .then((instance) => {
+            if (!instance) {
+                throw new Error(`Unable to find '${type}/${id}'.`);
+            }
+
+            return {
+                entity,
+                instance
+            };
+        })
     )
 ;
