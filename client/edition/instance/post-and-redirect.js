@@ -2,6 +2,7 @@ const Promise = require('bluebird');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
 module.exports = ($, element) => Promise.resolve()
+    .then(() => warpjsUtils.toast.warning($, "This can take few seconds. Page will redirect when done.", "Processing..."))
     .then(() => ({
         warpjsAction: $(element).data('warpjsAction')
     }))
@@ -12,5 +13,5 @@ module.exports = ($, element) => Promise.resolve()
     .catch((err) => {
         console.error("failed: err=", err);
         warpjsUtils.toast.error($, err.message, "Action error");
-    });
+    })
 ;

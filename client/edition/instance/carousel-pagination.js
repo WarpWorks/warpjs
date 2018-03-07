@@ -41,6 +41,7 @@ module.exports = ($, instanceDoc) => {
         };
 
         return Promise.resolve()
+            .then(() => warpjsUtils.toast.warning($, "This can take few seconds. Page will reload when done", "Creating..."))
             .then(() => warpjsUtils.proxy.post($, url, data))
             .then(() => document.location.reload())
             .catch((err) => {
@@ -66,6 +67,7 @@ module.exports = ($, instanceDoc) => {
             };
 
             Promise.resolve()
+                .then(() => warpjsUtils.toast.warning($, "This can take few seconds. Page will reload when done", "Deleting..."))
                 .then(() => warpjsUtils.proxy.del($, url, data))
                 .then((res) => document.location.reload())
                 .catch((err) => {
