@@ -23,11 +23,10 @@ module.exports = ($, instanceDoc) => {
         }
         $(this).closest('tr').remove();
 
-        // async server delete.
         return Promise.resolve()
+            // TODO: Add delete confirmation here.
             .then(() => warpjsUtils.proxy.del($, $(this).data('warpjsUrl')))
             .then((res) => console.log("TODO: Give UI feedback?"))
-            // TODO: Give UI feedback on error
             .catch((err) => {
                 console.error("Error delete-row on server:", err);
                 warpjsUtils.toast.error($, err.message, "Error deleting element");

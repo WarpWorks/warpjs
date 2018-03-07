@@ -7,7 +7,10 @@ const patch = require('./../../patch');
 module.exports = ($) => {
     $('[data-doc-level!=""][data-doc-level]').on('change', function() {
         const updatePath = $(this).data('doc-level');
-        const updateValue = $(this).val();
+        const updateValue = $(this).attr('type') === 'checkbox'
+            ? $(this).is(':checked')
+            : $(this).val()
+        ;
 
         return Promise.resolve()
             .then(() => formFeedback.start($, this))
