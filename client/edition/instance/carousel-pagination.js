@@ -41,7 +41,7 @@ module.exports = ($, instanceDoc) => {
         };
 
         return Promise.resolve()
-            .then(() => toast.warning($, "This can take few seconds. Page will reload when done", "Creating..."))
+            .then(() => toast.loading($, "This can take few seconds. Page will reload when done", "Creating..."))
             .then((toastWarning) => Promise.resolve()
                 .then(() => proxy.post($, url, data))
                 .then(() => document.location.reload())
@@ -70,7 +70,7 @@ module.exports = ($, instanceDoc) => {
             };
 
             Promise.resolve()
-                .then(() => toast.warning($, "This can take few seconds. Page will reload when done", "Deleting..."))
+                .then(() => toast.loading($, "This can take few seconds. Page will reload when done", "Deleting..."))
                 .then((toastWarning) => Promise.resolve()
                     .then(() => proxy.del($, url, data))
                     .then((res) => document.location.reload())
