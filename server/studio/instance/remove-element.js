@@ -57,7 +57,9 @@ module.exports = (req, res) => {
                     ;
                 } else {
                     // Remove the element itself.
-                    throw new Error(`TODO: Implement DELETE of instance.`);
+                    return Promise.resolve()
+                        .then(() => instanceData.entity.removeDocument(persistence, instanceData.instance))
+                    ;
                 }
             })
             .finally(() => persistence.close())
