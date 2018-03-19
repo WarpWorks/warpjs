@@ -43,6 +43,7 @@ module.exports = (req, res) => {
                     })
                 )
             )
+            .then(() => warpCore.removeDomainFromCache(domain))
             .finally(() => persistence.close())
         )
         .then(() => utils.sendHal(req, res, resource))

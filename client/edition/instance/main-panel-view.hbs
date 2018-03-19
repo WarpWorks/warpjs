@@ -8,13 +8,15 @@
         data-warpjs-action="change-logs"
         title="Change logs"
         ></span>
+      {{#if _links.preview}}
       &nbsp;
-      <span class="glyphicon glyphicon-eye-open"
-        data-toggle="tooltip"
-        data-warpjs-action="preview"
-        data-warpjs-url="{{_links.preview.href}}"
-        title="Preview document"
-        ></span>
+        <span class="glyphicon glyphicon-eye-open"
+          data-toggle="tooltip"
+          data-warpjs-action="preview"
+          data-warpjs-url="{{_links.preview.href}}"
+          title="Preview document"
+          ></span>
+      {{/if}}
       &nbsp;
       <span class="glyphicon glyphicon-trash"
         data-toggle="popover"

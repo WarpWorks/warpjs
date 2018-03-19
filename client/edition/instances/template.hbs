@@ -15,7 +15,9 @@
       {{#each _embedded.entities}}
         <div class="row">
           <div class="col-xs-12" data-warpjs-url="{{_links.self.href}}">
-            <a href="{{_links.portal.href}}"><span class="glyphicon glyphicon-eye-open" title="Preview '{{name}}' on portal"></span></a>
+            {{#if _links.portal}}
+              <a href="{{_links.portal.href}}"><span class="glyphicon glyphicon-eye-open" title="Preview '{{name}}' on portal"></span></a>
+            {{/if}}
             <a href="{{_links.self.href}}"><span class="glyphicon glyphicon-pencil text-primary" title="Edit '{{name}}'"></span></a>
             <span class="glyphicon glyphicon-trash" data-warpjs-action="delete" title="Delete '{{name}}'"></span>
             &nbsp;&nbsp;&nbsp;

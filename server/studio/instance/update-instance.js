@@ -54,6 +54,7 @@ module.exports = (req, res) => {
                     .then(() => instanceData.entity.updateDocument(persistence, instanceData.instance))
                 )
             )
+            .then(() => warpCore.removeDomainFromCache(domain))
             .then(() => res.status(204).send())
             .finally(() => persistence.close())
         )
