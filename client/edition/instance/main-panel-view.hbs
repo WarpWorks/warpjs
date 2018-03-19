@@ -9,9 +9,8 @@
         title="Change logs"
         ></span>
       {{#if _links.preview}}
-      &nbsp;
+        &nbsp;
         <span class="glyphicon glyphicon-eye-open"
-          data-toggle="tooltip"
           data-warpjs-action="preview"
           data-warpjs-url="{{_links.preview.href}}"
           title="Preview document"
@@ -29,7 +28,6 @@
       {{#unless isRootInstance}}
       &nbsp;
       <span class="glyphicon glyphicon-share"
-          data-toggle="tooltip"
           data-warpjs-action="add-sibling"
           data-warpjs-url="{{_links.sibling.href}}"
           title="Add sibling"

@@ -4,7 +4,9 @@ const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const breadcrumbMapper = require('./../../edition/instance/breadcrumb-mapper');
 const ChangeLogs = require('./../../../lib/change-logs');
+const ComplexTypes = require('./../../../lib/core/complex-types');
 const constants = require('./../constants');
+const contentConstants = require('./../../content/constants');
 const DocLevel = require('./../../../lib/doc-level');
 const editionInstance = require('./../../edition/instance');
 const utils = require('./../utils');
@@ -24,6 +26,15 @@ module.exports = (req, res) => {
         canEdit: true // Admin can edit anything.
     });
 
+    resource.link('history', {
+        href: RoutesInfo.expand(constants.routes.history, { domain, type, id }),
+        title: "Entity history"
+    });
+
+    if (type === ComplexTypes.Domain) {
+        resource.link('preview', RoutesInfo.expand(contentConstants.routes.instances, { domain, type: domain }));
+    }
+
     warpjsUtils.wrapWith406(res, {
         html: () => utils.basicRender(editionInstance.bundles, resource, req, res),
 
@@ -40,14 +51,6 @@ module.exports = (req, res) => {
                     // Changelogs
                     .then(() => ChangeLogs.toFormResource(domain, instanceData.instance))
                     .then((changeLogs) => resource.embed('changeLogs', changeLogs))
-
-                    // History
-                    .then(() => RoutesInfo.expand(constants.routes.history, {
-                        domain,
-                        type,
-                        id
-                    }))
-                    .then((historyUrl) => resource.link('history', historyUrl))
 
                     // Breadcrumbs
                     .then(() => instanceData.entity.getInstancePath(persistence, instanceData.instance))
