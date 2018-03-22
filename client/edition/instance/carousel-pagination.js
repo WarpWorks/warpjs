@@ -33,8 +33,7 @@ module.exports = ($, instanceDoc) => {
         e.preventDefault();
         e.stopPropagation();
 
-        const topEmbedded = findTopEmbedded(this);
-        const url = topEmbedded.data('warpjsUrl');
+        const url = $(this).data('warpjsUrl') ? $(this).data('warpjsUrl') : findTopEmbedded(this).data('warpjsUrl');
         const data = {
             action: $(this).data('warpjsAction'),
             docLevel: $(this).data('warpjsDocLevel')
@@ -42,12 +41,12 @@ module.exports = ($, instanceDoc) => {
 
         return Promise.resolve()
             .then(() => toast.loading($, "This can take few seconds. Page will reload when done", "Creating..."))
-            .then((toastWarning) => Promise.resolve()
+            .then((toastLoading) => Promise.resolve()
                 .then(() => proxy.post($, url, data))
                 .then(() => document.location.reload())
                 .catch((err) => {
                     console.error("Error adding carousel:", err);
-                    toast.close($, toastWarning);
+                    toast.close($, toastLoading);
                     toast.error($, err.message, "Error adding child document");
                 })
             )
@@ -71,12 +70,12 @@ module.exports = ($, instanceDoc) => {
 
             Promise.resolve()
                 .then(() => toast.loading($, "This can take few seconds. Page will reload when done", "Deleting..."))
-                .then((toastWarning) => Promise.resolve()
+                .then((toastLoading) => Promise.resolve()
                     .then(() => proxy.del($, url, data))
                     .then((res) => document.location.reload())
                     .catch((err) => {
                         console.error("Error removing carousel:", err);
-                        toast.close($, toastWarning);
+                        toast.close($, toastLoading);
                         toast.error($, err.message, "Error removing child document");
                     })
                 )
