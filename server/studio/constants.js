@@ -7,6 +7,13 @@ module.exports = {
         instance: 'W2:studio:instance',
         relationship: 'W2:studio:instance-relationship',
         relationshipPage: 'W2:studio:instance-relationship-page',
-        types: 'W2:studio:types'
+        types: 'W2:studio:types',
+        PROFILES: {
+            parentClass: 'parentClass',
+            targetEntity: 'targetEntity',
+            typeItems: 'typeItems',
+            types: 'types',
+            withChildren: 'withChildren'
+        }
     }
 };

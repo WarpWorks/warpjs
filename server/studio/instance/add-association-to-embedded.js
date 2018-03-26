@@ -1,4 +1,4 @@
-const debug = require('debug')('W2:studio:instance/add-association-to-embedded');
+// const debug = require('debug')('W2:studio:instance/add-association-to-embedded');
 const Promise = require('bluebird');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
@@ -33,15 +33,40 @@ module.exports = (req, res) => {
                             .then((docLevel) => docLevel.getData(persistence, instanceData.entity, instanceData.instance, 1))
                             .then((docLevelData) => {
                                 if (body.type && body.id) {
-                                    if (docLevelData.model.type === ComplexTypes.Relationship && docLevelData.instance.type === ComplexTypes.RelationshipPanelItem) {
-                                        docLevelData.instance.relationship = parseInt(body.id, 10);
+                                    if (docLevelData.model.type === ComplexTypes.Relationship) {
+                                        switch (docLevelData.instance.type) {
+                                            case ComplexTypes.RelationshipPanelItem:
+                                                // debug(`Found rel: docLevelData.instance=`, docLevelData.instance);
+                                                docLevelData.instance.relationship = parseInt(body.id, 10);
+                                                break;
+
+                                            case ComplexTypes.BasicPropertyPanelItem:
+                                                // debug(`Found BP: docLevelData.instance=`, docLevelData.instance);
+                                                docLevelData.instance.basicProperty = parseInt(body.id, 10);
+                                                break;
+
+                                            case ComplexTypes.EnumPanelItem:
+                                                // debug(`Found Enum: docLevelData.instance=`, docLevelData.instance);
+                                                docLevelData.instance.enumeration = parseInt(body.id, 10);
+                                                break;
+
+                                            default:
+                                                throw new Error(`Unexpected type=${docLevelData.instsance.type}`);
+                                        }
                                     } else {
-                                        throw new Error(`TODO: What to do with this? docLevelData=`, docLevelData);
+                                        throw new Error(`Unexpected model.type='${docLevelData.model.type}'.`);
                                     }
+
+                                    // if (docLevelData.model.type === ComplexTypes.Relationship && docLevelData.instance.type === ComplexTypes.RelationshipPanelItem) {
+                                    // } else if (docLevelData.model.type === ComplexTypes.Relationship && docLevelData.instance.type === ComplexTypes.BasicPropertyPanelItem) {
+                                    //     docLevelData.instance.basicProperty = parseInt(body.id, 10);
+                                    // } else {
+                                    //     throw new Error(`TODO: What to do with this? docLevelData=`, docLevelData);
+                                    // }
                                 } else {
                                     const { value } = docLevelData.docLevel.first();
-                                    debug(`docLevelData=`, docLevelData);
-                                    debug(`docLevelData.docLevel=`, docLevelData.docLevel);
+                                    // debug(`docLevelData=`, docLevelData);
+                                    // debug(`docLevelData.docLevel=`, docLevelData.docLevel);
 
                                     const relationship = docLevelData.model.getRelationshipByName(value);
 
