@@ -1,4 +1,4 @@
-const debug = require('debug')('W2:studio:relationship/retrieve-relationship-info');
+// const debug = require('debug')('W2:studio:relationship/retrieve-relationship-info');
 const Promise = require('bluebird');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');

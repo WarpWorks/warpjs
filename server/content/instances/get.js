@@ -64,21 +64,22 @@ module.exports = (req, res) => {
                 })
             });
 
-            const persistence = serverUtils.getPersistence(domain);
-
             return Promise.resolve()
-                .then(() => serverUtils.getEntity(domain, type))
-                .then((entity) => Promise.resolve()
-                    .then(() => entity.getDocuments(persistence))
-                    .then((documents) => {
-                        const embedded = documents.map((instance) => documentMapper(entity, domain, instance));
-                        resource.embed('entities', embedded);
+                .then(() => serverUtils.getPersistence(domain))
+                .then((persistence) => Promise.resolve()
+                    .then(() => serverUtils.getEntity(domain, type))
+                    .then((entity) => Promise.resolve()
+                        .then(() => entity.getDocuments(persistence, {type: entity.name})) // FIXME: We can't use the entity ID because old data doesn't have this info.
+                        .then((documents) => {
+                            const embedded = documents.map((instance) => documentMapper(entity, domain, instance));
+                            resource.embed('entities', embedded);
+                        })
+                        .then(() => utils.sendHal(req, res, resource))
+                    )
+                    .finally(() => {
+                        persistence.close();
                     })
-                    .then(() => utils.sendHal(req, res, resource))
                 )
-                .finally(() => {
-                    persistence.close();
-                })
             ;
         }
     });
