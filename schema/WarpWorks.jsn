@@ -2600,22 +2600,22 @@
           "id": 45,
           "literals": [
             {
-              "name": "One",
+              "name": "Exactly One",
               "type": "Literal",
               "id": 46
             },
             {
-              "name": "ZeroOne",
+              "name": "Zero or One",
               "type": "Literal",
               "id": 47
             },
             {
-              "name": "ZeroMany",
+              "name": "Zero to Many",
               "type": "Literal",
               "id": 48
             },
             {
-              "name": "OneMany",
+              "name": "One to Many",
               "type": "Literal",
               "id": 49
             }
@@ -3215,7 +3215,7 @@
               "type": "Panel",
               "id": 352,
               "position": 1,
-              "label": "panels",
+              "label": "Panels",
               "columns": 1,
               "alternatingColors": false,
               "separatorPanelItems": [],
@@ -3243,7 +3243,7 @@
               "type": "Panel",
               "id": 354,
               "position": 2,
-              "label": "actions",
+              "label": "Actions",
               "columns": 1,
               "alternatingColors": false,
               "separatorPanelItems": [],
@@ -3584,7 +3584,7 @@
               "desc": "Properties, Enums and Associations",
               "type": "Panel",
               "id": 373,
-              "position": 0,
+              "position": 1,
               "label": "Basics",
               "columns": 1,
               "alternatingColors": false,
@@ -3666,7 +3666,7 @@
               "desc": "Tooltip",
               "type": "Panel",
               "id": 380,
-              "position": 1,
+              "position": 5,
               "label": "Separators",
               "columns": 1,
               "alternatingColors": false,
@@ -3694,7 +3694,7 @@
               "desc": "Tooltip",
               "type": "Panel",
               "id": 382,
-              "position": 2,
+              "position": 3,
               "label": "Relationships",
               "columns": 1,
               "alternatingColors": false,
@@ -3722,7 +3722,7 @@
               "desc": "Tooltip",
               "type": "Panel",
               "id": 384,
-              "position": 3,
+              "position": 2,
               "label": "Basic Properties",
               "columns": 1,
               "alternatingColors": false,
@@ -3779,7 +3779,7 @@
               "type": "Panel",
               "id": 388,
               "position": 5,
-              "label": "actions",
+              "label": "Actions",
               "columns": 1,
               "alternatingColors": false,
               "separatorPanelItems": [],
@@ -3791,7 +3791,7 @@
                   "style": "Carousel",
                   "id": 389,
                   "position": 0,
-                  "label": "actions",
+                  "label": "Actions",
                   "relationship": [
                     75
                   ]
@@ -3886,7 +3886,7 @@
                   "style": "CSV",
                   "id": 403,
                   "position": 11,
-                  "label": "actions",
+                  "label": "Actions",
                   "relationship": [
                     75
                   ]
