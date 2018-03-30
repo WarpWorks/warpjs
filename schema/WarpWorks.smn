@@ -65,7 +65,7 @@ Panel (Base):
 SeparatorPanelItem(PanelItem)
 
 RelationshipPanelItem(PanelItem):
-- style:[CSV|Table|Preview]
+- style:[CSV|Table|Preview|Tile]
 - relationship=>Relationship
 
 BasicPropertyPanelItem(PanelItem):

@@ -5105,6 +5105,11 @@
               "name": "Preview",
               "type": "Literal",
               "id": 86
+            },
+            {
+              "name": "Tile",
+              "type": "Literal",
+              "id": 555
             }
           ]
         }
