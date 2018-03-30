@@ -1,5 +1,14 @@
 # Releases
 
+## 1.2.14 - 2018-03-27
+
+- Studio: Changed labels for tabs.
+- Studio: Fixed relationship association modal selection.
+- Studio: Display of toast for some of the errors.
+- Studio: Support for boolean with checkbox
+- Content: Fixed listing of entity sub-types in instance list.
+
+
 ## 1.2.13 - 2018-02-05
 
 - Fixed Overview order by Position (GH #61).
