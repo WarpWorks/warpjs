@@ -1,3 +1,4 @@
+// const debug = require('debug')('W2:content:instance/get');
 const Promise = require('bluebird');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
@@ -53,10 +54,9 @@ module.exports = (req, res) => {
     res.format({
         html: () => utils.basicRender(editionInstance.bundles, resource, req, res),
 
-        [warpjsUtils.constants.HAL_CONTENT_TYPE]: () => {
-            const persistence = serverUtils.getPersistence(domain);
-
-            return Promise.resolve()
+        [warpjsUtils.constants.HAL_CONTENT_TYPE]: () => Promise.resolve()
+            .then(() => serverUtils.getPersistence(domain))
+            .then((persistence) => Promise.resolve()
                 .then(() => serverUtils.getEntity(domain, type))
                 .then((entity) => Promise.resolve()
                     .then(() => entity.getInstance(persistence, id))
@@ -108,7 +108,6 @@ module.exports = (req, res) => {
                     utils.sendHal(req, res, resource, 500);
                 })
                 .finally(() => persistence.close())
-            ;
-        }
+            )
     });
 };
