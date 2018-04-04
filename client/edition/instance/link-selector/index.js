@@ -32,6 +32,6 @@ module.exports = ($, instanceDoc) => Promise.resolve()
     .then(() => $(`.${constants.SELECTION_MODAL_CLASS}`).modal('show'))
     .catch((err) => {
         // TODO: Show error.
-        console.log("ERROR:", err);
+        console.error("ERROR:", err);
     });
 ;

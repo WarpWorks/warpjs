@@ -33,7 +33,7 @@ module.exports = ($, instanceDoc) => {
             .then(() => tinymce.activeEditor.setContent(input.val()))
             .then(() => $(`.${constants.MODAL_CLASS}`).modal('show'))
             .catch((err) => {
-                console.log("error tinymce.init()...", err);
+                console.error("error tinymce.init()...", err);
             });
     });
 };

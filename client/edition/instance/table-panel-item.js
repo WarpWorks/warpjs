@@ -21,7 +21,7 @@ module.exports = ($) => {
                 console.log("Deleting done...", result);
             })
             .catch((err) => {
-                console.log("Error deleting...", err);
+                console.error("Error deleting...", err);
             });
     });
 };

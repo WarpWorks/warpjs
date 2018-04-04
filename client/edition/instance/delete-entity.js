@@ -9,7 +9,7 @@ module.exports = ($) => {
                 console.log("res=", res);
             })
             .catch((err) => {
-                console.log("res ERRORS=", err);
+                console.error("res ERRORS=", err);
             })
             .finally(() => {
             });

@@ -9,24 +9,25 @@ function defaultPostRender($, result) {
 }
 
 function defaultOnError($, err) {
-    console.log("ERROR:", err);
+    console.error("ERROR:", err);
+    progressBarModal.hide();
+    warpjsUtils.toast.error($, err.message, "Error initial load");
 }
 
 module.exports = ($, template, postRender = defaultPostRender, onError = defaultOnError) => {
     // Offer a render quickly then go fetch the data and update the page.
     progressBarModal.show($, 25);
 
-    $(document).ready(() => {
-        return warpjsUtils.getCurrentPageHAL($)
-            .then((result) => {
-                progressBarModal.show($, 50);
-                if (result.error) {
-                    return onError($, result);
-                }
+    $(document).ready(() => warpjsUtils.getCurrentPageHAL($)
+        .then((result) => {
+            progressBarModal.show($, 50);
+            if (result.error) {
+                onError($, result);
+            } else {
                 renderer(template, result);
-                return result;
-            })
-            .then((result) => postRender($, result))
-            .catch(onError);
-    });
+                postRender($, result);
+            }
+        })
+        .catch((err) => onError($, err))
+    );
 };
