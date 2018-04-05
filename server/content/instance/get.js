@@ -100,14 +100,15 @@ module.exports = (req, res) => {
                         .then((formResource) => resource.embed('formResources', formResource))
                     )
                 )
-                .then(() => utils.sendHal(req, res, resource))
-                .catch((err) => {
-                    console.log("Error in GET: err=", err);
-                    resource.error = true;
-                    resource.message = err.message;
-                    utils.sendHal(req, res, resource, 500);
-                })
                 .finally(() => persistence.close())
             )
+            .then(() => utils.sendHal(req, res, resource))
+            .then(() => console.log("instance/get ok"))
+            .catch((err) => {
+                console.log("Error in GET: err=", err);
+                resource.error = true;
+                resource.message = err.message;
+                utils.sendHal(req, res, resource, 500);
+            })
     });
 };
