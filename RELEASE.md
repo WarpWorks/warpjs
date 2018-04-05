@@ -1,5 +1,14 @@
 # Releases
 
+## 1.2.15 - 2018-04-04
+
+- Portal: Prototype for page visibility with Status.
+- Content: List only instance of specific type.
+- Content: Added "Tile" display style for relationship-panel-item.
+- Content: Fixed children display for the right collection.
+- Studio: Added simple background-image.
+- Studio: Fixed JSN import script to ignore inheritance.
+
 ## 1.2.14 - 2018-03-27
 
 - Studio: Changed labels for tabs.
