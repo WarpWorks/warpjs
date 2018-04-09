@@ -64,6 +64,7 @@ module.exports = (req, res) => {
                         .then(() => {
                             resource.displayName = entity.getDisplayName(instance);
                             resource.isRootInstance = instance.isRootInstance;
+                            resource.status = instance.Status;
                         })
 
                         // Changelogs

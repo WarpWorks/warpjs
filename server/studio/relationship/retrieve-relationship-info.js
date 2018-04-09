@@ -8,13 +8,6 @@ const constants = require('./../constants');
 const utils = require('./../utils');
 const warpCore = require('./../../../lib/core');
 
-// FIXME: Use something external.
-const PROP_NAME_BY_RELATIONSHIP = {
-    relationship: 'relationships',
-    basicProperty: 'basicProperties',
-    enumeration: 'enums'
-};
-
 module.exports = (req, res) => {
     const { domain, type, id, relationship } = req.params;
     const { profile } = req.query;
@@ -67,22 +60,31 @@ module.exports = (req, res) => {
             [warpjsUtils.constants.HAL_CONTENT_TYPE]: () => Promise.resolve()
                 .then(() => warpCore.getPersistence())
                 .then((persistence) => Promise.resolve()
-                    .then(() => utils.getInstance(persistence, type, id))
-                    .then((instanceData) => Promise.resolve()
-                        .then(() => instanceData.entity.getParent(persistence, instanceData.instance))
-                        .then((parent) => parent.entity.getRelationshipByName(PROP_NAME_BY_RELATIONSHIP[relationship]).getDocuments(persistence, parent.instance))
-                        .then((docs) => docs.map((doc) => {
-                            const docResource = warpjsUtils.createResource('', {
-                                id: doc.warpjsId,
-                                type: doc.type,
-                                name: doc.name
-                            });
+                    .then(() => warpCore.getDomainByName(domain))
+                    .then((domainModel) => domainModel.getElementByPersistenceId(id))
+                    .then((pageView) => pageView.getParentEntity())
+                    .then((entityModel) => {
+                        // FIXME: Hard-coded
+                        switch (relationship) {
+                            case 'basicProperty':
+                                return entityModel.getBasicProperties();
 
-                            return docResource;
-                        }))
-                        .then((entities) => resource.embed('entities', entities))
-                        // FIXME: Find the relationships defined on this entity.
-                    )
+                            case 'relationship':
+                                return entityModel.getRelationships();
+
+                            case 'enumeration':
+                                return entityModel.getEnums();
+
+                            default:
+                                throw new Error(`Unknown relationship='${relationship}'.`);
+                        }
+                    })
+                    .then((elements) => elements.map((element) => warpjsUtils.createResource('', {
+                        id: element.id,
+                        type: element.type,
+                        name: element.name
+                    })))
+                    .then((entities) => resource.embed('entities', entities))
                     .finally(() => persistence.close())
                 )
                 .then(() => utils.sendHal(req, res, resource))
