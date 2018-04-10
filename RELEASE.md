@@ -1,5 +1,13 @@
 # Releases
 
+## 1.2.16 - 2018-04-09
+
+- Display of document status on title bar.
+- WIP for delete confirmation popover.
+- Access to inherited basic properties, relationships and enumerations from page
+  views.
+- WIP still have some issues with new entities.
+
 ## 1.2.15 - 2018-04-04
 
 - Portal: Prototype for page visibility with Status.
