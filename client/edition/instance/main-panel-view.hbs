@@ -20,14 +20,8 @@
           title="Preview document"
           ></span>
       {{/if}}
-      &nbsp;
-      <span class="glyphicon glyphicon-trash"
-        data-toggle="popover"
-        data-warpjs-action="delete"
-        data-warpjs-url="{{_links.self.href}}"
-        title="Remove document"
-        {{#unless canEdit}}disabled{{/unless}}
-        ></span>
+
+      {{> delete-button action="delete" href=_links.self.href title="Remove document" canEdit=canEdit}}
 
       {{#unless isRootInstance}}
       &nbsp;

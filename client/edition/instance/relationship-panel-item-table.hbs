@@ -22,6 +22,8 @@
                         data-warpjs-url="{{row.[0]}}"
                         tooltip="Edit document"
                         ></span>
+
+                      {{> delete-button action="delete-row" href=row.[0] title="Delete document" canEdit=canEdit}}
                       <span class="glyphicon glyphicon-trash"
                         data-warpjs-action="delete-row"
                         data-warpjs-url="{{row.[0]}}"
