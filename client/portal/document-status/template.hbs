@@ -1,0 +1,31 @@
+{{#if isVisible}}
+  {{#if showDisclaimer}}
+    <div class="row warpjs-document-status-container">
+      {{>modal documentStatus=documentStatus}}
+
+      <div class="col-xs-1 left-right-margin"></div>
+
+      <div class="col-xs-10">
+        <div class="col-xs-1 left-right-margin" style="margin-right: 4px; color: #f00; font-size: 36px;">
+          <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        </div>
+        <div class="col-xs-10">
+          <span class="red-text">{{documentStatus}}</span><br/>
+
+          <a class="csv-list-item-link" data-toggle="modal" style="color: #f00;"
+            data-target="#warpjs-document-status-modal">
+            more information
+          </a>
+        </div>
+      </div>
+    </div>
+  {{/if}}
+
+  {{#unless isPublic}}
+    <div class="status-non-public row">
+      <div class="col-xs-10 col-xs-offset-1 alert alert-warning">
+        YOU CAN SEE THIS PAGE, BUT THE PAGE IS NOT OPEN TO THE PUBLIC.
+      </div>
+    </div>
+  {{/unless}}
+{{/if}}

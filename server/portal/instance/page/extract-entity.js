@@ -15,6 +15,8 @@ module.exports = (req, responseResource, persistence, hsEntity, instance) => Pro
         responseResource.isVisible = instanceStatus.isVisible;
         responseResource.showDisclaimer = instanceStatus.showDisclaimer;
         responseResource.isPublic = instanceStatus.isPublic;
+        responseResource.documentStatus = instanceStatus.documentStatus;
+
         if (instanceStatus.isVisible) {
             return Promise.resolve()
                 .then(() => extractPageView(req, responseResource, persistence, hsEntity, instance))
