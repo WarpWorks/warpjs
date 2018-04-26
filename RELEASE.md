@@ -1,5 +1,10 @@
 # Releases
 
+## 1.2.17 - 2018-04-26
+
+- Portal: Modal for document status disclaimer.
+- Content: Modal for document status explanation.
+
 ## 1.2.16 - 2018-04-09
 
 - Display of document status on title bar.
