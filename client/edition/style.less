@@ -205,33 +205,4 @@ span[data-warpjs-action="open-wysiwyg"] + input {
     }
 }
 
-[data-warpjs-placeholder="status"].warpjs-status {
-    padding: 2px 5px;
-    border-radius: 10px;
-    font-size: 70%;
-    color: white;
-
-    &.warpjs-status-InheritFromParent {
-        background-color: #99f;
-    }
-
-    &.warpjs-status-Draft {
-        background-color: #39f;
-    }
-
-    &.warpjs-status-Proposal {
-        background-color: #960;
-    }
-
-    &.warpjs-status-Approved {
-        background-color: #030;
-    }
-
-    &.warpjs-status-Declined {
-        background-color: #600;
-    }
-
-    &.warpjs-status-Retired {
-        background-color: #999;
-    }
-}
+@import './instance/document-status/style';

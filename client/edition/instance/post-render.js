@@ -13,7 +13,7 @@ const patchEntity = require('./patch-entity');
 const progressBarModal = require('./../progress-bar-modal');
 const tabContentNavigation = require('./tab-content-navigation');
 const tablePanelItem = require('./table-panel-item');
-const updateStatus = require('./update-status');
+const documentStatus = require('./document-status');
 const wysiwygEditor = require('./wysiwyg-editor');
 
 module.exports = ($, result) => {
@@ -36,5 +36,5 @@ module.exports = ($, result) => {
     addChild($);
     patchEntity($);
     tablePanelItem($);
-    updateStatus($, instanceDoc);
+    documentStatus($, instanceDoc);
 };
