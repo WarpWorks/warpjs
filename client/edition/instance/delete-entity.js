@@ -1,17 +1,24 @@
 const Promise = require('bluebird');
-const warpjsUtils = require('@warp-works/warpjs-utils');
+const { proxy, toast } = require('@warp-works/warpjs-utils');
+
+const deleteConfirm = require('./delete-confirm');
 
 module.exports = ($) => {
     $(document).on('click', '[data-warpjs-action="delete"][data-warpjs-url]:not([disabled])', function() {
-        return Promise.resolve()
-            .then(() => warpjsUtils.proxy.del($, $(this).data('url')))
-            .then((res) => {
-                console.log("res=", res);
+        Promise.resolve()
+            .then(() => deleteConfirm($, this))
+            .then((confirmed) => {
+                if (confirmed) {
+                    Promise.resolve()
+                        .then(() => toast.loading($, "This can take few seconds.", "Deleting..."))
+                        .then((toastLoading) => Promise.resolve()
+                            .then(() => proxy.del($, $(this).data('url')))
+                            .catch((err) => toast.error($, err.message, "Error removing document"))
+                            .finally(() => toast.close($, toastLoading))
+                        )
+                    ;
+                }
             })
-            .catch((err) => {
-                console.error("res ERRORS=", err);
-            })
-            .finally(() => {
-            });
+        ;
     });
 };

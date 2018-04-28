@@ -1,5 +1,7 @@
 const { proxy, toast } = require('@warp-works/warpjs-utils');
 
+const deleteConfirm = require('./delete-confirm');
+
 function findTopEmbedded(element) {
     return $(element).parents('[data-warpjs-entity-type="Embedded"]').last();
 }
@@ -69,16 +71,23 @@ module.exports = ($, instanceDoc) => {
             };
 
             Promise.resolve()
-                .then(() => toast.loading($, "This can take few seconds. Page will reload when done", "Deleting..."))
-                .then((toastLoading) => Promise.resolve()
-                    .then(() => proxy.del($, url, data))
-                    .then((res) => document.location.reload())
-                    .catch((err) => {
-                        console.error("Error removing carousel:", err);
-                        toast.close($, toastLoading);
-                        toast.error($, err.message, "Error removing child document");
-                    })
-                )
+                .then(() => deleteConfirm($, this))
+                .then((confirmed) => {
+                    if (confirmed) {
+                        Promise.resolve()
+                            .then(() => toast.loading($, "This can take few seconds. Page will reload when done", "Deleting..."))
+                            .then((toastLoading) => Promise.resolve()
+                                .then(() => proxy.del($, url, data))
+                                .then((res) => document.location.reload())
+                                .catch((err) => {
+                                    console.error("Error removing carousel:", err);
+                                    toast.close($, toastLoading);
+                                    toast.error($, err.message, "Error removing child document");
+                                })
+                            )
+                        ;
+                    }
+                })
             ;
         }
     });

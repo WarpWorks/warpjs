@@ -1,5 +1,9 @@
 # Releases
 
+## 1.2.18 - 2018-04-27
+
+- Content: Delete confirm popover.
+
 ## 1.2.17 - 2018-04-26
 
 - Portal: Modal for document status disclaimer.

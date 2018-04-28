@@ -21,7 +21,12 @@
           ></span>
       {{/if}}
 
-      {{> delete-button action="delete" href=_links.self.href title="Remove document" canEdit=canEdit}}
+      <span class="glyphicon glyphicon-trash text-danger"
+        data-warpjs-action="delete"
+        data-warpjs-url="{{_links.self.href}}"
+        title="Remove document"
+        {{#unless canEdit}}disabled{{/unless}}
+        ></span>
 
       {{#unless isRootInstance}}
       &nbsp;
