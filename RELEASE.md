@@ -1,5 +1,10 @@
 # Releases
 
+## 1.2.19 - 2018-04-30
+
+- #65: Updated disclaimer.
+- #67: Display status in instances list.
+
 ## 1.2.18 - 2018-04-27
 
 - Content: Delete confirm popover.
