@@ -18,13 +18,16 @@ function documentMapper(entity, domain, instance) {
         isRootInstance: instance.isRootInstance || undefined,
         id: instance.id,
         type: instance.type,
-        name: entity.getDisplayName(instance)
+        name: entity.getDisplayName(instance),
+        status: instance.Status
     });
 
     resource.link('portal', RoutesInfo.expand('entity', {
         type: instance.type,
         id: instance.id
     }));
+
+    // TODO: Get the authors
 
     return resource;
 }
