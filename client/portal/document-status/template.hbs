@@ -1,28 +1,37 @@
 {{#if isVisible}}
-  <div class="row warpjs-document-status-container">
-    {{#if showDisclaimer}}
+  {{#if showDisclaimer}}
+    <div class="row warpjs-document-status-container">
       {{>modal}}
-    {{/if}}
 
-    <div class="col-xs-1 left-right-margin"></div>
+      <div class="col-xs-1 left-right-margin"></div>
 
-    <div class="col-xs-10 warpjs-document-status-disclaimer">
-      <i class="glyphicon glyphicon-exclamation-sign fa-3x pull-left"></i>
-      <div class="text">
-        {{#if showDisclaimer}}
+      <div class="col-xs-10 warpjs-document-status-disclaimer">
+        <i class="glyphicon glyphicon-exclamation-sign fa-3x pull-left"></i>
+        <div class="text">
           <h6>Document status: PROPOSAL</h6>
           <a class="cvs-list-item-link" data-toggle="modal"
             data-target="#warpjs-document-status-modal"
             >Please read the Disclaimer</a>
-        {{/if}}
-        {{#unless isPublic}}
-          <h6>CHANGE THIS TEXT: YOU CAN SEE THIS PAGE, BUT THE PAGE IS NOT OPEN
-            TO THE PUBLIC.</h6>
-        {{/unless}}
+        </div>
       </div>
 
+      <div class="col-xs-1 left-right-margin"></div>
     </div>
+  {{/if}}
 
-    <div class="col-xs-1 left-right-margin"></div>
-  </div>
+  {{#unless isPublic}}
+    <div class="row warpjs-document-status-container">
+      <div class="col-xs-1 left-right-margin"></div>
+
+      <div class="col-xs-10 warpjs-document-status-disclaimer">
+        <i class="glyphicon glyphicon-exclamation-sign fa-3x pull-left"></i>
+        <div class="text">
+          <h6>CHANGE THIS TEXT: YOU CAN SEE THIS PAGE, BUT THE PAGE IS NOT OPEN
+            TO THE PUBLIC.</h6>
+        </div>
+      </div>
+
+      <div class="col-xs-1 left-right-margin"></div>
+    </div>
+  {{/unless}}
 {{/if}}

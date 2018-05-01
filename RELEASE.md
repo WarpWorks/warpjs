@@ -1,5 +1,9 @@
 # Releases
 
+## 1.2.20 - 2018-04-30
+
+- #65: Fixed logic to display disclaimer.
+
 ## 1.2.19 - 2018-04-30
 
 - #65: Updated disclaimer.
