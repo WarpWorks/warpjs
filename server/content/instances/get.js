@@ -7,29 +7,36 @@ const editionConstants = require('./../../edition/constants');
 const serverUtils = require('./../../utils');
 const utils = require('./../utils');
 
-function documentMapper(entity, domain, instance) {
-    const documentUrl = RoutesInfo.expand(constants.routes.instance, {
-        domain,
-        type: instance.type,
-        id: instance.id
-    });
+function documentMapper(persistence, entity, domain, instance) {
+    return Promise.resolve()
+        .then(() => RoutesInfo.expand(constants.routes.instance, {
+            domain,
+            type: instance.type,
+            id: instance.id
+        }))
+        .then((documentUrl) => warpjsUtils.createResource(documentUrl, {
+            isRootInstance: instance.isRootInstance || undefined,
+            id: instance.id,
+            type: instance.type,
+            name: entity.getDisplayName(instance),
+            status: instance.Status
+        }))
+        .then((resource) => Promise.resolve()
+            .then(() => resource.link('portal', RoutesInfo.expand('entity', {
+                type: instance.type,
+                id: instance.id
+            })))
 
-    const resource = warpjsUtils.createResource(documentUrl, {
-        isRootInstance: instance.isRootInstance || undefined,
-        id: instance.id,
-        type: instance.type,
-        name: entity.getDisplayName(instance),
-        status: instance.Status
-    });
-
-    resource.link('portal', RoutesInfo.expand('entity', {
-        type: instance.type,
-        id: instance.id
-    }));
-
-    // TODO: Get the authors
-
-    return resource;
+            .then(() => entity.getRelationshipByName('Authors')) // FIXME hard-coded
+            .then((relationship) => relationship
+                ? relationship.getDocuments(persistence, instance)
+                : []
+            )
+            .then((authors) => authors.map((author) => ({ Name: author.Name })))
+            .then((authors) => resource.embed('authors', authors))
+            .then(() => resource)
+        )
+    ;
 }
 
 module.exports = (req, res) => {
@@ -74,7 +81,10 @@ module.exports = (req, res) => {
                     .then((entity) => Promise.resolve()
                         // FIXME: We can't use the entity ID because old data doesn't have this info.
                         .then(() => entity.getDocuments(persistence, {type: entity.name}))
-                        .then((documents) => documents.map((instance) => documentMapper(entity, domain, instance)))
+                        .then((documents) => Promise.map(
+                            documents,
+                            (instance) => documentMapper(persistence, entity, domain, instance)
+                        ))
                         .then((embedded) => resource.embed('entities', embedded))
                         .then(() => utils.sendHal(req, res, resource))
                     )

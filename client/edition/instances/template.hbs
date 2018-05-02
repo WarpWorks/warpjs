@@ -44,8 +44,11 @@
                 </td>
 
                 <td class="warpjs-document-authors max-width-100 ellipsis">
-                  <div>WIP: Here is a super long list of authors to test if the
-                    ellipsis works.</div>
+                  <div>
+                    {{#each _embedded.authors as |author|}}
+                      {{author.Name}}{{#unless @last}}, {{/unless}}
+                    {{/each}}
+                  </div>
                 </td>
               </tr>
             {{/each}}

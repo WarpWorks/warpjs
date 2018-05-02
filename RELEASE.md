@@ -1,5 +1,10 @@
 # Releases
 
+## 1.2.21 - 2018-05-01
+
+- #65: Extract authors.
+- Content: Converted lists into tables.
+
 ## 1.2.20 - 2018-04-30
 
 - #65: Fixed logic to display disclaimer.
