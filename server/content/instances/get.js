@@ -72,11 +72,10 @@ module.exports = (req, res) => {
                 .then((persistence) => Promise.resolve()
                     .then(() => serverUtils.getEntity(domain, type))
                     .then((entity) => Promise.resolve()
-                        .then(() => entity.getDocuments(persistence, {type: entity.name})) // FIXME: We can't use the entity ID because old data doesn't have this info.
-                        .then((documents) => {
-                            const embedded = documents.map((instance) => documentMapper(entity, domain, instance));
-                            resource.embed('entities', embedded);
-                        })
+                        // FIXME: We can't use the entity ID because old data doesn't have this info.
+                        .then(() => entity.getDocuments(persistence, {type: entity.name}))
+                        .then((documents) => documents.map((instance) => documentMapper(entity, domain, instance)))
+                        .then((embedded) => resource.embed('entities', embedded))
                         .then(() => utils.sendHal(req, res, resource))
                     )
                     .finally(() => {

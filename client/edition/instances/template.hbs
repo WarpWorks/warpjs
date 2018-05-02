@@ -12,25 +12,46 @@
         </div>
 
     <div class="panel-body">
-      {{#each _embedded.entities}}
-        <div class="row">
-          <div class="col-xs-12" data-warpjs-url="{{_links.self.href}}">
-            {{#if _links.portal}}
-              <a href="{{_links.portal.href}}"><span class="glyphicon glyphicon-eye-open" title="Preview '{{name}}' on portal"></span></a>
-            {{/if}}
-            <a href="{{_links.self.href}}"><span class="glyphicon glyphicon-pencil text-primary" title="Edit '{{name}}'"></span></a>
-            <span class="glyphicon glyphicon-trash" data-warpjs-action="delete" title="Delete '{{name}}'"></span>
-            &nbsp;&nbsp;&nbsp;
-            <a href="{{_links.self.href}}">{{name}}</a>
-            {{#if isRootInstance}}[isRootInstance]{{/if}}
+      <div class="table-responsive">
+        <table class="table table-striped table-hover table-condensed">
+          <thead>
+            <tr>
+              <th class="col-xs-2 col-md-1"></th>
+              <th class="col-xs-4">Name</th>
+              <th class="col-xs-1">Status</th>
+              <th class="col-xs-5">Authors</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each _embedded.entities}}
+              <tr data-warpjs-url="{{_links.self.href}}">
+                <td>
+                  {{#if _links.portal}}
+                    <a href="{{_links.portal.href}}"><span class="glyphicon glyphicon-eye-open" title="Preview '{{name}}' on portal"></span></a>
+                  {{/if}}
+                  <a href="{{_links.self.href}}"><span class="glyphicon glyphicon-pencil text-primary" title="Edit '{{name}}'"></span></a>
+                  <span class="glyphicon glyphicon-trash text-danger" data-warpjs-action="delete" title="Delete '{{name}}'"></span>
+                </td>
 
-            <span class="warpjs-document-status
-            warpjs-document-status-{{status}}">{{status}}</span>
+                <td>
+                  <a href="{{_links.self.href}}">{{name}}</a>
+                  {{#if isRootInstance}}[isRootInstance]{{/if}}
+                </td>
 
-            <span class="warpjs-document-authors">WIP: Here goes the authors...</span>
-          </div>
-        </div>
-      {{/each}}
+                <td>
+                  <span class="warpjs-document-status
+                  warpjs-document-status-{{status}}">{{status}}</span>
+                </td>
+
+                <td class="warpjs-document-authors max-width-100 ellipsis">
+                  <div>WIP: Here is a super long list of authors to test if the
+                    ellipsis works.</div>
+                </td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>
