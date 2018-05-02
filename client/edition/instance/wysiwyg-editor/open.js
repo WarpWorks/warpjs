@@ -18,7 +18,7 @@ module.exports = ($, instanceDoc) => {
 
         return Promise.resolve()
             .then(() => {
-                if (!$(`.${constants.MODAL_CLASS}`).length) {
+                if (!$(constants.MODAL_SELECTOR, instanceDoc).length) {
                     const content = template(_.extend({}, constants, {
                         canEdit
                     }));
@@ -31,7 +31,7 @@ module.exports = ($, instanceDoc) => {
                 }
             })
             .then(() => tinymce.activeEditor.setContent(input.val()))
-            .then(() => $(`.${constants.MODAL_CLASS}`).modal('show'))
+            .then(() => $(constants.MODAL_SELECTOR, instanceDoc).modal('show'))
             .catch((err) => {
                 console.error("error tinymce.init()...", err);
             });

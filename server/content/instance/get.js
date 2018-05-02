@@ -104,7 +104,6 @@ module.exports = (req, res) => {
                 .finally(() => persistence.close())
             )
             .then(() => utils.sendHal(req, res, resource))
-            .then(() => console.log("instance/get ok"))
             .catch((err) => {
                 console.log("Error in GET: err=", err);
                 resource.error = true;

@@ -2,9 +2,12 @@ const constants = require('./constants');
 const optionsSetup = require('./options-setup');
 
 module.exports = ($, instanceDoc, canEdit) => {
+    console.log("width at runtime?", $(`${constants.MODAL_SELECTOR}`).width());
+
     return {
         selector: `.${constants.CONTENT_CLASS}`,
-        height: 200,
+        height: $(document).height() * 0.8 - 200,
+        width: $(document).width() * 0.75,
         menubar: false,
         elementpath: false,
         anchor_top: false,
@@ -14,8 +17,8 @@ module.exports = ($, instanceDoc, canEdit) => {
         forced_root_block: '',
         paste_as_text: true,
         extended_valid_elements: 'span[!class]',
-        plugins: "lists link paste",
-        toolbar: 'bold italic numlist bullist link linkbutton',
+        plugins: "lists link paste table",
+        toolbar: 'bold italic numlist bullist link linkbutton | table',
         setup(editor) {
             optionsSetup($, instanceDoc, editor);
         },

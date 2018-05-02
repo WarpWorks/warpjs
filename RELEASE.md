@@ -1,5 +1,9 @@
 # Releases
 
+## 1.2.22 - 2018-05-02
+
+- #68: Adding table to editor and make modal bigger.
+
 ## 1.2.21 - 2018-05-01
 
 - #65: Extract authors.

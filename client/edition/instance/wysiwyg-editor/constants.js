@@ -1,4 +1,7 @@
+const MODAL_NAME = 'wysiwyg-editor';
+
 module.exports = {
-    MODAL_CLASS: 'warpjs-wysiwyg-modal',
-    CONTENT_CLASS: 'warpjs-wysiwyg-content'
+    CONTENT_CLASS: 'warpjs-wysiwyg-content',
+    MODAL_NAME,
+    MODAL_SELECTOR: `[data-warpjs-modal="${MODAL_NAME}"]`
 };
