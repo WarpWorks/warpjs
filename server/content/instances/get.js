@@ -61,7 +61,7 @@ module.exports = (req, res) => {
         [warpjsUtils.constants.HAL_CONTENT_TYPE]: () => {
             resource.link('domain', {
                 title: domain,
-                href: RoutesInfo.expand(constants.routes.domain, {
+                href: RoutesInfo.expand(constants.routes.entities, {
                     domain
                 })
             });
