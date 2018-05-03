@@ -1,6 +1,6 @@
 const { proxy, toast } = require('@warp-works/warpjs-utils');
 
-const deleteConfirm = require('./delete-confirm');
+const deleteConfirm = require('./../delete-confirm');
 
 function findTopEmbedded(element) {
     return $(element).parents('[data-warpjs-entity-type="Embedded"]').last();

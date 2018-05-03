@@ -1,7 +1,7 @@
 const Promise = require('bluebird');
 const { proxy, toast } = require('@warp-works/warpjs-utils');
 
-const deleteConfirm = require('./delete-confirm');
+const deleteConfirm = require('./../delete-confirm');
 
 module.exports = ($, instanceDoc) => {
     instanceDoc.on('click', '[data-warpjs-action="delete-row"][data-warpjs-url]:not([disabled])', function() {

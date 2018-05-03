@@ -208,16 +208,21 @@ span[data-warpjs-action="open-wysiwyg"] + input {
 @import './instance/document-status/style';
 @import './instance/wysiwyg-editor/style';
 
-.max-width-100 {
-    max-width: 100px;
+.max-width-ellipsis {
+    max-width: 10px;
+
+    div {
+        overflow: hidden;
+        -ms-text-overflow: ellipsis;
+        -o-text-overflow: ellipsis;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: inherit;
+    }
 }
 
-.ellipsis div {
-    overflow: hidden;
-    -ms-text-overflow: ellipsis;
-    -o-text-overflow: ellipsis;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    width: inherit;
+.warpjs-actions {
+    .warpjs-action {
+        margin-right: 5px;
+    }
 }
-
