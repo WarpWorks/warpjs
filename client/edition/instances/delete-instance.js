@@ -5,9 +5,7 @@ const deleteConfirm = require('./../delete-confirm');
 
 module.exports = ($) => {
     $('[data-warpjs-status="instances"] [data-warpjs-action="delete"]').on('click', function() {
-        console.log("TODO: instances/delete-instance...");
         const deleteUrl = $(this).closest('[data-warpjs-url]').data('warpjsUrl');
-        console.log("deleteUrl=", deleteUrl);
 
         Promise.resolve()
             .then(() => deleteConfirm($, this))

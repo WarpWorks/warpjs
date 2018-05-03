@@ -1,5 +1,11 @@
 # Releases
 
+## 1.2.23 - 2018-05-03
+
+- Content: Link documents breadcrumb to entity list.
+- #66: Content: Implemented delete on document list.
+- #67: Updating styles and use warpjs-actions in Table style.
+
 ## 1.2.22 - 2018-05-02
 
 - #68: Adding table to editor and make modal bigger.
