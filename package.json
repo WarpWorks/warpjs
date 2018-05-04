@@ -71,7 +71,7 @@
     "@quoin/node-test-helpers": "0.2.x",
     "@warp-works/warpjs-elasticsearch-plugin": "1.2.3",
     "@warp-works/warpjs-imagemap-editor-plugin": "1.2.3",
-    "@warp-works/warpjs-map-plugin": "1.2.6",
+    "@warp-works/warpjs-map-plugin": "release-1.2",
     "@warp-works/warpjs-mongo-persistence": "0.1.5",
     "@warp-works/warpjs-plugins": "latest",
     "@warp-works/warpjs-session-plugin": "release-1.2",
