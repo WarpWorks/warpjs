@@ -24,7 +24,8 @@
   "status": {
     "property": "Status",
     "public": ["Proposal", "Approved"],
-    "disclaimer": ["Proposal"]
+    "disclaimer": ["Proposal"],
+    "inheritance": "InheritFromParent"
   },
   "plugins": [{
     "name": "I3C MapBrowser plugin",

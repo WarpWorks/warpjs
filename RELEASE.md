@@ -1,5 +1,9 @@
 # Releases
 
+## 1.2.24 - 2018-05-03
+
+- #65: Applied inheritance to document status.
+
 ## 1.2.23 - 2018-05-03
 
 - Content: Link documents breadcrumb to entity list.
