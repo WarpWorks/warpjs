@@ -1,5 +1,10 @@
 # Releases
 
+## 1.2.25 - 2018-05-04
+
+- #68: Content: Fixed save for text editor.
+- Minor code and style clean up.
+
 ## 1.2.24 - 2018-05-03
 
 - #65: Applied inheritance to document status.
