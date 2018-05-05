@@ -4,7 +4,7 @@ const cache = require('./cache');
 const constants = require('./constants');
 
 module.exports = ($, instanceDoc) => {
-    instanceDoc.on('click', `.${constants.MODAL_CLASS} [data-warpjs-action="save"]`, function() {
+    instanceDoc.on('click', `${constants.MODAL_SELECTOR} [data-warpjs-action="save"]`, function() {
         const content = tinymce.activeEditor.getContent();
 
         if (content !== cache.input.val()) {
@@ -12,6 +12,6 @@ module.exports = ($, instanceDoc) => {
             cache.input.trigger('change');
         }
 
-        $(`.${constants.MODAL_CLASS}`).modal('hide');
+        $(constants.MODAL_SELECTOR).modal('hide');
     });
 };

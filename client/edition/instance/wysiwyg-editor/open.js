@@ -9,14 +9,14 @@ const options = require('./options');
 const template = require('./template.hbs');
 
 module.exports = ($, instanceDoc) => {
-    instanceDoc.on('click', '[data-warpjs-action="open-wysiwyg"]', function() {
+    instanceDoc.on('click', constants.OPEN_MODAL_SELECTOR, function() {
         const input = $(this).parent().children('input');
         // Checking both as this is weird that jQuery converts it.
         const canEdit = $(this).data('warpjsCanEdit') === true || $(this).data('warpjsCanEdit') === 'true';
 
         cache.input = input;
 
-        return Promise.resolve()
+        Promise.resolve()
             .then(() => {
                 if (!$(constants.MODAL_SELECTOR, instanceDoc).length) {
                     const content = template(_.extend({}, constants, {
