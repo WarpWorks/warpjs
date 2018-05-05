@@ -14,7 +14,7 @@ function getParentStatus(statusConfig, persistence, entity, instance) {
                     .then((parentEntity) => getParentStatus(statusConfig, persistence, parentEntity, parentInstance))
                 ;
             } else {
-                return parentStatus
+                return parentStatus;
             }
         })
     ;

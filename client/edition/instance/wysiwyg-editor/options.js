@@ -2,8 +2,6 @@ const constants = require('./constants');
 const optionsSetup = require('./options-setup');
 
 module.exports = ($, instanceDoc, canEdit) => {
-    console.log("width at runtime?", $(`${constants.MODAL_SELECTOR}`).width());
-
     return {
         selector: `.${constants.CONTENT_CLASS}`,
         height: $(document).height() * 0.8 - 200,
