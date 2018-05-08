@@ -21,6 +21,12 @@
     "relationshipPath": ["Overview", "Images", "Map", "Target"],
     "overviewPath": ["Overview"]
   },
+  "status": {
+    "property": "Status",
+    "public": ["Proposal", "Approved"],
+    "disclaimer": ["Proposal"],
+    "inheritance": "InheritFromParent"
+  },
   "plugins": [{
     "name": "I3C MapBrowser plugin",
     "moduleName": "@warp-works/warpjs-map-plugin",

@@ -3,6 +3,7 @@ const warpjsUtils = require('@warp-works/warpjs-utils');
 const webpack = require('webpack');
 const WebpackVisualizer = require('webpack-visualizer-plugin');
 
+const constants = require('./../../server/edition/constants');
 const rootDir = path.dirname(require.resolve('./../../package.json'));
 
 module.exports = {
@@ -10,13 +11,12 @@ module.exports = {
         target: 'web',
         devtool: 'source-map',
         entry: {
-            'admin-domain': './client/admin/domain/index.js',
-            'domains': './client/content/domains/index.js',
-            'domain': './client/content/domain/index.js',
-            'domain-types': './client/content/domain-types/index.js',
-            'instances': './client/content/instances/index.js',
-            'entity': './client/content/entity/index.js',
-            'portal': './client/portal/entity/lib/index.js'
+            [constants.entryPoints.domains]: './client/edition/domains/index.js',
+            [constants.entryPoints.domain]: './client/edition/domain/index.js',
+            [constants.entryPoints.domainTypes]: './client/edition/domain-types/index.js',
+            [constants.entryPoints.instances]: './client/edition/instances/index.js',
+            [constants.entryPoints.instance]: './client/edition/instance/index.js',
+            [constants.entryPoints.portal]: './client/portal/entity/lib/index.js'
         },
         externals: {
             jquery: true,

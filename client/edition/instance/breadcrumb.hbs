@@ -1,0 +1,15 @@
+<ol class="breadcrumb">
+  {{#if isRootInstance}}
+    <li class="breadcrumb-item"><a href="{{_links.self.href}}">{{type}}</a></li>
+  {{else}}
+    {{#each _embedded.breadcrumbs}}
+      {{#if @last}}
+        <li class="active">{{_links.self.title}}{{#if displayType}} [{{displayType}}]{{/if}}</li>
+      {{else}}
+        <li class="breadcrumb-item">
+          <a href="{{_links.self.href}}" data-toggle="tooltip" title="{{type}}">{{_links.self.title}}</a>
+        </li>
+      {{/if}}
+    {{/each}}
+  {{/if}}
+</ol>

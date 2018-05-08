@@ -1,0 +1,43 @@
+<div id="WarpJS_mainPV_panel" class="panel panel-success">
+  <div class="panel-heading">
+    {{type}}: {{displayName}}
+
+    <span data-warpjs-placeholder="document-status"
+      class="warpjs-document-status warpjs-document-status-{{status}}"
+      >{{status}}</span>
+
+    <span class="pull-right warpjs-actions">
+      <span class="glyphicon glyphicon-time warpjs-action"
+        data-toggle="popover"
+        data-warpjs-action="change-logs"
+        title="Change logs"
+        ></span>
+      {{#if _links.preview}}
+        <span class="glyphicon glyphicon-eye-open warpjs-action"
+          data-warpjs-action="preview"
+          data-warpjs-url="{{_links.preview.href}}"
+          title="Preview document"
+          ></span>
+      {{/if}}
+
+      <span class="glyphicon glyphicon-trash warpjs-action"
+        data-warpjs-action="delete"
+        data-warpjs-url="{{_links.self.href}}"
+        title="Remove document"
+        {{#unless canEdit}}disabled{{/unless}}
+        ></span>
+
+      {{#unless isRootInstance}}
+      <span class="glyphicon glyphicon-share warpjs-action"
+          data-warpjs-action="add-sibling"
+          data-warpjs-url="{{_links.sibling.href}}"
+          title="Add sibling"
+          {{#unless canEdit}}disabled{{/unless}}
+          ></span>
+      {{/unless}}
+  </div>
+
+  <div class="panel-body">
+      {{> panel-body _embedded.formResources.[0] canEdit=canEdit}}
+  </div>
+</div>

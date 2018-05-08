@@ -1,0 +1,228 @@
+body.warpjs-studio {
+    background: #ffcc88 url(/static/images/studio-bg-text.png);
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+td[data-warpjs-url] {
+    cursor: help;
+}
+
+.glyphicon[data-warpjs-action]:not([disabled]) {
+    cursor: pointer;
+    color: #337ab7;
+}
+
+.nav-pills {
+    > li {
+        > span.glyphicon {
+            border-radius: 4px;
+        }
+    }
+}
+
+.nav {
+    > li {
+        > span.glyphicon {
+            position: relative;
+            display: block;
+            padding: 10px 15px;
+        }
+    }
+}
+
+.navbar {
+    .navbar-header {
+        .navbar-brand {
+            img {
+                max-height: 40px;
+                margin-top: -7px;
+            }
+        }
+    }
+}
+.search-body {
+    background: #eee;
+}
+.div-inline {
+    display: inline-block;
+}
+.even-lg-item {
+    background: lightgoldenrodyellow;
+}
+.search-result {
+    .title {
+        h3 {
+            margin: 0 0 15px;
+            color: #333;
+        }
+        p {
+            font-size: 12px;
+            color: #333;
+        }
+    }
+}
+.well {
+    border: 0;
+    padding: 20px;
+    min-height: 63px;
+    background: #fff;
+    box-shadow: none;
+    border-radius: 3px;
+    position: relative;
+    max-height: 100000px;
+    border-bottom: 2px solid #ccc;
+    transition: max-height 0.5s ease;
+    -o-transition: max-height 0.5s ease;
+    -ms-transition: max-height 0.5s ease;
+    -moz-transition: max-height 0.5s ease;
+    -webkit-transition: max-height 0.5s ease;
+}
+.form-control {
+    height: 30px;
+    padding: 8px;
+    font-size: 12px;
+    box-shadow: none;
+    border-radius: 0;
+    position: relative;
+}
+.panel-table {
+    .panel-body {
+        padding: 0;
+        .table-bordered {
+            border-style: none;
+            margin: 0;
+            >thead {
+                >tr {
+                    >th {
+                        &:first-of-type {
+                            text-align: center;
+                            width: 120px;
+                            border-left: 0px;
+                        }
+                        &:last-of-type {
+                            border-right: 0px;
+                        }
+                    }
+                    &:first-of-type {
+                        >th {
+                            border-top: 0px;
+                        }
+                    }
+                }
+            }
+            >tbody {
+                >tr {
+                    >td {
+                        &:last-of-type {
+                            border-right: 0px;
+                        }
+                        &:first-of-type {
+                            border-left: 0px;
+                        }
+                        line-height: 30px;
+                    }
+                    &:first-of-type {
+                        >td {
+                            border-bottom: 0px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .panel-footer {
+        .pagination {
+            margin: 0;
+        }
+        .col {
+            line-height: 30px;
+            height: 30px;
+        }
+    }
+    .panel-heading {
+        .col {
+            line-height: 28px;
+            height: 28px;
+        }
+    }
+}
+.entity-search {
+    height: 30px;
+}
+
+.tab-pane.active {
+    padding-top: 10px;
+}
+
+.warpjs-progress-bar {
+    padding-top: 15%;
+    overflow-y: visible;
+
+    .modal-content {
+        .modal-header {
+            h3 {
+                margin: 0;
+            }
+        }
+
+        .modal-body {
+            .progress {
+                margin-bottom: 0;
+            }
+        }
+    }
+}
+
+/* When readonly, need some space to display the previous icon */
+span[data-warpjs-action="open-wysiwyg"] + input {
+    width: calc(~"100% - 20px");
+}
+
+.warpjs-selection-entities,
+.modal .warpjs-selected-entities {
+    max-height: calc(~"40vh - 100px");
+    overflow-y: auto;
+}
+
+.modal-body {
+    max-height: 75vh;
+    overflow-y: auto;
+}
+
+.modal {
+    .modal-dialog {
+        .modal-content {
+            .modal-header {
+                .modal-title {
+                    font-weight: bold;
+                    font-size: 20px;
+                }
+            }
+        }
+    }
+}
+
+@import './instance/document-status/style';
+@import './instance/wysiwyg-editor/style';
+
+.max-width-ellipsis {
+    max-width: 10px;
+
+    div {
+        overflow: hidden;
+        -ms-text-overflow: ellipsis;
+        -o-text-overflow: ellipsis;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: inherit;
+    }
+}
+
+.warpjs-actions {
+    .warpjs-action {
+        margin-right: 5px;
+    }
+}

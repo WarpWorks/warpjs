@@ -61,7 +61,7 @@
                   "name": "Domains",
                   "desc": "Tooltip",
                   "type": "RelationshipPanelItem",
-                  "style": "Table",
+                  "style": "Carousel",
                   "id": 101,
                   "position": 0,
                   "label": "Domains",
@@ -160,7 +160,7 @@
           "propertyType": "string"
         },
         {
-          "name": "functionName",
+          "name": "pluginName",
           "desc": "",
           "type": "BasicProperty",
           "id": 95,
@@ -215,7 +215,7 @@
                   ]
                 },
                 {
-                  "name": "description",
+                  "name": "desc",
                   "desc": "Tooltip for description",
                   "type": "BasicPropertyPanelItem",
                   "id": 542,
@@ -248,12 +248,12 @@
                   ]
                 },
                 {
-                  "name": "functionName",
-                  "desc": "Tooltip for functionName",
+                  "name": "pluginName",
+                  "desc": "Tooltip for pluginName",
                   "type": "BasicPropertyPanelItem",
                   "id": 545,
                   "position": 4,
-                  "label": "functionName",
+                  "label": "pluginName",
                   "basicProperty": [
                     95
                   ]
@@ -307,7 +307,7 @@
                   ]
                 },
                 {
-                  "name": "description",
+                  "name": "desc",
                   "desc": "Tooltip for description",
                   "type": "BasicPropertyPanelItem",
                   "id": 550,
@@ -340,12 +340,12 @@
                   ]
                 },
                 {
-                  "name": "functionName",
-                  "desc": "Tooltip for functionName",
+                  "name": "pluginName",
+                  "desc": "Tooltip for pluginName",
                   "type": "BasicPropertyPanelItem",
                   "id": 553,
                   "position": 4,
-                  "label": "functionName",
+                  "label": "pluginName",
                   "basicProperty": [
                     95
                   ]
@@ -389,7 +389,7 @@
               ]
             },
             {
-              "name": "description",
+              "name": "desc",
               "desc": "Tooltip",
               "type": "TableItem",
               "id": 534,
@@ -422,12 +422,12 @@
               ]
             },
             {
-              "name": "functionName",
+              "name": "pluginName",
               "desc": "Tooltip",
               "type": "TableItem",
               "id": 537,
               "position": 4,
-              "label": "functionName",
+              "label": "pluginName",
               "property": [
                 95
               ]
@@ -468,7 +468,7 @@
           "propertyType": "string"
         },
         {
-          "name": "description",
+          "name": "desc",
           "desc": "",
           "type": "BasicProperty",
           "id": 5,
@@ -513,7 +513,7 @@
                   ]
                 },
                 {
-                  "name": "description",
+                  "name": "desc",
                   "desc": "Tooltip for description",
                   "type": "BasicPropertyPanelItem",
                   "id": 111,
@@ -561,7 +561,7 @@
                   ]
                 },
                 {
-                  "name": "description",
+                  "name": "desc",
                   "desc": "Tooltip for description",
                   "type": "BasicPropertyPanelItem",
                   "id": 115,
@@ -599,7 +599,7 @@
               ]
             },
             {
-              "name": "description",
+              "name": "desc",
               "desc": "Tooltip",
               "type": "TableItem",
               "id": 107,
@@ -619,7 +619,7 @@
       "type": "Entity",
       "id": 34,
       "isAbstract": false,
-      "entityType": "Embedded",
+      "entityType": "Document",
       "namePlural": "BasicPropertys",
       "parentClass": [
         33
@@ -728,7 +728,7 @@
                   ]
                 },
                 {
-                  "name": "description",
+                  "name": "desc",
                   "desc": "Tooltip for description",
                   "type": "BasicPropertyPanelItem",
                   "id": 236,
@@ -819,7 +819,7 @@
                   ]
                 },
                 {
-                  "name": "description",
+                  "name": "desc",
                   "desc": "Tooltip for description",
                   "type": "BasicPropertyPanelItem",
                   "id": 244,
@@ -891,7 +891,7 @@
               ]
             },
             {
-              "name": "description",
+              "name": "desc",
               "desc": "Tooltip",
               "type": "TableItem",
               "id": 230,
@@ -1014,7 +1014,7 @@
                   ]
                 },
                 {
-                  "name": "description",
+                  "name": "desc",
                   "desc": "Tooltip for description",
                   "type": "BasicPropertyPanelItem",
                   "id": 489,
@@ -1076,7 +1076,7 @@
                   "name": "actions",
                   "desc": "Tooltip",
                   "type": "RelationshipPanelItem",
-                  "style": "Table",
+                  "style": "Carousel",
                   "id": 496,
                   "position": 0,
                   "label": "actions",
@@ -1148,7 +1148,7 @@
                   ]
                 },
                 {
-                  "name": "description",
+                  "name": "desc",
                   "desc": "Tooltip for description",
                   "type": "BasicPropertyPanelItem",
                   "id": 500,
@@ -1219,7 +1219,7 @@
               ]
             },
             {
-              "name": "description",
+              "name": "desc",
               "desc": "Tooltip",
               "type": "TableItem",
               "id": 482,
@@ -1343,7 +1343,7 @@
                   ]
                 },
                 {
-                  "name": "description",
+                  "name": "desc",
                   "desc": "Tooltip for description",
                   "type": "BasicPropertyPanelItem",
                   "id": 123,
@@ -1443,7 +1443,7 @@
                   ]
                 },
                 {
-                  "name": "description",
+                  "name": "desc",
                   "desc": "Tooltip for description",
                   "type": "BasicPropertyPanelItem",
                   "id": 130,
@@ -1492,7 +1492,7 @@
               ]
             },
             {
-              "name": "description",
+              "name": "desc",
               "desc": "Tooltip",
               "type": "TableItem",
               "id": 118,
@@ -1756,7 +1756,7 @@
                   ]
                 },
                 {
-                  "name": "description",
+                  "name": "desc",
                   "desc": "Tooltip for description",
                   "type": "BasicPropertyPanelItem",
                   "id": 143,
@@ -1841,7 +1841,7 @@
                   "name": "basicProperties",
                   "desc": "Tooltip",
                   "type": "RelationshipPanelItem",
-                  "style": "Table",
+                  "style": "Carousel",
                   "id": 153,
                   "position": 0,
                   "label": "basicProperties",
@@ -1869,7 +1869,7 @@
                   "name": "relationships",
                   "desc": "Tooltip",
                   "type": "RelationshipPanelItem",
-                  "style": "Table",
+                  "style": "Carousel",
                   "id": 155,
                   "position": 0,
                   "label": "relationships",
@@ -1953,7 +1953,7 @@
                   "name": "enums",
                   "desc": "Tooltip",
                   "type": "RelationshipPanelItem",
-                  "style": "Table",
+                  "style": "Carousel",
                   "id": 161,
                   "position": 0,
                   "label": "enums",
@@ -2090,7 +2090,7 @@
                   ]
                 },
                 {
-                  "name": "description",
+                  "name": "desc",
                   "desc": "Tooltip for description",
                   "type": "BasicPropertyPanelItem",
                   "id": 165,
@@ -2184,7 +2184,7 @@
               ]
             },
             {
-              "name": "description",
+              "name": "desc",
               "desc": "Tooltip",
               "type": "TableItem",
               "id": 135,
@@ -2329,7 +2329,7 @@
                   ]
                 },
                 {
-                  "name": "description",
+                  "name": "desc",
                   "desc": "Tooltip for description",
                   "type": "BasicPropertyPanelItem",
                   "id": 515,
@@ -2391,7 +2391,7 @@
                   "name": "actions",
                   "desc": "Tooltip",
                   "type": "RelationshipPanelItem",
-                  "style": "Table",
+                  "style": "Carousel",
                   "id": 522,
                   "position": 0,
                   "label": "actions",
@@ -2463,7 +2463,7 @@
                   ]
                 },
                 {
-                  "name": "description",
+                  "name": "desc",
                   "desc": "Tooltip for description",
                   "type": "BasicPropertyPanelItem",
                   "id": 526,
@@ -2534,7 +2534,7 @@
               ]
             },
             {
-              "name": "description",
+              "name": "desc",
               "desc": "Tooltip",
               "type": "TableItem",
               "id": 508,
@@ -2587,7 +2587,7 @@
       "type": "Entity",
       "id": 44,
       "isAbstract": false,
-      "entityType": "Embedded",
+      "entityType": "Document",
       "namePlural": "Enumerations",
       "parentClass": [
         33
@@ -2600,22 +2600,22 @@
           "id": 45,
           "literals": [
             {
-              "name": "One",
+              "name": "Exactly One",
               "type": "Literal",
               "id": 46
             },
             {
-              "name": "ZeroOne",
+              "name": "Zero or One",
               "type": "Literal",
               "id": 47
             },
             {
-              "name": "ZeroMany",
+              "name": "Zero to Many",
               "type": "Literal",
               "id": 48
             },
             {
-              "name": "OneMany",
+              "name": "One to Many",
               "type": "Literal",
               "id": 49
             }
@@ -2683,7 +2683,7 @@
                   ]
                 },
                 {
-                  "name": "description",
+                  "name": "desc",
                   "desc": "Tooltip for description",
                   "type": "BasicPropertyPanelItem",
                   "id": 255,
@@ -2724,7 +2724,7 @@
                   "name": "literals",
                   "desc": "Tooltip",
                   "type": "RelationshipPanelItem",
-                  "style": "Table",
+                  "style": "Carousel",
                   "id": 259,
                   "position": 0,
                   "label": "literals",
@@ -2793,7 +2793,7 @@
                   ]
                 },
                 {
-                  "name": "description",
+                  "name": "desc",
                   "desc": "Tooltip for description",
                   "type": "BasicPropertyPanelItem",
                   "id": 263,
@@ -2843,7 +2843,7 @@
               ]
             },
             {
-              "name": "description",
+              "name": "desc",
               "desc": "Tooltip",
               "type": "TableItem",
               "id": 251,
@@ -2925,7 +2925,7 @@
                   ]
                 },
                 {
-                  "name": "description",
+                  "name": "desc",
                   "desc": "Tooltip for description",
                   "type": "BasicPropertyPanelItem",
                   "id": 275,
@@ -2995,7 +2995,7 @@
                   ]
                 },
                 {
-                  "name": "description",
+                  "name": "desc",
                   "desc": "Tooltip for description",
                   "type": "BasicPropertyPanelItem",
                   "id": 281,
@@ -3055,7 +3055,7 @@
               ]
             },
             {
-              "name": "description",
+              "name": "desc",
               "desc": "Tooltip",
               "type": "TableItem",
               "id": 269,
@@ -3173,7 +3173,7 @@
                   ]
                 },
                 {
-                  "name": "description",
+                  "name": "desc",
                   "desc": "Tooltip for description",
                   "type": "BasicPropertyPanelItem",
                   "id": 349,
@@ -3215,7 +3215,7 @@
               "type": "Panel",
               "id": 352,
               "position": 1,
-              "label": "panels",
+              "label": "Panels",
               "columns": 1,
               "alternatingColors": false,
               "separatorPanelItems": [],
@@ -3224,7 +3224,7 @@
                   "name": "panels",
                   "desc": "Tooltip",
                   "type": "RelationshipPanelItem",
-                  "style": "Table",
+                  "style": "Carousel",
                   "id": 353,
                   "position": 0,
                   "label": "panels",
@@ -3243,7 +3243,7 @@
               "type": "Panel",
               "id": 354,
               "position": 2,
-              "label": "actions",
+              "label": "Actions",
               "columns": 1,
               "alternatingColors": false,
               "separatorPanelItems": [],
@@ -3252,7 +3252,7 @@
                   "name": "actions",
                   "desc": "Tooltip",
                   "type": "RelationshipPanelItem",
-                  "style": "Table",
+                  "style": "Carousel",
                   "id": 355,
                   "position": 0,
                   "label": "actions",
@@ -3333,7 +3333,7 @@
                   ]
                 },
                 {
-                  "name": "description",
+                  "name": "desc",
                   "desc": "Tooltip for description",
                   "type": "BasicPropertyPanelItem",
                   "id": 359,
@@ -3393,7 +3393,7 @@
               ]
             },
             {
-              "name": "description",
+              "name": "desc",
               "desc": "Tooltip",
               "type": "TableItem",
               "id": 343,
@@ -3584,7 +3584,7 @@
               "desc": "Properties, Enums and Associations",
               "type": "Panel",
               "id": 373,
-              "position": 0,
+              "position": 1,
               "label": "Basics",
               "columns": 1,
               "alternatingColors": false,
@@ -3603,7 +3603,7 @@
                   ]
                 },
                 {
-                  "name": "description",
+                  "name": "desc",
                   "desc": "Tooltip for description",
                   "type": "BasicPropertyPanelItem",
                   "id": 375,
@@ -3666,8 +3666,8 @@
               "desc": "Tooltip",
               "type": "Panel",
               "id": 380,
-              "position": 1,
-              "label": "separatorPanelItems",
+              "position": 5,
+              "label": "Separators",
               "columns": 1,
               "alternatingColors": false,
               "separatorPanelItems": [],
@@ -3676,10 +3676,10 @@
                   "name": "separatorPanelItems",
                   "desc": "Tooltip",
                   "type": "RelationshipPanelItem",
-                  "style": "Table",
+                  "style": "Carousel",
                   "id": 381,
                   "position": 0,
-                  "label": "separatorPanelItems",
+                  "label": "Separators",
                   "relationship": [
                     71
                   ]
@@ -3694,8 +3694,8 @@
               "desc": "Tooltip",
               "type": "Panel",
               "id": 382,
-              "position": 2,
-              "label": "relationshipPanelItems",
+              "position": 3,
+              "label": "Relationships",
               "columns": 1,
               "alternatingColors": false,
               "separatorPanelItems": [],
@@ -3704,10 +3704,10 @@
                   "name": "relationshipPanelItems",
                   "desc": "Tooltip",
                   "type": "RelationshipPanelItem",
-                  "style": "Table",
+                  "style": "Carousel",
                   "id": 383,
                   "position": 0,
-                  "label": "relationshipPanelItems",
+                  "label": "Relationships",
                   "relationship": [
                     72
                   ]
@@ -3722,8 +3722,8 @@
               "desc": "Tooltip",
               "type": "Panel",
               "id": 384,
-              "position": 3,
-              "label": "basicPropertyPanelItems",
+              "position": 2,
+              "label": "Basic Properties",
               "columns": 1,
               "alternatingColors": false,
               "separatorPanelItems": [],
@@ -3732,10 +3732,10 @@
                   "name": "basicPropertyPanelItems",
                   "desc": "Tooltip",
                   "type": "RelationshipPanelItem",
-                  "style": "Table",
+                  "style": "Carousel",
                   "id": 385,
                   "position": 0,
-                  "label": "basicPropertyPanelItems",
+                  "label": "Basic Properties",
                   "relationship": [
                     73
                   ]
@@ -3751,7 +3751,7 @@
               "type": "Panel",
               "id": 386,
               "position": 4,
-              "label": "enumPanelItems",
+              "label": "Enumerations",
               "columns": 1,
               "alternatingColors": false,
               "separatorPanelItems": [],
@@ -3760,10 +3760,10 @@
                   "name": "enumPanelItems",
                   "desc": "Tooltip",
                   "type": "RelationshipPanelItem",
-                  "style": "Table",
+                  "style": "Carousel",
                   "id": 387,
                   "position": 0,
-                  "label": "enumPanelItems",
+                  "label": "Enumerations",
                   "relationship": [
                     74
                   ]
@@ -3779,7 +3779,7 @@
               "type": "Panel",
               "id": 388,
               "position": 5,
-              "label": "actions",
+              "label": "Actions",
               "columns": 1,
               "alternatingColors": false,
               "separatorPanelItems": [],
@@ -3788,10 +3788,10 @@
                   "name": "actions",
                   "desc": "Tooltip",
                   "type": "RelationshipPanelItem",
-                  "style": "Table",
+                  "style": "Carousel",
                   "id": 389,
                   "position": 0,
-                  "label": "actions",
+                  "label": "Actions",
                   "relationship": [
                     75
                   ]
@@ -3838,7 +3838,7 @@
                   "style": "CSV",
                   "id": 399,
                   "position": 7,
-                  "label": "separatorPanelItems",
+                  "label": "Separators",
                   "relationship": [
                     71
                   ]
@@ -3850,7 +3850,7 @@
                   "style": "CSV",
                   "id": 400,
                   "position": 8,
-                  "label": "relationshipPanelItems",
+                  "label": "Relationships",
                   "relationship": [
                     72
                   ]
@@ -3862,7 +3862,7 @@
                   "style": "CSV",
                   "id": 401,
                   "position": 9,
-                  "label": "basicPropertyPanelItems",
+                  "label": "Basic Properties",
                   "relationship": [
                     73
                   ]
@@ -3874,7 +3874,7 @@
                   "style": "CSV",
                   "id": 402,
                   "position": 10,
-                  "label": "enumPanelItems",
+                  "label": "Enumerations",
                   "relationship": [
                     74
                   ]
@@ -3886,7 +3886,7 @@
                   "style": "CSV",
                   "id": 403,
                   "position": 11,
-                  "label": "actions",
+                  "label": "Actions",
                   "relationship": [
                     75
                   ]
@@ -3905,7 +3905,7 @@
                   ]
                 },
                 {
-                  "name": "description",
+                  "name": "desc",
                   "desc": "Tooltip for description",
                   "type": "BasicPropertyPanelItem",
                   "id": 393,
@@ -3987,7 +3987,7 @@
               ]
             },
             {
-              "name": "description",
+              "name": "desc",
               "desc": "Tooltip",
               "type": "TableItem",
               "id": 367,
@@ -4141,7 +4141,7 @@
                   ]
                 },
                 {
-                  "name": "description",
+                  "name": "desc",
                   "desc": "Tooltip for description",
                   "type": "BasicPropertyPanelItem",
                   "id": 413,
@@ -4203,7 +4203,7 @@
                   "name": "actions",
                   "desc": "Tooltip",
                   "type": "RelationshipPanelItem",
-                  "style": "Table",
+                  "style": "Carousel",
                   "id": 418,
                   "position": 0,
                   "label": "actions",
@@ -4263,7 +4263,7 @@
                   ]
                 },
                 {
-                  "name": "description",
+                  "name": "desc",
                   "desc": "Tooltip for description",
                   "type": "BasicPropertyPanelItem",
                   "id": 422,
@@ -4334,7 +4334,7 @@
               ]
             },
             {
-              "name": "description",
+              "name": "desc",
               "desc": "Tooltip",
               "type": "TableItem",
               "id": 406,
@@ -4387,7 +4387,7 @@
       "type": "Entity",
       "id": 33,
       "isAbstract": true,
-      "entityType": "Embedded",
+      "entityType": "Document",
       "namePlural": "Propertys",
       "parentClass": [
         3
@@ -4428,7 +4428,7 @@
                   ]
                 },
                 {
-                  "name": "description",
+                  "name": "desc",
                   "desc": "Tooltip for description",
                   "type": "BasicPropertyPanelItem",
                   "id": 223,
@@ -4476,7 +4476,7 @@
                   ]
                 },
                 {
-                  "name": "description",
+                  "name": "desc",
                   "desc": "Tooltip for description",
                   "type": "BasicPropertyPanelItem",
                   "id": 227,
@@ -4514,7 +4514,7 @@
               ]
             },
             {
-              "name": "description",
+              "name": "desc",
               "desc": "Tooltip",
               "type": "TableItem",
               "id": 219,
@@ -4534,7 +4534,7 @@
       "type": "Entity",
       "id": 23,
       "isAbstract": false,
-      "entityType": "Embedded",
+      "entityType": "Document",
       "namePlural": "Relationships",
       "parentClass": [
         3
@@ -4696,7 +4696,7 @@
                   ]
                 },
                 {
-                  "name": "description",
+                  "name": "desc",
                   "desc": "Tooltip for description",
                   "type": "BasicPropertyPanelItem",
                   "id": 193,
@@ -4845,7 +4845,7 @@
                   ]
                 },
                 {
-                  "name": "description",
+                  "name": "desc",
                   "desc": "Tooltip for description",
                   "type": "BasicPropertyPanelItem",
                   "id": 207,
@@ -4971,7 +4971,7 @@
               ]
             },
             {
-              "name": "description",
+              "name": "desc",
               "desc": "Tooltip",
               "type": "TableItem",
               "id": 181,
@@ -5105,6 +5105,11 @@
               "name": "Preview",
               "type": "Literal",
               "id": 86
+            },
+            {
+              "name": "Tile",
+              "type": "Literal",
+              "id": 555
             }
           ]
         }
@@ -5191,7 +5196,7 @@
                   ]
                 },
                 {
-                  "name": "description",
+                  "name": "desc",
                   "desc": "Tooltip for description",
                   "type": "BasicPropertyPanelItem",
                   "id": 459,
@@ -5265,7 +5270,7 @@
                   "name": "actions",
                   "desc": "Tooltip",
                   "type": "RelationshipPanelItem",
-                  "style": "Table",
+                  "style": "Carousel",
                   "id": 468,
                   "position": 0,
                   "label": "actions",
@@ -5346,7 +5351,7 @@
                   ]
                 },
                 {
-                  "name": "description",
+                  "name": "desc",
                   "desc": "Tooltip for description",
                   "type": "BasicPropertyPanelItem",
                   "id": 472,
@@ -5429,7 +5434,7 @@
               ]
             },
             {
-              "name": "description",
+              "name": "desc",
               "desc": "Tooltip",
               "type": "TableItem",
               "id": 452,
@@ -5523,7 +5528,7 @@
                   ]
                 },
                 {
-                  "name": "description",
+                  "name": "desc",
                   "desc": "Tooltip for description",
                   "type": "BasicPropertyPanelItem",
                   "id": 436,
@@ -5585,7 +5590,7 @@
                   "name": "actions",
                   "desc": "Tooltip",
                   "type": "RelationshipPanelItem",
-                  "style": "Table",
+                  "style": "Carousel",
                   "id": 441,
                   "position": 0,
                   "label": "actions",
@@ -5645,7 +5650,7 @@
                   ]
                 },
                 {
-                  "name": "description",
+                  "name": "desc",
                   "desc": "Tooltip for description",
                   "type": "BasicPropertyPanelItem",
                   "id": 445,
@@ -5716,7 +5721,7 @@
               ]
             },
             {
-              "name": "description",
+              "name": "desc",
               "desc": "Tooltip",
               "type": "TableItem",
               "id": 429,
@@ -5871,7 +5876,7 @@
                   ]
                 },
                 {
-                  "name": "description",
+                  "name": "desc",
                   "desc": "Tooltip for description",
                   "type": "BasicPropertyPanelItem",
                   "id": 329,
@@ -5954,7 +5959,7 @@
                   ]
                 },
                 {
-                  "name": "description",
+                  "name": "desc",
                   "desc": "Tooltip for description",
                   "type": "BasicPropertyPanelItem",
                   "id": 337,
@@ -6014,7 +6019,7 @@
               ]
             },
             {
-              "name": "description",
+              "name": "desc",
               "desc": "Tooltip",
               "type": "TableItem",
               "id": 323,
@@ -6115,7 +6120,7 @@
                   ]
                 },
                 {
-                  "name": "description",
+                  "name": "desc",
                   "desc": "Tooltip for description",
                   "type": "BasicPropertyPanelItem",
                   "id": 309,
@@ -6166,7 +6171,7 @@
                   "name": "tableItems",
                   "desc": "Tooltip",
                   "type": "RelationshipPanelItem",
-                  "style": "Table",
+                  "style": "Carousel",
                   "id": 313,
                   "position": 0,
                   "label": "tableItems",
@@ -6226,7 +6231,7 @@
                   ]
                 },
                 {
-                  "name": "description",
+                  "name": "desc",
                   "desc": "Tooltip for description",
                   "type": "BasicPropertyPanelItem",
                   "id": 317,
@@ -6286,7 +6291,7 @@
               ]
             },
             {
-              "name": "description",
+              "name": "desc",
               "desc": "Tooltip",
               "type": "TableItem",
               "id": 303,
@@ -6390,7 +6395,7 @@
                   ]
                 },
                 {
-                  "name": "description",
+                  "name": "desc",
                   "desc": "Tooltip for description",
                   "type": "BasicPropertyPanelItem",
                   "id": 292,
@@ -6460,7 +6465,7 @@
                   ]
                 },
                 {
-                  "name": "description",
+                  "name": "desc",
                   "desc": "Tooltip for description",
                   "type": "BasicPropertyPanelItem",
                   "id": 298,
@@ -6520,7 +6525,7 @@
               ]
             },
             {
-              "name": "description",
+              "name": "desc",
               "desc": "Tooltip",
               "type": "TableItem",
               "id": 286,

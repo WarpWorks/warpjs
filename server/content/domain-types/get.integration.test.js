@@ -2,6 +2,7 @@ const RoutesInfo = require('@quoin/expressjs-routes-info');
 const testHelpers = require('@quoin/node-test-helpers');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const constants = require('./../constants');
 const testUtilsHelpers = require('./../../utils.helpers.test');
 
 const expect = testHelpers.expect;
@@ -14,7 +15,7 @@ describe.skip("server/content/domain-types/get", () => {
     });
 
     it("should return error when unknown", () => {
-        const url = RoutesInfo.expand('W2:content:domain', { domain: 'FOO-BAR' });
+        const url = RoutesInfo.expand(constants.routes.domain, { domain: 'FOO-BAR' });
         return app.get(url)
             .set('Accept', warpjsUtils.constants.HAL_CONTENT_TYPE)
             .then(

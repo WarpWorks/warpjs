@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 /**
  *  This script will take domains on file and put them into the database.
  */

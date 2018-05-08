@@ -1,3 +1,4 @@
+// const debug = require('debug')('W2:content:instance-relationship/post');
 const Promise = require('bluebird');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
@@ -10,8 +11,7 @@ const WarpWorksError = require('./../../../lib/core/error');
 
 module.exports = (req, res) => {
     const { domain, type, id, relationship } = req.params;
-
-    const payload = req.body;
+    const { body } = req;
 
     const persistence = serverUtils.getPersistence(domain);
 
@@ -41,7 +41,7 @@ module.exports = (req, res) => {
                         })
                         .then(() => (targetEntity.entityType === 'Embedded')
                             ? postEmbedded
-                            : (payload.id && payload.type)
+                            : (body.id && body.type)
                                 ? postAssociation
                                 : postAggregation
                         )

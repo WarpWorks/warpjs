@@ -2,6 +2,7 @@ const RoutesInfo = require('@quoin/expressjs-routes-info');
 const routesInfoCache = require('@quoin/expressjs-routes-info/lib/cache');
 const testHelpers = require('@quoin/node-test-helpers');
 
+const constants = require('./../constants');
 const moduleToTest = require('./get');
 
 const expect = testHelpers.expect;
@@ -12,8 +13,8 @@ describe("lib/controllers/domains/get", () => {
 
         // Because it's needed by the utils basicRender()
         const routesInfo = new RoutesInfo('/foo', '/bar');
-        routesInfo.route('W2:content:instance', '/');
-        routesInfo.route('W2:content:home', '/home');
+        routesInfo.route(constants.routes.instance, '/');
+        routesInfo.route(constants.routes.home, '/home');
     });
 
     afterEach(() => {

@@ -1,0 +1,70 @@
+{{#partial "content"}}
+<div class="container" role="main" data-warpjs-status="instances">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="panel panel-success">
+        <div class="panel-heading">
+          Available documents for
+          <a href="{{_links.domain.href}}">{{_links.domain.title}}</a>
+          /
+          {{_links.type.title}}
+          :
+        </div>
+
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table table-striped table-hover table-condensed">
+          <thead>
+            <tr>
+              <th class="col-xs-2"></th>
+              <th class="col-xs-4">Name</th>
+              <th class="col-xs-4">Authors</th>
+              <th class="col-xs-2">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each _embedded.entities}}
+              <tr data-warpjs-url="{{_links.self.href}}">
+                <td class="warpjs-actions">
+                  {{#if _links.portal}}
+                    <a href="{{_links.portal.href}}"
+                      ><span class="glyphicon glyphicon-eye-open warpjs-action" title="Preview '{{name}}' on portal"></span></a>
+                  {{/if}}
+                  <a href="{{_links.self.href}}"
+                    ><span class="glyphicon glyphicon-pencil warpjs-action" title="Edit '{{name}}'"></span></a>
+                  <span class="glyphicon glyphicon-trash warpjs-action" data-warpjs-action="delete" title="Delete '{{name}}'"></span>
+                </td>
+
+                <td class="max-width-ellipsis">
+                  <div>
+                  <a href="{{_links.self.href}}">{{name}}</a>
+                  {{#if isRootInstance}}[isRootInstance]{{/if}}
+                  </div>
+                </td>
+
+                <td class="warpjs-document-authors max-width-ellipsis">
+                  <div>
+                    {{#each _embedded.authors as |author|}}
+                      {{author.Name}}{{#unless @last}}, {{/unless}}
+                    {{/each}}
+                  </div>
+                </td>
+
+                <td class="max-width-ellipsis">
+                  <div class="warpjs-with-document-status">
+                    <span class="warpjs-document-status warpjs-document-status-{{status}}">{{status}}</span>
+                  </div>
+                </td>
+
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{{/partial}}
+
+{{> page-content}}
+

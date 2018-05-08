@@ -1,0 +1,34 @@
+<div class="form-group basic-property-pi">
+  <label class="col-xs-12">
+    <span class="col-xs-2 control-label">{{label}}</span>
+    <div class="col-xs-10">
+      {{#if model.propertyTypeCheck.isBoolean}}
+        <input
+            class="form-control"
+            type="checkbox"
+            data-doc-level="{{model.docLevel}}"
+            {{#if model._links.self}}data-warpjs-url="{{model._links.self.href}}"{{/if}}
+            {{#if model.value}}checked{{/if}}
+            {{#unless canEdit}}disabled{{/unless}}
+            />
+      {{else}}
+        {{#if (isPropertyTypeText)}}
+          <span class="glyphicon glyphicon-list-alt pull-right"
+              data-warpjs-action="open-wysiwyg"
+              data-warpjs-can-edit="{{canEdit}}"
+              ></span>
+        {{/if}}
+
+        <input
+            class="form-control"
+            type="{{model.inputType}}"
+            value="{{model.value}}"
+            data-doc-level="{{model.docLevel}}"
+            {{#if model._links.self}}data-warpjs-url="{{model._links.self.href}}"{{/if}}
+            {{#if (isPropertyTypeText)}}readonly{{/if}}
+            {{#unless canEdit}}disabled{{/unless}}
+            />
+      {{/if}}
+    </div>
+  </label>
+</div>

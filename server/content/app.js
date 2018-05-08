@@ -1,15 +1,12 @@
 // const debug = require('debug')('W2:App:app');
 const express = require('express');
 const path = require('path');
-const favicon = require('serve-favicon');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const config = require('./../config');
 const routes = require('./routes');
-
-const ROOT_DIR = path.dirname(require.resolve('./../../package.json'));
 
 module.exports = (baseUrl, staticUrlPath) => {
     const app = express();
@@ -19,7 +16,6 @@ module.exports = (baseUrl, staticUrlPath) => {
     app.set('W2:content:baseUrl', baseUrl === '/' ? '' : baseUrl);
     app.set('static-url', staticUrlPath === '/' ? '' : staticUrlPath);
 
-    app.use(favicon(path.join(ROOT_DIR, 'public', 'images', 'favicon.ico')));
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(cookieParser());

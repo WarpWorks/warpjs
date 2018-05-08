@@ -1,0 +1,39 @@
+<div class="form-group" data-warpjs-relationship-url="{{relationship._links.self.href}}">
+    <table class="table table-sm table-hover table-striped">
+        <thead>
+            <tr>
+                {{#each relationship.model.tableView.basicProperties}}
+                    <th>{{this}}</th>
+                {{/each}}
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each relationship.model.tableView.data as |row|}}
+                <tr>
+                    {{#each row as |col|}}
+                        {{#if @index}} {{!-- first is url --}}
+                        <td data-warpjs-action="link" data-warpjs-url="{{row.[0]}}">{{col}}</td>
+                        {{/if}}
+                    {{/each}}
+                    <td class="warpjs-actions">
+                      <span class="glyphicon glyphicon-pencil warpjs-action"
+                        data-warpjs-action="link"
+                        data-warpjs-url="{{row.[0]}}"
+                        tooltip="Edit document"
+                        ></span>
+
+                      <span class="glyphicon glyphicon-trash text-danger warpjs-action"
+                        data-warpjs-action="delete-row"
+                        data-warpjs-url="{{row.[0]}}"
+                        tooltip="Delete document"
+                        {{#unless ../canEdit}}disabled{{/unless}}
+                        ></span>
+                    </td>
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+
+    {{> table-navigation addUrl=relationship._links.self.href canEdit=canEdit}}
+</div>

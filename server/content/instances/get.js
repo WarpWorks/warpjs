@@ -2,29 +2,41 @@ const Promise = require('bluebird');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const constants = require('./../constants');
+const editionConstants = require('./../../edition/constants');
 const serverUtils = require('./../../utils');
 const utils = require('./../utils');
 
-function documentMapper(entity, domain, instance) {
-    const documentUrl = RoutesInfo.expand('W2:content:instance', {
-        domain,
-        type: instance.type,
-        id: instance.id
-    });
+function documentMapper(persistence, entity, domain, instance) {
+    return Promise.resolve()
+        .then(() => RoutesInfo.expand(constants.routes.instance, {
+            domain,
+            type: instance.type,
+            id: instance.id
+        }))
+        .then((documentUrl) => warpjsUtils.createResource(documentUrl, {
+            isRootInstance: instance.isRootInstance || undefined,
+            id: instance.id,
+            type: instance.type,
+            name: entity.getDisplayName(instance),
+            status: instance.Status
+        }))
+        .then((resource) => Promise.resolve()
+            .then(() => resource.link('portal', RoutesInfo.expand('entity', {
+                type: instance.type,
+                id: instance.id
+            })))
 
-    const resource = warpjsUtils.createResource(documentUrl, {
-        isRootInstance: instance.isRootInstance || undefined,
-        id: instance.id,
-        type: instance.type,
-        name: entity.getDisplayName(instance)
-    });
-
-    resource.link('portal', RoutesInfo.expand('entity', {
-        type: instance.type,
-        id: instance.id
-    }));
-
-    return resource;
+            .then(() => entity.getRelationshipByName('Authors')) // FIXME hard-coded
+            .then((relationship) => relationship
+                ? relationship.getDocuments(persistence, instance)
+                : []
+            )
+            .then((authors) => authors.map((author) => ({ Name: author.Name })))
+            .then((authors) => resource.embed('authors', authors))
+            .then(() => resource)
+        )
+    ;
 }
 
 module.exports = (req, res) => {
@@ -37,8 +49,8 @@ module.exports = (req, res) => {
         html() {
             utils.basicRender(
                 [
-                    `${RoutesInfo.expand('W2:app:static')}/app/vendor.min.js`,
-                    `${RoutesInfo.expand('W2:app:static')}/app/instances.min.js`
+                    `${RoutesInfo.expand('W2:app:static')}/app/${editionConstants.assets.vendor}`,
+                    `${RoutesInfo.expand('W2:app:static')}/app/${editionConstants.assets.instances}`
                 ],
                 resource,
                 req,
@@ -49,34 +61,37 @@ module.exports = (req, res) => {
         [warpjsUtils.constants.HAL_CONTENT_TYPE]: () => {
             resource.link('domain', {
                 title: domain,
-                href: RoutesInfo.expand('W2:content:domain', {
+                href: RoutesInfo.expand(constants.routes.entities, {
                     domain
                 })
             });
 
             resource.link('type', {
                 title: type,
-                href: RoutesInfo.expand('W2:content:instances', {
+                href: RoutesInfo.expand(constants.routes.instances, {
                     domain,
                     type
                 })
             });
 
-            const persistence = serverUtils.getPersistence(domain);
-
             return Promise.resolve()
-                .then(() => serverUtils.getEntity(domain, type))
-                .then((entity) => Promise.resolve()
-                    .then(() => entity.getDocuments(persistence))
-                    .then((documents) => {
-                        const embedded = documents.map((instance) => documentMapper(entity, domain, instance));
-                        resource.embed('entities', embedded);
+                .then(() => serverUtils.getPersistence(domain))
+                .then((persistence) => Promise.resolve()
+                    .then(() => serverUtils.getEntity(domain, type))
+                    .then((entity) => Promise.resolve()
+                        // FIXME: We can't use the entity ID because old data doesn't have this info.
+                        .then(() => entity.getDocuments(persistence, {type: entity.name}))
+                        .then((documents) => Promise.map(
+                            documents,
+                            (instance) => documentMapper(persistence, entity, domain, instance)
+                        ))
+                        .then((embedded) => resource.embed('entities', embedded))
+                        .then(() => utils.sendHal(req, res, resource))
+                    )
+                    .finally(() => {
+                        persistence.close();
                     })
-                    .then(() => utils.sendHal(req, res, resource))
                 )
-                .finally(() => {
-                    persistence.close();
-                })
             ;
         }
     });

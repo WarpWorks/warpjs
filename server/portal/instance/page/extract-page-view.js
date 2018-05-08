@@ -178,15 +178,18 @@ function createOverviewPanel(req, persistence, hsCurrentEntity, currentInstance)
         .then(() => hsCurrentEntity.getOverview(persistence, currentInstance))
         .then(parseLinks)
         .then(convertToResource.bind(null, req))
-        .then((overviews) => overviews.sort(warpjsUtils.byPositionThenName))
+        .then((overviews) => overviews ? overviews.sort(warpjsUtils.byPositionThenName) : overviews)
         .then((overviews) => {
-            const resource = createObjResource({
-                alternatingColors: false,
-                type: 'Overview'
-            });
+            if (overviews) {
+                const resource = createObjResource({
+                    position: 0,
+                    alternatingColors: false,
+                    type: 'Overview'
+                });
 
-            resource.embed('overviews', overviews);
-            return resource;
+                resource.embed('overviews', overviews);
+                return resource;
+            }
         });
 }
 
@@ -210,7 +213,8 @@ function addRelationshipPanelItems(req, panel, persistence, entity, items) {
 
 function addBasicPropertyPanelItems(panel, entity, items) {
     panel.basicPropertyPanelItems.forEach((item) => {
-        item.value = entity[item.name];
+        item.value = item.hasBasicProperty() ? item.getBasicProperty().getValue(entity) : null;
+
         const itemResource = createObjResource(item);
         itemResource.model = {
             propertyType: item.basicProperty[0].propertyType
@@ -234,31 +238,31 @@ module.exports = (req, responseResource, persistence, hsEntity, entity) => Promi
     .then((pageView) => pageView.getPanels())
     .then((panels) => {
         const embeddedPanels = [];
-        return Promise.map(panels,
-            (panel, panelIndex) => {
-                const panelResource = createObjResource(panel);
-                embeddedPanels.push(panelResource);
+        return Promise.resolve()
+            .then(() => Promise.map(panels,
+                (panel, panelIndex) => {
+                    const panelResource = createObjResource(panel);
+                    embeddedPanels.push(panelResource);
 
-                return Promise.resolve()
-                    .then(() => [])
-                    .then((items) => addSeparatorPanelItems(panel, items))
-                    .then((items) => addRelationshipPanelItems(req, panel, persistence, entity, items))
-                    .then((items) => addBasicPropertyPanelItems(panel, entity, items))
-                    .then((items) => addEnumPanelItems(panel, entity, items))
-                    .then((items) => sortItems(items))
-                    .then((items) => embed(panelResource, 'panelItems', items));
-            }
-        )
+                    return Promise.resolve()
+                        .then(() => [])
+                        .then((items) => addSeparatorPanelItems(panel, items))
+                        .then((items) => addRelationshipPanelItems(req, panel, persistence, entity, items))
+                        .then((items) => addBasicPropertyPanelItems(panel, entity, items))
+                        .then((items) => addEnumPanelItems(panel, entity, items))
+                        .then((items) => sortItems(items))
+                        .then((items) => embed(panelResource, 'panelItems', items));
+                }
+            ))
             .then(() => createOverviewPanel(req, persistence, hsEntity, entity))
             .then((overviewPanel) => {
                 if (overviewPanel) {
-                // We increment the position becase we will add the overview at
-                // the first position of the panels.
+                    // We increment the position becase we will add the overview at
+                    // the first position of the panels.
                     embeddedPanels.forEach((panel) => {
-                    // It is some time a Number, some time a String.
+                        // It is some time a Number, some time a String.
                         panel.position = Number(panel.position) + 1;
                     });
-                    overviewPanel.position = 0;
                     embeddedPanels.unshift(overviewPanel);
                     embeddedPanels.sort((a, b) => a.position - b.position);
                 }
