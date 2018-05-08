@@ -3,11 +3,13 @@ const Promise = require('bluebird');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
-const utils = require('./../utils');
+const constants = require('./../constants');
+const editionConstants = require('./../../edition/constants');
 const entityMap = require('./entity-map');
-const linkableEntity = require('./linkable-entity');
-const nonAbstractOnly = require('./non-abstract-only');
+const linkableEntity = require('./../../edition/utils/linkable-entity');
+const nonAbstractOnly = require('./../../edition/utils/non-abstract-only');
 const serverUtils = require('./../../utils');
+const utils = require('./../utils');
 
 module.exports = (req, res) => {
     const domain = req.params.domain;
@@ -21,8 +23,8 @@ module.exports = (req, res) => {
     res.format({
         html: () => utils.basicRender(
             [
-                `${RoutesInfo.expand('W2:app:static')}/app/vendor.min.js`,
-                `${RoutesInfo.expand('W2:app:static')}/app/domain-types.min.js`
+                `${RoutesInfo.expand('W2:app:static')}/app/${editionConstants.assets.vendor}`,
+                `${RoutesInfo.expand('W2:app:static')}/app/${editionConstants.assets.domainTypes}`
             ],
             resource,
             req,
@@ -32,7 +34,7 @@ module.exports = (req, res) => {
         [warpjsUtils.constants.HAL_CONTENT_TYPE]: () => Promise.resolve()
             .then(() => resource.link('domain', {
                 title: domain,
-                href: RoutesInfo.expand('W2:content:domain', {
+                href: RoutesInfo.expand(constants.routes.domain, {
                     domain
                 })
             }))

@@ -1,5 +1,6 @@
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 
+const constants = require('./constants');
 const domain = require('./domain');
 const domains = require('./domains');
 const domainType = require('./domain-type');
@@ -18,17 +19,17 @@ const ROUTE_OPTIONS = {
 module.exports = (baseUrl) => {
     const routesInfo = new RoutesInfo('/', baseUrl);
 
-    routesInfo.route('W2:content:home', '/', home);
-    routesInfo.route('W2:content:domains', '/domain', domains);
-    routesInfo.route('W2:content:domain', '/domain/{domain}', domain);
-    routesInfo.route('W2:content:entities', '/domain/{domain}/type{?profile}', domainTypes);
-    routesInfo.route('W2:content:entity', '/domain/{domain}/type/{type}{?profile}', domainType);
-    routesInfo.route('W2:content:instances', '/domain/{domain}/type/{type}/instance', instances);
-    routesInfo.route('W2:content:instance', '/domain/{domain}/type/{type}/instance/{id}', instance, ROUTE_OPTIONS);
-    routesInfo.route('W2:content:instance-history', '/domain/{domain}/type/{type}/instance/{id}/history', instanceHistory);
-    routesInfo.route('W2:content:instance-sibling', '/domain/{domain}/type/{type}/instance/{id}/sibling', entitySibling);
-    routesInfo.route('W2:content:instance-relationship', '/domain/{domain}/type/{type}/instance/{id}/relationship/{relationship}', instanceRelationship, ROUTE_OPTIONS);
-    routesInfo.route('W2:content:instance-relationship-page', '/domain/{domain}/type/{type}/instance/{id}/relationship/{relationship}/page/{page}', instance);
+    routesInfo.route(constants.routes.home, '/', home);
+    routesInfo.route(constants.routes.domains, '/domain', domains);
+    routesInfo.route(constants.routes.domain, '/domain/{domain}', domain);
+    routesInfo.route(constants.routes.entities, '/domain/{domain}/type{?profile}', domainTypes);
+    routesInfo.route(constants.routes.entity, '/domain/{domain}/type/{type}{?profile}', domainType);
+    routesInfo.route(constants.routes.instances, '/domain/{domain}/type/{type}/instance', instances);
+    routesInfo.route(constants.routes.instance, '/domain/{domain}/type/{type}/instance/{id}', instance, ROUTE_OPTIONS);
+    routesInfo.route(constants.routes.history, '/domain/{domain}/type/{type}/instance/{id}/history', instanceHistory);
+    routesInfo.route(constants.routes.sibling, '/domain/{domain}/type/{type}/instance/{id}/sibling', entitySibling);
+    routesInfo.route(constants.routes.relationship, '/domain/{domain}/type/{type}/instance/{id}/relationship/{relationship}', instanceRelationship, ROUTE_OPTIONS);
+    routesInfo.route(constants.routes.relationshipPage, '/domain/{domain}/type/{type}/instance/{id}/relationship/{relationship}/page/{page}', instance);
 
     return routesInfo;
 };

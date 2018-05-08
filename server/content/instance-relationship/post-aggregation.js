@@ -1,6 +1,7 @@
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 
 const ChangeLogs = require('./../../../lib/change-logs');
+const constants = require('./../constants');
 const logger = require('./../../loggers');
 const utils = require('./../utils');
 
@@ -23,7 +24,7 @@ module.exports = (req, res, persistence, entity, instance, resource) => {
                 .then(() => ChangeLogs.addAggregation(req, instance, relationship, newDoc.type, newDoc.id))
                 .then(() => entity.updateDocument(persistence, instance))
                 .then(() => {
-                    const redirectUrl = RoutesInfo.expand('W2:content:instance', {
+                    const redirectUrl = RoutesInfo.expand(constants.routes.instance, {
                         domain,
                         type: targetEntity.name,
                         id: newDoc.id

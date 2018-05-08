@@ -5,16 +5,19 @@ const express = require('express');
 const path = require('path');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsPlugins = require('@warp-works/warpjs-plugins');
-const warpStudio = require('@warp-works/studio');
 
 const content = require('./content');
 const extractAuthMiddlewares = require('./extract-auth-middlewares');
+const favicon = require('serve-favicon');
 const logFiles = require('./log-files');
 const portal = require('./portal');
 const middlewares = require('./middlewares');
 const serverUtils = require('./utils');
 const status = require('./status');
+const studio = require('./studio');
 const warpjsCore = require('./../lib/core');
+
+const ROOT_DIR = path.dirname(require.resolve('./../package.json'));
 
 module.exports = (baseUrl, staticUrl) => {
     const config = serverUtils.getConfig();
@@ -32,6 +35,7 @@ module.exports = (baseUrl, staticUrl) => {
     RoutesInfo.staticPath('W2:app:public', app, baseUrl, '/public', path.join(config.folders.w2projects, 'public'));
     RoutesInfo.staticPath('W2:app:static', app, baseUrl, staticUrl, 'public');
 
+    app.use(favicon(path.join(ROOT_DIR, 'public', 'images', 'favicon.ico')));
     app.use(bodyParser.json());
     app.use(cookieParser(config.cookieSecret, {
         httpOnly: true,
@@ -50,7 +54,7 @@ module.exports = (baseUrl, staticUrl) => {
         app.use(authMiddlewares.warpjsUser);
     }
 
-    const adminPrefix = `${baseUrl}/admin`;
+    const adminPrefix = `${baseUrl}/studio`;
     const adminParams = [adminPrefix];
 
     const contentPrefix = `${baseUrl}/content`;
@@ -72,7 +76,7 @@ module.exports = (baseUrl, staticUrl) => {
         portalParams.push(authMiddlewares.unauthorized);
     }
 
-    adminParams.push(warpStudio.app(adminPrefix, staticUrl));
+    adminParams.push(studio.app(adminPrefix, staticUrl));
     app.use.apply(app, adminParams);
 
     contentParams.push(content.app(contentPrefix, staticUrl));

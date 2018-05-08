@@ -3,6 +3,8 @@ const hal = require('hal');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const constants = require('./constants');
+
 function createResourceFromDocument(instance) {
     // FIXME: missing domain
     const data = {
@@ -14,13 +16,14 @@ function createResourceFromDocument(instance) {
         data.id = instance._id;
     }
 
-    return warpjsUtils.createResource(RoutesInfo.expand('W2:content:instance', data), instance);
+    return warpjsUtils.createResource(RoutesInfo.expand(constants.routes.instance, data), instance);
 }
 
-function basicRender(bundles, data, req, res) {
+function basicRender(bundles, data, req, res, isStudio) {
     const resource = (data instanceof hal.Resource) ? data : warpjsUtils.createResource(req, data);
     resource.baseUrl = req.app.get('base-url');
     resource.staticUrl = req.app.get('static-url');
+    resource.isStudio = isStudio;
 
     resource.bundles = bundles;
 
@@ -29,9 +32,9 @@ function basicRender(bundles, data, req, res) {
 }
 
 function sendHal(req, res, resource, status) {
-    resource.link('warpjsContentHome', RoutesInfo.expand('W2:content:home'));
+    resource.link('warpjsHome', RoutesInfo.expand(constants.routes.home, {}));
     if (req.params.domain) {
-        resource.link('warpjsContentDomain', RoutesInfo.expand('W2:content:domain', {
+        resource.link('warpjsDomain', RoutesInfo.expand(constants.routes.domain, {
             domain: req.params.domain
         }));
     }
@@ -49,8 +52,8 @@ function basicRenderOld(name, data, req, res) {
     const resource = (data instanceof hal.Resource) ? data : warpjsUtils.createResource(req, data);
     resource.baseUrl = '/static';
 
-    resource.link('w2WarpJSHome', RoutesInfo.expand('W2:content:home'));
-    resource.link('w2WarpJSDomain', RoutesInfo.expand('W2:content:instances', data));
+    resource.link('w2WarpJSHome', RoutesInfo.expand(constants.routes.home, {}));
+    resource.link('w2WarpJSDomain', RoutesInfo.expand(constants.routes.instances, data));
 
     res.render(name, resource.toJSON());
 }

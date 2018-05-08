@@ -1,0 +1,58 @@
+
+[data-warpjs-placeholder="document-status"] {
+    cursor: help;
+}
+
+[data-warpjs-modal="document-status"] {
+    .panel {
+        margin-bottom: -1px;
+    }
+}
+
+.warpjs-with-document-status {
+    color: white;
+}
+
+.warpjs-document-status {
+    padding: 3px 12px;
+    border-radius: 10px;
+    font-size: 10px;
+    color: white;
+    border: 0;
+
+    &.warpjs-document-status-InheritFromParent {
+        background-color: #99f;
+    }
+
+    &.warpjs-document-status-Draft {
+        background-color: #39f;
+    }
+
+    &.warpjs-document-status-Proposal {
+        background-color: #960;
+    }
+
+    &.warpjs-document-status-Approved {
+        background-color: #030;
+    }
+
+    &.warpjs-document-status-Declined {
+        background-color: #600;
+    }
+
+    &.warpjs-document-status-Retired {
+        background-color: #999;
+    }
+
+    &.warpjs-document-status-InheritFromParent {
+        background-color: #30c;
+    }
+}
+
+.panel {
+    .panel-body {
+        &.table-header {
+            background-color: #eee;
+        }
+    }
+}

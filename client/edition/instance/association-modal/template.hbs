@@ -1,0 +1,62 @@
+<div class="modal fade" role="dialog" tabindex="-1"
+    aria-hidden="true" aria-labelledby="Target-Association"
+    data-warpjs-modal="{{modalName}}"
+    >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"
+            aria-label="Close" aria-hidden="true"
+            >&times;</button>
+        <div class="modal-title">Entities Selection</div>
+      </div>
+
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-xs-10 col-xs-offset-1">
+            <ul class="list-group">
+              {{#if canEdit}}
+                <li class="list-group-item">
+                  <form class="form-inline">
+                    Select type:
+                    <div class="form-group">
+                      <select class="form-control {{selectionTypes}}">
+                        {{> types-option-loading}}
+                      </select>
+                    </div>
+                  </form>
+                </li>
+              {{/if}}
+
+              {{#if canEdit}}
+                <li class="list-group-item">
+                  <ul class="list-group {{selectionEntities}}">
+                    {{> selection-entities-loading}}
+                  </ul>
+                </li>
+              {{/if}}
+
+              <li class="list-group-item">
+                <label>Selected entities:</label>
+                <ul class="nav nav-pills {{selectedEntities}}">
+                </ul>
+              </li>
+
+              <li class="list-group-item {{selectedDetails}}" data-warpjs-can-edit="{{canEdit}}">
+              </li>
+
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default {{selectionSave}}"
+            data-dismiss="modal"
+            aria-label="Close"
+            aria-hidden="true"
+            >Done</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -12,7 +12,7 @@ attic/
 # Generated Files
 /views/app*.hbs
 /views/portal*.hbs
-/public/app/*_WebAPI.js
+/public/app
 
 
 # WebStorm IDE Config

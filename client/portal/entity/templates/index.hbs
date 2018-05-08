@@ -1,20 +1,24 @@
 {{#partial "content"}}
-    <div class="breadcrumb-container row">
-        <div class="col-xs-1 left-right-margin" />
-        <div class="col-xs-8 no-padding">
-            {{> ./partials/_breadcrumb breadcrumbs=this._embedded.breadcrumbs}}
-        </div>
-        <div class="col-xs-2 no-padding">
-            {{> ./partials/_edit}}
-        </div>
-        <div class="col-xs-1 left-right-margin" />
+  <div class="breadcrumb-container row">
+    <div class="col-xs-1 left-right-margin" />
+    <div class="col-xs-8 no-padding">
+      {{> ./partials/_breadcrumb breadcrumbs=this._embedded.breadcrumbs}}
     </div>
+    <div class="col-xs-2 no-padding">
+      {{> ./partials/_edit}}
+    </div>
+    <div class="col-xs-1 left-right-margin" />
+  </div>
+
+  {{>../../document-status/template isVisible=isVisible showDisclaimer=showDisclaimer isPublic=isPublic}}
+
+  {{#if isVisible}}
     <div class="pageview-container row">
-        <div class="col-xs-1 left-right-margin" />
-        <div class="col-xs-10 no-padding">
-            {{> ./partials/_pageview panels=this._embedded.panels}}
-        </div>
-        <div class="col-xs-1 left-right-margin" />
+      <div class="col-xs-1 left-right-margin" />
+      <div class="col-xs-10 no-padding">
+        {{> ./partials/_pageview panels=this._embedded.panels}}
+      </div>
+      <div class="col-xs-1 left-right-margin" />
     </div>
     <div class="community row">
       <div class="col-xs-1 left-right-margin" />
@@ -23,6 +27,13 @@
       </div>
       <div class="col-xs-1 left-right-margin" />
     </div>
+  {{else}}
+    <div class="non-display-status row">
+      <div class="col-xs-10 col-xs-offset-1 alert alert-warning">
+        This page is not visible because of your access.
+      </div>
+    </div>
+  {{/if}}
 
 {{/partial}}
 

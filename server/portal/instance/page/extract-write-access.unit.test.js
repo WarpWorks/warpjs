@@ -3,6 +3,7 @@ const testHelpers = require('@quoin/node-test-helpers');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const config = require('./../../config');
+const constants = require('./../../../content/constants');
 const extractWriteAccess = require('./extract-write-access');
 
 const expect = testHelpers.expect;
@@ -53,7 +54,7 @@ describe("server/portal/entity/extract-write-access", () => {
                     expect(resource._links).to.have.property('edit');
                     expect(resource._links.edit.toJSON()).to.deep.equal({
                         rel: 'edit',
-                        href: RoutesInfo.expand('W2:content:instance', {
+                        href: RoutesInfo.expand(constants.routes.instance, {
                             domain: config.domainName,
                             type: instance.type,
                             id: instance.id

@@ -3,6 +3,7 @@ const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const domainMapper = require('./domain-mapper');
+const editionConstants = require('./../../edition/constants');
 const utils = require('./../utils');
 const warpCore = require('./../../../lib/core');
 
@@ -14,14 +15,21 @@ module.exports = (req, res) => {
     res.format({
         html: () => utils.basicRender(
             [
-                `${RoutesInfo.expand('W2:app:static')}/app/vendor.min.js`,
-                `${RoutesInfo.expand('W2:app:static')}/app/domains.min.js`
+                `${RoutesInfo.expand('W2:app:static')}/app/${editionConstants.assets.vendor}`,
+                `${RoutesInfo.expand('W2:app:static')}/app/${editionConstants.assets.domains}`
             ],
             resource, req, res
         ),
 
         [warpjsUtils.constants.HAL_CONTENT_TYPE]: () => Promise.resolve()
-            .then(() => Promise.map(warpCore.domainFiles(), (domain) => domainMapper(domain)))
+            .then(() => warpCore.getPersistence())
+            .then((persistence) => Promise.resolve()
+                .then(() => Promise.map(
+                    warpCore.listDomains(persistence),
+                    (domain) => domainMapper(domain)
+                ))
+                .finally(() => persistence.close())
+            )
             .then((domains) => resource.embed('domains', domains))
             .then(() => utils.sendHal(req, res, resource))
     });

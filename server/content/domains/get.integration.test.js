@@ -1,6 +1,7 @@
 const testHelpers = require('@quoin/node-test-helpers');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const constants = require('./../constants');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const testUtilsHelpers = require('./../../utils.helpers.test');
 
@@ -13,7 +14,7 @@ describe.skip("server/content/domains/get", () => {
 
         beforeEach(() => {
             app = testUtilsHelpers.requestApp();
-            url = RoutesInfo.expand('W2:content:home');
+            url = RoutesInfo.expand(constants.routes.home);
         });
 
         it("should not accept unknown type", () => {

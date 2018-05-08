@@ -1,5 +1,79 @@
 # Releases
 
+## 1.2.26 - 2018-05-08
+
+- #69: Removed info icon on studio and content lists.
+- Fixed carousel labels.
+- Disclaimer updates.
+
+## 1.2.25 - 2018-05-04
+
+- #68: Content: Fixed save for text editor.
+- Minor code and style clean up.
+
+## 1.2.24 - 2018-05-03
+
+- #65: Applied inheritance to document status.
+
+## 1.2.23 - 2018-05-03
+
+- Content: Link documents breadcrumb to entity list.
+- #66: Content: Implemented delete on document list.
+- #67: Updating styles and use warpjs-actions in Table style.
+
+## 1.2.22 - 2018-05-02
+
+- #68: Adding table to editor and make modal bigger.
+
+## 1.2.21 - 2018-05-01
+
+- #65: Extract authors.
+- Content: Converted lists into tables.
+
+## 1.2.20 - 2018-04-30
+
+- #65: Fixed logic to display disclaimer.
+
+## 1.2.19 - 2018-04-30
+
+- #65: Updated disclaimer.
+- #67: Display status in instances list.
+
+## 1.2.18 - 2018-04-27
+
+- Content: Delete confirm popover.
+
+## 1.2.17 - 2018-04-26
+
+- Portal: Modal for document status disclaimer.
+- Content: Modal for document status explanation.
+
+## 1.2.16 - 2018-04-09
+
+- Display of document status on title bar.
+- WIP for delete confirmation popover.
+- Access to inherited basic properties, relationships and enumerations from page
+  views.
+- WIP still have some issues with new entities.
+
+## 1.2.15 - 2018-04-04
+
+- Portal: Prototype for page visibility with Status.
+- Content: List only instance of specific type.
+- Content: Added "Tile" display style for relationship-panel-item.
+- Content: Fixed children display for the right collection.
+- Studio: Added simple background-image.
+- Studio: Fixed JSN import script to ignore inheritance.
+
+## 1.2.14 - 2018-03-27
+
+- Studio: Changed labels for tabs.
+- Studio: Fixed relationship association modal selection.
+- Studio: Display of toast for some of the errors.
+- Studio: Support for boolean with checkbox
+- Content: Fixed listing of entity sub-types in instance list.
+
+
 ## 1.2.13 - 2018-02-05
 
 - Fixed Overview order by Position (GH #61).
@@ -10,6 +84,48 @@
 - Added Tile panel-item style (GH #59).
 - Fixed missing search plugin icon due to multiple search packages installed.
 - Changed portal breadcrumb to use type.name instead of type.desc.
+
+## 1.2.11 - 2018-01-30
+
+- Added missing warpjsId to new entity.
+- Sort list of entities.
+- Show item name in carousel drop-down.
+- Added missing warpjsId to new relationship.
+- Allow remove of embedded.
+
+## 1.2.10 - 2018-01-29
+
+- Small chack for the targetEntity.
+
+## 1.2.9 - 2018-01-29
+
+- Added script [`warpjs-stats`](./scripts/stats.js).
+- Small hack for the parentClass.
+
+## 1.2.8 - 2018-01-26
+
+- Allow creation of Embedded and Aggregations. Need to work on Association.
+
+## 1.2.7 - 2018-01-25
+
+- WarpWorks V6 schema
+- Added missing Property model
+- Studio: Hack to handle parentClass and targetEntity relationship-panel-items.
+- Studio: Refactorying with new DocLevel model.
+- Studio: Allow updating BasicProperty or Enum instance.
+
+## 1.2.6 - 2018-01-24
+
+- studio work to display the Carousel for page & table views.
+
+## 1.2.5 - 2018-01-19
+
+- Fixed missing link for studio/{domain}.
+
+## 1.2.4 - 2018-01-19
+
+- Conversion to use level1 documents in database.
+- First steps for refactoring of studio.
 
 ## 1.2.3 - 2017-12-27
 
