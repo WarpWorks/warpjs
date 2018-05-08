@@ -22,8 +22,10 @@
                   {{#each _embedded.entities}}
                     <tr>
                       <td class="warpjs-actions">
+                        {{!--
                         <a href="{{_links.self.href}}"
                           ><span class="glyphicon glyphicon-info-sign warpjs-action"></span></a>
+                        --}}
 
                         {{#if _links.instances}}
                           <a href="{{_links.instances.href}}"
