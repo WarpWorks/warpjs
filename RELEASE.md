@@ -1,5 +1,11 @@
 # Releases
 
+## 1.2.26 - 2018-05-08
+
+- #69: Removed info icon on studio and content lists.
+- Fixed carousel labels.
+- Disclaimer updates.
+
 ## 1.2.25 - 2018-05-04
 
 - #68: Content: Fixed save for text editor.
