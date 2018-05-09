@@ -1,5 +1,11 @@
 # Releases
 
+## 1.2.27 - 2018-05-09
+
+- Fixed breadcrumb bleeding out when long (multi-lines).
+- Fixed adding sub-embedded child.
+- #72 WIP on history modal redesign.
+
 ## 1.2.26 - 2018-05-08
 
 - #69: Removed info icon on studio and content lists.
