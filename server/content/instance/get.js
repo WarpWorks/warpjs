@@ -25,7 +25,7 @@ function breadcrumbMapper(domain, breadcrumb) {
 }
 
 module.exports = (req, res) => {
-    const {domain, type, id} = req.params;
+    const { domain, type, id } = req.params;
 
     const resource = warpjsUtils.createResource(req, {
         title: `Domain ${domain} - Type ${type} - Id ${id}`,
