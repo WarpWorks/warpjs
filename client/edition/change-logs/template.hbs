@@ -15,13 +15,13 @@
 
       <div class="modal-body">
         {{#if changeLogs.length}}
-            <ul class="list-group">
+          <ul class="list-group">
             {{#each changeLogs as |changeLog|}}
-                <li class="list-group-item">
-                    {{> change-logs-item changeLog}}
-                </li>
+              <li class="list-group-item">
+                {{> item changeLog}}
+              </li>
             {{/each}}
-            </ul>
+          </ul>
         {{else}}
             No changes.
         {{/if}}
