@@ -1,15 +1,19 @@
 <div class="row">
-  <div class="col-xs-3">
+  <div class="col-xs-2 text-right">
     {{#if user._links.thumbnail.href}}
       <img class="img-circle" src="{{user._links.thumbnail.href}}" alt="{{user.name}}" />
     {{/if}}
   </div>
 
-  <div class="col-xs-9">
+  <div class="col-xs-10">
     <span class="warpjs-change-log-by">
       <span class="warpjs-change-log-by-label">By</span>
       <span class="warpjs-change-log-by-value">
-        <a href="{{user._links.self.href}}">{{user.name}}</a>
+        {{#if user._links.self.href}}
+          <a href="{{user._links.self.href}}">{{user.name}}</a>
+        {{else}}
+          {{user.name}}
+        {{/if}}
       </span>
     </span>
     -
@@ -43,12 +47,12 @@
       <span class="warpjs-change-log-fromTo-from-label">from</span>
       <span class="warpjs-change-log-fromTo-from-value"
           {{#if fromTo.fromHelp}}title="{{fromTo.fromHelp}}"{{/if}}
-          >"<code>{{fromTo.fromValue}}</code>"</span>
+          ><code class="{{fromTo.fromClass}}">{{fromTo.fromValue}}</code></span>
       <br>
       <span class="warpjs-change-log-fromTo-to-label">to</span>
       <span class="warpjs-change-log-fromTo-to-value"
           {{#if fromTo.toHelp}}title="{{fromTo.toHelp}}"{{/if}}
-          >"<code>{{fromTo.toValue}}</code>"</span>
+            ><code class="{{fromTo.toClass}}">{{fromTo.toValue}}</code></span>
     {{else if from}}
       <span class="warpjs-change-log-from-label">from parent</span>
       <span class="warpjs-change-log-from-value">
