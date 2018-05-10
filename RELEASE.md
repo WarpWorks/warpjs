@@ -1,5 +1,9 @@
 # Releases
 
+## 1.2.28 - 2018-05-10
+
+- #72 history modal anonymous image and Enum:Status design.
+
 ## 1.2.27 - 2018-05-09
 
 - Fixed breadcrumb bleeding out when long (multi-lines).
