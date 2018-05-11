@@ -1,5 +1,9 @@
 # Releases
 
+## 1.2.29 - 2018-05-10
+
+- #72: history modal displaying user profile image.
+
 ## 1.2.28 - 2018-05-10
 
 - #72 history modal anonymous image and Enum:Status design.
