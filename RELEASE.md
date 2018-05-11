@@ -1,6 +1,6 @@
 # Releases
 
-## 1.2.29 - 2018-05-10
+## 1.2.30 - 2018-05-10
 
 - #72: history modal displaying user profile image.
 
