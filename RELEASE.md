@@ -1,6 +1,10 @@
 # Releases
 
-## 1.2.30 - 2018-05-10
+## 1.2.32 - 2018-05-11
+
+- Carousel drop-down now handles specifically Paragraph, Image, and ImageArea.
+
+## 1.2.31 - 2018-05-10
 
 - #72: history modal displaying user profile image.
 
