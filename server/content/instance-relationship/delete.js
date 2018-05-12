@@ -1,5 +1,6 @@
 const Promise = require('bluebird');
 
+const EntityTypes = require('./../../../lib/core/entity-types');
 const logger = require('./../../loggers');
 const removeEmbedded = require('./remove-embedded');
 const serverUtils = require('./../../utils');
@@ -26,7 +27,7 @@ module.exports = (req, res) => {
                         }
                     })
                     .then(() => {
-                        if (targetEntity.entityType === 'Embedded') {
+                        if (targetEntity.entityType === EntityTypes.EMBEDDED) {
                             return removeEmbedded(req, res, persistence, entity, instance);
                         } else {
                             throw new Error(`Unexpected entityType: '${targetEntity.entityType}'`);

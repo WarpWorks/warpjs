@@ -1,6 +1,7 @@
 const Promise = require('bluebird');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const EntityTypes = require('./../../../lib/core/entity-types');
 const serverUtils = require('./../../utils');
 const utils = require('./../utils');
 
@@ -22,7 +23,7 @@ module.exports = (req, res) => {
                 const childEntities = entity.getChildEntities(true, true)
                     .concat(entity)
                     .filter((entity) => !entity.isAbstract)
-                    .filter((entity) => entity.entityType === 'Document')
+                    .filter((entity) => entity.entityType === EntityTypes.DOCUMENT)
                     .sort(warpjsUtils.byPositionThenName)
                     .map((entity) => entity.toResource());
 

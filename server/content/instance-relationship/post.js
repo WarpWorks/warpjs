@@ -2,6 +2,7 @@
 const Promise = require('bluebird');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const EntityTypes = require('./../../../lib/core/entity-types');
 const logger = require('./../../loggers');
 const postAggregation = require('./post-aggregation');
 const postAssociation = require('./post-association');
@@ -39,7 +40,7 @@ module.exports = (req, res) => {
                                 throw new WarpWorksError(`You do not have permission to create this entry.`);
                             }
                         })
-                        .then(() => (targetEntity.entityType === 'Embedded')
+                        .then(() => (targetEntity.entityType === EntityTypes.EMBEDDED)
                             ? postEmbedded
                             : (body.id && body.type)
                                 ? postAssociation
