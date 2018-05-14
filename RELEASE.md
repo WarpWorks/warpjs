@@ -1,5 +1,9 @@
 # Releases
 
+## 1.2.33 - 2018-05-14
+
+- Studio: Fixed issue with ChangeLogs now needing the persistence.
+
 ## 1.2.32 - 2018-05-11
 
 - Carousel drop-down now handles specifically Paragraph, Image, and ImageArea.

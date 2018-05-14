@@ -1,3 +1,4 @@
+// const debug = require('debug')('W2:studio:instance/get-instance');
 const Promise = require('bluebird');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
@@ -49,7 +50,7 @@ module.exports = (req, res) => {
                     })
 
                     // Changelogs
-                    .then(() => ChangeLogs.toFormResource(domain, instanceData.instance))
+                    .then(() => ChangeLogs.toFormResource(domain, persistence, instanceData.instance))
                     .then((changeLogs) => resource.embed('changeLogs', changeLogs))
 
                     // Breadcrumbs
