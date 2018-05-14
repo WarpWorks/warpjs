@@ -1,6 +1,6 @@
 # Releases
 
-## 1.2.33 - 2018-05-14
+## 1.2.34 - 2018-05-14
 
 - Studio: Fixed issue with ChangeLogs now needing the persistence.
 
