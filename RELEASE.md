@@ -1,5 +1,9 @@
 # Releases
 
+## 1.2.36 - 2018-05-15
+
+- #74: Fixed assigning Target to ImageArea.
+
 ## 1.2.35 - 2018-05-15
 
 - Minor design rework on document status disclaimer.
