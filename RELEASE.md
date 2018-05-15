@@ -1,5 +1,9 @@
 # Releases
 
+## 1.2.35 - 2018-05-15
+
+- Minor design rework on document status disclaimer.
+
 ## 1.2.34 - 2018-05-14
 
 - Studio: Fixed issue with ChangeLogs now needing the persistence.

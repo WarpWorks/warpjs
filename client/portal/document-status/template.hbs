@@ -6,15 +6,23 @@
       <div class="col-xs-1 left-right-margin"></div>
 
       <div class="col-xs-10 warpjs-document-status-disclaimer">
-        <i class="glyphicon glyphicon-exclamation-sign fa-2x pull-left"></i>
-        <div class="text">
-          <h6>
-            <b>Document status: PROPOSAL</b>
-            <a class="cvs-list-item-link" data-toggle="modal"
-              data-target="#warpjs-document-status-modal"
-              >Please read the Disclaimer</a>
-          </h6>
-        </div>
+        <table class="table table-borderless">
+          <tbody>
+            <tr>
+              <td scope="row" width="30px">
+                <i class="glyphicon glyphicon-exclamation-sign fa-2x pull-left"
+                   style="color: #f00"></i>
+              </td>
+              <td>
+                <h6>
+                  <b>Document status: PROPOSAL - Please read the</b>
+                  <a class="csv-list-item-link" data-toggle="modal"
+                    data-target="#warpjs-document-status-modal">Disclaimer</a>
+                </h6>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
       <div class="col-xs-1 left-right-margin"></div>
@@ -26,12 +34,36 @@
       <div class="col-xs-1 left-right-margin"></div>
 
       <div class="col-xs-10 warpjs-document-status-disclaimer">
-        <div class="text">
-          <h6>This page is visible only to registered users.</h6>
-        </div>
+        <table class="table table-borderless">
+          <tbody>
+            <tr>
+              <td>
+                <h6><b>This page is only visible to IIC member users.</b></h6>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
       <div class="col-xs-1 left-right-margin"></div>
     </div>
   {{/unless}}
+{{else}}
+  <div class="row warpjs-document-status-container">
+    <div class="col-xs-1 left-right-margin"></div>
+
+    <div class="col-xs-10 warpjs-document-status-disclaimer">
+      <table class="table table-borderless">
+        <tbody>
+          <tr>
+            <td>
+              <h6><b>This page is not visible because of your access.</b></h6>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col-xs-1 left-right-margin"></div>
+  </div>
 {{/if}}
