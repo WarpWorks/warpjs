@@ -1,6 +1,6 @@
 {
   "name": "@warp-works/warpjs",
-  "version": "1.2.35",
+  "version": "1.2.36",
   "description": "Content management system for WarpWorks in javascript",
   "repository": {
     "type": "git",
@@ -78,7 +78,7 @@
     "@warp-works/warpjs-utils": "release-1.2",
     "babel-core": "6.26.x",
     "babel-loader": "7.1.x",
-    "babel-preset-env": "1.6.1",
+    "babel-preset-env": "1.7.x",
     "babel-preset-stage-0": "6.24.1",
     "body-parser": "1.18.3",
     "cookie-parser": "1.4.3",

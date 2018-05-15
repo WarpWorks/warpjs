@@ -5,6 +5,7 @@ const Promise = require('bluebird');
 // const debug = require('debug')('W2:content:instance/post');
 
 const ChangeLogs = require('./../../../lib/change-logs');
+const globalConstants = require('./../../../lib/constants');
 const DocLevel = require('./../../../lib/doc-level');
 const logger = require('./../../loggers');
 const serverUtils = require('./../../utils');
@@ -30,10 +31,31 @@ module.exports = (req, res) => {
                     })
 
                     .then(() => DocLevel.fromString(body.docLevel))
-                    .then((docLevel) => docLevel.getData(persistence, entity, instance, 0))
-                    .then((docLevelData) => {
-                        const newData = docLevelData.model.createTargetInstance();
-                        docLevelData.model.addTargetInstance(persistence, docLevelData.instance, newData.instance);
+                    .then((docLevel) => {
+                        switch (body.action) {
+                            case globalConstants.actions.ADD_CAROUSEL_CHILD:
+                                return Promise.resolve()
+                                    .then(() => docLevel.getData(persistence, entity, instance, 0))
+                                    .then((docLevelData) => {
+                                        const newData = docLevelData.model.createTargetInstance();
+                                        docLevelData.model.addTargetInstance(persistence, docLevelData.instance, newData.instance);
+                                    })
+                                ;
+
+                            case globalConstants.actions.ADD_ASSOCIATION:
+                                return Promise.resolve()
+                                    .then(() => docLevel.getData(persistence, entity, instance, 1))
+                                    .then((docLevelData) => {
+                                        docLevelData.model.addAssociation(docLevelData.instance, {
+                                            id: body.id,
+                                            type: body.type
+                                        });
+                                    })
+                                ;
+
+                            default:
+                                throw new WarpWorksError(`Need to implement action=${body.action}.`);
+                        }
                     })
 
                     .then(() => ChangeLogs.addEmbedded(req, instance, body.docLevel, body.type, body.id))
