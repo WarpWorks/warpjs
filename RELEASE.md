@@ -1,5 +1,9 @@
 # Releases
 
+## 1.2.38 - 2018-05-17
+
+- #65: Adjusting text and style.
+
 ## 1.2.37 - 2018-05-16
 
 - #52: Content: Select sub-type when creating an aggregation on table-item.
