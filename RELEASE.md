@@ -1,5 +1,9 @@
 # Releases
 
+## 1.2.37 - 2018-05-16
+
+- #52: Content: Select sub-type when creating an aggregation on table-item.
+
 ## 1.2.36 - 2018-05-15
 
 - #74: Fixed assigning Target to ImageArea.

@@ -1,10 +1,7 @@
 const Promise = require('bluebird');
 
 const bodyTemplate = require('./body.hbs');
-
-const constants = {
-    HAS_POPOVER: 'warpjs-element-has-popover'
-};
+const constants = require('./../../constants');
 
 module.exports = ($, element) => new Promise((resolve, reject) => {
     // Remove any existing popover.
@@ -27,7 +24,7 @@ module.exports = ($, element) => new Promise((resolve, reject) => {
     });
 
     $(`.popover.in .popover-content [data-warpjs-action="cancel-delete"]`).on('click', function() {
-        resolve(false);
         $(element).popover('destroy');
+        resolve(false);
     });
 });

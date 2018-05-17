@@ -18,6 +18,15 @@
         {{> ../templates/chevron this direction="right" pageLimit=relationship.totalSize action="paginate-table" url=relationship._links.nextPage.href}}
       </div>
       <div class="input-group-addon">
+        {{#each subEntities as |subEntity|}}
+          <span style="display:none;"
+            data-warpjs-sub-entity="true"
+            data-warpjs-sub-entity-id="{{subEntity.id}}"
+            data-warpjs-sub-entity-name="{{subEntity.name}}"
+            data-warpjs-sub-entity-label="{{subEntity.label}}"
+            ></span>
+        {{/each}}
+
         <span class="glyphicon glyphicon-plus-sign"
           data-warpjs-action="add-child"
           data-warpjs-url="{{addUrl}}"

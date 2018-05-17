@@ -6,17 +6,20 @@ const logger = require('./../../loggers');
 const utils = require('./../utils');
 
 module.exports = (req, res, persistence, entity, instance, resource) => {
-    const domain = req.params.domain;
-    const relationship = req.params.relationship;
+    const { domain, relationship } = req.params;
+    const { body } = req;
 
     const action = ChangeLogs.constants.AGGREGATION_ADDED;
 
     const relationshipEntity = entity.getRelationshipByName(relationship);
-    const targetEntity = relationshipEntity.getTargetEntity();
+    const targetEntity = (body.typeId)
+        ? entity.getDomain().getEntityById(body.typeId)
+        : relationshipEntity.getTargetEntity()
+    ;
 
     return Promise.resolve()
         .then(() => logger(req, `Trying ${action}`))
-        .then(() => entity.createChildForInstance(instance, relationshipEntity))
+        .then(() => targetEntity.createContentChildForRelationship(relationshipEntity, entity, instance))
         .then((child) => Promise.resolve()
             .then(() => ChangeLogs.createEntity(req, child, entity.getDisplayName(instance), entity.schemaId, instance.id))
             .then(() => targetEntity.createDocument(persistence, child))

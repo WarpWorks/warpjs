@@ -1,9 +1,7 @@
-const addChild = require('./add-child');
-
 const actionDeleteRow = require('./action-delete-row');
 const actionLink = require('./action-link');
 const actionPreview = require('./action-preview');
-
+const addChild = require('./add-child');
 const addSibling = require('./add-sibling');
 const associationModal = require('./association-modal');
 const carouselPagination = require('./carousel-pagination');

@@ -35,5 +35,5 @@
         </tbody>
     </table>
 
-    {{> table-navigation addUrl=relationship._links.self.href canEdit=canEdit}}
+    {{> table-navigation addUrl=relationship._links.self.href canEdit=canEdit subEntities=relationship.model._embedded.subEntities}}
 </div>
