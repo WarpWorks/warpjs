@@ -1,5 +1,9 @@
 # Releases
 
+## 1.2.40 - 2018-05-17
+
+- Minor change for action button spacing.
+
 ## 1.2.39 - 2018-05-17
 
 - #65: Adjusting text and style.
