@@ -1,3 +1,4 @@
+const Promise = require('bluebird');
 const { proxy, toast } = require('@warp-works/warpjs-utils');
 
 const deleteConfirm = require('./../delete-confirm');

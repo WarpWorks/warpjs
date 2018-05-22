@@ -1,3 +1,4 @@
+const Promise = require('bluebird');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 
 const ChangeLogs = require('./../../../lib/change-logs');
