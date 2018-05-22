@@ -1,5 +1,10 @@
 # Releases
 
+## 1.2.41 - 2018-05-18
+
+- Fixed backup.
+- #76: Added core domain (WarpJS) to backup.
+
 ## 1.2.40 - 2018-05-17
 
 - Minor change for action button spacing.
