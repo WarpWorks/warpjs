@@ -7,8 +7,6 @@ const warpjsPlugins = require('@warp-works/warpjs-plugins');
 const serverUtils = require('./../server/utils');
 const warpCore = require('./../lib/core');
 
-const config = serverUtils.getConfig();
-
 Promise.resolve()
     .then(() => debug("Starting re-index process..."))
     .then(() => serverUtils.getConfig())

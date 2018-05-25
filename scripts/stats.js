@@ -3,16 +3,13 @@
 const debug = require('debug')('W2:scripts:stats');
 const Promise = require('bluebird');
 
-const core = require('./../lib/core');
-
 const serverUtils = require('./../server/utils');
 
 Promise.config({
     longStackTraces: true
 });
 
-
-return Promise.resolve()
+Promise.resolve()
     .then(() => debug(`Getting persistence...`))
     .then(() => serverUtils.getPersistence())
     .then((persistence) => Promise.resolve()

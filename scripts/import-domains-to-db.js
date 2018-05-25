@@ -10,7 +10,6 @@ const path = require('path');
 const Promise = require('bluebird');
 
 const createDomainFromJSONString = require('./../lib/core/file-schema/create-domain-from-json-string');
-const models = require('./../lib/core/models');
 const warpCore = require('./../lib/core');
 
 Promise.config({
@@ -54,13 +53,13 @@ Promise.resolve()
                             console.log(`Domain '${domainInfo.name}' already imported. Skipping...`);
                         } else {
                             return Promise.resolve()
-                            .then(() => readDomainFromFile(domainInfo))
-                            .then((domain) => domain.save(persistence))
-                            .then((res) => debug(`Domain '${domainInfo.name}': domain.save():`, res))
-                            .catch((err) => {
-                                console.error(`Error importing '${domainInfo.name}'.`);
-                                throw err;
-                            })
+                                .then(() => readDomainFromFile(domainInfo))
+                                .then((domain) => domain.save(persistence))
+                                .then((res) => debug(`Domain '${domainInfo.name}': domain.save():`, res))
+                                .catch((err) => {
+                                    console.error(`Error importing '${domainInfo.name}'.`);
+                                    throw err;
+                                });
                         }
                     })
             ))
