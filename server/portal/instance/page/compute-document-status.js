@@ -6,15 +6,17 @@ function getParentStatus(statusConfig, persistence, entity, instance) {
         .then(() => entity.getParentInstance(persistence, instance))
         .then((parentInstances) => parentInstances.pop())
         .then((parentInstance) => {
-            const parentStatus = parentInstance[statusConfig.property];
+            if (parentInstance) {
+                const parentStatus = parentInstance[statusConfig.property];
 
-            if (parentStatus === statusConfig.inheritance) {
-                return Promise.resolve()
-                    .then(() => entity.getParentEntity(instance))
-                    .then((parentEntity) => getParentStatus(statusConfig, persistence, parentEntity, parentInstance))
-                ;
-            } else {
-                return parentStatus;
+                if (parentStatus === statusConfig.inheritance) {
+                    return Promise.resolve()
+                        .then(() => entity.getParentEntity(instance))
+                        .then((parentEntity) => getParentStatus(statusConfig, persistence, parentEntity, parentInstance))
+                    ;
+                } else {
+                    return parentStatus;
+                }
             }
         })
     ;
