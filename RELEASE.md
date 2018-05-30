@@ -1,9 +1,14 @@
 # Releases
 
-## 1.2.41 - 2018-05-18
+## 1.2.41 - 2018-05-30
 
 - Fixed backup.
 - #76: Added core domain (WarpJS) to backup.
+- Fixed the new entity ID from target domain instead of level0 domain.
+- #89: Studio: Some work on SMN export.
+- #85: Studio: Add JSON export for domain.
+- #81: Tentative to fix IE missing Promise
+
 
 ## 1.2.40 - 2018-05-17
 

@@ -12,7 +12,3 @@
 
 # in case 'npm pack' was run on this folder.
 /*.tgz
-
-# Because of refactoring temporary files.
-/studio
-/templates
