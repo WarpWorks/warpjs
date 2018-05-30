@@ -1,1 +1,0 @@
-(C) http://glyphicons.com/
