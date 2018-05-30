@@ -22,10 +22,11 @@ function handleAggregation(req, res, resource, persistence, instanceData) {
     return Promise.resolve()
         .then(() => instanceData.entity.getRelationshipByName(relationship))
         .then((relationshipModel) => Promise.resolve()
-            .then(() => instanceData.entity.createChildForInstance(
+            .then(() => warpCore.getDomainByName(domain))
+            .then((level1Domain) => instanceData.entity.createChildForInstance(
                 instanceData.instance,
                 relationshipModel,
-                instanceData.entity.getDomain().createNewID()
+                level1Domain.createNewID()
             ))
             .then((child) => Promise.resolve()
                 // TODO: Changelog createEntity()
@@ -69,17 +70,21 @@ function handleAssociation(req, res, resource, persistence, instanceData) {
 
 function handleEmbedded(req, res, resource, persistence, instanceData) {
     const { body } = req;
+    const { domain } = req.params;
 
     return Promise.resolve()
         .then(() => DocLevel.fromString(body.docLevel))
         .then((docLevel) => docLevel.getData(persistence, instanceData.entity, instanceData.instance))
         .then((docLevelData) => Promise.resolve()
             .then(() => docLevelData.model.getTargetReferences(docLevelData.instance))
-            .then((references) => {
-                const newInstance = docLevelData.model.getTargetEntity().newInstance(null, instanceData.entity.getDomain().createNewID());
-                references.push(newInstance);
-                return newInstance;
-            })
+            .then((references) => Promise.resolve()
+                .then(() => warpCore.getDomainByName(domain))
+                .then((level1Domain) => {
+                    const newInstance = docLevelData.model.getTargetEntity().newInstance(null, level1Domain.createNewID());
+                    references.push(newInstance);
+                    return newInstance;
+                })
+            )
         )
         .then((newInstance) => {
             // TODO: ChangeLog
