@@ -114,7 +114,7 @@ module.exports = (req, res) => {
             .then(() => utils.getInstance(persistence, type, id))
             .then((instanceData) => Promise.resolve()
                 .then(() => debug(`instanceData=`, instanceData))
-                // TODO: handle 'targetEntity?
+                // TODO: handleTargetEntity
                 .then(() => instanceData.entity.getRelationshipByName(relationship))
                 .then((relationshipModel) => {
                     const targetEntity = relationshipModel.getTargetEntity();
