@@ -1,3 +1,5 @@
+const FilterBox = require('@warp-works/warpjs-filter-box');
+
 const actionDeleteRow = require('./action-delete-row');
 const actionLink = require('./action-link');
 const actionPreview = require('./action-preview');
@@ -7,7 +9,6 @@ const associationModal = require('./association-modal');
 const carouselPagination = require('./carousel-pagination');
 const changeLogs = require('./../change-logs');
 const deleteEntity = require('./delete-entity');
-const filterBox = require('./../filter-box');
 const patchEntity = require('./patch-entity');
 const progressBarModal = require('./../progress-bar-modal');
 const tabContentNavigation = require('./tab-content-navigation');
@@ -37,5 +38,5 @@ module.exports = ($, result) => {
     tablePanelItem($);
     documentStatus($, instanceDoc);
 
-    filterBox($);
+    FilterBox.init($);
 };

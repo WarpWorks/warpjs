@@ -1,4 +1,5 @@
 const path = require('path');
+const FilterBox = require('@warp-works/warpjs-filter-box');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 const webpack = require('webpack');
 const WebpackVisualizer = require('webpack-visualizer-plugin');
@@ -57,7 +58,8 @@ module.exports = {
                             warpjsUtils.getHandlebarsHelpersDir()
                         ],
                         partialDirs: [
-                            warpjsUtils.getHandlebarsPartialsDir()
+                            warpjsUtils.getHandlebarsPartialsDir(),
+                            FilterBox.templatesDir
                         ]
                     }
                 }

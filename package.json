@@ -70,6 +70,7 @@
     "@quoin/eslint-config-quoin": "latest",
     "@quoin/node-test-helpers": "latest",
     "@warp-works/warpjs-elasticsearch-plugin": "1.2.3",
+    "@warp-works/warpjs-filter-box": "1.0.0",
     "@warp-works/warpjs-imagemap-editor-plugin": "1.2.3",
     "@warp-works/warpjs-map-plugin": "release-1.2",
     "@warp-works/warpjs-mongo-persistence": "0.1.5",

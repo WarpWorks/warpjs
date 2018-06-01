@@ -1,10 +1,11 @@
-const filterBox = require('./../filter-box');
+const FilterBox = require('@warp-works/warpjs-filter-box');
+
 const progressBarModal = require('./../progress-bar-modal');
 
 module.exports = ($, result) => {
     progressBarModal.show($, 90);
 
-    filterBox($);
+    FilterBox.init($);
 
     progressBarModal.show($, 100);
     progressBarModal.hide();
