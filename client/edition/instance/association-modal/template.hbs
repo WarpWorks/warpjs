@@ -29,7 +29,8 @@
               {{/if}}
 
               {{#if canEdit}}
-                <li class="list-group-item">
+                <li class="list-group-item warpjs-filter-box-container">
+                  {{> ../../filter-box/template}}
                   <ul class="list-group {{selectionEntities}}">
                     {{> selection-entities-loading}}
                   </ul>

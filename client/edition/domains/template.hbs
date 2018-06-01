@@ -2,9 +2,13 @@
 <div class="container" role="main">
   <div class="row">
     <div class="col-xs-12">
-      <div class="panel panel-success">
+      <div class="panel panel-success warpjs-filter-box-container">
         <div class="panel-heading">
-          Available domains
+          Available domains:
+
+          <div class="pull-right">
+            {{>../filter-box/template placeholder="Filter list of domains"}}
+          </div>
         </div>
 
         <div class="panel-body">
@@ -18,7 +22,7 @@
               </thead>
               <tbody>
                 {{#each _embedded.domains}}
-                  <tr>
+                  <tr class="warpjs-filter-box-item">
                     <td class="warpjs-actions">
                       {{!--
                       <a href="{{_links.self.href}}"
