@@ -2,7 +2,7 @@
   <div class="container" role="main">
     <div class="row">
       <div class="col-xs-12">
-        <div class="panel panel-success">
+        <div class="panel panel-success warpjs-filter-box-container">
           <div class="panel-heading">
             Available entity types for
             <a href="{{_links.domain.href}}">{{_links.domain.title}}</a>
@@ -24,7 +24,7 @@
                 </thead>
                 <tbody>
                   {{#each _embedded.entities}}
-                    <tr>
+                    <tr class="warpjs-filter-box-item">
                       <td class="warpjs-actions">
                         {{!--
                         <a href="{{_links.self.href}}"

@@ -7,6 +7,7 @@ const associationModal = require('./association-modal');
 const carouselPagination = require('./carousel-pagination');
 const changeLogs = require('./../change-logs');
 const deleteEntity = require('./delete-entity');
+const filterBox = require('./../filter-box');
 const patchEntity = require('./patch-entity');
 const progressBarModal = require('./../progress-bar-modal');
 const tabContentNavigation = require('./tab-content-navigation');
@@ -35,4 +36,6 @@ module.exports = ($, result) => {
     patchEntity($);
     tablePanelItem($);
     documentStatus($, instanceDoc);
+
+    filterBox($);
 };
