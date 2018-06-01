@@ -1,5 +1,9 @@
 # Releases
 
+## 1.2.42 - 2018-05-31
+
+- #87: Filter box on some lists.
+
 ## 1.2.41 - 2018-05-30
 
 - Fixed backup.
