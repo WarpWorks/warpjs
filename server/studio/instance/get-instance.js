@@ -7,7 +7,7 @@ const breadcrumbMapper = require('./../../edition/instance/breadcrumb-mapper');
 const ChangeLogs = require('./../../../lib/change-logs');
 const ComplexTypes = require('./../../../lib/core/complex-types');
 const constants = require('./../constants');
-const contentConstants = require('./../../content/constants');
+const contentRoutes = require('./../../content/constants').routes;
 const DocLevel = require('./../../../lib/doc-level');
 const editionInstance = require('./../../edition/instance');
 const utils = require('./../utils');
@@ -33,7 +33,7 @@ module.exports = (req, res) => {
     });
 
     if (type === ComplexTypes.Domain) {
-        resource.link('preview', RoutesInfo.expand(contentConstants.routes.instances, { domain, type: domain }));
+        resource.link('preview', RoutesInfo.expand(contentRoutes.instances, { domain, type: domain }));
     }
 
     warpjsUtils.wrapWith406(res, {
@@ -47,6 +47,14 @@ module.exports = (req, res) => {
                     .then(() => {
                         resource.displayName = instanceData.entity.getDisplayName(instanceData.instance);
                         resource.isRootInstance = Boolean(instanceData.instance.isRootInstance);
+
+                        resource.link('content', {
+                            href: RoutesInfo.expand(contentRoutes.instances, {
+                                domain,
+                                type: instanceData.instance.name
+                            }),
+                            title: `Show instances of '${instanceData.instance.name}'.`
+                        });
                     })
 
                     // Changelogs

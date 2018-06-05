@@ -2,7 +2,7 @@ const FilterBox = require('@warp-works/warpjs-filter-box');
 
 const actionDeleteRow = require('./action-delete-row');
 const actionLink = require('./action-link');
-const actionPreview = require('./action-preview');
+const actionGoto = require('./action-goto');
 const addChild = require('./add-child');
 const addSibling = require('./add-sibling');
 const associationModal = require('./association-modal');
@@ -24,7 +24,7 @@ module.exports = ($, result) => {
 
     actionDeleteRow($, instanceDoc);
     actionLink($, instanceDoc);
-    actionPreview($, instanceDoc);
+    actionGoto($, instanceDoc);
     associationModal($, instanceDoc);
     changeLogs($, instanceDoc);
     wysiwygEditor($, instanceDoc);

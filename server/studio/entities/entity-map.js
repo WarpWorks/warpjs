@@ -3,6 +3,7 @@ const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const ComplexTypes = require('./../../../lib/core/complex-types');
 const constants = require('./../constants');
+const contentRoutes = require('./../../content/constants').routes;
 
 module.exports = (domain, entity) => {
     const entityData = {
@@ -29,6 +30,14 @@ module.exports = (domain, entity) => {
     resource.link('label', {
         href: resource._links.self.href,
         title: resource._links.self.title
+    });
+
+    resource.link('content', {
+        href: RoutesInfo.expand(contentRoutes.instances, {
+            domain,
+            type: entity.name
+        }),
+        title: `Show instances of '${entity.name}'.`
     });
 
     return resource;

@@ -7,6 +7,20 @@
       >{{status}}</span>
 
     <span class="pull-right warpjs-actions">
+      {{#if _links.studio}}
+        <span class="glyphicon glyphicon-wrench warpjs-action"
+          data-warpjs-action="goto"
+          data-warpjs-url="{{_links.studio.href}}"
+          title="{{_links.studio.title}}"
+          ></span>
+      {{else if _links.content}}
+        <span class="glyphicon glyphicon-list warpjs-action"
+          data-warpjs-action="goto"
+          data-warpjs-url="{{_links.content.href}}"
+          title="{{_links.content.title}}"
+          ></span>
+      {{/if}}
+
       <span class="glyphicon glyphicon-time warpjs-action"
         data-toggle="popover"
         data-warpjs-action="change-logs"
@@ -14,7 +28,7 @@
         ></span>
       {{#if _links.preview}}
         <span class="glyphicon glyphicon-eye-open warpjs-action"
-          data-warpjs-action="preview"
+          data-warpjs-action="goto"
           data-warpjs-url="{{_links.preview.href}}"
           title="Preview document"
           ></span>

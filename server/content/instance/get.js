@@ -7,6 +7,7 @@ const ChangeLogs = require('./../../../lib/change-logs');
 const constants = require('./../constants');
 const editionInstance = require('./../../edition/instance');
 const serverUtils = require('./../../utils');
+const studioRoutes = require('./../../studio/constants').routes;
 const utils = require('./../utils');
 
 const config = serverUtils.getConfig();
@@ -59,6 +60,18 @@ module.exports = (req, res) => {
             .then((persistence) => Promise.resolve()
                 .then(() => serverUtils.getEntity(domain, type))
                 .then((entity) => Promise.resolve()
+                    .then(() => {
+                        // FIXME: to studio only if admin.
+                        resource.link('studio', {
+                            href: RoutesInfo.expand(studioRoutes.instance, {
+                                domain,
+                                type: entity.type,
+                                id: entity.persistenceId
+                            }),
+                            title: "Edit schema in Studio"
+                        });
+                    })
+
                     .then(() => entity.getInstance(persistence, id))
                     .then((instance) => Promise.resolve()
                         .then(() => {

@@ -1,5 +1,5 @@
-module.exports = {
-    routes: {
+module.exports = Object.freeze({
+    routes: Object.freeze({
         entities: 'W2:studio:domain-entities',
         history: 'W2:studio:instance-history',
         home: 'W2:studio:home',
@@ -9,12 +9,12 @@ module.exports = {
         relationship: 'W2:studio:instance-relationship',
         relationshipPage: 'W2:studio:instance-relationship-page',
         types: 'W2:studio:types',
-        PROFILES: {
+        PROFILES: Object.freeze({
             parentClass: 'parentClass',
             targetEntity: 'targetEntity',
             typeItems: 'typeItems',
             types: 'types',
             withChildren: 'withChildren'
-        }
-    }
-};
+        })
+    })
+});

@@ -3,7 +3,7 @@ const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const ComplexTypes = require('./../../../lib/core/complex-types');
 const constants = require('./../constants');
-const studioConstants = require('./../../studio/constants');
+const studioRoutes = require('./../../studio/constants').routes;
 
 module.exports = (domain, entity) => {
     const entityData = {
@@ -25,7 +25,7 @@ module.exports = (domain, entity) => {
     // Clicking on the pencil.
     // TODO: Only link if has admin privileges.
     resource.link('studio', {
-        href: RoutesInfo.expand(studioConstants.routes.instance, {
+        href: RoutesInfo.expand(studioRoutes.instance, {
             domain,
             type: ComplexTypes.Entity,
             id: entity.persistenceId

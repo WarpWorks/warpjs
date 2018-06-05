@@ -40,7 +40,11 @@
                         {{#if _links.studio}}
                           <a href="{{_links.studio.href}}"
                               title="{{_links.studio.title}}"
-                              ><span class="glyphicon glyphicon-pencil warpjs-action"></span></a>
+                              ><span class="glyphicon glyphicon-wrench warpjs-action"></span></a>
+                        {{else if _links.content}}
+                          <a href="{{_links.content.href}}"
+                            title="{{_links.content.title}}"
+                            ><span class="glyphicon glyphicon-book warpjs-action"></span></a>
                         {{/if}}
                       </td>
                       <td>
