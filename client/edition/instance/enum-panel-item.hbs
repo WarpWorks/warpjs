@@ -1,19 +1,18 @@
 <div class="form-group enum-pi">
-    <label class="col-xs-12">
-        <span class="col-xs-2 control-label">{{label}}</span>
-        <div class="col-xs-10">
-            <select
-                class="form-control"
-                data-doc-level="{{model.docLevel}}"
-                {{#if model._links.self}}data-warpjs-url="{{model._links.self.href}}"{{/if}}
-                {{#unless canEdit}}disabled{{/unless}}
-              >
-                <option data-literal="WarpJS_Enum_noSelection">------------</option>
-                {{#each model.literals}}
-                    {{!-- FIXME: Add the selected attribute --}}
-                    <option data-literal="{{name}}" {{#if selected}}selected{{/if}}>{{name}}</option>
-                {{/each}}
-            </select>
-        </div>
-    </label>
+  <label class="col-xs-12">
+    <span class="col-xs-2 control-label">{{label}}</span>
+    <div class="col-xs-10">
+      <select
+        class="form-control"
+        data-doc-level="{{model.docLevel}}"
+        {{#if model._links.self}}data-warpjs-url="{{model._links.self.href}}"{{/if}}
+        {{#unless canEdit}}disabled{{/unless}}
+        >
+        <option data-literal="warpjs-enum-no-selection" value="">------------</option>
+        {{#each model.literals}}
+          <option data-literal="{{name}}" value="{{name}}" {{#if selected}}selected{{/if}}>{{name}}</option>
+        {{/each}}
+      </select>
+    </div>
+  </label>
 </div>

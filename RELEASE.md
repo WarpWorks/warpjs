@@ -1,5 +1,9 @@
 # Releases
 
+## 1.2.43 - 2018-06-05
+
+- #80: Allow empty value in enumeration selection.
+
 ## 1.2.42 - 2018-05-31
 
 - #87: Filter box on some lists.
