@@ -1,5 +1,11 @@
 # Releases
 
+## 1.2.44 - 2018-06-05
+
+- Added missing Style=Carousel
+- Added few links between Studio and Content (not totally working, see
+  PageView).
+
 ## 1.2.43 - 2018-06-05
 
 - #80: Allow empty value in enumeration selection.
