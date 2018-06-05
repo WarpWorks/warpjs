@@ -5097,6 +5097,11 @@
               "id": 84
             },
             {
+              "id": 556,
+              "type": "Literal",
+              "name": "Carousel"
+            },
+            {
               "name": "Table",
               "type": "Literal",
               "id": 85
