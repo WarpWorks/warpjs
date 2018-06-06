@@ -19,6 +19,7 @@ function documentMapper(persistence, entity, domain, instance) {
             id: instance.id,
             type: instance.type,
             name: entity.getDisplayName(instance),
+            description: instance.Description,
             status: instance.Status
         }))
         .then((resource) => Promise.resolve()

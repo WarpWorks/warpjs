@@ -1,0 +1,12 @@
+<div class="modal-header">
+  {{>./modal-close-button}}
+  {{#if title}}
+    <div class="modal-title">
+      {{#if html}}
+        {{{title}}}
+      {{else}}
+        {{title}}
+      {{/if}}
+    </div>
+  {{/if}}
+</div>

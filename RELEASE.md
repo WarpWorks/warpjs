@@ -1,5 +1,9 @@
 # Releases
 
+## 1.2.45 - 2018-06-06
+
+- Adding description to association-modal and link-selection.
+
 ## 1.2.44 - 2018-06-05
 
 - Added missing Style=Carousel

@@ -58,6 +58,7 @@ module.exports = {
                             warpjsUtils.getHandlebarsHelpersDir()
                         ],
                         partialDirs: [
+                            path.join(rootDir, 'client', 'partials'),
                             warpjsUtils.getHandlebarsPartialsDir(),
                             FilterBox.templatesDir
                         ]

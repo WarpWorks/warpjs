@@ -1,3 +1,4 @@
+// const debug = require('debug')('W2:studio:entities/entity-map');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
@@ -32,13 +33,15 @@ module.exports = (domain, entity) => {
         title: resource._links.self.title
     });
 
-    resource.link('content', {
-        href: RoutesInfo.expand(contentRoutes.instances, {
-            domain,
-            type: entity.name
-        }),
-        title: `Show instances of '${entity.name}'.`
-    });
+    if (entity.isDocument() && !entity.isAbstract) {
+        resource.link('content', {
+            href: RoutesInfo.expand(contentRoutes.instances, {
+                domain,
+                type: entity.name
+            }),
+            title: `Show instances of '${entity.name}'.`
+        });
+    }
 
     return resource;
 };

@@ -1,14 +1,15 @@
 {{#each entities as |entity|}}
-    <li class="list-group-item warpjs-selection-entity clickable warpjs-filter-box-item"
-        data-warpjs-id="{{entity.id}}"
-        data-warpjs-type="{{entity.type}}"
-        data-warpjs-name="{{entity.name}}"
-        data-warpjs-display-name="{{entity.name}}"
-        >
-      <span class="glyphicon glyphicon-plus pull-right"></span>
-      {{entity.name}}
-    </li>
+  <li class="list-group-item warpjs-selection-entity clickable warpjs-filter-box-item"
+      data-warpjs-id="{{entity.id}}"
+      data-warpjs-type="{{entity.type}}"
+      data-warpjs-name="{{entity.name}}"
+      data-warpjs-display-name="{{entity.name}}"
+      >
+    <span class="glyphicon glyphicon-plus pull-right"></span>
+
+    <div class="warpjs-selection-entity-name">{{entity.name}}</div>
+    {{#if description}}<div class="warpjs-selection-entity-description">{{description}}</div>{{/if}}
+  </li>
 {{else}}
-    <li class="list-group-item alert alert-warning"
-        >No entities available</li>
+  <li class="list-group-item alert alert-warning">No entities available</li>
 {{/each}}

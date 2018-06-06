@@ -1,21 +1,13 @@
-<div class="modal fade {{SELECTION_MODAL_CLASS}}"
-    role="dialog"
-    tabindex="-1"
-    aria-hidden="true"
-    aria-labelledby="Link-Selector"
+<div class="modal fade {{SELECTION_MODAL_CLASS}}" role="dialog" tabindex="-1" aria-hidden="true"
+    data-warpjs-modal="link-selector"
     >
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"
-            aria-label="Close" aria-hidden="true"
-            >&times;</button>
-        <div class="modal-title">Link Editor</div>
-      </div>
+      {{>modal-header title="Link Editor"}}
+
       <div class="modal-body">
         <div class="row">
           <div class="col-md-10 col-md-offset-1">
-            <form class="form-inline">
               <ul class="list-group">
 
                 <li class="list-group-item">
@@ -30,7 +22,8 @@
                   </div>
                 </li>
 
-                <li class="list-group-item" >
+                <li class="list-group-item warpjs-filter-box-container" >
+                  {{> warpjs-filter-box-template}}
                   <div class="form-group">
                     Entities:
                     <ul class="list-group warpjs-selection-entities">Select an entity type</ul>
@@ -46,7 +39,6 @@
                 </li>
 
               </ul>
-            </form>
           </div>
         </div>
       </div>
