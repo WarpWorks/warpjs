@@ -17,17 +17,27 @@
               data-warpjs-action="open-wysiwyg"
               data-warpjs-can-edit="{{canEdit}}"
               ></span>
-        {{/if}}
 
-        <input
+          <textarea
+            class="form-control"
+            type="{{model.inputType}}"
+            readonly
+            rows="7"
+            data-doc-level="{{model.docLevel}}"
+            data-warpjs-can-edit="{{canEdit}}"
+            {{#if model._links.self}}data-warpjs-url="{{model._links.self.href}}"{{/if}}
+            {{#unless canEdit}}disabled{{/unless}}
+            >{{model.value}}</textarea>
+        {{else}}
+          <input
             class="form-control"
             type="{{model.inputType}}"
             value="{{model.value}}"
             data-doc-level="{{model.docLevel}}"
             {{#if model._links.self}}data-warpjs-url="{{model._links.self.href}}"{{/if}}
-            {{#if (isPropertyTypeText)}}readonly{{/if}}
             {{#unless canEdit}}disabled{{/unless}}
             />
+        {{/if}}
       {{/if}}
     </div>
   </label>
