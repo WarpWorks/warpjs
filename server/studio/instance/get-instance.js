@@ -48,13 +48,15 @@ module.exports = (req, res) => {
                         resource.displayName = instanceData.entity.getDisplayName(instanceData.instance);
                         resource.isRootInstance = Boolean(instanceData.instance.isRootInstance);
 
-                        resource.link('content', {
-                            href: RoutesInfo.expand(contentRoutes.instances, {
-                                domain,
-                                type: instanceData.instance.name
-                            }),
-                            title: `Show instances of '${instanceData.instance.name}'.`
-                        });
+                        if (instanceData.entity.isDocument(instanceData.instance)) {
+                            resource.link('content', {
+                                href: RoutesInfo.expand(contentRoutes.instances, {
+                                    domain,
+                                    type: instanceData.instance.name
+                                }),
+                                title: `Show instances of '${instanceData.instance.name}'.`
+                            });
+                        }
                     })
 
                     // Changelogs
