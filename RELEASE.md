@@ -1,4 +1,11 @@
-# Releases
+# WarpJS's Releases Notes
+
+## 1.2.46 - 2018-06-06
+
+- Change text field from `<input>` to `<textarea>`.
+- Studio: Only display link to Content for entities with
+  `entityType`=`Document`.
+- Studio: Changed order and labels of panels.
 
 ## 1.2.45 - 2018-06-06
 
