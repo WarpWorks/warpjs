@@ -7,7 +7,7 @@ const addChild = require('./add-child');
 const addSibling = require('./add-sibling');
 const associationModal = require('./association-modal');
 const carouselPagination = require('./carousel-pagination');
-const changeLogs = require('./../change-logs');
+const ChangeLogs = require('./../change-logs');
 const deleteEntity = require('./delete-entity');
 const patchEntity = require('./patch-entity');
 const progressBarModal = require('./../progress-bar-modal');
@@ -26,7 +26,7 @@ module.exports = ($, result) => {
     actionLink($, instanceDoc);
     actionGoto($, instanceDoc);
     associationModal($, instanceDoc);
-    changeLogs($, instanceDoc);
+    ChangeLogs.init($, instanceDoc);
     wysiwygEditor($, instanceDoc);
 
     tabContentNavigation($);

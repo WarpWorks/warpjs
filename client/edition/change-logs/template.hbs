@@ -8,17 +8,7 @@
       {{>modal-header title="Change Logs"}}
 
       <div class="modal-body">
-        {{#if changeLogs.length}}
-          <ul class="list-group">
-            {{#each changeLogs as |changeLog|}}
-              <li class="list-group-item">
-                {{> item changeLog}}
-              </li>
-            {{/each}}
-          </ul>
-        {{else}}
-            No changes.
-        {{/if}}
+        {{>modal-body changeLogs=changeLogs}}
       </div>
 
       <div class="modal-footer">

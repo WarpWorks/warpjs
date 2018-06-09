@@ -41,7 +41,7 @@ module.exports = ($, instanceDoc) => {
         openModal($, instanceDoc, this);
     });
 
-    instanceDoc.on('click', 'textarea', function() {
+    instanceDoc.on('click', 'textarea.warpjs-text-field', function() {
         openModal($, instanceDoc, this);
     });
 };

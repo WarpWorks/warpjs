@@ -1,6 +1,7 @@
 const Promise = require('bluebird');
 const { proxy, toast } = require('@warp-works/warpjs-utils');
 
+const ChangeLogs = require('./../change-logs');
 const deleteConfirm = require('./../delete-confirm');
 
 module.exports = ($, instanceDoc) => {
@@ -13,7 +14,8 @@ module.exports = ($, instanceDoc) => {
                         .then(() => toast.loading($, "This can take few seconds.", "Deleting..."))
                         .then((toastLoading) => Promise.resolve()
                             .then(() => proxy.del($, $(this).data('warpjsUrl')))
-                            .then((res) => {
+                            .then(() => ChangeLogs.dirty())
+                            .then(() => {
                                 toast.success($, "Deleted");
 
                                 // Immediate UI feedback

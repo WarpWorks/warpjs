@@ -22,9 +22,9 @@
       {{/if}}
 
       <span class="glyphicon glyphicon-time warpjs-action"
-        data-toggle="popover"
         data-warpjs-action="change-logs"
         title="Change logs"
+        data-warpjs-url="{{_links.history.href}}"
         ></span>
       {{#if _links.preview}}
         <span class="glyphicon glyphicon-eye-open warpjs-action"
