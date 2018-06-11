@@ -22,6 +22,11 @@ function breadcrumbMapper(domain, breadcrumb) {
 
     resource._links.self.title = breadcrumb.Name || breadcrumb.name || breadcrumb.type;
 
+    resource.link('instances', {
+        href: RoutesInfo.expand(constants.routes.instances, { domain, type: breadcrumb.type }),
+        title: `Documents of type '${breadcrumb.type}'.`
+    });
+
     return resource;
 }
 

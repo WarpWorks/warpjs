@@ -4,7 +4,11 @@
   {{else}}
     {{#each _embedded.breadcrumbs}}
       {{#if @last}}
-        <li class="active">{{_links.self.title}}{{#if displayType}} [{{displayType}}]{{/if}}</li>
+        <li class="active">{{_links.self.title}}
+          {{#if displayType}}
+            [<a href="{{_links.instances.href}}" title="{{_links.instances.title}}">{{displayType}}</a>]
+          {{/if}}
+        </li>
       {{else}}
         <li class="breadcrumb-item">
           <a href="{{_links.self.href}}" data-toggle="tooltip" title="{{type}}">{{_links.self.title}}</a>
