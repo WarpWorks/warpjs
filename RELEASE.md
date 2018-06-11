@@ -1,5 +1,10 @@
 # WarpJS's Releases Notes
 
+## 1.2.47 - 2018-06-11
+
+- #93: Update change logs modal when page data has been modified.
+- Allow navigation to parent type.
+
 ## 1.2.46 - 2018-06-06
 
 - Change text field from `<input>` to `<textarea>`.
