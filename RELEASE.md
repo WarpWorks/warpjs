@@ -1,5 +1,10 @@
 # WarpJS's Releases Notes
 
+## 1.2.48 - 2018-06-12
+
+- #95: Portal: Styling table content.
+- #78: Content: List orphan documents.
+
 ## 1.2.47 - 2018-06-11
 
 - #93: Update change logs modal when page data has been modified.
