@@ -1,0 +1,56 @@
+{{#partial "content"}}
+  <div class="container" role="main">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="panel panel-success warpjs-filter-box-container">
+          <div class="panel-heading">
+            Orphan documents for
+            <a href="{{_links.domain.href}}">{{_links.domain.title}}</a>
+            :
+
+            <div class="pull-right">
+              {{>warpjs-filter-box-template placeholder="Filter list of domains"}}
+            </div>
+          </div>
+
+          <div class="panel-body">
+            {{#if _embedded.orphans.length}}
+              <div class="info">Number of orphans: {{_embedded.orphans.length}}</div>
+
+              <div class="table-responsive">
+                <table class="table table-striped table-hover table-condensed">
+                  <thead>
+                    <tr>
+                      <th class="col-xs-2"></th>
+                      <th class="col-xs-4">Name</th>
+                      <th class="col-xs-2">Entity</th>
+                      <th class="col-xs-4">Reason</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {{#each _embedded.orphans as |orphan|}}
+                      <tr class="warpjs-filter-box-item">
+                        <td class="warpjs-actions">
+                          <a href="{{orphan._links.self.href}}" title="Edit"
+                            ><span class="glyphicon glyphicon-pencil warpjs-action"></span></a>
+                        </td>
+                        <td><a href="{{orphan._links.self.href}}">{{orphan.label}}</a></td>
+                        <td>{{orphan.type}}</td>
+                        <td>{{orphan.reason}}</td>
+                      </tr>
+                    {{/each}}
+                  </tbody>
+                </table>
+              </div>
+            {{else}}
+              <div class="info col-xs-12">No orphans found.</div>
+            {{/if}}
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+{{/partial}}
+
+{{> page-content}}

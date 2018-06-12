@@ -17,6 +17,7 @@ module.exports = {
             [constants.entryPoints.domainTypes]: './client/edition/domain-types/index.js',
             [constants.entryPoints.instances]: './client/edition/instances/index.js',
             [constants.entryPoints.instance]: './client/edition/instance/index.js',
+            [constants.entryPoints.orphans]: './client/edition/orphans/index.js',
             [constants.entryPoints.portal]: './client/portal/entity/lib/index.js'
         },
         externals: {

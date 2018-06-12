@@ -40,6 +40,13 @@ module.exports = (domain) => {
         title: "Edit in Studio"
     });
 
+    resource.link('orphans', {
+        href: RoutesInfo.expand(constants.routes.orphans, {
+            domain: domain.name
+        }),
+        title: "Find orphan documents"
+    });
+
     // Clicking on the domain name label.
     resource.link('label', {
         href: resource._links.domainTypes.href,

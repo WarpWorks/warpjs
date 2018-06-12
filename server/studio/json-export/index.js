@@ -1,9 +1,5 @@
 const generateDomainJson = require('./generate-domain-json');
 
-const implementations = {
+module.exports = Object.freeze({
     get: (req, res) => generateDomainJson(req, res)
-};
-
-Object.freeze(implementations);
-
-module.exports = implementations;
+});

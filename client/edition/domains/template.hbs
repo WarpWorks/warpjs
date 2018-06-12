@@ -24,22 +24,19 @@
                 {{#each _embedded.domains}}
                   <tr class="warpjs-filter-box-item">
                     <td class="warpjs-actions">
-                      {{!--
-                      <a href="{{_links.self.href}}"
-                        ><span class="glyphicon glyphicon-info-sign warpjs-action"></span></a>
-                      --}}
-                      <a href="{{_links.domainTypes.href}}"
-                        title="{{_links.domainTypes.title}}"
+                      <a href="{{_links.domainTypes.href}}" title="{{_links.domainTypes.title}}"
                         ><span class="glyphicon glyphicon-list warpjs-action"></span></a>
                       {{#if _links.studio.href}}
-                        <a href="{{_links.studio.href}}"
-                          title="{{_links.studio.title}}"
+                        <a href="{{_links.studio.href}}" title="{{_links.studio.title}}"
                           ><span class="glyphicon glyphicon-pencil warpjs-action"></span></a>
                       {{/if}}
                       {{#if _links.export.href}}
-                        <a href="{{_links.export.href}}"
-                          title="{{_links.export.title}}"
+                        <a href="{{_links.export.href}}" title="{{_links.export.title}}"
                           ><span class="glyphicon glyphicon-export warpjs-action"></span></a>
+                      {{/if}}
+                      {{#if _links.orphans.href}}
+                        <a href="{{_links.orphans.href}}" title="{{_links.orphans.title}}"
+                          ><span class="glyphicon glyphicon-random warpjs-action"></span></a>
                       {{/if}}
                     </td>
 

@@ -2,12 +2,10 @@ const RoutesInfo = require('@quoin/expressjs-routes-info');
 
 const constants = require('./../constants');
 
-module.exports = {
+module.exports = Object.freeze({
     get bundles() {
-        return [
-            `${RoutesInfo.expand('W2:app:static')}/libs/svg/svg.js`,
-            `${RoutesInfo.expand('W2:app:static')}/app/${constants.assets.vendor}`,
+        return constants.baseBundles.concat([
             `${RoutesInfo.expand('W2:app:static')}/app/${constants.assets.instance}`
-        ];
+        ]);
     }
-};
+});

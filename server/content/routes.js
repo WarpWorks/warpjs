@@ -5,12 +5,13 @@ const domain = require('./domain');
 const domains = require('./domains');
 const domainType = require('./domain-type');
 const domainTypes = require('./domain-types');
+const entitySibling = require('./entity-sibling');
+const home = require('./home');
 const instances = require('./instances');
 const instance = require('./instance');
 const instanceHistory = require('./instance-history');
 const instanceRelationship = require('./instance-relationship');
-const entitySibling = require('./entity-sibling');
-const home = require('./home');
+const orphans = require('./orphans');
 
 const ROUTE_OPTIONS = {
     allowPatch: 'application/json'
@@ -22,6 +23,7 @@ module.exports = (baseUrl) => {
     routesInfo.route(constants.routes.home, '/', home);
     routesInfo.route(constants.routes.domains, '/domain', domains);
     routesInfo.route(constants.routes.domain, '/domain/{domain}', domain);
+    routesInfo.route(constants.routes.orphans, '/domain/{domain}/orphans', orphans);
     routesInfo.route(constants.routes.entities, '/domain/{domain}/type{?profile}', domainTypes);
     routesInfo.route(constants.routes.entity, '/domain/{domain}/type/{type}{?profile}', domainType);
     routesInfo.route(constants.routes.instances, '/domain/{domain}/type/{type}/instance', instances);
