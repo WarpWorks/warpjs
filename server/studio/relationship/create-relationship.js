@@ -1,4 +1,4 @@
-const debug = require('debug')('W2:studio:relationship/create-relationship');
+// const debug = require('debug')('W2:studio:relationship/create-relationship');
 const Promise = require('bluebird');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
@@ -29,7 +29,9 @@ function handleAggregation(req, res, resource, persistence, instanceData) {
                 level1Domain.createNewID()
             ))
             .then((child) => Promise.resolve()
-                // TODO: Changelog createEntity()
+                .then(() => {
+                    // TODO: Changelog createEntity()
+                })
                 .then(() => relationshipModel.getTargetEntity())
                 .then((targetEntity) => Promise.resolve()
                     .then(() => targetEntity.createDocument(persistence, child))
@@ -108,7 +110,7 @@ module.exports = (req, res) => {
         relationship
     });
 
-    debug(`${req.warpjsRequestToken}: domain=${domain}; type=${type}; id=${id}; relationship=${relationship}; body=`, body);
+    // debug(`${req.warpjsRequestToken}: domain=${domain}; type=${type}; id=${id}; relationship=${relationship}; body=`, body);
 
     return Promise.resolve()
         .then(() => {
@@ -118,7 +120,7 @@ module.exports = (req, res) => {
         .then((persistence) => Promise.resolve()
             .then(() => utils.getInstance(persistence, type, id))
             .then((instanceData) => Promise.resolve()
-                .then(() => debug(`instanceData=`, instanceData))
+                // .then(() => debug(`instanceData=`, instanceData))
                 // TODO: handleTargetEntity
                 .then(() => instanceData.entity.getRelationshipByName(relationship))
                 .then((relationshipModel) => {
