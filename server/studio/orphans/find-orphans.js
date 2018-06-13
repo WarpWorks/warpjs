@@ -1,7 +1,9 @@
 const Promise = require('bluebird');
+const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const ComplexTypes = require('./../../../lib/core/complex-types');
+const { routes } = require('./../constants');
 const Domain = require('./../../../lib/core/models/domain');
 const Orphans = require('./orphans');
 const editionConstants = require('./../../edition/constants');
@@ -13,7 +15,12 @@ module.exports = (req, res) => {
 
     const resource = warpjsUtils.createResource(req, {
         domain,
-        title: "List of orphan elements"
+        title: "Domain schema warnings"
+    });
+
+    resource.link('domain', {
+        href: RoutesInfo.expand(routes.entities, { domain }),
+        title: domain
     });
 
     warpjsUtils.wrapWith406(res, {
@@ -25,11 +32,9 @@ module.exports = (req, res) => {
                 .then(() => warpCore.getCoreDomain())
                 .then((coreDomain) => coreDomain.getEntityByName(ComplexTypes.Domain))
                 .then((domainEntity) => Promise.resolve()
-                    .then(() => console.log("domainEntity=", domainEntity))
                     .then(() => domainEntity.getDocuments(persistence, {name: domain}))
                     .then((documents) => documents && documents.length ? documents[0] : {})
                     .then((domainJSON) => Promise.resolve()
-                        .then(() => console.log("domainJSON=", domainJSON))
                         .then(() => new Domain(warpCore, domainJSON.name, domainJSON.desc, false))
                         .then((domainInstance) => domainInstance.fromPersistenceJSON(persistence, domainJSON))
                         .then((domainInstance) => new Orphans(domainInstance))

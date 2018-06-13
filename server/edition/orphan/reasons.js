@@ -1,4 +1,5 @@
 module.exports = Object.freeze({
+    EMPTY_PANEL: "Panel is empty",
     INVALID_PAGEVIEW_BASIC_PROPERTY: "BasicProperty is invalid",
     INVALID_PAGEVIEW_RELATIONSHIP: "Relationship is invalid",
     INVALID_PARENT_CLASS: "parentClass entity is invalid",

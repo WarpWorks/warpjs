@@ -53,6 +53,11 @@ class Orphans {
             entity.pageViews.forEach((pageView) => {
                 // Panel
                 pageView.panels.forEach((panel) => {
+                    // Empty panel
+                    if (!panel.basicPropertyPanelItems.length && !panel.relationshipPanelItems.length && !panel.enumPanelItems.length) {
+                        this.addOrphan(Orphan.REASONS.EMPTY_PANEL, pageView, panel.name);
+                    }
+
                     // BasicProperty
                     panel.basicPropertyPanelItems.forEach((panelItem) => {
                         const oid = panelItem.hasBasicProperty() ? panelItem.getBasicProperty() : null;

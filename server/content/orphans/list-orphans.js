@@ -1,10 +1,12 @@
 const Promise = require('bluebird');
+const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const allDocuments = require('./all-documents');
 const constants = require('./../../edition/constants');
 const Orphans = require('./orphans');
 const serverUtils = require('./../../utils');
+const { routes } = require('./../constants');
 const utils = require('./../utils');
 
 module.exports = (req, res) => {
@@ -13,6 +15,11 @@ module.exports = (req, res) => {
     const resource = warpjsUtils.createResource(req, {
         title: `List of orphans for domain ${domain}`,
         domain
+    });
+
+    resource.link('domain', {
+        href: RoutesInfo.expand(routes.entities, { domain }),
+        title: domain
     });
 
     warpjsUtils.wrapWith406(res, {
