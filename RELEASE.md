@@ -1,5 +1,10 @@
 # WarpJS's Releases Notes
 
+## 1.2.49 - 2018-06-13
+
+- #99: Studio: List warning for domain schema.
+- Clean-up of `WarpWorks.json` file: labels and `DefaultPortalView`.
+
 ## 1.2.48 - 2018-06-12
 
 - #95: Portal: Styling table content.
