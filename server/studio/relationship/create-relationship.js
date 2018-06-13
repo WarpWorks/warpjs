@@ -100,7 +100,7 @@ function handleEmbedded(req, res, resource, persistence, instanceData) {
 
 module.exports = (req, res) => {
     const { domain, type, id, relationship } = req.params;
-    const { body } = req;
+    // const { body } = req;
 
     const resource = warpjsUtils.createResource(req, {
         title: `New child for relationship ${domain} - ${type} - ${id} - ${relationship}`,

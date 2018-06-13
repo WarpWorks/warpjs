@@ -29,10 +29,8 @@ module.exports = (req, res) => {
                 .then((domainModel) => Promise.resolve()
                     .then(() => serverUtils.getDomain(domain))
                     .then((domainModel) => allDocuments(persistence, domainModel))
-                    .then((documents) => {
-                        const orphans = new Orphans(domainModel, documents);
-                        resource.embed('orphans', orphans.toHAL());
-                    })
+                    .then((documents) => new Orphans(domainModel, documents))
+                    .then((orphans) => resource.embed('orphans', orphans.toHAL()))
                 )
             )
             .then(() => utils.sendHal(req, res, resource))

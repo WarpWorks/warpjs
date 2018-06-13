@@ -45,5 +45,13 @@ module.exports = (domain) => {
         title: `Export JSON`
     });
 
+    // orphan pointers
+    resource.link('orphans', {
+        href: RoutesInfo.expand(constants.routes.orphans, {
+            domain: domain.name
+        }),
+        title: `Check schema`
+    });
+
     return resource;
 };

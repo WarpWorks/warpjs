@@ -5,6 +5,7 @@ const entities = require('./entities');
 const home = require('./home');
 const instance = require('./instance');
 const jsonExport = require('./json-export');
+const orphans = require('./orphans');
 const types = require('./types');
 const relationship = require('./relationship');
 
@@ -13,6 +14,7 @@ module.exports = (baseUrl) => {
 
     routesInfo.route(constants.routes.home, '/', home);
     routesInfo.route(constants.routes.jsonExport, '/{domain}/json-export', jsonExport);
+    routesInfo.route(constants.routes.orphans, '/{domain}/orphans', orphans);
     routesInfo.route(constants.routes.entities, '/{domain}/entities{?profile}', entities);
     routesInfo.route(constants.routes.types, '/{domain}/types{?profile}', types);
     routesInfo.route(constants.routes.instances, '/{domain}/{type}{?profile}', {});

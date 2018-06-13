@@ -2,23 +2,28 @@ const _ = require('lodash');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
-const { routes } = require('./../constants');
+const REASONS = require('./reasons');
 
 class Orphan {
-    constructor(reason, document) {
+    constructor(reason, document, details) {
         this.reason = reason;
         this.document = _.cloneDeep(document);
+        this.details = details;
     }
 
     get id() {
         return this.document.id;
     }
 
-    toHAL(domainModel) {
+    static get REASONS() {
+        return REASONS;
+    }
+
+    toHAL(domainModel, routes) {
         const href = RoutesInfo.expand(routes.instance, {
             domain: domainModel.name,
             type: this.document.type,
-            id: this.document.id
+            id: this.document.persistenceId || this.document.id
         });
 
         const resource = warpjsUtils.createResource(href, {
@@ -26,17 +31,12 @@ class Orphan {
             type: this.document.type,
             name: this.document.Name || this.document.name,
             label: domainModel.getDisplayName(this.document),
-            reason: this.reason
+            reason: this.reason,
+            details: this.details
         });
 
         return resource;
     }
 }
-
-Orphan.REASONS = Object.freeze({
-    MISSING_ENTITY: "Document's entity is missing",
-    MISSING_PARENT: "Parent document is missing",
-    MISSING_RELATIONSHIP: "Parent document relationship is missing"
-});
 
 module.exports = Orphan;

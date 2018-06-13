@@ -1,5 +1,4 @@
 const Promise = require('bluebird');
-const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const ComplexTypes = require('./../../../lib/core/complex-types');
@@ -14,13 +13,7 @@ module.exports = (req, res) => {
     });
 
     warpjsUtils.wrapWith406(res, {
-        html: () => utils.basicRender(
-            [
-                `${RoutesInfo.expand('W2:app:static')}/app/${editionConstants.assets.vendor}`,
-                `${RoutesInfo.expand('W2:app:static')}/app/${editionConstants.assets.domains}`
-            ],
-            resource, req, res
-        ),
+        html: () => utils.basicRender(editionConstants.getBundles(editionConstants.entryPoints.domains), resource, req, res),
 
         [warpjsUtils.constants.HAL_CONTENT_TYPE]: () => Promise.resolve()
             .then(() => warpCore.getPersistence())

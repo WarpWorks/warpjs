@@ -1,5 +1,6 @@
 const ComplexTypes = require('./../../../lib/core/complex-types');
-const Orphan = require('./orphan');
+const Orphan = require('./../../edition/orphan');
+const { routes } = require('./../constants');
 
 class Orphans {
     constructor(domainModel, documents) {
@@ -60,7 +61,7 @@ class Orphans {
     }
 
     toHAL() {
-        return this.orphans.map((orphan) => orphan.toHAL(this.domainModel));
+        return this.orphans.map((orphan) => orphan.toHAL(this.domainModel, routes));
     }
 }
 
