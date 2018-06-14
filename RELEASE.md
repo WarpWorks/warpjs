@@ -1,5 +1,9 @@
 # WarpJS's Releases Notes
 
+## 1.2.50 - 2018-06-14
+
+- Force any `BasicProperty.name==="name"` to be alphanumeric only.
+
 ## 1.2.49 - 2018-06-13
 
 - #99: Studio: List warning for domain schema.

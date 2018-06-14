@@ -332,7 +332,7 @@
           "desc": "",
           "type": "BasicProperty",
           "id": 4,
-          "defaultValue": "CHANGE-THIS-NAME",
+          "defaultValue": "ChangeThisName",
           "constraints": null,
           "examples": null,
           "propertyType": "string"
