@@ -77,17 +77,7 @@
           ]
         }
       ],
-      "tableViews": [
-        {
-          "name": "DefaultTableView",
-          "desc": "",
-          "type": "TableView",
-          "id": 98,
-          "label": "DefaultTableView",
-          "isDefault": true,
-          "tableItems": []
-        }
-      ]
+      "tableViews": []
     },
     {
       "name": "Action",
@@ -112,16 +102,6 @@
           "propertyType": "string"
         },
         {
-          "name": "label",
-          "desc": "",
-          "type": "BasicProperty",
-          "id": 94,
-          "defaultValue": "THIS-VALUE-IS-USED-AS-DISPLAY-NAME",
-          "constraints": null,
-          "examples": null,
-          "propertyType": "string"
-        },
-        {
           "name": "pluginName",
           "desc": "",
           "type": "BasicProperty",
@@ -136,7 +116,7 @@
           "desc": "",
           "type": "BasicProperty",
           "id": 96,
-          "defaultValue": 0,
+          "defaultValue": 1,
           "constraints": null,
           "examples": null,
           "propertyType": "number"
@@ -206,7 +186,7 @@
                   "position": 4,
                   "label": "Label",
                   "basicProperty": [
-                    94
+                    78
                   ]
                 },
                 {
@@ -238,84 +218,7 @@
           ]
         }
       ],
-      "tableViews": [
-        {
-          "name": "DefaultTableView",
-          "desc": "",
-          "type": "TableView",
-          "id": 532,
-          "label": "DefaultTableView",
-          "isDefault": true,
-          "tableItems": [
-            {
-              "name": "name",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 533,
-              "position": 2,
-              "label": "Name",
-              "property": [
-                4
-              ]
-            },
-            {
-              "name": "desc",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 534,
-              "position": 3,
-              "label": "Description",
-              "property": [
-                5
-              ]
-            },
-            {
-              "name": "icon",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 535,
-              "position": 5,
-              "label": "icon",
-              "property": [
-                93
-              ]
-            },
-            {
-              "name": "label",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 536,
-              "position": 4,
-              "label": "Label",
-              "property": [
-                94
-              ]
-            },
-            {
-              "name": "pluginName",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 537,
-              "position": 6,
-              "label": "Plugin's Name",
-              "property": [
-                95
-              ]
-            },
-            {
-              "name": "position",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 538,
-              "position": 1,
-              "label": "Position",
-              "property": [
-                96
-              ]
-            }
-          ]
-        }
-      ]
+      "tableViews": []
     },
     {
       "name": "Base",
@@ -343,6 +246,16 @@
           "type": "BasicProperty",
           "id": 5,
           "defaultValue": "default-description",
+          "constraints": null,
+          "examples": null,
+          "propertyType": "string"
+        },
+        {
+          "name": "label",
+          "desc": "Name to be displayed",
+          "type": "BasicProperty",
+          "id": 78,
+          "defaultValue": "default-label",
           "constraints": null,
           "examples": null,
           "propertyType": "string"
@@ -376,8 +289,8 @@
                   "desc": "Tooltip for name",
                   "type": "BasicPropertyPanelItem",
                   "id": 110,
-                  "position": 0,
-                  "label": "name",
+                  "position": 1,
+                  "label": "Name",
                   "basicProperty": [
                     4
                   ]
@@ -387,10 +300,21 @@
                   "desc": "Tooltip for description",
                   "type": "BasicPropertyPanelItem",
                   "id": 111,
-                  "position": 1,
-                  "label": "description",
+                  "position": 2,
+                  "label": "Description",
                   "basicProperty": [
                     5
+                  ]
+                },
+                {
+                  "name": "label",
+                  "desc": "Tooltip for label",
+                  "type": "BasicPropertyPanelItem",
+                  "id": 558,
+                  "position": 3,
+                  "label": "Label",
+                  "basicProperty": [
+                    78
                   ]
                 }
               ],
@@ -400,40 +324,7 @@
           ]
         }
       ],
-      "tableViews": [
-        {
-          "name": "DefaultTableView",
-          "desc": "",
-          "type": "TableView",
-          "id": 105,
-          "label": "DefaultTableView",
-          "isDefault": true,
-          "tableItems": [
-            {
-              "name": "name",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 106,
-              "position": 0,
-              "label": "name",
-              "property": [
-                4
-              ]
-            },
-            {
-              "name": "desc",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 107,
-              "position": 1,
-              "label": "description",
-              "property": [
-                5
-              ]
-            }
-          ]
-        }
-      ]
+      "tableViews": []
     },
     {
       "name": "BasicProperty",
@@ -526,16 +417,7 @@
               "label": "Basics",
               "columns": 1,
               "alternatingColors": false,
-              "separatorPanelItems": [
-                {
-                  "name": "Separator",
-                  "desc": "---------",
-                  "type": "SeparatorPanelItem",
-                  "position": 4,
-                  "label": "",
-                  "id": 239
-                }
-              ],
+              "separatorPanelItems": [],
               "relationshipPanelItems": [],
               "basicPropertyPanelItems": [
                 {
@@ -543,8 +425,8 @@
                   "desc": "Tooltip for name",
                   "type": "BasicPropertyPanelItem",
                   "id": 235,
-                  "position": 0,
-                  "label": "name",
+                  "position": 1,
+                  "label": "Name",
                   "basicProperty": [
                     4
                   ]
@@ -554,10 +436,21 @@
                   "desc": "Tooltip for description",
                   "type": "BasicPropertyPanelItem",
                   "id": 236,
-                  "position": 1,
-                  "label": "description",
+                  "position": 2,
+                  "label": "Description",
                   "basicProperty": [
                     5
+                  ]
+                },
+                {
+                  "name": "label",
+                  "desc": "Tooltip for label",
+                  "type": "BasicPropertyPanelItem",
+                  "id": 559,
+                  "position": 3,
+                  "label": "Label",
+                  "basicProperty": [
+                    78
                   ]
                 },
                 {
@@ -565,7 +458,7 @@
                   "desc": "Tooltip for defaultValue",
                   "type": "BasicPropertyPanelItem",
                   "id": 237,
-                  "position": 2,
+                  "position": 4,
                   "label": "defaultValue",
                   "basicProperty": [
                     42
@@ -576,7 +469,7 @@
                   "desc": "Tooltip for examples",
                   "type": "BasicPropertyPanelItem",
                   "id": 238,
-                  "position": 3,
+                  "position": 5,
                   "label": "examples",
                   "basicProperty": [
                     43
@@ -589,7 +482,7 @@
                   "desc": "Tooltip for propertyType",
                   "type": "EnumPanelItem",
                   "id": 240,
-                  "position": 5,
+                  "position": 6,
                   "label": "propertyType",
                   "enumeration": [
                     35
@@ -601,62 +494,7 @@
           ]
         }
       ],
-      "tableViews": [
-        {
-          "name": "DefaultTableView",
-          "desc": "",
-          "type": "TableView",
-          "id": 228,
-          "label": "DefaultTableView",
-          "isDefault": true,
-          "tableItems": [
-            {
-              "name": "name",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 229,
-              "position": 0,
-              "label": "name",
-              "property": [
-                4
-              ]
-            },
-            {
-              "name": "desc",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 230,
-              "position": 1,
-              "label": "description",
-              "property": [
-                5
-              ]
-            },
-            {
-              "name": "defaultValue",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 231,
-              "position": 2,
-              "label": "defaultValue",
-              "property": [
-                42
-              ]
-            },
-            {
-              "name": "examples",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 232,
-              "position": 3,
-              "label": "examples",
-              "property": [
-                43
-              ]
-            }
-          ]
-        }
-      ]
+      "tableViews": []
     },
     {
       "name": "BasicPropertyPanelItem",
@@ -708,16 +546,7 @@
               "label": "Basics",
               "columns": 1,
               "alternatingColors": false,
-              "separatorPanelItems": [
-                {
-                  "name": "Separator",
-                  "desc": "---------",
-                  "type": "SeparatorPanelItem",
-                  "position": 5,
-                  "label": "",
-                  "id": 493
-                }
-              ],
+              "separatorPanelItems": [],
               "relationshipPanelItems": [
                 {
                   "name": "basicProperty",
@@ -771,7 +600,7 @@
                   "desc": "Tooltip for label",
                   "type": "BasicPropertyPanelItem",
                   "id": 491,
-                  "position": 3,
+                  "position": 4,
                   "label": "label",
                   "basicProperty": [
                     78
@@ -782,7 +611,7 @@
                   "desc": "Tooltip for readOnly",
                   "type": "BasicPropertyPanelItem",
                   "id": 492,
-                  "position": 4,
+                  "position": 5,
                   "label": "readOnly",
                   "basicProperty": [
                     79
@@ -823,73 +652,7 @@
           ]
         }
       ],
-      "tableViews": [
-        {
-          "name": "DefaultTableView",
-          "desc": "",
-          "type": "TableView",
-          "id": 480,
-          "label": "DefaultTableView",
-          "isDefault": true,
-          "tableItems": [
-            {
-              "name": "name",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 481,
-              "position": 0,
-              "label": "name",
-              "property": [
-                4
-              ]
-            },
-            {
-              "name": "desc",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 482,
-              "position": 1,
-              "label": "description",
-              "property": [
-                5
-              ]
-            },
-            {
-              "name": "position",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 483,
-              "position": 2,
-              "label": "position",
-              "property": [
-                77
-              ]
-            },
-            {
-              "name": "label",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 484,
-              "position": 3,
-              "label": "label",
-              "property": [
-                78
-              ]
-            },
-            {
-              "name": "readOnly",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 485,
-              "position": 4,
-              "label": "readOnly",
-              "property": [
-                79
-              ]
-            }
-          ]
-        }
-      ]
+      "tableViews": []
     },
     {
       "name": "Domain",
@@ -961,8 +724,8 @@
                   "desc": "Tooltip for name",
                   "type": "BasicPropertyPanelItem",
                   "id": 122,
-                  "position": 0,
-                  "label": "name",
+                  "position": 1,
+                  "label": "Name",
                   "basicProperty": [
                     4
                   ]
@@ -972,8 +735,8 @@
                   "desc": "Tooltip for description",
                   "type": "BasicPropertyPanelItem",
                   "id": 123,
-                  "position": 1,
-                  "label": "description",
+                  "position": 2,
+                  "label": "Description",
                   "basicProperty": [
                     5
                   ]
@@ -983,10 +746,21 @@
                   "desc": "Tooltip for definitionOfMany",
                   "type": "BasicPropertyPanelItem",
                   "id": 124,
-                  "position": 2,
-                  "label": "definitionOfMany",
+                  "position": 4,
+                  "label": "Definition Of Many",
                   "basicProperty": [
                     7
+                  ]
+                },
+                {
+                  "name": "label",
+                  "desc": "Tooltip for label",
+                  "type": "BasicPropertyPanelItem",
+                  "id": 560,
+                  "position": 3,
+                  "label": "Label",
+                  "basicProperty": [
+                    78
                   ]
                 }
               ],
@@ -999,7 +773,7 @@
               "type": "Panel",
               "id": 125,
               "position": 1,
-              "label": "entities",
+              "label": "Entities",
               "columns": 1,
               "alternatingColors": false,
               "separatorPanelItems": [],
@@ -1024,51 +798,7 @@
           ]
         }
       ],
-      "tableViews": [
-        {
-          "name": "DefaultTableView",
-          "desc": "",
-          "type": "TableView",
-          "id": 116,
-          "label": "DefaultTableView",
-          "isDefault": true,
-          "tableItems": [
-            {
-              "name": "name",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 117,
-              "position": 0,
-              "label": "name",
-              "property": [
-                4
-              ]
-            },
-            {
-              "name": "desc",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 118,
-              "position": 1,
-              "label": "description",
-              "property": [
-                5
-              ]
-            },
-            {
-              "name": "definitionOfMany",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 119,
-              "position": 2,
-              "label": "definitionOfMany",
-              "property": [
-                7
-              ]
-            }
-          ]
-        }
-      ]
+      "tableViews": []
     },
     {
       "name": "Entity",
@@ -1264,24 +994,7 @@
               "label": "Basics",
               "columns": 1,
               "alternatingColors": false,
-              "separatorPanelItems": [
-                {
-                  "name": "Separator",
-                  "desc": "---------",
-                  "type": "SeparatorPanelItem",
-                  "position": 6,
-                  "label": "",
-                  "id": 148
-                },
-                {
-                  "name": "Separator",
-                  "desc": "---------",
-                  "type": "SeparatorPanelItem",
-                  "position": 8,
-                  "label": "",
-                  "id": 150
-                }
-              ],
+              "separatorPanelItems": [],
               "relationshipPanelItems": [
                 {
                   "name": "parentClass",
@@ -1290,7 +1003,7 @@
                   "style": "CSV",
                   "id": 151,
                   "position": 9,
-                  "label": "parentClass",
+                  "label": "Parent Class",
                   "relationship": [
                     22
                   ]
@@ -1302,8 +1015,8 @@
                   "desc": "Tooltip for name",
                   "type": "BasicPropertyPanelItem",
                   "id": 142,
-                  "position": 0,
-                  "label": "name",
+                  "position": 2,
+                  "label": "Name",
                   "basicProperty": [
                     4
                   ]
@@ -1313,10 +1026,21 @@
                   "desc": "Tooltip for description",
                   "type": "BasicPropertyPanelItem",
                   "id": 143,
-                  "position": 1,
-                  "label": "description",
+                  "position": 3,
+                  "label": "Description",
                   "basicProperty": [
                     5
+                  ]
+                },
+                {
+                  "name": "label",
+                  "desc": "Tooltip for label",
+                  "type": "BasicPropertyPanelItem",
+                  "id": 561,
+                  "position": 4,
+                  "label": "Label",
+                  "basicProperty": [
+                    78
                   ]
                 },
                 {
@@ -1324,7 +1048,7 @@
                   "desc": "Tooltip for isAbstract",
                   "type": "BasicPropertyPanelItem",
                   "id": 144,
-                  "position": 2,
+                  "position": 6,
                   "label": "Is Abstract",
                   "basicProperty": [
                     10
@@ -1335,7 +1059,7 @@
                   "desc": "Tooltip for namePlural",
                   "type": "BasicPropertyPanelItem",
                   "id": 145,
-                  "position": 3,
+                  "position": 5,
                   "label": "Plural of Name",
                   "basicProperty": [
                     11
@@ -1346,8 +1070,8 @@
                   "desc": "Tooltip for isRootEntity",
                   "type": "BasicPropertyPanelItem",
                   "id": 146,
-                  "position": 4,
-                  "label": "isRootEntity",
+                  "position": 7,
+                  "label": "Is Root Entity",
                   "basicProperty": [
                     12
                   ]
@@ -1357,8 +1081,8 @@
                   "desc": "Tooltip for isRootInstance",
                   "type": "BasicPropertyPanelItem",
                   "id": 147,
-                  "position": 5,
-                  "label": "isRootInstance",
+                  "position": 8,
+                  "label": "Is Root Instance",
                   "basicProperty": [
                     13
                   ]
@@ -1370,8 +1094,8 @@
                   "desc": "Tooltip for entityType",
                   "type": "EnumPanelItem",
                   "id": 149,
-                  "position": 7,
-                  "label": "entityType",
+                  "position": 1,
+                  "label": "Entity Type",
                   "enumeration": [
                     14
                   ]
@@ -1522,84 +1246,7 @@
           ]
         }
       ],
-      "tableViews": [
-        {
-          "name": "DefaultTableView",
-          "desc": "",
-          "type": "TableView",
-          "id": 133,
-          "label": "DefaultTableView",
-          "isDefault": true,
-          "tableItems": [
-            {
-              "name": "name",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 134,
-              "position": 0,
-              "label": "name",
-              "property": [
-                4
-              ]
-            },
-            {
-              "name": "desc",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 135,
-              "position": 1,
-              "label": "description",
-              "property": [
-                5
-              ]
-            },
-            {
-              "name": "isAbstract",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 136,
-              "position": 2,
-              "label": "Is Abstract",
-              "property": [
-                10
-              ]
-            },
-            {
-              "name": "namePlural",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 137,
-              "position": 3,
-              "label": "Plural of Name",
-              "property": [
-                11
-              ]
-            },
-            {
-              "name": "isRootEntity",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 138,
-              "position": 4,
-              "label": "isRootEntity",
-              "property": [
-                12
-              ]
-            },
-            {
-              "name": "isRootInstance",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 139,
-              "position": 5,
-              "label": "isRootInstance",
-              "property": [
-                13
-              ]
-            }
-          ]
-        }
-      ]
+      "tableViews": []
     },
     {
       "name": "EnumPanelItem",
@@ -1651,16 +1298,7 @@
               "label": "Basics",
               "columns": 1,
               "alternatingColors": false,
-              "separatorPanelItems": [
-                {
-                  "name": "Separator",
-                  "desc": "---------",
-                  "type": "SeparatorPanelItem",
-                  "position": 5,
-                  "label": "",
-                  "id": 519
-                }
-              ],
+              "separatorPanelItems": [],
               "relationshipPanelItems": [
                 {
                   "name": "enumeration",
@@ -1766,73 +1404,7 @@
           ]
         }
       ],
-      "tableViews": [
-        {
-          "name": "DefaultTableView",
-          "desc": "",
-          "type": "TableView",
-          "id": 506,
-          "label": "DefaultTableView",
-          "isDefault": true,
-          "tableItems": [
-            {
-              "name": "name",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 507,
-              "position": 0,
-              "label": "name",
-              "property": [
-                4
-              ]
-            },
-            {
-              "name": "desc",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 508,
-              "position": 1,
-              "label": "description",
-              "property": [
-                5
-              ]
-            },
-            {
-              "name": "position",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 509,
-              "position": 2,
-              "label": "position",
-              "property": [
-                77
-              ]
-            },
-            {
-              "name": "label",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 510,
-              "position": 3,
-              "label": "label",
-              "property": [
-                78
-              ]
-            },
-            {
-              "name": "readOnly",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 511,
-              "position": 4,
-              "label": "readOnly",
-              "property": [
-                79
-              ]
-            }
-          ]
-        }
-      ]
+      "tableViews": []
     },
     {
       "name": "Enumeration",
@@ -1912,16 +1484,7 @@
               "label": "Basics",
               "columns": 1,
               "alternatingColors": false,
-              "separatorPanelItems": [
-                {
-                  "name": "Separator",
-                  "desc": "---------",
-                  "type": "SeparatorPanelItem",
-                  "position": 2,
-                  "label": "",
-                  "id": 256
-                }
-              ],
+              "separatorPanelItems": [],
               "relationshipPanelItems": [],
               "basicPropertyPanelItems": [
                 {
@@ -1929,7 +1492,7 @@
                   "desc": "Tooltip for name",
                   "type": "BasicPropertyPanelItem",
                   "id": 254,
-                  "position": 0,
+                  "position": 1,
                   "label": "name",
                   "basicProperty": [
                     4
@@ -1940,10 +1503,21 @@
                   "desc": "Tooltip for description",
                   "type": "BasicPropertyPanelItem",
                   "id": 255,
-                  "position": 1,
+                  "position": 2,
                   "label": "description",
                   "basicProperty": [
                     5
+                  ]
+                },
+                {
+                  "name": "label",
+                  "desc": "Tooltip for label",
+                  "type": "BasicPropertyPanelItem",
+                  "id": 562,
+                  "position": 3,
+                  "label": "label",
+                  "basicProperty": [
+                    78
                   ]
                 }
               ],
@@ -1953,7 +1527,7 @@
                   "desc": "Tooltip for validEnumSelections",
                   "type": "EnumPanelItem",
                   "id": 257,
-                  "position": 3,
+                  "position": 4,
                   "label": "validEnumSelections",
                   "enumeration": [
                     45
@@ -1993,40 +1567,7 @@
           ]
         }
       ],
-      "tableViews": [
-        {
-          "name": "DefaultTableView",
-          "desc": "",
-          "type": "TableView",
-          "id": 249,
-          "label": "DefaultTableView",
-          "isDefault": true,
-          "tableItems": [
-            {
-              "name": "name",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 250,
-              "position": 0,
-              "label": "name",
-              "property": [
-                4
-              ]
-            },
-            {
-              "name": "desc",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 251,
-              "position": 1,
-              "label": "description",
-              "property": [
-                5
-              ]
-            }
-          ]
-        }
-      ]
+      "tableViews": []
     },
     {
       "name": "Literal",
@@ -2127,6 +1668,17 @@
                   "basicProperty": [
                     53
                   ]
+                },
+                {
+                  "name": "label",
+                  "desc": "Tooltip for label",
+                  "type": "BasicPropertyPanelItem",
+                  "id": 563,
+                  "position": 3,
+                  "label": "Label",
+                  "basicProperty": [
+                    78
+                  ]
                 }
               ],
               "enumPanelItems": [],
@@ -2135,62 +1687,7 @@
           ]
         }
       ],
-      "tableViews": [
-        {
-          "name": "DefaultTableView",
-          "desc": "",
-          "type": "TableView",
-          "id": 267,
-          "label": "DefaultTableView",
-          "isDefault": true,
-          "tableItems": [
-            {
-              "name": "name",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 268,
-              "position": 0,
-              "label": "name",
-              "property": [
-                4
-              ]
-            },
-            {
-              "name": "desc",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 269,
-              "position": 1,
-              "label": "description",
-              "property": [
-                5
-              ]
-            },
-            {
-              "name": "position",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 270,
-              "position": 2,
-              "label": "position",
-              "property": [
-                52
-              ]
-            },
-            {
-              "name": "icon",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 271,
-              "position": 3,
-              "label": "icon",
-              "property": [
-                53
-              ]
-            }
-          ]
-        }
-      ]
+      "tableViews": []
     },
     {
       "name": "PageView",
@@ -2292,7 +1789,7 @@
                   "position": 2,
                   "label": "label",
                   "basicProperty": [
-                    55
+                    78
                   ]
                 },
                 {
@@ -2369,62 +1866,7 @@
           ]
         }
       ],
-      "tableViews": [
-        {
-          "name": "DefaultTableView",
-          "desc": "",
-          "type": "TableView",
-          "id": 341,
-          "label": "DefaultTableView",
-          "isDefault": true,
-          "tableItems": [
-            {
-              "name": "name",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 342,
-              "position": 0,
-              "label": "name",
-              "property": [
-                4
-              ]
-            },
-            {
-              "name": "desc",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 343,
-              "position": 1,
-              "label": "description",
-              "property": [
-                5
-              ]
-            },
-            {
-              "name": "label",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 344,
-              "position": 2,
-              "label": "label",
-              "property": [
-                55
-              ]
-            },
-            {
-              "name": "isDefault",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 345,
-              "position": 3,
-              "label": "isDefault",
-              "property": [
-                56
-              ]
-            }
-          ]
-        }
-      ]
+      "tableViews": []
     },
     {
       "name": "Panel",
@@ -2447,16 +1889,6 @@
           "constraints": null,
           "examples": null,
           "propertyType": "number"
-        },
-        {
-          "name": "label",
-          "desc": "",
-          "type": "BasicProperty",
-          "id": 68,
-          "defaultValue": "display-name",
-          "constraints": null,
-          "examples": null,
-          "propertyType": "string"
         },
         {
           "name": "columns",
@@ -2629,7 +2061,7 @@
                   "position": 3,
                   "label": "label",
                   "basicProperty": [
-                    68
+                    78
                   ]
                 },
                 {
@@ -2801,84 +2233,7 @@
           ]
         }
       ],
-      "tableViews": [
-        {
-          "name": "DefaultTableView",
-          "desc": "",
-          "type": "TableView",
-          "id": 365,
-          "label": "DefaultTableView",
-          "isDefault": true,
-          "tableItems": [
-            {
-              "name": "name",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 366,
-              "position": 0,
-              "label": "name",
-              "property": [
-                4
-              ]
-            },
-            {
-              "name": "desc",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 367,
-              "position": 1,
-              "label": "description",
-              "property": [
-                5
-              ]
-            },
-            {
-              "name": "position",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 368,
-              "position": 2,
-              "label": "position",
-              "property": [
-                67
-              ]
-            },
-            {
-              "name": "label",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 369,
-              "position": 3,
-              "label": "label",
-              "property": [
-                68
-              ]
-            },
-            {
-              "name": "columns",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 370,
-              "position": 4,
-              "label": "columns",
-              "property": [
-                69
-              ]
-            },
-            {
-              "name": "alternatingColors",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 371,
-              "position": 5,
-              "label": "alternatingColors",
-              "property": [
-                70
-              ]
-            }
-          ]
-        }
-      ]
+      "tableViews": []
     },
     {
       "name": "PanelItem",
@@ -2901,16 +2256,6 @@
           "constraints": null,
           "examples": null,
           "propertyType": "number"
-        },
-        {
-          "name": "label",
-          "desc": "",
-          "type": "BasicProperty",
-          "id": 78,
-          "defaultValue": "display-name",
-          "constraints": null,
-          "examples": null,
-          "propertyType": "string"
         },
         {
           "name": "readOnly",
@@ -3054,73 +2399,7 @@
           ]
         }
       ],
-      "tableViews": [
-        {
-          "name": "DefaultTableView",
-          "desc": "",
-          "type": "TableView",
-          "id": 404,
-          "label": "DefaultTableView",
-          "isDefault": true,
-          "tableItems": [
-            {
-              "name": "name",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 405,
-              "position": 0,
-              "label": "name",
-              "property": [
-                4
-              ]
-            },
-            {
-              "name": "desc",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 406,
-              "position": 1,
-              "label": "description",
-              "property": [
-                5
-              ]
-            },
-            {
-              "name": "position",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 407,
-              "position": 2,
-              "label": "position",
-              "property": [
-                77
-              ]
-            },
-            {
-              "name": "label",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 408,
-              "position": 3,
-              "label": "label",
-              "property": [
-                78
-              ]
-            },
-            {
-              "name": "readOnly",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 409,
-              "position": 4,
-              "label": "readOnly",
-              "property": [
-                79
-              ]
-            }
-          ]
-        }
-      ]
+      "tableViews": []
     },
     {
       "name": "Property",
@@ -3162,7 +2441,7 @@
                   "desc": "Tooltip for name",
                   "type": "BasicPropertyPanelItem",
                   "id": 222,
-                  "position": 0,
+                  "position": 1,
                   "label": "name",
                   "basicProperty": [
                     4
@@ -3173,10 +2452,21 @@
                   "desc": "Tooltip for description",
                   "type": "BasicPropertyPanelItem",
                   "id": 223,
-                  "position": 1,
+                  "position": 2,
                   "label": "description",
                   "basicProperty": [
                     5
+                  ]
+                },
+                {
+                  "name": "label",
+                  "desc": "Tooltip for label",
+                  "type": "BasicPropertyPanelItem",
+                  "id": 564,
+                  "position": 3,
+                  "label": "Label",
+                  "basicProperty": [
+                    78
                   ]
                 }
               ],
@@ -3186,40 +2476,7 @@
           ]
         }
       ],
-      "tableViews": [
-        {
-          "name": "DefaultTableView",
-          "desc": "",
-          "type": "TableView",
-          "id": 217,
-          "label": "DefaultTableView",
-          "isDefault": true,
-          "tableItems": [
-            {
-              "name": "name",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 218,
-              "position": 0,
-              "label": "name",
-              "property": [
-                4
-              ]
-            },
-            {
-              "name": "desc",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 219,
-              "position": 1,
-              "label": "description",
-              "property": [
-                5
-              ]
-            }
-          ]
-        }
-      ]
+      "tableViews": []
     },
     {
       "name": "Relationship",
@@ -3352,16 +2609,7 @@
               "label": "Basics",
               "columns": 1,
               "alternatingColors": false,
-              "separatorPanelItems": [
-                {
-                  "name": "Separator",
-                  "desc": "---------",
-                  "type": "SeparatorPanelItem",
-                  "position": 10,
-                  "label": "",
-                  "id": 202
-                }
-              ],
+              "separatorPanelItems": [],
               "relationshipPanelItems": [
                 {
                   "name": "targetEntity",
@@ -3382,7 +2630,7 @@
                   "desc": "Tooltip for name",
                   "type": "BasicPropertyPanelItem",
                   "id": 192,
-                  "position": 0,
+                  "position": 1,
                   "label": "name",
                   "basicProperty": [
                     4
@@ -3393,10 +2641,21 @@
                   "desc": "Tooltip for description",
                   "type": "BasicPropertyPanelItem",
                   "id": 193,
-                  "position": 1,
+                  "position": 2,
                   "label": "description",
                   "basicProperty": [
                     5
+                  ]
+                },
+                {
+                  "name": "label",
+                  "desc": "Tooltip for label",
+                  "type": "BasicPropertyPanelItem",
+                  "id": 565,
+                  "position": 3,
+                  "label": "Label",
+                  "basicProperty": [
+                    78
                   ]
                 },
                 {
@@ -3404,7 +2663,7 @@
                   "desc": "Tooltip for isAggregation",
                   "type": "BasicPropertyPanelItem",
                   "id": 194,
-                  "position": 2,
+                  "position": 4,
                   "label": "isAggregation",
                   "basicProperty": [
                     24
@@ -3415,7 +2674,7 @@
                   "desc": "Tooltip for sourceRole",
                   "type": "BasicPropertyPanelItem",
                   "id": 195,
-                  "position": 3,
+                  "position": 5,
                   "label": "sourceRole",
                   "basicProperty": [
                     25
@@ -3426,7 +2685,7 @@
                   "desc": "Tooltip for sourceMin",
                   "type": "BasicPropertyPanelItem",
                   "id": 196,
-                  "position": 4,
+                  "position": 6,
                   "label": "sourceMin",
                   "basicProperty": [
                     26
@@ -3437,7 +2696,7 @@
                   "desc": "Tooltip for sourceMax",
                   "type": "BasicPropertyPanelItem",
                   "id": 197,
-                  "position": 5,
+                  "position": 7,
                   "label": "sourceMax",
                   "basicProperty": [
                     27
@@ -3448,7 +2707,7 @@
                   "desc": "Tooltip for targetRole",
                   "type": "BasicPropertyPanelItem",
                   "id": 198,
-                  "position": 6,
+                  "position": 8,
                   "label": "targetRole",
                   "basicProperty": [
                     28
@@ -3459,7 +2718,7 @@
                   "desc": "Tooltip for targetMin",
                   "type": "BasicPropertyPanelItem",
                   "id": 199,
-                  "position": 7,
+                  "position": 9,
                   "label": "targetMin",
                   "basicProperty": [
                     29
@@ -3470,7 +2729,7 @@
                   "desc": "Tooltip for targetMax",
                   "type": "BasicPropertyPanelItem",
                   "id": 200,
-                  "position": 8,
+                  "position": 10,
                   "label": "targetMax",
                   "basicProperty": [
                     30
@@ -3481,7 +2740,7 @@
                   "desc": "Tooltip for targetAverage",
                   "type": "BasicPropertyPanelItem",
                   "id": 201,
-                  "position": 9,
+                  "position": 11,
                   "label": "targetAverage",
                   "basicProperty": [
                     31
@@ -3494,128 +2753,7 @@
           ]
         }
       ],
-      "tableViews": [
-        {
-          "name": "DefaultTableView",
-          "desc": "",
-          "type": "TableView",
-          "id": 179,
-          "label": "DefaultTableView",
-          "isDefault": true,
-          "tableItems": [
-            {
-              "name": "name",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 180,
-              "position": 0,
-              "label": "name",
-              "property": [
-                4
-              ]
-            },
-            {
-              "name": "desc",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 181,
-              "position": 1,
-              "label": "description",
-              "property": [
-                5
-              ]
-            },
-            {
-              "name": "isAggregation",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 182,
-              "position": 2,
-              "label": "isAggregation",
-              "property": [
-                24
-              ]
-            },
-            {
-              "name": "sourceRole",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 183,
-              "position": 3,
-              "label": "sourceRole",
-              "property": [
-                25
-              ]
-            },
-            {
-              "name": "sourceMin",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 184,
-              "position": 4,
-              "label": "sourceMin",
-              "property": [
-                26
-              ]
-            },
-            {
-              "name": "sourceMax",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 185,
-              "position": 5,
-              "label": "sourceMax",
-              "property": [
-                27
-              ]
-            },
-            {
-              "name": "targetRole",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 186,
-              "position": 6,
-              "label": "targetRole",
-              "property": [
-                28
-              ]
-            },
-            {
-              "name": "targetMin",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 187,
-              "position": 7,
-              "label": "targetMin",
-              "property": [
-                29
-              ]
-            },
-            {
-              "name": "targetMax",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 188,
-              "position": 8,
-              "label": "targetMax",
-              "property": [
-                30
-              ]
-            },
-            {
-              "name": "targetAverage",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 189,
-              "position": 9,
-              "label": "targetAverage",
-              "property": [
-                31
-              ]
-            }
-          ]
-        }
-      ]
+      "tableViews": []
     },
     {
       "name": "RelationshipPanelItem",
@@ -3700,24 +2838,7 @@
               "label": "Basics",
               "columns": 1,
               "alternatingColors": false,
-              "separatorPanelItems": [
-                {
-                  "name": "Separator",
-                  "desc": "---------",
-                  "type": "SeparatorPanelItem",
-                  "position": 5,
-                  "label": "",
-                  "id": 463
-                },
-                {
-                  "name": "Separator",
-                  "desc": "---------",
-                  "type": "SeparatorPanelItem",
-                  "position": 7,
-                  "label": "",
-                  "id": 465
-                }
-              ],
+              "separatorPanelItems": [],
               "relationshipPanelItems": [
                 {
                   "name": "relationship",
@@ -3725,7 +2846,7 @@
                   "type": "RelationshipPanelItem",
                   "style": "CSV",
                   "id": 466,
-                  "position": 8,
+                  "position": 7,
                   "label": "relationship",
                   "relationship": [
                     87
@@ -3738,7 +2859,7 @@
                   "desc": "Tooltip for name",
                   "type": "BasicPropertyPanelItem",
                   "id": 458,
-                  "position": 0,
+                  "position": 2,
                   "label": "name",
                   "basicProperty": [
                     4
@@ -3749,7 +2870,7 @@
                   "desc": "Tooltip for description",
                   "type": "BasicPropertyPanelItem",
                   "id": 459,
-                  "position": 1,
+                  "position": 3,
                   "label": "description",
                   "basicProperty": [
                     5
@@ -3760,7 +2881,7 @@
                   "desc": "Tooltip for position",
                   "type": "BasicPropertyPanelItem",
                   "id": 460,
-                  "position": 2,
+                  "position": 1,
                   "label": "position",
                   "basicProperty": [
                     77
@@ -3771,8 +2892,8 @@
                   "desc": "Tooltip for label",
                   "type": "BasicPropertyPanelItem",
                   "id": 461,
-                  "position": 3,
-                  "label": "label",
+                  "position": 4,
+                  "label": "Label",
                   "basicProperty": [
                     78
                   ]
@@ -3782,7 +2903,7 @@
                   "desc": "Tooltip for readOnly",
                   "type": "BasicPropertyPanelItem",
                   "id": 462,
-                  "position": 4,
+                  "position": 5,
                   "label": "readOnly",
                   "basicProperty": [
                     79
@@ -3835,73 +2956,7 @@
           ]
         }
       ],
-      "tableViews": [
-        {
-          "name": "DefaultTableView",
-          "desc": "",
-          "type": "TableView",
-          "id": 450,
-          "label": "DefaultTableView",
-          "isDefault": true,
-          "tableItems": [
-            {
-              "name": "name",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 451,
-              "position": 0,
-              "label": "name",
-              "property": [
-                4
-              ]
-            },
-            {
-              "name": "desc",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 452,
-              "position": 1,
-              "label": "description",
-              "property": [
-                5
-              ]
-            },
-            {
-              "name": "position",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 453,
-              "position": 2,
-              "label": "position",
-              "property": [
-                77
-              ]
-            },
-            {
-              "name": "label",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 454,
-              "position": 3,
-              "label": "label",
-              "property": [
-                78
-              ]
-            },
-            {
-              "name": "readOnly",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 455,
-              "position": 4,
-              "label": "readOnly",
-              "property": [
-                79
-              ]
-            }
-          ]
-        }
-      ]
+      "tableViews": []
     },
     {
       "name": "SeparatorPanelItem",
@@ -3943,7 +2998,7 @@
                   "desc": "Tooltip for name",
                   "type": "BasicPropertyPanelItem",
                   "id": 435,
-                  "position": 0,
+                  "position": 2,
                   "label": "name",
                   "basicProperty": [
                     4
@@ -3954,7 +3009,7 @@
                   "desc": "Tooltip for description",
                   "type": "BasicPropertyPanelItem",
                   "id": 436,
-                  "position": 1,
+                  "position": 3,
                   "label": "description",
                   "basicProperty": [
                     5
@@ -3965,7 +3020,7 @@
                   "desc": "Tooltip for position",
                   "type": "BasicPropertyPanelItem",
                   "id": 437,
-                  "position": 2,
+                  "position": 1,
                   "label": "position",
                   "basicProperty": [
                     77
@@ -3976,8 +3031,8 @@
                   "desc": "Tooltip for label",
                   "type": "BasicPropertyPanelItem",
                   "id": 438,
-                  "position": 3,
-                  "label": "label",
+                  "position": 4,
+                  "label": "Label",
                   "basicProperty": [
                     78
                   ]
@@ -3987,7 +3042,7 @@
                   "desc": "Tooltip for readOnly",
                   "type": "BasicPropertyPanelItem",
                   "id": 439,
-                  "position": 4,
+                  "position": 5,
                   "label": "readOnly",
                   "basicProperty": [
                     79
@@ -4028,73 +3083,7 @@
           ]
         }
       ],
-      "tableViews": [
-        {
-          "name": "DefaultTableView",
-          "desc": "",
-          "type": "TableView",
-          "id": 427,
-          "label": "DefaultTableView",
-          "isDefault": true,
-          "tableItems": [
-            {
-              "name": "name",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 428,
-              "position": 0,
-              "label": "name",
-              "property": [
-                4
-              ]
-            },
-            {
-              "name": "desc",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 429,
-              "position": 1,
-              "label": "description",
-              "property": [
-                5
-              ]
-            },
-            {
-              "name": "position",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 430,
-              "position": 2,
-              "label": "position",
-              "property": [
-                77
-              ]
-            },
-            {
-              "name": "label",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 431,
-              "position": 3,
-              "label": "label",
-              "property": [
-                78
-              ]
-            },
-            {
-              "name": "readOnly",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 432,
-              "position": 4,
-              "label": "readOnly",
-              "property": [
-                79
-              ]
-            }
-          ]
-        }
-      ]
+      "tableViews": []
     },
     {
       "name": "TableItem",
@@ -4117,16 +3106,6 @@
           "constraints": null,
           "examples": null,
           "propertyType": "number"
-        },
-        {
-          "name": "label",
-          "desc": "",
-          "type": "BasicProperty",
-          "id": 61,
-          "defaultValue": "display-name",
-          "constraints": null,
-          "examples": null,
-          "propertyType": "string"
         }
       ],
       "enums": [],
@@ -4167,16 +3146,7 @@
               "label": "Basics",
               "columns": 1,
               "alternatingColors": false,
-              "separatorPanelItems": [
-                {
-                  "name": "Separator",
-                  "desc": "---------",
-                  "type": "SeparatorPanelItem",
-                  "position": 4,
-                  "label": "",
-                  "id": 332
-                }
-              ],
+              "separatorPanelItems": [],
               "relationshipPanelItems": [
                 {
                   "name": "property",
@@ -4233,7 +3203,7 @@
                   "position": 3,
                   "label": "label",
                   "basicProperty": [
-                    61
+                    78
                   ]
                 }
               ],
@@ -4243,62 +3213,7 @@
           ]
         }
       ],
-      "tableViews": [
-        {
-          "name": "DefaultTableView",
-          "desc": "",
-          "type": "TableView",
-          "id": 321,
-          "label": "DefaultTableView",
-          "isDefault": true,
-          "tableItems": [
-            {
-              "name": "name",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 322,
-              "position": 0,
-              "label": "name",
-              "property": [
-                4
-              ]
-            },
-            {
-              "name": "desc",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 323,
-              "position": 1,
-              "label": "description",
-              "property": [
-                5
-              ]
-            },
-            {
-              "name": "position",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 324,
-              "position": 2,
-              "label": "position",
-              "property": [
-                60
-              ]
-            },
-            {
-              "name": "label",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 325,
-              "position": 3,
-              "label": "label",
-              "property": [
-                61
-              ]
-            }
-          ]
-        }
-      ]
+      "tableViews": []
     },
     {
       "name": "TableView",
@@ -4383,7 +3298,7 @@
                   "position": 2,
                   "label": "label",
                   "basicProperty": [
-                    55
+                    78
                   ]
                 },
                 {
@@ -4432,62 +3347,7 @@
           ]
         }
       ],
-      "tableViews": [
-        {
-          "name": "DefaultTableView",
-          "desc": "",
-          "type": "TableView",
-          "id": 301,
-          "label": "DefaultTableView",
-          "isDefault": true,
-          "tableItems": [
-            {
-              "name": "name",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 302,
-              "position": 0,
-              "label": "name",
-              "property": [
-                4
-              ]
-            },
-            {
-              "name": "desc",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 303,
-              "position": 1,
-              "label": "description",
-              "property": [
-                5
-              ]
-            },
-            {
-              "name": "label",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 304,
-              "position": 2,
-              "label": "label",
-              "property": [
-                55
-              ]
-            },
-            {
-              "name": "isDefault",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 305,
-              "position": 3,
-              "label": "isDefault",
-              "property": [
-                56
-              ]
-            }
-          ]
-        }
-      ]
+      "tableViews": []
     },
     {
       "name": "View",
@@ -4501,16 +3361,6 @@
         3
       ],
       "basicProperties": [
-        {
-          "name": "label",
-          "desc": "",
-          "type": "BasicProperty",
-          "id": 55,
-          "defaultValue": "display-name",
-          "constraints": null,
-          "examples": null,
-          "propertyType": "string"
-        },
         {
           "name": "isDefault",
           "desc": "",
@@ -4575,7 +3425,7 @@
                   "position": 2,
                   "label": "label",
                   "basicProperty": [
-                    55
+                    78
                   ]
                 },
                 {
@@ -4596,62 +3446,7 @@
           ]
         }
       ],
-      "tableViews": [
-        {
-          "name": "DefaultTableView",
-          "desc": "",
-          "type": "TableView",
-          "id": 284,
-          "label": "DefaultTableView",
-          "isDefault": true,
-          "tableItems": [
-            {
-              "name": "name",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 285,
-              "position": 0,
-              "label": "name",
-              "property": [
-                4
-              ]
-            },
-            {
-              "name": "desc",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 286,
-              "position": 1,
-              "label": "description",
-              "property": [
-                5
-              ]
-            },
-            {
-              "name": "label",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 287,
-              "position": 2,
-              "label": "label",
-              "property": [
-                55
-              ]
-            },
-            {
-              "name": "isDefault",
-              "desc": "Tooltip",
-              "type": "TableItem",
-              "id": 288,
-              "position": 3,
-              "label": "isDefault",
-              "property": [
-                56
-              ]
-            }
-          ]
-        }
-      ]
+      "tableViews": []
     }
   ]
 }
