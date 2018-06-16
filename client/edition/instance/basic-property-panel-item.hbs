@@ -11,6 +11,14 @@
             {{#if model.value}}checked{{/if}}
             {{#unless canEdit}}disabled{{/unless}}
             />
+      {{else if model.propertyTypeCheck.isFile}}
+        {{>./../file-upload/button pull="pull-right" url=model._links.upload.href canEdit=canEdit}}
+
+        <input class="form-control warpjs-file-field" type="text" value="{{model.value}}"
+          data-doc-level="{{model.docLevel}}"
+          {{#if model._links.self}}data-warpjs-url="{{model._links.self.href}}"{{/if}}
+          {{#unless canEdit}}disabled{{/unless}}
+          />
       {{else}}
         {{#if (isPropertyTypeText)}}
           <span class="glyphicon glyphicon-list-alt pull-right"

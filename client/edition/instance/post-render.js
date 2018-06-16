@@ -10,6 +10,7 @@ const associationModal = require('./association-modal');
 const carouselPagination = require('./carousel-pagination');
 const ChangeLogs = require('./../change-logs');
 const deleteEntity = require('./delete-entity');
+const FileUpload = require('./../file-upload');
 const patchEntity = require('./patch-entity');
 const tabContentNavigation = require('./tab-content-navigation');
 const tablePanelItem = require('./table-panel-item');
@@ -27,6 +28,7 @@ module.exports = ($, result) => {
     actionGoto($, instanceDoc);
     associationModal($, instanceDoc);
     ChangeLogs.init($, instanceDoc);
+    FileUpload.init($, instanceDoc);
     wysiwygEditor($, instanceDoc);
 
     tabContentNavigation($);

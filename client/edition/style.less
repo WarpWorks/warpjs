@@ -176,7 +176,12 @@ td[data-warpjs-url] {
     }
 }
 
-/* When readonly, need some space to display the previous icon */
+/* Input file for file. Need space for the upload button. */
+span[data-warpjs-action="file-upload"] + input {
+    width: calc(~"100% - 25px");
+}
+
+/* Textarea field. Need space for the wysiwyg button */
 span[data-warpjs-action="open-wysiwyg"] + textarea {
     width: calc(~"100% - 20px");
 }

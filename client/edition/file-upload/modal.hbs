@@ -1,0 +1,21 @@
+<div class="modal fade" role="dialog" tabindex="-1" aria-hidden="true"
+  data-warpjs-modal="{{MODAL_NAME}}"
+  >
+
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      {{>modal-header title=title}}
+
+      <div class="modal-body">
+        {{>./form url=url}}
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-warpjs-action="confirm-upload">Upload</button>
+        <button type="button" class="btn btn-default" data-warpjs-action="cancel-upload">Cancel</button>
+      </div>
+    </div>
+
+  </div>
+
+</div>

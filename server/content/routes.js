@@ -6,6 +6,7 @@ const domains = require('./domains');
 const domainType = require('./domain-type');
 const domainTypes = require('./domain-types');
 const entitySibling = require('./entity-sibling');
+const fileUpload = require('./../edition/file-upload');
 const home = require('./home');
 const instances = require('./instances');
 const instance = require('./instance');
@@ -23,6 +24,7 @@ module.exports = (baseUrl) => {
     routesInfo.route(routes.home, '/', home);
     routesInfo.route(routes.domains, '/domain', domains);
     routesInfo.route(routes.domain, '/domain/{domain}', domain);
+    routesInfo.route(routes.fileUpload, '/domain/{domain}/file-upload', fileUpload);
     routesInfo.route(routes.orphans, '/domain/{domain}/orphans', orphans);
     routesInfo.route(routes.entities, '/domain/{domain}/type{?profile}', domainTypes);
     routesInfo.route(routes.entity, '/domain/{domain}/type/{type}{?profile}', domainType);
