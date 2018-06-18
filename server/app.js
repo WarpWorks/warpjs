@@ -32,7 +32,7 @@ module.exports = (baseUrl, staticUrl) => {
     RoutesInfo.staticPath('W2:app:public', app, baseUrl, '/public', path.join(config.folders.w2projects, 'public'));
     RoutesInfo.staticPath('W2:app:static', app, baseUrl, staticUrl, 'public');
 
-    app.use(bodyParser.json());
+    app.use(bodyParser.json({limit: '5mb'}));
     app.use(cookieParser(config.cookieSecret, {
         httpOnly: true,
         maxAge: 3 * 60 * 60, // 3 hours

@@ -1,0 +1,13 @@
+
+// Basic Entity Definitions:
+ComplexEvent: complexName, eventWindow, timeSlot, timeUnit, maxEvent, maxSlot, conPolicy, selPolicy, description, {events:Event*}, {eventLogEntrys:EventLogEntry*}
+Event: eventName, connector, eventId, eventParentId, description, eventStatus {conditions:Condition*}
+Condition: condId, connector, condParentId, description, condKey, condRel, condValue, evalOrder
+EventLogEntry: eventName, timeStamp, eventId, {values: Value*}
+Value: sourceEntity, sourceKey, sourceValue
+
+Action: actionName, execOrder, description, {functions:Function*}, {FunctionLogEntrys: FunctionLogEntry*}
+Function: description, functionName, {params: Param*}
+Param: order, paramName, functionName, value
+FunctionLogEntry: functionName, timeStamp, functionId, {paramValues: ParamValue*}
+ParamValue: sourceEntity, sourceKey, sourceValue

@@ -41,28 +41,6 @@
       }
     }
   }, {
-    "name": "Session manager",
-    "moduleName": "@warp-works/warpjs-session-plugin",
-    "path": "/session",
-    "type": "session",
-    "config": {
-      "jwtSecret": "cannotGuessThi$",
-      "jwtCookieName": "w2jwt",
-      "roles": {
-        "admin": "admin",
-        "content": "content"
-      },
-      "users": {
-        "entity": "Account",
-        "usernameField": "UserName",
-        "passwordField": "Password"
-      },
-      "admin": {
-        "username": "admin",
-        "password": "$2a$10$5/b3MizUy3CEkjzLNIqrB.kS2p6ZeiMvlZPQ82/ZE1W/exiesMvCa"
-      }
-    }
-  }, {
     "name": "ElasticSearch plugin",
     "moduleName": "@warp-works/warpjs-elasticsearch-plugin",
     "path": "/search",
@@ -81,5 +59,18 @@
       "glyphicon": "picture",
       "label": "Edit ImageMap"
     }
-  }]
+  },
+  {
+    "name": "warpjs-openapi-plugin",
+    "moduleName": "@warp-works/warpjs-openapi-plugin",
+    "path": "/REST",
+    "type": "action",
+    "config": {
+      "glyphicon": "picture",
+      "label": "Edit ImageMap"
+    }
+  }
+    
+  
+  ]
 }
