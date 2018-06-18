@@ -1,4 +1,5 @@
 const warpjsUtils = require('@warp-works/warpjs-utils');
+const Promise = require('bluebird');
 
 function findTopEmbedded(element) {
     return $(element).parents('[data-warpjs-entity-type="Embedded"]').last();

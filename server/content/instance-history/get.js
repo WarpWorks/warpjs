@@ -1,4 +1,5 @@
 const warpjsUtils = require('@warp-works/warpjs-utils');
+const Promise = require('bluebird');
 
 const ChangeLogs = require('./../../../lib/change-logs');
 const serverUtils = require('./../../utils');
