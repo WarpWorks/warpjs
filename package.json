@@ -68,6 +68,7 @@
   "devDependencies": {
     "@quoin/eslint-config-quoin": "latest",
     "@quoin/node-test-helpers": "0.2.x",
+	"@warp-works/warpjs-openapi-plugin": "latest",
     "@warp-works/warpjs-elasticsearch-plugin": "1.2.1",
     "@warp-works/warpjs-imagemap-editor-plugin": "1.2.2",
     "@warp-works/warpjs-map-plugin": "1.2.5",
