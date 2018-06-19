@@ -1,10 +1,13 @@
-// const debug = require('debug')('W2:studio:relationship/create-relationship');
+const debug = require('debug')('W2:studio:relationship/create-relationship');
 const Promise = require('bluebird');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const ChangeLogs = require('./../../../lib/change-logs');
 const constants = require('./../constants');
 const DocLevel = require('./../../../lib/doc-level');
+const { actions } = require('./../../../lib/constants');
+const logger = require('./../../loggers');
 const utils = require('./../utils');
 const warpCore = require('./../../../lib/core');
 
@@ -18,8 +21,12 @@ const warpCore = require('./../../../lib/core');
 
 function handleAggregation(req, res, resource, persistence, instanceData) {
     const { domain, relationship } = req.params;
+    const { body } = req;
+
+    const ACTION = actions.ADD_ASSOCIATION;
 
     return Promise.resolve()
+        .then(() => logger(req, `Trying ${ACTION}`, body))
         .then(() => instanceData.entity.getRelationshipByName(relationship))
         .then((relationshipModel) => Promise.resolve()
             .then(() => warpCore.getDomainByName(domain))
@@ -36,9 +43,7 @@ function handleAggregation(req, res, resource, persistence, instanceData) {
                 .then((targetEntity) => Promise.resolve()
                     .then(() => targetEntity.createDocument(persistence, child))
                     .then((newDoc) => Promise.resolve()
-                        .then(() => {
-                            // TODO: ChangeLogs.AddAggregation()
-                        })
+                        .then(() => ChangeLogs.addAggregation(req, instanceData.instance, relationship, newDoc.type, newDoc.id))
                         .then(() => instanceData.entity.updateDocument(persistence, instanceData.instance))
                         .then(() => {
                             const redirectUrl = RoutesInfo.expand(constants.routes.instance, {
@@ -53,20 +58,22 @@ function handleAggregation(req, res, resource, persistence, instanceData) {
                 )
             )
         )
+        .then(() => logger(req, `Success ${ACTION}`))
     ;
 }
 
 function handleAssociation(req, res, resource, persistence, instanceData) {
     const { body } = req;
 
+    const ACTION = actions.ADD_ASSOCIATION;
+
     return Promise.resolve()
+        .then(() => logger(req, `Trying ${ACTION}`, body))
         .then(() => DocLevel.fromString(body.docLevel))
         .then((docLevel) => docLevel.getData(persistence, instanceData.entity, instanceData.instance))
         .then((docLevelData) => docLevelData.model.addValue(persistence, body.type, body.id, docLevelData.instance))
         .then(() => instanceData.entity.updateDocument(persistence, instanceData.instance))
-        .then(() => {
-            // TODO: logger
-        })
+        .then(() => logger(req, `Success ${ACTION}`))
     ;
 }
 
@@ -74,7 +81,10 @@ function handleEmbedded(req, res, resource, persistence, instanceData) {
     const { body } = req;
     const { domain } = req.params;
 
+    const ACTION = actions.ADD_EMBEDDED;
+
     return Promise.resolve()
+        .then(() => logger(req, `Trying ${ACTION}`, body))
         .then(() => DocLevel.fromString(body.docLevel))
         .then((docLevel) => docLevel.getData(persistence, instanceData.entity, instanceData.instance))
         .then((docLevelData) => Promise.resolve()
@@ -92,15 +102,13 @@ function handleEmbedded(req, res, resource, persistence, instanceData) {
             // TODO: ChangeLog
         })
         .then(() => instanceData.entity.updateDocument(persistence, instanceData.instance))
-        .then(() => {
-            // TODO: logger
-        })
+        .then(() => logger(req, `Success ${ACTION}`))
     ;
 }
 
 module.exports = (req, res) => {
     const { domain, type, id, relationship } = req.params;
-    // const { body } = req;
+    const { body } = req;
 
     const resource = warpjsUtils.createResource(req, {
         title: `New child for relationship ${domain} - ${type} - ${id} - ${relationship}`,
@@ -110,7 +118,7 @@ module.exports = (req, res) => {
         relationship
     });
 
-    // debug(`${req.warpjsRequestToken}: domain=${domain}; type=${type}; id=${id}; relationship=${relationship}; body=`, body);
+    debug(`${req.warpjsRequestToken}: domain=${domain}; type=${type}; id=${id}; relationship=${relationship}; body=`, body);
 
     return Promise.resolve()
         .then(() => {

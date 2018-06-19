@@ -6,13 +6,18 @@ const removeEmbedded = require('./remove-embedded');
 const serverUtils = require('./../../utils');
 const WarpWorksError = require('./../../../lib/core/error');
 
+const { actions } = require('./../../../lib/constants');
+
+const ACTION = actions.REMOVE_CHILD;
+
 module.exports = (req, res) => {
     const { domain, type, id, relationship } = req.params;
+    const { body } = req;
 
     const persistence = serverUtils.getPersistence(domain);
 
     Promise.resolve()
-        .then(() => logger(req, "Trying remove child", req.body))
+        .then(() => logger(req, `Trying ${ACTION}`, body))
         .then(() => serverUtils.getEntity(domain, type))
         .then((entity) => Promise.resolve()
             .then(() => entity.getRelationshipByName(relationship))
@@ -34,12 +39,12 @@ module.exports = (req, res) => {
                         }
                     })
                 )
-                .then(() => logger(req, "Success remove child"))
+                .then(() => logger(req, `Success ${ACTION}`))
                 .then(() => res.status(204).send())
             )
         )
         .catch((err) => {
-            logger(req, "Failed", {err});
+            logger(req, `Failed ${ACTION}`, {err});
             serverUtils.sendError(req, res, err);
         })
         .finally(() => persistence.close())

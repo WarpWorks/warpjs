@@ -2,9 +2,14 @@
 const Promise = require('bluebird');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const { actions } = require('./../../../lib/constants');
+const ChangeLogs = require('./../../../lib/change-logs');
 const DocLevel = require('./../../../lib/doc-level');
+const logger = require('./../../loggers');
 const utils = require('./../utils');
 const warpCore = require('./../../../lib/core');
+
+const ACTION = actions.REMOVE_CHILD;
 
 module.exports = (req, res) => {
     const { domain, type, id, relationship } = req.params;
@@ -19,9 +24,7 @@ module.exports = (req, res) => {
     });
 
     return Promise.resolve()
-        .then(() => {
-            // TODO: add logger
-        })
+        .then(() => logger(req, `Trying ${ACTION}`, body))
         .then(() => warpCore.getPersistence())
         .then((persistence) => Promise.resolve()
             .then(() => utils.getInstance(persistence, type, id))
@@ -42,14 +45,17 @@ module.exports = (req, res) => {
                         }
                     })
                 )
+                .then(() => ChangeLogs.removeEmbedded(req, instanceData.instance, body.docLevel))
             )
             .then(() => warpCore.removeDomainFromCache(domain))
+            .then(() => logger(req, `Success ${ACTION}`))
             .finally(() => persistence.close())
         )
         .then(() => utils.sendHal(req, res, resource))
         .catch((err) => {
             // eslint-disable-next-line no-console
             console.error(`Error removing relationship child. err=`, err);
+            logger(req, `Failed ${ACTION}`, { err });
             utils.sendErrorHal(req, res, resource, err);
         })
     ;

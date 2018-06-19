@@ -2,8 +2,10 @@
 const Promise = require('bluebird');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const ChangeLogs = require('./../../../lib/change-logs');
 const ComplexTypes = require('./../../../lib/core/complex-types');
 const DocLevel = require('./../../../lib/doc-level');
+const logger = require('./../../loggers');
 const utils = require('./../utils');
 const warpCore = require('./../../../lib/core');
 
@@ -13,16 +15,18 @@ module.exports = (req, res) => {
 
     // console.log(`PATCH(): domain=${domain}, type=${type}, id=${id}, body=`, body);
 
+    const deleteAssociation = Boolean(body && body.patchAction && body.patchAction === 'remove'); // FIXME: Use a constant.
+    const ACTION = deleteAssociation ? ChangeLogs.constants.ASSOCIATION_REMOVED : ChangeLogs.constants.UPDATE_VALUE;
+
     return Promise.resolve()
+        .then(() => logger(req, `Trying ${ACTION}`, body))
         .then(() => warpCore.getPersistence())
         .then((persistence) => Promise.resolve()
             .then(() => utils.getInstance(persistence, type, id))
             .then((instanceData) => Promise.resolve()
-                // TODO: Add logger
-
                 .then(() => DocLevel.fromString(body.updatePath))
                 .then((docLevel) => {
-                    if (body && body.patchAction && body.patchAction === 'remove') { // FIXME: Use a constant.
+                    if (deleteAssociation) {
                         return Promise.resolve()
                             .then(() => docLevel.getData(persistence, instanceData.entity, instanceData.instance, 1))
                             .then((docLevelData) => {
@@ -46,9 +50,12 @@ module.exports = (req, res) => {
                         // console.log("updateData=", updateData);
                         // console.log("instanceData.instance=", instanceData.instance);
                     })
-
-                    // TODO: Add logger
-                    // TODO: Add ChangeLogs
+                    .then(() => logger(req, `Success ${ACTION}`, {
+                        docLevel: body.updatePath,
+                        newValue: updateData.newValue,
+                        oldValue: updateData.oldValue
+                    }))
+                    .then(() => ChangeLogs.updateValue(req, instanceData.instance, body.updatePath, updateData.oldValue, updateData.newValue))
 
                     // FIXME: assume "admin" so allow can update.
                     .then(() => instanceData.entity.updateDocument(persistence, instanceData.instance))
@@ -59,8 +66,9 @@ module.exports = (req, res) => {
             .finally(() => persistence.close())
         )
         .catch((err) => {
+            // eslint-disable-next-line no-console
             console.error(`update-instance(): ERROR: err=r`, err);
-            // TODO: Add logger
+            logger(req, `Failed ${ACTION}`, { err });
             const resource = warpjsUtils.createResource(req, {
                 domain,
                 type,

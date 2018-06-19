@@ -2,6 +2,7 @@ const Promise = require('bluebird');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const ChangeLogs = require('./../../../lib/change-logs');
+const { routes } = require('./../constants');
 const serverUtils = require('./../../utils');
 const utils = require('./../utils');
 
@@ -13,7 +14,7 @@ module.exports = (req, res) => {
             const persistence = serverUtils.getPersistence(domain);
 
             const resource = warpjsUtils.createResource(req, {
-                title: `Domain ${domain} - Type ${type} - Id ${id} - History`,
+                title: `WarpJS Content: History of '${domain}/${type}/${id}`,
                 domain,
                 type,
                 id
@@ -22,7 +23,7 @@ module.exports = (req, res) => {
             Promise.resolve()
                 .then(() => serverUtils.getEntity(domain, type))
                 .then((entity) => entity.getInstance(persistence, id))
-                .then((instance) => ChangeLogs.toFormResource(domain, persistence, instance))
+                .then((instance) => ChangeLogs.toFormResource(domain, persistence, instance, routes))
                 .then((changeLogs) => resource.embed('changeLogs', changeLogs))
                 .then(() => utils.sendHal(req, res, resource))
                 .catch((err) => {

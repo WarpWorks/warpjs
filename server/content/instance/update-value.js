@@ -9,34 +9,39 @@ const serverUtils = require('./../../utils');
 const utils = require('./../utils');
 
 module.exports = (req, res, persistence, entity, instance) => {
-    const domain = req.params.domain;
-    const type = req.params.type;
-    const id = req.params.id;
-    const payload = req.body;
+    const { domain, type, id } = req.params;
+    const { body } = req;
 
-    // debug(`payload=`, payload);
+    // debug(`body=`, body);
 
-    const deleteAssociation = Boolean(payload && payload.patchAction && payload.patchAction === 'remove');
+    const resource = warpjsUtils.createResource(req, {
+        title: `WarpJS Content: Update '${domain}/${type}/${id}'`,
+        domain,
+        type,
+        id
+    });
+
+    const deleteAssociation = Boolean(body && body.patchAction && body.patchAction === 'remove');
 
     const action = deleteAssociation ? ChangeLogs.constants.ASSOCIATION_REMOVED : ChangeLogs.constants.UPDATE_VALUE;
-    const patchAction = deleteAssociation ? [payload.patchAction, payload.type, payload.id].join(':') : null;
+    const patchAction = deleteAssociation ? [body.patchAction, body.type, body.id].join(':') : null;
 
     return Promise.resolve()
-        .then(() => logger(req, `Trying ${action}`, payload))
+        .then(() => logger(req, `Trying ${action}`, body))
         .then(() => serverUtils.canEdit(persistence, entity, instance, req.warpjsUser))
         .then((canEdit) => {
             if (!canEdit) {
                 throw new warpjsUtils.WarpJSError(`Do not have write permission`);
             }
         })
-        .then(() => entity.patch(payload.updatePath, 0, instance, payload.updateValue, patchAction))
+        .then(() => entity.patch(body.updatePath, 0, instance, body.updateValue, patchAction))
         .then((valueInfo) => {
             logger(req, `Success ${action}`, {
-                updatePath: payload.updatePath,
+                updatePath: body.updatePath,
                 newValue: valueInfo.newValue,
                 oldValue: valueInfo.oldValue
             });
-            ChangeLogs.updateValue(req, instance, payload.updatePath, valueInfo.oldValue, valueInfo.newValue);
+            ChangeLogs.updateValue(req, instance, body.updatePath, valueInfo.oldValue, valueInfo.newValue);
         })
         .then(() => entity.updateDocument(persistence, instance))
         .then(() => search.indexDocument(persistence, entity, instance))
@@ -45,14 +50,7 @@ module.exports = (req, res, persistence, entity, instance) => {
             // eslint-disable-next-line no-console
             console.error("updateValue(): ERROR: err=", err);
             logger(req, `Failed ${action}`, {err});
-            const resource = warpjsUtils.createResource(req, {
-                domain,
-                type,
-                id,
-                body: req.body,
-                message: err.message
-            });
-            utils.sendHal(req, res, resource, 500);
+            utils.sendErrorHal(req, res, resource, err);
         })
     ;
 };

@@ -20,7 +20,7 @@ module.exports = (req, res) => {
     const { domain, type, id } = req.params;
 
     const resource = warpjsUtils.createResource(req, {
-        title: `WarpJS Studio: instance '${domain}/${type}/${id}'`,
+        title: `WarpJS Studio: Instance '${domain}/${type}/${id}'`,
         domain,
         type,
         id,
@@ -60,7 +60,7 @@ module.exports = (req, res) => {
                     })
 
                     // Changelogs
-                    .then(() => ChangeLogs.toFormResource(domain, persistence, instanceData.instance))
+                    .then(() => ChangeLogs.toFormResource(domain, persistence, instanceData.instance, constants.routes))
                     .then((changeLogs) => resource.embed('changeLogs', changeLogs))
 
                     // Breadcrumbs

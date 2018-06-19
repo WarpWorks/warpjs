@@ -5,8 +5,8 @@ const Promise = require('bluebird');
 // const debug = require('debug')('W2:content:instance/post');
 
 const ChangeLogs = require('./../../../lib/change-logs');
-const globalConstants = require('./../../../lib/constants');
 const DocLevel = require('./../../../lib/doc-level');
+const { actions } = require('./../../../lib/constants');
 const logger = require('./../../loggers');
 const serverUtils = require('./../../utils');
 const WarpWorksError = require('./../../../lib/core/error');
@@ -33,7 +33,7 @@ module.exports = (req, res) => {
                     .then(() => DocLevel.fromString(body.docLevel))
                     .then((docLevel) => {
                         switch (body.action) {
-                            case globalConstants.actions.ADD_CAROUSEL_CHILD:
+                            case actions.ADD_CAROUSEL_CHILD:
                                 return Promise.resolve()
                                     .then(() => docLevel.getData(persistence, entity, instance, 0))
                                     .then((docLevelData) => {
@@ -42,7 +42,7 @@ module.exports = (req, res) => {
                                     })
                                 ;
 
-                            case globalConstants.actions.ADD_ASSOCIATION:
+                            case actions.ADD_ASSOCIATION:
                                 return Promise.resolve()
                                     .then(() => docLevel.getData(persistence, entity, instance, 1))
                                     .then((docLevelData) => {

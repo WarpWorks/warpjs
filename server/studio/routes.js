@@ -2,6 +2,7 @@ const RoutesInfo = require('@quoin/expressjs-routes-info');
 
 const { routes } = require('./constants');
 const entities = require('./entities');
+const history = require('./history');
 const home = require('./home');
 const instance = require('./instance');
 const jsonExport = require('./json-export');
@@ -19,7 +20,7 @@ module.exports = (baseUrl) => {
     routesInfo.route(routes.types, '/{domain}/types{?profile}', types);
     routesInfo.route(routes.instances, '/{domain}/{type}{?profile}', {});
     routesInfo.route(routes.instance, '/{domain}/{type}/{id}', instance);
-    routesInfo.route(routes.history, '/{domain}/{type}/{id}/history', {});
+    routesInfo.route(routes.history, '/{domain}/{type}/{id}/history', history);
     routesInfo.route(routes.relationship, '/{domain}/{type}/{id}/relationship/{relationship}{?profile}', relationship);
     routesInfo.route(routes.relationshipPage, '/{domain}/{type}/{id}/relationship/{relationship}/{page}', {});
 

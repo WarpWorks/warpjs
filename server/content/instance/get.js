@@ -86,7 +86,7 @@ module.exports = (req, res) => {
                         })
 
                         // Changelogs
-                        .then(() => ChangeLogs.toFormResource(domain, persistence, instance))
+                        .then(() => ChangeLogs.toFormResource(domain, persistence, instance, constants.routes))
                         .then((changeLogs) => resource.embed('changeLogs', changeLogs))
 
                         // History link.
