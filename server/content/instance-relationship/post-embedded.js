@@ -15,7 +15,8 @@ module.exports = (req, res, persistence, entity, instance, resource) => {
         .then(() => logger(req, `Success ${action}`))
         .then(() => utils.sendHal(req, res, resource))
         .catch((err) => {
-            console.log("ERROR:", err);
+            // eslint-disable-next-line no-console
+            console.error("ERROR:", err);
             logger(req, "Failed create new embedded", {err});
             res.status(500).send(err.message); // FIXME: Don't send the err.
         })

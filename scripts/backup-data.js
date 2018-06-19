@@ -9,5 +9,8 @@ Promise.resolve()
     .then(() => debug("Start backup process"))
     .then(() => backup())
     .then(() => debug("Backup process completed successfully."))
-    .catch((err) => console.log("Backup process error:", err))
+    .catch((err) => {
+        // eslint-disable-next-line no-console
+        console.error("Backup process error:", err);
+    })
 ;

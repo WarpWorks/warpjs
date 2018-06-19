@@ -26,6 +26,7 @@ module.exports = (req, res) => {
         html: () => Promise.resolve()
             .then(() => utils.basicRender(constants.getBundles('orphans'), resource, req, res))
             .catch((err) => {
+                // eslint-disable-next-line no-console
                 console.error(`Error generating HTML:`, err);
             }),
 
@@ -42,6 +43,7 @@ module.exports = (req, res) => {
             )
             .then(() => utils.sendHal(req, res, resource))
             .catch((err) => {
+                // eslint-disable-next-line no-console
                 console.error(`Error list orphans:`, err);
             })
     });

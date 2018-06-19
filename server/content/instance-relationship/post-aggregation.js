@@ -48,7 +48,8 @@ module.exports = (req, res, persistence, entity, instance, resource) => {
         )
         .catch((err) => {
             logger(req, `Failed ${action}`, {err});
-            console.log("entity-child(): err=", err);
+            // eslint-disable-next-line no-console
+            console.error("entity-child(): err=", err);
             resource.message = err.message;
             utils.sendHal(req, res, resource, 500);
         })

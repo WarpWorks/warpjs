@@ -65,7 +65,8 @@ module.exports = (req, res) => {
                 )
             )
             .catch((err) => {
-                console.log("ERROR:", err);
+                // eslint-disable-next-line no-console
+                console.error("ERROR:", err);
                 logger(req, "Failed to create embedded association", {err});
                 res.status(500).send(err.message); // FIXME: Don't send the err.
             })

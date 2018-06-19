@@ -50,6 +50,7 @@ Promise.resolve()
                     .then(() => debug("Trying to import:", domainInfo))
                     .then(() => {
                         if (existingDomains[domainInfo.name]) {
+                            // eslint-disable-next-line no-console
                             console.log(`Domain '${domainInfo.name}' already imported. Skipping...`);
                         } else {
                             return Promise.resolve()
@@ -57,6 +58,7 @@ Promise.resolve()
                                 .then((domain) => domain.save(persistence))
                                 .then((res) => debug(`Domain '${domainInfo.name}': domain.save():`, res))
                                 .catch((err) => {
+                                    // eslint-disable-next-line no-console
                                     console.error(`Error importing '${domainInfo.name}'.`);
                                     throw err;
                                 });
@@ -65,6 +67,7 @@ Promise.resolve()
             ))
         )
         .catch((err) => {
+            // eslint-disable-next-line no-console
             console.error("Error importing:", err);
         })
         .finally(() => persistence.close())

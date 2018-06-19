@@ -51,6 +51,7 @@ module.exports = (req, res) => {
             .then((webPath) => resource.link('uploadedFile', webPath))
             .then(() => serverUtils.sendHal(req, res, resource))
             .catch((err) => {
+                // eslint-disable-next-line no-console
                 console.error(`Error in file upload:`, err);
                 serverUtils.sendErrorHal(req, res, resource, err);
             })

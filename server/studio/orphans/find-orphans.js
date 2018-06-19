@@ -45,6 +45,7 @@ module.exports = (req, res) => {
             )
             .then(() => utils.sendHal(req, res, resource))
             .catch((err) => {
+                // eslint-disable-next-line no-console
                 console.error("*** ERROR studio/orphans/find-orphans ***", err);
                 utils.sendErrorHal(req, res, resource, err);
             })

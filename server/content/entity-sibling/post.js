@@ -44,7 +44,8 @@ module.exports = (req, res) => {
             })
         )
         .catch((err) => {
-            console.log("entity-sibling(): err=", err);
+            // eslint-disable-next-line no-console
+            console.error("entity-sibling(): err=", err);
             resource.message = err.message;
             utils.sendHal(req, res, resource, 500);
         })

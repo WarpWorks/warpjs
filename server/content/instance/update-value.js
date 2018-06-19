@@ -42,6 +42,7 @@ module.exports = (req, res, persistence, entity, instance) => {
         .then(() => search.indexDocument(persistence, entity, instance))
         .then(() => res.status(204).send())
         .catch((err) => {
+            // eslint-disable-next-line no-console
             console.error("updateValue(): ERROR: err=", err);
             logger(req, `Failed ${action}`, {err});
             const resource = warpjsUtils.createResource(req, {

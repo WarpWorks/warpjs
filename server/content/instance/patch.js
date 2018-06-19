@@ -16,7 +16,8 @@ module.exports = (req, res, next) => {
             .then((instance) => updateValue(req, res, persistence, entity, instance))
         )
         .catch((err) => {
-            console.log("Error content.instance.patch():", err);
+            // eslint-disable-next-line no-console
+            console.error("Error content.instance.patch():", err);
             next(err);
         })
         .finally(() => persistence.close());

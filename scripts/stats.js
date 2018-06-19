@@ -35,6 +35,7 @@ Promise.resolve()
     )
     .then((stats) => {
         debug(`Done!`);
+        // eslint-disable-next-line no-console
         console.log(stats.sort().join('\n'));
     })
     .finally(() => {

@@ -19,5 +19,8 @@ Promise.resolve()
         : null
     )
     .then(() => debug("re-index process completed successfully."))
-    .catch((err) => console.log("re-index process error:", err))
+    .catch((err) => {
+        // eslint-disable-next-line no-console
+        console.log("re-index process error:", err);
+    })
 ;
