@@ -1,5 +1,11 @@
 # WarpJS's Releases Notes
 
+## 1.2.51 - 2018-06-18
+
+- #94: File upload.
+- #96: Studio: Adding the label in preparation for locking down the name.
+- #103: Portal: Adding a close icon on popover.
+
 ## 1.2.50 - 2018-06-14
 
 - Force any `BasicProperty.name==="name"` to be alphanumeric only.
