@@ -122,11 +122,6 @@ module.exports = (req, res) => {
                 .finally(() => persistence.close())
             )
             .then(() => utils.sendHal(req, res, resource))
-            .catch((err) => {
-                console.log("Error in GET: err=", err);
-                resource.error = true;
-                resource.message = err.message;
-                utils.sendHal(req, res, resource, 500);
-            })
+            .catch((err) => utils.sendErrorHal(req, res, resource, err))
     });
 };

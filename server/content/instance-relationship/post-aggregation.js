@@ -50,8 +50,7 @@ module.exports = (req, res, persistence, entity, instance, resource) => {
             logger(req, `Failed ${action}`, {err});
             // eslint-disable-next-line no-console
             console.error("entity-child(): err=", err);
-            resource.message = err.message;
-            utils.sendHal(req, res, resource, 500);
+            utils.sendErrorHal(req, res, resource, err);
         })
     ;
 };

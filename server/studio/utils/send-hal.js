@@ -1,10 +1,9 @@
 const RoutesInfo = require('@quoin/expressjs-routes-info');
-const warpjsUtils = require('@warp-works/warpjs-utils');
 
-const constants = require('./../constants');
+const { routes } = require('./../constants');
+const { sendHal } = require('./../../utils');
 
 module.exports = (req, res, resource, status) => {
-    resource.link('warpjsHome', RoutesInfo.expand(constants.routes.home, {}));
-
-    warpjsUtils.sendHal(req, res, resource, RoutesInfo, status);
+    resource.link('warpjsHome', RoutesInfo.expand(routes.home, {}));
+    sendHal(req, res, resource, status);
 };

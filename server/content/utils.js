@@ -4,6 +4,7 @@ const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const constants = require('./constants');
+const serverUtils = require('./../utils');
 
 function createResourceFromDocument(instance) {
     // FIXME: missing domain
@@ -39,12 +40,14 @@ function sendHal(req, res, resource, status) {
         }));
     }
 
-    warpjsUtils.sendHal(req, res, resource, RoutesInfo, status);
+    serverUtils.sendHal(req, res, resource, status);
 }
 
 function sendErrorHal(req, res, resource, err, status) {
     const execution = new Error();
+    // eslint-disable-next-line no-console
     console.error("Execution stack:", execution.stack);
+    // eslint-disable-next-line no-console
     console.error("Original error:", err);
     resource.error = true;
     resource.message = err.message;
@@ -72,6 +75,6 @@ module.exports = {
     basicRenderOld,
     createResourceFromDocument,
     sendErrorHal: (req, res, resource, error, status) => sendErrorHal(req, res, resource, error, status),
-    sendHal,
+    sendHal: (req, res, resource, status) => sendHal(req, res, resource, status),
     sendHalOnly
 };
