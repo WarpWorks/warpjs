@@ -17,7 +17,7 @@ module.exports = ($) => {
                 content: '<span class="text-warning">Please wait while loading data...</span>'
             };
 
-            $(this).data('toggle', 'popover');
+            // $(this).data('toggle', 'popover');
 
             const centerCoords = centerOfImageArea($, this);
             if (centerCoords) {
@@ -39,6 +39,9 @@ module.exports = ($) => {
 
             warpjsUtils.proxy.get($, $(this).data('warpjsPreviewUrl'))
                 .then((result) => position($, this, popover, result, popoverOffset))
+                .then(() => {
+                    $('[data-dismiss="popover"]', popover).on('click', () => popover.popover('hide'));
+                })
                 .catch(() => {
                     $('.popover-title', popover).html("Trouble loading preview");
                     $('.popover-content', popover).html(`<div class="alert alert-danger">Issue loading preview page</div>`);

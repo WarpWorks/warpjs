@@ -7,7 +7,10 @@ module.exports = ($, element, popover, result, popoverOffset) => {
         overflow: 'hidden'
     });
 
-    $('.popover-title', popover).html(result.title);
+    $('.popover-title', popover).html(
+        '<span class="close pull-right" data-dismiss="popover" aria-label="Close" aria-hidden="true">×</span>' +
+        result.title
+    );
     $('.popover-content', popover).html(chunks[0]);
 
     if (popoverOffset) {
