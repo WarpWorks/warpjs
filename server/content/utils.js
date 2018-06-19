@@ -42,6 +42,15 @@ function sendHal(req, res, resource, status) {
     warpjsUtils.sendHal(req, res, resource, RoutesInfo, status);
 }
 
+function sendErrorHal(req, res, resource, err, status) {
+    const execution = new Error();
+    console.error("Execution stack:", execution.stack);
+    console.error("Original error:", err);
+    resource.error = true;
+    resource.message = err.message;
+    sendHal(req, res, resource, status || 500);
+}
+
 function sendHalOnly(req, res, resource, status) {
     res.status(status || 200)
         .header('Content-Type', warpjsUtils.constants.HAL_CONTENT_TYPE)
@@ -62,6 +71,7 @@ module.exports = {
     basicRender,
     basicRenderOld,
     createResourceFromDocument,
+    sendErrorHal: (req, res, resource, error, status) => sendErrorHal(req, res, resource, error, status),
     sendHal,
     sendHalOnly
 };

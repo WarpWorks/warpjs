@@ -42,7 +42,7 @@ class FileUpload {
 
                     if (file.length) {
                         const data = new FormData();
-                        data.append('file', file, file.name);
+                        data.append('file', file[0], file[0].name);
 
                         const url = $('form', modal).data('warpjsUrl');
 
@@ -62,11 +62,15 @@ class FileUpload {
                                 }))
                                 .then((res) => {
                                     warpjsUtils.toast.success($, "File uploaded successfully.", TITLE);
-                                    console.log("res=", res);
+                                    modal.modal('hide');
+                                    const inputField = uploadButton.closest('.form-group').find('input.warpjs-file-field');
+                                    inputField.val(res._links.uploadedFile.href);
+                                    inputField.trigger('change');
                                 })
                                 .catch((err) => {
+                                    // eslint-disable-next-line no-console
                                     console.error("Error upload-file:", err);
-                                    warpjsUtils.toast.error($, "Faile upload failed!", TITLE);
+                                    warpjsUtils.toast.error($, "File upload failed!", TITLE);
                                 })
                                 .finally(() => warpjsUtils.toast.close($, toastLoading))
                             )

@@ -2,6 +2,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const debug = require('debug')('W2:WarpJS:app');
 const express = require('express');
+const expressBusboy = require('express-busboy');
 const path = require('path');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsPlugins = require('@warp-works/warpjs-plugins');
@@ -37,6 +38,11 @@ module.exports = (baseUrl, staticUrl) => {
 
     app.use(favicon(path.join(ROOT_DIR, 'public', 'images', 'favicon.ico')));
     app.use(bodyParser.json());
+    expressBusboy.extend(app, {
+        upload: true,
+        path: path.join(config.folders.w2projects, 'tmpFiles')
+    });
+
     app.use(cookieParser(config.cookieSecret, {
         httpOnly: true,
         maxAge: 3 * 60 * 60, // 3 hours
