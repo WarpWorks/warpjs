@@ -1,5 +1,9 @@
 # WarpJS's Releases Notes
 
+## 1.2.52 - 2018-06-18
+
+- #101: ImageArea Target used before HRef.
+
 ## 1.2.51 - 2018-06-18
 
 - #94: File upload.

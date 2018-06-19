@@ -161,11 +161,11 @@ function convertToResource(req, data) {
     });
 
     if (resource.type === 'ImageArea') {
-        if (resource.HRef) {
-            resource.link('target', resource.HRef);
-        } else if (resource._embedded && resource._embedded.Targets && resource._embedded.Targets.length) {
+        if (resource._embedded && resource._embedded.Targets && resource._embedded.Targets.length) {
             resource.link('target', resource._embedded.Targets[0]._links.self.href);
             resource.link('preview', resource._embedded.Targets[0]._links.preview.href);
+        } else if (resource.HRef) {
+            resource.link('target', resource.HRef);
         }
     }
 
