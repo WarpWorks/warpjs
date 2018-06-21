@@ -1,10 +1,10 @@
 /**
  *  This module allows the addition of an association on embedded entities.
  */
+const ChangeLogs = require('@warp-works/warpjs-change-logs');
 const Promise = require('bluebird');
 // const debug = require('debug')('W2:content:instance/post');
 
-const ChangeLogs = require('./../../../lib/change-logs');
 const DocLevel = require('./../../../lib/doc-level');
 const { actions } = require('./../../../lib/constants');
 const logger = require('./../../loggers');
@@ -58,7 +58,11 @@ module.exports = (req, res) => {
                         }
                     })
 
-                    .then(() => ChangeLogs.addEmbedded(req, instance, body.docLevel, body.type, body.id))
+                    .then(() => ChangeLogs.add(ChangeLogs.ACTIONS.EMBEDDED_ADDED, req.warpjsUser, instance, {
+                        key: body.docLevel,
+                        type: body.type,
+                        id: body.id
+                    }))
                     .then(() => entity.updateDocument(persistence, instance))
                     .then(() => logger(req, `Success add embedded association`))
                     .then(() => res.status(204).send())

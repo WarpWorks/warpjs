@@ -1,9 +1,9 @@
 // const debug = require('debug')('W2:content:instance/get');
+const ChangeLogs = require('@warp-works/warpjs-change-logs');
 const Promise = require('bluebird');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
-const ChangeLogs = require('./../../../lib/change-logs');
 const constants = require('./../constants');
 const editionInstance = require('./../../edition/instance');
 const serverUtils = require('./../../utils');
@@ -78,45 +78,57 @@ module.exports = (req, res) => {
                     })
 
                     .then(() => entity.getInstance(persistence, id))
-                    .then((instance) => Promise.resolve()
-                        .then(() => {
-                            resource.displayName = entity.getDisplayName(instance);
-                            resource.isRootInstance = instance.isRootInstance;
-                            resource.status = instance.Status;
-                        })
+                    .then(
+                        (instance) => Promise.resolve()
+                            .then(() => {
+                                resource.displayName = entity.getDisplayName(instance);
+                                resource.isRootInstance = instance.isRootInstance;
+                                resource.status = instance.Status;
+                            })
 
-                        // Changelogs
-                        .then(() => ChangeLogs.toFormResource(domain, persistence, instance, constants.routes))
-                        .then((changeLogs) => resource.embed('changeLogs', changeLogs))
+                            // Changelogs
+                            .then(() => ChangeLogs.toFormResource(instance, domain, persistence, constants.routes.instance))
+                            .then((changeLogs) => resource.embed('changeLogs', changeLogs))
 
-                        // History link.
-                        .then(() => RoutesInfo.expand(constants.routes.history, {
-                            domain,
-                            type,
-                            id
-                        }))
-                        .then((historyUrl) => resource.link('history', historyUrl))
+                            // History link.
+                            .then(() => RoutesInfo.expand(constants.routes.history, {
+                                domain,
+                                type,
+                                id
+                            }))
+                            .then((historyUrl) => resource.link('history', historyUrl))
 
-                        // can edit the page?
-                        .then(() => serverUtils.canEdit(persistence, entity, instance, req.warpjsUser))
-                        .then((canEdit) => {
-                            resource.canEdit = canEdit;
-                        })
+                            // can edit the page?
+                            .then(() => serverUtils.canEdit(persistence, entity, instance, req.warpjsUser))
+                            .then((canEdit) => {
+                                resource.canEdit = canEdit;
+                            })
 
-                        // Breadcrumbs
-                        .then(() => entity.getInstancePath(persistence, instance))
-                        .then((breadcrumbs) => breadcrumbs.map(breadcrumbMapper.bind(null, domain)))
-                        .then((breadcrumbs) => resource.embed('breadcrumbs', breadcrumbs))
+                            // Breadcrumbs
+                            .then(() => entity.getInstancePath(persistence, instance))
+                            .then((breadcrumbs) => breadcrumbs.map(breadcrumbMapper.bind(null, domain)))
+                            .then((breadcrumbs) => resource.embed('breadcrumbs', breadcrumbs))
 
-                        // Get the form resource
-                        .then(() => entity.getPageView(config.views.content))
-                        .then((pageViewEntity) => pageViewEntity.toFormResource(persistence, instance, [], {
-                            domain,
-                            type,
-                            id,
-                            href: resource._links.self.href
-                        }))
-                        .then((formResource) => resource.embed('formResources', formResource))
+                            // Get the form resource
+                            .then(() => entity.getPageView(config.views.content))
+                            .then((pageViewEntity) => pageViewEntity.toFormResource(persistence, instance, [], {
+                                domain,
+                                type,
+                                id,
+                                href: resource._links.self.href
+                            }))
+                            .then((formResource) => resource.embed('formResources', formResource))
+                        ,
+
+                        // Document not found.
+                        () => {
+                            resource.notFound = true;
+                            // FIXME: This doesn't work because the referrer to
+                            // this JSON is the HTML (which is the same URL).
+                            // if (req.headers.referer) {
+                            //     resource.link('referrer', req.headers.referer);
+                            // }
+                        }
                     )
                 )
                 .finally(() => persistence.close())

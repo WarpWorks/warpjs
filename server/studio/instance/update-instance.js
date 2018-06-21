@@ -1,8 +1,8 @@
+const ChangeLogs = require('@warp-works/warpjs-change-logs');
 // const debug = require('debug')('W2:studio:server/studio/instance/update-instance');
 const Promise = require('bluebird');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
-const ChangeLogs = require('./../../../lib/change-logs');
 const ComplexTypes = require('./../../../lib/core/complex-types');
 const DocLevel = require('./../../../lib/doc-level');
 const logger = require('./../../loggers');
@@ -16,7 +16,7 @@ module.exports = (req, res) => {
     // console.log(`PATCH(): domain=${domain}, type=${type}, id=${id}, body=`, body);
 
     const deleteAssociation = Boolean(body && body.patchAction && body.patchAction === 'remove'); // FIXME: Use a constant.
-    const ACTION = deleteAssociation ? ChangeLogs.constants.ASSOCIATION_REMOVED : ChangeLogs.constants.UPDATE_VALUE;
+    const ACTION = deleteAssociation ? ChangeLogs.ACTIONS.ASSOCIATION_REMOVED : ChangeLogs.ACTIONS.UPDATE_VALUE;
 
     return Promise.resolve()
         .then(() => logger(req, `Trying ${ACTION}`, body))
@@ -55,7 +55,11 @@ module.exports = (req, res) => {
                         newValue: updateData.newValue,
                         oldValue: updateData.oldValue
                     }))
-                    .then(() => ChangeLogs.updateValue(req, instanceData.instance, body.updatePath, updateData.oldValue, updateData.newValue))
+                    .then(() => ChangeLogs.add(ChangeLogs.ACTIONS.UPDATE_VALUE, req.warpjsUser, instanceData.instance, {
+                        key: body.updatePath,
+                        oldValue: updateData.oldValue,
+                        newValue: updateData.newValue
+                    }))
 
                     // FIXME: assume "admin" so allow can update.
                     .then(() => instanceData.entity.updateDocument(persistence, instanceData.instance))

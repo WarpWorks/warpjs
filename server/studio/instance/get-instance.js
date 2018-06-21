@@ -1,10 +1,10 @@
+const ChangeLogs = require('@warp-works/warpjs-change-logs');
 // const debug = require('debug')('W2:studio:instance/get-instance');
 const Promise = require('bluebird');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const breadcrumbMapper = require('./../../edition/instance/breadcrumb-mapper');
-const ChangeLogs = require('./../../../lib/change-logs');
 const ComplexTypes = require('./../../../lib/core/complex-types');
 const constants = require('./../constants');
 const contentRoutes = require('./../../content/constants').routes;
@@ -43,49 +43,62 @@ module.exports = (req, res) => {
             .then(() => warpCore.getPersistence())
             .then((persistence) => Promise.resolve()
                 .then(() => utils.getInstance(persistence, type, id))
-                .then((instanceData) => Promise.resolve()
-                    .then(() => {
-                        resource.displayName = instanceData.entity.getDisplayName(instanceData.instance);
-                        resource.isRootInstance = Boolean(instanceData.instance.isRootInstance);
+                .then(
+                    (instanceData) => Promise.resolve()
+                        .then(() => {
+                            resource.displayName = instanceData.entity.getDisplayName(instanceData.instance);
+                            resource.isRootInstance = Boolean(instanceData.instance.isRootInstance);
 
-                        if (instanceData.entity.isDocument(instanceData.instance)) {
-                            resource.link('content', {
-                                href: RoutesInfo.expand(contentRoutes.instances, {
-                                    domain,
-                                    type: instanceData.instance.name
-                                }),
-                                title: `Show instances of '${instanceData.instance.name}'.`
-                            });
-                        }
-                    })
+                            if (instanceData.entity.isDocument(instanceData.instance)) {
+                                resource.link('content', {
+                                    href: RoutesInfo.expand(contentRoutes.instances, {
+                                        domain,
+                                        type: instanceData.instance.name
+                                    }),
+                                    title: `Show instances of '${instanceData.instance.name}'.`
+                                });
+                            }
+                        })
 
-                    // Changelogs
-                    .then(() => ChangeLogs.toFormResource(domain, persistence, instanceData.instance, constants.routes))
-                    .then((changeLogs) => resource.embed('changeLogs', changeLogs))
+                        // Changelogs
+                        .then(() => warpCore.getDomainByName(domain))
+                        .then((domainEntity) => domainEntity.getEntityByName('User')) // FIXME: Hard-coded
+                        .then((userEntity) => ChangeLogs.toFormResource(instanceData.instance, domain, persistence, constants.routes.instance, userEntity))
+                        .then((changeLogs) => resource.embed('changeLogs', changeLogs))
 
-                    // Breadcrumbs
-                    .then(() => instanceData.entity.getInstancePath(persistence, instanceData.instance))
-                    .then((breadcrumbs) => breadcrumbs.map(
-                        (breadcrumb) => breadcrumbMapper(domain, breadcrumb, constants.routes)
-                    ))
-                    .then((breadcrumbResource) => resource.embed('breadcrumbs', breadcrumbResource))
+                        // Breadcrumbs
+                        .then(() => instanceData.entity.getInstancePath(persistence, instanceData.instance))
+                        .then((breadcrumbs) => breadcrumbs.map(
+                            (breadcrumb) => breadcrumbMapper(domain, breadcrumb, constants.routes)
+                        ))
+                        .then((breadcrumbResource) => resource.embed('breadcrumbs', breadcrumbResource))
 
-                    // Get the form resource
-                    .then(() => instanceData.entity.getPageView(config.views.content))
-                    .then((pageView) => pageView.toStudioResource(
-                        persistence,
-                        instanceData.instance,
-                        new DocLevel(),
-                        {
-                            domain,
-                            type,
-                            id,
-                            href: resource._links.self.href
-                        },
-                        constants.routes
-                    ))
-                    .then((formResource) => resource.embed('formResources', formResource))
+                        // Get the form resource
+                        .then(() => instanceData.entity.getPageView(config.views.content))
+                        .then((pageView) => pageView.toStudioResource(
+                            persistence,
+                            instanceData.instance,
+                            new DocLevel(),
+                            {
+                                domain,
+                                type,
+                                id,
+                                href: resource._links.self.href
+                            },
+                            constants.routes
+                        ))
+                        .then((formResource) => resource.embed('formResources', formResource))
+                    ,
 
+                    // Document not found.
+                    () => {
+                        resource.notFound = true;
+                        // FIXME: This doesn't work because the referrer to this
+                        // JSON is the HTML (which is the same URL)
+                        // if (req.headers.referer) {
+                        //     resource.link('referrer', req.headers.referer);
+                        // }
+                    }
                 )
                 .then(() => utils.sendHal(req, res, resource))
                 .catch((err) => utils.sendErrorHal(req, res, resource, err))

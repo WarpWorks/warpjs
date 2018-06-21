@@ -1,8 +1,8 @@
+const ChangeLogs = require('@warp-works/warpjs-change-logs');
 // const debug = require('debug')('W2:studio:history/get-history');
 const Promise = require('bluebird');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
-const ChangeLogs = require('./../../../lib/change-logs');
 const { routes } = require('./../constants');
 const utils = require('./../utils');
 const warpCore = require('./../../../lib/core');
@@ -22,7 +22,11 @@ module.exports = (req, res) => {
             .then(() => warpCore.getPersistence())
             .then((persistence) => Promise.resolve()
                 .then(() => utils.getInstance(persistence, type, id))
-                .then((instanceData) => ChangeLogs.toFormResource(domain, persistence, instanceData.instance, routes))
+                .then((instanceData) => Promise.resolve()
+                    .then(() => warpCore.getDomainByName(domain))
+                    .then((domainEntity) => domainEntity.getEntityByName('User')) // FIXME: Hard-coded
+                    .then((userEntity) => ChangeLogs.toFormResource(instanceData.instance, domain, persistence, routes.instance, userEntity))
+                )
                 .then((changeLogs) => resource.embed('changeLogs', changeLogs))
                 .finally(() => persistence.close())
             )

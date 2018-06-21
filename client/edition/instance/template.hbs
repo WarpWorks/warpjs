@@ -1,17 +1,34 @@
 {{#partial "content"}}
-<div class="container" role="main" id="WarpJS"
-    data-warpjs-status="instance"
-    data-warpjs-url="{{_links.self.href}}"
-    data-warpjs-types-url="{{_links.types.href}}"
-    >
-  <div class="row">
-    <div class="col-xs-12">
-      {{> breadcrumb}}
-      {{> main-panel-view}}
-      {{> ../change-logs/template changeLogs=_embedded.changeLogs}}
+  <div class="container" role="main" id="WarpJS"
+      data-warpjs-status="instance"
+      data-warpjs-url="{{_links.self.href}}"
+      data-warpjs-types-url="{{_links.types.href}}"
+      >
+    <div class="row">
+      <div class="col-xs-12">
+        {{#if notFound}}
+          <div class="bg-danger">
+            <h1>Document not found</h1>
+
+            <div>
+              If you came here from the history, this document may have been
+              deleted. Otherwise, please check your link.
+            </div>
+
+            {{#if _links.referrer}}
+              <div>
+                Source: <a href="{{_links.referrer.href}}">{{_links.referrer.href}}</a>
+              </div>
+            {{/if}}
+          </div>
+        {{else}}
+          {{> breadcrumb}}
+          {{> main-panel-view}}
+          {{> ../change-logs/template changeLogs=_embedded.changeLogs}}
+        {{/if}}
+      </div>
     </div>
   </div>
-</div>
 {{/partial}}
 
 {{> page-content}}

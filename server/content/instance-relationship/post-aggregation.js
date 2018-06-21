@@ -1,7 +1,7 @@
+const ChangeLogs = require('@warp-works/warpjs-change-logs');
 const Promise = require('bluebird');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 
-const ChangeLogs = require('./../../../lib/change-logs');
 const constants = require('./../constants');
 const logger = require('./../../loggers');
 const utils = require('./../utils');
@@ -10,7 +10,7 @@ module.exports = (req, res, persistence, entity, instance, resource) => {
     const { domain, relationship } = req.params;
     const { body } = req;
 
-    const action = ChangeLogs.constants.AGGREGATION_ADDED;
+    const action = ChangeLogs.ACTIONS.AGGREGATION_ADDED;
 
     const relationshipEntity = entity.getRelationshipByName(relationship);
     const targetEntity = (body.typeId)
@@ -22,10 +22,18 @@ module.exports = (req, res, persistence, entity, instance, resource) => {
         .then(() => logger(req, `Trying ${action}`))
         .then(() => targetEntity.createContentChildForRelationship(relationshipEntity, entity, instance))
         .then((child) => Promise.resolve()
-            .then(() => ChangeLogs.createEntity(req, child, entity.getDisplayName(instance), entity.schemaId, instance.id))
+            .then(() => ChangeLogs.add(ChangeLogs.ACTIONS.ENTITY_CREATED, req.warpjsUser, child, {
+                label: entity.getDisplayName(instance),
+                type: entity.name, // FIXME: use schemaId
+                id: instance.id
+            }))
             .then(() => targetEntity.createDocument(persistence, child))
             .then((newDoc) => Promise.resolve()
-                .then(() => ChangeLogs.addAggregation(req, instance, relationship, newDoc.type, newDoc.id))
+                .then(() => ChangeLogs.add(action, req.warpjsUser, instance, {
+                    key: relationship,
+                    type: newDoc.type,
+                    id: newDoc.id
+                }))
                 .then(() => entity.updateDocument(persistence, instance))
                 .then(() => {
                     const redirectUrl = RoutesInfo.expand(constants.routes.instance, {

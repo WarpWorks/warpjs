@@ -1,5 +1,9 @@
 # WarpJS's Releases Notes
 
+## 1.2.53 - 2018-06-20
+
+- #98: Refactored ChangeLogs into its own package.
+
 ## 1.2.52 - 2018-06-18
 
 - #101: ImageArea Target used before HRef.

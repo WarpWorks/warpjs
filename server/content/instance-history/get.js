@@ -1,7 +1,7 @@
+const ChangeLogs = require('@warp-works/warpjs-change-logs');
 const Promise = require('bluebird');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
-const ChangeLogs = require('./../../../lib/change-logs');
 const { routes } = require('./../constants');
 const serverUtils = require('./../../utils');
 const utils = require('./../utils');
@@ -23,7 +23,7 @@ module.exports = (req, res) => {
             Promise.resolve()
                 .then(() => serverUtils.getEntity(domain, type))
                 .then((entity) => entity.getInstance(persistence, id))
-                .then((instance) => ChangeLogs.toFormResource(domain, persistence, instance, routes))
+                .then((instance) => ChangeLogs.toFormResource(instance, domain, persistence, routes.instance))
                 .then((changeLogs) => resource.embed('changeLogs', changeLogs))
                 .then(() => utils.sendHal(req, res, resource))
                 .catch((err) => {

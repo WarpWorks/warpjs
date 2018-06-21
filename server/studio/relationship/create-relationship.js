@@ -1,9 +1,9 @@
+const ChangeLogs = require('@warp-works/warpjs-change-logs');
 const debug = require('debug')('W2:studio:relationship/create-relationship');
 const Promise = require('bluebird');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
-const ChangeLogs = require('./../../../lib/change-logs');
 const constants = require('./../constants');
 const DocLevel = require('./../../../lib/doc-level');
 const { actions } = require('./../../../lib/constants');
@@ -36,14 +36,20 @@ function handleAggregation(req, res, resource, persistence, instanceData) {
                 level1Domain.createNewID()
             ))
             .then((child) => Promise.resolve()
-                .then(() => {
-                    // TODO: Changelog createEntity()
-                })
+                .then(() => ChangeLogs.add(ChangeLogs.ACTIONS.ENTITY_CREATED, req.warpjsUser, child, {
+                    label: instanceData.entity.getDisplayName(instanceData.instance),
+                    type: instanceData.entity.name, // FIXME: use schemaId
+                    id: instanceData.instance.id
+                }))
                 .then(() => relationshipModel.getTargetEntity())
                 .then((targetEntity) => Promise.resolve()
                     .then(() => targetEntity.createDocument(persistence, child))
                     .then((newDoc) => Promise.resolve()
-                        .then(() => ChangeLogs.addAggregation(req, instanceData.instance, relationship, newDoc.type, newDoc.id))
+                        .then(() => ChangeLogs.add(ChangeLogs.ACTIONS.AGGREGATION_ADDED, req.warpjsUser, instanceData.instance, {
+                            key: relationship,
+                            type: newDoc.type,
+                            id: newDoc.id
+                        }))
                         .then(() => instanceData.entity.updateDocument(persistence, instanceData.instance))
                         .then(() => {
                             const redirectUrl = RoutesInfo.expand(constants.routes.instance, {

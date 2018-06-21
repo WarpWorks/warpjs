@@ -1,6 +1,6 @@
+const ChangeLogs = require('@warp-works/warpjs-change-logs');
 const Promise = require('bluebird');
 
-const ChangeLogs = require('./../../../lib/change-logs');
 const getTargetInstance = require('./get-target-instance');
 const logger = require('./../../loggers');
 
@@ -10,15 +10,17 @@ module.exports = (req, res, persistence, entity, instance) => {
     const relationshipEntity = entity.getRelationshipByName(relationship);
     const targetEntity = relationshipEntity.getTargetEntity();
 
-    const action = ChangeLogs.constants.ASSOCIATION_REMOVED;
+    const action = ChangeLogs.ACTIONS.ASSOCIATION_REMOVED;
 
     return Promise.resolve()
         .then(() => logger(req, `Trying ${action}`, req.body))
         .then(() => getTargetInstance(req, persistence, instance, relationshipEntity))
-        .then((targetInstance) => ChangeLogs.removeAssociation(
-            req, instance, relationship,
-            targetEntity.getDisplayName(targetInstance), req.body.type, req.body.id
-        ))
+        .then((targetInstance) => ChangeLogs.add(action, req.warpjsUser, instance, {
+            key: relationship,
+            label: targetEntity.getDisplayName(targetInstance),
+            type: req.body.type,
+            id: req.body.id
+        }))
         .then((instance) => relationshipEntity.removeAssociation(instance, req.body))
         .then((instance) => entity.updateDocument(persistence, instance))
         .then(() => logger(req, `Success ${action}`))

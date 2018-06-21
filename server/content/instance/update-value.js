@@ -1,8 +1,8 @@
+const ChangeLogs = require('@warp-works/warpjs-change-logs');
 // const debug = require('debug')('W2:content:instance:update-value');
 const Promise = require('bluebird');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
-const ChangeLogs = require('./../../../lib/change-logs');
 const logger = require('./../../loggers');
 const search = require('./../../../lib/search');
 const serverUtils = require('./../../utils');
@@ -23,7 +23,7 @@ module.exports = (req, res, persistence, entity, instance) => {
 
     const deleteAssociation = Boolean(body && body.patchAction && body.patchAction === 'remove');
 
-    const action = deleteAssociation ? ChangeLogs.constants.ASSOCIATION_REMOVED : ChangeLogs.constants.UPDATE_VALUE;
+    const action = deleteAssociation ? ChangeLogs.ACTIONS.ASSOCIATION_REMOVED : ChangeLogs.ACTIONS.UPDATE_VALUE;
     const patchAction = deleteAssociation ? [body.patchAction, body.type, body.id].join(':') : null;
 
     return Promise.resolve()
@@ -41,7 +41,10 @@ module.exports = (req, res, persistence, entity, instance) => {
                 newValue: valueInfo.newValue,
                 oldValue: valueInfo.oldValue
             });
-            ChangeLogs.updateValue(req, instance, body.updatePath, valueInfo.oldValue, valueInfo.newValue);
+            ChangeLogs.add(ChangeLogs.ACTIONS.UPDATE_VALUE, req.warpjsUser, instance, {
+                oldValue: valueInfo.oldValue,
+                newValue: valueInfo.newValue
+            });
         })
         .then(() => entity.updateDocument(persistence, instance))
         .then(() => search.indexDocument(persistence, entity, instance))

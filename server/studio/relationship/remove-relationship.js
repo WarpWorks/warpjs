@@ -1,9 +1,9 @@
+const ChangeLogs = require('@warp-works/warpjs-change-logs');
 // const debug = require('debug')('W2:studio:remove-relationship');
 const Promise = require('bluebird');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const { actions } = require('./../../../lib/constants');
-const ChangeLogs = require('./../../../lib/change-logs');
 const DocLevel = require('./../../../lib/doc-level');
 const logger = require('./../../loggers');
 const utils = require('./../utils');
@@ -45,7 +45,9 @@ module.exports = (req, res) => {
                         }
                     })
                 )
-                .then(() => ChangeLogs.removeEmbedded(req, instanceData.instance, body.docLevel))
+                .then(() => ChangeLogs.add(ChangeLogs.ACTIONS.EMBEDDED_REMOVED, req.warpjsUser, instanceData.instance, {
+                    key: body.docLevel
+                }))
             )
             .then(() => warpCore.removeDomainFromCache(domain))
             .then(() => logger(req, `Success ${ACTION}`))
