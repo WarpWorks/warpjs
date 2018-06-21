@@ -1,5 +1,9 @@
 # WarpJS's Releases Notes
 
+## 1.2.55 - 2018-06-21
+
+- #98: Added change-log to parent when removing a child
+
 ## 1.2.54 - 2018-06-21
 
 - #98: Monor fixes due to refactoring.

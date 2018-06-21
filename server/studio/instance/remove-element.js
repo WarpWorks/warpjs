@@ -1,8 +1,10 @@
+const ChangeLogs = require('@warp-works/warpjs-change-logs');
 // const debug = require('debug')('W2:studio:instance/remove-element');
 const Promise = require('bluebird');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const DocLevel = require('./../../../lib/doc-level');
+// const logger = require('./../../loggers');
 const utils = require('./../utils');
 const warpCore = require('./../../../lib/core');
 
@@ -58,6 +60,20 @@ module.exports = (req, res) => {
                 } else {
                     // Remove the element itself.
                     return Promise.resolve()
+                        .then(() => instanceData.entity.getParentData(persistence, instanceData.instance))
+                        .then((parentData) => {
+                            if (parentData) {
+                                return Promise.resolve()
+                                    .then(() => ChangeLogs.add(ChangeLogs.ACTIONS.AGGREGATION_REMOVED, req.warpjsUser, parentData.instance, {
+                                        key: instanceData.instance.parentRelnName,
+                                        label: instanceData.entity.getDisplayName(instanceData.instance),
+                                        type: instanceData.instance.type,
+                                        id: instanceData.instance.id
+                                    }))
+                                    .then(() => parentData.entity.updateDocument(persistence, parentData.instance))
+                                ;
+                            }
+                        })
                         .then(() => instanceData.entity.removeDocument(persistence, instanceData.instance))
                     ;
                 }

@@ -1,3 +1,4 @@
+const ChangeLogs = require('@warp-works/warpjs-change-logs');
 const Promise = require('bluebird');
 
 const logger = require('./../../loggers');
@@ -22,6 +23,25 @@ module.exports = (req, res) => {
                             throw new WarpWorksError(`You do not have permission to delete this entry.`);
                         }
                     })
+
+                    // Add log to parent document
+                    .then(() => Promise.resolve()
+                        .then(() => entity.getParentData(persistence, instance))
+                        .then((parentData) => {
+                            if (parentData) {
+                                return Promise.resolve()
+                                    .then(() => ChangeLogs.add(ChangeLogs.ACTIONS.AGGREGATION_REMOVED, req.warpjsUser, parentData.instance, {
+                                        key: instance.parentRelnName,
+                                        label: entity.getDisplayName(instance),
+                                        type: instance.type,
+                                        id: instance.id
+                                    }))
+                                    .then(() => parentData.entity.updateDocument(persistence, parentData.instance))
+                                ;
+                            }
+                        })
+                    )
+
                     .then(() => entity.removeDocument(persistence, id))
                     .then(() => {
                         logger(req, "Deleted", instance);

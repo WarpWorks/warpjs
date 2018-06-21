@@ -1,5 +1,5 @@
 const ChangeLogs = require('@warp-works/warpjs-change-logs');
-const debug = require('debug')('W2:studio:relationship/create-relationship');
+// const debug = require('debug')('W2:studio:relationship/create-relationship');
 const Promise = require('bluebird');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
@@ -114,7 +114,6 @@ function handleEmbedded(req, res, resource, persistence, instanceData) {
 
 module.exports = (req, res) => {
     const { domain, type, id, relationship } = req.params;
-    const { body } = req;
 
     const resource = warpjsUtils.createResource(req, {
         title: `New child for relationship ${domain} - ${type} - ${id} - ${relationship}`,
@@ -124,7 +123,8 @@ module.exports = (req, res) => {
         relationship
     });
 
-    debug(`${req.warpjsRequestToken}: domain=${domain}; type=${type}; id=${id}; relationship=${relationship}; body=`, body);
+    // const { body } = req;
+    // debug(`${req.warpjsRequestToken}: domain=${domain}; type=${type}; id=${id}; relationship=${relationship}; body=`, body);
 
     return Promise.resolve()
         .then(() => {
