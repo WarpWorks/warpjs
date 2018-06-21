@@ -22,8 +22,16 @@ module.exports = (req, res) => {
 
             Promise.resolve()
                 .then(() => serverUtils.getEntity(domain, type))
-                .then((entity) => entity.getInstance(persistence, id))
-                .then((instance) => ChangeLogs.toFormResource(instance, domain, persistence, routes.instance))
+                .then((entity) => Promise.resolve()
+                    .then(() => entity.getInstance(persistence, id))
+                    .then((instance) => ChangeLogs.toFormResource(
+                        instance,
+                        domain,
+                        persistence,
+                        routes.instance,
+                        entity.getDomain().getEntityByName('User') // FIXME: Hard-coded
+                    ))
+                )
                 .then((changeLogs) => resource.embed('changeLogs', changeLogs))
                 .then(() => utils.sendHal(req, res, resource))
                 .catch((err) => {

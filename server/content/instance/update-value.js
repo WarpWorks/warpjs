@@ -42,6 +42,7 @@ module.exports = (req, res, persistence, entity, instance) => {
                 oldValue: valueInfo.oldValue
             });
             ChangeLogs.add(ChangeLogs.ACTIONS.UPDATE_VALUE, req.warpjsUser, instance, {
+                key: body.updatePath,
                 oldValue: valueInfo.oldValue,
                 newValue: valueInfo.newValue
             });

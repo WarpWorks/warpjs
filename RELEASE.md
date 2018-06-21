@@ -1,5 +1,9 @@
 # WarpJS's Releases Notes
 
+## 1.2.54 - 2018-06-21
+
+- #98: Monor fixes due to refactoring.
+
 ## 1.2.53 - 2018-06-20
 
 - #98: Refactored ChangeLogs into its own package.
