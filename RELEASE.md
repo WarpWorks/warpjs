@@ -1,5 +1,9 @@
 # WarpJS's Releases Notes
 
+## 1.2.56 - 2018-06-25
+
+- #98: Fixed side-effect of change-logs on existing pages
+
 ## 1.2.55 - 2018-06-21
 
 - #98: Added change-log to parent when removing a child
