@@ -37,14 +37,6 @@ module.exports = (domain) => {
         title: resource._links.self.title
     });
 
-    // json export
-    resource.link('export', {
-        href: RoutesInfo.expand(constants.routes.jsonExport, {
-            domain: domain.name
-        }),
-        title: `Export JSON`
-    });
-
     // orphan pointers
     resource.link('orphans', {
         href: RoutesInfo.expand(constants.routes.orphans, {

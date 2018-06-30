@@ -1,5 +1,9 @@
 # WarpJS's Releases Notes
 
+## 1.2.57 - 2018-06-30
+
+- #91: Adding Studio header menu plugin.
+
 ## 1.2.56 - 2018-06-25
 
 - #98: Fixed side-effect of change-logs on existing pages

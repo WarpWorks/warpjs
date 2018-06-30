@@ -31,6 +31,8 @@
     "name": "I3C MapBrowser plugin",
     "moduleName": "@warp-works/warpjs-map-plugin",
     "path": "/map",
+    "auth": true,
+    "type": "portal-action",
     "config": {
       "mapMarkerType": "UseCase",
       "mapTypes": [
@@ -72,6 +74,7 @@
     "name": "ElasticSearch plugin",
     "moduleName": "@warp-works/warpjs-elasticsearch-plugin",
     "path": "/search",
+    "auth": true,
     "type": "search",
     "config": {
       "host": "http://localhost:9200",
@@ -82,10 +85,21 @@
     "name": "imagemap-editor",
     "moduleName": "@warp-works/warpjs-imagemap-editor-plugin",
     "path": "/imagemap-editor",
+    "auth": "content",
     "type": "action",
     "config": {
       "glyphicon": "picture",
       "label": "Edit ImageMap"
+    }
+  }, {
+    "name": "domain-json-exporter",
+    "moduleName": "@warp-works/warpjs-domain-json-exporter-plugin",
+    "path": "/json-exporter",
+    "auth": "admin",
+    "type": "studio-domain-action",
+    "config": {
+      "glyphicon": "random",
+      "label": "Export Domain JSN"
     }
   }]
 }
