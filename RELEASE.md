@@ -1,5 +1,9 @@
 # WarpJS's Releases Notes
 
+## 1.2.59 - 2018-07-11
+
+- Fixed typo.
+
 ## 1.2.58 - 2018-07-11
 
 - #105 - Portal: Don't send deprecated authors/contributors associations to
