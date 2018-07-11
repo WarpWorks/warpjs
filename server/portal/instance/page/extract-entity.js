@@ -23,9 +23,7 @@ module.exports = (req, responseResource, persistence, hsEntity, instance) => Pro
                 .then(() => extractCommunity(persistence, hsEntity, instance, 'Authors'))
                 .then((authors) => {
                     responseResource.embed('authors', authors);
-                    if (authors.length > 1) {
-                        responseResource.multiAuthors = true;
-                    }
+                    responseResource.multiAuthors = (authors.length > 1);
                 })
                 .then(() => extractCommunity(persistence, hsEntity, instance, 'Contributors'))
                 .then((contributors) => responseResource.embed('contributors', contributors))

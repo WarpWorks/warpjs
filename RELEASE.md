@@ -1,5 +1,10 @@
 # WarpJS's Releases Notes
 
+## 1.2.58 - 2018-07-11
+
+- #105 - Portal: Don't send deprecated authors/contributors associations to
+  front-end.
+
 ## 1.2.57 - 2018-06-30
 
 - #91: Adding Studio header menu plugin.
