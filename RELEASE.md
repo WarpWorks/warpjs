@@ -1,5 +1,10 @@
 # WarpJS's Releases Notes
 
+## 1.2.60 - 2018-07-12
+
+- #106: Extending meta-schema for PageView, Panel, and RelationshipPanelItems
+  styles.
+
 ## 1.2.59 - 2018-07-11
 
 - Fixed typo.
