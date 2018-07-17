@@ -4,7 +4,7 @@ const Promise = require('bluebird');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
-const profileImage = require('./../../../../lib/user-profile/image');
+const profileImage = require('./../../../lib/user-profile/image');
 const extractWorkingFor = require('./extract-working-for');
 const extractUserGroups = require('./extract-user-groups');
 

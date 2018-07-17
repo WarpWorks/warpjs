@@ -7,14 +7,14 @@ const RoutesInfo = require('@quoin/expressjs-routes-info');
 const urlTemplate = require('url-template');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
-const basicTypes = require('./../../../../lib/core/basic-types');
-const convertCustomLinks = require('./../convert-custom-links');
+const basicTypes = require('./../../../lib/core/basic-types');
+const convertCustomLinks = require('./convert-custom-links');
 const createObjResource = require('./create-obj-resource');
 const embed = require('./embed');
 const sortItems = require('./sort-items');
 
 const IMAGE_PATH = urlTemplate.parse('/public/iic_images/{ImageURL}'); // FIXME: Hard-coded path.
-const CONTENT_LINK_RE = require('./../../../../lib/core/content-link-re');
+const CONTENT_LINK_RE = require('./../../../lib/core/content-link-re');
 
 function parseLinks(overviews) {
     if (overviews) {
@@ -251,7 +251,8 @@ module.exports = (req, responseResource, persistence, hsEntity, entity) => Promi
                         .then((items) => addBasicPropertyPanelItems(panel, entity, items))
                         .then((items) => addEnumPanelItems(panel, entity, items))
                         .then((items) => sortItems(items))
-                        .then((items) => embed(panelResource, 'panelItems', items));
+                        .then((items) => embed(panelResource, 'panelItems', items))
+                    ;
                 }
             ))
             .then(() => createOverviewPanel(req, persistence, hsEntity, entity))

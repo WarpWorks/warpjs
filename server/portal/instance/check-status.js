@@ -3,7 +3,7 @@ const _ = require('lodash');
 const Promise = require('bluebird');
 
 const computeDocumentStatus = require('./compute-document-status');
-const serverUtils = require('./../../../utils');
+const serverUtils = require('./../../utils');
 
 module.exports = (req, persistence, entity, instance) => {
     const status = {};

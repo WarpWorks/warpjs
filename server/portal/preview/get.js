@@ -5,7 +5,7 @@ const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const convertCustomLinks = require('./../instance/convert-custom-links');
 const serverUtils = require('./../../utils');
-const walkExtract = require('./../instance/page/walk-extract');
+const walkExtract = require('./../instance/walk-extract');
 
 module.exports = (req, res) => {
     const { type, id } = req.params;

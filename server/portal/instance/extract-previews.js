@@ -2,10 +2,10 @@ const Promise = require('bluebird');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
-const config = require('./../../../config');
-const serverUtils = require('./../../../utils');
+const config = require('./../../config');
+const serverUtils = require('./../../utils');
 const walkExtract = require('./walk-extract');
-const convertCustomLinks = require('./../convert-custom-links');
+const convertCustomLinks = require('./convert-custom-links');
 
 function alreadyCached(cachedItems, instance) {
     return cachedItems.filter((cachedItem) => cachedItem.type === instance.type && cachedItem.id === instance.id).length !== 0;

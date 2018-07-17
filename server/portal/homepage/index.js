@@ -1,5 +1,5 @@
-const routesInfo = require('./routes-info');
+const redirectToDefaultPage = require('./redirect-to-default-page');
 
 module.exports = {
-    routesInfo
+    get: (req, res) => redirectToDefaultPage(req, res)
 };

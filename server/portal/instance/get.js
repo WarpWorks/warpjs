@@ -4,7 +4,7 @@ const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const extractEntity = require('./extract-entity');
 const extractPreviews = require('./extract-previews');
-const serverUtils = require('./../../../utils');
+const serverUtils = require('./../../utils');
 
 module.exports = (req, res) => {
     warpjsUtils.wrapWith406(res, {
