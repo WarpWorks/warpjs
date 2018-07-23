@@ -1,0 +1,36 @@
+<div class="container-fluid">
+  <div class="row breadcrumb-container">
+    {{> ../left-right-margin}}
+    <div class="col-xs-8 no-padding">
+      <ol class="breadcrumb-ordered-list breadcrumb no-padding">
+        {{#each page._embedded.breadcrumbs as |breadcrumb|}}
+          <li class="breadcrumb-item">
+            {{#if @last}}
+              {{breadcrumb.name}} {{#if breadcrumb.displayType}}[{{breadcrumb.displayType}}]{{/if}}
+            {{else}}
+              <a href="{{breadcrumb._links.self.href}}" title="{{breadcrumb.name}}">{{breadcrumb.name}}</a>
+            {{/if}}
+          </li>
+        {{/each}}
+      </ol>
+    </div>
+    <div class="col-xs-2 no-padding">
+      {{#if page._links.edit}}
+        <a class="pull-right" href="{{page._links.edit.href}}"
+          title="Edit '{{page.name}}'"
+          ><span class="glyphicon glyphicon-pencil"></span></a>
+      {{/if}}
+    </div>
+    {{> ../left-right-margin}}
+  </div>
+</div>
+
+<div class="container-fluid">
+  {{> ../document-status/template status=page.status}}
+</div>
+
+{{#if page.status.isVisible}}
+  <div class="container-fluid">
+    {{> page-view  page=page pageView=page._embedded.pageViews.[0]}}
+  </div>
+{{/if}}

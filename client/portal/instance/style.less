@@ -1,0 +1,43 @@
+.warpjs-page-view-Plain {
+    > .warpjs-panel.row {
+        &:nth-child(odd) {
+            background-color: transparent;
+        }
+
+        &:nth-child(even) {
+            background-color: #eee;
+        }
+    }
+}
+
+.warpjs-panel {
+
+    .warpjs-panel-style {
+        &-Solid {
+            margin-top: 20px;
+            background-color: #ddd;
+
+            > .panel-heading {
+            }
+
+            > .panel-body {
+            }
+        }
+
+        &-Transparent {
+            margin-top: 20px;
+            background-color: transparent;
+            border-color: transparent;
+
+            > .panel-heading {
+                background-color: transparent;
+                border-color: transparent;
+                background-image: none;
+            }
+
+            > .panel-body {
+                background-color: transparent;
+            }
+        }
+    }
+}

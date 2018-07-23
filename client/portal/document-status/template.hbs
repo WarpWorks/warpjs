@@ -1,5 +1,5 @@
-{{#if isVisible}}
-  {{#if showDisclaimer}}
+{{#if status.isVisible}}
+  {{#if status.showDisclaimer}}
     <div class="row warpjs-document-status-container">
       {{>modal}}
 
@@ -29,7 +29,7 @@
     </div>
   {{/if}}
 
-  {{#unless isPublic}}
+  {{#unless status.isPublic}}
     <div class="row warpjs-document-status-container">
       <div class="col-xs-1 left-right-margin"></div>
 

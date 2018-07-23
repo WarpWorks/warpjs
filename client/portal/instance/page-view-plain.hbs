@@ -1,0 +1,15 @@
+{{#each pageView._embedded.overviews as |panel|}}
+  <div class="row warpjs-panel">
+    {{> ../left-right-margin}}
+    <div class="col-xs-10">
+      <div class="panel panel-item panel-default warpjs-panel-style-{{panel.style}}">
+        <div class="panel-heading panel-item-heading">
+          <div class="panel-title">{{panel.label}}</div>
+        </div>
+        <div class="panel-body panel-item-body">
+        </div>
+      </div>
+    </div>
+    {{> ../left-right-margin}}
+  </div>
+{{/each}}

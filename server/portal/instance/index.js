@@ -1,5 +1,5 @@
-const get = require('./get');
+const extractInstance = require('./extract-instance');
 
 module.exports = {
-    get
+    get: (req, res) => extractInstance(req, res)
 };
