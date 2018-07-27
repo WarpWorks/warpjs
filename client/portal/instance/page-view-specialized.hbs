@@ -1,0 +1,23 @@
+<div class="row">
+  {{> ../left-right-margin}}
+
+  <div class="col-xs-10 warpjs-page-view-specialized">
+    {{> page-view-header-image image=pageView._embedded.headerImages.[0]}}
+    {{> page-view-entity-label page=page}}
+    {{> page-view-header page=page}}
+    {{> page-view-summary page=page summary=pageView._embedded.summaries}}
+
+    <div class="row">
+      <div class="col-xs-4">
+        {{> page-view-sidebar sidebars=pageView._embedded.sidebars}}
+        {{> page-view-community communities=pageView._embedded.communities}}
+      </div>
+
+      <div class="col-xs-8">
+        {{> page-view-main-body panels=pageView._embedded.mainBodyPanels}}
+      </div>
+    </div>
+  </div>
+
+  {{> ../left-right-margin}}
+</div>

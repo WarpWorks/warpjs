@@ -1,0 +1,20 @@
+{{#if sidebars.length}}
+  <div class="warpjs-page-view-sidebars">
+    {{#each sidebars as |sidebar|}}
+      <div class="row warpjs-page-view-sidebars-panel">
+        <p>A section</p>
+
+        {{#if sidebar._embedded.items}}
+          <div class="row warpjs-page-view-sidebars-panel-items">
+            {{#each sidebar._embedded.items as |item|}}
+              CHANGEME
+              <p>Participants</p>
+              <p>Fujitsu Limited</p>
+              <p>Cisco Systems</p>
+            {{/each}}
+          </div>
+        {{/if}}
+      </div>
+    {{/each}}
+  </div>
+{{/if}}

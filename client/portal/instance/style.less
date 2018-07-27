@@ -1,14 +1,23 @@
-.warpjs-page-view-Plain {
-    > .warpjs-panel.row {
-        &:nth-child(odd) {
-            background-color: transparent;
-        }
+.warpjs-page-view {
+    color: #000;
+}
 
-        &:nth-child(even) {
-            background-color: #eee;
-        }
+.breadcrumb-container {
+    &.row {
+        background-color: @row-bg-color;
+        min-height: 30px;
+    }
+    .no-padding {
+        padding-top: 3px;
+        padding-bottom: 0;
     }
 }
+
+.breadcrumb-ordered-list {
+    margin-bottom: 0px;
+    padding: 0px;
+}
+
 
 .warpjs-panel {
 
@@ -41,3 +50,170 @@
         }
     }
 }
+
+.warpjs-table {
+    display: table;
+    width: 100%;
+
+    > .warpjs-cell {
+        float: none;
+        display: table-cell;
+        vertical-align: top;
+    }
+}
+
+.warpjs-page-view-label {
+    background-color: #f3f3f3;
+    color: #000000;
+    margin-top: 20px;
+
+    .warpjs-page-view-label-value {
+        text-transform: uppercase;
+        color: #000000;
+    }
+}
+
+.warpjs-page-view-header {
+    background-color: #2f2f2f;
+    color: #ffffff;
+    margin-top: 0;
+    margin-bottom: 20px;
+
+    .warpjs-page-view-header-value {
+        text-transform: uppercase;
+    }
+}
+
+.warpjs-page-view-summary {
+    color: #fff;
+
+    .warpjs-page-view-summary-results-title {
+        text-transform: uppercase;
+        background-color: #000;
+    }
+
+    .warpjs-page-view-summary-results-content {
+        text-transform: uppercase;
+        background-color: #2c2c2c;
+    }
+
+    .warpjs-page-view-summary-challenge-title {
+        background-color: #cb291c;
+    }
+
+    .warpjs-page-view-summary-challenge-content {
+        background-color: #e34f43;
+    }
+
+    .warpjs-page-view-summary-solution-title {
+        background-color: #cb291c;
+    }
+
+    .warpjs-page-view-summary-solution-content {
+        background-color: #e34f43;
+    }
+}
+
+.warpjs-page-view-main-body {
+    padding: 5px;
+    margin: 5px;
+
+    .warpjs-page-view-main-body-panel {
+        padding: 5px;
+        margin: 5px;
+
+        .warpjs-page-view-main-body-item {
+            padding: 5px;
+            margin: 5px;
+        }
+    }
+}
+
+.warpjs-page-view-sidebar {
+    background-color: #f6f6f6;
+}
+
+.warpjs-page-view-community {
+    background-color: #cccccc;
+
+    .warpjs-page-view-community-section {
+        margin: 5px;
+        padding: 5px;
+
+        .warpjs-title {
+        }
+
+        .warpjs-user {
+            .warpjs-community-image {
+                padding-left: 0px;
+                padding-right: 0px;
+
+                .image-container-parent {
+                    position: relative;
+                    width: 100%;
+                    padding-bottom: 0%;
+                    border-radius: 50%;
+                    overflow: hidden;
+
+                    .image-container-child {
+                        position: relative;
+                        padding-bottom: calc(~"100%");
+
+                        img {
+                            width: 100%;
+                            position: absolute;
+                            top: 0;
+                            bottom: 0;
+                            left: 0;
+                            right: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.warpjs-page-view-main-body {
+    color: #000;
+    background-color: #e1f5fe;
+    margin: 5px;
+    padding: 5px;
+
+    &:nth-child(odd) {
+        background-color: #fff3e0; /* DEBUG */
+    }
+
+    .warpjs-page-view-main-body-panel {
+        margin: 5px;
+        padding: 5px;
+        background-color: #ffe0b2; /* DEBUG */
+    }
+
+    .warpjs-page-view-main-body-item {
+        margin: 5px;
+        padding: 5px;
+        background-color: #ffcc80; /* DEBUG */
+
+        .warpjs-title {
+            background-color: #ffb74d; /* DEBUG */
+        }
+
+        .warpjs-description {
+            background-color: #ffa726; /* DEBUG */
+        }
+    }
+}
+
+.warpjs-page-view-Plain {
+    > .warpjs-panel.row {
+        &:nth-child(odd) {
+            background-color: transparent;
+        }
+
+        &:nth-child(even) {
+            background-color: #eee;
+        }
+    }
+}
+

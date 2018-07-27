@@ -4,7 +4,7 @@ const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const config = require('./../config');
-const Page = require('./models/page');
+const extractPage = require('./extract-page');
 const serverUtils = require('./../../utils');
 
 module.exports = (req, res) => {
@@ -24,9 +24,8 @@ module.exports = (req, res) => {
                 .then((entity) => Promise.resolve()
                     .then(() => entity.getInstance(persistence, id))
                     .then((instance) => Promise.resolve()
-                        .then(() => new Page())
-                        .then((page) => page.extract(persistence, entity, instance, pageViewName, req.warpjsUser))
-                        .then((page) => resource.embed('pages', page.toHal(req)))
+                        .then(() => extractPage(req, persistence, entity, instance, pageViewName))
+                        .then((pageResource) => resource.embed('pages', pageResource))
                     )
                 )
                 .finally(() => persistence.close())

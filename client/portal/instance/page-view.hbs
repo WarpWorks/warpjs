@@ -1,11 +1,7 @@
-<div class="warpjs-page-view-{{pageView.style}}">
-  {{#if pageView.isOfStyle.BoK}}
-    TODO: Display BoK
-  {{else if pageView.isOfStyle.Insight}}
-    TODO: Display Insight
-  {{else if pageView.isOfStyle.Testbed}}
-    TODO: Display Testbed
+<div class="container-fluid warpjs-page-view warpjs-page-view-{{pageView.style}}">
+  {{#if pageView.isSpecializedPageViewStyle}}
+    {{> page-view-specialized page=page pageView=pageView}}
   {{else}}
-    {{> page-view-plain pageView=pageView}}
+    {{> page-view-plain page=page pageView=pageView}}
   {{/if}}
 </div>

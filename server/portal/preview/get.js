@@ -3,9 +3,9 @@ const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsPlugins = require('@warp-works/warpjs-plugins');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
-const convertCustomLinks = require('./../instance/convert-custom-links');
+const convertCustomLinks = require('./../instance-old/convert-custom-links');
 const serverUtils = require('./../../utils');
-const walkExtract = require('./../instance/walk-extract');
+const walkExtract = require('./../instance-old/walk-extract');
 
 module.exports = (req, res) => {
     const { type, id } = req.params;

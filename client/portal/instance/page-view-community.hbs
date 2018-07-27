@@ -1,0 +1,8 @@
+{{#if communities.length}}
+  <div class="row warpjs-page-view-community">
+    {{#each communities as |community|}}
+      {{> page-view-community-section title="Authors" users=community._embedded.authors}}
+      {{> page-view-community-section title="Contributors" users=community._embedded.contributors}}
+    {{/each}}
+  </div>
+{{/if}}

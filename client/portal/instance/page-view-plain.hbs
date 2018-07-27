@@ -1,4 +1,4 @@
-{{#each pageView._embedded.overviews as |panel|}}
+{{#each pageView._embedded.mainBodyPanels as |panel|}}
   <div class="row warpjs-panel">
     {{> ../left-right-margin}}
     <div class="col-xs-10">
@@ -7,9 +7,35 @@
           <div class="panel-title">{{panel.label}}</div>
         </div>
         <div class="panel-body panel-item-body">
+          {{#each panel._embedded.items as |item|}}
+            {{> page-view-main-body-document item=item}}
+          {{/each}}
+
+          {{> page-view-main-body panels=pageView._embedded.mainBodyPanels}}
         </div>
       </div>
     </div>
     {{> ../left-right-margin}}
   </div>
 {{/each}}
+
+{{#each pageView._embedded.communities as |community|}}
+  {{#if community.show}}
+    <div class="row warpjs-panel">
+        {{> ../left-right-margin}}
+        <div class="col-xs-10">
+          <div class="panel panel-item panel-default warpjs-panel-style-{{panel.style}}">
+            <div class="panel-heading panel-item-heading">
+              <div class="panel-title">{{panel.label}}</div>
+            </div>
+            <div class="panel-body panel-item-body">
+              {{> page-view-main-body panels=pageView._embedded.mainBodyPanels}}
+              {{> page-view-community communities=pageView._embedded.communities}}
+            </div>
+          </div>
+        </div>
+        {{> ../left-right-margin}}
+    </div>
+  {{/if}}
+{{/each}}
+

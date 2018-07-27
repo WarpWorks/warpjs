@@ -1,0 +1,9 @@
+{{#if users}}
+  <div class="warpjs-title">{{title}}</div>
+  {{#each users as |user|}}
+    <div class="warpjs-user">
+      [IMG]
+      <a href="{{user._links.self.href}}">{{user.name}}</a>
+    </div>
+  {{/each}}
+{{/if}}
