@@ -1,0 +1,4 @@
+{{#each items as |item|}}
+  <a href="{{item._links.self.href}}">{{item.label}}</a>
+  {{#unless @last}}/{{/unless}}
+{{/each}}

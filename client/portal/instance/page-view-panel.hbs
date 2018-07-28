@@ -1,0 +1,11 @@
+<div class="panel panel-default warpjs-panel-style-{{panel.style}}">
+  <div class="panel-heading">
+    <div class="panel-title">{{panel.label}}</div>
+  </div>
+
+  <div class="panel-body">
+    {{#each panel._embedded.items as |section|}}
+      {{> page-view-panel-section section=section}}
+    {{/each}}
+  </div>
+</div>

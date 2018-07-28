@@ -9,12 +9,18 @@ module.exports = (persistence, entity, instance) => Promise.resolve()
         id: null,
         name: "Overview",
         description: "Document Overview",
-        label: "Overview"
+        label: "Overview",
+        isOverviewPanel: true
     }))
     .then((resource) => Promise.resolve()
         .then(() => entity.getRelationshipByName('Overview'))
         .then((relationship) => paragraphsByRelationship(persistence, relationship, instance))
-        .then((items) => resource.embed('items', items))
+        .then((items) => {
+            if (items && items.length) {
+                resource.showPanel = true;
+                resource.embed('items', items);
+            }
+        })
         .then(() => resource)
     )
 ;

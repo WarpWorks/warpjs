@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const debug = require('debug')('W2:portal:instance/models/page');
+// const debug = require('debug')('W2:portal:instance/extract-page');
 const Promise = require('bluebird');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
@@ -13,7 +13,7 @@ const config = serverUtils.getConfig();
 const statusConfig = config.status;
 
 function computeDocumentStatus(persistence, entity, instance) {
-    debug(`computeDocumentStatus()...`);
+    // debug(`computeDocumentStatus()...`);
     const instanceStatus = instance[statusConfig.property];
 
     return Promise.resolve()
@@ -26,9 +26,9 @@ function computeDocumentStatus(persistence, entity, instance) {
 }
 
 function computeParentDocumentStatus(persistence, entity, instance) {
-    debug(`computeParentDocumentStatus()...`);
+    // debug(`computeParentDocumentStatus()...`);
     return Promise.resolve()
-        .then(() => debug(`computeParentDocumentStatus(): entity=`, entity.constructor.name))
+        // .then(() => debug(`computeParentDocumentStatus(): entity=`, entity.constructor.name))
         .then(() => entity.getParentInstance(persistence, instance))
         .then((parentInstances) => parentInstances.pop())
         .then((parentInstance) => (parentInstance)

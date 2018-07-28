@@ -1,11 +1,10 @@
-<div class="warpjs-page-view-main-body">
-  {{#each panels as |panel|}}
+{{#each panels as |panel|}}
+  {{#if panel.showPanel}}
     <div class="warpjs-page-view-main-body-panel">
       <div class="warpjs-page-view-main-body-panel-title">
         {{panel.label}}
       </div>
-      {{> page-view-main-body-document panel=panel}}
+      {{> page-view-main-body-item items=panel._embedded.items}}
     </div>
-  {{/each}}
-</div>
-
+  {{/if}}
+{{/each}}

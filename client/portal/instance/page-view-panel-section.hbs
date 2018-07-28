@@ -1,0 +1,23 @@
+{{#if section.showItem}}
+  <div class="row warpjs-panel-section">
+    {{#if section.documentStyle}}
+      <div class="col-xs-12">
+        <div class="title">{{section.name}}</div>
+        <div class="content">{{{section.description}}}</div>
+      </div>
+    {{else if section.isOfType.SeparatorPanelItem}}
+      <hr />
+    {{else if section.isOfType.BasicPropertyPanelItem}}
+      <div class="col-xs-3 warpjs-label">{{section.label}}:</div>
+      <div class="col-xs-9 warpjs-value">{{section.value}}</div>
+    {{else if section.isOfType.EnumPanelItem}}
+      <div class="col-xs-3 warpjs-label">{{section.label}}:</div>
+      <div class="col-xs-9 warpjs-value">{{section.value}}</div>
+    {{else if section.isOfType.RelationshipPanelItem}}
+      {{> relationship-panel-items section=section}}
+    {{else}}
+      <div class="col-xs-12">TODO: Implement panel-section for {{section.type}}</div>
+    {{/if}}
+  </div>
+{{/if}}
+

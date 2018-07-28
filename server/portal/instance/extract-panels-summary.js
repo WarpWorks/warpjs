@@ -14,8 +14,7 @@ const warpjsUtils = require('@warp-works/warpjs-utils');
 const constants = require('./../resources/constants');
 
 module.exports = (persistence, entity, instance, entityPanels) => Promise.resolve()
-    .then(() => entityPanels.filter((panel) => panel.name === constants.PANEL_NAMES.Summary))
-    .then((panels) => panels && panels.length ? panels[0] : null)
+    .then(() => entityPanels.find((panel) => panel.name === constants.PANEL_NAMES.Summary))
     .then((panel) => panel ? panel.getPanelItems().find((panelItem) => panelItem.name === constants.PANEL_ITEM_NAMES.Summary) : null)
     .then((panelItem) => panelItem ? panelItem.getRelationship() : null)
     .then((relationship) => relationship ? relationship.getDocuments(persistence, instance) : null)

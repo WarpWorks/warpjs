@@ -12,7 +12,7 @@ module.exports = (persistence, entity, instance) => Promise.resolve()
         .then((relationship) => usersByRelationship(persistence, relationship, instance))
         .then((authors) => {
             if (authors && authors.length) {
-                resource.show = true;
+                resource.showPanel = true;
                 resource.embed('authors', authors);
             }
         })
@@ -21,7 +21,7 @@ module.exports = (persistence, entity, instance) => Promise.resolve()
         .then((relationship) => usersByRelationship(persistence, relationship, instance))
         .then((contributors) => {
             if (contributors && contributors.length) {
-                resource.show = true;
+                resource.showPanel = true;
                 resource.embed('contributors', contributors);
             }
         })

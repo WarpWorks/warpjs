@@ -23,4 +23,5 @@ module.exports = (persistence, relationship, instance) => Promise.resolve()
                 .then(() => resource)
             )
     ))
+    .then((documents) => documents.sort(warpjsUtils.byPositionThenName))
 ;

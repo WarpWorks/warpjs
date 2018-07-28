@@ -20,10 +20,10 @@
 
 
 .warpjs-panel {
+    margin-bottom: 20px;
 
     .warpjs-panel-style {
         &-Solid {
-            margin-top: 20px;
             background-color: #ddd;
 
             > .panel-heading {
@@ -34,7 +34,6 @@
         }
 
         &-Transparent {
-            margin-top: 20px;
             background-color: transparent;
             border-color: transparent;
 
@@ -76,7 +75,7 @@
 .warpjs-page-view-header {
     background-color: #2f2f2f;
     color: #ffffff;
-    margin-top: 0;
+    margin-bottom: 0;
     margin-bottom: 20px;
 
     .warpjs-page-view-header-value {
@@ -116,68 +115,88 @@
 
 .warpjs-page-view-main-body {
     padding: 5px;
-    margin: 5px;
+    margin-bottom: 5px;
 
     .warpjs-page-view-main-body-panel {
         padding: 5px;
-        margin: 5px;
+        margin-bottom: 5px;
 
         .warpjs-page-view-main-body-item {
             padding: 5px;
-            margin: 5px;
+            margin-bottom: 5px;
         }
     }
 }
 
-.warpjs-page-view-sidebar {
-    background-color: #f6f6f6;
-}
+.warpjs-page-view-side-zone {
+    background-color: #ff6d00;
+    padding: 5px;
 
-.warpjs-page-view-community {
-    background-color: #cccccc;
-
-    .warpjs-page-view-community-section {
-        margin: 5px;
+    .warpjs-page-view-side-panel {
+        background-color: #fbe9e7; /* DEBUG */
+        margin-bottom: 5px;
         padding: 5px;
 
-        .warpjs-title {
+        .warpjs-page-view-side-section {
+            background-color: #ffccbc; /* DEBUG */
+            margin-bottom: 5px;
+            padding: 5px;
+
+            .warpjs-title {
+                background-color: #ffab91; /* DEBUG */
+            }
+
+            .warpjs-content {
+                background-color: #ff8a65; /* DEBUG */
+            }
         }
 
-        .warpjs-user {
-            .warpjs-community-image {
-                padding-left: 0px;
-                padding-right: 0px;
+        &.warpjs-page-view-sidebar {
+        }
 
-                .image-container-parent {
-                    position: relative;
-                    width: 100%;
-                    padding-bottom: 0%;
-                    border-radius: 50%;
-                    overflow: hidden;
+        &.warpjs-page-view-badges {
+        }
 
-                    .image-container-child {
+        &.warpjs-page-view-community {
+            .warpjs-user {
+                .warpjs-community-image {
+                    padding-left: 0px;
+                    padding-right: 0px;
+
+                    .image-container-parent {
                         position: relative;
-                        padding-bottom: calc(~"100%");
+                        width: 100%;
+                        padding-bottom: 0%;
+                        border-radius: 50%;
+                        overflow: hidden;
 
-                        img {
-                            width: 100%;
-                            position: absolute;
-                            top: 0;
-                            bottom: 0;
-                            left: 0;
-                            right: 0;
+                        .image-container-child {
+                            position: relative;
+                            padding-bottom: calc(~"100%");
+
+                            img {
+                                width: 100%;
+                                position: absolute;
+                                top: 0;
+                                bottom: 0;
+                                left: 0;
+                                right: 0;
+                            }
                         }
                     }
                 }
             }
         }
     }
+
 }
+
+
 
 .warpjs-page-view-main-body {
     color: #000;
     background-color: #e1f5fe;
-    margin: 5px;
+    margin-bottom: 5px;
     padding: 5px;
 
     &:nth-child(odd) {
@@ -185,13 +204,13 @@
     }
 
     .warpjs-page-view-main-body-panel {
-        margin: 5px;
+        margin-bottom: 5px;
         padding: 5px;
         background-color: #ffe0b2; /* DEBUG */
     }
 
     .warpjs-page-view-main-body-item {
-        margin: 5px;
+        margin-bottom: 5px;
         padding: 5px;
         background-color: #ffcc80; /* DEBUG */
 
@@ -205,8 +224,29 @@
     }
 }
 
+.warpjs-relationship-style-CSV_Columns {
+    .warpjs-value {
+        .warpjs-value-item {
+            padding-left: 0;
+            margin-bottom: 5px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+    }
+}
+
+
 .warpjs-page-view-Plain {
-    > .warpjs-panel.row {
+    .warpjs-page-view-label,
+    .warpjs-page-view-header,
+    .warpjs-page-view-summary,
+    .warpjs-page-view-sidebar,
+    .warpjs-page-view-badges {
+        display: none;
+    }
+
+    > .row.warpjs-panel {
         &:nth-child(odd) {
             background-color: transparent;
         }
@@ -217,3 +257,25 @@
     }
 }
 
+.warpjs-page-view-BoK {
+    .warpjs-page-view-header-image,
+    .warpjs-page-view-summary,
+    .warpjs-page-view-badges {
+        display: none;
+    }
+}
+
+.warpjs-page-view-Insight {
+    .warpjs-page-view-header-image,
+    .warpjs-page-view-badges {
+        display: none;
+    }
+}
+
+.warpjs-page-view-Testbed {
+    .warpjs-page-view-label,
+    .warpjs-page-view-header,
+    .warpjs-page-view-summary {
+        display: none;
+    }
+}

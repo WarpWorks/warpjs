@@ -1,8 +1,12 @@
 const _ = require('lodash');
+// const debug = require('debug')('W2:portal:resources/constants');
 
-function generateIndicators(items, itemToCompare) {
+const ComplexTypes = require('./../../../lib/core/complex-types');
+
+function generateIndicators(obj, itemToCompare) {
+    // debug(`generateIndicators(obj, itemToCompare='${itemToCompare}'): obj=`, obj);
     return Object.freeze(_.reduce(
-        items,
+        _.values(obj),
         (indicators, indicator) => _.extend(indicators, {
             [indicator]: itemToCompare === indicator
         }),
@@ -20,7 +24,7 @@ module.exports = Object.freeze({
     }),
 
     isOfPageViewStyle(style) {
-        return generateIndicators(_.values(this.PAGE_VIEW_STYLES), style);
+        return generateIndicators(this.PAGE_VIEW_STYLES, style);
     },
 
     isSpecializedPageViewStyle(style) {
@@ -34,17 +38,19 @@ module.exports = Object.freeze({
     }),
 
     isOfPanelName(name) {
-        return generateIndicators(_.values(this.PANEL_NAMES), name);
+        return generateIndicators(this.PANEL_NAMES, name);
     },
 
     PANEL_ITEM_NAMES: Object.freeze({
+        Sidebar: 'Sidebar',
+        Badges: 'Badges',
         Summary: 'Summary',
         Authors: 'Authors',
         Contributors: 'Contributors'
     }),
 
-    isSpecializedPanel(style) {
-        return _.values(this.PANEL_ITEM_NAMES).indexOf(style) !== -1;
+    isSpecializedPanel(name) {
+        return _.values(this.PANEL_ITEM_NAMES).indexOf(name) !== -1;
     },
 
     RELATIONSHIP_PANEL_ITEM_STYLES: Object.freeze({
@@ -58,7 +64,18 @@ module.exports = Object.freeze({
         Document: 'Document'
     }),
 
-    isOfRelationshipPanelItemStyle(style) {
-        return generateIndicators(_.values(this.RELATIONSHIP_PANEL_ITEM_STYLES), style);
+    isOfRelationshipPanelItemStyle(panelItem) {
+        return generateIndicators(this.RELATIONSHIP_PANEL_ITEM_STYLES, panelItem.style);
+    },
+
+    PANEL_ITEM_TYPES: Object.freeze({
+        [ComplexTypes.SeparatorPanelItem]: ComplexTypes.SeparatorPanelItem,
+        [ComplexTypes.RelationshipPanelItem]: ComplexTypes.RelationshipPanelItem,
+        [ComplexTypes.BasicPropertyPanelItem]: ComplexTypes.BasicPropertyPanelItem,
+        [ComplexTypes.EnumPanelItem]: ComplexTypes.EnumPanelItem
+    }),
+
+    isOfPanelItemType(panelItem) {
+        return generateIndicators(this.PANEL_ITEM_TYPES, panelItem.type);
     }
 });

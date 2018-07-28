@@ -11,7 +11,7 @@ module.exports = (persistence, entity, instance, entityPanels, isSpecializedPage
             return true;
         }
 
-        return !constants.isSpecializedPanel(panel.style);
+        return !constants.isSpecializedPanel(panel.name);
     }))
     .then((panels) => Promise.map(
         panels,

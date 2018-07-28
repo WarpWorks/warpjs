@@ -1,13 +1,12 @@
 {{#if panels.length}}
-  <div class="warpjs-page-view-side-panel warpjs-page-view-sidebar">
+  <div class="warpjs-page-view-side-panel warpjs-page-view-badges">
     {{#each panels as |panel|}}
       {{#each panel._embedded.items as |section|}}
         {{#if section.showItem}}
           <div class="warpjs-page-view-side-section">
-            <div class="warpjs-title">
-              {{section.label}}
-            </div>
+            <div class="warpjs-title">{{section.label}}</div>
             <div class="warpjs-content">
+              {{> panel-items-csv items=section._embedded.items}}
             </div>
           </div>
         {{/if}}
@@ -15,4 +14,3 @@
     {{/each}}
   </div>
 {{/if}}
-

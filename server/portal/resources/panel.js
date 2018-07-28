@@ -15,7 +15,12 @@ module.exports = (persistence, panel, instance) => Promise.resolve()
     }))
     .then((resource) => Promise.resolve()
         .then(() => panelItemsByPanel(persistence, panel, instance))
-        .then((panelItems) => resource.embed('items', panelItems))
+        .then((panelItems) => {
+            if (panelItems && panelItems.length) {
+                resource.showPanel = true;
+                resource.embed('items', panelItems);
+            }
+        })
 
         .then(() => resource)
     )

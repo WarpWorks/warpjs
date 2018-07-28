@@ -1,0 +1,15 @@
+<div class="warpjs-relationship-style-{{section.style}}">
+  {{#if section.isOfStyle.CSV}}
+    <div class="col-xs-3 warpjs-label">{{section.label}}</div>
+    <div class="col-xs-9 warpjs-value">
+      {{> panel-items-csv items=section._embedded.items}}
+    </div>
+  {{else if section.isOfStyle.CSV_Columns}}
+    <div class="col-xs-3 warpjs-label">{{section.label}}</div>
+    <div class="col-xs-9 warpjs-value">
+      {{> panel-items-csv-columns items=section._embedded.items}}
+    </div>
+  {{else}}
+    <div class="col-xs-12">TODO: Implement relationship style {{section.style}}</div>
+  {{/if}}
+</div>

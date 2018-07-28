@@ -8,12 +8,13 @@
     {{> page-view-summary page=page summary=pageView._embedded.summaries}}
 
     <div class="row">
-      <div class="col-xs-4">
-        {{> page-view-sidebar sidebars=pageView._embedded.sidebars}}
-        {{> page-view-community communities=pageView._embedded.communities}}
+      <div class="col-xs-4 warpjs-page-view-side-zone">
+        {{> page-view-sidebar panels=pageView._embedded.sidebars}}
+        {{> page-view-badges panels=pageView._embedded.badges}}
+        {{> page-view-community panels=pageView._embedded.communities}}
       </div>
 
-      <div class="col-xs-8">
+      <div class="col-xs-8 warpjs-page-view-main-body">
         {{> page-view-main-body panels=pageView._embedded.mainBodyPanels}}
       </div>
     </div>

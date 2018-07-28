@@ -1,22 +1,24 @@
 {{#if users}}
-  <div class="warpjs-page-view-community-section">
-    <div class="row">
-      <div class="col-xs-12 warpjs-title">{{title}}</div>
+  <div class="warpjs-page-view-side-section">
+    <div class="warpjs-title">
+      {{title}}
     </div>
     {{#each users as |user|}}
-      <div class="row warpjs-user">
-        <div class="col-xs-2">
-          <div class="warpjs-community-image">
-            <div class="image-container-parent">
-              <div class="image-container-child">
-                <img src="{{user._links.image.href}}" />
+      <div class="warpjs-content">
+        <div class="row warpjs-user">
+          <div class="col-xs-2">
+            <div class="warpjs-community-image">
+              <div class="image-container-parent">
+                <div class="image-container-child">
+                  <img src="{{user._links.image.href}}" />
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div class="col-xs-10">
-          <a href="{{user._links.self.href}}">{{user.name}}</a>
+          <div class="col-xs-10">
+            <a href="{{user._links.self.href}}">{{user.name}}</a>
+          </div>
         </div>
       </div>
     {{/each}}

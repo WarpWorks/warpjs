@@ -8,6 +8,7 @@ module.exports = (persistence, relationship, instance) => Promise.resolve()
     .then((paragraphs) => paragraphs.sort(warpjsUtils.byPositionThenName))
     .then((paragraphs) => Promise.map(paragraphs, (paragraph) => Promise.resolve()
         .then(() => warpjsUtils.createResource('', {
+            showItem: true,
             documentStyle: true,
             name: paragraph.Heading,
             description: paragraph.Content
