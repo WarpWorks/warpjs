@@ -36,6 +36,10 @@ module.exports = (persistence, panelItem, instance) => Promise.resolve()
                                     const targetIndex = i + (j * itemsPerColumn);
                                     if (targetIndex < items.length) {
                                         resortedItems.push(items[targetIndex]);
+                                    } else {
+                                        // Place holder so that we know to add
+                                        // an empty element.
+                                        resortedItems.push(null);
                                     }
                                 }
                             }

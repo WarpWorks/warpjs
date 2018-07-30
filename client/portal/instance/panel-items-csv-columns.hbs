@@ -1,5 +1,9 @@
 {{#each items as |item|}}
   <div class="col-xs-4 warpjs-value-item">
-    <a href="{{item._links.self.href}}" title="{{item.label}}">{{item.label}}</a>
+    {{#if item.label}}
+      <a href="{{item._links.self.href}}" title="{{item.label}}">{{item.label}}</a>
+    {{else}}
+      &nbsp;
+    {{/if}}
   </div>
 {{/each}}
