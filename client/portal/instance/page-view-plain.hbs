@@ -13,17 +13,14 @@
 {{/each}}
 
 {{#each pageView._embedded.communities as |community|}}
-  {{#if community.show}}
+  {{#if community.showPanel}}
     <div class="row warpjs-panel">
         {{> ../left-right-margin}}
         <div class="col-xs-10">
-          <div class="panel panel-item panel-default warpjs-panel-style-{{panel.style}}">
-            <div class="panel-heading panel-item-heading">
-              <div class="panel-title">{{panel.label}}</div>
-            </div>
+          <div class="panel panel-item panel-default warpjs-panel-style-Transparent">
             <div class="panel-body panel-item-body">
-              {{> page-view-main-body panels=pageView._embedded.mainBodyPanels}}
-              {{> page-view-community communities=pageView._embedded.communities}}
+              {{> page-view-community-section title="Authors" users=community._embedded.authors}}
+              {{> page-view-community-section title="Contributors" users=community._embedded.contributors}}
             </div>
           </div>
         </div>

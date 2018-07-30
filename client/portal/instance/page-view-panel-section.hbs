@@ -3,7 +3,9 @@
     {{#if section.documentStyle}}
       {{> page-view-panel-section-document section=section}}
     {{else if section.isOfType.SeparatorPanelItem}}
-      <hr />
+      <div class="col-xs-12">
+        <hr />
+      </div>
     {{else if section.isOfType.BasicPropertyPanelItem}}
       <div class="col-xs-3 warpjs-label">{{section.label}}:</div>
       <div class="col-xs-9 warpjs-value">{{section.value}}</div>

@@ -1,35 +1,42 @@
 {{#if image._links.self.href}}
-  <div class="row overview-image-container">
-    <div class="col-xs-12 text-center">
-      <figure class="figure-container">
-        <img class="margin-right"
-          src="{{image._links.self.href}}"
+  <div class="col-xs-12 text-center">
+    <figure class="figure-container">
+      <img class="margin-right"
+        src="{{image._links.self.href}}"
+        {{#if image.altText}}alt="{{image.altText}}"{{/if}}
+        {{#if image.width}}width="{{image.width}}"{{/if}}
+        {{#if image.height}}height="{{image.height}}"{{/if}}
+        {{#if image._embedded.imageAreas.length}}usemap="#paragraph-map-{{image.id}}"{{/if}}
+        />
 
-          {{#if image.width}}width="{{image.width}}"{{/if}}
-          {{#if image.height}}height="{{image.height}}"{{/if}}
-          {{#if image._embedded.imageAreas.length}}usemap="#paragraph-map-{{image.id}}"{{/if}}
-          />
+      {{#if image.description}}
+        <figcaption class="figure-caption">{{image.description}}</figcaption>
+      {{/if}}
 
-        {{#if image._embedded.imageAreas.length}}
-          <map name="paragraph-map-{{image.id}}">
-            {{#each image._embedded.imageAreas as |imageArea|}}
-              <area class="map-hover-area"
-                {{#if imageArea.alt}}alt="{{imageArea.alt}}"{{/if}}
-                {{#if imageArea.shape}}shape="{{imageArea.shape}}"{{/if}}
-                {{#if imageArea.coords}}coords="{{imageArea.coords}}"{{/if}}
+      {{#if image._embedded.imageAreas.length}}
+        <map name="paragraph-map-{{image.id}}">
+          {{#each image._embedded.imageAreas as |imageArea|}}
+            <area class="map-hover-area"
+              {{#if imageArea.alt}}alt="{{imageArea.alt}}"{{/if}}
+              {{#if imageArea.shape}}shape="{{imageArea.shape}}"{{/if}}
+              {{#if imageArea.coords}}coords="{{imageArea.coords}}"{{/if}}
 
-                {{#if imageArea._links.target.href}}
-                  data-preview-title="{{imageArea._links.target.title}}"
-                  href="{{imageArea._links.target.href}}"
-                {{else if imageArea._links.self.href}}
-                  href="{{imageArea._links.self.href}}"
+              {{#if imageArea._links.target.href}}
+                data-warpjs-action="preview"
+                data-warpjs-preview-url="{{imageArea._links.preview.href}}"
+                data-target-href="{{imageArea._links.preview.href}}"
+                href="{{imageArea._links.target.href}}"
+                {{#if imageArea.name}}
+                  data-preview-title="{{imageArea.name}}"
                 {{/if}}
-                />
-            {{/each}}
-          </map>
-        {{/if}}
+              {{else if imageArea._links.self.href}}
+                href="{{imageArea._links.self.href}}"
+              {{/if}}
+              />
+          {{/each}}
+        </map>
+      {{/if}}
 
-      </figure>
-    </div>
+    </figure>
   </div>
 {{/if}}

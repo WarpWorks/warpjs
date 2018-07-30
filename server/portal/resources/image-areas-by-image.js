@@ -29,6 +29,14 @@ module.exports = (persistence, image, instance) => Promise.resolve()
                                 id: target.id
                             })
                         });
+
+                        imageAreaResource.link('preview', {
+                            title: `Preview for '${image.getDisplayName(target)}'`,
+                            href: RoutesInfo.expand('W2:portal:preview', {
+                                type: target.type,
+                                id: target.id
+                            })
+                        });
                     }
                 })
                 .then(() => imageAreaResource)

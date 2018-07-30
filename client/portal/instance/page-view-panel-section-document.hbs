@@ -1,7 +1,21 @@
 <div class="col-xs-12">
-  <div class="title">{{section.name}}</div>
-  {{#each section._embedded.images as |image|}}
-    {{> page-view-panel-section-document-image section=section image=image}}
-  {{/each}}
-  <div class="content">{{{section.description}}}</div>
+  {{#if section.name}}
+    <div class="row">
+      <div class="col-xs-12 title">{{section.name}}</div>
+    </div>
+  {{/if}}
+
+  {{#if section._embedded.images.length}}
+    <div class="row overview-image-container">
+      {{#each section._embedded.images as |image|}}
+        {{> page-view-panel-section-document-image section=section image=image}}
+      {{/each}}
+    </div>
+  {{/if}}
+
+  {{#if section.description}}
+    <div class="row">
+      <div class="col-xs-12 content">{{{section.description}}}</div>
+    </div>
+  {{/if}}
 </div>
