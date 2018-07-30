@@ -20,6 +20,9 @@ module.exports = (persistence, relationship, instance) => Promise.resolve()
                 label: relationship.getDisplayName(document)
             }))
             .then((resource) => Promise.resolve()
+                // Preview
+                .then(() => resource.link('preview', RoutesInfo.expand('W2:portal:preview', { type: document.type, id: document.id })))
+
                 .then(() => resource)
             )
     ))

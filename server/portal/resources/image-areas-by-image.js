@@ -1,5 +1,6 @@
-const debug = require('debug')('W2:portal:resources/extract-image-areas-from-image');
+// const debug = require('debug')('W2:portal:resources/image-areas-by-image');
 const Promise = require('bluebird');
+const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
 module.exports = (persistence, image, instance) => Promise.resolve()
@@ -19,8 +20,15 @@ module.exports = (persistence, image, instance) => Promise.resolve()
                 .then((targetRelationship) => targetRelationship.getDocuments(persistence, imageArea))
                 .then((targets) => targets.pop())
                 .then((target) => {
-                    debug(`target=`, target);
+                    // debug(`target=`, target);
                     if (target) {
+                        imageAreaResource.link('target', {
+                            title: image.getDisplayName(target),
+                            href: RoutesInfo.expand('entity', {
+                                type: target.type,
+                                id: target.id
+                            })
+                        });
                     }
                 })
                 .then(() => imageAreaResource)
