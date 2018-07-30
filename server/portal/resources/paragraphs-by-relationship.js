@@ -3,7 +3,7 @@ const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const CONTENT_LINK_RE = require('./../../../lib/core/content-link-re');
-const extractImagesByEntity = require('./images-by-paragraph');
+const imagesByParagraph = require('./images-by-paragraph');
 
 function contentLinkReplacer(match, label, type, id) {
     const href = RoutesInfo.expand('entity', { type, id });
@@ -26,7 +26,7 @@ module.exports = (persistence, relationship, instance) => Promise.resolve()
             description: convertCustomLinks(paragraph.Content)
         }))
         .then((paragraphResource) => Promise.resolve()
-            .then(() => extractImagesByEntity(persistence, relationship.getTargetEntity(), paragraph))
+            .then(() => imagesByParagraph(persistence, relationship.getTargetEntity(), paragraph))
             .then((images) => paragraphResource.embed('images', images))
             .then(() => paragraphResource)
         )

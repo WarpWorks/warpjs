@@ -1,4 +1,7 @@
 <div class="col-xs-12">
   <div class="title">{{section.name}}</div>
+  {{#each section._embedded.images as |image|}}
+    {{> page-view-panel-section-document-image section=section image=image}}
+  {{/each}}
   <div class="content">{{{section.description}}}</div>
 </div>

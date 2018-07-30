@@ -10,6 +10,8 @@ module.exports = (persistence, paragraph, instance) => Promise.resolve()
         .then((images) => Promise.map(images, (image) => Promise.resolve()
             .then(() => image.ImageURL || '')
             .then((href) => warpjsUtils.createResource(href, {
+                type: image.type,
+                id: image._id,
                 name: image.altText,
                 description: image.Caption,
                 width: image.Width,

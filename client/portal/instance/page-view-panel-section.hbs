@@ -1,10 +1,7 @@
 {{#if section.showItem}}
   <div class="row warpjs-panel-section">
     {{#if section.documentStyle}}
-      <div class="col-xs-12">
-        <div class="title">{{section.name}}</div>
-        <div class="content">{{{section.description}}}</div>
-      </div>
+      {{> page-view-panel-section-document section=section}}
     {{else if section.isOfType.SeparatorPanelItem}}
       <hr />
     {{else if section.isOfType.BasicPropertyPanelItem}}
