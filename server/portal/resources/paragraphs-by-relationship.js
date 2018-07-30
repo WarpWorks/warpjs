@@ -16,7 +16,7 @@ function convertCustomLinks(text) {
 }
 
 module.exports = (persistence, relationship, instance) => Promise.resolve()
-    .then(() => relationship.getDocuments(persistence, instance))
+    .then(() => relationship ? relationship.getDocuments(persistence, instance) : [])
     .then((paragraphs) => paragraphs.sort(warpjsUtils.byPositionThenName))
     .then((paragraphs) => Promise.map(paragraphs, (paragraph) => Promise.resolve()
         .then(() => warpjsUtils.createResource('', {
