@@ -14,6 +14,7 @@ module.exports = (persistence, relationship, instance) => Promise.resolve()
             }))
             .then((href) => warpjsUtils.createResource(href, {
                 type: document.type,
+                typeLabel: relationship.getTargetEntity().label || relationship.getTargetEntity().name,
                 id: document.id,
                 name: document.Name,
                 relnDesc: document.relnDesc,

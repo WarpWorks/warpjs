@@ -7,6 +7,7 @@ const baseInfoByRelationship = require('./base-info-by-relationship');
 const basePanelItemInfo = require('./base-panel-item-info');
 const constants = require('./constants');
 const paragraphsByRelationship = require('./paragraphs-by-relationship');
+const previewByEntity = require('./preview-by-entity');
 
 module.exports = (persistence, panelItem, instance) => Promise.resolve()
     .then(() => basePanelItemInfo(panelItem))
@@ -46,6 +47,15 @@ module.exports = (persistence, panelItem, instance) => Promise.resolve()
 
                             return resortedItems;
                         });
+                } else if (resource.style === constants.RELATIONSHIP_PANEL_ITEM_STYLES.Tile) {
+                    return Promise.resolve()
+                        // .then(() => baseInfoByRelationship(persistence, relationship, instance))
+                        .then(() => relationship.getDocuments(persistence, instance))
+                        .then((docs) => Promise.map(
+                            docs,
+                            (doc) => previewByEntity(persistence, relationship.getTargetEntity(), doc)
+                        ))
+                    ;
                 } else {
                     debug(`TODO resource.style = '${resource.style}'`);
                 }

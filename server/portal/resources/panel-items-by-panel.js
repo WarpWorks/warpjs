@@ -1,6 +1,5 @@
 const debug = require('debug')('W2:portal:resources/panel-items-by-panel');
 const Promise = require('bluebird');
-const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const BasicPropertyPanelItemResource = require('./basic-property-panel-item');
 const ComplexTypes = require('./../../../lib/core/complex-types');
@@ -13,6 +12,7 @@ module.exports = (persistence, panel, instance) => Promise.resolve()
     .then((panelItems) => Promise.map(
         panelItems,
         (panelItem) => Promise.resolve()
+            // .then(() => debug(`panelItem: name:${panelItem.name}; position:${panelItem.position}`))
             .then(() => {
                 if (panelItem.type === ComplexTypes.BasicPropertyPanelItem) {
                     return BasicPropertyPanelItemResource(persistence, panelItem, instance);
@@ -27,5 +27,4 @@ module.exports = (persistence, panel, instance) => Promise.resolve()
                 }
             })
     ))
-    .then((panelItems) => panelItems.sort(warpjsUtils.byPositionThenName))
 ;

@@ -32,7 +32,9 @@ function computeParentDocumentStatus(persistence, entity, instance) {
         .then(() => entity.getParentInstance(persistence, instance))
         .then((parentInstances) => parentInstances.pop())
         .then((parentInstance) => (parentInstance)
-            ? computeDocumentStatus(persistence, entity.getParentEntity(instance), parentInstance)
+            ? Promise.resolve()
+                .then(() => entity.getParentEntity(instance))
+                .then((parentEntity) => computeDocumentStatus(persistence, parentEntity(instance), parentInstance))
             : null
         )
     ;
