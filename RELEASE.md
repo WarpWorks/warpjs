@@ -1,5 +1,10 @@
 # WarpJS's Releases Notes
 
+## 1.2.61 - 2018-07-31
+
+- #107: Implementing the new page view styles, panel styles, and panel item
+  styles.
+
 ## 1.2.60 - 2018-07-12
 
 - #106: Extending meta-schema for PageView, Panel, and RelationshipPanelItems

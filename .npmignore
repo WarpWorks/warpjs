@@ -6,6 +6,7 @@
 /Gruntfile.js
 /reports
 /server.js
+/tmp
 
 /lib/**/*.test.js
 /server/**/*.test.js

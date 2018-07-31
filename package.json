@@ -1,6 +1,6 @@
 {
   "name": "@warp-works/warpjs",
-  "version": "1.2.60",
+  "version": "1.2.61",
   "description": "Content management system for WarpWorks in javascript",
   "repository": {
     "type": "git",
