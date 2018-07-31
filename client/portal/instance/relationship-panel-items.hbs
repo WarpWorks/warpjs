@@ -13,6 +13,10 @@
     <div class="col-xs-12 warpjs-value">
       {{> panel-items-tile items=section._embedded.items}}
     </div>
+  {{else if section.isOfStyle.Preview}}
+    <div class="col-xs-12 warpjs-value">
+      {{> panel-items-preview items=section._embedded.items}}
+    </div>
   {{else}}
     <div class="col-xs-12">TODO: Implement relationship style {{section.style}}</div>
   {{/if}}

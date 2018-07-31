@@ -16,6 +16,12 @@ module.exports = (persistence, entity, instance) => Promise.resolve()
         label: instance.Label || instance.Name
     }))
     .then((resource) => Promise.resolve()
+        .then(() => RoutesInfo.expand('W2:portal:preview', {
+            type: instance.type,
+            id: instance.id
+        }))
+        .then((previewHref) => resource.link('preview', previewHref))
+
         .then(() => overviewByEntity(persistence, entity, instance))
         .then((overview) => overview && overview._embedded ? overview._embedded.items : null)
         .then((paragraphs) => paragraphs && paragraphs.length ? paragraphs[0] : null)

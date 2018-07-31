@@ -1,8 +1,0 @@
-{{#if groups.length}}
-  <div class="{{className}}">
-    <span class="label">{{groupLabel}}:</span>
-    {{#each groups as |group|}}
-      <a href="{{group._links.self.href}}">{{group.Name}}</a>{{#if group.isLeader}}<span title="Leader">*</span>{{/if}}{{#unless @last}},{{/unless}}
-    {{/each}}
-  </div>
-{{/if}}

@@ -1,0 +1,18 @@
+{{#each items as |item|}}
+  <div class="warpjs-value-item">
+    {{#if item._links.image}}
+      <div class="col-xs-2 warpjs-image">
+        <figure class="pull-left">
+          <img class="preview-img-responsive" src="{{item._links.image.href}}" />
+        </figure>
+      </div>
+      <div class="col-xs-10 warpjs-body">
+        {{> panel-items-preview-body item=item}}
+      </div>
+    {{else}}
+      <div class="col-xs-12 warpjs-body">
+        {{> panel-items-preview-body item=item}}
+      </div>
+    {{/if}}
+  </div>
+{{/each}}

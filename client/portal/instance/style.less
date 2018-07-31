@@ -143,10 +143,6 @@
             margin-bottom: 5px;
             padding: 5px;
 
-            .warpjs-title {
-                background-color: #ffab91; /* DEBUG */
-            }
-
             .warpjs-content {
                 background-color: #ff8a65; /* DEBUG */
             }
@@ -192,11 +188,26 @@
 
 }
 
+.warpjs-value {
+    .warpjs-body {
+        .warpjs-title {
+            /* background-color: #ffb74d; /* DEBUG */
+            font-size: 150%;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .warpjs-see-more {
+            margin-top: 5px;
+        }
+    }
+}
+
 .warpjs-relationship-style-Tile {
     .warpjs-value {
         .warpjs-value-item {
             height: 250px;
-            background-color: yellow;
+            background-color: #cccccc;
             margin-bottom: 20px;
             overflow-y: hidden;
 
@@ -211,17 +222,47 @@
             }
 
             .warpjs-body {
+                padding: 5px;
+
                 .warpjs-label {
                 }
 
-                .warpjs-title {
-                    font-size: 150%;
-                    font-weight: bold;
-                    margin-bottom: 20px;
-                }
-
                 .warpjs-content {
-                    padding: 5px;
+                    line-height: 20px;
+                    max-height: 140px;
+                    overflow: hidden;
+                }
+            }
+        }
+    }
+}
+
+.warpjs-relationship-style-Preview {
+    .warpjs-value {
+        .warpjs-value-item {
+            max-height: 150px;
+            /* background-color: yellow; /* DEBUG */
+            margin-bottom: 10px;
+            overflow: hidden;
+
+            .warpjs-image {
+                padding-left: 0;
+                padding-right: 0;
+                max-width: 100%;
+                border-radius: 50%;
+                overflow: hidden;
+
+                img {
+                    width: 100%;
+                }
+            }
+
+            .warpjs-body {
+                .warpjs-content {
+                    line-height: 20px;
+                    max-height: 80px;
+                    /* background-color: red; /* DEBUG */
+                    overflow: hidden;
                 }
             }
         }
@@ -250,10 +291,6 @@
         margin-bottom: 5px;
         padding: 5px;
         background-color: #ffcc80; /* DEBUG */
-
-        .warpjs-title {
-            background-color: #ffb74d; /* DEBUG */
-        }
 
         .warpjs-description {
             background-color: #ffa726; /* DEBUG */

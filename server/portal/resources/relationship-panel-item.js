@@ -56,6 +56,13 @@ module.exports = (persistence, panelItem, instance) => Promise.resolve()
                             (doc) => previewByEntity(persistence, relationship.getTargetEntity(), doc)
                         ))
                     ;
+                } else if (resource.style === constants.RELATIONSHIP_PANEL_ITEM_STYLES.Preview) {
+                    return Promise.resolve()
+                        .then(() => relationship.getDocuments(persistence, instance))
+                        .then((docs) => Promise.map(
+                            docs,
+                            (doc) => previewByEntity(persistence, relationship.getTargetEntity(), doc)
+                        ));
                 } else {
                     debug(`TODO resource.style = '${resource.style}'`);
                 }

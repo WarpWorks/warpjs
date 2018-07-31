@@ -12,10 +12,10 @@
         <div class="warpjs-title">{{item.name}}</div>
 
         {{#unless item._links.image}}
-          <div class="warpjs-content">
-            {{{item.description}}}
-          </div>
+          <div class="warpjs-content">{{{item.description}}}</div>
         {{/unless}}
+
+        {{> see-more title=item.name href=item._links.self.href}}
       </div>
     </div>
   </div>
