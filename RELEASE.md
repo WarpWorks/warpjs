@@ -1,5 +1,9 @@
 # WarpJS's Releases Notes
 
+## 1.2.62 - 2018-07-31
+
+- Fixed typo.
+
 ## 1.2.61 - 2018-07-31
 
 - #107: Implementing the new page view styles, panel styles, and panel item
