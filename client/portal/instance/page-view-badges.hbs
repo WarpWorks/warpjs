@@ -1,16 +1,25 @@
-{{#if panels.length}}
-  <div class="warpjs-page-view-side-panel warpjs-page-view-badges">
-    {{#each panels as |panel|}}
-      {{#each panel._embedded.items as |section|}}
-        {{#if section.showItem}}
-          <div class="warpjs-page-view-side-section">
-            <div class="warpjs-title">{{section.label}}</div>
-            <div class="warpjs-content">
-              {{> panel-items-csv items=section._embedded.items}}
-            </div>
+{{#each panels as |panel|}}
+  {{#if panel.showPanel}}
+    <div class="row warpjs-page-view-side-panel warpjs-page-view-badges">
+      <div class="warpjs-title">{{panel.label}}</div>
+      <div class="warpjs-content">
+        {{#each panel._embedded.items as |badge|}}
+          <div class="col-xs-12 col-md-6 warpjs-item">
+            {{#if badge._links.image.href}}
+              <div class="warpjs-image-container-parent">
+                <div class="warpjs-image-container-child">
+                  <img src="{{badge._links.image.href}}"
+                    alt="{{badge.label}}"
+                    title="{{badge.description}}"
+                    />
+                </div>
+              </div>
+            {{else}}
+              <div>[MISSING IMAGE FOR "{{badge.label}}"]</div>
+            {{/if}}
           </div>
-        {{/if}}
-      {{/each}}
-    {{/each}}
-  </div>
-{{/if}}
+        {{/each}}
+      </div>
+    </div>
+  {{/if}}
+{{/each}}

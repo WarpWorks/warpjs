@@ -17,6 +17,12 @@
     <div class="col-xs-12 warpjs-value">
       {{> panel-items-preview items=section._embedded.items}}
     </div>
+  {{else if section.isOfStyle.Document}}
+    <div class="col-xs-12 warpjs-value">
+      {{#each section._embedded.items as |item|}}
+        {{> page-view-panel-section section=item}}
+      {{/each}}
+    </div>
   {{else}}
     <div class="col-xs-12">TODO: Implement relationship style {{section.style}}</div>
   {{/if}}

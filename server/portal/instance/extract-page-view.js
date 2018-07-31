@@ -64,9 +64,9 @@ module.exports = (persistence, pageView, instance) => Promise.resolve()
                         })
 
                         .then(() => extractBadgesPanels(persistence, pageView, instance, panels))
-                        .then((badgesPanels) => {
-                            if (badgesPanels && badgesPanels.length) {
-                                resource.embed('badges', badgesPanels);
+                        .then((badgesPanel) => {
+                            if (badgesPanel) {
+                                resource.embed('badges', badgesPanel);
                             }
                         })
                     ;
