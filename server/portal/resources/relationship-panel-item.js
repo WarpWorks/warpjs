@@ -8,6 +8,7 @@ const basePanelItemInfo = require('./base-panel-item-info');
 const constants = require('./constants');
 const paragraphsByRelationship = require('./paragraphs-by-relationship');
 const previewByEntity = require('./preview-by-entity');
+const sortIntoColumns = require('./sort-into-columns');
 
 module.exports = (persistence, panelItem, instance) => Promise.resolve()
     .then(() => basePanelItemInfo(panelItem))
@@ -27,26 +28,8 @@ module.exports = (persistence, panelItem, instance) => Promise.resolve()
                 } else if (resource.style === constants.RELATIONSHIP_PANEL_ITEM_STYLES.CsvColumns) {
                     return Promise.resolve()
                         .then(() => baseInfoByRelationship(persistence, relationship, instance))
-                        .then((items) => {
-                            // We want the items to be sorted by column-down
-                            const numberOfColumns = 3;
-                            const itemsPerColumn = Math.ceil(items.length / numberOfColumns);
-                            const resortedItems = [];
-                            for (let i = 0; i < itemsPerColumn; i++) {
-                                for (let j = 0; j < numberOfColumns; j++) {
-                                    const targetIndex = i + (j * itemsPerColumn);
-                                    if (targetIndex < items.length) {
-                                        resortedItems.push(items[targetIndex]);
-                                    } else {
-                                        // Place holder so that we know to add
-                                        // an empty element.
-                                        resortedItems.push(null);
-                                    }
-                                }
-                            }
-
-                            return resortedItems;
-                        });
+                        .then((items) => sortIntoColumns(items, 3))
+                    ;
                 } else if (resource.style === constants.RELATIONSHIP_PANEL_ITEM_STYLES.Tile) {
                     return Promise.resolve()
                         // .then(() => baseInfoByRelationship(persistence, relationship, instance))
