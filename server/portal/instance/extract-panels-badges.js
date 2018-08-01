@@ -25,7 +25,7 @@ module.exports = (persistence, entity, instance, entityPanels) => Promise.resolv
         .then((relationship) => Promise.resolve()
             .then(() => relationship
                 ? relationship.getDocuments(persistence, instance)
-                : null
+                : []
             )
             .then((badges) => Promise.map(
                 badges,

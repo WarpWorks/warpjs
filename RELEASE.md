@@ -1,5 +1,9 @@
 # WarpJS's Releases Notes
 
+## 1.2.63 - 2018-08-01
+
+- Fixed Promise.map() on null.
+
 ## 1.2.62 - 2018-07-31
 
 - Fixed typo.

@@ -5,12 +5,12 @@ const moduleToTest = require('./sort-into-columns');
 const expect = testHelpers.expect;
 
 describe("server/portal/resources/sort-into-columns", () => {
+    it("should expose a function", () => {
+        expect(moduleToTest).to.be.a('function').and.to.have.lengthOf(2);
+    });
+
     context("into 3 columns", () => {
         const nbOfColumns = 3;
-
-        it("should expose a function", () => {
-            expect(moduleToTest).to.be.a('function').and.to.have.lengthOf(2);
-        });
 
         it("should handle 0 elements", () => {
             const input = [];
@@ -92,5 +92,26 @@ describe("server/portal/resources/sort-into-columns", () => {
 
     context("into 4 columns", () => {
         const nbOfColumns = 4;
+
+        it("should handle 3 elements", () => {
+            const input = [1, 2, 3];
+            const expected = [1, 2, 3, null];
+
+            expect(moduleToTest(input, nbOfColumns)).to.deep.equal(expected);
+        });
+
+        it("should handle 4 elements", () => {
+            const input = [1, 2, 3, 4];
+            const expected = [1, 2, 3, 4];
+
+            expect(moduleToTest(input, nbOfColumns)).to.deep.equal(expected);
+        });
+
+        it("should handle 5 elements", () => {
+            const input = [1, 2, 3, 4, 5];
+            const expected = [1, 3, 4, 5, 2, null, null, null];
+
+            expect(moduleToTest(input, nbOfColumns)).to.deep.equal(expected);
+        });
     });
 });
