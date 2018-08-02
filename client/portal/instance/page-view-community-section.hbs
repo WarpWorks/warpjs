@@ -1,10 +1,10 @@
 {{#if users}}
   <div class="warpjs-page-view-side-section">
     <div class="warpjs-title">{{title}}</div>
-    {{#each users as |user|}}
-      <div class="warpjs-content">
+    <div class="warpjs-content">
+      {{#each users as |user|}}
         <div class="row warpjs-user">
-          <div class="col-xs-12 col-md-4 warpjs-community-image">
+          <div class="col-xs-3 col-md-2 warpjs-community-image">
             <div class="warpjs-image-container-parent">
               <div class="warpjs-image-container-child">
                 <img src="{{user._links.image.href}}" />
@@ -12,11 +12,11 @@
             </div>
           </div>
 
-          <div class="col-xs-12 col-md-8">
-            <a href="{{user._links.self.href}}">{{user.name}}</a>
+          <div class="col-xs-9 col-md-10 warpjs-user-info">
+            <a class="warpjs-user-name href="{{user._links.self.href}}">{{user.name}}</a>
           </div>
         </div>
-      </div>
-    {{/each}}
+      {{/each}}
+    </div>
   </div>
 {{/if}}

@@ -1,6 +1,6 @@
 {{#each panels as |panel|}}
   {{#if panel.showPanel}}
-    <div class="row warpjs-page-view-side-panel warpjs-page-view-badges">
+    <div class="row warpjs-secondary-bg warpjs-page-view-side-panel warpjs-page-view-badges">
       <div class="warpjs-title">{{panel.label}}</div>
       <div class="warpjs-content">
         {{#each panel._embedded.items as |badge|}}
@@ -8,10 +8,12 @@
             {{#if badge._links.image.href}}
               <div class="warpjs-image-container-parent">
                 <div class="warpjs-image-container-child">
-                  <img src="{{badge._links.image.href}}"
-                    alt="{{badge.label}}"
-                    title="{{badge.description}}"
-                    />
+                  <a href="{{badge._links.self.href}}">
+                    <img src="{{badge._links.image.href}}"
+                      alt="{{badge.label}}"
+                      title="{{badge.description}}"
+                      />
+                  </a>
                 </div>
               </div>
             {{else}}

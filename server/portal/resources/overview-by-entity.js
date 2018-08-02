@@ -10,7 +10,8 @@ module.exports = (persistence, entity, instance) => Promise.resolve()
         name: "Overview",
         description: "Document Overview",
         label: "Overview",
-        isOverviewPanel: true
+        isOverviewPanel: true,
+        style: 'Transparent'
     }))
     .then((resource) => Promise.resolve()
         .then(() => entity.getRelationshipByName('Overview'))

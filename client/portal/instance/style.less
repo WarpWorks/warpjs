@@ -4,9 +4,13 @@
 }
 
 .breadcrumb-container {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
     &.row {
-        background-color: @row-bg-color;
         min-height: 30px;
+        margin-bottom: 5px;
     }
     .no-padding {
         padding-top: 3px;
@@ -50,69 +54,83 @@
             }
         }
     }
+
+    .panel-heading {
+        .panel-title {
+            font-size: 200%;
+            font-weight: bold;
+        }
+    }
+
+    .panel-body {
+        .warpjs-panel-section {
+            .warpjs-title {
+                margin-top: 15px;
+            }
+        }
+    }
 }
 
 .warpjs-table {
     display: table;
     width: 100%;
 
+    > .warpjs-header-cell {
+        font-size: 18px;
+    }
+
     > .warpjs-cell {
+        padding-top: 10px;
+        padding-bottom: 10px;
         float: none;
         display: table-cell;
         vertical-align: top;
     }
 }
 
-.warpjs-page-view-label {
-    background-color: #f3f3f3;
-    color: #000000;
-    margin-top: 20px;
-
-    .warpjs-page-view-label-value {
-        text-transform: uppercase;
-        color: #000000;
-    }
-}
-
-.warpjs-page-view-header {
-    background-color: #2f2f2f;
-    color: #ffffff;
-    margin-bottom: 0;
+.warpjs-page-view-headline {
     margin-bottom: 20px;
 
-    .warpjs-page-view-header-value {
+    .warpjs-page-view-headline-section {
+        .warpjs-page-view-headline-section-value {
+            text-transform: uppercase;
+
+            width: 80%;
+            height: 50px;
+            -webkit-clip-path: polygon(0% 100%, 100% 100%, 100% 50px, calc(100% - 50px) 0%, 0% 0%);
+            clip-path: polygon(0% 100%, 100% 100%, 100% 50px, calc(100% - 50px) 0%, 0% 0%);
+            font-size: 32px;
+            line-height: 140%;
+            padding-left: 18px;
+            padding-top: 8px;
+        }
+
+        .warpjs-page-view-headline-section-footer {
+            height: 14px;
+        }
+    }
+
+    .warpjs-page-view-headline-content {
+        min-height: 60px;
+        font-size: 32px;
+        line-height: 140%;
+        padding-left: 18px;
+        padding-top: 12px;
+        padding-bottom: 12px;
         text-transform: uppercase;
     }
 }
 
 .warpjs-page-view-summary {
-    color: #fff;
     margin-bottom: 20px;
 
     .warpjs-page-view-summary-results-title {
         text-transform: uppercase;
-        background-color: #000;
+        background-color: #000000;
     }
 
     .warpjs-page-view-summary-results-content {
         text-transform: uppercase;
-        background-color: #2c2c2c;
-    }
-
-    .warpjs-page-view-summary-challenge-title {
-        background-color: #cb291c;
-    }
-
-    .warpjs-page-view-summary-challenge-content {
-        background-color: #e34f43;
-    }
-
-    .warpjs-page-view-summary-solution-title {
-        background-color: #cb291c;
-    }
-
-    .warpjs-page-view-summary-solution-content {
-        background-color: #e34f43;
     }
 }
 
@@ -160,22 +178,19 @@
 }
 
 .warpjs-page-view-side-zone {
-    /* background-color: #ff6d00; /* DEBUG */
     padding-left: 0px;
+    padding-right: 0px;
 
     .warpjs-page-view-side-panel {
-        background-color: #cccccc;
         margin-bottom: 20px;
         margin-left: 15px;
         margin-right: 0;
 
         .warpjs-page-view-side-section {
-            /* background-color: #ffccbc; /* DEBUG */
             margin-bottom: 5px;
             padding: 5px;
 
             .warpjs-content {
-                /* background-color: #ff8a65; /* DEBUG */
             }
         }
 
@@ -188,9 +203,12 @@
                     .warpjs-image-container-parent {
                         max-width: 100px;
                         max-height: 100px;
+                        border-radius: 0;
 
                         .warpjs-image-container-child {
                             img {
+                                width: auto;
+                                height: 100%;
                             }
                         }
                     }
@@ -203,10 +221,22 @@
                 margin-left: 0;
                 margin-right: 0;
                 padding-left: 15px;
+                margin-bottom: 10px;
 
                 .warpjs-community-image {
                     padding-left: 0px;
                     padding-right: 0px;
+
+                    .warpjs-image-container-parent {
+                        max-width: 50px;
+                    }
+                }
+
+                .warpjs-user-info {
+                    padding-top: 5px;
+
+                    .warpjs-user-name {
+                    }
                 }
             }
         }
@@ -217,7 +247,6 @@
 .warpjs-value {
     .warpjs-body {
         .warpjs-title {
-            /* background-color: #ffb74d; /* DEBUG */
             font-size: 150%;
             font-weight: bold;
             margin-bottom: 5px;
@@ -268,7 +297,6 @@
     .warpjs-value {
         .warpjs-value-item {
             max-height: 150px;
-            /* background-color: yellow; /* DEBUG */
             margin-bottom: 10px;
             overflow: hidden;
 
@@ -288,7 +316,6 @@
                 .warpjs-content {
                     line-height: 20px;
                     max-height: 80px;
-                    /* background-color: red; /* DEBUG */
                     overflow: hidden;
                 }
             }
@@ -300,27 +327,22 @@
 
 .warpjs-page-view-main-body {
     color: #000;
-    /* background-color: #e1f5fe; /* DEBUG */
     margin-bottom: 5px;
     padding: 5px;
 
     &:nth-child(odd) {
-        /* background-color: #fff3e0; /* DEBUG */
     }
 
     .warpjs-page-view-main-body-panel {
         margin-bottom: 5px;
         padding: 5px;
-        /* background-color: #ffe0b2; /* DEBUG */
     }
 
     .warpjs-page-view-main-body-item {
         margin-bottom: 5px;
         padding: 5px;
-        /* background-color: #ffcc80; /* DEBUG */
 
         .warpjs-description {
-            /* background-color: #ffa726; /* DEBUG */
         }
     }
 }
@@ -353,7 +375,7 @@
         }
 
         &:nth-child(even) {
-            background-color: #eee;
+            background-color: @warpjs-secondary-bg;
         }
     }
 
@@ -362,14 +384,10 @@
             padding-left: 0px;
             padding-right: 0px;
 
-            .image-container-parent {
-                position: relative;
-                width: 100%;
-                padding-bottom: 0%;
-                border-radius: 50%;
-                overflow: hidden;
+            .warpjs-image-container-parent {
+                max-width: 50px;
 
-                .image-container-child {
+                .warpjs-image-container-child {
                     position: relative;
                     padding-bottom: calc(~"100%");
 

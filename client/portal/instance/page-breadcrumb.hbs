@@ -1,0 +1,14 @@
+<ol class="breadcrumb-ordered-list breadcrumb no-padding warpjs-secondary-bg">
+  {{#each breadcrumbs as |breadcrumb|}}
+    <li class="breadcrumb-item">
+      {{#if @last}}
+        {{breadcrumb.name}}
+        {{!--
+        {{#if breadcrumb.displayType}}[{{breadcrumb.displayType}}]{{/if}}
+        --}}
+      {{else}}
+        <a href="{{breadcrumb._links.self.href}}" title="{{breadcrumb.name}}">{{breadcrumb.name}}</a>
+      {{/if}}
+    </li>
+  {{/each}}
+</ol>
