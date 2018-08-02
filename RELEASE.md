@@ -1,5 +1,9 @@
 # WarpJS's Releases Notes
 
+## 1.2.64 - 2018-08-01
+
+- Portal new header.
+
 ## 1.2.63 - 2018-08-01
 
 - Fixed Promise.map() on null.

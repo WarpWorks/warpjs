@@ -108,8 +108,45 @@ table {
 }
 
 .page--top {
-    height: 10px;
-    background-color: @top-theme-bg-color;
+
+    > .row {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        font-size: 10px;
+
+        form {
+            margin-bottom: 0;
+        }
+
+        .btn {
+            font-size: inherit;
+            line-height: 1;
+            border-radius: 50px;
+        }
+
+        .input-group-addon {
+            font-size: inherit;
+            line-height: 1;
+            border-top-left-radius: 15px;
+            border-bottom-left-radius: 15px;
+            background-color: white;
+        }
+
+        .form-control {
+            font-size: inherit;
+            line-height: 1;
+            height: auto;
+            border-left: none;
+            box-shadow: none;
+            border-top-right-radius: 15px;
+            border-bottom-right-radius: 15px;
+        }
+
+        .warpjs-user {
+            line-height: 25px;
+            padding-left: 10px;
+        }
+    }
 }
 
 .map-browser-header {
