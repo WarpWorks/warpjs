@@ -1,5 +1,9 @@
 # WarpJS's Releases Notes
 
+## 1.2.65 - 2018-08-06
+
+- Server-side rendering for portal index page.
+
 ## 1.2.64 - 2018-08-01
 
 - Portal new header.
