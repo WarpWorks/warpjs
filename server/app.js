@@ -6,6 +6,7 @@ const expressBusboy = require('express-busboy');
 const path = require('path');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsPlugins = require('@warp-works/warpjs-plugins');
+const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const content = require('./content');
 const extractAuthMiddlewares = require('./extract-auth-middlewares');
@@ -22,6 +23,7 @@ const ROOT_DIR = path.dirname(require.resolve('./../package.json'));
 
 module.exports = (baseUrl, staticUrl) => {
     const config = serverUtils.getConfig();
+    warpjsUtils.cache.setConfig(config);
 
     const app = express();
 

@@ -157,13 +157,13 @@ table {
     }
 }
 
+@page-header-height: 60px;
+
 .page--header {
     background-color: @warpjs-secondary-bg;
-    height: 60px;
-    margin-bottom: 5px;
     padding-top: 10px;
     padding-bottom: 10px;
-    height: 80px;
+    height: calc(@page-header-height + 20px);
 
     .pull-left {
         margin-right: 20px;
@@ -176,16 +176,30 @@ table {
     .logo-container {
         img {
             &.logo {
-                max-height: 60px;
+                max-height: @page-header-height;
+                max-width: 120%;
             }
         }
     }
 
     .header-items {
+        display: table;
+
+        > .header-items-cell {
+            display: table-cell;
+            vertical-align: middle;
+            height: @page-header-height;
+            padding-top: 15px;
+        }
+
         .header-item {
             text-transform: uppercase;
             padding-right: 15px;
             white-space: nowrap;
+        }
+
+        .header-menu-item {
+            padding-top: 20px;
         }
     }
 }

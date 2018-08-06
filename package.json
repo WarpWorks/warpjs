@@ -74,7 +74,7 @@
     "@quoin/node-test-helpers": "latest",
     "@warp-works/progress-bar-modal": "1.0.x",
     "@warp-works/warpjs-domain-json-exporter-plugin": "1.2",
-    "@warp-works/warpjs-elasticsearch-plugin": "1.2.3",
+    "@warp-works/warpjs-elasticsearch-plugin": "latest",
     "@warp-works/warpjs-filter-box": "1.0.x",
     "@warp-works/warpjs-imagemap-editor-plugin": "1.2.3",
     "@warp-works/warpjs-map-plugin": "release-1.2",
@@ -92,8 +92,8 @@
     "eslint-config-standard": "11.0.x",
     "eslint-plugin-html": "4.0.x",
     "eslint-plugin-import": "2.13.x",
-    "eslint-plugin-json": "1.2.0",
-    "eslint-plugin-node": "6.0.x",
+    "eslint-plugin-json": "1.2.x",
+    "eslint-plugin-node": "7.0.x",
     "eslint-plugin-promise": "3.8.x",
     "eslint-plugin-standard": "3.1.x",
     "express": "4.16.x",
@@ -118,7 +118,7 @@
   },
   "peerDependencies": {
     "@warp-works/warpjs-plugins": ">=1.2.2",
-    "@warp-works/warpjs-utils": ">=1.2.9",
+    "@warp-works/warpjs-utils": ">=1.2.26",
     "body-parser": ">=1.17.0",
     "cookie-parser": ">=1.4.0",
     "express": ">=4.0.0"
