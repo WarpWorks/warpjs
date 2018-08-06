@@ -3,9 +3,9 @@
     <div class="row warpjs-document-status-container">
       {{>modal}}
 
-      <div class="col-xs-1 left-right-margin"></div>
+      {{> left-right-margin}}
 
-      <div class="col-xs-10 warpjs-document-status-disclaimer">
+      <div class="col-xs-12 col-sm-10 warpjs-document-status-disclaimer">
         <table class="table table-borderless">
           <tbody>
             <tr>
@@ -25,15 +25,15 @@
         </table>
       </div>
 
-      <div class="col-xs-1 left-right-margin"></div>
+      {{> left-right-margin}}
     </div>
   {{/if}}
 
   {{#unless status.isPublic}}
     <div class="row warpjs-document-status-container">
-      <div class="col-xs-1 left-right-margin"></div>
+      {{> left-right-margin}}
 
-      <div class="col-xs-10 warpjs-document-status-disclaimer">
+      <div class="col-xs-12 col-sm-10 warpjs-document-status-disclaimer">
         <table class="table table-borderless">
           <tbody>
             <tr>
@@ -49,14 +49,14 @@
         </table>
       </div>
 
-      <div class="col-xs-1 left-right-margin"></div>
+      {{> left-right-margin}}
     </div>
   {{/unless}}
 {{else}}
   <div class="row warpjs-document-status-container">
-    <div class="col-xs-1 left-right-margin"></div>
+    {{> left-right-margin}}
 
-    <div class="col-xs-10 warpjs-document-status-disclaimer">
+    <div class="col-xs-12 col-sm-10 warpjs-document-status-disclaimer">
       <table class="table table-borderless">
         <tbody>
           <tr>
@@ -68,6 +68,6 @@
       </table>
     </div>
 
-    <div class="col-xs-1 left-right-margin"></div>
+    {{> left-right-margin}}
   </div>
 {{/if}}

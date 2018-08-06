@@ -1,25 +1,25 @@
 <div class="row">
-  {{> ../left-right-margin}}
+  {{> left-right-margin}}
 
-  <div class="col-xs-10 warpjs-page-view-specialized">
+  <div class="col-xs-12 col-sm-10 warpjs-page-view-specialized">
     {{> page-view-header-image image=pageView._embedded.headerImages.[0]}}
     {{> page-view-headline page=page}}
     {{> page-view-summary page=page summary=pageView._embedded.summaries}}
 
     <div class="row">
+      <div class="col-xs-8 warpjs-page-view-main-body pull-right">
+        {{#each pageView._embedded.mainBodyPanels as |panel|}}
+          {{> page-view-panel panel=panel}}
+        {{/each}}
+      </div>
+
       <div class="col-xs-4 warpjs-page-view-side-zone">
         {{> page-view-sidebar panels=pageView._embedded.sidebars}}
         {{> page-view-badges panels=pageView._embedded.badges}}
         {{> page-view-community panels=pageView._embedded.communities}}
       </div>
-
-      <div class="col-xs-8 warpjs-page-view-main-body">
-        {{#each pageView._embedded.mainBodyPanels as |panel|}}
-          {{> page-view-panel panel=panel}}
-        {{/each}}
-      </div>
     </div>
   </div>
 
-  {{> ../left-right-margin}}
+  {{> left-right-margin}}
 </div>

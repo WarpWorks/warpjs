@@ -1,11 +1,11 @@
 <div class="container-fluid">
   <div class="row warpjs-secondary-bg breadcrumb-container">
-    {{> ../left-right-margin}}
+    {{> left-right-margin}}
 
-    <div class="col-xs-9 no-padding">
+    <div class="col-xs-10 col-sm-9 no-padding">
       {{> page-breadcrumb breadcrumbs=page._embedded.breadcrumbs}}
     </div>
-    <div class="col-xs-1 no-padding breadcrumb-actions">
+    <div class="col-xs-2 col-sm-1 no-padding breadcrumb-actions">
       {{#if page._links.edit}}
         <a href="{{page._links.edit.href}}"
           title="Edit '{{page.name}}'"
@@ -13,7 +13,7 @@
       {{/if}}
     </div>
 
-    {{> ../left-right-margin}}
+    {{> left-right-margin}}
   </div>
 </div>
 
