@@ -15,7 +15,7 @@ module.exports = (req, res) => {
     });
 
     warpjsUtils.wrapWith406(res, {
-        html: () => warpjsUtils.sendIndex(res, 'Entity', 'portal'),
+        html: () => warpjsUtils.sendPortalIndex(req, res, RoutesInfo, 'Entity', 'portal'),
 
         [warpjsUtils.constants.HAL_CONTENT_TYPE]: () => Promise.resolve()
             .then(() => serverUtils.getPersistence())

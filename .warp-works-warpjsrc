@@ -27,6 +27,31 @@
     "disclaimer": ["Proposal"],
     "inheritance": "InheritFromParent"
   },
+  "headerItems": [{
+    "label": "House of IIC",
+    "type": "BSSL",
+    "id": "593699e552ad09000f5675a3"
+  }, {
+    "label": "BoK",
+    "type": "BodyOfKnowledge",
+    "id": "5935a8b3109ab6000ff06b28"
+  }, {
+    "label": "Community",
+    "type": "",
+    "id": ""
+  }, {
+    "label": "Testbeds",
+    "type": "",
+    "id": ""
+  }, {
+    "label": "Toolkits & Training",
+    "type": "Document",
+    "id": "593c61b274e589000f715387"
+  }, {
+    "label": "IIoT Maturity Model",
+    "type": "IIoT_MaturityModel",
+    "id": "59369b6752ad09000f5675a4"
+  }],
   "plugins": [{
     "name": "I3C MapBrowser plugin",
     "moduleName": "@warp-works/warpjs-map-plugin",

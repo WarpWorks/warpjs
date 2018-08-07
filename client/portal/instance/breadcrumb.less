@@ -1,0 +1,33 @@
+
+@breadcrumb-height: 30px;
+
+.breadcrumb-container {
+    &.row {
+        height: @breadcrumb-height;
+        line-height: @breadcrumb-height;
+        margin-bottom: 5px;
+        margin-top: 5px;
+    }
+    .no-padding {
+        padding-bottom: 0;
+    }
+
+    .breadcrumb-ordered-list {
+        margin-bottom: 0px;
+        padding: 0px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        background-color: transparent;
+    }
+
+    .breadcrumb-actions {
+        text-align: right;
+
+        .glyphicon {
+            line-height: inherit;
+        }
+    }
+}
+
+

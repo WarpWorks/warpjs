@@ -2,7 +2,7 @@ module.exports = ($, element, popover, result, popoverOffset) => {
     const chunks = (result.content || '').split('<br />'); // Tinymce dependent.
 
     $('.popover-content', popover).css({
-        maxHeight: '200px',
+        maxHeight: '150px',
         textOverflow: 'ellipsis',
         overflow: 'hidden'
     });
