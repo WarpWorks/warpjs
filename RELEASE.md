@@ -1,5 +1,9 @@
 # WarpJS's Releases Notes
 
+## 1.2.66 - 2018-08-07
+
+- Styling search box.
+
 ## 1.2.65 - 2018-08-06
 
 - Server-side rendering for portal index page.

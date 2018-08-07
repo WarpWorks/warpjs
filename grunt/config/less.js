@@ -13,7 +13,7 @@ module.exports = {
     portal: {
         files: [{
             dest: 'public/app/warpjs.min.css',
-            src: 'client/portal/less/main.less'
+            src: 'client/portal/instance/style.less'
         }]
     }
 };
