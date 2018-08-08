@@ -87,8 +87,8 @@ module.exports = (req, persistence, entity, instance) => Promise.resolve()
             .then(() => {
                 if (resource.status.isVisible) {
                     return Promise.resolve()
-                        .then(() => entity.getPageView(req.query.pageViewName || config.views.portal))
-                        .then((pageView) => extractPageView(persistence, pageView, instance))
+                        .then(() => entity.getPageView(req.query.view, config.views.portal))
+                        .then((pageView) => extractPageView(persistence, pageView, instance, req.query.style))
                         .then((pageViewResource) => resource.embed('pageViews', pageViewResource))
                     ;
                 }

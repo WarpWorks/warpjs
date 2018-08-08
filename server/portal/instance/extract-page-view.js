@@ -12,16 +12,17 @@ const extractBadgesPanels = require('./extract-panels-badges');
 const communityByEntity = require('./../resources/community-by-entity');
 const overviewByEntity = require('./../resources/overview-by-entity');
 
-module.exports = (persistence, pageView, instance) => Promise.resolve()
-    .then(() => warpjsUtils.createResource('', {
+module.exports = (persistence, pageView, instance, customStyle) => Promise.resolve()
+    .then(() => customStyle || pageView.style || constants.PAGE_VIEW_STYLES.Plain)
+    .then((style) => warpjsUtils.createResource('', {
         id: pageView.id,
         type: pageView.type,
         name: pageView.name,
         desc: pageView.desc,
         label: pageView.label,
-        style: pageView.style || constants.PAGE_VIEW_STYLES.Plain,
-        isOfStyle: constants.isOfPageViewStyle(pageView.style),
-        isSpecializedPageViewStyle: constants.isSpecializedPageViewStyle(pageView.style)
+        style,
+        isOfStyle: constants.isOfPageViewStyle(style),
+        isSpecializedPageViewStyle: constants.isSpecializedPageViewStyle(style)
     }))
     .then((resource) => Promise.resolve()
         // Add overview to main body
