@@ -4,6 +4,9 @@ const Promise = require('bluebird');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const basePanelItemInfo = require('./base-panel-item-info');
+const BasicTypes = require('./../../../lib/core/basic-types');
+const constants = require('./constants');
+const convertCustomLinks = require('./convert-custom-links');
 
 module.exports = (persistence, panelItem, instance) => Promise.resolve()
     .then(() => basePanelItemInfo(panelItem))
@@ -17,7 +20,10 @@ module.exports = (persistence, panelItem, instance) => Promise.resolve()
                 resource.showItem = true;
                 resource.propertyName = basicProperty.name;
                 resource.propertyType = basicProperty.propertyType;
-                resource.value = basicProperty.getValue(instance);
+                resource.typeOfProperty = constants.isOfPropertyType(basicProperty.propertyType);
+
+                const value = basicProperty.getValue(instance);
+                resource.value = (resource.propertyType === BasicTypes.Text) ? convertCustomLinks(value) : value;
             }
         })
         .then(() => resource)

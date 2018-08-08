@@ -1,6 +1,7 @@
 const _ = require('lodash');
 // const debug = require('debug')('W2:portal:resources/constants');
 
+const BasicTypes = require('./../../../lib/core/basic-types');
 const ComplexTypes = require('./../../../lib/core/complex-types');
 
 function generateIndicators(obj, itemToCompare) {
@@ -77,5 +78,7 @@ module.exports = Object.freeze({
 
     isOfPanelItemType(panelItem) {
         return generateIndicators(this.PANEL_ITEM_TYPES, panelItem.type);
-    }
+    },
+
+    isOfPropertyType: (type) => BasicTypes.typesCheck(type)
 });

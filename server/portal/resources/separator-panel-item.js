@@ -9,6 +9,7 @@ module.exports = (persistence, panelItem, instance) => Promise.resolve()
     // .then(() => debug(panelItem))
     .then(() => basePanelItemInfo(panelItem))
     .then((basePanelItemInfo) => _.extend({}, basePanelItemInfo, {
+        showItem: true
     }))
     .then((resourceInfo) => warpjsUtils.createResource('', resourceInfo))
     .then((resource) => Promise.resolve()

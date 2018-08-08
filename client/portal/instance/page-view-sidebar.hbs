@@ -3,12 +3,26 @@
     <div class="row warpjs-secondary-bg warpjs-page-view-side-panel warpjs-page-view-sidebar">
       {{#each panel._embedded.items as |section|}}
         {{#if section.showItem}}
-          <div class="warpjs-page-view-side-section">
-            <div class="warpjs-title">{{section.label}}</div>
-            <div class="warpjs-content">
-              {{> panel-items-csv items=section._embedded.items}}
+          {{#if section.isOfType.SeparatorPanelItem}}
+            <hr />
+          {{else}}
+            <div class="warpjs-page-view-side-section">
+              <div class="warpjs-title">{{section.label}}</div>
+              <div class="warpjs-content">
+                {{#if section.isOfType.RelationshipPanelItem}}
+                  {{> panel-items-csv items=section._embedded.items}}
+                {{else if section.isOfType.BasicPropertyPanelItem}}
+                  {{#if section.typeOfProperty.isText}}
+                    {{{section.value}}}
+                  {{else}}
+                    {{section.value}}
+                  {{/if}}
+                {{else if section.isOfType.EnumPanelItem}}
+                  {{section.value}}
+                {{/if}}
+              </div>
             </div>
-          </div>
+          {{/if}}
         {{/if}}
       {{/each}}
     </div>
