@@ -27,6 +27,7 @@ module.exports = (persistence, entity, instance, entityPanels) => Promise.resolv
                 ? relationship.getDocuments(persistence, instance)
                 : []
             )
+
             .then((badges) => Promise.map(
                 badges,
                 (badge) => Promise.resolve()
@@ -40,23 +41,29 @@ module.exports = (persistence, entity, instance, entityPanels) => Promise.resolv
                     .then((badgeResource) => Promise.resolve()
                         .then(() => badgeResource.link('preview', RoutesInfo.expand('W2:portal:preview', badge)))
 
-                        .then(() => overviewByEntity(persistence, relationship.getTargetEntity(), badge))
-                        .then((overview) => overview && overview._embedded ? overview._embedded.items : null)
-                        .then((paragraphs) => paragraphs && paragraphs.length ? paragraphs[0] : null)
-                        .then((paragraph) => {
-                            if (paragraph) {
-                                badgeResource.description = paragraph.description;
-                                return paragraph._embedded ? paragraph._embedded.images : null;
-                            }
-                        })
-                        .then((images) => images && images.length ? images[0] : null)
-                        .then((image) => image && image._links ? image._links.self : null)
-                        .then((self) => self ? self.href : null)
-                        .then((href) => {
-                            if (href) {
-                                badgeResource.link('image', href);
-                            }
-                        })
+                        .then(() => relationship.getTargetEntity())
+                        .then((badgeEntity) => badgeEntity.getRelationshipByName('BadgeDefinition'))
+                        .then((badgeDefinitionRelationship) => Promise.resolve()
+                            .then(() => badgeDefinitionRelationship.getDocuments(persistence, badge))
+                            .then((badgeDefinitions) => badgeDefinitions && badgeDefinitions.length ? badgeDefinitions[0] : null)
+                            .then((badgeDefinition) => badgeDefinition ? overviewByEntity(persistence, badgeDefinitionRelationship.getTargetEntity(), badgeDefinition) : null)
+                            .then((overview) => overview && overview._embedded ? overview._embedded.items : null)
+                            .then((paragraphs) => paragraphs && paragraphs.length ? paragraphs[0] : null)
+                            .then((paragraph) => {
+                                if (paragraph) {
+                                    badgeResource.description = paragraph.description;
+                                    return paragraph._embedded ? paragraph._embedded.images : null;
+                                }
+                            })
+                            .then((images) => images && images.length ? images[0] : null)
+                            .then((image) => image && image._links ? image._links.self : null)
+                            .then((self) => self ? self.href : null)
+                            .then((href) => {
+                                if (href) {
+                                    badgeResource.link('image', href);
+                                }
+                            })
+                        )
 
                         .then(() => badgeResource)
                     )
