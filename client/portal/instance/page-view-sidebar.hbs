@@ -1,6 +1,6 @@
 {{#if panels.length}}
-  <div class="row warpjs-secondary-bg warpjs-page-view-side-panel warpjs-page-view-sidebar">
-    {{#each panels as |panel|}}
+  {{#each panels as |panel|}}
+    <div class="row warpjs-secondary-bg warpjs-page-view-side-panel warpjs-page-view-sidebar">
       {{#each panel._embedded.items as |section|}}
         {{#if section.showItem}}
           <div class="warpjs-page-view-side-section">
@@ -11,7 +11,7 @@
           </div>
         {{/if}}
       {{/each}}
-    {{/each}}
-  </div>
+    </div>
+  {{/each}}
 {{/if}}
 
