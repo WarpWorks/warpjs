@@ -1,5 +1,13 @@
 # WarpJS's Releases Notes
 
+## 1.2.67 - 2018-08-08
+
+- Each sidebar panel is its own panel.
+- Better handle xs screen
+- Added non-relationship support for sidebar
+- Take parentBaseClassID instead of parentBaseClassName
+- Refactored for badge and badge-definition
+
 ## 1.2.66 - 2018-08-07
 
 - Styling search box.
