@@ -1,5 +1,11 @@
 # WarpJS's Releases Notes
 
+## 1.2.68 - 2018-08-09
+
+- Enable custom view and style from URL.
+- CSS changes from feedback.
+- Header image
+
 ## 1.2.67 - 2018-08-08
 
 - Each sidebar panel is its own panel.

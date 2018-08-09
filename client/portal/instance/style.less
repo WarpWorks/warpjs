@@ -5,6 +5,54 @@
 .warpjs-page-view {
     color: #000;
     padding-top: 20px;
+
+    .warpjs-page-header-image {
+        height: 160px;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: cover;
+
+        .left-right-margin {
+            background-color: rgba(255, 255, 255, 0.6);
+            height: 100%;
+        }
+
+        .warpjs-page-image-header-content {
+            padding-left: 0;
+            padding-right: 0;
+
+            .warpjs-page-image-header-padding {
+                background-color: rgba(255, 255, 255, 0.6);
+                height: 100%;
+                width: 15px;
+            }
+
+            .warpjs-section {
+                height: 100%;
+                margin-left: 15px;
+                margin-right: 15px;
+
+                color: #ffffff;
+                font-family: @warpjs-secondary-font-family;
+
+                .warpjs-label {
+                    text-align: center;
+                    font-size: 24px;
+                    font-weight: normal;
+                    padding-top: 36px;
+                    padding-bottom: 18px;
+                }
+
+                .warpjs-title {
+                    text-align: center;
+                    font-size: 36px;
+                    line-height: 140%;
+                    padding-top: 12px;
+                    padding-bottom: 28px;
+                }
+            }
+        }
+    }
 }
 
 
@@ -416,8 +464,7 @@
 
 
 .warpjs-page-view-Plain {
-    .warpjs-page-view-label,
-    .warpjs-page-view-header,
+    .warpjs-page-view-headline,
     .warpjs-page-view-summary,
     .warpjs-page-view-sidebar,
     .warpjs-page-view-badges {
@@ -470,7 +517,7 @@
 }
 
 .warpjs-page-view-BoK {
-    .warpjs-page-view-header-image,
+    .warpjs-page-header-image,
     .warpjs-page-view-summary,
     .warpjs-page-view-badges {
         display: none;
@@ -478,15 +525,14 @@
 }
 
 .warpjs-page-view-Insight {
-    .warpjs-page-view-header-image,
+    .warpjs-page-header-image,
     .warpjs-page-view-badges {
         display: none;
     }
 }
 
 .warpjs-page-view-Testbed {
-    .warpjs-page-view-label,
-    .warpjs-page-view-header,
+    .warpjs-page-view-headline,
     .warpjs-page-view-summary {
         display: none;
     }

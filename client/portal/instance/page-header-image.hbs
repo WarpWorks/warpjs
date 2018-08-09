@@ -1,0 +1,18 @@
+{{#if image._links.self.href}}
+  <div class="row warpjs-page-header-image"
+       style="background-image:url({{image._links.self.href}})"
+    >
+    {{> left-right-margin}}
+
+    <div class="col-xs-12 col-sm-10 warpjs-page-image-header-content">
+      <div class="warpjs-page-image-header-padding pull-left"></div>
+      <div class="warpjs-page-image-header-padding pull-right"></div>
+      <div class="warpjs-section">
+        <div class="warpjs-label">{{page.typeLabel}}</div>
+        <div class="warpjs-title">{{page.name}}</div>
+      </div>
+    </div>
+
+    {{> left-right-margin}}
+  </div>
+{{/if}}

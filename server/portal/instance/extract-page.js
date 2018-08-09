@@ -7,6 +7,7 @@ const warpjsUtils = require('@warp-works/warpjs-utils');
 const breadcrumbsByEntity = require('./../resources/breadcrumbs-by-entity');
 const contentConstants = require('./../../content/constants');
 const extractPageView = require('./extract-page-view');
+const headerImageByEntity = require('./../resources/header-image-by-entity');
 const serverUtils = require('./../../utils');
 
 const config = serverUtils.getConfig();
@@ -87,6 +88,9 @@ module.exports = (req, persistence, entity, instance) => Promise.resolve()
             .then(() => {
                 if (resource.status.isVisible) {
                     return Promise.resolve()
+                        .then(() => headerImageByEntity(persistence, entity, instance))
+                        .then((headerImages) => resource.embed('headerImages', headerImages))
+
                         .then(() => entity.getPageView(req.query.view, config.views.portal))
                         .then((pageView) => extractPageView(persistence, pageView, instance, req.query.style))
                         .then((pageViewResource) => resource.embed('pageViews', pageViewResource))

@@ -126,5 +126,24 @@
       "glyphicon": "random",
       "label": "Export Domain JSN"
     }
+  }, {
+    "name": "ipt",
+    "moduleName": "@warp-works/warpjs-ipt-plugin",
+    "path": "/ipt",
+    "type": "action",
+    "config": {
+      "glyphicon": "plane",
+      "label": "IPT Survey",
+      "schema": {
+        "questionnaire": "IPT",
+        "category": "CategoryQ",
+        "question": "DimensionQ",
+        "option": "OptionQ",
+        "attempt": "IPT_Attempt",
+        "imageLibrary": "IMGLIB",
+        "image": "Image",
+        "map": "Map"
+      }
+    }
   }]
 }
