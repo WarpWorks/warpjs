@@ -6,23 +6,17 @@
       {{> left-right-margin}}
 
       <div class="col-xs-12 col-sm-10 warpjs-document-status-disclaimer">
-        <table class="table table-borderless">
-          <tbody>
-            <tr>
-              <td scope="row" width="30px">
-                <i class="glyphicon glyphicon-exclamation-sign fa-2x pull-left"
-                   style="color: #f00"></i>
-              </td>
-              <td>
-                <h6>
-                  <b>Document status: PROPOSAL - Please read the</b>
-                  <a class="csv-list-item-link" data-toggle="modal"
-                    data-target="#warpjs-document-status-modal">Disclaimer</a>
-                </h6>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="warpjs-table">
+          <div class="warpjs-cell warpjs-icon">
+            <i class="glyphicon glyphicon-exclamation-sign fa-2x pull-left"></i>
+          </div>
+
+          <div class="warpjs-cell warpjs-content">
+              <b>Document status: PROPOSAL - Please read the</b>
+              <a class="csv-list-item-link" data-toggle="modal"
+                data-target="#warpjs-document-status-modal">Disclaimer</a>
+          </div>
+        </div>
       </div>
 
       {{> left-right-margin}}
@@ -33,20 +27,10 @@
     <div class="row warpjs-document-status-container">
       {{> left-right-margin}}
 
-      <div class="col-xs-12 col-sm-10 warpjs-document-status-disclaimer">
-        <table class="table table-borderless">
-          <tbody>
-            <tr>
-              <td>
-                <h6>
-                  <b>This page will not be accessible to the general public and
-                    is visible only to IIC member users because of the status of
-                    the content on this page.</b>
-                </h6>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="col-xs-12 col-sm-10 warpjs-document-status-disclaimer warpjs-content">
+        <b>This page will not be accessible to the general public and
+          is visible only to IIC member users because of the status of
+          the content on this page.</b>
       </div>
 
       {{> left-right-margin}}
@@ -56,16 +40,8 @@
   <div class="row warpjs-document-status-container">
     {{> left-right-margin}}
 
-    <div class="col-xs-12 col-sm-10 warpjs-document-status-disclaimer">
-      <table class="table table-borderless">
-        <tbody>
-          <tr>
-            <td>
-              <h6><b>This page is not visible because of your access.</b></h6>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="col-xs-12 col-sm-10 warpjs-document-status-disclaimer warpjs-content">
+      <b>This page is not visible because of your access.</b>
     </div>
 
     {{> left-right-margin}}

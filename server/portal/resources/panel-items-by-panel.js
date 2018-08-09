@@ -27,4 +27,17 @@ module.exports = (persistence, panel, instance) => Promise.resolve()
                 }
             })
     ))
+    .then((panelItemResources) => panelItemResources.filter((panelItemResource) => panelItemResource.showItem))
+    .then((panelItemResources) => {
+        // We want to make sure that the list doesn't end with a separator.
+        while (true) {
+            const len = panelItemResources.length;
+            if (len && panelItemResources[len - 1].isOfType.SeparatorPanelItem) {
+                panelItemResources.pop();
+            } else {
+                break;
+            }
+        }
+        return panelItemResources;
+    })
 ;

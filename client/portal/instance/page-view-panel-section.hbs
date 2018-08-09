@@ -1,5 +1,5 @@
 {{#if section.showItem}}
-  <div class="row warpjs-panel-section">
+  <div class="row warpjs-panel-section warpjs-panel-section-{{section.type}}">
     {{#if section.documentStyle}}
       {{> page-view-panel-section-document section=section}}
     {{else if section.isOfType.SeparatorPanelItem}}

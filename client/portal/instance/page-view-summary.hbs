@@ -1,49 +1,49 @@
 <div class="warpjs-page-view-summary">
   <div class="hidden-xs hidden-sm">
     <div class="warpjs-table">
-      <div class="col-xs-4 warpjs-hi-primary warpjs-page-view-summary-results-title warpjs-header-cell warpjs-cell">
+      <div class="col-xs-4 warpjs-section-header warpjs-cell warpjs-summary-results">
         {{summary.[0].title}}
       </div>
-      <div class="col-xs-4 warpjs-hi-secondary warpjs-header-cell warpjs-cell">
+      <div class="col-xs-4 warpjs-section-header warpjs-cell">
         {{summary.[1].title}}
       </div>
-      <div class="col-xs-4 warpjs-hi-secondary warpjs-header-cell warpjs-cell">
+      <div class="col-xs-4 warpjs-section-header warpjs-cell">
         {{summary.[2].title}}
       </div>
     </div>
 
     <div class="warpjs-table">
-      <div class="col-xs-4 warpjs-hi-primary warpjs-page-view-summary-results-content warpjs-cell">
+      <div class="col-xs-4 warpjs-hi-primary warpjs-section-content warpjs-summary-results warpjs-cell">
         {{{summary.[0].content}}}
       </div>
 
-      <div class="col-xs-4 warpjs-hi-secondary warpjs-cell">
+      <div class="col-xs-4 warpjs-hi-secondary warpjs-section-content warpjs-cell">
         {{{summary.[1].content}}}
       </div>
-      <div class="col-xs-4 warpjs-hi-secondary warpjs-cell">
+      <div class="col-xs-4 warpjs-hi-secondary warpjs-section-content warpjs-cell">
         {{{summary.[2].content}}}
       </div>
     </div>
   </div>
   <div class="hidden-md hidden-lg">
-    <div class="col-xs-12 warpjs-hi-primary warpjs-page-view-summary-results-title">
+    <div class="col-xs-12 warpjs-section-header warpjs-summary-results">
       {{summary.[0].title}}
     </div>
-    <div class="col-xs-12 warpjs-hi-primary warpjs-page-view-summary-results-content">
+    <div class="col-xs-12 warpjs-hi-primary warpjs-section-content warpjs-summary-results">
       {{{summary.[0].content}}}
     </div>
 
-    <div class="col-xs-12 warpjs-hi-secondary warpjs-header-cell">
+    <div class="col-xs-12 warpjs-section-header">
       {{summary.[1].title}}
     </div>
-    <div class="col-xs-12 warpjs-hi-secondary">
+    <div class="col-xs-12 warpjs-hi-secondary warpjs-section-content">
       {{{summary.[1].content}}}
     </div>
 
-    <div class="col-xs-12 warpjs-hi-secondary warpjs-header-cell">
+    <div class="col-xs-12 warpjs-section-header">
       {{summary.[2].title}}
     </div>
-    <div class="col-xs-12 warpjs-hi-secondary">
+    <div class="col-xs-12 warpjs-hi-secondary warpjs-section-content">
       {{{summary.[2].content}}}
     </div>
   </div>

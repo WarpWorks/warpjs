@@ -6,7 +6,7 @@
     {{> page-view-headline page=page}}
     {{> page-view-summary page=page summary=pageView._embedded.summaries}}
 
-    <div class="row">
+    <div class="row warpjs-content">
       <div class="col-xs-12 col-sm-8 warpjs-page-view-main-body pull-right">
         {{#each pageView._embedded.mainBodyPanels as |panel|}}
           {{> page-view-panel panel=panel}}

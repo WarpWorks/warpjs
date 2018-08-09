@@ -52,6 +52,17 @@
             .warpjs-title {
                 margin-top: 15px;
             }
+
+            .row.overview-image-container {
+                + .row {
+                    padding-top: 24px;
+                }
+            }
+
+        }
+
+        .warpjs-panel-section-SeparatorPanelItem + .warpjs-panel-section-SeparatorPanelItem {
+            display: none;
         }
     }
 }
@@ -60,31 +71,33 @@
     display: table;
     width: 100%;
 
-    > .warpjs-header-cell {
-        font-size: 18px;
+    .warpjs-header-cell {
+        font-family: @warpjs-secondary-font-family;
+        font-size: 24px;
+        font-weight: 300;
+        height: 38px !important;
+        padding-top: 20px !important;
     }
 
-    > .warpjs-cell {
-        padding-top: 10px;
-        padding-bottom: 10px;
+    .warpjs-cell {
         float: none;
         display: table-cell;
-        vertical-align: top;
     }
 }
 
 .warpjs-page-view-headline {
-    margin-bottom: 20px;
 
     .warpjs-page-view-headline-section {
         .warpjs-page-view-headline-section-value {
+            font-family: @warpjs-secondary-font-family;
             text-transform: uppercase;
 
             width: 80%;
-            height: 50px;
+            height: 38px;
             -webkit-clip-path: polygon(0% 100%, 100% 100%, 100% 50px, calc(100% - 50px) 0%, 0% 0%);
             clip-path: polygon(0% 100%, 100% 100%, 100% 50px, calc(100% - 50px) 0%, 0% 0%);
-            font-size: 32px;
+            font-size: 24px;
+            font-weight: 300;
             line-height: 140%;
             padding-left: 18px;
             padding-top: 8px;
@@ -96,26 +109,63 @@
     }
 
     .warpjs-page-view-headline-content {
+        font-family: @warpjs-secondary-font-family;
         min-height: 60px;
-        font-size: 32px;
+        font-size: 36px;
+        font-weight: 700;
         line-height: 140%;
         padding-left: 18px;
         padding-top: 12px;
-        padding-bottom: 12px;
+        padding-bottom: 14px;
         text-transform: uppercase;
     }
 }
 
 .warpjs-page-view-summary {
-    margin-bottom: 20px;
+    margin-bottom: 24px;
+
+    .warpjs-section-header {
+        font-family: @warpjs-secondary-font-family;
+        font-size: 24px;
+        font-weight: 300;
+        height: 64px;
+        padding-bottom: 24px;
+        padding-top: 20px;
+
+        &.warpjs-summary-results {
+        }
+    }
+
+    .warpjs-section-content {
+        padding-bottom: 24px;
+        padding-top: 10px;
+
+        &.warpjs-summary-results {
+            background-color: #000;
+            font-family: @warpjs-secondary-font-family;
+            font-size: 24px;
+            font-weight: 300;
+            line-height: 140%;
+        }
+    }
 
     .warpjs-page-view-summary-results-title {
-        text-transform: uppercase;
-        background-color: #000000;
+        padding-top: 20px;
+        padding-bottom: 24px;
+        height: 64px;
     }
 
     .warpjs-page-view-summary-results-content {
+        background-color: #000;
+        font-family: @warpjs-secondary-font-family;
         text-transform: uppercase;
+        font-size: 24px;
+        line-height: 140%;
+        padding-top: 10%;
+        padding-bottom: 24px;
+    }
+
+    .warpjs-header-cell {
     }
 }
 
@@ -179,6 +229,11 @@
         .warpjs-page-view-side-section {
             margin-bottom: 18px;
 
+            .warpjs-title {
+                padding-bottom: 12px !important;
+                line-height: 140%;
+            }
+
             .warpjs-content {
                 > div {
                     padding-left: 0;
@@ -197,6 +252,8 @@
                             max-width: 100px;
                             max-height: 100px;
                             border-radius: 0;
+                            margin-left: auto;
+                            margin-right: auto;
 
                             .warpjs-image-container-child {
                                 img {
@@ -217,8 +274,8 @@
                 margin-bottom: 10px;
 
                 .warpjs-community-image {
-                    padding-left: 0px;
-                    padding-right: 0px;
+                    padding: 0;
+                    vertical-align: middle;
 
                     .warpjs-image-container-parent {
                         max-width: 50px;
@@ -226,7 +283,8 @@
                 }
 
                 .warpjs-user-info {
-                    padding-top: 5px;
+                    padding: 0;
+                    vertical-align: middle;
 
                     .warpjs-user-name {
                     }
@@ -316,7 +374,11 @@
     }
 }
 
-
+.warpjs-page-view-specialized {
+    > .warpjs-content {
+        margin-top: 20px;
+    }
+}
 
 .warpjs-page-view-main-body {
     color: #000;
@@ -369,6 +431,15 @@
 
         &:nth-child(even) {
             background-color: @warpjs-secondary-bg;
+
+            hr {
+                border-color: @warpjs-primary-bg;
+            }
+        }
+
+        > .warpjs-content {
+            padding-left: 0;
+            padding-right: 0;
         }
     }
 
