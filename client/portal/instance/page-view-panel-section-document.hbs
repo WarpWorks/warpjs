@@ -5,6 +5,14 @@
     </div>
   {{/if}}
 
+  {{#if section._embedded.iframes.length}}
+    <div class="row overview-iframes-container">
+      {{#each section._embedded.iframes as |iframe|}}
+        {{> page-view-panel-section-document-iframe section=section iframe=iframe}}
+      {{/each}}
+    </div>
+  {{/if}}
+
   {{#if section._embedded.images.length}}
     <div class="row overview-image-container">
       {{#each section._embedded.images as |image|}}

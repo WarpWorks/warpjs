@@ -2,6 +2,7 @@ const Promise = require('bluebird');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const convertCustomLinks = require('./convert-custom-links');
+const iframesByParagraph = require('./iframes-by-paragraph');
 const imagesByParagraph = require('./images-by-paragraph');
 
 module.exports = (persistence, relationship, instance) => Promise.resolve()
@@ -16,7 +17,18 @@ module.exports = (persistence, relationship, instance) => Promise.resolve()
         }))
         .then((paragraphResource) => Promise.resolve()
             .then(() => imagesByParagraph(persistence, relationship.getTargetEntity(), paragraph))
-            .then((images) => paragraphResource.embed('images', images))
+            .then((images) => {
+                if (images && images.length) {
+                    paragraphResource.embed('images', images);
+                }
+            })
+
+            .then(() => iframesByParagraph(persistence, relationship.getTargetEntity(), paragraph))
+            .then((iframes) => {
+                if (iframes && iframes.length) {
+                    paragraphResource.embed('iframes', iframes);
+                }
+            })
             .then(() => paragraphResource)
         )
     ))

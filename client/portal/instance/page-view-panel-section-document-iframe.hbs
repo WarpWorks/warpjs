@@ -1,0 +1,13 @@
+{{#if iframe._links.self.href}}
+  <div class="col-xs-12 text-center">
+    <iframe src="{{iframe._links.self.href}}"
+      {{#if iframe.width}}width="{{iframe.width}}"{{/if}}
+      {{#if iframe.height}}height="{{iframe.height}}"{{/if}}
+      {{#if iframe.srcdoc}}srcdoc="{{{iframe.srcdoc}}}"{{/if}}
+      {{#if iframe.sandbox}}sandbox{{/if}}
+      {{#if iframe.allow}}allow="{{iframe.allow}}"{{/if}}
+      {{#if iframe.allowfullscreen}}allowfullscreen{{/if}}
+      >
+    </iframe>
+  </div>
+{{/if}}
