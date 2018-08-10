@@ -3,6 +3,7 @@ const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const overviewByEntity = require('./overview-by-entity');
+const previewImageByEntity = require('./preview-image-by-entity');
 
 module.exports = (persistence, entity, instance) => Promise.resolve()
     .then(() => RoutesInfo.expand('entity', {
@@ -33,12 +34,10 @@ module.exports = (persistence, entity, instance) => Promise.resolve()
                 }
             })
 
-            .then(() => paragraph && paragraph._embedded ? paragraph._embedded.images : null)
-            .then((images) => images && images.length ? images[0] : null)
-            .then((image) => image && image._links ? image._links.self : null)
-            .then((self) => {
-                if (self && self.href) {
-                    resource.link('image', self.href);
+            .then(() => previewImageByEntity(persistence, entity, instance))
+            .then((previewImageUrl) => {
+                if (previewImageUrl) {
+                    resource.link('image', previewImageUrl);
                 }
             })
         )
