@@ -9,6 +9,7 @@ const contentConstants = require('./../../content/constants');
 const extractPageView = require('./extract-page-view');
 const headerImageByEntity = require('./../resources/header-image-by-entity');
 const serverUtils = require('./../../utils');
+const targetPreviewsByEntity = require('./../resources/target-previews-by-entity');
 
 const config = serverUtils.getConfig();
 const statusConfig = config.status;
@@ -90,6 +91,9 @@ module.exports = (req, persistence, entity, instance) => Promise.resolve()
                     return Promise.resolve()
                         .then(() => headerImageByEntity(persistence, entity, instance))
                         .then((headerImages) => resource.embed('headerImages', headerImages))
+
+                        .then(() => targetPreviewsByEntity(persistence, entity, instance))
+                        .then((targetPreviews) => resource.embed('previews', targetPreviews))
 
                         .then(() => entity.getPageView(req.query.view, config.views.portal))
                         .then((pageView) => extractPageView(persistence, pageView, instance, req.query.style))

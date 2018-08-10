@@ -1,5 +1,10 @@
 # WarpJS's Releases Notes
 
+## 1.2.69 - 2018-08-09
+
+- Fixed preview caching.
+- Reduced pop-up to 5 lines.
+
 ## 1.2.68 - 2018-08-09
 
 - Enable custom view and style from URL.
