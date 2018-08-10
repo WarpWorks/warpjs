@@ -2,7 +2,7 @@
   {{#if multiPanels }}
     <div class="tab-content">
       <ul class="nav nav-tabs">
-        {{#each panels as |panel tabindex|}}
+        {{#each _embedded.panels as |panel tabindex|}}
           <li role="presentation"
             data-tabindex="{{tabindex}}"
             {{#if @first}}class="active"{{/if}}
@@ -10,11 +10,11 @@
         {{/each}}
       </ul>
 
-      {{#each panels as |panel tabindex|}}
+      {{#each _embedded.panels as |panel tabindex|}}
         {{> panel panel tab=true tabindex=tabindex canEdit=../canEdit}}
       {{/each}}
     </div>
   {{else}}
-    {{> panel panels.[0] tab=false tabindex=0 canEdit=canEdit}}
+    {{> panel _embedded.panels.[0] tab=false tabindex=0 canEdit=canEdit}}
   {{/if}}
 </div>
