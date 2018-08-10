@@ -1,6 +1,7 @@
 const _ = require('lodash');
 const debug = require('debug')('W2:portal:resources/relationship-panel-item');
 const Promise = require('bluebird');
+const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const baseInfoByRelationship = require('./base-info-by-relationship');
@@ -45,7 +46,45 @@ module.exports = (persistence, panelItem, instance) => Promise.resolve()
                         .then((docs) => Promise.map(
                             docs,
                             (doc) => previewByEntity(persistence, relationship.getTargetEntity(), doc)
-                        ));
+                        ))
+                    ;
+                } else if (resource.style === constants.RELATIONSHIP_PANEL_ITEM_STYLES.Vocabulary) {
+                    return Promise.resolve()
+                        .then(() => relationship.getDocuments(persistence, instance))
+                        .then((docs) => Promise.map(
+                            docs,
+                            (doc) => Promise.resolve()
+                                .then(() => RoutesInfo.expand('entity', doc))
+                                .then((href) => warpjsUtils.createResource(href, {
+                                    type: doc.type,
+                                    id: doc.id,
+                                    name: doc.Name,
+                                    definition: doc.Definition,
+                                    resources: doc.Resources || doc.Ressources,
+                                    label: relationship.getDisplayName(doc)
+                                }))
+                        ))
+                        .then((docResources) => docResources.sort((a, b) => (a.label || '').localeCompare(b.label || '')))
+                        .then((docResources) => docResources.reduce(
+                            (cumulator, docResource) => {
+                                const letter = docResource.label[0].toUpperCase();
+
+                                let foundLetter = cumulator.find((letterResource) => letterResource.letter === letter);
+                                if (!foundLetter) {
+                                    cumulator.push(warpjsUtils.createResource('', {
+                                        letter
+                                    }));
+
+                                    foundLetter = cumulator.find((letterResource) => letterResource.letter === letter);
+                                }
+
+                                foundLetter.embed('items', docResource);
+
+                                return cumulator;
+                            },
+                            []
+                        ))
+                    ;
                 } else {
                     debug(`TODO resource.style = '${resource.style}'`);
                 }

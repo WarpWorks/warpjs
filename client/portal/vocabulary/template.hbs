@@ -1,0 +1,27 @@
+<div class="warpjs-panel-items-vocabulary">
+  <div class="warpjs-vocabulary-letters">
+    {{#each items as |item|}}
+      <span class="warpjs-vocabulary-letter" data-warpjs-letter="{{item.letter}}">{{item.letter}}</span>
+    {{/each}}
+  </div>
+
+  <div class="warpjs-vocabulary-definitions">
+    {{#each items as |item|}}
+      <div class="row warpjs-vocabulary-definition" data-warpjs-letter="{{item.letter}}">
+        <div class="col-xs-12 warpjs-vocabulary-definition-letter">{{item.letter}}</div>
+
+        {{#each item._embedded.items as |definition|}}
+          <div class="col-xs-4 warpjs-vocabulary-definition-item">
+            <div class="warpjs-content">
+              <div class="warpjs-vocabulary-letter">{{item.letter}}</div>
+              <div class="warpjs-title"><a href="{{definition._links.self.href}}">{{definition.label}}</a></div>
+              <div class="warpjs-definition">{{{definition.definition}}}</div>
+              <div class="warpjs-resource">{{{definition.resources}}}</div>
+            </div>
+          </div>
+        {{/each}}
+      </div>
+    {{/each}}
+  </div>
+
+</div>

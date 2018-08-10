@@ -23,6 +23,10 @@
         {{> page-view-panel-section section=item}}
       {{/each}}
     </div>
+  {{else if section.isOfStyle.Vocabulary}}
+    <div class="col-xs-12 warpjs-value">
+      {{> ./../vocabulary/template items=section._embedded.items}}
+    </div>
   {{else}}
     <div class="col-xs-12">TODO: Implement relationship style {{section.style}}</div>
   {{/if}}

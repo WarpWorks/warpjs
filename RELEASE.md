@@ -1,5 +1,9 @@
 # WarpJS's Releases Notes
 
+## 1.2.70 - 2018-08-09
+
+- Implementation of Vocabulary style.
+
 ## 1.2.69 - 2018-08-09
 
 - Fixed preview caching.

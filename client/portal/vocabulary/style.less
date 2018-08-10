@@ -1,0 +1,49 @@
+.warpjs-panel-items-vocabulary {
+    .warpjs-vocabulary-letters {
+        text-align: center;
+        padding: 20px;
+
+        .warpjs-vocabulary-letter {
+            color: #ffffff;
+            background-color: #cc0000;
+            padding: 5px 10px;
+            margin-right: 5px;
+            cursor: pointer;
+
+            &.warpjs-vocabulary-letter-selected {
+                background-color: #0000cc;
+            }
+        }
+    }
+
+    .warpjs-vocabulary-definitions {
+
+        .warpjs-vocabulary-definition {
+            display: table;
+            width: 100%;
+            display: none;
+
+            .warpjs-vocabulary-definition-letter {
+                text-align: center;
+                font-size: 36px;
+                line-height: 40px;
+                margin-bottom: 12px;
+            }
+
+            .warpjs-vocabulary-definition-item {
+                display: table-cell;
+                vertical-align: top;
+                margin-bottom: 18px;
+
+                &.col-xs-4:nth-child(3n+2) {
+                    clear: left;
+                }
+
+                .warpjs-content {
+                    background-color: @warpjs-secondary-bg;
+                    padding: 12px;
+                }
+            }
+        }
+    }
+}

@@ -3,6 +3,7 @@ const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const preview = require('./../preview');
 const template = require('./template.hbs');
+const vocabulary = require('./../vocabulary');
 
 const errorTemplate = warpjsUtils.requirePartial('error-portal');
 
@@ -31,6 +32,8 @@ const errorTemplate = warpjsUtils.requirePartial('error-portal');
 
                     preview($);
                 }
+
+                vocabulary($);
 
                 warpjsUtils.documentReady($);
             }
