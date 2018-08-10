@@ -1,5 +1,12 @@
 # WarpJS's Releases Notes
 
+## 1.2.71 - 2018-08-10
+
+- Don't return deleted references.
+- Refactoring to use new PreviewImage from Content.
+- Embed panels in payload.
+- Implementing IFrame in paragraph.
+
 ## 1.2.70 - 2018-08-09
 
 - Implementation of Vocabulary style.
