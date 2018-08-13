@@ -1,5 +1,11 @@
 # WarpJS's Releases Notes
 
+## 1.2.72 - 2018-08-13
+
+- #112: Adding callout.
+- #114: Moved badges panel above sidebar.
+- #115: Changed label and added padding.
+
 ## 1.2.71 - 2018-08-10
 
 - Don't return deleted references.
