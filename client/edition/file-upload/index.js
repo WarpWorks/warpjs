@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const Promise = require('bluebird');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
@@ -38,11 +39,11 @@ class FileUpload {
 
                 $('[data-warpjs-action="confirm-upload"]', modal).on('click', function(e) {
                     const input = $('form input[type="file"]', modal).get(0);
-                    const file = input.files;
+                    const files = input.files;
 
-                    if (file.length) {
+                    if (files.length) {
                         const data = new FormData();
-                        data.append('file', file[0], file[0].name);
+                        data.append('file', files[0], files[0].name);
 
                         const url = $('form', modal).data('warpjsUrl');
 
@@ -61,11 +62,29 @@ class FileUpload {
                                     contentType: false
                                 }))
                                 .then((res) => {
+                                    let changeIndex = 0;
                                     warpjsUtils.toast.success($, "File uploaded successfully.", TITLE);
                                     modal.modal('hide');
                                     const inputField = uploadButton.closest('.form-group').find('input.warpjs-file-field');
                                     inputField.val(res._links.uploadedFile.href);
                                     inputField.trigger('change');
+                                    changeIndex += 1;
+
+                                    if (res.info) {
+                                        const tabPane = uploadButton.closest('.tab-pane');
+
+                                        _.forEach(res.info, (value, key) => {
+                                            const inputField = tabPane.find(`.warpjs-basic-property-${key} input`);
+                                            if (inputField) {
+                                                changeIndex += 1;
+                                                inputField.val(value);
+
+                                                // Introduce delay to avoid
+                                                // concurrent changes.
+                                                setTimeout(() => inputField.trigger('change'), changeIndex * 500);
+                                            }
+                                        });
+                                    }
                                 })
                                 .catch((err) => {
                                     // eslint-disable-next-line no-console
