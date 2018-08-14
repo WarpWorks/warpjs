@@ -41,8 +41,9 @@
     "id": ""
   }, {
     "label": "Testbeds",
-    "type": "",
-    "id": ""
+    "type": "I3C",
+    "id": "5935a892109ab6000ff06b27",
+    "view": "Testbed_Overview"
   }, {
     "label": "Toolkits & Training",
     "type": "Document",
