@@ -1,0 +1,7 @@
+<img class="margin-right"
+  src="{{image._links.self.href}}"
+  {{#if image.altText}}alt="{{image.altText}}"{{/if}}
+  {{#if image.width}}width="{{image.width}}"{{/if}}
+  {{#if image.height}}height="{{image.height}}"{{/if}}
+  {{#if image._embedded.imageAreas.length}}usemap="#paragraph-map-{{image.id}}"{{/if}}
+  />

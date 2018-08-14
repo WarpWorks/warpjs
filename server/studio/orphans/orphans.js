@@ -55,7 +55,7 @@ class Orphans {
                 pageView.panels.forEach((panel) => {
                     // Empty panel
                     if (!panel.basicPropertyPanelItems.length && !panel.relationshipPanelItems.length && !panel.enumPanelItems.length) {
-                        this.addOrphan(Orphan.REASONS.EMPTY_PANEL, pageView, panel.name);
+                        this.addOrphan(Orphan.REASONS.EMPTY_PANEL, pageView, panel.label || panel.name);
                     }
 
                     // BasicProperty
@@ -70,7 +70,7 @@ class Orphans {
                     panel.relationshipPanelItems.forEach((panelItem) => {
                         const oid = panelItem.hasRelationship() ? panelItem.getRelationship() : null;
                         if (this.isInvalid(oid)) {
-                            this.addOrphan(Orphan.REASONS.INVALID_PAGEVIEW_RELATIONSHIP, pageView, `${panel.name}.${panelItem.name}`);
+                            this.addOrphan(Orphan.REASONS.INVALID_PAGEVIEW_RELATIONSHIP, pageView, `${panel.label || panel.name}.${panelItem.label || panelItem.name}`);
                         }
                     });
 

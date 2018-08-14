@@ -1,19 +1,9 @@
 {{#if image._links.self.href}}
   <div class="col-xs-12 text-center">
     <figure class="figure-container">
-      <img class="margin-right"
-        src="{{image._links.self.href}}"
-        {{#if image.altText}}alt="{{image.altText}}"{{/if}}
-        {{#if image.width}}width="{{image.width}}"{{/if}}
-        {{#if image.height}}height="{{image.height}}"{{/if}}
-        {{#if image._embedded.imageAreas.length}}usemap="#paragraph-map-{{image.id}}"{{/if}}
-        />
-
-      {{#if image.description}}
-        <figcaption class="figure-caption">{{image.description}}</figcaption>
-      {{/if}}
-
       {{#if image._embedded.imageAreas.length}}
+        {{> image-element image=image}}
+
         <map name="paragraph-map-{{image.id}}">
           {{#each image._embedded.imageAreas as |imageArea|}}
             <area class="map-hover-area"
@@ -35,6 +25,21 @@
               />
           {{/each}}
         </map>
+
+      {{else if image._links.target.href}}
+        <a href="{{image._links.target.href}}">
+          {{> image-element image=image}}
+        </a>
+      {{else if image._links.href.href}}
+        <a href="{{image._links.href.href}}">
+          {{> image-element image=image}}
+        </a>
+      {{else}}
+        {{> image-element image=image}}
+      {{/if}}
+
+      {{#if image.description}}
+        <figcaption class="figure-caption">{{image.description}}</figcaption>
       {{/if}}
 
     </figure>

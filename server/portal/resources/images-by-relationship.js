@@ -1,26 +1,18 @@
 const Promise = require('bluebird');
-const warpjsUtils = require('@warp-works/warpjs-utils');
 
-const imageAreasByImage = require('./image-areas-by-image');
+const imageResource = require('./image');
 
-module.exports = (persistence, relationship, instance) => Promise.resolve()
+module.exports = (persistence, relationship, instance, imageType) => Promise.resolve()
     .then(() => relationship ? relationship.getDocuments(persistence, instance) : [])
+    .then((images) => {
+        if (imageType) {
+            return images.filter((image) => image.Type === imageType);
+        } else {
+            return images;
+        }
+    })
     .then((images) => Promise.map(
         images,
-        (image) => Promise.resolve()
-            .then(() => image.ImageURL || '')
-            .then((href) => warpjsUtils.createResource(href, {
-                type: image.type,
-                id: image._id,
-                name: image.altText,
-                description: image.Caption,
-                width: image.Width,
-                height: image.Height
-            }))
-            .then((imageResource) => Promise.resolve()
-                .then(() => imageAreasByImage(persistence, relationship.getTargetEntity(), image))
-                .then((imageAreas) => imageResource.embed('imageAreas', imageAreas))
-                .then(() => imageResource)
-            )
+        (image) => imageResource(persistence, relationship.getTargetEntity(), image)
     ))
 ;
