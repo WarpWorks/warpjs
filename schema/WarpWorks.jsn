@@ -1635,7 +1635,7 @@
                   "desc": "Tooltip for name",
                   "type": "BasicPropertyPanelItem",
                   "id": 274,
-                  "position": 0,
+                  "position": 2,
                   "label": "Name",
                   "basicProperty": [
                     4
@@ -1646,7 +1646,7 @@
                   "desc": "Tooltip for description",
                   "type": "BasicPropertyPanelItem",
                   "id": 275,
-                  "position": 1,
+                  "position": 3,
                   "label": "Description",
                   "basicProperty": [
                     5
@@ -1657,7 +1657,7 @@
                   "desc": "Tooltip for position",
                   "type": "BasicPropertyPanelItem",
                   "id": 276,
-                  "position": 2,
+                  "position": 1,
                   "label": "Position",
                   "basicProperty": [
                     52
@@ -1668,7 +1668,7 @@
                   "desc": "Tooltip for icon",
                   "type": "BasicPropertyPanelItem",
                   "id": 277,
-                  "position": 3,
+                  "position": 5,
                   "label": "icon",
                   "basicProperty": [
                     53
@@ -1679,7 +1679,7 @@
                   "desc": "Tooltip for label",
                   "type": "BasicPropertyPanelItem",
                   "id": 563,
-                  "position": 3,
+                  "position": 4,
                   "label": "Label",
                   "basicProperty": [
                     78
