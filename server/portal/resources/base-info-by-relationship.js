@@ -5,6 +5,8 @@ const warpjsUtils = require('@warp-works/warpjs-utils');
 
 module.exports = (persistence, relationship, instance) => Promise.resolve()
     .then(() => relationship.getDocuments(persistence, instance))
+    .then((documents) => documents.sort(warpjsUtils.byPositionThenName))
+    .then((documents) => documents.filter((document) => document.Name !== 'TEMPLATE'))
     .then((documents) => Promise.map(
         documents,
         (document) => Promise.resolve()
@@ -27,5 +29,4 @@ module.exports = (persistence, relationship, instance) => Promise.resolve()
                 .then(() => resource)
             )
     ))
-    .then((documents) => documents.sort(warpjsUtils.byPositionThenName))
 ;

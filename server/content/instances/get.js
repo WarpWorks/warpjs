@@ -1,3 +1,4 @@
+// const debug = require('debug')('W2:content:instances/get');
 const Promise = require('bluebird');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
@@ -28,13 +29,18 @@ function documentMapper(persistence, entity, domain, instance) {
                 id: instance.id
             })))
 
+            // FIXME: What is this for?
             .then(() => entity.getRelationshipByName('Authors')) // FIXME hard-coded
             .then((relationship) => relationship
                 ? relationship.getDocuments(persistence, instance)
                 : []
             )
             .then((authors) => authors.map((author) => ({ Name: author.Name })))
-            .then((authors) => resource.embed('authors', authors))
+            .then((authors) => {
+                if (authors && authors.length) {
+                    resource.embed('authors', authors);
+                }
+            })
             .then(() => resource)
         )
     ;
@@ -82,6 +88,8 @@ module.exports = (req, res) => {
                     .then((entity) => Promise.resolve()
                         // FIXME: We can't use the entity ID because old data doesn't have this info.
                         .then(() => entity.getDocuments(persistence, {type: entity.name}))
+                        .then((documents) => documents.sort(warpjsUtils.byName))
+                        .then((documents) => documents.filter((d) => d.Name !== 'TEMPLATE'))
                         .then((documents) => Promise.map(
                             documents,
                             (instance) => documentMapper(persistence, entity, domain, instance)

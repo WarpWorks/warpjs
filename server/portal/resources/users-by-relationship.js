@@ -10,6 +10,7 @@ module.exports = (persistence, relationship, instance) => Promise.resolve()
         ? Promise.resolve()
             .then(() => relationship.getDocuments(persistence, instance))
             .then((users) => users.sort(warpjsUtils.byPositionThenName))
+            .then((users) => users.filter((user) => user.Name !== 'TEMPLATE'))
             .then((users) => Promise.map(
                 users,
                 (user) => previewByEntity(persistence, relationship.getTargetEntity(), user)
