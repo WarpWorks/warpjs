@@ -1,5 +1,16 @@
 # WarpJS's Releases Notes
 
+## 1.2.73 - 2018-08-15
+
+- #111: TEMPLATE clone
+- #116: Testbed landing page
+- #117: Preparation work for responsive images.
+- #118: Adding image's HRef and Target. Refactored for HeaderImage and PreviewImage
+- #119: Moved popover near mouseenter coords
+- #120: Minor changes to Overview panel's name and display
+- Updated Literal CMS view
+- Sort relationship items by position+name
+
 ## 1.2.72 - 2018-08-13
 
 - #112: Adding callout.
