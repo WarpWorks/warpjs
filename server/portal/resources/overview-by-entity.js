@@ -3,13 +3,13 @@ const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const paragraphsByRelationship = require('./paragraphs-by-relationship');
 
-module.exports = (persistence, entity, instance) => Promise.resolve()
+module.exports = (persistence, entity, instance, isSpecializedPageViewStyle) => Promise.resolve()
     .then(() => warpjsUtils.createResource('', {
         type: "Panel",
         id: null,
         name: "Overview",
         description: "Document Overview",
-        label: "Overview",
+        label: entity.getDisplayName(instance),
         isOverviewPanel: true,
         style: 'Transparent'
     }))

@@ -433,6 +433,18 @@
 .warpjs-page-view-specialized {
     > .warpjs-content {
         margin-top: 20px;
+
+        > .warpjs-page-view-main-body {
+            padding: 0;
+
+            .warpjs-is-overview-panel-true {
+                display: none;
+
+                + .panel-body {
+                    padding-top: 5px;
+                }
+            }
+        }
     }
 }
 
