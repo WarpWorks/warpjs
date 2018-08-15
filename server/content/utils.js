@@ -70,11 +70,24 @@ function basicRenderOld(name, data, req, res) {
     res.render(name, resource.toJSON());
 }
 
+function sendRedirect(req, res, resource, redirectUrl) {
+    if (req.headers['x-requested-with']) {
+        // Was ajax call. return a resource.
+        resource.link('redirect', redirectUrl);
+
+        sendHal(req, res, resource);
+    } else {
+        // Direct call.
+        res.redirect(redirectUrl);
+    }
+}
+
 module.exports = {
     basicRender,
     basicRenderOld,
     createResourceFromDocument,
     sendErrorHal: (req, res, resource, error, status) => sendErrorHal(req, res, resource, error, status),
     sendHal: (req, res, resource, status) => sendHal(req, res, resource, status),
-    sendHalOnly
+    sendHalOnly: (req, res, resource, status) => sendHalOnly(req, res, resource, status),
+    sendRedirect: (req, res, resource, redirectUrl) => sendRedirect(req, res, resource, redirectUrl)
 };

@@ -2137,17 +2137,6 @@
                   "basicProperty": [
                     69
                   ]
-                },
-                {
-                  "name": "alternatingColors",
-                  "desc": "Tooltip for alternatingColors",
-                  "type": "BasicPropertyPanelItem",
-                  "id": 379,
-                  "position": 7,
-                  "label": "Alternating Colors",
-                  "basicProperty": [
-                    70
-                  ]
                 }
               ],
               "enumPanelItems": [

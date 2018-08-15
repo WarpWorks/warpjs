@@ -42,15 +42,7 @@ module.exports = (req, res, persistence, entity, instance, resource) => {
                         id: newDoc.id
                     });
 
-                    if (req.headers['x-requested-with']) {
-                        // Was ajax call. return a resource.
-                        resource.link('redirect', redirectUrl);
-
-                        utils.sendHal(req, res, resource);
-                    } else {
-                        // Direct call.
-                        res.redirect(redirectUrl);
-                    }
+                    utils.sendRedirect(req, res, resource, redirectUrl);
                 })
             )
         )

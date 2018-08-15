@@ -33,8 +33,8 @@ module.exports = (persistence, panelItem, instance) => Promise.resolve()
                     ;
                 } else if (resource.style === constants.RELATIONSHIP_PANEL_ITEM_STYLES.Tile) {
                     return Promise.resolve()
-                        // .then(() => baseInfoByRelationship(persistence, relationship, instance))
                         .then(() => relationship.getDocuments(persistence, instance))
+                        .then((docs) => docs.sort(warpjsUtils.byPositionThenName))
                         .then((docs) => Promise.map(
                             docs,
                             (doc) => previewByEntity(persistence, relationship.getTargetEntity(), doc)
