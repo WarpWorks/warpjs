@@ -1,4 +1,3 @@
-const FilterBox = require('@warp-works/warpjs-filter-box');
 const ProgressBarModal = require('@warp-works/progress-bar-modal');
 
 const actionDeleteRow = require('./action-delete-row');
@@ -10,16 +9,16 @@ const associationModal = require('./association-modal');
 const carouselPagination = require('./carousel-pagination');
 const ChangeLogs = require('./../change-logs');
 const deleteEntity = require('./delete-entity');
+const documentStatus = require('./document-status');
 const FileUpload = require('./../file-upload');
 const patchEntity = require('./patch-entity');
+const shared = require('./../shared');
 const tabContentNavigation = require('./tab-content-navigation');
 const tablePanelItem = require('./table-panel-item');
-const documentStatus = require('./document-status');
 const wysiwygEditor = require('./wysiwyg-editor');
 
 module.exports = ($, result) => {
-    ProgressBarModal.show($, 100);
-    ProgressBarModal.hide();
+    ProgressBarModal.show($, 80);
 
     const instanceDoc = $('[data-warpjs-status="instance"]');
 
@@ -40,5 +39,5 @@ module.exports = ($, result) => {
     tablePanelItem($);
     documentStatus($, instanceDoc);
 
-    FilterBox.init($);
+    shared($);
 };
