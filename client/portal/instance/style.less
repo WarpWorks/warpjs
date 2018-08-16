@@ -544,10 +544,36 @@
     }
 }
 
+@warpjs-insight-bg: #263d45;
+
 .warpjs-page-view-Insight {
     .warpjs-page-header-image,
     .warpjs-page-view-badges {
         display: none;
+    }
+
+    .warpjs-page-view-specialized {
+        .warpjs-page-view-headline {
+            .warpjs-page-view-headline-section {
+                .warpjs-page-view-headline-section-value {
+                    background-color: @warpjs-insight-bg;
+                }
+
+                .warpjs-page-view-headline-section-footer {
+                    background-color: @warpjs-insight-bg;
+                }
+            }
+        }
+
+        .warpjs-page-view-summary {
+            .warpjs-section-content {
+                background-color: @warpjs-insight-bg;
+
+                &.warpjs-summary-results {
+                    background-color: #000;
+                }
+            }
+        }
     }
 }
 
