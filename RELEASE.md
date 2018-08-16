@@ -1,5 +1,11 @@
 # WarpJS's Releases Notes
 
+## 1.2.75 - 2018-08-16
+
+- #121: Detection of Chrome for CMS and Studio
+- #122: Adding background color for images
+- #123: Changed bg color for Insight reports.
+
 ## 1.2.74 - 2018-08-15
 
 - #119: Fixed popover preview location.
