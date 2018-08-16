@@ -14,7 +14,8 @@ module.exports = (persistence, imageEntity, imageInstance) => Promise.resolve()
         description: imageInstance.Caption,
         width: imageInstance.Width,
         height: imageInstance.Height,
-        imageType: imageInstance.Type
+        imageType: imageInstance.Type,
+        imageBackground: imageInstance.ImageBackground || 'Transparent'
     }))
     .then((imageResource) => Promise.resolve()
         // HRef

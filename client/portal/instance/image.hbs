@@ -1,6 +1,6 @@
 {{#if image._links.self.href}}
   <div class="col-xs-12 text-center">
-    <figure class="figure-container">
+    <figure class="figure-container warpjs-image-background-{{image.imageBackground}}">
       {{#if image._embedded.imageAreas.length}}
         {{> image-element image=image}}
 
