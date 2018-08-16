@@ -1,5 +1,9 @@
 # WarpJS's Releases Notes
 
+## 1.2.74 - 2018-08-15
+
+- #119: Fixed popover preview location.
+
 ## 1.2.73 - 2018-08-15
 
 - #111: TEMPLATE clone
