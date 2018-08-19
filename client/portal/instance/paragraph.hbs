@@ -1,14 +1,16 @@
 <div class="col-xs-12 {{#if paragraph._embedded.callouts.length}}warpjs-paragraph-callout{{/if}}">
-  {{#if paragraph.name}}
+  {{#if paragraph.name.length}}
     <div class="row">
       <div class="col-xs-12 warpjs-title">{{paragraph.name}}</div>
     </div>
   {{/if}}
 
   {{#if paragraph._embedded.callouts.length}}
-    <div class="row warpjs-paragraph-callout-subheading">
-      {{> paragraph-callout-subheading callouts=paragraph._embedded.callouts}}
-    </div>
+    {{#if paragraph._embedded.callouts.[0].subHeading.length}}
+      <div class="row warpjs-paragraph-callout-subheading">
+        <div class="col-xs-12 warpjs-content">{{paragraph._embedded.callouts.[0].subHeading}}</div>
+      </div>
+    {{/if}}
   {{/if}}
 
   {{#if paragraph._embedded.iframes.length}}

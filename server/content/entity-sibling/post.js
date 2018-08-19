@@ -1,4 +1,4 @@
-const debug = require('debug')('W2:content:entity-sibling/post');
+// const debug = require('debug')('W2:content:entity-sibling/post');
 const Promise = require('bluebird');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
@@ -25,7 +25,7 @@ module.exports = (req, res) => {
             .then(() => entity.getInstance(persistence, id))
 
             .then((instance) => Promise.resolve()
-                // TODO: check Edit permissions of the parent!!!
+            // TODO: check Edit permissions of the parent!!!
 
                 // Find sibling TEMPLATE.
                 .then(() => entity.getDocuments(persistence, {
