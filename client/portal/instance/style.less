@@ -261,10 +261,10 @@
 }
 
 .warpjs-page-view-side-section {
-    .warpjs-user {
-        .warpjs-cell {
-            vertical-align: middle;
-        }
+    margin-bottom: 18px;
+
+    > .warpjs-title {
+        margin-bottom: 10px;
     }
 }
 
@@ -323,32 +323,46 @@
             }
         }
 
-        &.warpjs-page-view-community {
-            .warpjs-user {
-                margin-left: 0;
-                margin-right: 0;
-                margin-bottom: 10px;
+    }
 
-                .warpjs-community-image {
-                    padding: 0;
-                    vertical-align: middle;
+}
 
-                    .warpjs-image-container-parent {
-                        max-width: 50px;
-                    }
-                }
+.warpjs-user {
+    margin-left: 0;
+    margin-bottom: 10px;
 
-                .warpjs-user-info {
-                    padding: 0;
-                    vertical-align: middle;
+    .warpjs-community-image {
+        padding-left: 0;
+        padding-right: 0;
+        width: 65px;
+        margin-bottom: 10px;
 
-                    .warpjs-user-name {
-                    }
+        .warpjs-image-container-parent {
+            width: 50px;
+
+            .warpjs-image-container-child {
+                position: relative;
+                padding-bottom: calc(~"100%");
+
+                img {
+                    width: 100%;
+                    position: absolute;
+                    top: 0;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
                 }
             }
         }
     }
 
+    .warpjs-user-info {
+        padding: 0;
+        vertical-align: middle;
+
+        .warpjs-user-name {
+        }
+    }
 }
 
 .warpjs-value {
@@ -367,6 +381,10 @@
 
 .warpjs-relationship-style-Tile {
     .warpjs-value {
+        > div {
+            padding-left: 0px;
+        }
+
         .warpjs-value-item {
             min-height: 250px;
             background-color: #cccccc;
@@ -445,6 +463,10 @@
                 }
             }
         }
+
+        > .warpjs-page-view-side-zone {
+            margin-top: 18px;
+        }
     }
 }
 
@@ -510,30 +532,8 @@
         }
     }
 
-    .warpjs-user {
-        .warpjs-community-image {
-            padding-left: 0px;
-            padding-right: 0px;
 
-            .warpjs-image-container-parent {
-                max-width: 50px;
 
-                .warpjs-image-container-child {
-                    position: relative;
-                    padding-bottom: calc(~"100%");
-
-                    img {
-                        width: 100%;
-                        position: absolute;
-                        top: 0;
-                        bottom: 0;
-                        left: 0;
-                        right: 0;
-                    }
-                }
-            }
-        }
-    }
 }
 
 .warpjs-page-view-BoK {

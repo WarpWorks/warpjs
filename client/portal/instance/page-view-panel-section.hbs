@@ -8,10 +8,10 @@
       </div>
     {{else if section.isOfType.BasicPropertyPanelItem}}
       <div class="col-xs-12 col-sm-3 warpjs-label">{{section.label}}</div>
-      <div class="col-xs-11 col-xs-offset-1 col-sm-9 warpjs-value">{{section.value}}</div>
+      <div class="col-xs-11 col-xs-offset-1 col-sm-9 col-sm-offset-0 warpjs-value">{{section.value}}</div>
     {{else if section.isOfType.EnumPanelItem}}
       <div class="col-xs-12 col-sm-3 warpjs-label">{{section.label}}</div>
-      <div class="col-xs-11 col-xs-offset-1 col-sm-9 warpjs-value">{{section.value}}</div>
+      <div class="col-xs-11 col-xs-offset-1 col-sm-9 col-sm-offset-0 warpjs-value">{{section.value}}</div>
     {{else if section.isOfType.RelationshipPanelItem}}
       {{> relationship-panel-items section=section}}
     {{else}}
