@@ -17,13 +17,13 @@ module.exports = (persistence, panelItem, instance) => Promise.resolve()
         .then(() => panelItem.hasBasicProperty() ? panelItem.getBasicProperty() : null)
         .then((basicProperty) => {
             if (basicProperty) {
-                resource.showItem = true;
                 resource.propertyName = basicProperty.name;
                 resource.propertyType = basicProperty.propertyType;
                 resource.typeOfProperty = constants.isOfPropertyType(basicProperty.propertyType);
 
                 const value = basicProperty.getValue(instance);
                 resource.value = (resource.propertyType === BasicTypes.Text) ? convertCustomLinks(value) : value;
+                resource.showItem = !_.isUndefined(resource.value);
             }
         })
         .then(() => resource)
