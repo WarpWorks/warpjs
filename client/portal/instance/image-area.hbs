@@ -1,0 +1,24 @@
+{{#if imageArea._links.target.href}}
+  <!-- target -->
+  <a xlink:href="{{imageArea._links.target.href}}"
+      class="map-hover-area"
+      {{#if imageArea.alt}}alt="{{imageArea.alt}}"{{/if}}
+      data-warpjs-action="preview"
+      data-warpjs-preview-url="{{imageArea._links.preview.href}}"
+      data-target-href="{{imageArea._links.preview.href}}"
+      {{#if imageArea.name}}data-preview-title="{{imageArea.name}}"{{/if}}
+    >
+    {{> image-shape imageArea=imageArea}}
+  </a>
+{{else if imageArea._links.self.href}}
+  <!-- self -->
+  <a xlink:href="{{imageArea._links.self.href}}"
+      class="map-hover-area"
+      {{#if imageArea.alt}}alt="{{imageArea.alt}}"{{/if}}
+    >
+    {{> image-shape imageArea=imageArea}}
+  </a>
+{{else}}
+  <!-- no link -->
+  {{> image-shape imageArea=imageArea}}
+{{/if}}

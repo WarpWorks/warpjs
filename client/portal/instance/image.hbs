@@ -43,5 +43,35 @@
       {{/if}}
 
     </figure>
+
+
+    <div>SVG...</div>
+    <figure class="figure-container warpjs-image-background-{{image.imageBackground}}">
+      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+          viewBox="0 0 {{image.width}} {{image.height}}">
+        <image width="{{image.width}}" height="{{image.height}}"
+            xlink:href="{{image._links.self.href}}"></image>
+
+          {{#each image._embedded.imageAreas as |imageArea|}}
+            {{> image-area imageArea=imageArea}}
+          {{else}}
+            {{#if image._links.target.href}}
+              <a xlink:href="{{image._links.target.href}}">
+                {{> image-rect x=0 y=0 width=image.width height=image.height}}
+              </a>
+            {{else if image._links.href.href}}
+              <a xlink:href="{{image._links.href.href}}">
+                {{> image-rect x=0 y=0 width=image.width height=image.height}}
+              </a>
+            {{/if}}
+          {{/each}}
+
+      </svg>
+
+      {{#if image.description}}
+        <figcaption class="figure-caption">{{image.description}}</figcaption>
+      {{/if}}
+    </figure>
+
   </div>
 {{/if}}
