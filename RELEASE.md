@@ -1,5 +1,12 @@
 # WarpJS's Releases Notes
 
+## 1.2.76 - 2018-08-20
+
+- #111: Using TEMPLATE when creating a sibling.
+- Aug 14th UI feedbacks
+- #125: Removed ':' on basic property and enumeration.
+- Redesign for panel-items for XS.
+
 ## 1.2.75 - 2018-08-16
 
 - #121: Detection of Chrome for CMS and Studio
