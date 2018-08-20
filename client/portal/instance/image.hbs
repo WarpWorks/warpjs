@@ -1,52 +1,6 @@
 {{#if image._links.self.href}}
   <div class="col-xs-12 text-center">
     <figure class="figure-container warpjs-image-background-{{image.imageBackground}}">
-      {{#if image._embedded.imageAreas.length}}
-        {{> image-element image=image}}
-
-        <map name="paragraph-map-{{image.id}}">
-          {{#each image._embedded.imageAreas as |imageArea|}}
-            <area class="map-hover-area"
-              {{#if imageArea.alt}}alt="{{imageArea.alt}}"{{/if}}
-              {{#if imageArea.shape}}shape="{{imageArea.shape}}"{{/if}}
-              {{#if imageArea.coords}}coords="{{imageArea.coords}}"{{/if}}
-
-              {{#if imageArea._links.target.href}}
-                data-warpjs-action="preview"
-                data-warpjs-preview-url="{{imageArea._links.preview.href}}"
-                data-target-href="{{imageArea._links.preview.href}}"
-                href="{{imageArea._links.target.href}}"
-                {{#if imageArea.name}}
-                  data-preview-title="{{imageArea.name}}"
-                {{/if}}
-              {{else if imageArea._links.self.href}}
-                href="{{imageArea._links.self.href}}"
-              {{/if}}
-              />
-          {{/each}}
-        </map>
-
-      {{else if image._links.target.href}}
-        <a href="{{image._links.target.href}}">
-          {{> image-element image=image}}
-        </a>
-      {{else if image._links.href.href}}
-        <a href="{{image._links.href.href}}">
-          {{> image-element image=image}}
-        </a>
-      {{else}}
-        {{> image-element image=image}}
-      {{/if}}
-
-      {{#if image.description}}
-        <figcaption class="figure-caption">{{image.description}}</figcaption>
-      {{/if}}
-
-    </figure>
-
-
-    <div>SVG...</div>
-    <figure class="figure-container warpjs-image-background-{{image.imageBackground}}">
       <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
           viewBox="0 0 {{image.width}} {{image.height}}">
         <image width="{{image.width}}" height="{{image.height}}"

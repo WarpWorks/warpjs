@@ -1,5 +1,4 @@
 {{#if imageArea._links.target.href}}
-  <!-- target -->
   <a xlink:href="{{imageArea._links.target.href}}"
       class="map-hover-area"
       {{#if imageArea.alt}}alt="{{imageArea.alt}}"{{/if}}
@@ -11,7 +10,6 @@
     {{> image-shape imageArea=imageArea}}
   </a>
 {{else if imageArea._links.self.href}}
-  <!-- self -->
   <a xlink:href="{{imageArea._links.self.href}}"
       class="map-hover-area"
       {{#if imageArea.alt}}alt="{{imageArea.alt}}"{{/if}}
@@ -19,6 +17,5 @@
     {{> image-shape imageArea=imageArea}}
   </a>
 {{else}}
-  <!-- no link -->
   {{> image-shape imageArea=imageArea}}
 {{/if}}

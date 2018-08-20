@@ -9,6 +9,7 @@
             data-doc-level="{{model.docLevel}}"
             {{#if model._links.self}}data-warpjs-url="{{model._links.self.href}}"{{/if}}
             {{#if model.value}}checked{{/if}}
+            {{#if readOnly}}readonly{{/if}}
             {{#unless canEdit}}disabled{{/unless}}
             />
       {{else if model.propertyTypeCheck.isFile}}
@@ -17,6 +18,7 @@
         <input class="form-control warpjs-file-field" type="text" value="{{model.value}}"
           data-doc-level="{{model.docLevel}}"
           {{#if model._links.self}}data-warpjs-url="{{model._links.self.href}}"{{/if}}
+            {{#if readOnly}}readonly{{/if}}
           {{#unless canEdit}}disabled{{/unless}}
           />
       {{else}}
@@ -34,6 +36,7 @@
             data-doc-level="{{model.docLevel}}"
             data-warpjs-can-edit="{{canEdit}}"
             {{#if model._links.self}}data-warpjs-url="{{model._links.self.href}}"{{/if}}
+            {{#if readOnly}}readonly{{/if}}
             {{#unless canEdit}}disabled{{/unless}}
             >{{model.value}}</textarea>
         {{else}}
@@ -43,6 +46,7 @@
             value="{{model.value}}"
             data-doc-level="{{model.docLevel}}"
             {{#if model._links.self}}data-warpjs-url="{{model._links.self.href}}"{{/if}}
+            {{#if readOnly}}readonly{{/if}}
             {{#unless canEdit}}disabled{{/unless}}
             />
         {{/if}}

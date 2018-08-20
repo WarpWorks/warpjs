@@ -5,7 +5,8 @@ const warpjsUtils = require('@warp-works/warpjs-utils');
 const BASE_POPOVER_OPTIONS = Object.freeze({
     html: true,
     placement: 'top',
-    trigger: 'hover focus'
+    trigger: 'hover focus',
+    container: 'body'
 });
 const INITIALIZED = 'warpjsPopoverInitialized';
 const CSS = Object.freeze({
@@ -14,9 +15,12 @@ const CSS = Object.freeze({
 });
 
 function position(popover, evt) {
-    const currentTargetOffset = $(evt.currentTarget).offset();
-    const left = Math.max(0, currentTargetOffset.left + evt.offsetX - (popover.width() / 2));
-    const top = Math.max(0, currentTargetOffset.top + evt.offsetY - popover.height() - 20);
+    const currentTarget = evt.currentTarget;
+    const svg = $(currentTarget).closest('svg');
+    const svgOffset = svg.offset();
+
+    const left = Math.max(0, svgOffset.left + evt.offsetX - (popover.width() / 2));
+    const top = Math.max(0, svgOffset.top + evt.offsetY - popover.height() - 20);
 
     popover.offset({left, top});
 }
