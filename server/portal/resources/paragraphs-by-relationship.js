@@ -13,6 +13,7 @@ module.exports = (persistence, relationship, instance) => Promise.resolve()
         .then(() => warpjsUtils.createResource('', {
             showItem: true,
             documentStyle: true,
+            id: paragraph.id || paragraph._id,
             name: paragraph.Heading,
             description: convertCustomLinks(paragraph.Content)
         }))

@@ -12,19 +12,17 @@ const Promise = require('bluebird');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const constants = require('./../resources/constants');
+const paragraphsByRelationship = require('./../resources/paragraphs-by-relationship');
 
 module.exports = (persistence, entity, instance, entityPanels) => Promise.resolve()
     .then(() => entityPanels.find((panel) => panel.name === constants.PANEL_NAMES.Summary))
     .then((panel) => panel ? panel.getPanelItems().find((panelItem) => panelItem.name === constants.PANEL_ITEM_NAMES.Summary) : null)
     .then((panelItem) => panelItem ? panelItem.getRelationship() : null)
-    .then((relationship) => relationship ? relationship.getDocuments(persistence, instance) : null)
-    .then((paragraphs) => paragraphs ? paragraphs.sort(warpjsUtils.byPositionThenName) : null)
-    .then((paragraphs) => paragraphs ? paragraphs.slice(0, 3) : null)
-    .then((paragraphs) => paragraphs
-        ? paragraphs.map((paragraph) => warpjsUtils.createResource('', {
-            title: paragraph.Heading,
-            content: paragraph.Content
-        }))
-        : null
-    )
+    .then((relationship) => relationship ? paragraphsByRelationship(persistence, relationship, instance) : [])
+    .then((paragraphResources) => paragraphResources.slice(0, 3))
+    .then((paragraphResources) => paragraphResources.map((paragraphResource) => warpjsUtils.createResource('', {
+        id: paragraphResource.id,
+        title: paragraphResource.name,
+        content: paragraphResource.description
+    })))
 ;

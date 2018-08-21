@@ -17,6 +17,7 @@ module.exports = (persistence, entity, instance, entityPanels) => Promise.resolv
         )
         .then((panelItem) => {
             if (panelItem) {
+                resource.id = panelItem.getRelationship().id;
                 resource.name = panelItem.name;
                 resource.label = panelItem.label || panelItem.name;
                 return panelItem.getRelationship();

@@ -16,12 +16,12 @@
                     {{#if section.isOfType.RelationshipPanelItem}}
                       {{> panel-items-csv items=section._embedded.items}}
                       {{#if section.isAssociation}}
-                        {{> ../inline-edit/context-button page=../../page}}
+                        {{> ../inline-edit/context-button page=../../page elementId=section.id elementType='Relationship'}}
                       {{/if}}
                     {{else if section.isOfType.BasicPropertyPanelItem}}
                       {{#if section.typeOfProperty.isText}}
                         {{{section.value}}}
-                        {{> ../inline-edit/context-button page=../../page}}
+                        {{> ../inline-edit/context-button page=../../page elementId=section.id elementType='Paragraph'}}
                       {{else}}
                         {{section.value}}
                       {{/if}}

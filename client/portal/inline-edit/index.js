@@ -11,4 +11,8 @@ module.exports = ($) => {
             $('body').addClass(classes.IN_EDIT);
         }
     });
+
+    $(document).on('click', `.${classes.IN_EDIT} .warpjs-inline-edit-context`, function() {
+        alert(`id=${$(this).data('warpjsId')}, type=${$(this).data('warpjsType')}`);
+    });
 };
