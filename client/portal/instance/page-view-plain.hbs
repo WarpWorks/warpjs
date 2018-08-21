@@ -1,10 +1,18 @@
+<div class="row">
+  {{> left-right-margin}}
+  <div class="col-xs-12 col-sm-8 col-sm-offset-1">
+    {{> ../inline-edit/global-button page=page}}
+  </div>
+  {{> left-right-margin}}
+</div>
+
 {{#each pageView._embedded.mainBodyPanels as |panel|}}
   {{#if panel.showPanel}}
     <div class="row warpjs-panel">
       {{> left-right-margin}}
 
       <div class="col-xs-12 col-sm-8 col-sm-offset-1 warpjs-content">
-        {{> page-view-panel panel=panel}}
+        {{> page-view-panel page=../page panel=panel}}
       </div>
 
       {{> left-right-margin}}
@@ -20,8 +28,8 @@
         <div class="col-xs-12 col-sm-8 col-sm-offset-1 warpjs-content">
           <div class="panel panel-item panel-default warpjs-panel-style-Transparent">
             <div class="panel-body panel-item-body">
-              {{> page-view-community-section title="Authors" users=community._embedded.authors}}
-              {{> page-view-community-section title="Contributors" users=community._embedded.contributors}}
+              {{> page-view-community-section page=../page title="Authors" users=community._embedded.authors}}
+              {{> page-view-community-section page=../page title="Contributors" users=community._embedded.contributors}}
             </div>
           </div>
         </div>

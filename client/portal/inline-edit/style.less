@@ -1,0 +1,43 @@
+@inline-edit-bg: #5d922a;
+@inline-edit-fg: #ffffff;
+
+.warpjs-inline-edit {
+    background-color: @inline-edit-bg;
+    color: @inline-edit-fg;
+    font-size: 24px;
+    padding: 12px !important;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.warpjs-inline-edit-global {
+    position: absolute;
+    right: -50px;
+}
+
+.warpjs-inline-edit-context {
+    display: none;
+    position: absolute;
+    bottom: 0;
+    right: 10px;
+}
+
+.warpjs-inline-edit-disable {
+    display: none;
+}
+
+.warpjs-inline-edit-global-in-edit {
+    .warpjs-inline-edit-global {
+        .warpjs-inline-edit-enable {
+            display: none;
+        }
+
+        .warpjs-inline-edit-disable {
+            display: inline-block;
+        }
+    }
+
+    .warpjs-inline-edit-context {
+        display: block;
+    }
+}

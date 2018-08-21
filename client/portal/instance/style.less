@@ -1,6 +1,11 @@
 @import '../styles/index.less';
 @import './breadcrumb';
 @import '../document-status/style';
+@import '../inline-edit/style';
+
+.warpjs-content {
+    position: relative;
+}
 
 .warpjs-page-view {
     color: #000;
@@ -278,6 +283,11 @@
         margin-right: 0;
         padding: 18px;
 
+        > .col-xs-12 {
+            padding-left: 0;
+            padding-right: 0;
+        }
+
         hr {
             border-color: @warpjs-primary-bg;
         }
@@ -288,12 +298,6 @@
             .warpjs-title {
                 padding-bottom: 12px !important;
                 line-height: 140%;
-            }
-
-            .warpjs-content {
-                > div {
-                    padding-left: 0;
-                }
             }
         }
 

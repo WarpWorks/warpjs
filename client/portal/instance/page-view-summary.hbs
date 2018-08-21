@@ -15,13 +15,16 @@
     <div class="warpjs-table">
       <div class="col-xs-4 warpjs-hi-primary warpjs-section-content warpjs-summary-results warpjs-cell">
         {{{summary.[0].content}}}
+        {{> ../inline-edit/context-button page=page}}
       </div>
 
       <div class="col-xs-4 warpjs-hi-secondary warpjs-section-content warpjs-cell">
         {{{summary.[1].content}}}
+        {{> ../inline-edit/context-button page=page}}
       </div>
       <div class="col-xs-4 warpjs-hi-secondary warpjs-section-content warpjs-cell">
         {{{summary.[2].content}}}
+        {{> ../inline-edit/context-button page=page}}
       </div>
     </div>
   </div>
@@ -31,6 +34,7 @@
     </div>
     <div class="col-xs-12 warpjs-hi-primary warpjs-section-content warpjs-summary-results">
       {{{summary.[0].content}}}
+      {{> ../inline-edit/context-button page=page}}
     </div>
 
     <div class="col-xs-12 warpjs-section-header">
@@ -38,6 +42,7 @@
     </div>
     <div class="col-xs-12 warpjs-hi-secondary warpjs-section-content">
       {{{summary.[1].content}}}
+      {{> ../inline-edit/context-button page=page}}
     </div>
 
     <div class="col-xs-12 warpjs-section-header">
@@ -45,6 +50,7 @@
     </div>
     <div class="col-xs-12 warpjs-hi-secondary warpjs-section-content">
       {{{summary.[2].content}}}
+      {{> ../inline-edit/context-button page=page}}
     </div>
   </div>
 </div>
