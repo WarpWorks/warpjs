@@ -1,5 +1,12 @@
 # WarpJS's Releases Notes
 
+## 1.2.77 - 2018-08-20
+
+- Some more CSS.
+- #117: Responsive image using SVG.
+- #117: Set max-width for responsive image.
+- Added script to find overview with images without width+height.
+
 ## 1.2.76 - 2018-08-20
 
 - #111: Using TEMPLATE when creating a sibling.

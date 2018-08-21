@@ -1,12 +1,9 @@
 #!/usr/bin/env node
 
-const debug = require('debug')('W2:scripts:find-entities-with-images');
+// const debug = require('debug')('W2:scripts:find-entities-with-images');
 const Promise = require('bluebird');
 
-const warpjsCore = require('./../lib/core');
 const serverUtils = require('./../server/utils');
-
-const config = serverUtils.getConfig();
 
 let paragraphEntity;
 let imagesRelationship;
