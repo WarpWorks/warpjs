@@ -43,7 +43,7 @@ module.exports = (persistence, image, instance) => Promise.resolve()
                 shape: imageArea.Shape
             }))
             .then((imageAreaResource) => Promise.resolve()
-                .then(() => debug(`shape=`, imageAreaResource.shape))
+                // .then(() => debug(`shape=`, imageAreaResource.shape))
                 .then(() => {
                     if (imageAreaResource.shape === ImageAreaShapes.Rect) {
                         debug(`    Is Rect`);
