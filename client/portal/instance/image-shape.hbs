@@ -1,13 +1,15 @@
-{{#if imageArea.isRect}}
-  <!-- isRect -->
-  {{> image-rect x=imageArea.x y=imageArea.y width=imageArea.w height=imageArea.h}}
-{{else if imageArea.isCircle}}
-  <!-- isCircle -->
-  <circle cx="{{imageArea.cx}}" y="{{imageArea.cy}}"
-      r="{{imageArea.r}}"
-      fill="#fff" opacity="0.5"
-    ></circle>
-{{else}}
-  <!-- TODO {{imageArea.shape}} -->
-  <div class="text-warning">**** TODO: Handle shape: {{imageArea.shape}}</div>
+{{#if imageArea.showArea}}
+  {{#if imageArea.isRect}}
+    <!-- isRect -->
+    {{> image-rect x=imageArea.x y=imageArea.y width=imageArea.w height=imageArea.h}}
+  {{else if imageArea.isCircle}}
+    <!-- isCircle -->
+    <circle cx="{{imageArea.cx}}" y="{{imageArea.cy}}"
+        r="{{imageArea.r}}"
+        fill="#fff" opacity="0.5"
+      ></circle>
+  {{else}}
+    <!-- TODO {{imageArea.shape}} -->
+    <div class="text-warning">**** TODO: Handle shape: {{imageArea.shape}}</div>
+  {{/if}}
 {{/if}}

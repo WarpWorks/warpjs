@@ -13,6 +13,7 @@ function defineRect(imageAreaResource) {
         imageAreaResource.w = parseInt(coords[2], 10) - imageAreaResource.x;
         imageAreaResource.h = parseInt(coords[3], 10) - imageAreaResource.y;
         imageAreaResource.isRect = true;
+        imageAreaResource.showArea = true;
     } else {
         debug(`       Invalid Rect: coords=${imageAreaResource.coords}`);
     }
@@ -25,6 +26,7 @@ function defineCircle(imageAreaResource) {
         imageAreaResource.cy = parseInt(coords[1], 10);
         imageAreaResource.r = parseInt(coords[2], 10);
         imageAreaResource.isCircle = true;
+        imageAreaResource.showArea = true;
     } else {
         debug(`        Invalid Circle: coords=${imageAreaResource.coords}`);
     }
@@ -46,14 +48,19 @@ module.exports = (persistence, image, instance) => Promise.resolve()
                 // .then(() => debug(`shape=`, imageAreaResource.shape))
                 .then(() => {
                     if (imageAreaResource.shape === ImageAreaShapes.Rect) {
-                        debug(`    Is Rect`);
+                        // debug(`    Is Rect`);
                         defineRect(imageAreaResource);
                     } else if (imageAreaResource.shape === ImageAreaShapes.Circle) {
-                        debug(`    Is Circle`);
+                        // debug(`    Is Circle`);
                         defineCircle(imageAreaResource);
                     } else if (imageAreaResource.coords) {
-                        debug(`    Assuming Rect`);
-                        defineRect(imageAreaResource);
+                        // debug(`    Assuming Rect`);
+                        const coords = imageAreaResource.coords.split(',');
+                        if (coords.length === 4) {
+                            defineRect(imageAreaResource);
+                        } else if (coords.length === 3) {
+                            defineCircle(imageAreaResource);
+                        }
                     } else {
                         debug(`    *** TODO: Unknown shape=${imageAreaResource.shape}; coords=${imageAreaResource.coords}`);
                     }

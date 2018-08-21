@@ -1,5 +1,9 @@
 # WarpJS's Releases Notes
 
+## 1.2.78 - 2018-08-20
+
+- #117: Skip invalid shape+coords.
+
 ## 1.2.77 - 2018-08-20
 
 - Some more CSS.
