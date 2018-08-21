@@ -41,6 +41,7 @@ module.exports = (req, res) => {
             .then(() => serverUtils.getDomain(domain))
             .then((schema) => schema.getEntities()
                 .filter(nonAbstractOnly)
+                .filter((entity) => entity.isDocument())
                 .filter((entity) => linkableEntity(profile, entity))
                 .sort(warpjsUtils.byPositionThenName)
                 .map((entity) => entityMap(domain, entity))
