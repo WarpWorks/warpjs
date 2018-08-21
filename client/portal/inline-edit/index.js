@@ -1,3 +1,7 @@
+const warpjsUtils = require('@warp-works/warpjs-utils');
+
+const textModal = require('./text-modal');
+
 const classes = Object.freeze({
     GLOBAL: '.warpjs-inline-edit-global',
     IN_EDIT: 'warpjs-inline-edit-global-in-edit'
@@ -13,6 +17,14 @@ module.exports = ($) => {
     });
 
     $(document).on('click', `.${classes.IN_EDIT} .warpjs-inline-edit-context`, function() {
-        alert(`id=${$(this).data('warpjsId')}, type=${$(this).data('warpjsType')}`);
+        const elementType = $(this).data('warpjsType');
+        const elementId = $(this).data('warpjsId');
+
+        if (elementType === 'Paragraph' || elementType === 'Document') {
+            textModal($, this);
+        } else if (elementType === 'Relationship') {
+        } else {
+            warpjsUtils.toast.warning($, `Handling of {type:${elementType}, id:${elementId}}`, "TODO");
+        }
     });
 };

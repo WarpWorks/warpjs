@@ -1,6 +1,33 @@
 @inline-edit-bg: #5d922a;
 @inline-edit-fg: #ffffff;
 
+
+[data-warpjs-modal="warpjs-inline-edit"] {
+    .modal-dialog {
+        width: 80%;
+
+        .modal-content {
+            height: 80%;
+
+            .modal-body {
+                height: 100%;
+                padding-top: 0;
+                padding-bottom: 0;
+
+                .warpjs-list-container {
+                    background-color: #ffffff;
+                    height: 100%;
+                }
+
+                .warpjs-detail-container {
+                    background-color: #cccccc;
+                    height: 100%;
+                }
+            }
+        }
+    }
+}
+
 .warpjs-inline-edit {
     background-color: @inline-edit-bg;
     color: @inline-edit-fg;

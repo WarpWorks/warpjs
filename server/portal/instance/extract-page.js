@@ -68,6 +68,16 @@ module.exports = (req, persistence, entity, instance) => Promise.resolve()
                         }),
                         title: `Edit "${resource.name}"`
                     });
+
+                    resource.link('inlineEdit', {
+                        href: RoutesInfo.expand(contentConstants.routes.inlineEdit, {
+                            domain: config.domainName,
+                            type: instance.type,
+                            id: instance.id,
+                            view: req.query.view
+                        }),
+                        title: `In-line edit "${resource.name}"`
+                    });
                 }
             })
 

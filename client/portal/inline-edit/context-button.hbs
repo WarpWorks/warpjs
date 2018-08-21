@@ -1,7 +1,8 @@
-{{#if page._links.edit}}
+{{#if page._links.inlineEdit}}
   <div class="warpjs-inline-edit warpjs-inline-edit-context"
       data-warpjs-id="{{elementId}}"
       data-warpjs-type="{{elementType}}"
+      data-warpjs-url="{{page._links.inlineEdit.href}}"
     >
     <span class="glyphicon glyphicon-pencil"></span>
   </div>
