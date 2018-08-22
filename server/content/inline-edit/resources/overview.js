@@ -7,6 +7,11 @@ module.exports = (persistence, relationship, instance) => Promise.resolve()
     .then((paragraphs) => paragraphs.map((paragraph) => warpjsUtils.createResource('', {
         type: paragraph.type,
         id: paragraph.id || paragraph._id,
+        reference: {
+            type: relationship.type,
+            id: relationship.id,
+            name: relationship.name
+        },
         name: paragraph.Heading,
         description: paragraph.Content,
         position: paragraph.Position

@@ -11,6 +11,7 @@ module.exports = (persistence, relationshipPanelItem, instance) => Promise.resol
                     debug(`This is not an association nor a paragraph`);
                     return null;
                 } else if (!relationship.isAggregation && relationship.getTargetEntity().entityType === 'Document') {
+                    // Association
                     return warpjsUtils.createResource('', {
                         type: relationship.type,
                         id: relationship.id,

@@ -23,6 +23,7 @@ module.exports = ($) => {
         if (elementType === 'Paragraph' || elementType === 'Document') {
             textModal($, this);
         } else if (elementType === 'Relationship') {
+            console.log(`TODO: implement elementType=${elementType}`);
         } else {
             warpjsUtils.toast.warning($, `Handling of {type:${elementType}, id:${elementId}}`, "TODO");
         }
