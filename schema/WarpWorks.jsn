@@ -2326,7 +2326,7 @@
           "desc": "",
           "type": "BasicProperty",
           "id": 79,
-          "defaultValue": true,
+          "defaultValue": false,
           "constraints": null,
           "examples": null,
           "propertyType": "boolean"
