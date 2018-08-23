@@ -2,54 +2,24 @@ const Promise = require('bluebird');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const constants = require('./constants');
-const template = require('./text-modal.hbs');
+const headingChanged = require('./heading-changed');
 const itemsTemplate = require('./text-modal-elements.hbs');
-const detailTemplate = require('./text-modal-detail.hbs');
+const listItemValueClicked = require('./list-item-value-clicked');
+const template = require('./text-modal.hbs');
 
 function defineEvents($, modal) {
-    modal.on('click', '.warpjs-document-elements .warpjs-content .warpjs-list-item .warpjs-list-item-value', function() {
-        $(this).closest('.warpjs-document-elements').find('.warpjs-list-item').removeClass('warpjs-list-item-selected');
-        $(this).closest('.warpjs-list-item').addClass('warpjs-list-item-selected');
-
-        const item = {
-            type: $(this).data('warpjsType'),
-            id: $(this).data('warpjsId'),
-            position: $(this).data('warpjsPosition'),
-            name: $(this).data('warpjsName'),
-            description: $(this).data('warpjsDescription'),
-            reference: {
-                type: $(this).data('warpjsReferenceType'),
-                id: $(this).data('warpjsReferenceId'),
-                name: $(this).data('warpjsReferenceName')
-            },
-            canChangeName: $(this).data('warpjsReferenceType') === 'Relationship'
-        };
-
-        $('.warpjs-detail-container .warpjs-placeholder', modal).html(detailTemplate({item}));
+    modal.on('hidden.bs.modal', function() {
+        if (modal.data('warpjsIsDirty')) {
+            warpjsUtils.toast.loading($, "Data hase been updated, please reload the page", "Reload needed");
+        }
     });
 
-    modal.on('change', '#warpjs-inline-edit-heading, #warpjs-inline-edit-content', function() {
-        const url = modal.data('warpjsUrl');
-        const data = {
-            id: $(this).data('warpjsId'),
-            field: $(this).data('warpjsField'),
-            reference: {
-                type: $(this).data('warpjsReferenceType'),
-                id: $(this).data('warpjsReferenceId'),
-                name: $(this).data('warpjsReferenceName')
-            },
-            newValue: $(this).val()
-        };
+    modal.on('click', '.warpjs-document-elements .warpjs-content .warpjs-list-item .warpjs-list-item-value', function() {
+        listItemValueClicked($, modal, this);
+    });
 
-        Promise.resolve()
-            .then(() => warpjsUtils.toast.loading($, "Saving..."))
-            .then((toastLoading) => Promise.resolve()
-                .then(() => warpjsUtils.proxy.patch($, url, data))
-                .then(() => warpjsUtils.toast.success($, "Data updated"))
-                .catch((err) => warpjsUtils.toast.error($, err.message, "Failed"))
-                .finally(() => warpjsUtils.toast.close($, toastLoading))
-            )
-        ;
+    modal.on('change', '#warpjs-inline-edit-heading', function() {
+        headingChanged($, modal, this);
     });
 }
 

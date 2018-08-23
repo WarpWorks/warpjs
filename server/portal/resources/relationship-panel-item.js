@@ -23,6 +23,7 @@ module.exports = (persistence, panelItem, instance) => Promise.resolve()
         .then((relationship) => {
             if (relationship) {
                 resource.isAssociation = !relationship.isAggregation;
+                resource.id = relationship.id;
 
                 if (resource.style === constants.RELATIONSHIP_PANEL_ITEM_STYLES.Document) {
                     return paragraphsByRelationship(persistence, relationship, instance);

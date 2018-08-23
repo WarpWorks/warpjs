@@ -15,9 +15,13 @@ module.exports = (persistence, relationshipPanelItem, instance) => Promise.resol
                     return warpjsUtils.createResource('', {
                         type: relationship.type,
                         id: relationship.id,
-                        name: relationship.name,
+                        name: relationship.label || relationship.name,
                         description: relationship.desc,
-                        label: relationship.label || relationship.name
+                        reference: {
+                            type: relationship.type,
+                            id: relationship.id,
+                            name: relationship.name
+                        }
                     });
                 } else {
                     debug(`TODO: other relationship?`);

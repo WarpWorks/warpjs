@@ -2,7 +2,8 @@ const debug = require('debug')('W2:content:inline-edit/extract-data');
 const Promise = require('bluebird');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
-const extractDataParagraphs = require('./extract-data-paragraphs');
+const overview = require('./resources/overview');
+const pageViewResource = require('./resources/page-view');
 const serverUtils = require('./../../utils');
 const utils = require('./../utils');
 
@@ -12,6 +13,9 @@ module.exports = (req, res) => {
     const { body } = req;
 
     debug(`domain=${domain}, type=${type}, id=${id}, view=${view}, body=`, body);
+
+    const config = serverUtils.getConfig();
+    const pageViewName = view || config.views.portal;
 
     const resource = warpjsUtils.createResource(req, {
     });
@@ -33,16 +37,22 @@ module.exports = (req, res) => {
                         .then((instanceResource) => Promise.resolve()
                             .then(() => resource.embed('instances', instanceResource))
 
-                            .then(() => {
-                                if (body.elementType === 'Paragraph') {
-                                    return extractDataParagraphs(req, persistence, entity, instance);
-                                } else {
-                                    throw new Error(`Unknown body.elementType='${body.elementType}'.`);
-                                }
-                            })
+                            .then(() => [])
+                            .then((resultItems) => Promise.resolve()
+                                // Overview
+                                .then(() => overview(persistence, entity.getRelationshipByName('Overview'), instance))
+                                .then((items) => resultItems.concat(items))
+                            )
+
+                            .then((resultItems) => Promise.resolve()
+                                .then(() => entity.getPageView(pageViewName))
+                                .then((pageView) => pageViewResource(persistence, pageView, instance))
+                                .then((items) => resultItems.concat(items))
+                            )
 
                             .then((items) => instanceResource.embed('items', items))
                         )
+
                     )
                 )
                 .finally(() => persistence.close())
