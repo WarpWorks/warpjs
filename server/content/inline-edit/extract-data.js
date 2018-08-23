@@ -29,7 +29,6 @@ module.exports = (req, res) => {
                 .then((entity) => Promise.resolve()
                     .then(() => entity.getInstance(persistence, id))
                     .then((instance) => Promise.resolve()
-                        .then(() => debug(`instance=`, instance))
                         .then(() => warpjsUtils.createResource(req, {
                             id: instance.id,
                             type: instance.type,

@@ -1,4 +1,4 @@
-const debug = require('debug')('W2:content:inline-edit/resources/panel-item-basic-property');
+// const debug = require('debug')('W2:content:inline-edit/resources/panel-item-basic-property');
 const Promise = require('bluebird');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 

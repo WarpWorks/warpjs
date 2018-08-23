@@ -20,12 +20,36 @@ function defineEvents($, modal) {
             reference: {
                 type: $(this).data('warpjsReferenceType'),
                 id: $(this).data('warpjsReferenceId'),
-                name: $(this).data('warpjsReferenceName'),
-            }
+                name: $(this).data('warpjsReferenceName')
+            },
+            canChangeName: $(this).data('warpjsReferenceType') === 'Relationship'
         };
 
-        $('.warpjs-detail-container', modal).html(detailTemplate({item}));
+        $('.warpjs-detail-container .warpjs-placeholder', modal).html(detailTemplate({item}));
+    });
 
+    modal.on('change', '#warpjs-inline-edit-heading, #warpjs-inline-edit-content', function() {
+        const url = modal.data('warpjsUrl');
+        const data = {
+            id: $(this).data('warpjsId'),
+            field: $(this).data('warpjsField'),
+            reference: {
+                type: $(this).data('warpjsReferenceType'),
+                id: $(this).data('warpjsReferenceId'),
+                name: $(this).data('warpjsReferenceName')
+            },
+            newValue: $(this).val()
+        };
+
+        Promise.resolve()
+            .then(() => warpjsUtils.toast.loading($, "Saving..."))
+            .then((toastLoading) => Promise.resolve()
+                .then(() => warpjsUtils.proxy.patch($, url, data))
+                .then(() => warpjsUtils.toast.success($, "Data updated"))
+                .catch((err) => warpjsUtils.toast.error($, err.message, "Failed"))
+                .finally(() => warpjsUtils.toast.close($, toastLoading))
+            )
+        ;
     });
 }
 
@@ -49,24 +73,24 @@ function updateModal($, element, res) {
 
     modal.modal('show');
 
-    console.log(`Looking for elementType=${elementType} + elementId=${elementId}...`);
     $(`.warpjs-list-item-value[data-warpjs-type="${elementType}"][data-warpjs-id="${elementId}"]`, modal).trigger('click');
+    modal.data('warpjsUrl', res._links.self.href);
 }
 
 module.exports = ($, element) => {
-        const elementType = $(element).data('warpjsType');
-        const elementId = $(element).data('warpjsId');
+    const elementType = $(element).data('warpjsType');
+    const elementId = $(element).data('warpjsId');
 
-        return Promise.resolve()
-            .then(() => warpjsUtils.toast.loading($, "Loading paragraphs...", "Loading"))
-            .then((toastLoading) => Promise.resolve()
-                .then(() => warpjsUtils.proxy.post($, $(element).data('warpjsUrl'), { elementType, elementId }))
-                .then((res) => updateModal($, element, res))
-                .catch((err) => {
-                    console.error("Error:", err);
-                    warpjsUtils.toast.error($, err.message, "Error getting data");
-                })
-                .finally(() => warpjsUtils.toast.close($, toastLoading))
-            )
-        ;
+    return Promise.resolve()
+        .then(() => warpjsUtils.toast.loading($, "Loading paragraphs...", "Loading"))
+        .then((toastLoading) => Promise.resolve()
+            .then(() => warpjsUtils.proxy.post($, $(element).data('warpjsUrl'), { elementType, elementId }))
+            .then((res) => updateModal($, element, res))
+            .catch((err) => {
+                console.error("Error:", err);
+                warpjsUtils.toast.error($, err.message, "Error getting data");
+            })
+            .finally(() => warpjsUtils.toast.close($, toastLoading))
+        )
+    ;
 };
