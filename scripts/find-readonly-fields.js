@@ -18,7 +18,6 @@ function pad(s, length, filler) {
 function row(item, lengths, filler) {
     const columns = KEYS.map((key) => pad(item[key], lengths[key], filler));
     console.log(columns.join('   '));
-
 }
 
 function table(items) {

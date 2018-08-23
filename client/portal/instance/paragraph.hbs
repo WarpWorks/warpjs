@@ -35,7 +35,7 @@
     </div>
   {{/if}}
 
-  {{#if paragraph._embedded.callouts.length}}
+  {{#if paragraph._embedded.callouts.[0]._links.self.href}}
     <div class="row warpjs-paragraph-callout-button">
       {{> paragraph-callout-button callouts=paragraph._embedded.callouts}}
     </div>

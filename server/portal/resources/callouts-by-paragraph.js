@@ -6,13 +6,15 @@ module.exports = (persistence, paragraphEntity, paragraphInstance) => Promise.re
     .then(() => paragraphEntity ? paragraphEntity.getRelationshipByName('Callout') : null)
     .then((relationship) => relationship ? relationship.getDocuments(persistence, paragraphInstance) : [])
     .then((callouts) => callouts.map((callout) => {
-        const resource = warpjsUtils.createResource(callout.ButtonSrc || '', {
-            type: callout.type,
-            id: callout.id || callout._id,
-            subHeading: callout.SubHeading
-        });
+        if (callout.ButtonSrc) {
+            const resource = warpjsUtils.createResource(callout.ButtonSrc, {
+                type: callout.type,
+                id: callout.id || callout._id,
+                subHeading: callout.SubHeading
+            });
 
-        resource._links.self.title = callout.ButtonLabel;
+            resource._links.self.title = callout.ButtonLabel;
 
-        return resource;
+            return resource;
+        }
     }));

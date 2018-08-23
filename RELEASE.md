@@ -1,5 +1,10 @@
 # WarpJS's Releases Notes
 
+## 1.2.79 - 2018-08-23
+
+- #128: Fixed when callout ButtonSrc is missing.
+- Changed readOnly default value to false.
+
 ## 1.2.78 - 2018-08-20
 
 - #117: Skip invalid shape+coords.
