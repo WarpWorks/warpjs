@@ -81,7 +81,7 @@ module.exports = ($, element) => {
     const elementType = $(element).data('warpjsType');
     const elementId = $(element).data('warpjsId');
 
-    return Promise.resolve()
+    Promise.resolve()
         .then(() => warpjsUtils.toast.loading($, "Loading paragraphs...", "Loading"))
         .then((toastLoading) => Promise.resolve()
             .then(() => warpjsUtils.proxy.post($, $(element).data('warpjsUrl'), { elementType, elementId }))

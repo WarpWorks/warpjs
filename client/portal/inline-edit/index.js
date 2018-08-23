@@ -1,5 +1,6 @@
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const linkModal = require('./link-modal');
 const textModal = require('./text-modal');
 
 const classes = Object.freeze({
@@ -23,7 +24,7 @@ module.exports = ($) => {
         if (elementType === 'Paragraph' || elementType === 'Document') {
             textModal($, this);
         } else if (elementType === 'Relationship') {
-            warpjsUtils.toast.warning($, `implement elementType=${elementType}`, "TODO");
+            linkModal($, this);
         } else {
             warpjsUtils.toast.warning($, `Handling of {type:${elementType}, id:${elementId}}`, "TODO");
         }
