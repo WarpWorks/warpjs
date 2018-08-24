@@ -1,5 +1,6 @@
 const associationTemplate = require('./association.hbs');
 const detailTemplate = require('./text-modal-detail.hbs');
+const initializeWysiwyg = require('./initialize-wysiwyg');
 const updateTypes = require('./update-types');
 
 module.exports = ($, modal, clickedElement) => {
@@ -24,6 +25,7 @@ module.exports = ($, modal, clickedElement) => {
 
     if (isParagraph) {
         $('.warpjs-detail-container .warpjs-placeholder', modal).html(detailTemplate({item}));
+        initializeWysiwyg($, modal, clickedElement);
     } else {
         $('.warpjs-detail-container .warpjs-placeholder', modal).html(associationTemplate({item}));
         updateTypes($, modal, clickedElement);
