@@ -1,12 +1,7 @@
 <div class="warpjs-title">Selected documents:</div>
 
 {{#each documents as |doc|}}
-  <span class="warpjs-section-item"
-      data-warpjs-type="{{doc.type}}"
-      data-warpjs-id="{{doc.id}}"
-      data-warpjs-name="{{doc.name}}"
-      data-warpjs-description="{{doc.description}}"
-      >{{doc.name}}</span>
+  {{> selected-documents-item doc=doc}}
 {{else}}
   <div class="text-warning">No documents selected.</div>
 {{/each}}

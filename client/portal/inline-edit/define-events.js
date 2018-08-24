@@ -1,5 +1,6 @@
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const addDocumentToSelection = require('./events/add-document-to-selection');
 const headingChanged = require('./heading-changed');
 const listItemValueClicked = require('./list-item-value-clicked');
 const removeFromSelectionClicked = require('./events/remove-from-selection-clicked');
@@ -31,5 +32,9 @@ module.exports = ($, modal) => {
 
     modal.on('click', '#warpjs-inline-edit-delete-button', function() {
         removeFromSelectionClicked($, modal, this);
+    });
+
+    modal.on('click', '.warpjs-section-type-documents .warpjs-section-item', function() {
+        addDocumentToSelection($, modal, this);
     });
 };
