@@ -3,5 +3,5 @@
 {{#each documents as |doc|}}
   {{> selected-documents-item doc=doc}}
 {{else}}
-  <div class="text-warning">No documents selected.</div>
+  {{> selected-documents-none}}
 {{/each}}

@@ -25,8 +25,15 @@
     }
 
     .warpjs-section {
+        .warpjs-title {
+            margin-top: 15px;
+        }
+
         .warpjs-section-item {
-            padding: 5px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            padding-left: 10px;
+            padding-right: 10px;
             border-radius: 10px;
             cursor: pointer;
 
@@ -150,6 +157,19 @@
         }
 
         .warpjs-section-type-selector {
+            .form-group {
+                &.has-error {
+                    select {
+                        color: #a94442;
+                    }
+                }
+
+                &.has-warning {
+                    select {
+                        color: #8a6d3b;
+                    }
+                }
+            }
         }
 
         .warpjs-section-type-documents {

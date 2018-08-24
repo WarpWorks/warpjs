@@ -26,7 +26,12 @@ module.exports = ($, modal, elementToAdd) => {
             ? addedDocument
             : Promise.resolve()
                 .then(() => warpjsUtils.toast.warning($, "Create assocation on server", "TODO"))
-                .then((res) => $('.warpjs-section-selected-documents', modal).append(selectedDocumentsItemTemplate({doc})))
+                .then((res) => {
+                    if (!$('.warpjs-section-selected-documents .warpjs-section-item').length) {
+                        $('.warpjs-section-selected-documents .warpjs-no-documents').remove();
+                    }
+                    $('.warpjs-section-selected-documents', modal).append(selectedDocumentsItemTemplate({doc}));
+                })
                 .then(() => findAddedSelection($, modal, doc))
         )
         .then((addedDocument) => {

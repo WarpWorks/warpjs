@@ -15,6 +15,11 @@ module.exports = ($, modal, clickedElement) => Promise.resolve()
         }
     }))
     .then((res) => {
+        $('#warpjs-inline-edit-type-selector', modal)
+            .closest('.form-group')
+            .removeClass('has-warning has-error')
+        ;
+
         const instance = res._embedded && res._embedded.instances && res._embedded.instances.length ? res._embedded.instances[0] : null;
         if (instance) {
             if (instance._embedded) {
@@ -36,5 +41,12 @@ module.exports = ($, modal, clickedElement) => Promise.resolve()
         } else {
             warpjsUtils.toast.error($, "Document not found");
         }
+    })
+    .catch((err) => {
+        warpjsUtils.toast.error($, err.message, "Fetching data error");
+        $('#warpjs-inline-edit-type-selector', modal)
+            .html($('<option>Unable to load types</option>'))
+            .closest('.form-group').addClass('has-error').removeClass('has-warning')
+        ;
     })
 ;
