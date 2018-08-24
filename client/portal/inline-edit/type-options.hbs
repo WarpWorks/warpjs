@@ -1,0 +1,5 @@
+{{#each types as |type|}}
+  <option data-warpjs-id="{{type.id}}" data-warpjs-name="{{type.name}}">{{type.name}}</option>
+{{else}}
+  <option disabled>Could not find any types</option>
+{{/each}}
