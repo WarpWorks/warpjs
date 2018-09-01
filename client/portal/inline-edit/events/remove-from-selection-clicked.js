@@ -10,7 +10,7 @@ module.exports = ($, modal, buttonClicked) => {
         id: $(buttonClicked).data('warpjsId'),
         reference: {
             type: $(section).data('warpjsReferenceType'),
-            id: $(section).data('warpjsReferenceId'),
+            id: $(section).data('warpjsReferenceId')
         }
     };
 

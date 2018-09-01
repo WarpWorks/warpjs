@@ -1,6 +1,8 @@
+// const debug = require('debug')('W2:portal:resources/overview-by-entity');
 const Promise = require('bluebird');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const EntityTypes = require('./../../../lib/core/entity-types');
 const paragraphsByRelationship = require('./paragraphs-by-relationship');
 
 module.exports = (persistence, entity, instance, isSpecializedPageViewStyle) => Promise.resolve()
@@ -15,7 +17,19 @@ module.exports = (persistence, entity, instance, isSpecializedPageViewStyle) => 
     }))
     .then((resource) => Promise.resolve()
         .then(() => entity.getRelationshipByName('Overview'))
-        .then((relationship) => paragraphsByRelationship(persistence, relationship, instance))
+        .then((relationship) => Promise.resolve()
+            .then(() => {
+                resource.id = relationship.id;
+
+                if (!relationship.isAggregation || relationship.getTargetEntity().entityType === EntityTypes.EMBEDDED) {
+                    resource.reference = {
+                        type: relationship.type,
+                        id: relationship.id
+                    };
+                }
+            })
+            .then(() => paragraphsByRelationship(persistence, relationship, instance))
+        )
         .then((items) => {
             if (items && items.length) {
                 resource.showPanel = true;

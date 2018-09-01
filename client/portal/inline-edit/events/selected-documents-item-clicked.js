@@ -12,5 +12,4 @@ module.exports = ($, modal, clickedElement) => {
     };
 
     $('.warpjs-section-selected-document-detail', modal).html(selectedDocumentDetailTemplate(data));
-
 };

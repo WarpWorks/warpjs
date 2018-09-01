@@ -2,6 +2,7 @@ const Promise = require('bluebird');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const calloutsByParagraph = require('./callouts-by-paragraph');
+const constants = require('./constants');
 const convertCustomLinks = require('./convert-custom-links');
 const iframesByParagraph = require('./iframes-by-paragraph');
 const imagesByParagraph = require('./images-by-paragraph');
@@ -15,6 +16,8 @@ module.exports = (persistence, relationship, instance) => Promise.resolve()
             documentStyle: true,
             id: paragraph.id || paragraph._id,
             name: paragraph.Heading,
+            level: paragraph.HeadingLevel || 'H1',
+            isOfHeadingLevel: constants.isOfHeadingLevel(paragraph.HeadingLevel || 'H1'),
             description: convertCustomLinks(paragraph.Content)
         }))
         .then((paragraphResource) => Promise.resolve()

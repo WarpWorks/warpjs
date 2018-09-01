@@ -27,7 +27,7 @@ module.exports = ($, modal) => {
         paragraphContentChanged($, modal, this);
     });
 
-    modal.on('click', '.warpjs-section-selected-documents .warpjs-section-item', function () {
+    modal.on('click', '.warpjs-section-selected-documents .warpjs-section-item', function() {
         selectedDocumentsItemClicked($, modal, this);
     });
 

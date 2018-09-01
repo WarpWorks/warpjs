@@ -3,6 +3,7 @@ const _ = require('lodash');
 
 const BasicTypes = require('./../../../lib/core/basic-types');
 const ComplexTypes = require('./../../../lib/core/complex-types');
+const HeadingLevels = require('./../../../lib/core/heading-levels');
 
 function generateIndicators(obj, itemToCompare) {
     // debug(`generateIndicators(obj, itemToCompare='${itemToCompare}'): obj=`, obj);
@@ -80,5 +81,7 @@ module.exports = Object.freeze({
         return generateIndicators(this.PANEL_ITEM_TYPES, panelItem.type);
     },
 
-    isOfPropertyType: (type) => BasicTypes.typesCheck(type)
+    isOfPropertyType: (type) => BasicTypes.typesCheck(type),
+
+    isOfHeadingLevel: (headingLevel) => generateIndicators(HeadingLevels, headingLevel)
 });
