@@ -1,0 +1,16 @@
+<div class="modal fade" id="overviewTOC" tabindex="-1" role="dialog" aria-labelledby="overviewTOCLabel"
+  data-warpjs-modal="overview-toc"
+  >
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <div class="modal-title" id="overviewTOCLabel">Table of contents</div>
+      </div>
+
+      <div class="modal-body">
+        {{> toc-level items=panel._embedded.tableOfContents}}
+      </div>
+    </div>
+  </div>
+</div>
