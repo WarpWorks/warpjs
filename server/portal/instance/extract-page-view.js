@@ -26,7 +26,7 @@ module.exports = (persistence, pageView, instance, customStyle) => Promise.resol
     }))
     .then((resource) => Promise.resolve()
         // Add overview to main body
-        .then(() => overviewByEntity(persistence, pageView.getParentEntity(), instance, resource.isSpecializedPageViewStyle))
+        .then(() => overviewByEntity(persistence, pageView.getParentEntity(), instance, resource.isSpecializedPageViewStyle, true))
         .then((overviewPanel) => resource.embed('mainBodyPanels', overviewPanel))
 
         // Define the authors for all pages

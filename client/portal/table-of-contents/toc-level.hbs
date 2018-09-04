@@ -1,0 +1,10 @@
+{{#if items.length}}
+  <ol>
+    {{#each items as |item|}}
+      <li>
+        <div class="toc-item" data-warpjs-id="{{item.id}}">{{item.name}}</div>
+        {{> toc-level items=item._embedded.items}}
+      </li>
+    {{/each}}
+  </ol>
+{{/if}}

@@ -1,0 +1,8 @@
+{{#if panel.isOverviewPanel}}
+  {{> modal panel=panel}}
+  <div data-spy="affix" data-offset-top="400" class="affix-top">
+    <div class="TOC">
+      <button type="button" data-toggle="modal" data-target="#overviewTOC">Table of contents</button>
+    </div>
+  </div>
+{{/if}}

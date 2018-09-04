@@ -5,6 +5,7 @@
     </div>
 
     <div class="panel-body">
+      {{> ../table-of-contents/template panel=panel}}
       {{#each panel._embedded.items as |section|}}
         {{> page-view-panel-section page=../page section=section reference=../reference}}
       {{/each}}

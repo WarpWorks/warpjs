@@ -5,7 +5,31 @@ const warpjsUtils = require('@warp-works/warpjs-utils');
 const EntityTypes = require('./../../../lib/core/entity-types');
 const paragraphsByRelationship = require('./paragraphs-by-relationship');
 
-module.exports = (persistence, entity, instance, isSpecializedPageViewStyle) => Promise.resolve()
+function buildTOCLevel(items, level, index) {
+    let cumulator = [];
+
+    for (let i = index; i < items.length; i++) {
+        const item = items[i];
+        const currentLevel = parseInt(item.level[1], 10);
+
+        if (currentLevel < level) {
+            // We went up one level. End.
+            break;
+        } else if (currentLevel === level) {
+            const resource = warpjsUtils.createResource('', {
+                id: item.id,
+                name: item.name
+            });
+            cumulator.push(resource);
+
+            resource.embed('items', buildTOCLevel(items, level + 1, i+1));
+        }
+    }
+
+    return cumulator;
+}
+
+module.exports = (persistence, entity, instance, isSpecializedPageViewStyle, pageOverview) => Promise.resolve()
     .then(() => warpjsUtils.createResource('', {
         type: "Panel",
         id: null,
@@ -34,6 +58,11 @@ module.exports = (persistence, entity, instance, isSpecializedPageViewStyle) => 
             if (items && items.length) {
                 resource.showPanel = true;
                 resource.embed('items', items);
+
+                // Need to convert paragraph into TOC.
+                if (pageOverview) {
+                    resource.embed('tableOfContents', buildTOCLevel(items, 1, 0));
+                }
             }
         })
         .then(() => resource)
