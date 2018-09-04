@@ -4,10 +4,8 @@ const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const ComplexTypes = require('./../../../lib/core/complex-types');
 const constants = require('./constants');
-const EntityTypes = require('./../../../lib/core/entity-types');
+const extractDataAssociations = require('./extract-data-associations');
 const listTypes = require('./list-types');
-// const overview = require('./resources/overview');
-// const pageViewResource = require('./resources/page-view');
 const serverUtils = require('./../../utils');
 const utils = require('./../utils');
 
@@ -17,9 +15,6 @@ module.exports = (req, res) => {
     const { body } = req;
 
     debug(`domain=${domain}, type=${type}, id=${id}, view=${view}, body=`, body);
-
-    // const config = serverUtils.getConfig();
-    // const pageViewName = view || config.views.portal;
 
     const resource = warpjsUtils.createResource(req, {
         domain,
@@ -58,81 +53,38 @@ module.exports = (req, res) => {
                                                 if (body.reference.type === ComplexTypes.Relationship) {
                                                     return Promise.resolve()
                                                         .then(() => entity.getRelationshipById(body.reference.id))
-                                                        .then((relationship) => Promise.resolve()
-                                                            .then(() => {
-                                                                if (relationship.isAggregation && relationship.getTargetEntity().entityType === EntityTypes.DOCUMENT) {
-                                                                    debug(`This is not an association nor a paragraph`);
-                                                                } else if (!relationship.isAggregation && relationship.getTargetEntity().entityType === EntityTypes.DOCUMENT) {
-                                                                    return warpjsUtils.createResource('', {
-                                                                        type: relationship.type,
-                                                                        id: relationship.id,
-                                                                        name: relationship.label || relationship.name,
-                                                                        description: relationship.desc,
+                                                        .then((relationship) => relationship.getTargetEntity().name === 'Paragraph'
+                                                            ? Promise.resolve()
+                                                                .then(() => relationship.getDocuments(persistence, instance))
+                                                                .then((paragraphs) => paragraphs.sort(warpjsUtils.byPositionThenName))
+                                                                .then((paragraphs) => Promise.map(
+                                                                    paragraphs,
+                                                                    (paragraph) => warpjsUtils.createResource('', {
+                                                                        type: paragraph.type,
+                                                                        id: paragraph.id || paragraph._id,
+                                                                        level: paragraph.HeadingLevel || 'H1',
+                                                                        isOfHeadingLevel: constants.isOfHeadingLevel(paragraph.HeadingLevel || 'H1'),
+                                                                        name: paragraph.Heading,
+                                                                        description: paragraph.Content,
                                                                         reference: {
                                                                             type: relationship.type,
                                                                             id: relationship.id,
                                                                             name: relationship.name
                                                                         }
-                                                                    });
-                                                                } else if (relationship.getTargetEntity().name === 'Paragraph') {
-                                                                    return Promise.resolve()
-                                                                        .then(() => relationship.getDocuments(persistence, instance))
-                                                                        .then((paragraphs) => paragraphs.sort(warpjsUtils.byPositionThenName))
-                                                                        .then((paragraphs) => Promise.map(
-                                                                            paragraphs,
-                                                                            (paragraph) => warpjsUtils.createResource('', {
-                                                                                type: paragraph.type,
-                                                                                id: paragraph.id || paragraph._id,
-                                                                                level: paragraph.HeadingLevel || 'H1',
-                                                                                isOfHeadingLevel: constants.isOfHeadingLevel(paragraph.HeadingLevel || 'H1'),
-                                                                                name: paragraph.Heading,
-                                                                                description: paragraph.Content,
-                                                                                reference: {
-                                                                                    type: relationship.type,
-                                                                                    id: relationship.id,
-                                                                                    name: relationship.name
-                                                                                }
-                                                                            })
-                                                                        ))
-                                                                        .then((paragraphs) => instanceResource.embed('items', paragraphs))
-                                                                    ;
-                                                                } else {
-                                                                    debug(`TODO: Other?`);
-                                                                }
-                                                            })
-
-                                                            // .then(() => relationship.getDocuments(persistence, instance))
-                                                            // .then((paragraphs) => Promise.map(
-                                                            //     paragraphs,
-                                                            //     (doc) => Promise.resolve()
-                                                            //         .then(() => debug(`doc=`, doc))
-                                                            //         .then(() => {
-                                                            //         })
-                                                            // ))
+                                                                    })
+                                                                ))
+                                                                .then((paragraphs) => instanceResource.embed('items', paragraphs))
+                                                            : Promise.reject(new Error(`Relationship ${relationship.name}'s target is not Paragraph.`))
                                                         )
                                                     ;
                                                 } else {
                                                     debug(`TODO: body.reference.type=`, body.reference.type);
                                                 }
+                                            } else if (body && body.elementType === 'Relationship') {
+                                                return extractDataAssociations(persistence, entity, instance, body);
                                             }
                                         })
                                     ;
-
-                                    //                                        .then(() => [])
-                                    //                                        .then((resultItems) => Promise.resolve()
-                                    //                                            // Overview
-                                    //                                            .then(() => overview(persistence, entity.getRelationshipByName('Overview'), instance))
-                                    //                                            .then((items) => resultItems.concat(items))
-                                    //                                        )
-                                    //
-                                    //                                        .then((resultItems) => Promise.resolve()
-                                    //                                            .then(() => entity.getPageView(pageViewName))
-                                    //                                            .then((pageView) => pageViewResource(persistence, pageView, instance))
-                                    //                                            .then((items) => resultItems.concat(items))
-                                    //                                        )
-                                    //
-                                    //                                        .then((items) => instanceResource.embed('items', items))
-                                    //                                    ;
                                 }
                             })
 
