@@ -1,30 +1,40 @@
 {{#if panels.length}}
   {{#each panels as |panel|}}
     <div class="row warpjs-secondary-bg warpjs-page-view-side-panel warpjs-page-view-sidebar">
-      {{#each panel._embedded.items as |section|}}
-        {{#if section.showItem}}
-          {{#if section.isOfType.SeparatorPanelItem}}
-            <hr />
-          {{else}}
-            <div class="warpjs-page-view-side-section">
-              <div class="warpjs-title">{{section.label}}</div>
-              <div class="warpjs-content">
-                {{#if section.isOfType.RelationshipPanelItem}}
-                  {{> panel-items-csv items=section._embedded.items}}
-                {{else if section.isOfType.BasicPropertyPanelItem}}
-                  {{#if section.typeOfProperty.isText}}
-                    {{{section.value}}}
-                  {{else}}
-                    {{section.value}}
-                  {{/if}}
-                {{else if section.isOfType.EnumPanelItem}}
-                  {{section.value}}
-                {{/if}}
+      <div class="col-xs-12">
+        {{#each panel._embedded.items as |section|}}
+          {{#if section.showItem}}
+            {{#if section.isOfType.SeparatorPanelItem}}
+              <hr />
+            {{else}}
+              <div class="warpjs-page-view-side-section">
+                <div class="row warpjs-title">
+                  <div class="col-xs-12">{{section.label}}</div>
+                </div>
+                <div class="row warpjs-content">
+                  <div class="col-xs-12">
+                    {{#if section.isOfType.RelationshipPanelItem}}
+                      {{> panel-items-csv items=section._embedded.items}}
+                      {{#if section.isAssociation}}
+                        {{> ../inline-edit/context-button page=../../page elementId=section.id elementType='Relationship'}}
+                      {{/if}}
+                    {{else if section.isOfType.BasicPropertyPanelItem}}
+                      {{#if section.typeOfProperty.isText}}
+                        {{{section.value}}}
+                        {{> ../inline-edit/context-button page=../../page elementId=section.id elementType='Paragraph'}}
+                      {{else}}
+                        {{section.value}}
+                      {{/if}}
+                    {{else if section.isOfType.EnumPanelItem}}
+                      {{section.value}}
+                    {{/if}}
+                  </div>
+                </div>
               </div>
-            </div>
+            {{/if}}
           {{/if}}
-        {{/if}}
-      {{/each}}
+        {{/each}}
+      </div>
     </div>
   {{/each}}
 {{/if}}

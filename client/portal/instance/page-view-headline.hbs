@@ -4,5 +4,8 @@
     <div class="warpjs-hi-secondary warpjs-page-view-headline-section-footer"></div>
   </div>
 
-  <div class="warpjs-hi-primary warpjs-page-view-headline-content">{{page.name}}</div>
+  <div class="warpjs-hi-primary warpjs-page-view-headline-content warpjs-content">
+    {{page.name}}
+    {{> ../inline-edit/context-button page=page elementId=page.id elementType='Document'}}
+  </div>
 </div>

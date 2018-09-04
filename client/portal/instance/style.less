@@ -1,6 +1,11 @@
 @import '../styles/index.less';
 @import './breadcrumb';
 @import '../document-status/style';
+@import '../inline-edit/style';
+
+.warpjs-content {
+    position: relative;
+}
 
 .warpjs-page-view {
     color: #000;
@@ -99,6 +104,30 @@
         .warpjs-panel-section {
             .warpjs-title {
                 margin-top: 15px;
+
+                &.warpjs-title-level-H1 {
+                    font-size: 250%;
+                }
+
+                &.warpjs-title-level-H2 {
+                    font-size: 225%;
+                }
+
+                &.warpjs-title-level-H3 {
+                    font-size: 200%;
+                }
+
+                &.warpjs-title-level-H4 {
+                    font-size: 180%;
+                }
+
+                &.warpjs-title-level-H5 {
+                    font-size: 160%;
+                }
+
+                &.warpjs-title-level-H6 {
+                    font-size: 140%;
+                }
             }
 
             .row.overview-image-container {
@@ -278,6 +307,11 @@
         margin-right: 0;
         padding: 18px;
 
+        > .col-xs-12 {
+            padding-left: 0;
+            padding-right: 0;
+        }
+
         hr {
             border-color: @warpjs-primary-bg;
         }
@@ -288,12 +322,6 @@
             .warpjs-title {
                 padding-bottom: 12px !important;
                 line-height: 140%;
-            }
-
-            .warpjs-content {
-                > div {
-                    padding-left: 0;
-                }
             }
         }
 

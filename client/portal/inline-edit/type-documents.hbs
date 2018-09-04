@@ -1,0 +1,9 @@
+{{#each documents as |doc|}}
+  <div class="warpjs-section-item"
+      data-warpjs-type="{{doc.type}}"
+      data-warpjs-id="{{doc.id}}"
+      data-warpjs-name="{{doc.name}}"
+    ><span class="glyphicon glyphicon-plus"></span> {{doc.name}}</div>
+{{else}}
+  <div class="text-warning">No documents found for this type.</div>
+{{/each}}

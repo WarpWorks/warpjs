@@ -1,5 +1,10 @@
 # WarpJS's Releases Notes
 
+## 1.2.80 - 2018-09-04
+
+- #127: Work in progress for inline editor. Only the paragraph relationship for
+  now.
+
 ## 1.2.79 - 2018-08-23
 
 - #128: Fixed when callout ButtonSrc is missing.

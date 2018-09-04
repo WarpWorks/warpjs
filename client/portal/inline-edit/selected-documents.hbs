@@ -1,0 +1,7 @@
+<div class="warpjs-title">Selected documents:</div>
+
+{{#each documents as |doc|}}
+  {{> selected-documents-item doc=doc}}
+{{else}}
+  {{> selected-documents-none}}
+{{/each}}

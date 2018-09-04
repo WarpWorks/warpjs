@@ -1,27 +1,35 @@
 {{#each panels as |panel|}}
   {{#if panel.showPanel}}
     <div class="row warpjs-secondary-bg warpjs-page-view-side-panel warpjs-page-view-badges">
-      <div class="warpjs-page-view-side-section">
-        <div class="warpjs-title">{{panel.label}}</div>
-        <div class="warpjs-content">
-          {{#each panel._embedded.items as |badge|}}
-            <div class="col-xs-4 col-md-6 warpjs-item">
-              {{#if badge._links.image.href}}
-                <div class="warpjs-image-container-parent">
-                  <div class="warpjs-image-container-child">
-                    <a href="{{badge._links.self.href}}">
-                      <img src="{{badge._links.image.href}}"
-                        alt="{{badge.label}}"
-                        title="{{badge.description}}"
-                        />
-                    </a>
+      <div class="col-xs-12">
+        <div class="warpjs-page-view-side-section">
+          <div class="row warpjs-title">
+            <div class="col-xs-12">{{panel.label}}</div>
+          </div>
+          <div class="row warpjs-content">
+            <div class="col-xs-12">
+              <div class="row">
+                {{#each panel._embedded.items as |badge|}}
+                  <div class="col-xs-4 col-md-6 warpjs-item">
+                    {{#if badge._links.image.href}}
+                      <div class="warpjs-image-container-parent">
+                        <div class="warpjs-image-container-child">
+                          <a href="{{badge._links.self.href}}">
+                            <img src="{{badge._links.image.href}}"
+                              alt="{{badge.label}}"
+                              title="{{badge.description}}"
+                              />
+                          </a>
+                        </div>
+                      </div>
+                    {{else}}
+                      <div>[MISSING IMAGE FOR "{{badge.label}}"]</div>
+                    {{/if}}
                   </div>
-                </div>
-              {{else}}
-                <div>[MISSING IMAGE FOR "{{badge.label}}"]</div>
-              {{/if}}
+                {{/each}}
+              </div>
             </div>
-          {{/each}}
+          </div>
         </div>
       </div>
     </div>

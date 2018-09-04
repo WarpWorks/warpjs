@@ -1,0 +1,37 @@
+<div class="row">
+  <div class="col-xs-12 warpjs-section warpjs-section-type-selector">
+    <form class="form-inline">
+      <div class="form-group has-warning">
+        <label for="warpjs-inline-edit-type-selector">Select type:</label>
+        <select class="form-control" id="warpjs-inline-edit-type-selector"
+          data-warpjs-reference-type="{{item.reference.type}}"
+          data-warpjs-reference-id="{{item.reference.id}}"
+          disabled
+          >
+          <option>Loading...</option>
+        </select>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12 warpjs-section warpjs-section-type-documents"
+      data-warpjs-reference-type="{{item.reference.type}}"
+      data-warpjs-reference-id="{{item.reference.id}}"
+    ></div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12 warpjs-section warpjs-section-selected-documents"
+      data-warpjs-reference-type="{{item.reference.type}}"
+      data-warpjs-reference-id="{{item.reference.id}}"
+    ></div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12 warpjs-section warpjs-section-selected-document-detail"
+      data-warpjs-reference-type="{{item.reference.type}}"
+      data-warpjs-reference-id="{{item.reference.id}}"
+    ></div>
+</div>

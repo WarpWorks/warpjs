@@ -1,22 +1,27 @@
 {{#if users}}
-  <div class="warpjs-page-view-side-section">
-    <div class="warpjs-title">{{title}}</div>
-    <div class="warpjs-content">
-      {{#each users as |user|}}
-        <div class="row warpjs-user warpjs-table">
-          <div class="warpjs-community-image warpjs-cell">
-            <div class="warpjs-image-container-parent">
-              <div class="warpjs-image-container-child">
-                <img src="{{user._links.image.href}}" />
+  <div class="col-xs-12 warpjs-page-view-side-section">
+    <div class="row warpjs-title">
+      <div class="col-xs-12">{{title}}</div>
+    </div>
+    <div class="row warpjs-content">
+      <div class="col-xs-12">
+        {{#each users as |user|}}
+          <div class="row warpjs-user warpjs-table">
+            <div class="warpjs-community-image warpjs-cell">
+              <div class="warpjs-image-container-parent">
+                <div class="warpjs-image-container-child">
+                  <img src="{{user._links.image.href}}" />
+                </div>
               </div>
             </div>
-          </div>
 
-          <div class="warpjs-user-info warpjs-cell">
-            <a class="warpjs-user-name" href="{{user._links.self.href}}">{{user.name}}</a>
+            <div class="warpjs-user-info warpjs-cell">
+              <a class="warpjs-user-name" href="{{user._links.self.href}}">{{user.name}}</a>
+            </div>
           </div>
-        </div>
-      {{/each}}
+        {{/each}}
+      </div>
+      {{> ../inline-edit/context-button page=page elementId=title elementType='Relationship'}}
     </div>
   </div>
 {{/if}}

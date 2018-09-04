@@ -1,6 +1,7 @@
 const Promise = require('bluebird');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const inlineEdit = require('./../inline-edit');
 const preview = require('./../preview');
 const template = require('./template.hbs');
 const vocabulary = require('./../vocabulary');
@@ -34,6 +35,7 @@ const errorTemplate = warpjsUtils.requirePartial('error-portal');
                 }
 
                 vocabulary($);
+                inlineEdit($);
 
                 warpjsUtils.documentReady($);
             }

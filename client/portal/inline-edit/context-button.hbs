@@ -1,0 +1,11 @@
+{{#if page._links.inlineEdit}}
+  <div class="warpjs-inline-edit warpjs-inline-edit-context"
+      data-warpjs-id="{{elementId}}"
+      data-warpjs-type="{{elementType}}"
+      data-warpjs-url="{{page._links.inlineEdit.href}}"
+      data-warpjs-reference-type="{{reference.type}}"
+      data-warpjs-reference-id="{{reference.id}}"
+    >
+    <span class="glyphicon glyphicon-pencil"></span>
+  </div>
+{{/if}}

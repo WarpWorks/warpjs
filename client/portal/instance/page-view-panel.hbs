@@ -6,7 +6,7 @@
 
     <div class="panel-body">
       {{#each panel._embedded.items as |section|}}
-        {{> page-view-panel-section section=section}}
+        {{> page-view-panel-section page=../page section=section reference=../reference}}
       {{/each}}
     </div>
   </div>
