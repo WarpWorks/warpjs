@@ -1,8 +1,8 @@
 {{#if panel.isOverviewPanel}}
-  {{> modal panel=panel}}
-  <div data-spy="affix" data-offset-top="400" class="affix-top">
-    <div class="TOC">
-      <button type="button" data-toggle="modal" data-target="#overviewTOC">Table of contents</button>
+  <div class="warpjs-overview-toc">
+    {{> modal panel=panel}}
+    <div id="overview-toc-affix" class="affix-top">
+      <button type="button" data-toggle="modal" data-target="#overview-toc-modal">Table of contents</button>
     </div>
   </div>
 {{/if}}

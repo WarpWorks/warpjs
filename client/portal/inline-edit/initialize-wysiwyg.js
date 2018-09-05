@@ -11,8 +11,6 @@ module.exports = ($, modal, clickedElement) => {
         }
     });
 
-    console.log("hhhh....");
-
     if (tinymce.editors.length) {
         tinymce.editors[0].remove();
     }

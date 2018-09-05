@@ -3,6 +3,7 @@ const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const inlineEdit = require('./../inline-edit');
 const preview = require('./../preview');
+const tableOfContents = require('./../table-of-contents');
 const template = require('./template.hbs');
 const vocabulary = require('./../vocabulary');
 
@@ -36,6 +37,7 @@ const errorTemplate = warpjsUtils.requirePartial('error-portal');
 
                 vocabulary($);
                 inlineEdit($);
+                tableOfContents($);
 
                 warpjsUtils.documentReady($);
             }
