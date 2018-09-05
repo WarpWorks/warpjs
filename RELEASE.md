@@ -1,5 +1,9 @@
 # WarpJS's Releases Notes
 
+## 1.2.81 - 2018-09-05
+
+- #130: Added TOC for Overview.
+
 ## 1.2.80 - 2018-09-04
 
 - #127: Work in progress for inline editor. Only the paragraph relationship for
