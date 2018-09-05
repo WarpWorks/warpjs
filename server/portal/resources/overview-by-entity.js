@@ -18,7 +18,7 @@ function buildTOCLevel(items, level, index) {
         } else if (currentLevel === level) {
             const resource = warpjsUtils.createResource('', {
                 id: item.id,
-                name: item.name || item.id
+                name: item.name
             });
             cumulator.push(resource);
 

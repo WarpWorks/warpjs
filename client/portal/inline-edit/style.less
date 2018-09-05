@@ -1,6 +1,17 @@
 @inline-edit-bg: #5d922a;
 @inline-edit-fg: #ffffff;
 
+/* Pencil in breadcrumb */
+
+.warpjs-inline-edit-toggle {
+    background-color: @inline-edit-bg;
+    color: @inline-edit-fg;
+    cursor: pointer;
+    border-radius: 50%;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
 
 [data-warpjs-modal="warpjs-inline-edit"] {
     .modal-dialog {
@@ -103,7 +114,6 @@
                     display: table;
                     border-top: 5px;
                     width: 100%;
-                    cursor: pointer;
 
                     &.row {
                         margin-left: 0;
@@ -127,6 +137,11 @@
                         padding-top: 5px;
                         padding-bottom: 5px;
                         border-radius: 10px;
+                        cursor: pointer;
+
+                        &.warpjs-list-item-value-untitled {
+                            font-style: italic;
+                        }
                     }
 
                     .warpjs-list-item-status {
@@ -155,12 +170,77 @@
         height: 100%;
 
         .warpjs-modal-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 24px !important;
+            font-weight: normal;
+            height: 38px !important;
         }
 
         .warpjs-modal-top-menu {
+
+            span {
+                background-color: white;
+                border-width: 1px;
+                border-style: solid;
+                border-color: #5096b7;
+                padding: 4px 24px 4px 24px;
+                color: #5096b7;
+                font-weight: bold;
+                white-space: nowrap;
+
+                &.warpjs-modal-language {
+                    cursor: not-allowed;
+                }
+
+                &.warpjs-modal-delete {
+                    cursor: not-allowed;
+                }
+
+                &.warpjs-modal-history {
+                    cursor: not-allowed;
+                }
+
+                &.warpjs-modal-advanced-edit {
+                    cursor: pointer;
+                }
+            }
         }
 
         .warpjs-navigation-menu {
+            line-height: 30px;
+
+            span {
+                text-align: center;
+                background-color: #5096b7;
+                margin-right: 4px;
+                padding: 4px 24px 4px 24px;
+                color: white;
+                font-weight: bold;
+
+                &.navigation-double-left {
+                    cursor: not-allowed;
+                }
+
+                &.navigation-single-left {
+                    cursor: not-allowed;
+                }
+
+                &.navigation-position {
+                    cursor: not-allowed;
+                }
+
+                &.navigation-single-right {
+                    cursor: not-allowed;
+                }
+
+                &.navigation-double-right {
+                    cursor: not-allowed;
+                }
+
+                &.navigation-visible-on-web {
+                    cursor: not-allowed;
+                }
+            }
         }
 
         textarea {
@@ -252,15 +332,6 @@
     }
 }
 
-.warpjs-inline-edit {
-    background-color: @inline-edit-bg;
-    color: @inline-edit-fg;
-    font-size: 24px;
-    padding: 12px !important;
-    border-radius: 50%;
-    cursor: pointer;
-}
-
 .warpjs-inline-edit-global {
     position: absolute;
     right: -50px;
@@ -271,6 +342,12 @@
     position: absolute;
     bottom: 0;
     right: 10px;
+    background-color: @inline-edit-bg;
+    color: @inline-edit-fg;
+    font-size: 24px;
+    padding: 12px !important;
+    border-radius: 50%;
+    cursor: pointer;
 }
 
 .warpjs-inline-edit-disable {

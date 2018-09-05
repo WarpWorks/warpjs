@@ -1,11 +1,3 @@
-<div class="row">
-  {{> left-right-margin}}
-  <div class="col-xs-12 col-sm-8 col-sm-offset-1">
-    {{> ../inline-edit/global-button page=page}}
-  </div>
-  {{> left-right-margin}}
-</div>
-
 {{#each pageView._embedded.mainBodyPanels as |panel|}}
   {{#if panel.showPanel}}
     <div class="row warpjs-panel">

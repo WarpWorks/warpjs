@@ -1,7 +1,7 @@
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const addDocumentToSelection = require('./events/add-document-to-selection');
-const headingChanged = require('./heading-changed');
+const headingChanged = require('./events/heading-changed');
 const listItemValueClicked = require('./list-item-value-clicked');
 const paragraphContentChanged = require('./events/paragraph-content-changed');
 const removeFromSelectionClicked = require('./events/remove-from-selection-clicked');
@@ -41,5 +41,9 @@ module.exports = ($, modal) => {
 
     modal.on('click', '.warpjs-section-type-documents .warpjs-section-item', function() {
         addDocumentToSelection($, modal, this);
+    });
+
+    modal.on('click', '.warpjs-modal-advanced-edit', function() {
+        document.location.href = $(this).data('warpjsUrl');
     });
 };

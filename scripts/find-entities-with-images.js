@@ -37,6 +37,7 @@ Promise.resolve()
                                     .then(() => {
                                         if (image.ImageURL) {
                                             if (!image.Width || !image.Height) {
+                                                // eslint-disable-next-line no-console
                                                 console.log(`http://localhost:8080/content/domain/${domain.name}/type/${entity.name}/instance/${doc.id}`);
                                             }
                                         }

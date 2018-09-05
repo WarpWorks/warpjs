@@ -1,5 +1,11 @@
 # WarpJS's Releases Notes
 
+## 1.2.82 - 2018-09-05
+
+- #127: Styling and minor fixes.
+- #127: Advanced edit now through the inline-edit modal.
+- #130: Styling and minor fixes.
+
 ## 1.2.81 - 2018-09-05
 
 - #130: Added TOC for Overview.

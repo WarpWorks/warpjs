@@ -3,12 +3,12 @@ const warpjsUtils = require('@warp-works/warpjs-utils');
 const textModal = require('./text-modal');
 
 const classes = Object.freeze({
-    GLOBAL: '.warpjs-inline-edit-global',
-    IN_EDIT: 'warpjs-inline-edit-global-in-edit'
+    IN_EDIT: 'warpjs-inline-edit-global-in-edit',
+    TOGGLE: '.warpjs-inline-edit-toggle'
 });
 
 module.exports = ($) => {
-    $(document).on('click', classes.GLOBAL, function() {
+    $(document).on('click', classes.TOGGLE, function() {
         if ($('body').hasClass(classes.IN_EDIT)) {
             $('body').removeClass(classes.IN_EDIT);
         } else {
