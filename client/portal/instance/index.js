@@ -1,6 +1,7 @@
 const Promise = require('bluebird');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const actionGoto = require('./../../shared/action-goto');
 const inlineEdit = require('./../inline-edit');
 const preview = require('./../preview');
 const tableOfContents = require('./../table-of-contents');
@@ -38,6 +39,7 @@ const errorTemplate = warpjsUtils.requirePartial('error-portal');
                 vocabulary($);
                 inlineEdit($);
                 tableOfContents($);
+                actionGoto($);
 
                 warpjsUtils.documentReady($);
             }

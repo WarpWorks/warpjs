@@ -7,6 +7,7 @@ const paragraphContentChanged = require('./events/paragraph-content-changed');
 const removeFromSelectionClicked = require('./events/remove-from-selection-clicked');
 const selectedDocumentDetailChanged = require('./events/selected-document-detail-changed');
 const selectedDocumentsItemClicked = require('./events/selected-documents-item-clicked');
+const textModalEvents = require('./text-modal/events');
 
 module.exports = ($, modal) => {
     modal.on('hidden.bs.modal', function() {
@@ -46,4 +47,6 @@ module.exports = ($, modal) => {
     modal.on('click', '.warpjs-modal-advanced-edit', function() {
         document.location.href = $(this).data('warpjsUrl');
     });
+
+    textModalEvents($, modal);
 };

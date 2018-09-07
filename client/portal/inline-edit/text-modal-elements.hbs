@@ -1,30 +1,5 @@
 {{#each items as |item|}}
-  <div class="row warpjs-list-item">
-    {{#if item.isOfHeadingLevel.H1}}
-      {{> text-modal-element item=item}}
-    {{else}}
-      {{> text-modal-indentation level='H1'}}
-      {{#if item.isOfHeadingLevel.H2}}
-        {{> text-modal-element item=item}}
-      {{else}}
-        {{> text-modal-indentation level='H2'}}
-        {{#if item.isOfHeadingLevel.H3}}
-          {{> text-modal-element item=item}}
-        {{else}}
-          {{> text-modal-indentation level='H3'}}
-          {{#if item.isOfHeadingLevel.H4}}
-            {{> text-modal-element item=item}}
-          {{else}}
-            {{> text-modal-indentation level='H4'}}
-            {{#if item.isOfHeadingLevel.H5}}
-              {{> text-modal-element item=item}}
-            {{else}}
-              {{> text-modal-indentation level='H5'}}
-              {{> text-modal-element item=item}}
-            {{/if}}
-          {{/if}}
-        {{/if}}
-      {{/if}}
-    {{/if}}
+  <div class="row warpjs-list-item warpjs-list-item-level-{{item.level}}">
+    {{> text-modal-element item=item}}
   </div>
 {{/each}}

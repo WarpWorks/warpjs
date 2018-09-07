@@ -4,7 +4,7 @@ const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const ComplexTypes = require('./../../../lib/core/complex-types');
 const constants = require('./constants');
-const extractDataAssociations = require('./extract-data-associations');
+const extractDataRelationship = require('./extract-data-relationship');
 const listTypes = require('./list-types');
 const serverUtils = require('./../../utils');
 const utils = require('./../utils');
@@ -64,7 +64,7 @@ module.exports = (req, res) => {
                                                                         id: paragraph.id || paragraph._id,
                                                                         level: paragraph.HeadingLevel || 'H1',
                                                                         isOfHeadingLevel: constants.isOfHeadingLevel(paragraph.HeadingLevel || 'H1'),
-                                                                        name: paragraph.Heading || paragraph.id,
+                                                                        name: paragraph.Heading,
                                                                         description: paragraph.Content,
                                                                         reference: {
                                                                             type: relationship.type,
@@ -81,7 +81,10 @@ module.exports = (req, res) => {
                                                     debug(`TODO: body.reference.type=`, body.reference.type);
                                                 }
                                             } else if (body && body.elementType === 'Relationship') {
-                                                return extractDataAssociations(persistence, entity, instance, body);
+                                                return Promise.resolve()
+                                                    .then(() => extractDataRelationship(persistence, entity, instance, body))
+                                                    .then((items) => instanceResource.embed('items', items))
+                                                ;
                                             }
                                         })
                                     ;

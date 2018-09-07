@@ -5,6 +5,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" arial-label="Close" aria-hidden="true">&times;</button>
         <div class="row">
           <div class="col-sm-4 warpjs-list-container">
             <div class="row warpjs-document-name">
@@ -20,35 +21,28 @@
                 <div class="warpjs-content"></div>
               </div>
             </div>
-
-            <div class="row warpjs-document-filters">
-              <div class="col-xs-12">
-                TODO: PUT FILTER HERE.
-              </div>
-            </div>
           </div>
 
           <div class="col-sm-8 warpjs-detail-container">
             <div class="row">
-              <div class="col-xs-4 warpjs-modal-title">I3C INLINE EDITOR</div>
+              <div class="col-xs-4 warpjs-modal-title">EDIT</div>
               <div class="col-xs-8 warpjs-modal-top-menu">
-                <span class="warpjs-modal-language">English</span>
-                <span class="warpjs-modal-delete">Delete</span>
-                <span class="warpjs-modal-history">History</span>
-                <span class="warpjs-modal-advanced-edit" data-warpjs-url="{{EDIT_URL}}">Advanced edit</span>
-                <button type="button" class="close" data-dismiss="modal" arial-label="Close" aria-hidden="true">&times;</button>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col-xs-12 warpjs-navigation-menu">
-                <span class="navigation-double-left">&lt;&lt;</span>
-                <span class="navigation-single-left">&lt;</span>
-                <span class="navigation-position">Position 1</span>
-                <span class="navigation-single-right">&gt;</span>
-                <span class="navigation-double-right">&gt;&gt;</span>
-
-                <span class="navigation-visible-on-web">Visible on Web</span>
+                <span class="dropdown">
+                  <span class="dropdown-toggle"
+                    id="warpjs-inline-edit-modal-language"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="true"
+                    data-warpjs-action="inline-edit-language"
+                    ><span class="text">English</span> <span class="caret"></span></span>
+                  <ul class="dropdown-menu" aria-labelledby="warpjs-inline-edit-modal-language">
+                    <li data-warpjs-action="inline-edit-language-change">Chinese</li>
+                    <li data-warpjs-action="inline-edit-language-change">English</li>
+                    <li data-warpjs-action="inline-edit-language-change">German</li>
+                  </ul>
+                </span>
+                <span data-warpjs-action="inline-edit-delete">Delete</span>
+                <span data-warpjs-action="inline-edit-history">History</span>
               </div>
             </div>
 

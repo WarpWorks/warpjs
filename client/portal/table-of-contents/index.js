@@ -4,6 +4,10 @@ module.exports = ($) => {
             offset: {
                 top: function() {
                     return (this.top = $(element).offset().top);
+                },
+
+                bottom: function() {
+                    return (this.bottom = $('.page--footer').outerHeight(true) + $('#overview-toc-affix').outerHeight(true));
                 }
             }
         });
@@ -15,5 +19,9 @@ module.exports = ($) => {
         if (target) {
             target.scrollIntoView(true);
         }
+    });
+
+    $(document).on('affixed.bs.affix', function() {
+        $('#overview-toc-affix').removeAttr('style');
     });
 };

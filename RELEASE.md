@@ -1,5 +1,14 @@
 # WarpJS's Releases Notes
 
+## 1.2.83 - 2018-09-06
+
+- Few styling changes from Andreas' comments.
+- TOC button only displayed when scrolling down.
+- #127: Adding HeadingLevel and Visibility.
+- #127: Adding Coming Soon...
+- #127: Changed pencil => eye+cog in breadcrumb.
+- #130: Moved affix to bottom.
+
 ## 1.2.82 - 2018-09-05
 
 - #127: Styling and minor fixes.

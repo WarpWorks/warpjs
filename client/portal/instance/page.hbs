@@ -2,12 +2,24 @@
   <div class="row warpjs-secondary-bg breadcrumb-container">
     {{> left-right-margin}}
 
-    <div class="col-xs-10 col-sm-9 no-padding">
+    <div class="col-xs-10 col-sm-8 col-lg-9 no-padding">
       {{> page-breadcrumb breadcrumbs=page._embedded.breadcrumbs}}
     </div>
-    <div class="col-xs-2 col-sm-1 no-padding breadcrumb-actions">
+    <div class="col-xs-2 col-lg-1 no-padding breadcrumb-actions warpjs-actions">
       {{#if page._links.edit}}
-        <span class="glyphicon glyphicon-pencil warpjs-inline-edit-toggle"></span>
+        <span class="glyphicon glyphicon-pencil warpjs-inline-edit-enable"
+          title="Show inline edit"
+          data-warpjs-action="inline-edit-toggle"
+          ></span>
+        <span class="glyphicon glyphicon-eye-open warpjs-inline-edit-toggle warpjs-inline-edit-disable"
+          title="Hide inline edit"
+          data-warpjs-action="inline-edit-toggle"
+          ></span>
+        <span class="glyphicon glyphicon-cog warpjs-inline-edit-content"
+          title="Edit document in CMS"
+          data-warpjs-action="goto"
+          data-warpjs-url="{{page._links.edit.href}}"
+          ></span>
       {{/if}}
     </div>
 

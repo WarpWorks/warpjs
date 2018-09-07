@@ -1,14 +1,12 @@
-const warpjsUtils = require('@warp-works/warpjs-utils');
-
+const comingSoon = require('./coming-soon');
 const textModal = require('./text-modal');
 
 const classes = Object.freeze({
-    IN_EDIT: 'warpjs-inline-edit-global-in-edit',
-    TOGGLE: '.warpjs-inline-edit-toggle'
+    IN_EDIT: 'warpjs-inline-edit-global-in-edit'
 });
 
 module.exports = ($) => {
-    $(document).on('click', classes.TOGGLE, function() {
+    $(document).on('click', '[data-warpjs-action="inline-edit-toggle"]', function() {
         if ($('body').hasClass(classes.IN_EDIT)) {
             $('body').removeClass(classes.IN_EDIT);
         } else {
@@ -22,13 +20,12 @@ module.exports = ($) => {
 
         switch (elementType) {
             case 'Paragraph':
-            case 'Document':
-            case 'Relationship':
                 textModal($, this);
                 break;
 
             default:
-                warpjsUtils.toast.warning($, `Handling of {type:${elementType}, id:${elementId}}`, "TODO");
+                console.log(`Handling of {type:${elementType}, id:${elementId}}`);
+                comingSoon($, "This functionality is coming soon.");
         }
     });
 };

@@ -25,7 +25,7 @@
 
     .affix {
         background-color: transparent;
-        top: 0;
+        bottom: 15px;
         right: 0;
         float: right;
         z-index: 200 !important;
@@ -40,10 +40,14 @@
 
     .affix-top {
         background-color: transparent;
-        position: absolute;
+        position: fixed;
         right: 0;
+        bottom: 15px;
+        padding-right: 20px;
         z-index: 200 !important;
+    }
 
+    .affix-bottom {
         button {
             display: none;
         }

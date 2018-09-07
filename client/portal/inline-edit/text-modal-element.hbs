@@ -1,13 +1,21 @@
-<div class="warpjs-list-item-value warpjs-list-item-level-{{item.level}} {{#unless item.name}}warpjs-list-item-value-untitled{{/unless}}"
+{{> text-modal-indentation level='H1'}}
+{{> text-modal-indentation level='H2'}}
+{{> text-modal-indentation level='H3'}}
+{{> text-modal-indentation level='H4'}}
+{{> text-modal-indentation level='H5'}}
+
+<div class="warpjs-list-item-value {{#unless item.name}}warpjs-list-item-value-untitled{{/unless}}"
   data-warpjs-type="{{item.type}}"
   data-warpjs-id="{{item.id}}"
   data-warpjs-position="{{item.position}}"
   data-warpjs-name="{{item.name}}"
   data-warpjs-description="{{item.description}}"
+  data-warpjs-level="{{item.level}}"
   data-warpjs-reference-type="{{item.reference.type}}"
   data-warpjs-reference-id="{{item.reference.id}}"
   data-warpjs-reference-name="{{item.reference.name}}"
   >{{#if item.name}}{{item.name}}{{else}}untitled{{/if}}</div>
+
 <div class="warpjs-list-item-status">
   <span class="warpjs-list-item-status-icon">&bull;</span>
 </div>

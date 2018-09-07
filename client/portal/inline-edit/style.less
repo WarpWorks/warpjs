@@ -4,12 +4,7 @@
 /* Pencil in breadcrumb */
 
 .warpjs-inline-edit-toggle {
-    background-color: @inline-edit-bg;
-    color: @inline-edit-fg;
     cursor: pointer;
-    border-radius: 50%;
-    padding-left: 10px;
-    padding-right: 10px;
 }
 
 
@@ -21,6 +16,8 @@
             height: 80%;
 
             .modal-body {
+                background-color: #cccccc;
+
                 height: 100%;
                 padding-top: 0;
                 padding-bottom: 0;
@@ -106,8 +103,6 @@
             }
 
             .warpjs-content {
-                /* overflow-y: auto; */
-                /* overflow-x: hidden; */
 
                 .warpjs-list-item {
                     border-radius: 10px;
@@ -151,6 +146,48 @@
                         font-size: 30px;
                         width: 15px;
                     }
+
+                    &.warpjs-list-item-level {
+                        &-H1 {
+                            .warpjs-list-item-indentation-H1,
+                            .warpjs-list-item-indentation-H2,
+                            .warpjs-list-item-indentation-H3,
+                            .warpjs-list-item-indentation-H4,
+                            .warpjs-list-item-indentation-H5 {
+                                display: none;
+                            }
+                        }
+
+                        &-H2 {
+                            .warpjs-list-item-indentation-H2,
+                            .warpjs-list-item-indentation-H3,
+                            .warpjs-list-item-indentation-H4,
+                            .warpjs-list-item-indentation-H5 {
+                                display: none;
+                            }
+                        }
+
+                        &-H3 {
+                            .warpjs-list-item-indentation-H3,
+                            .warpjs-list-item-indentation-H4,
+                            .warpjs-list-item-indentation-H5 {
+                                display: none;
+                            }
+                        }
+
+                        &-H4 {
+                            .warpjs-list-item-indentation-H4,
+                            .warpjs-list-item-indentation-H5 {
+                                display: none;
+                            }
+                        }
+
+                        &-H5 {
+                            .warpjs-list-item-indentation-H5 {
+                                display: none;
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -164,21 +201,28 @@
     }
 
     .warpjs-detail-container {
-        padding-top: 30px;
+        padding-top: 5px;
         background-color: #cccccc;
         color: #000000;
-        height: 100%;
+        height: calc(~"100% - 25px");
+        overflow-y: auto;
+        overflow-x: hidden;
 
         .warpjs-modal-title {
             font-family: 'Oswald', sans-serif;
             font-size: 24px !important;
             font-weight: normal;
-            height: 38px !important;
+            line-height: 35px;
+            float: left;
+            padding-left: 15px;
         }
 
         .warpjs-modal-top-menu {
+            text-align: right;
+            line-height: 35px;
+            padding-right: 15px;
 
-            span {
+            [data-warpjs-action] {
                 background-color: white;
                 border-width: 1px;
                 border-style: solid;
@@ -187,58 +231,43 @@
                 color: #5096b7;
                 font-weight: bold;
                 white-space: nowrap;
+            }
 
-                &.warpjs-modal-language {
-                    cursor: not-allowed;
-                }
-
-                &.warpjs-modal-delete {
-                    cursor: not-allowed;
-                }
-
-                &.warpjs-modal-history {
-                    cursor: not-allowed;
-                }
-
-                &.warpjs-modal-advanced-edit {
-                    cursor: pointer;
+            .dropdown-menu {
+                li {
+                    background-color: transparent;
+                    border-width: 0;
+                    padding-left: 24px;
                 }
             }
         }
 
         .warpjs-navigation-menu {
-            line-height: 30px;
+            width: calc(~"100% - 150px");
+            padding-left: 15px;
+            padding-right: 15px;
 
-            span {
+            .warpjs-navigation {
                 text-align: center;
                 background-color: #5096b7;
-                margin-right: 4px;
-                padding: 4px 24px 4px 24px;
+                margin-left: 2px;
+                margin-right: 2px;
                 color: white;
                 font-weight: bold;
+                float: left;
+                line-height: 25px;
+                width: 15%;
 
-                &.navigation-double-left {
-                    cursor: not-allowed;
+                &:first-child {
+                    margin-left: 0;
                 }
 
-                &.navigation-single-left {
-                    cursor: not-allowed;
+                &:last-child {
+                    margin-right: 0;
                 }
 
-                &.navigation-position {
-                    cursor: not-allowed;
-                }
-
-                &.navigation-single-right {
-                    cursor: not-allowed;
-                }
-
-                &.navigation-double-right {
-                    cursor: not-allowed;
-                }
-
-                &.navigation-visible-on-web {
-                    cursor: not-allowed;
+                &.warpjs-navigation-position {
+                    width: calc(~"40% - 16px");
                 }
             }
         }
@@ -259,8 +288,15 @@
 
             textarea {
                 width: 100%;
-                height: 65px;
+                height: 55px;
             }
+        }
+
+        .warpjs-inline-edit-level {
+        }
+
+        .warpjs-inline-edit-visibility {
+            float: right;
         }
 
         .warpjs-detail-image-preview {
@@ -270,7 +306,7 @@
             width: 150px;
 
             .warpjs-content {
-                height: 65px;
+                height: 100px;
                 background-color: #aaaaaa;
             }
         }
@@ -350,19 +386,17 @@
     cursor: pointer;
 }
 
-.warpjs-inline-edit-disable {
+.warpjs-inline-edit-disable, .warpjs-inline-edit-content {
     display: none;
 }
 
 .warpjs-inline-edit-global-in-edit {
-    .warpjs-inline-edit-global {
-        .warpjs-inline-edit-enable {
-            display: none;
-        }
+    .warpjs-inline-edit-enable {
+        display: none;
+    }
 
-        .warpjs-inline-edit-disable {
-            display: inline-block;
-        }
+    .warpjs-inline-edit-disable, .warpjs-inline-edit-content {
+        display: inline-block;
     }
 
     .warpjs-inline-edit-context {

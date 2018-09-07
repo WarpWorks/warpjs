@@ -1,4 +1,22 @@
 <div class="row">
+  <div class="warpjs-navigation-menu">
+    <div class="warpjs-navigation"
+      data-warpjs-action="inline-edit-paragraph-move-to-first"
+      >&lt;&lt;</div>
+    <div class="warpjs-navigation"
+      data-warpjs-action="inline-edit-paragraph-move-up"
+      >&lt;</div>
+    <div class="warpjs-navigation warpjs-navigation-position">Position 1</div>
+    <div class="warpjs-navigation"
+      data-warpjs-action="inline-edit-paragraph-move-down"
+      >&gt;</div>
+    <div class="warpjs-navigation"
+      data-warpjs-action="inline-edit-paragraph-move-to-last"
+      >&gt;&gt;</div>
+  </div>
+</div>
+
+<div class="row">
   <div class="warpjs-detail-heading">
     <div class="form-group">
       <label for="warpjs-inline-edit-heading">Heading</label>
@@ -10,6 +28,44 @@
           data-warpjs-reference-name="{{item.reference.name}}"
           {{#unless item.canChangeName}}readonly{{/unless}}
         >{{item.name}}</textarea>
+    </div>
+
+    <div class="form-inline">
+      <div class="form-group warpjs-inline-edit-level">
+        <label for="warpjs-inline-edit-level">Level</label>
+        <select class="form-control" id="warpjs-inline-edit-level"
+            data-warpjs-id="{{item.id}}"
+            data-warpjs-field="Level"
+            data-warpjs-reference-type="{{item.reference.type}}"
+            data-warpjs-reference-id="{{item.reference.id}}"
+            data-warpjs-reference-name="{{item.reference.name}}"
+            {{#unless item.canChangeName}}readonly{{/unless}}
+          >
+          <option value="H1" {{#if item.isHeadingLevel.H1}}selected{{/if}}>H1</option>
+          <option value="H2" {{#if item.isHeadingLevel.H2}}selected{{/if}}>H2</option>
+          <option value="H3" {{#if item.isHeadingLevel.H3}}selected{{/if}}>H3</option>
+          <option value="H4" {{#if item.isHeadingLevel.H4}}selected{{/if}}>H4</option>
+          <option value="H5" {{#if item.isHeadingLevel.H5}}selected{{/if}}>H5</option>
+          <option value="H6" {{#if item.isHeadingLevel.H6}}selected{{/if}}>H6</option>
+        </select>
+      </div>
+
+      <div class="form-group warpjs-inline-edit-visibility">
+        <label for="warpjs-inline-edit-visibility">Visibility</label>
+        <select class="form-control" id="warpjs-inline-edit-visibility"
+          value="{{item.position}}"
+          data-warpjs-id="{{item.id}}"
+          data-warpjs-field="Position"
+          data-warpjs-reference-type="{{item.reference.type}}"
+          data-warpjs-reference-id="{{item.reference.id}}"
+          data-warpjs-reference-name="{{item.reference.name}}"
+          {{#unless item.canChangeName}}readonly{{/unless}}
+          >
+          <option value="Web">Web</option>
+          <option value="PDF">PDF</option>
+          <option value="Web & PDF">Web &amp; PDF</option>
+        </select>
+      </div>
     </div>
   </div>
 
