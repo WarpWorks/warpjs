@@ -426,10 +426,15 @@
         }
 
         .warpjs-value-item {
-            min-height: 250px;
+            height: 300px;
             background-color: #ececec;
             margin-bottom: 20px;
             overflow: hidden;
+
+            .warpjs-container {
+                max-height: calc(~"100% - 32px");
+                overflow: hidden;
+            }
 
             .warpjs-image {
                 padding-left: 0;
@@ -443,9 +448,14 @@
             }
 
             .warpjs-body {
-                padding: 16px;
+                padding: 16px 16px 0 16px;
 
                 .warpjs-label {
+                }
+
+                .warpjs-title {
+                    line-height: 120%;
+                    padding-bottom: 12px;
                 }
 
                 .warpjs-content {
@@ -453,6 +463,11 @@
                     max-height: 140px;
                     overflow: hidden;
                 }
+            }
+
+            .warpjs-see-more {
+                padding-left: 16px;
+                padding-right: 16px;
             }
         }
     }

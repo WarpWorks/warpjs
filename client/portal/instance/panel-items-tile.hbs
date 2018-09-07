@@ -1,22 +1,24 @@
 {{#each items as |item|}}
   <div class="col-xs-4">
     <div class="warpjs-value-item">
-      {{#if item._links.image}}
-        <div class="warpjs-image">
-          <img src="{{item._links.image.href}}" />
+      <div class="warpjs-container">
+        {{#if item._links.image}}
+          <div class="warpjs-image">
+            <img src="{{item._links.image.href}}" />
+          </div>
+        {{/if}}
+
+        <div class="warpjs-body">
+          <div class="warpjs-label">{{item.type}}</div>
+          <div class="warpjs-title">{{item.name}}</div>
+
+          {{#unless item._links.image}}
+            <div class="warpjs-content">{{{item.description}}}</div>
+          {{/unless}}
+
         </div>
-      {{/if}}
-
-      <div class="warpjs-body">
-        <div class="warpjs-label">{{item.type}}</div>
-        <div class="warpjs-title">{{item.name}}</div>
-
-        {{#unless item._links.image}}
-          <div class="warpjs-content">{{{item.description}}}</div>
-        {{/unless}}
-
-        {{> see-more title=item.name href=item._links.self.href}}
       </div>
+      {{> see-more title=item.name href=item._links.self.href}}
     </div>
   </div>
 {{/each}}

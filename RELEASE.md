@@ -1,5 +1,9 @@
 # WarpJS's Releases Notes
 
+## 1.2.85 - 2018-09-07
+
+- Restyling the Tiles
+
 ## 1.2.84 - 2018-09-07
 
 - #127: Fix layout of modal for display SM and higher.
