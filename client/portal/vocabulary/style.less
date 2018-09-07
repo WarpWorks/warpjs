@@ -34,14 +34,24 @@
                 display: table-cell;
                 vertical-align: top;
                 margin-bottom: 18px;
+                padding-left: 10px;
+                padding-right: 10px;
 
-                &.col-xs-4:nth-child(3n+2) {
+                &:nth-child(3n+1) {
+                    padding-left: 15px;
+                    padding-right: 5px;
                     clear: left;
+                }
+
+                &:nth-child(3n+3) {
+                    padding-left: 5px;
+                    padding-right: 15px;
                 }
 
                 .warpjs-content {
                     background-color: @warpjs-secondary-bg;
                     padding: 12px;
+                    overflow-x: hidden;
                 }
             }
         }

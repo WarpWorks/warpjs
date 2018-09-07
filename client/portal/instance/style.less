@@ -106,39 +106,39 @@
                 margin-top: 15px;
 
                 &.warpjs-title-level-H1 {
-                    font-size: 50px;
-                    line-height: 1.4;
-                    padding-bottom: 24px;
-                }
-
-                &.warpjs-title-level-H2 {
-                    font-size: 45px;
-                    line-height: 1.4;
-                    padding-bottom: 22px;
-                }
-
-                &.warpjs-title-level-H3 {
                     font-size: 40px;
                     line-height: 1.4;
                     padding-bottom: 20px;
                 }
 
-                &.warpjs-title-level-H4 {
+                &.warpjs-title-level-H2 {
                     font-size: 36px;
                     line-height: 1.4;
                     padding-bottom: 18px;
                 }
 
-                &.warpjs-title-level-H5 {
+                &.warpjs-title-level-H3 {
                     font-size: 32px;
                     line-height: 1.4;
                     padding-bottom: 16px;
                 }
 
-                &.warpjs-title-level-H6 {
+                &.warpjs-title-level-H4 {
                     font-size: 28px;
                     line-height: 1.4;
                     padding-bottom: 14px;
+                }
+
+                &.warpjs-title-level-H5 {
+                    font-size: 24px;
+                    line-height: 1.4;
+                    padding-bottom: 12px;
+                }
+
+                &.warpjs-title-level-H6 {
+                    font-size: 20px;
+                    line-height: 1.4;
+                    padding-bottom: 10px;
                 }
             }
 
@@ -422,7 +422,16 @@
 .warpjs-relationship-style-Tile {
     .warpjs-value {
         > div {
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        > div:nth-child(3n+1) {
             padding-left: 0px;
+        }
+
+        > div:nth-child(3n+3) {
+            padding-right: 0px;
         }
 
         .warpjs-value-item {
@@ -575,7 +584,7 @@
         }
 
         &:nth-child(even) {
-            background-color: @warpjs-secondary-bg;
+            background-color: #f9f9f9;
 
             hr {
                 border-color: @warpjs-primary-bg;
@@ -678,6 +687,8 @@
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
+    margin-top: 24px;
+    margin-bottom: 24px;
 
     & .warpjs-image-background {
         &-Transparent {

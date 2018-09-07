@@ -1,5 +1,9 @@
 # WarpJS's Releases Notes
 
+## 1.2.86 - 2018-09-07
+
+- Styling updates from feedbacks.
+
 ## 1.2.85 - 2018-09-07
 
 - Restyling the Tiles

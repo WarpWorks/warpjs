@@ -7,19 +7,23 @@
 
   <div class="warpjs-vocabulary-definitions">
     {{#each items as |item|}}
-      <div class="row warpjs-vocabulary-definition" data-warpjs-letter="{{item.letter}}">
-        <div class="col-xs-12 warpjs-vocabulary-definition-letter">{{item.letter}}</div>
+      <div class="warpjs-vocabulary-definition" data-warpjs-letter="{{item.letter}}">
+        <div class="row">
+          <div class="col-xs-12 warpjs-vocabulary-definition-letter">{{item.letter}}</div>
+        </div>
 
-        {{#each item._embedded.items as |definition|}}
-          <div class="col-xs-4 warpjs-vocabulary-definition-item">
-            <div class="warpjs-content">
-              <div class="warpjs-vocabulary-letter">{{item.letter}}</div>
-              <div class="warpjs-title"><a href="{{definition._links.self.href}}">{{definition.label}}</a></div>
-              <div class="warpjs-definition">{{{definition.definition}}}</div>
-              <div class="warpjs-resource">{{{definition.resources}}}</div>
+        <div class="row warpjs-content">
+          {{#each item._embedded.items as |definition|}}
+            <div class="col-xs-4 warpjs-vocabulary-definition-item">
+              <div class="warpjs-content">
+                <div class="warpjs-vocabulary-letter">{{item.letter}}</div>
+                <div class="warpjs-title"><a href="{{definition._links.self.href}}">{{definition.label}}</a></div>
+                <div class="warpjs-definition">{{{definition.definition}}}</div>
+                <div class="warpjs-resource">{{{definition.resources}}}</div>
+              </div>
             </div>
-          </div>
-        {{/each}}
+          {{/each}}
+        </div>
       </div>
     {{/each}}
   </div>
