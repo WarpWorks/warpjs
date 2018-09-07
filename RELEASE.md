@@ -1,5 +1,11 @@
 # WarpJS's Releases Notes
 
+## 1.2.84 - 2018-09-07
+
+- #127: Fix layout of modal for display SM and higher.
+- Fixed issue with clip-path showing a white line on different zoom level
+- Better contrast because of Tiles
+
 ## 1.2.83 - 2018-09-06
 
 - Few styling changes from Andreas' comments.
