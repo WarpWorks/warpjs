@@ -18,11 +18,18 @@ module.exports = (persistence, entity, instance, entityPanels) => Promise.resolv
     .then(() => entityPanels.find((panel) => panel.name === constants.PANEL_NAMES.Summary))
     .then((panel) => panel ? panel.getPanelItems().find((panelItem) => panelItem.name === constants.PANEL_ITEM_NAMES.Summary) : null)
     .then((panelItem) => panelItem ? panelItem.getRelationship() : null)
-    .then((relationship) => relationship ? paragraphsByRelationship(persistence, relationship, instance) : [])
-    .then((paragraphResources) => paragraphResources.slice(0, 3))
-    .then((paragraphResources) => paragraphResources.map((paragraphResource) => warpjsUtils.createResource('', {
-        id: paragraphResource.id,
-        title: paragraphResource.name,
-        content: paragraphResource.description
-    })))
+    .then((relationship) => Promise.resolve()
+        .then(() => relationship ? paragraphsByRelationship(persistence, relationship, instance) : [])
+        .then((paragraphResources) => paragraphResources.slice(0, 3))
+        .then((paragraphResources) => paragraphResources.map((paragraphResource) => warpjsUtils.createResource('', {
+            id: paragraphResource.id,
+            title: paragraphResource.name,
+            content: paragraphResource.description,
+            reference: {
+                type: relationship.type,
+                id: relationship.id,
+                name: relationship.name
+            }
+        })))
+    )
 ;
