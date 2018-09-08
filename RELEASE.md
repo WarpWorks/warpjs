@@ -1,5 +1,10 @@
 # WarpJS's Releases Notes
 
+## 1.2.87 - 2018-09-07
+
+- #127: Fixed InsightReport's Summary reference to inline-edit
+- #127: Saving HeadingLevel change.
+
 ## 1.2.86 - 2018-09-07
 
 - Styling updates from feedbacks.

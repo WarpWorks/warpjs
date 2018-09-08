@@ -35,7 +35,7 @@
         <label for="warpjs-inline-edit-level">Level</label>
         <select class="form-control" id="warpjs-inline-edit-level"
             data-warpjs-id="{{item.id}}"
-            data-warpjs-field="Level"
+            data-warpjs-field="HeadingLevel"
             data-warpjs-reference-type="{{item.reference.type}}"
             data-warpjs-reference-id="{{item.reference.id}}"
             data-warpjs-reference-name="{{item.reference.name}}"
@@ -55,15 +55,15 @@
         <select class="form-control" id="warpjs-inline-edit-visibility"
           value="{{item.position}}"
           data-warpjs-id="{{item.id}}"
-          data-warpjs-field="Position"
+          data-warpjs-field="Visibility"
           data-warpjs-reference-type="{{item.reference.type}}"
           data-warpjs-reference-id="{{item.reference.id}}"
           data-warpjs-reference-name="{{item.reference.name}}"
           {{#unless item.canChangeName}}readonly{{/unless}}
           >
-          <option value="Web">Web</option>
-          <option value="PDF">PDF</option>
-          <option value="Web & PDF">Web &amp; PDF</option>
+          <option value="Web" {{#if item.isVisibility.Web}}selected{{/if}}>Web</option>
+          <option value="PDF" {{#if item.isVisibility.PDF}}selected{{/if}}>PDF</option>
+          <option value="WebAndPDF" {{#if item.isVisibility.WebAndPDF}}selected{{/if}}>Web &amp; PDF</option>
         </select>
       </div>
     </div>

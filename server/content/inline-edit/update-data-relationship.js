@@ -10,10 +10,14 @@ module.exports = (persistence, entity, instance, body) => Promise.resolve()
             if (paragraph) {
                 const paragraphEntity = relationship.getTargetEntity();
                 const basicProperty = paragraphEntity.getBasicPropertyByName(body.field);
+                const enumeration = paragraphEntity.getEnumByName(body.field);
+
                 if (basicProperty) {
                     return basicProperty.setValue(paragraph, body.newValue);
+                } else if (enumeration) {
+                    return enumeration.setValue(paragraph, body.newValue);
                 } else {
-                    throw new Error(`Invalid BasicProperty '${body.field}'`);
+                    throw new Error(`Invalid Field '${body.field}'`);
                 }
             }
         })
