@@ -1,22 +1,50 @@
-<div class="form-group"
-     >
-
-  <label>Description{{#if entity.displayName}} for selection '{{entity.displayName}}'{{/if}}:</label>
-  <textarea class="form-control warpjs-relationship-description" row="3"
-    data-warpjs-id="{{entity.id}}"
-    data-warpjs-type="{{entity.type}}"
-    data-warpjs-display-name="{{entity.displayName}}"
-    data-warpjs-relationship-description="{{entity.relationshipDescription}}"
-    data-warpjs-doc-level="{{entity.docLevel}}"
-    {{#unless entity.id}}readonly{{/unless}}
-    {{#unless canEdit}}disabled{{/unless}}
-    >{{entity.relationshipDescription}}</textarea>
-
+<div class="row warpjs-association-modal-selected-name">
   {{#if canEdit}}
-    <div class="btn-group-sm" role="group">
+    <div class="warpjs-title col-xs-6 col-sm-7">{{entity.displayName}}</div>
+    <div class="col-xs-6 col-sm-5 btn-group-sm text-right" role="group">
       <button type="button" class="btn btn-danger warpjs-remove"
         {{#unless entity.id}}disabled{{/unless}}
         >Remove from Selection</button>
     </div>
+  {{else}}
+    <div class="warpjs-title col-xs-12">{{entity.displayName}}</div>
   {{/if}}
+</div>
+
+<div class="row form-group">
+  <div class="col-xs-4">
+    <label for="warpjs-association-modal-position">Position:</label>
+  </div>
+  <div class="col-xs-8">
+    <input type="number" class="form-control"
+      id="warpjs-association-modal-position"
+      value="{{entity.relationshipPosition}}"
+      data-warpjs-id="{{entity.id}}"
+      data-warpjs-type="{{entity.type}}"
+      data-warpjs-display-name="{{entity.displayName}}"
+      data-warpjs-relationship-description="{{entity.relationshipPosition}}"
+      data-warpjs-doc-level="{{entity.docLevel}}"
+      {{#unless entity.id}}readonly{{/unless}}
+      {{#unless canEdit}}disabled{{/unless}}
+      />
+  </div>
+</div>
+
+<div class="row form-group">
+  <div class="col-xs-4">
+  <label for="warpjs-association-modal-selected-description">Description:</label>
+  </div>
+  <div class="col-xs-8">
+    <textarea class="form-control warpjs-relationship-description" row="3"
+      id="warpjs-association-modal-selected-description"
+      data-warpjs-id="{{entity.id}}"
+      data-warpjs-type="{{entity.type}}"
+      data-warpjs-display-name="{{entity.displayName}}"
+      data-warpjs-relationship-description="{{entity.relationshipDescription}}"
+      data-warpjs-doc-level="{{entity.docLevel}}"
+      {{#unless entity.id}}readonly{{/unless}}
+      {{#unless canEdit}}disabled{{/unless}}
+      >{{entity.relationshipDescription}}</textarea>
+
+  </div>
 </div>
