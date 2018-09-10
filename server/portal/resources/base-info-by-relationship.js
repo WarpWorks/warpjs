@@ -20,6 +20,7 @@ module.exports = (persistence, relationship, instance) => Promise.resolve()
                 id: document.id,
                 name: document.Name,
                 relnDesc: document.relnDesc,
+                relnPosition: document.relnPosition,
                 label: relationship.getDisplayName(document)
             }))
             .then((resource) => Promise.resolve()

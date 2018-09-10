@@ -12,7 +12,8 @@ module.exports = (persistence, entity, instance, body, instanceResource) => Prom
             type: association.type,
             id: association.id,
             name: childRelationship.getDisplayName(association),
-            description: association.relnDesc
+            description: association.relnDesc,
+            position: association.relnPosition
         })))
         .then((associations) => instanceResource.embed('associations', associations))
 

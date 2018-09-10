@@ -27,6 +27,7 @@ module.exports = ($, instanceDoc) => {
             id,
             displayName: $(this).data('warpjsDisplayName'),
             relnDesc: '',
+            position: '',
             docLevel
         };
 

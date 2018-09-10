@@ -3,6 +3,7 @@ const Promise = require('bluebird');
 const addSelectionEntities = require('./add-selection-entities');
 const browseSelectedEntities = require('./browse-selected-entities');
 const constants = require('./constants');
+const events = require('./events');
 const initializeSelectedEntities = require('./initialize-selected-entities');
 const relationshipDescriptionModified = require('./relationship-description-modified');
 const removeSelectionEntities = require('./remove-selection-entities');
@@ -30,6 +31,8 @@ module.exports = ($, instanceDoc) => {
             addSelectionEntities($, instanceDoc);
             removeSelectionEntities($, instanceDoc);
             selectionTypesOnChange($, instanceDoc);
+
+            events($, instanceDoc);
         }
         $(constants.DIALOG_SELECTOR, instanceDoc).modal('show');
 

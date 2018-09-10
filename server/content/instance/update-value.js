@@ -26,6 +26,10 @@ module.exports = (req, res, persistence, entity, instance) => {
     const action = deleteAssociation ? ChangeLogs.ACTIONS.ASSOCIATION_REMOVED : ChangeLogs.ACTIONS.UPDATE_VALUE;
     const patchAction = deleteAssociation ? [body.patchAction, body.type, body.id].join(':') : null;
 
+    if (body.field) {
+        body.updatePath += `.Field:${body.field}`;
+    }
+
     return Promise.resolve()
         .then(() => logger(req, `Trying ${action}`, body))
         .then(() => serverUtils.canEdit(persistence, entity, instance, req.warpjsUser))

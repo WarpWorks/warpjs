@@ -8,6 +8,7 @@ module.exports = ($, instanceDoc) => {
             id: $(element).data('warpjsId'),
             displayName: $(element).data('warpjsDisplayName'),
             relationshipDescription: $(element).data('warpjsRelationshipDescription'),
+            relationshipPosition: $(element).data('warpjsRelationshipPosition'),
             docLevel: $(element).data('warpjsDocLevel')
         }))
         .get();
