@@ -1,3 +1,5 @@
+{{> page-header-image page=page image=page._embedded.headerImages.[0]}}
+
 {{#each pageView._embedded.mainBodyPanels as |panel|}}
   {{#if panel.showPanel}}
     <div class="row warpjs-panel">
