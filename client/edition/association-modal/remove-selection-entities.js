@@ -1,7 +1,7 @@
 const Promise = require('bluebird');
 const { proxy, toast } = require('@warp-works/warpjs-utils');
 
-const ChangeLogs = require('./../../change-logs');
+const ChangeLogs = require('./../change-logs');
 const constants = require('./constants');
 
 module.exports = ($, instanceDoc) => {

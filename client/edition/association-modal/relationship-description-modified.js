@@ -2,7 +2,7 @@ const Promise = require('bluebird');
 const { proxy, toast } = require('@warp-works/warpjs-utils');
 
 const constants = require('./constants');
-const formFeedback = require('./../../form-feedback');
+const formFeedback = require('./../form-feedback');
 
 module.exports = ($, instanceDoc) => {
     instanceDoc.on('change', `${constants.DIALOG_SELECTOR} textarea.warpjs-relationship-description`, function() {

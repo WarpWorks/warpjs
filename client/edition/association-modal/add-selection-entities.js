@@ -4,11 +4,11 @@
 const Promise = require('bluebird');
 const { proxy, toast } = require('@warp-works/warpjs-utils');
 
-const ChangeLogs = require('./../../change-logs');
+const ChangeLogs = require('./../change-logs');
 const constants = require('./constants');
-const globalConstants = require('./../../../../lib/constants');
+const globalConstants = require('./../../../lib/constants');
 const template = require('./selected-entity.hbs');
-const csvTemplate = require('./../relationship-panel-item-csv-item.hbs');
+const csvTemplate = require('./../instance/relationship-panel-item-csv-item.hbs');
 
 module.exports = ($, instanceDoc) => {
     instanceDoc.on('click', `${constants.DIALOG_SELECTOR} .warpjs-selection-entities .warpjs-selection-entity`, function() {
