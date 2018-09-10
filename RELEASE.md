@@ -1,5 +1,14 @@
 # WarpJS's Releases Notes
 
+## 1.2.88 - 2018-09-09
+
+- #130: No border/outline on TOC button
+- #133: Auto-open first vocabulary element
+- #134: Adding missing HeaderImage to Plain page view.
+- #135: height:300px. Added some margin-bottom.
+- Added min-height to warpjs-content-placeholder 50vh.
+
+
 ## 1.2.87 - 2018-09-07
 
 - #127: Fixed InsightReport's Summary reference to inline-edit
