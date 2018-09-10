@@ -37,7 +37,6 @@ module.exports = (persistence, panelItem, instance) => Promise.resolve()
                 } else if (resource.style === constants.RELATIONSHIP_PANEL_ITEM_STYLES.Tile) {
                     return Promise.resolve()
                         .then(() => relationship.getDocuments(persistence, instance))
-                        .then((docs) => docs.sort(warpjsUtils.byPositionThenName))
                         .then((docs) => docs.filter((doc) => doc.Name !== 'TEMPLATE'))
                         .then((docs) => Promise.map(
                             docs,
@@ -47,7 +46,6 @@ module.exports = (persistence, panelItem, instance) => Promise.resolve()
                 } else if (resource.style === constants.RELATIONSHIP_PANEL_ITEM_STYLES.Preview) {
                     return Promise.resolve()
                         .then(() => relationship.getDocuments(persistence, instance))
-                        .then((docs) => docs.sort(warpjsUtils.byPositionThenName))
                         .then((docs) => docs.filter((doc) => doc.Name !== 'TEMPLATE'))
                         .then((docs) => Promise.map(
                             docs,

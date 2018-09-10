@@ -4,7 +4,6 @@ const { proxy, toast } = require('@warp-works/warpjs-utils');
 const constants = require('./../constants');
 const formFeedback = require('./../../form-feedback');
 
-
 module.exports = ($, instanceDoc) => {
     const selector = `${constants.DIALOG_SELECTOR} #warpjs-association-modal-selected-position`;
 
@@ -27,5 +26,5 @@ module.exports = ($, instanceDoc) => {
                 toast.error($, err.message, "Error updating association position");
             })
         ;
-    })
+    });
 };
