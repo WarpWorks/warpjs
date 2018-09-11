@@ -1,5 +1,5 @@
 const Promise = require('bluebird');
-const { proxy, toast } = require('@warp-works/warpjs-utils');
+const { byPositionThenName, proxy, toast } = require('@warp-works/warpjs-utils');
 
 const constants = require('./../constants');
 const formFeedback = require('./../../form-feedback');
@@ -20,6 +20,36 @@ module.exports = ($, instanceDoc) => {
             .then(() => formFeedback.start($, this))
             .then(() => proxy.patch($, undefined, data))
             .then(() => formFeedback.success($, this))
+
+            // Reposition the selected in the modal.
+            .then(() => $(`${constants.DIALOG_SELECTOR} .${constants.SELECTED_ENTITIES}`, instanceDoc))
+            .then((section) => Promise.resolve()
+                .then(() => section.children('li').get())
+                .then((items) => items.map((item) => ({
+                    name: $(item).data('warpjsDisplayName'),
+                    position: $(item).data('warpjsRelationshipPosition'),
+                    item
+                })))
+                .then((items) => items.sort(byPositionThenName))
+                .then((items) => items.map((item) => item.item))
+                .then((items) => items.forEach((item) => section.append(item)))
+            )
+
+            // Resort CSV list
+            .then(() => $(constants.DIALOG_SELECTOR).data(constants.CURRENT_ELEMENT_KEY))
+            .then((currentElement) => $(currentElement).closest(`.${constants.SELECTED_ENTITIES}`))
+            .then((section) => Promise.resolve()
+                .then(() => section.children('.warpjs-selected-item').get())
+                .then((items) => items.map((item) => ({
+                    name: $(item).data('warpjsDisplayName'),
+                    position: $(item).data('warpjsRelationshipPosition'),
+                    item
+                })))
+                .then((items) => items.sort(byPositionThenName))
+                .then((items) => items.map((item) => item.item))
+                .then((items) => items.forEach((item) => section.append(item)))
+            )
+
             .catch((err) => {
                 formFeedback.error($, this);
                 console.error("Error updating association position:", err);

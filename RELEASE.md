@@ -1,5 +1,10 @@
 # WarpJS's Releases Notes
 
+## 1.2.89 - 2018-09-10
+
+- #129: Added resorting of selected items.
+
+
 ## 1.2.88 - 2018-09-09
 
 - #130: No border/outline on TOC button
