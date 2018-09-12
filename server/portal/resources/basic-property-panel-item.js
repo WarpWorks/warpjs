@@ -23,7 +23,7 @@ module.exports = (persistence, panelItem, instance) => Promise.resolve()
 
                 const value = basicProperty.getValue(instance);
                 resource.value = (resource.propertyType === BasicTypes.Text) ? convertCustomLinks(value) : value;
-                resource.showItem = !_.isUndefined(resource.value);
+                resource.showItem = !_.isUndefined(resource.value) && resource.value !== '';
             }
         })
         .then(() => resource)
