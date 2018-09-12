@@ -4,6 +4,8 @@ const warpjsPlugins = require('@warp-works/warpjs-plugins');
 
 const packageJson = require('./../package.json');
 
+const serverStarted = (new Date()).toString();
+
 function getRoutes() {
     return _.reduce(
         RoutesInfo.all(),
@@ -19,6 +21,7 @@ module.exports = (req, res) => {
         .set('Content-Type', 'text/plain')
         .send(JSON.stringify({
             version: packageJson.version,
+            serverStarted,
             routes: getRoutes(),
             plugins: warpjsPlugins.info()
         }, null, 2))

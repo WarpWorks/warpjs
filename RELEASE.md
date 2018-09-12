@@ -1,5 +1,9 @@
 # WarpJS's Releases Notes
 
+## 1.2.91 - 2018-09-12
+
+- Adding more info for invalid name to try help trace it.
+
 ## 1.2.90 - 2018-09-11
 
 - #139: Moved the action plugin buttons above the fields.
