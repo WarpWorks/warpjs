@@ -3,6 +3,7 @@
 ## 1.2.90 - 2018-09-11
 
 - #139: Moved the action plugin buttons above the fields.
+- #140: Properly display basic-property panel-item of type text.
 
 ## 1.2.89 - 2018-09-10
 
