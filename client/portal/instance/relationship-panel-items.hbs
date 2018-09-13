@@ -22,6 +22,11 @@
         {{> ../inline-edit/context-button page=page elementId=section.id elementType='Relationship'}}
       {{/if}}
     </div>
+  {{else if section.isOfStyle.Basic_Tile}}
+      {{> panel-items-basic-tile items=section._embedded.items}}
+      {{#if section.isAssociation}}
+        {{> ../inline-edit/context-button page=page elementId=section.id elementType='Relationship'}}
+      {{/if}}
   {{else if section.isOfStyle.Preview}}
     <div class="col-xs-12 warpjs-value">
       {{> panel-items-preview items=section._embedded.items}}

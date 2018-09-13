@@ -63,7 +63,8 @@ module.exports = Object.freeze({
         Preview: 'Preview',
         Tile: 'Tile',
         Vocabulary: 'Vocabulary',
-        Document: 'Document'
+        Document: 'Document',
+        Basic_Tile: 'Basic_Tile'
     }),
 
     isOfRelationshipPanelItemStyle(panelItem) {

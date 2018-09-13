@@ -1,0 +1,11 @@
+{{#each items as |item|}}
+  <div class="col-xs-4">
+    <div class="warpjs-value-item">
+      <div class="warpjs-container">
+        <div class="warpjs-body">
+          <div class="warpjs-title"><a href="{{item._links.self.href}}">{{item.label}}</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+{{/each}}

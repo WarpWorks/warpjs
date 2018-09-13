@@ -10,7 +10,7 @@
         >
         <option data-literal="warpjs-enum-no-selection" value="">------------</option>
         {{#each model.literals}}
-          <option data-literal="{{name}}" value="{{name}}" {{#if selected}}selected{{/if}}>{{name}}</option>
+          <option data-literal="{{name}}" value="{{name}}" {{#if selected}}selected{{/if}}>{{label}}</option>
         {{/each}}
       </select>
     </div>

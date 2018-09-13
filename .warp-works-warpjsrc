@@ -36,9 +36,10 @@
     "type": "BodyOfKnowledge",
     "id": "5935a8b3109ab6000ff06b28"
   }, {
-    "label": "Community",
-    "type": "",
-    "id": ""
+    "label": "IIC Ecosystem",
+    "type": "I3C",
+    "id": "5935a892109ab6000ff06b27",
+    "view": "Ecosystem_Overview"
   }, {
     "label": "Testbeds",
     "type": "I3C",

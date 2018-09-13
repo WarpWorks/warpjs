@@ -1,5 +1,9 @@
 # WarpJS's Releases Notes
 
+## 1.2.92 - 2018-09-13
+
+- Adding Ecosystem Directory.
+
 ## 1.2.91 - 2018-09-12
 
 - Adding more info for invalid name to try help trace it.

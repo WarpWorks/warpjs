@@ -43,6 +43,29 @@ module.exports = (persistence, panelItem, instance) => Promise.resolve()
                             (doc) => previewByEntity(persistence, relationship.getTargetEntity(), doc)
                         ))
                     ;
+                } else if (resource.style === constants.RELATIONSHIP_PANEL_ITEM_STYLES.Basic_Tile) {
+                    return Promise.resolve()
+                        .then(() => relationship.getDocuments(persistence, instance))
+                        .then((docs) => docs.filter((doc) => doc.Name !== 'TEMPLATE'))
+
+                        .then((docs) => Promise.map(
+                            docs,
+                            (doc) => Promise.resolve()
+                                .then(() => RoutesInfo.expand('entity', {
+                                    type: doc.type,
+                                    id: doc.id
+                                }))
+                                .then((href) => warpjsUtils.createResource(href, {
+                                    id: doc.id,
+                                    type: doc.type,
+                                    name: doc.Name,
+                                    position: doc.Position,
+                                    description: doc.Description,
+                                    status: doc.status,
+                                    label: relationship.getDisplayName(doc)
+                                }))
+                        ))
+                    ;
                 } else if (resource.style === constants.RELATIONSHIP_PANEL_ITEM_STYLES.Preview) {
                     return Promise.resolve()
                         .then(() => relationship.getDocuments(persistence, instance))
