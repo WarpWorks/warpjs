@@ -1,5 +1,9 @@
 # WarpJS's Releases Notes
 
+## 1.2.93 - 2018-09-15
+
+- #156: Content: Fixed inherited relationship Overview.
+
 ## 1.2.92 - 2018-09-13
 
 - Adding Ecosystem Directory.

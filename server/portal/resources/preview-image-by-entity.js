@@ -6,7 +6,6 @@ const imagesByRelationship = require('./images-by-relationship');
 const overviewByEntity = require('./overview-by-entity');
 
 module.exports = (persistence, entity, instance) => Promise.resolve()
-    // .then(() => debug(`relationships=`, entity.getRelationships().map((reln) => reln.name)))
     .then(() => entity ? entity.getRelationshipByName('Images') : null)
     .then((relationship) => relationship ? imagesByRelationship(persistence, relationship, instance, imageTypes.PREVIEW_IMAGE) : null)
     .then((images) => images && images.length ? images[0] : null)
