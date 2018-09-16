@@ -1,5 +1,9 @@
 # WarpJS's Releases Notes
 
+## 1.2.94 - 2018-09-15
+
+- Fixed typo.
+
 ## 1.2.93 - 2018-09-15
 
 - #156: Content: Fixed inherited relationship Overview.
