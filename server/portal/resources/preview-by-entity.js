@@ -12,6 +12,7 @@ module.exports = (persistence, entity, instance) => Promise.resolve()
     }))
     .then((href) => warpjsUtils.createResource(href, {
         type: instance.type,
+        typeLabel: entity.getDomain().getEntityLabelByEntityName(instance.type),
         id: instance.id,
         name: instance.Name,
         label: instance.Label || instance.Name
