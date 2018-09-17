@@ -1,10 +1,12 @@
 {{#if items.length}}
   <ul>
     {{#each items as |item|}}
-      <li>
-        <span class="toc-item {{#unless item.name}}toc-item-untitled{{/unless}}" data-warpjs-id="{{item.id}}" data-dismiss="modal">{{#if item.name}}{{item.name}}{{else}}untitled{{/if}}</span>
-        {{> toc-level items=item._embedded.items}}
-      </li>
+      {{#if item.name}}
+        <li>
+          <span class="toc-item" data-warpjs-id="{{item.id}}" data-dismiss="modal">{{item.name}}</span>
+          {{> toc-level items=item._embedded.items}}
+        </li>
+      {{/if}}
     {{/each}}
   </ul>
 {{/if}}
