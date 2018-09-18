@@ -68,9 +68,6 @@ module.exports = (baseUrl, staticUrl) => {
     const contentPrefix = `${baseUrl}/content`;
     const contentParams = [contentPrefix];
 
-    const portalPrefix = `${baseUrl}/portal`;
-    const portalParams = [portalPrefix];
-
     if (authMiddlewares) {
         adminParams.push(authMiddlewares.requiresWarpjsUser);
         adminParams.push(authMiddlewares.canAccessAsAdmin);
@@ -79,9 +76,6 @@ module.exports = (baseUrl, staticUrl) => {
         contentParams.push(authMiddlewares.requiresWarpjsUser);
         contentParams.push(authMiddlewares.canAccessAsContentManager);
         contentParams.push(authMiddlewares.unauthorized);
-
-        portalParams.push(authMiddlewares.requiresWarpjsUser);
-        portalParams.push(authMiddlewares.unauthorized);
     }
 
     adminParams.push(studio.app(adminPrefix, staticUrl));
@@ -90,8 +84,8 @@ module.exports = (baseUrl, staticUrl) => {
     contentParams.push(content.app(contentPrefix, staticUrl));
     app.use.apply(app, contentParams);
 
-    portalParams.push(portal.app(portalPrefix, staticUrl));
-    app.use.apply(app, portalParams);
+    const portalPrefix = `${baseUrl}/portal`;
+    app.use(portalPrefix, portal.app(portalPrefix, staticUrl));
 
     warpjsPlugins.register(warpjsCore, app, baseUrl, staticUrl);
 

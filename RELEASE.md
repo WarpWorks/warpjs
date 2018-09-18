@@ -1,5 +1,12 @@
 # WarpJS's Releases Notes
 
+## 1.2.95 - 2018-09-18
+
+- Removed IIC label to Ecosystem per Kathy's request
+- #157: Fixed to display entity label instead of name.
+- #130: Removing display for items without a name.
+- #146: First draft for public release.
+
 ## 1.2.94 - 2018-09-15
 
 - Fixed typo.

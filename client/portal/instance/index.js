@@ -49,6 +49,7 @@ const errorTemplate = warpjsUtils.requirePartial('error-portal');
     //     putFooterAtBottom($);
     //     $(window).on('resize', _.throttle(function() { putFooterAtBottom($); }, 200));
     // })
+    .then(() => warpjsUtils.documentReady($))
     .then(() => warpjsUtils.getCurrentPageHAL($))
     .then(
         (result) => {
@@ -81,15 +82,9 @@ const errorTemplate = warpjsUtils.requirePartial('error-portal');
                 inlineEdit($);
                 tableOfContents($);
                 actionGoto($);
-
-                warpjsUtils.documentReady($);
             }
         },
-        (err) => {
-            warpjsUtils.toast.error($, err.message, "Error contacting server");
-        }
+        (err) => warpjsUtils.toast.error($, err.message, "Error contacting server")
     )
-    .catch((err) => {
-        warpjsUtils.toast.error($, err.message, "Error processing response");
-    })
+    .catch((err) => warpjsUtils.toast.error($, err.message, "Error processing response"))
 ))(jQuery);

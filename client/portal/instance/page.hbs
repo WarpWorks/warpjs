@@ -33,4 +33,12 @@
 
 {{#if page.status.isVisible}}
   {{> page-view  page=page pageView=page._embedded.pageViews.[0]}}
+{{else}}
+    {{> left-right-margin}}
+
+    <div class="col-xs-12 col-sm-10 no-padding">
+      To view the content of this page, please login at the top-right corner.
+    </div>
+
+    {{> left-right-margin}}
 {{/if}}
