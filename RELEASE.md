@@ -1,5 +1,9 @@
 # WarpJS's Releases Notes
 
+## 1.2.96 - 2018-09-18
+
+- #147: Added "Public Beta" banner.
+
 ## 1.2.95 - 2018-09-18
 
 - Removed IIC label to Ecosystem per Kathy's request
