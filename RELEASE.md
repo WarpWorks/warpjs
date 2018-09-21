@@ -1,5 +1,9 @@
 # WarpJS's Releases Notes
 
+## 1.2.99 - 2018-09-21
+
+- Fixes missing for content and studio with new warpjs-utils.
+
 ## 1.2.98 - 2018-09-20
 
 - #146: Add login button on page.

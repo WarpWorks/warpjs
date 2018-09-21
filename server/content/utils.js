@@ -4,6 +4,7 @@ const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const constants = require('./constants');
+const editionConstants = require('./../edition/constants');
 const serverUtils = require('./../utils');
 
 function createResourceFromDocument(instance) {
@@ -28,7 +29,14 @@ function basicRender(bundles, data, req, res, isStudio) {
 
     resource.bundles = bundles;
 
-    // debug("resource=", JSON.stringify(resource, null, 2));
+    if (!resource._links.warpjsUtilsJs) {
+        if (isStudio) {
+            resource.link('warpjsUtilsJs', editionConstants.assets.studio);
+        } else {
+            resource.link('warpjsUtilsJs', editionConstants.assets.content);
+        }
+    }
+
     res.render('index-edition', resource.toJSON());
 }
 
@@ -61,6 +69,7 @@ function sendHalOnly(req, res, resource, status) {
 }
 
 function basicRenderOld(name, data, req, res) {
+    console.warn('*** DEPRECATED basicRenderOld()... ***');
     const resource = (data instanceof hal.Resource) ? data : warpjsUtils.createResource(req, data);
     resource.baseUrl = '/static';
 

@@ -1,4 +1,5 @@
 const RoutesInfo = require('@quoin/expressjs-routes-info');
+const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const entryPoints = {
     portal: 'portal',
@@ -42,6 +43,9 @@ module.exports = Object.freeze({
         domainTypes: minJs(entryPoints.domainTypes),
         instances: minJs(entryPoints.instances),
         instance: minJs(entryPoints.instance),
-        orphans: minJs(entryPoints.orphans)
+        orphans: minJs(entryPoints.orphans),
+
+        content: warpjsUtils.constants.assets.content.js,
+        studio: warpjsUtils.constants.assets.studio.js
     })
 });
