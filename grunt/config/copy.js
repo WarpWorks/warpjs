@@ -12,6 +12,15 @@ module.exports = {
             src: [
                 '**'
             ]
+        }, {
+            expand: true,
+            flatten: true,
+            dest: 'public/app',
+            cwd: path.join(warpjsUtilsAssetsFolder),
+            src: [
+                'css/warp-works-*.css',
+                'js/warp-works-*.js'
+            ]
         }]
     },
 

@@ -2,7 +2,6 @@
  *  When clicking on the entity in the selection list.
  */
 const Promise = require('bluebird');
-const { proxy, toast } = require('@warp-works/warpjs-utils');
 
 const ChangeLogs = require('./../change-logs');
 const constants = require('./constants');
@@ -35,7 +34,7 @@ module.exports = ($, instanceDoc) => {
         if (!added.length) {
             // Call this async
             Promise.resolve()
-                .then(() => proxy.post($, $(element).data('warpjsUrl'), {
+                .then(() => window.WarpJS.proxy.post($, $(element).data('warpjsUrl'), {
                     id,
                     type,
                     docLevel,
@@ -50,7 +49,7 @@ module.exports = ($, instanceDoc) => {
                 })
                 .catch((err) => {
                     console.error("Error adding data to server:", err);
-                    toast.error($, err.message, "Error adding association");
+                    window.WarpJS.toast.error($, err.message, "Error adding association");
                 });
         } else {
             $(`${selector} a`, instanceDoc).trigger('click');

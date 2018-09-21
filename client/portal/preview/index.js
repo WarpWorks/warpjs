@@ -1,6 +1,5 @@
 const _ = require('lodash');
 const Promise = require('bluebird');
-const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const BASE_POPOVER_OPTIONS = Object.freeze({
     html: true,
@@ -40,7 +39,7 @@ module.exports = ($) => {
             position(popover, evt);
         } else {
             Promise.resolve()
-                .then(() => warpjsUtils.proxy.get($, $(this).data('warpjsPreviewUrl')))
+                .then(() => window.WarpJS.proxy.get($, $(this).data('warpjsPreviewUrl')))
                 .then((result) => Promise.resolve()
                     .then(() => {
                         // Tinymce dependent.

@@ -1,5 +1,4 @@
 const Promise = require('bluebird');
-const { proxy, toast } = require('@warp-works/warpjs-utils');
 
 const deleteConfirm = require('./../delete-confirm');
 
@@ -43,14 +42,14 @@ module.exports = ($, instanceDoc) => {
         };
 
         return Promise.resolve()
-            .then(() => toast.loading($, "This can take few seconds. Page will reload when done", "Creating..."))
+            .then(() => window.WarpJS.toast.loading($, "This can take few seconds. Page will reload when done", "Creating..."))
             .then((toastLoading) => Promise.resolve()
-                .then(() => proxy.post($, url, data))
+                .then(() => window.WarpJS.proxy.post($, url, data))
                 .then(() => document.location.reload())
                 .catch((err) => {
                     console.error("Error adding carousel:", err);
-                    toast.close($, toastLoading);
-                    toast.error($, err.message, "Error adding child document");
+                    window.WarpJS.toast.close($, toastLoading);
+                    window.WarpJS.toast.error($, err.message, "Error adding child document");
                 })
             )
         ;
@@ -76,14 +75,14 @@ module.exports = ($, instanceDoc) => {
                 .then((confirmed) => {
                     if (confirmed) {
                         Promise.resolve()
-                            .then(() => toast.loading($, "This can take few seconds. Page will reload when done", "Deleting..."))
+                            .then(() => window.WarpJS.toast.loading($, "This can take few seconds. Page will reload when done", "Deleting..."))
                             .then((toastLoading) => Promise.resolve()
-                                .then(() => proxy.del($, url, data))
+                                .then(() => window.WarpJS.proxy.del($, url, data))
                                 .then((res) => document.location.reload())
                                 .catch((err) => {
                                     console.error("Error removing carousel:", err);
-                                    toast.close($, toastLoading);
-                                    toast.error($, err.message, "Error removing child document");
+                                    window.WarpJS.toast.close($, toastLoading);
+                                    window.WarpJS.toast.error($, err.message, "Error removing child document");
                                 })
                             )
                         ;

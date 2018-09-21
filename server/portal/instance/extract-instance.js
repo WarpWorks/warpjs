@@ -24,6 +24,11 @@ module.exports = (req, res) => {
                 .then((entity) => Promise.resolve()
                     .then(() => entity.getInstance(persistence, id))
                     .then((instance) => Promise.resolve()
+                        .then(() => {
+                            if (!instance.id) {
+                                throw new warpjsUtils.WarpJSError(`Invalid document '${type}' with id='${id}'.`);
+                            }
+                        })
                         .then(() => extractPage(req, persistence, entity, instance, pageViewName))
                         .then((pageResource) => resource.embed('pages', pageResource))
                     )

@@ -1,5 +1,3 @@
-const warpjsUtils = require('@warp-works/warpjs-utils');
-
 const addDocumentToSelection = require('./events/add-document-to-selection');
 const listItemValueClicked = require('./list-item-value-clicked');
 const paragraphContentChanged = require('./events/paragraph-content-changed');
@@ -11,7 +9,7 @@ const textModalEvents = require('./text-modal/events');
 module.exports = ($, modal) => {
     modal.on('hidden.bs.modal', function() {
         if (modal.data('warpjsIsDirty')) {
-            warpjsUtils.toast.loading($, "Data has been updated, please reload the page", "Reload needed");
+            window.WarpJS.toast.loading($, "Data has been updated, please reload the page", "Reload needed");
         }
     });
 

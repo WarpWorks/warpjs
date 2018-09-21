@@ -1,13 +1,8 @@
-const warpjsUtils = require('@warp-works/warpjs-utils');
-
 const constants = require('./../../server/edition/constants');
 
 module.exports = {
     options: {
-        compress: true,
-        paths: [
-            warpjsUtils.stylePath
-        ]
+        compress: true
     },
 
     edition: {

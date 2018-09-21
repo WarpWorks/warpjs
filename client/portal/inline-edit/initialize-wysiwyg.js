@@ -1,5 +1,4 @@
 const tinymce = require('tinymce'); require('tinymce/themes/modern/theme');
-const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const TEXT_SELECTOR = '#warpjs-inline-edit-content';
 
@@ -32,7 +31,7 @@ module.exports = ($, modal, clickedElement) => {
             editor.addButton('linkbutton', {
                 text: 'Custom Link',
                 icon: false,
-                onclick: () => warpjsUtils.toast.warning($, "Implement Custom Link clicked", "TODO")
+                onclick: () => window.WarpJS.toast.warning($, "Implement Custom Link clicked", "TODO")
             });
 
             editor.addButton('warpjsSave', {

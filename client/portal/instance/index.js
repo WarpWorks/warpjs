@@ -1,6 +1,5 @@
 // const _ = require('lodash');
 const Promise = require('bluebird');
-const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const actionGoto = require('./../../shared/action-goto');
 const inlineEdit = require('./../inline-edit');
@@ -9,57 +8,14 @@ const tableOfContents = require('./../table-of-contents');
 const template = require('./template.hbs');
 const vocabulary = require('./../vocabulary');
 
-const errorTemplate = warpjsUtils.requirePartial('error-portal');
-
-// let initialViewportHeight;
-//
-// function putFooterAtBottom($) {
-//     $('body').css('padding-bottom', 0);
-//
-//     if (!initialViewportHeight) {
-//         initialViewportHeight = $(window).height();
-//     }
-//
-//     const documentHeight = $(document).height();
-//
-//     console.log(`window:`, $(window).height(), '; document:', $(document).height());
-//
-//
-//     if (documentHeight < initialViewportHeight) {
-//         const footerHeight = $('.page--footer').outerHeight(true);
-//         $('body').css({
-//             'padding-bottom': `${footerHeight}px`,
-//             'min-height': '100vh',
-//         });
-//
-//         $('.page--footer').css({
-//             'position': 'absolute',
-//             'bottom': 0
-//         });
-//     } else {
-//         $('.page--footer').css({
-//             'position': 'relative'
-//         });
-//     }
-//
-// }
-
 (($) => $(document).ready(() => Promise.resolve()
-    // .then(() => {
-    //     putFooterAtBottom($);
-    //     $(window).on('resize', _.throttle(function() { putFooterAtBottom($); }, 200));
-    // })
-    .then(() => warpjsUtils.documentReady($))
-    .then(() => warpjsUtils.getCurrentPageHAL($))
+    .then(() => window.WarpJS.getCurrentPageHAL($))
     .then(
         (result) => {
             if (result.error) {
-                $(warpjsUtils.constants.CONTENT_PLACEHOLDER).html(errorTemplate(result.data));
-                // putFooterAtBottom($);
+                $(window.WarpJS.CONTENT_PLACEHOLDER).html(window.WarpJS.error(result.data));
             } else {
-                $(warpjsUtils.constants.CONTENT_PLACEHOLDER).html(template(result.data));
-
-                // putFooterAtBottom($);
+                $(window.WarpJS.CONTENT_PLACEHOLDER).html(template(result.data));
 
                 if (result.data && result.data._embedded && result.data._embedded.pages) {
                     const page = result.data._embedded.pages[0];
@@ -69,7 +25,7 @@ const errorTemplate = warpjsUtils.requirePartial('error-portal');
                     }
 
                     if (page && page._embedded && page._embedded.previews) {
-                        page._embedded.previews.forEach((preview) => warpjsUtils.cache.set(preview._links.preview.href, {
+                        page._embedded.previews.forEach((preview) => window.WarpJS.cache.set(preview._links.preview.href, {
                             title: preview.title,
                             content: preview.content
                         }));
@@ -84,7 +40,7 @@ const errorTemplate = warpjsUtils.requirePartial('error-portal');
                 actionGoto($);
             }
         },
-        (err) => warpjsUtils.toast.error($, err.message, "Error contacting server")
+        (err) => window.WarpJS.toast.error($, err.message, "Error contacting server")
     )
-    .catch((err) => warpjsUtils.toast.error($, err.message, "Error processing response"))
+    .catch((err) => window.WarpJS.toast.error($, err.message, "Error processing response"))
 ))(jQuery);

@@ -1,5 +1,4 @@
 const Promise = require('bluebird');
-const { proxy, toast } = require('@warp-works/warpjs-utils');
 
 const constants = require('./constants');
 const formFeedback = require('./../form-feedback');
@@ -16,12 +15,12 @@ module.exports = ($, instanceDoc) => {
 
         return Promise.resolve()
             .then(() => formFeedback.start($, this))
-            .then(() => proxy.patch($, undefined, data))
+            .then(() => window.WarpJS.proxy.patch($, undefined, data))
             .then(() => formFeedback.success($, this))
             .catch((err) => {
                 formFeedback.error($, this);
                 console.error("Error updating association description:", err);
-                toast.error($, err.message, "Error updating association description");
+                window.WarpJS.toast.error($, err.message, "Error updating association description");
             })
         ;
     });

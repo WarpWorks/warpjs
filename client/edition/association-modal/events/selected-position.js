@@ -1,5 +1,4 @@
 const Promise = require('bluebird');
-const { byPositionThenName, proxy, toast } = require('@warp-works/warpjs-utils');
 
 const constants = require('./../constants');
 const formFeedback = require('./../../form-feedback');
@@ -18,7 +17,7 @@ module.exports = ($, instanceDoc) => {
 
         return Promise.resolve()
             .then(() => formFeedback.start($, this))
-            .then(() => proxy.patch($, undefined, data))
+            .then(() => window.WarpJS.proxy.patch($, undefined, data))
             .then(() => formFeedback.success($, this))
 
             // Reposition the selected in the modal.
@@ -30,7 +29,7 @@ module.exports = ($, instanceDoc) => {
                     position: $(item).data('warpjsRelationshipPosition'),
                     item
                 })))
-                .then((items) => items.sort(byPositionThenName))
+                .then((items) => items.sort(window.WarpJS.byPositionThenName))
                 .then((items) => items.map((item) => item.item))
                 .then((items) => items.forEach((item) => section.append(item)))
             )
@@ -45,7 +44,7 @@ module.exports = ($, instanceDoc) => {
                     position: $(item).data('warpjsRelationshipPosition'),
                     item
                 })))
-                .then((items) => items.sort(byPositionThenName))
+                .then((items) => items.sort(window.WarpJS.byPositionThenName))
                 .then((items) => items.map((item) => item.item))
                 .then((items) => items.forEach((item) => section.append(item)))
             )
@@ -53,7 +52,7 @@ module.exports = ($, instanceDoc) => {
             .catch((err) => {
                 formFeedback.error($, this);
                 console.error("Error updating association position:", err);
-                toast.error($, err.message, "Error updating association position");
+                window.WarpJS.toast.error($, err.message, "Error updating association position");
             })
         ;
     });

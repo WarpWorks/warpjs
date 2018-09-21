@@ -1,6 +1,5 @@
 const moment = require('moment');
 const Promise = require('bluebird');
-const { proxy, toast } = require('@warp-works/warpjs-utils');
 
 const bodyTemplate = require('./modal-body.hbs');
 
@@ -17,12 +16,12 @@ class ChangeLogs {
             Promise.resolve()
                 .then(() => ChangeLogs.isDirty
                     ? Promise.resolve()
-                        .then(() => toast.loading($, "Updating change logs...", constants.TOAST_TITLE))
+                        .then(() => window.WarpJS.toast.loading($, "Updating change logs...", constants.TOAST_TITLE))
                         .then((toastLoading) => Promise.resolve()
-                            .then(() => proxy.get($, $(this).data('warpjsUrl'), true))
+                            .then(() => window.WarpJS.proxy.get($, $(this).data('warpjsUrl'), true))
                             .then((res) => bodyTemplate({ changeLogs: res._embedded.changeLogs }))
                             .then((content) => $(`${constants.MODAL_SELECTOR} .modal-body`, instanceDoc).html(content))
-                            .then(() => toast.close($, toastLoading))
+                            .then(() => window.WarpJS.toast.close($, toastLoading))
                         )
                     : null
                 )
@@ -35,7 +34,7 @@ class ChangeLogs {
                 })
                 .then(() => $(constants.MODAL_SELECTOR, instanceDoc).modal('show'))
                 .then(() => ChangeLogs.clean())
-                .catch(() => toast.error($, "Trouble getting the change logs", constants.TOAST_TITLE))
+                .catch(() => window.WarpJS.toast.error($, "Trouble getting the change logs", constants.TOAST_TITLE))
             ;
         });
     }

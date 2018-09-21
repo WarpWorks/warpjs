@@ -1,5 +1,4 @@
 const Promise = require('bluebird');
-const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const noDocumentsTemplate = require('./../selected-documents-none.hbs');
 
@@ -17,7 +16,7 @@ module.exports = ($, modal, buttonClicked) => {
     const selectedDocument = $(`.warpjs-section-selected-documents .warpjs-section-item[data-warpjs-id="${data.id}"]`, modal);
 
     return Promise.resolve()
-        .then(() => warpjsUtils.toast.warning($, "Remove selection on server", "TODO"))
+        .then(() => window.WarpJS.toast.warning($, "Remove selection on server", "TODO"))
         .then((res) => {
             selectedDocument.remove();
             if (!$('.warpjs-section-selected-documents .warpjs-section-item').length) {
@@ -25,6 +24,6 @@ module.exports = ($, modal, buttonClicked) => {
             }
             $('.warpjs-section-selected-document-detail').html('');
         })
-        .catch((err) => warpjsUtils.toast.error($, err.message, "ERROR"))
+        .catch((err) => window.WarpJS.toast.error($, err.message, "ERROR"))
     ;
 };

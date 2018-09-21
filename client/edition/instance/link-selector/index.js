@@ -1,6 +1,5 @@
 const FilterBox = require('@warp-works/warpjs-filter-box');
 const Promise = require('bluebird');
-const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const addSelectedEntity = require('./add-selected-entity');
 const constants = require('./constants');
@@ -20,7 +19,7 @@ module.exports = ($, instanceDoc) => Promise.resolve()
             FilterBox.init($);
 
             return Promise.resolve()
-                .then(() => warpjsUtils.proxy.get($, instanceDoc.data('warpjsTypesUrl')))
+                .then(() => window.WarpJS.proxy.get($, instanceDoc.data('warpjsTypesUrl')))
                 .then((res) => {
                     const content = template({
                         SELECTION_MODAL_CLASS: constants.SELECTION_MODAL_CLASS,

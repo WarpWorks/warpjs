@@ -1,5 +1,4 @@
 const Promise = require('bluebird');
-const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const constants = require('./constants');
 const selectionEntitiesErrorTemplate = require('./selection-entities-error.hbs');
@@ -15,7 +14,7 @@ module.exports = ($, instanceDoc) => {
     $(`${constants.DIALOG_SELECTOR} .${constants.SELECTION_ENTITIES}`, instanceDoc).html(selectionEntitiesLoadingTemplate());
 
     return Promise.resolve()
-        .then(() => warpjsUtils.proxy.get($, $(element).data('warpjsTypesUrl')))
+        .then(() => window.WarpJS.proxy.get($, $(element).data('warpjsTypesUrl')))
         .then((res) => {
             const content = selectOptionsTemplate({entities: res._embedded.entities});
             $(`${constants.DIALOG_SELECTOR} .${constants.SELECTION_TYPES}`, instanceDoc).html(content);
@@ -23,7 +22,7 @@ module.exports = ($, instanceDoc) => {
         .then(() => updateSelectionEntities($, instanceDoc))
         .catch((err) => {
             console.error("Error updating selection types:", err);
-            warpjsUtils.toast.error($, "Error getting data from server.", "Data error");
+            window.WarpJS.toast.error($, "Error getting data from server.", "Data error");
             $(`${constants.DIALOG_SELECTOR} .${constants.SELECTION_TYPES}`, instanceDoc).html(typesOptionErrorTemplate());
             $(`${constants.DIALOG_SELECTOR} .${constants.SELECTION_ENTITIES}`, instanceDoc).html(selectionEntitiesErrorTemplate());
         })

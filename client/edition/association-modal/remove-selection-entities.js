@@ -1,5 +1,4 @@
 const Promise = require('bluebird');
-const { proxy, toast } = require('@warp-works/warpjs-utils');
 
 const ChangeLogs = require('./../change-logs');
 const constants = require('./constants');
@@ -23,11 +22,11 @@ module.exports = ($, instanceDoc) => {
 
         // Call server async
         Promise.resolve()
-            .then(() => proxy.patch($, $(element).data('warpjsUrl'), {id, type, updatePath, patchAction}))
+            .then(() => window.WarpJS.proxy.patch($, $(element).data('warpjsUrl'), {id, type, updatePath, patchAction}))
             .then(() => ChangeLogs.dirty())
             .catch((err) => {
                 console.error("Error removing association", err);
-                toast.error($, err.message, "Error removing association");
+                window.WarpJS.toast.error($, err.message, "Error removing association");
             })
         ;
     });

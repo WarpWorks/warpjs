@@ -28,7 +28,8 @@
   ],
   "main": "index.js",
   "scripts": {
-    "prepublish": "grunt && npm test",
+    "prepare": "grunt",
+    "prepack": "npm test",
     "grunt": "grunt",
     "coverage:integration": "nyc --report-dir=reports/coverage/integration npm run -s test:integration",
     "coverage:unit": "nyc --report-dir=reports/coverage/unit npm run -s test:unit",
@@ -84,7 +85,7 @@
     "@warp-works/warpjs-mongo-persistence": "0.1.x",
     "@warp-works/warpjs-plugins": "latest",
     "@warp-works/warpjs-session-plugin": "latest",
-    "@warp-works/warpjs-utils": "1.2.x",
+    "@warp-works/warpjs-utils": "~1.2.41",
     "babel-core": "6.26.x",
     "babel-loader": "7.1.x",
     "babel-preset-env": "1.7.x",
@@ -122,7 +123,7 @@
   "peerDependencies": {
     "@warp-works/warpjs-plugins": ">=1.2.2",
     "@warp-works/warpjs-session-plugin": ">=1.2.9",
-    "@warp-works/warpjs-utils": ">=1.2.38",
+    "@warp-works/warpjs-utils": ">=1.2.41",
     "body-parser": ">=1.17.0",
     "cookie-parser": ">=1.4.0",
     "express": ">=4.0.0"

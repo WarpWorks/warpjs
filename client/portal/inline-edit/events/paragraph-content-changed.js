@@ -1,5 +1,4 @@
 const Promise = require('bluebird');
-const warpjsUtils = require('@warp-works/warpjs-utils');
 
 module.exports = ($, modal, changedElement) => {
     const url = modal.data('warpjsUrl');
@@ -18,18 +17,18 @@ module.exports = ($, modal, changedElement) => {
     };
 
     Promise.resolve()
-        .then(() => warpjsUtils.toast.loading($, "Saving..."))
+        .then(() => window.WarpJS.toast.loading($, "Saving..."))
         .then((toastLoading) => Promise.resolve()
-            .then(() => warpjsUtils.proxy.patch($, url, data))
-            .then(() => warpjsUtils.toast.success($, "Data updated"))
+            .then(() => window.WarpJS.proxy.patch($, url, data))
+            .then(() => window.WarpJS.toast.success($, "Data updated"))
             .then(() => {
                 modal.data('warpjsIsDirty', true);
                 $(`.warpjs-document-elements .warpjs-list-item .warpjs-list-item-value[data-warpjs-id="${id}"]`, modal)
                     .data('warpjsDescription', newValue)
                 ;
             })
-            .catch((err) => warpjsUtils.toast.error($, err.message, "Failed"))
-            .finally(() => warpjsUtils.toast.close($, toastLoading))
+            .catch((err) => window.WarpJS.toast.error($, err.message, "Failed"))
+            .finally(() => window.WarpJS.toast.close($, toastLoading))
         )
     ;
 };
