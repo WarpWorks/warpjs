@@ -1,5 +1,10 @@
 # WarpJS's Releases Notes
 
+## 1.2.97 - 2018-09-20
+
+- #41: Actually remove the title of the page on Plain style.
+- Upgraded node version and refactored for warpjs-utils@1.2.41
+
 ## 1.2.96 - 2018-09-18
 
 - #147: Added "Public Beta" banner.
