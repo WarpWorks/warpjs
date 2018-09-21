@@ -1,5 +1,9 @@
 # WarpJS's Releases Notes
 
+## 1.2.98 - 2018-09-20
+
+- #146: Add login button on page.
+
 ## 1.2.97 - 2018-09-20
 
 - #41: Actually remove the title of the page on Plain style.
