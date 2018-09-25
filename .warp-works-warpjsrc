@@ -144,7 +144,12 @@
         "attempt": "IPT_Attempt",
         "imageLibrary": "IMGLIB",
         "image": "Image",
-        "map": "Map"
+        "map": "Map",
+        "resultSet": "ResultSet",
+        "result": "Result",
+        "relevantHigh": "Relevant_If_High",
+        "relevantLow": "Relevant_If_Low",
+        "content": "Content"
       }
     }
   }]
