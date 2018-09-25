@@ -1,5 +1,9 @@
 # WarpJS's Releases Notes
 
+## 1.2.104 - 2018-09-25
+
+- Bumped warpjs-utils@1.2.47
+
 ## 1.2.103 - 2018-09-25
 
 - #161: Portal: Filter out Draft, Declined, and Retired.
