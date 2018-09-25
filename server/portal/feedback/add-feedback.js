@@ -6,17 +6,6 @@ const serverUtils = require('./../../utils');
 module.exports = (req, res) => {
     const { body } = req;
 
-    const data = {
-        choice: body.choice,
-        href: body.href,
-        text: body.text,
-        now: Date.now(),
-        from: req.ip
-
-    };
-
-    console.log("data=", data);
-
     const resource = warpjsUtils.createResource(req, {
         title: `Adding feedback`,
         form: body
@@ -29,7 +18,6 @@ module.exports = (req, res) => {
             try {
                 const entity = await serverUtils.getEntity(null, 'AdminConfiguration');
                 const documents = await entity.getDocuments(persistence);
-                console.log("documents=", documents);
 
                 // There should only be one document, so let's get the first
                 // one.
@@ -49,8 +37,6 @@ module.exports = (req, res) => {
                 feedbackInstance.HRef = body.href;
                 feedbackInstance.Text = body.text;
                 feedbackInstance.FeedbackType = body.choice;
-
-                console.log("feedbackInstance=", feedbackInstance);
 
                 await feedbackEntity.createDocument(persistence, feedbackInstance);
 

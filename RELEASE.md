@@ -1,5 +1,10 @@
 # WarpJS's Releases Notes
 
+## 1.2.101 - 2018-09-25
+
+- #160: Code cleaning.
+- #146: Update to warpjs@1.2.45.
+
 ## 1.2.100 - 2018-09-24
 
 - #148: Saving feedback on server.

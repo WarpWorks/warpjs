@@ -1,6 +1,6 @@
 {
   "name": "@warp-works/warpjs",
-  "version": "1.2.100",
+  "version": "1.2.101",
   "description": "Content management system for WarpWorks in javascript",
   "repository": {
     "type": "git",
@@ -85,7 +85,7 @@
     "@warp-works/warpjs-mongo-persistence": "0.1.x",
     "@warp-works/warpjs-plugins": "latest",
     "@warp-works/warpjs-session-plugin": "latest",
-    "@warp-works/warpjs-utils": "~1.2.44",
+    "@warp-works/warpjs-utils": "~1.2.45",
     "babel-core": "6.26.x",
     "babel-loader": "7.1.x",
     "babel-preset-env": "1.7.x",
@@ -123,7 +123,7 @@
   "peerDependencies": {
     "@warp-works/warpjs-plugins": ">=1.2.2",
     "@warp-works/warpjs-session-plugin": ">=1.2.9",
-    "@warp-works/warpjs-utils": ">=1.2.44",
+    "@warp-works/warpjs-utils": ">=1.2.45",
     "body-parser": ">=1.17.0",
     "cookie-parser": ">=1.4.0",
     "express": ">=4.0.0"
