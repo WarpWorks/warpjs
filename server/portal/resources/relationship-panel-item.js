@@ -10,6 +10,7 @@ const constants = require('./constants');
 const paragraphsByRelationship = require('./paragraphs-by-relationship');
 const previewByEntity = require('./preview-by-entity');
 const sortIntoColumns = require('./sort-into-columns');
+const visibleOnly = require('./visible-only');
 
 module.exports = (persistence, panelItem, instance) => Promise.resolve()
     .then(() => basePanelItemInfo(panelItem))
@@ -37,7 +38,7 @@ module.exports = (persistence, panelItem, instance) => Promise.resolve()
                 } else if (resource.style === constants.RELATIONSHIP_PANEL_ITEM_STYLES.Tile) {
                     return Promise.resolve()
                         .then(() => relationship.getDocuments(persistence, instance))
-                        .then((docs) => docs.filter((doc) => doc.Name !== 'TEMPLATE'))
+                        .then((docs) => docs.filter(visibleOnly))
                         .then((docs) => Promise.map(
                             docs,
                             (doc) => previewByEntity(persistence, relationship.getTargetEntity(), doc)
@@ -46,7 +47,7 @@ module.exports = (persistence, panelItem, instance) => Promise.resolve()
                 } else if (resource.style === constants.RELATIONSHIP_PANEL_ITEM_STYLES.Basic_Tile) {
                     return Promise.resolve()
                         .then(() => relationship.getDocuments(persistence, instance))
-                        .then((docs) => docs.filter((doc) => doc.Name !== 'TEMPLATE'))
+                        .then((docs) => docs.filter(visibleOnly))
 
                         .then((docs) => Promise.map(
                             docs,
@@ -69,7 +70,7 @@ module.exports = (persistence, panelItem, instance) => Promise.resolve()
                 } else if (resource.style === constants.RELATIONSHIP_PANEL_ITEM_STYLES.Preview) {
                     return Promise.resolve()
                         .then(() => relationship.getDocuments(persistence, instance))
-                        .then((docs) => docs.filter((doc) => doc.Name !== 'TEMPLATE'))
+                        .then((docs) => docs.filter(visibleOnly))
                         .then((docs) => Promise.map(
                             docs,
                             (doc) => previewByEntity(persistence, relationship.getTargetEntity(), doc)
@@ -78,7 +79,7 @@ module.exports = (persistence, panelItem, instance) => Promise.resolve()
                 } else if (resource.style === constants.RELATIONSHIP_PANEL_ITEM_STYLES.Vocabulary) {
                     return Promise.resolve()
                         .then(() => relationship.getDocuments(persistence, instance))
-                        .then((docs) => docs.filter((doc) => doc.Name !== 'TEMPLATE'))
+                        .then((docs) => docs.filter(visibleOnly))
                         .then((docs) => Promise.map(
                             docs,
                             (doc) => Promise.resolve()

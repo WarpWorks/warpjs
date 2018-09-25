@@ -1,5 +1,14 @@
 # WarpJS's Releases Notes
 
+## 1.2.103 - 2018-09-25
+
+- #161: Portal: Filter out Draft, Declined, and Retired.
+
+## 1.2.102 - 2018-09-25
+
+- #146: More styling for login
+- Redefining header items.
+
 ## 1.2.101 - 2018-09-25
 
 - #160: Code cleaning.

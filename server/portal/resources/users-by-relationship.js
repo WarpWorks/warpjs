@@ -3,12 +3,13 @@ const Promise = require('bluebird');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 
 const previewByEntity = require('./preview-by-entity');
+const visibleOnly = require('./visible-only');
 
 module.exports = (persistence, relationship, instance) => Promise.resolve()
     .then(() => relationship
         ? Promise.resolve()
             .then(() => relationship.getDocuments(persistence, instance))
-            .then((users) => users.filter((user) => user.Name !== 'TEMPLATE'))
+            .then((users) => users.filter(visibleOnly))
             .then((users) => Promise.map(
                 users,
                 (user) => previewByEntity(persistence, relationship.getTargetEntity(), user)

@@ -3,9 +3,11 @@ const Promise = require('bluebird');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const visibleOnly = require('./visible-only');
+
 module.exports = (persistence, relationship, instance) => Promise.resolve()
     .then(() => relationship.getDocuments(persistence, instance))
-    .then((documents) => documents.filter((document) => document.Name !== 'TEMPLATE'))
+    .then((documents) => documents.filter(visibleOnly))
     .then((documents) => Promise.map(
         documents,
         (document) => Promise.resolve()
