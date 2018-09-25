@@ -1,4 +1,3 @@
-const FilterBox = require('@warp-works/warpjs-filter-box');
 const Promise = require('bluebird');
 
 const addSelectedEntity = require('./add-selected-entity');
@@ -16,7 +15,6 @@ module.exports = ($, instanceDoc) => Promise.resolve()
             addSelectedEntity($, instanceDoc);
             removeSelectedEntity($, instanceDoc);
             saveSeletedEntities($, instanceDoc);
-            FilterBox.init($);
 
             return Promise.resolve()
                 .then(() => window.WarpJS.proxy.get($, instanceDoc.data('warpjsTypesUrl')))

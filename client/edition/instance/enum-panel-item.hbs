@@ -7,6 +7,7 @@
         data-doc-level="{{model.docLevel}}"
         {{#if model._links.self}}data-warpjs-url="{{model._links.self.href}}"{{/if}}
         {{#unless canEdit}}disabled{{/unless}}
+        {{#if readOnly}}disabled{{/if}}
         >
         <option data-literal="warpjs-enum-no-selection" value="">------------</option>
         {{#each model.literals}}

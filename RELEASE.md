@@ -1,5 +1,9 @@
 # WarpJS's Releases Notes
 
+## 1.2.100 - 2018-09-24
+
+- #148: Saving feedback on server.
+
 ## 1.2.99 - 2018-09-21
 
 - Fixes missing for content and studio with new warpjs-utils.
