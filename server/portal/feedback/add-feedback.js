@@ -37,6 +37,8 @@ module.exports = (req, res) => {
                 feedbackInstance.HRef = body.href;
                 feedbackInstance.Text = body.text;
                 feedbackInstance.FeedbackType = body.choice;
+                feedbackInstance.Contact = body.contact;
+                feedbackInstance.Browser = req.useragent.source;
 
                 await feedbackEntity.createDocument(persistence, feedbackInstance);
 

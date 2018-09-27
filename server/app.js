@@ -3,6 +3,7 @@ const cookieParser = require('cookie-parser');
 const debug = require('debug')('W2:WarpJS:app');
 const express = require('express');
 const expressBusboy = require('express-busboy');
+const expressUserAgent = require('express-useragent');
 const path = require('path');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsPlugins = require('@warp-works/warpjs-plugins');
@@ -26,6 +27,8 @@ module.exports = (baseUrl, staticUrl) => {
     warpjsUtils.cache.setConfig(config);
 
     const app = express();
+
+    app.use(expressUserAgent.express());
 
     baseUrl = (baseUrl === '/') ? '' : baseUrl;
 

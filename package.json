@@ -1,6 +1,6 @@
 {
   "name": "@warp-works/warpjs",
-  "version": "1.2.105",
+  "version": "1.2.106",
   "description": "Content management system for WarpWorks in javascript",
   "repository": {
     "type": "git",
@@ -58,6 +58,7 @@
     "bluebird": "~3.5.2",
     "debug": "3.1.0",
     "express-busboy": "7.0.0",
+    "express-useragent": "~1.0.12",
     "file-stream-rotator": "0.2.1",
     "hal": "0.1.0",
     "hbs": "4.0.1",
@@ -85,7 +86,7 @@
     "@warp-works/warpjs-mongo-persistence": "0.1.x",
     "@warp-works/warpjs-plugins": "latest",
     "@warp-works/warpjs-session-plugin": "latest",
-    "@warp-works/warpjs-utils": "~1.2.48",
+    "@warp-works/warpjs-utils": "~1.2.49",
     "babel-core": "6.26.x",
     "babel-loader": "7.1.x",
     "babel-preset-env": "1.7.x",
@@ -123,7 +124,7 @@
   "peerDependencies": {
     "@warp-works/warpjs-plugins": ">=1.2.2",
     "@warp-works/warpjs-session-plugin": ">=1.2.9",
-    "@warp-works/warpjs-utils": ">=1.2.48",
+    "@warp-works/warpjs-utils": ">=1.2.49",
     "body-parser": ">=1.17.0",
     "cookie-parser": ">=1.4.0",
     "express": ">=4.0.0"
