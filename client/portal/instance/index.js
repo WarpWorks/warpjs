@@ -38,6 +38,8 @@ const vocabulary = require('./../vocabulary');
                 inlineEdit($);
                 tableOfContents($);
                 actionGoto($);
+
+                window.WarpJS.displayCookiePopup(result.data.customMessages, result.data._links.acceptCookies);
             }
         },
         (err) => window.WarpJS.toast.error($, err.message, "Error contacting server")

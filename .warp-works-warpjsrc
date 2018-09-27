@@ -16,6 +16,10 @@
     "content": "DefaultPageView",
     "portal": "DefaultPortalView"
   },
+  "adminConfig": {
+    "type": "AdminConfiguration",
+    "id": "5ba9ca96ffe8c80011f1993f"
+  },
   "paginationSize": 5,
   "previews": {
     "relationshipPath": ["Overview", "Images", "Map", "Target"],

@@ -1,17 +1,22 @@
 // const debug = require('debug')('W2:portal:instance:extract-instance');
+const extend = require('lodash/extend');
 const Promise = require('bluebird');
+const reduce = require('lodash/reduce');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
-const config = require('./../config');
 const extractPage = require('./extract-page');
+const routes = require('./../../../lib/constants/routes');
 const serverUtils = require('./../../utils');
+
+const config = serverUtils.getConfig();
 
 module.exports = (req, res) => {
     const { type, id } = req.params;
     const pageViewName = req.query.pageViewName || config.views.portal;
 
     const resource = warpjsUtils.createResource(req, {
+        customMessages: {}
     });
 
     warpjsUtils.wrapWith406(res, {
@@ -22,6 +27,26 @@ module.exports = (req, res) => {
             .then((persistence) => Promise.resolve()
                 .then(() => serverUtils.getEntity(null, type))
                 .then((entity) => Promise.resolve()
+                    .then(async () => {
+                        const w2cookies = (req.signedCookies && req.signedCookies.w2cookies) ? JSON.parse(req.signedCookies.w2cookies) : {};
+
+                        if (!w2cookies.accepted) {
+                            const messages = await warpjsUtils.server.getCustomMessages(persistence, config, entity.getDomain(), [
+                                'PortalCookiePopup',
+                                'PortalCookiePopupAcceptLabel',
+                                'PortalLegalNotice',
+                                'PortalCookiePopupDetails'
+                            ]);
+
+                            reduce(messages, (accumulator, instance, key) => extend(accumulator, { [key]: instance.Message }), resource.customMessages);
+
+                            resource.link('acceptCookies', {
+                                href: RoutesInfo.expand(routes.portal.acceptCookies, {}),
+                                title: "Accept Cookies"
+                            });
+                        }
+                    })
+
                     .then(() => entity.getInstance(persistence, id))
                     .then((instance) => Promise.resolve()
                         .then(() => {

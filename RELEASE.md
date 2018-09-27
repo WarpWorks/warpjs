@@ -1,5 +1,9 @@
 # WarpJS's Releases Notes
 
+## 1.2.105 - 2018-09-26
+
+- #124: Portal: Display cookie disclaimer.
+
 ## 1.2.104 - 2018-09-25
 
 - Bumped warpjs-utils@1.2.47

@@ -1,5 +1,6 @@
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 
+const acceptCookies = require('./accept-cookies');
 const feedback = require('./feedback');
 const homepage = require('./homepage');
 const instance = require('./instance');
@@ -13,6 +14,7 @@ module.exports = (baseUrl) => {
     routesInfo.route(routes.portal.entity, '/{type}/{id}{?view,style}', instance);
     routesInfo.route(routes.portal.preview, '/{type}/{id}/preview', preview);
     routesInfo.route(routes.portal.feedback, '/feedback', feedback);
+    routesInfo.route(routes.portal.acceptCookies, '/accept-cookies', acceptCookies);
 
     return routesInfo;
 };
