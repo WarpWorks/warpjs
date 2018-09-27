@@ -40,4 +40,11 @@ module.exports = ($, result) => {
     documentStatus($, instanceDoc);
 
     shared($);
+
+    $('.warpjs-basic-property-Date.warpjs-readonly-field input[readonly]').each((index, element) => {
+        const val = $(element).val();
+        if (val) {
+            $(element).val(new Date(parseInt(val, 10)));
+        }
+    });
 };
