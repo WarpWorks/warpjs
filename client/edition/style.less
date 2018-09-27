@@ -186,9 +186,21 @@ span[data-warpjs-action="file-upload"] + input {
     width: calc(~"100% - 25px");
 }
 
-/* Textarea field. Need space for the wysiwyg button */
-span[data-warpjs-action="open-wysiwyg"] + textarea {
-    width: calc(~"100% - 20px");
+.warpjs-basic-property-Text {
+    /* Textarea field. Need space for the wysiwyg button */
+    textarea {
+        width: calc(~"100% - 20px");
+    }
+
+    &.warpjs-readonly-field {
+        span[data-warpjs-action="open-wysiwyg"] {
+            display: none;
+        }
+
+        textarea {
+            width: 100%;
+        }
+    }
 }
 
 .warpjs-selection-entities,

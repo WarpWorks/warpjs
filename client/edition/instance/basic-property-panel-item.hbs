@@ -1,4 +1,4 @@
-<div class="form-group basic-property-pi warpjs-basic-property-{{name}}">
+<div class="form-group basic-property-pi warpjs-basic-property-{{name}} {{#if readOnly}}warpjs-readonly-field{{/if}}">
   <label class="col-xs-12">
     <span class="col-xs-2 control-label">{{label}}</span>
     <div class="col-xs-10">
@@ -36,7 +36,7 @@
             data-doc-level="{{model.docLevel}}"
             data-warpjs-can-edit="{{canEdit}}"
             {{#if model._links.self}}data-warpjs-url="{{model._links.self.href}}"{{/if}}
-            {{#if readOnly}}readonly{{/if}}
+            {{#if readOnly}}disabled{{/if}}
             {{#unless canEdit}}disabled{{/unless}}
             >{{model.value}}</textarea>
         {{else}}
