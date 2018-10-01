@@ -156,5 +156,28 @@
         "content": "Content"
       }
     }
+  }, {
+    "name": "survey-tool",
+    "moduleName": "@warp-works/warpjs-survey-tool-plugin",
+    "path": "/survey-tool",
+    "type": "action",
+    "config": {
+      "glyphicon": "plane",
+      "label": "IPT Survey",
+      "schema": {
+        "questionnaire": "IPT",
+        "category": "CategoryQ",
+        "question": "DimensionQ",
+        "option": "OptionQ",
+        "imageLibrary": "IMGLIB",
+        "image": "Image",
+        "map": "Map",
+        "resultSet": "ResultSet",
+        "result": "Result",
+        "relevantHigh": "Relevant_If_High",
+        "relevantLow": "Relevant_If_Low",
+        "content": "Content"
+      }
+    }
   }]
 }
