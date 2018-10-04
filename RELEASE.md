@@ -1,5 +1,9 @@
 # WarpJS's Releases Notes
 
+## 1.2.108 - 2018-10-04
+
+- Added sorting to `entity.getChildren()`.
+
 ## 1.2.107 - 2018-10-01
 
 - WIP for survey-tool.
