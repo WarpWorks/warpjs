@@ -40,7 +40,8 @@ module.exports = (req, res) => {
         id,
         _meta: {
             editable: true
-        }
+        },
+        customMessages: {}
     });
 
     resource.link('preview', RoutesInfo.expand('entity', {
@@ -84,6 +85,11 @@ module.exports = (req, res) => {
                                 resource.displayName = entity.getDisplayName(instance);
                                 resource.isRootInstance = instance.isRootInstance;
                                 resource.status = instance.Status;
+                            })
+
+                            // Custom messages
+                            .then(async () => {
+                                resource.customMessages = await warpjsUtils.server.getCustomMessagesByPrefix(persistence, config, entity.getDomain(), 'Content');
                             })
 
                             // Changelogs

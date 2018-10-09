@@ -28,21 +28,21 @@
 </div>
 
 <div class="container-fluid">
-  {{> ../document-status/template status=page.status}}
+  {{> ../document-status/template status=page.status customMessages=customMessages}}
 </div>
 
 {{#if page.status.isVisible}}
   {{> page-view  page=page pageView=page._embedded.pageViews.[0]}}
 {{else}}
-    {{> left-right-margin}}
+  {{> left-right-margin}}
 
-    <div class="col-xs-12 col-sm-10 no-padding">
-      <div class="text-center warpjs-user-not-logged-in">To view the content of this page, please login.</div>
+  <div class="col-xs-12 col-sm-10 no-padding">
+    <div class="text-center warpjs-user-not-logged-in">To view the content of this page, please login.</div>
 
-      <div class="login-button text-center">
-        <button type="button" class="btn" data-warpjs-action="toggle-login-form">Login</button>
-      </div>
+    <div class="login-button text-center">
+      <button type="button" class="btn" data-warpjs-action="toggle-login-form">Login</button>
     </div>
+  </div>
 
-    {{> left-right-margin}}
+  {{> left-right-margin}}
 {{/if}}

@@ -91,7 +91,7 @@ module.exports = (req, persistence, entity, instance) => Promise.resolve()
                         showDisclaimer: (_.indexOf(statusConfig.disclaimer, documentStatus) !== -1)
                     };
 
-                    resource.status.isVisible = resource.status.isPublic || canEdit;
+                    resource.status.isVisible = resource.status.isPublic || canEdit || false;
                 })
             )
 

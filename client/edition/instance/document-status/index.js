@@ -1,5 +1,4 @@
 const constants = require('./constants');
-const modalTemplate = require('./modal.hbs');
 
 module.exports = ($, instanceDoc) => {
     $('select[data-doc-level="Enum:Status"]', instanceDoc).on('change', function() {
@@ -12,14 +11,16 @@ module.exports = ($, instanceDoc) => {
     });
 
     $(constants.PLACEHOLDER, instanceDoc).on('click', function() {
-        console.log("Display modal");
+        const customMessages = $(window.WarpJS.CONTENT_PLACEHOLDER).data('customMessages');
 
-        if (!$(constants.MODAL_SELECTOR, instanceDoc).length) {
-            instanceDoc.append(modalTemplate({
-                identifier: constants.IDENTIFIER,
-                baseClass: constants.BASE_CLASS
-            }));
-        }
-        $(constants.MODAL_SELECTOR, instanceDoc).modal('show');
+        const modalTitle = customMessages.ContentDocumentStatusModalTitle;
+        const modalContent = customMessages.ContentDocumentStatusModalContent;
+
+        const modal = window.WarpJS.modal($, constants.IDENTIFIER, modalTitle, [
+            { label: 'Close' }
+        ]);
+        $('> .modal-dialog > .modal-content > .modal-body', modal).html(modalContent);
+
+        modal.modal('show');
     });
 };

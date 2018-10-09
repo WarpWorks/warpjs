@@ -5,23 +5,66 @@
     padding-top: 5px;
     padding-bottom: 5px;
 
-    .warpjs-document-status-disclaimer {
+    .warpjs-document-status-content {
         color: #a32d27;
-    }
 
-    .warpjs-table {
-        .warpjs-cell {
-            vertical-align: middle;
+        a {
+            color: #a32d27;
+            text-decoration: underline;
+        }
 
-            &.warpjs-icon {
-                padding-right: 20px;
+        .warpjs-table {
+            .warpjs-cell {
+                vertical-align: middle;
+
+                &.warpjs-icon {
+                    padding-right: 20px;
+                }
             }
+        }
 
-            a {
-                color: #a32d27;
-                text-decoration: underline;
-            }
+        .warpjs-document-status-Proposal {
+            display: none;
+        }
+
+        .warpjs-document-status-IndividualContribution {
+            display: none;
+        }
+
+        .warpjs-document-status-not-public {
+            display: none;
+        }
+
+        .warpjs-document-status-not-visible {
+            display: none;
         }
     }
 
+    &[data-warpjs-document-status-is-public="true"][data-warpjs-document-status-show-disclaimer="false"][data-warpjs-document-status-is-visible="true"] {
+        display: none;
+    }
+
+    &[data-warpjs-document-status-is-public="false"][data-warpjs-document-status-is-visible="true"] {
+        .warpjs-document-status-not-public {
+            display: inherit;
+        }
+    }
+
+    &[data-warpjs-document-status-is-visible="false"] {
+        .warpjs-document-status-not-visible {
+            display: inherit;
+        }
+    }
+
+    &[data-warpjs-document-status-value="Proposal"] {
+        .warpjs-document-status-Proposal {
+            display: inherit;
+        }
+    }
+
+    &[data-warpjs-document-status-value="IndividualContribution"] {
+        .warpjs-document-status-IndividualContribution {
+            display: inherit;
+        }
+    }
 }

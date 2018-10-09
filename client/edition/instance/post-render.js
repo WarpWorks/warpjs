@@ -39,7 +39,7 @@ module.exports = ($, result) => {
     tablePanelItem($);
     documentStatus($, instanceDoc);
 
-    shared($);
+    shared($, result.data);
 
     $('.warpjs-basic-property-Date.warpjs-readonly-field input[readonly]').each((index, element) => {
         const val = $(element).val();

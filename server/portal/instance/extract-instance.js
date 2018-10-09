@@ -1,7 +1,5 @@
 // const debug = require('debug')('W2:portal:instance:extract-instance');
-const extend = require('lodash/extend');
 const Promise = require('bluebird');
-const reduce = require('lodash/reduce');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
@@ -30,16 +28,9 @@ module.exports = (req, res) => {
                     .then(async () => {
                         const w2cookies = (req.signedCookies && req.signedCookies.w2cookies) ? JSON.parse(req.signedCookies.w2cookies) : {};
 
+                        resource.customMessages = await warpjsUtils.server.getCustomMessagesByPrefix(persistence, config, entity.getDomain(), 'Portal');
+
                         if (!w2cookies.accepted) {
-                            const messages = await warpjsUtils.server.getCustomMessages(persistence, config, entity.getDomain(), [
-                                'PortalCookiePopup',
-                                'PortalCookiePopupAcceptLabel',
-                                'PortalLegalNotice',
-                                'PortalCookiePopupDetails'
-                            ]);
-
-                            reduce(messages, (accumulator, instance, key) => extend(accumulator, { [key]: instance.Message }), resource.customMessages);
-
                             resource.link('acceptCookies', {
                                 href: RoutesInfo.expand(routes.portal.acceptCookies, {}),
                                 title: "Accept Cookies"

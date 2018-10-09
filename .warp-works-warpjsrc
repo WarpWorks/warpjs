@@ -27,8 +27,8 @@
   },
   "status": {
     "property": "Status",
-    "public": ["Proposal", "Approved"],
-    "disclaimer": ["Proposal"],
+    "public": ["Proposal", "Approved", "IndividualContribution"],
+    "disclaimer": ["Proposal", "IndividualContribution"],
     "inheritance": "InheritFromParent"
   },
   "headerItems": [{

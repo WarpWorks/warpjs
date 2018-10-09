@@ -1,49 +1,46 @@
-{{#if status.isVisible}}
-  {{#if status.showDisclaimer}}
-    <div class="row warpjs-document-status-container">
-      {{>modal}}
+<div class="row warpjs-document-status-container"
+  data-warpjs-document-status-value="{{status.documentStatus}}"
+  data-warpjs-document-status-is-public="{{status.isPublic}}"
+  data-warpjs-document-status-show-disclaimer="{{status.showDisclaimer}}"
+  data-warpjs-document-status-is-visible="{{status.isVisible}}"
+  >
+  {{> left-right-margin}}
 
-      {{> left-right-margin}}
-
-      <div class="col-xs-12 col-sm-10 warpjs-document-status-disclaimer">
-        <div class="warpjs-table">
-          <div class="warpjs-cell warpjs-icon">
-            <i class="glyphicon glyphicon-exclamation-sign fa-2x pull-left"></i>
-          </div>
-
-          <div class="warpjs-cell warpjs-content">
-              <b>Document status: PROPOSAL - Please read the</b>
-              <a class="csv-list-item-link" data-toggle="modal"
-                data-target="#warpjs-document-status-modal">Disclaimer</a>
-          </div>
-        </div>
+  <div class="col-xs-12 col-sm-10 warpjs-document-status-content">
+    <div class="warpjs-table warpjs-document-status-Proposal">
+      <div class="warpjs-cell warpjs-icon">
+        <i class="glyphicon glyphicon-exclamation-sign fa-2x pull-left"></i>
       </div>
-
-      {{> left-right-margin}}
-    </div>
-  {{/if}}
-
-  {{#unless status.isPublic}}
-    <div class="row warpjs-document-status-container">
-      {{> left-right-margin}}
-
-      <div class="col-xs-12 col-sm-10 warpjs-document-status-disclaimer warpjs-content">
-        <b>This page will not be accessible to the general public and
-          is visible only to IIC member users because of the status of
-          the content on this page.</b>
+      <div class="warpjs-cell warpjs-content"
+        data-warpjs-document-status-modal-title="PortalDocumentStatusProposalModalTitle"
+        data-warpjs-document-status-modal-content="PortalDocumentStatusProposalModalContent"
+        data-warpjs-document-status-open-modal="true"
+        >
+        <b>{{{customMessages.PortalDocumentStatusProposalText}}}</b>
       </div>
-
-      {{> left-right-margin}}
-    </div>
-  {{/unless}}
-{{else}}
-  <div class="row warpjs-document-status-container">
-    {{> left-right-margin}}
-
-    <div class="col-xs-12 col-sm-10 warpjs-document-status-disclaimer warpjs-content">
-      <b>This page is not visible because of your access.</b>
     </div>
 
-    {{> left-right-margin}}
+    <div class="warpjs-table warpjs-document-status-IndividualContribution">
+      <div class="warpjs-cell warpjs-icon">
+        <i class="glyphicon glyphicon-exclamation-sign fa-2x pull-left"></i>
+      </div>
+      <div class="warpjs-cell warpjs-content"
+        data-warpjs-document-status-modal-title="PortalDocumentStatusIndividualContributionModalTitle"
+        data-warpjs-document-status-modal-content="PortalDocumentStatusIndividualContributionModalContent"
+        data-warpjs-document-status-open-modal="true"
+        >
+        <b>{{{customMessages.PortalDocumentStatusIndividualContributionText}}}</b>
+      </div>
+    </div>
+
+    <div class="warpjs-document-status-not-public">
+      <b>{{{customMessages.PortalDocumentStatusNotPublic}}}</b>
+    </div>
+
+    <div class="warpjs-document-status-not-visible">
+      <b>{{{customMessages.PortalDocumentStatusNotVisible}}}</b>
+    </div>
   </div>
-{{/if}}
+
+  {{> left-right-margin}}
+</div>

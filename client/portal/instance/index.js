@@ -2,6 +2,7 @@
 const Promise = require('bluebird');
 
 const actionGoto = require('./../../shared/action-goto');
+const documentStatus = require('./../document-status');
 const inlineEdit = require('./../inline-edit');
 const preview = require('./../preview');
 const tableOfContents = require('./../table-of-contents');
@@ -38,6 +39,7 @@ const vocabulary = require('./../vocabulary');
                 inlineEdit($);
                 tableOfContents($);
                 actionGoto($);
+                documentStatus($, result.data);
 
                 window.WarpJS.displayCookiePopup(result.data.customMessages, result.data._links.acceptCookies);
             }

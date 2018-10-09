@@ -1,5 +1,9 @@
 # WarpJS's Releases Notes
 
+## 1.2.109 - 2018-10-08
+
+- #136: Added IndividualContribution.
+
 ## 1.2.108 - 2018-10-04
 
 - Added sorting to `entity.getChildren()`.
