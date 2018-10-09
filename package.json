@@ -70,6 +70,7 @@
     "morgan": "~1.9.0",
     "random-words": "0.0.1",
     "serve-favicon": "2.5.0",
+    "shelljs": "~0.8.2",
     "url-template": "2.0.8",
     "uuid": "3.3.x",
     "winston": "2.4.x"
