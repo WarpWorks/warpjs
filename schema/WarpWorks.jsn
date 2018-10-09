@@ -1547,7 +1547,7 @@
               "type": "Panel",
               "id": 258,
               "position": 1,
-              "label": "literals",
+              "label": "Literals",
               "columns": 1,
               "alternatingColors": false,
               "separatorPanelItems": [],
@@ -1559,7 +1559,7 @@
                   "style": "Carousel",
                   "id": 259,
                   "position": 0,
-                  "label": "literals",
+                  "label": "Literals",
                   "relationship": [
                     50
                   ]
