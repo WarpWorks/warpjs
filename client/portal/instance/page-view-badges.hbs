@@ -8,26 +8,30 @@
           </div>
           <div class="row warpjs-content">
             <div class="col-xs-12">
-              <div class="row">
-                {{#each panel._embedded.items as |badge|}}
-                  <div class="col-xs-4 col-md-6 warpjs-item">
-                    {{#if badge._links.image.href}}
-                      <div class="warpjs-image-container-parent">
-                        <div class="warpjs-image-container-child">
-                          <a href="{{badge._links.self.href}}">
-                            <img src="{{badge._links.image.href}}"
-                              alt="{{badge.label}}"
-                              title="{{badge.description}}"
-                              />
-                          </a>
-                        </div>
-                      </div>
-                    {{else}}
-                      <div>[MISSING IMAGE FOR "{{badge.label}}"]</div>
-                    {{/if}}
+              {{#each panel._embedded.badgeCategories as |badgeCategory|}}
+                <div class="row">
+                  <div class="col-xs-12">
+                    {{badgeCategory.name}}
                   </div>
-                {{/each}}
-              </div>
+                </div>
+                <div class="row">
+                  {{#each badgeCategory._embedded.badgeDefinitions as |badgeDefinition|}}
+                    <div class="col-xs-6 warpjs-item">
+                      {{#if badgeDefinition._links.image.href}}
+                        <div class="warpjs-image-container-parent">
+                          <div class="warpjs-image-container-child">
+                            <a href="{{badgeDefinition._links.self.href}}">
+                              <img src="{{badgeDefinition._links.image.href}}" />
+                            </a>
+                          </div>
+                        </div>
+                      {{else}}
+                        <div>[MISSING IMAGE FOR "{{badge.label}}"]</div>
+                      {{/if}}
+                    </div>
+                  {{/each}}
+                </div>
+              {{/each}}
             </div>
           </div>
         </div>
