@@ -1,5 +1,9 @@
 # WarpJS's Releases Notes
 
+## 1.2.110 - 2018-10-10
+
+- #154: Categorized badges.
+
 ## 1.2.109 - 2018-10-08
 
 - #136: Added IndividualContribution.

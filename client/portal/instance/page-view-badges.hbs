@@ -9,12 +9,10 @@
           <div class="row warpjs-content">
             <div class="col-xs-12">
               {{#each panel._embedded.badgeCategories as |badgeCategory|}}
-                <div class="row">
-                  <div class="col-xs-12">
-                    {{badgeCategory.name}}
-                  </div>
+                <div class="row warpjs-badge-category">
+                  <div class="col-xs-12 warpjs-badge-category-title">{{badgeCategory.name}}</div>
                 </div>
-                <div class="row">
+                <div class="row warpjs-badge-definitions">
                   {{#each badgeCategory._embedded.badgeDefinitions as |badgeDefinition|}}
                     <div class="col-xs-6 warpjs-item">
                       {{#if badgeDefinition._links.image.href}}
@@ -25,8 +23,6 @@
                             </a>
                           </div>
                         </div>
-                      {{else}}
-                        <div>[MISSING IMAGE FOR "{{badge.label}}"]</div>
                       {{/if}}
                     </div>
                   {{/each}}
