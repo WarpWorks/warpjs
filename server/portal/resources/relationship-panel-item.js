@@ -48,7 +48,7 @@ module.exports = (persistence, panelItem, instance) => Promise.resolve()
                     return Promise.resolve()
                         .then(() => relationship.getDocuments(persistence, instance))
                         .then((docs) => docs.filter(visibleOnly))
-
+                        .then((docs) => docs.sort(warpjsUtils.byName))
                         .then((docs) => Promise.map(
                             docs,
                             (doc) => Promise.resolve()
