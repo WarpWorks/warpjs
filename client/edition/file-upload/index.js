@@ -36,6 +36,10 @@ class FileUpload {
                     modal.modal('hide');
                 });
 
+                modal.on('hidden.bs.modal', (event) => {
+                    modal.remove();
+                });
+
                 $('[data-warpjs-action="confirm-upload"]', modal).on('click', function(e) {
                     const input = $('form input[type="file"]', modal).get(0);
                     const files = input.files;
