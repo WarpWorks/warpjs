@@ -15,7 +15,7 @@
       <div class="col-xs-12 col-sm-3 warpjs-label">{{section.label}}</div>
       <div class="col-xs-11 col-xs-offset-1 col-sm-9 col-sm-offset-0 warpjs-value">{{section.value}}</div>
     {{else if section.isOfType.RelationshipPanelItem}}
-      {{> relationship-panel-items page=page section=section}}
+      {{> ./panel-items/template page=page section=section}}
     {{else}}
       <div class="col-xs-12">TODO: Implement panel-section for {{section.type}}</div>
     {{/if}}

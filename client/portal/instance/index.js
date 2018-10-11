@@ -7,7 +7,7 @@ const inlineEdit = require('./../inline-edit');
 const preview = require('./../preview');
 const tableOfContents = require('./../table-of-contents');
 const template = require('./template.hbs');
-const vocabulary = require('./../vocabulary');
+const panelItems = require('./panel-items');
 
 (($) => $(document).ready(() => Promise.resolve()
     .then(() => window.WarpJS.getCurrentPageHAL($))
@@ -35,7 +35,7 @@ const vocabulary = require('./../vocabulary');
                     preview($);
                 }
 
-                vocabulary($);
+                panelItems($);
                 inlineEdit($);
                 tableOfContents($);
                 actionGoto($);

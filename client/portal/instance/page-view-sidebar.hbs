@@ -14,7 +14,7 @@
                 <div class="row warpjs-content">
                   <div class="col-xs-12">
                     {{#if section.isOfType.RelationshipPanelItem}}
-                      {{> panel-items-csv items=section._embedded.items}}
+                      {{> ./panel-items/csv/template items=section._embedded.items}}
                       {{#if section.isAssociation}}
                         {{> ../inline-edit/context-button page=../../page elementId=section.id elementType='Relationship'}}
                       {{/if}}

@@ -1,5 +1,5 @@
 {{#each items as |item|}}
-  <div class="col-xs-4">
+  <div class="col-xs-4 warpjs-value-item-container">
     <div class="warpjs-value-item">
       <div class="warpjs-container">
         {{#if item._links.image}}
@@ -16,9 +16,9 @@
             <div class="warpjs-content">{{{item.description}}}</div>
           {{/unless}}
 
+          {{> ../../see-more title=item.name href=item._links.self.href}}
         </div>
       </div>
-      {{> see-more title=item.name href=item._links.self.href}}
     </div>
   </div>
 {{/each}}
