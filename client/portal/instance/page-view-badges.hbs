@@ -10,7 +10,9 @@
             <div class="col-xs-12">
               {{#each panel._embedded.badgeCategories as |badgeCategory|}}
                 <div class="row warpjs-badge-category">
-                  <div class="col-xs-12 warpjs-badge-category-title">{{badgeCategory.name}}</div>
+                  <div class="col-xs-12 warpjs-badge-category-title">
+                    <a href="{{badgeCategory._links.self.href}}">{{badgeCategory.name}}</a>
+                  </div>
                 </div>
                 <div class="row warpjs-badge-definitions">
                   {{#each badgeCategory._embedded.badgeDefinitions as |badgeDefinition|}}
