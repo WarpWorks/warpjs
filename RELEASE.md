@@ -1,12 +1,25 @@
 # WarpJS's Releases Notes
 
+## 1.2.111 - 2018-10-11
+
+- #154: Styling categorized badges.
+- #113: Fixed multiple image uploads.
+- #164: Dynamically adjust Tile and Basic_Tile height.
+- #154: Added link to BadgeCategory label
+- Adding user's company
+- Restyling the header image.
+
 ## 1.2.110 - 2018-10-10
 
+- Fixed styling for tab-navigation.
+- Fixed CSS for textarea in edition.
 - #154: Categorized badges.
+- Sorted `Basic_Tile` by name.
 
 ## 1.2.109 - 2018-10-08
 
 - #136: Added IndividualContribution.
+- Also refactored to extract CustomMessages (WarpWorks/warpjs-utils@a0a1677)
 
 ## 1.2.108 - 2018-10-04
 
