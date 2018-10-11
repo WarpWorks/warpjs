@@ -17,11 +17,18 @@
 
             <div class="warpjs-user-info warpjs-cell">
               <a class="warpjs-user-name" href="{{user._links.self.href}}">{{user.name}}</a>
+              {{#if user._embedded.companies.length}}
+                <div class="warpjs-user-companies">
+                  {{#each user._embedded.companies as |company|}}
+                    <a href="{{company._links.self.href}}" class="warpjs-user-company">{{company.label}}</a>{{#unless @last}},{{/unless}}
+                  {{/each}}
+                </div>
+              {{/if}}
             </div>
           </div>
         {{/each}}
       </div>
-      {{> ../inline-edit/context-button page=page elementId=title elementType='Relationship'}}
+      {{> ../../../inline-edit/context-button page=page elementId=title elementType='Relationship'}}
     </div>
   </div>
 {{/if}}

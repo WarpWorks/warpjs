@@ -4,9 +4,10 @@ const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const overviewByEntity = require('./overview-by-entity');
 const previewImageByEntity = require('./preview-image-by-entity');
+const routes = require('./../../../lib/constants/routes');
 
 module.exports = (persistence, entity, instance) => Promise.resolve()
-    .then(() => RoutesInfo.expand('entity', {
+    .then(() => RoutesInfo.expand(routes.portal.entity, {
         type: instance.type,
         id: instance.id
     }))
@@ -18,7 +19,7 @@ module.exports = (persistence, entity, instance) => Promise.resolve()
         label: instance.Label || instance.Name
     }))
     .then((resource) => Promise.resolve()
-        .then(() => RoutesInfo.expand('W2:portal:preview', {
+        .then(() => RoutesInfo.expand(routes.portal.preview, {
             type: instance.type,
             id: instance.id
         }))

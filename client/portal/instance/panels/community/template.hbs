@@ -1,0 +1,8 @@
+{{#each panels as |panel|}}
+  {{#if panel.showPanel}}
+    <div class="row warpjs-secondary-bg warpjs-page-view-side-panel warpjs-page-view-community">
+      {{> ./section page=../page title="Authors" users=panel._embedded.authors}}
+      {{> ./section page=../page title="Contributors" users=panel._embedded.contributors}}
+    </div>
+  {{/if}}
+{{/each}}
