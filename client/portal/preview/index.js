@@ -20,7 +20,6 @@ function position(popover, evt) {
 
     const left = Math.max(0, svgOffset.left + evt.offsetX - (popover.width() / 2));
     const top = Math.max(0, svgOffset.top + evt.offsetY - popover.height() - 20);
-
     popover.offset({left, top});
 }
 
@@ -31,7 +30,12 @@ function findPopover($) {
 }
 
 module.exports = ($) => {
-    $(document).on('mouseenter', '[data-warpjs-action="preview"][data-warpjs-preview-url]', function(evt) {
+    $(document).on('mousemove', '[data-warpjs-action="preview"][data-warpjs-preview-url]', _.throttle((evt) => {
+        const popover = findPopover($);
+        position(popover, evt);
+    }, 20));
+
+    $(document).on('mouseover', '[data-warpjs-action="preview"][data-warpjs-preview-url]', function(evt) {
         if ($(this).data(INITIALIZED)) {
             $(this).popover('show');
 
