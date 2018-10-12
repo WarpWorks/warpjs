@@ -1,5 +1,9 @@
 # WarpJS's Releases Notes
 
+##1.2.113 - 2018-10-12
+
+- #145 Preview Popover on ImageArea to follow mouse.
+
 ## 1.2.112 - 2018-10-12
 
 - Updated to warpjs-utils@1.2.54 to support direct links to header items.

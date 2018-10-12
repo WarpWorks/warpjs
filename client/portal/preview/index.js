@@ -35,7 +35,7 @@ module.exports = ($) => {
         position(popover, evt);
     }, 20));
 
-    $(document).on('mouseover', '[data-warpjs-action="preview"][data-warpjs-preview-url]', function(evt) {
+    $(document).on('mouseenter', '[data-warpjs-action="preview"][data-warpjs-preview-url]', function(evt) {
         if ($(this).data(INITIALIZED)) {
             $(this).popover('show');
 
