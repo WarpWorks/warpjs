@@ -42,8 +42,7 @@
     "view": "Testbed_Overview"
   }, {
     "label": "Project Explorer",
-    "type": "Document",
-    "id": "593c61b274e589000f715387"
+    "href": "/survey-tool/5b683a769e3c940010310dda"
   }, {
     "label": "BoK",
     "type": "BodyOfKnowledge",
