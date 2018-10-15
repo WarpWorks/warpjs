@@ -1,5 +1,9 @@
 # WarpJS's Releases Notes
 
+## 1.2.114 - 2018-10-15
+
+- #166: Fixed image upload size set
+
 ##1.2.113 - 2018-10-12
 
 - #145 Preview Popover on ImageArea to follow mouse.
