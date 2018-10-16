@@ -1,5 +1,13 @@
 # WarpJS's Releases Notes
 
+# Releases 1.3.x
+
+## 1.3.1 - 2018-10-16
+
+- #158: Implementation for path alias.
+
+# Releases 1.2.x
+
 ## 1.2.114 - 2018-10-15
 
 - #166: Fixed image upload size set
@@ -697,6 +705,8 @@
 - Refactored views and partials to be in other repos.
 - Updated dependencies.
 
+# Releases 1.0.x
+
 ## 1.0.0-rc17 - 2017-06-10
 
 - Link back to portal from WarpJS.
@@ -771,6 +781,8 @@
 ## 1.0.0-rc1 - 2017-05-31
 
 - Full front-end rework for embedded documents.
+
+# Releases 0.x
 
 ## 0.6.6 - 2017-05-12
 

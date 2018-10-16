@@ -1,4 +1,4 @@
-const debug = require('debug')('W2:portal:resources/users-by-relationship');
+// const debug = require('debug')('W2:portal:resources/users-by-relationship');
 const Promise = require('bluebird');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 
@@ -18,7 +18,7 @@ module.exports = async (persistence, relationship, instance) => {
             async (user) => {
                 const resource = await previewByEntity(persistence, targetEntity, user);
 
-                debug(`user=`, user);
+                // debug(`user=`, user);
                 const companies = await workingForByUser(persistence, targetEntity, user);
                 if (companies && companies.length) {
                     resource.embed('companies', companies);

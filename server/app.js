@@ -15,6 +15,7 @@ const favicon = require('serve-favicon');
 const logFiles = require('./log-files');
 const portal = require('./portal');
 const middlewares = require('./middlewares');
+const pathAlias = require('./path-alias');
 const serverUtils = require('./utils');
 const status = require('./status');
 const studio = require('./studio');
@@ -91,6 +92,9 @@ module.exports = (baseUrl, staticUrl) => {
     app.use(portalPrefix, portal.app(portalPrefix, staticUrl));
 
     warpjsPlugins.register(warpjsCore, app, baseUrl, staticUrl);
+
+    const pathAliasPrefix = `${baseUrl}/alias`;
+    app.use(pathAliasPrefix, pathAlias.app(pathAliasPrefix, staticUrl));
 
     // Just send default to the portal.
     app.get('/', (req, res) => {
