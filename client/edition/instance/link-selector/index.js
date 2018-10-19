@@ -33,4 +33,4 @@ module.exports = ($, instanceDoc) => Promise.resolve()
         // TODO: Show error.
         console.error("ERROR:", err);
     });
-;
+

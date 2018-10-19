@@ -2,7 +2,7 @@ const loadGruntConfig = require('load-grunt-config');
 const path = require('path');
 const timeGrunt = require('time-grunt');
 
-module.exports = function gruntfile(grunt) {
+module.exports = (grunt) => {
     timeGrunt(grunt);
 
     loadGruntConfig(grunt, {

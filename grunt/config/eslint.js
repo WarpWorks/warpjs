@@ -27,7 +27,11 @@ module.exports = {
         options: {
             baseConfig: {
                 root: true,
-                extends: '@quoin/eslint-config-quoin/client'
+                extends: [
+                    '@quoin/eslint-config-quoin/client',
+                    'eslint:recommended',
+                    'plugin:react/recommended'
+                ]
             },
             envs: [
                 'jquery',

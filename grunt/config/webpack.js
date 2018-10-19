@@ -33,6 +33,12 @@ module.exports = {
             filename: '[name].min.js'
         },
         plugins: [
+            // new webpack.DefinePlugin({
+            //     'process.env': {
+            //         NODE_ENV: JSON.stringify('production')
+            //     }
+            // }),
+
             new WebpackVisualizer(),
             new webpack.optimize.CommonsChunkPlugin({
                 names: 'vendor',
@@ -48,7 +54,7 @@ module.exports = {
         module: {
             loaders: [
                 {
-                    test: /\.js$/,
+                    test: /\.jsx?$/,
                     loader: 'babel-loader'
                 },
                 {
