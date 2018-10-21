@@ -1,6 +1,4 @@
 const Promise = require('bluebird');
-const React = require('react');
-const ReactDOM = require('react-dom');
 
 const actionGoto = require('./../../shared/action-goto');
 const documentStatus = require('./../document-status');
@@ -9,7 +7,6 @@ const preview = require('./../preview');
 const tableOfContents = require('./../table-of-contents');
 const template = require('./template.hbs');
 const panelItems = require('./panel-items');
-const Community = require('./community/component.jsx');
 
 (($) => $(document).ready(() => Promise.resolve()
     .then(() => window.WarpJS.getCurrentPageHAL($))
@@ -45,20 +42,24 @@ const Community = require('./community/component.jsx');
 
                 window.WarpJS.displayCookiePopup(result.data.customMessages, result.data._links.acceptCookies);
 
-                const communityPlaceholder = document.getElementById('warpjs-sidebar-community');
-                if (communityPlaceholder) {
-                    const data = result.data;
-                    const pages = (data && data._embedded && data._embedded.pages) ? data._embedded.pages : null;
-                    const page = (pages && pages.length) ? pages[0] : null;
-                    const pageViews = (page && page._embedded && page._embedded.pageViews) ? page._embedded.pageViews : null;
-                    const pageView = (pageViews && pageViews.length) ? pageViews[0] : null;
-                    const communities = (pageView && pageView._embedded && pageView._embedded.communities) ? pageView._embedded.communities : null;
-                    const community = (communities && communities.length) ? communities[0] : null;
+                // const React = require('react');
+                // const ReactDOM = require('react-dom');
+                // const Community = require('./community/component.jsx');
+                //
+                // const communityPlaceholder = document.getElementById('warpjs-sidebar-community');
+                // if (communityPlaceholder) {
+                //     const data = result.data;
+                //     const pages = (data && data._embedded && data._embedded.pages) ? data._embedded.pages : null;
+                //     const page = (pages && pages.length) ? pages[0] : null;
+                //     const pageViews = (page && page._embedded && page._embedded.pageViews) ? page._embedded.pageViews : null;
+                //     const pageView = (pageViews && pageViews.length) ? pageViews[0] : null;
+                //     const communities = (pageView && pageView._embedded && pageView._embedded.communities) ? pageView._embedded.communities : null;
+                //     const community = (communities && communities.length) ? communities[0] : null;
 
-                    if (community) {
-                        ReactDOM.render(<Community page={page} community={community} />, communityPlaceholder);
-                    }
-                }
+                //     if (community) {
+                //         ReactDOM.render(<Community page={page} community={community} />, communityPlaceholder);
+                //     }
+                // }
             }
         },
         (err) => {

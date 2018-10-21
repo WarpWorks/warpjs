@@ -21,12 +21,15 @@ module.exports = {
             [constants.entryPoints.portal]: './client/portal/instance/index.js'
         },
         externals: {
-            jquery: true,
-            tinymce: true
+            'jquery': 'jQuery',
+            'tinymce': 'tinyMCE',
+            'react': 'React',
+            'react-dom': 'ReactDOM',
+            'react-bootstrap': 'ReactBootstrap',
+            'react-redux': 'ReactRedux'
         },
         node: {
-            fs: 'empty',
-            tinymce: 'empty'
+            fs: 'empty'
         },
         output: {
             path: `${rootDir}/public/app`,

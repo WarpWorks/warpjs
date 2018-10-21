@@ -132,30 +132,6 @@
       "label": "Export Domain JSN"
     }
   }, {
-    "name": "ipt",
-    "moduleName": "@warp-works/warpjs-ipt-plugin",
-    "path": "/ipt",
-    "type": "action",
-    "config": {
-      "glyphicon": "plane",
-      "label": "IPT Survey",
-      "schema": {
-        "questionnaire": "IPT",
-        "category": "CategoryQ",
-        "question": "DimensionQ",
-        "option": "OptionQ",
-        "attempt": "IPT_Attempt",
-        "imageLibrary": "IMGLIB",
-        "image": "Image",
-        "map": "Map",
-        "resultSet": "ResultSet",
-        "result": "Result",
-        "relevantHigh": "Relevant_If_High",
-        "relevantLow": "Relevant_If_Low",
-        "content": "Content"
-      }
-    }
-  }, {
     "name": "survey-tool",
     "moduleName": "@warp-works/warpjs-survey-tool-plugin",
     "path": "/survey-tool",

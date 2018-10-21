@@ -1,5 +1,3 @@
-const React = require('react');
-
 const CommunitySection = require('./../community-section');
 
 const Community = (props) => {

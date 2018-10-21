@@ -1,5 +1,3 @@
-const React = require('react');
-
 const CommunityUser = require('./../community-user');
 const ContextButton = require('./../context-button');
 
