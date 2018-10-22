@@ -2,6 +2,10 @@
 
 # Releases 1.3.x
 
+## 1.3.3 - 2018-10-22
+
+- update node_modules
+
 ## 1.3.2 - 2018-10-22
 
 - #171 SVG height fix for IE11
