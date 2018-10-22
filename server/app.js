@@ -42,6 +42,10 @@ module.exports = (baseUrl, staticUrl) => {
     RoutesInfo.staticPath('W2:app:public', app, baseUrl, '/public', path.join(config.folders.w2projects, 'public'));
     RoutesInfo.staticPath('W2:app:static', app, baseUrl, staticUrl, 'public');
 
+    const coreStaticPath = path.join(path.dirname(require.resolve('@warp-works/warpjs-utils/package.json')), 'assets');
+
+    RoutesInfo.staticPath('W2:app:core', app, baseUrl, '/core', coreStaticPath);
+
     app.use(favicon(path.join(ROOT_DIR, 'public', 'images', 'favicon.ico')));
     app.use(bodyParser.json());
     expressBusboy.extend(app, {

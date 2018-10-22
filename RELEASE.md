@@ -2,6 +2,10 @@
 
 # Releases 1.3.x
 
+## 1.3.4 - 2018-10-22
+
+- Refactored to avoid need publish `warpjs` when `warpjs-utils` is published.
+
 ## 1.3.3 - 2018-10-22
 
 - update node_modules
