@@ -7,6 +7,7 @@ const preview = require('./../preview');
 const tableOfContents = require('./../table-of-contents');
 const template = require('./template.hbs');
 const panelItems = require('./panel-items');
+const imageResizer = require('./image-resizer');
 
 (($) => $(document).ready(() => Promise.resolve()
     .then(() => window.WarpJS.getCurrentPageHAL($))
@@ -60,6 +61,8 @@ const panelItems = require('./panel-items');
                 //         ReactDOM.render(<Community page={page} community={community} />, communityPlaceholder);
                 //     }
                 // }
+
+                imageResizer($);
             }
         },
         (err) => {
