@@ -1,5 +1,4 @@
 const tinymce = require('tinymce'); require('tinymce/themes/modern/theme');
-
 const TEXT_SELECTOR = '#warpjs-inline-edit-content';
 
 module.exports = ($, modal, clickedElement) => {
@@ -41,6 +40,10 @@ module.exports = ($, modal, clickedElement) => {
                 onclick: () => {
                     $(TEXT_SELECTOR, modal).val(editor.getContent()).trigger('change');
                 }
+            });
+
+            editor.on('blur', function(event) {
+                $(TEXT_SELECTOR, modal).val(editor.getContent()).trigger('change');
             });
         },
         content_css: '//www.tinymce.com/css/codepen.min.css'
