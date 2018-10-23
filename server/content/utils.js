@@ -26,6 +26,7 @@ function basicRender(bundles, data, req, res, isStudio) {
     resource.baseUrl = req.app.get('base-url');
     resource.staticUrl = req.app.get('static-url');
     resource.isStudio = isStudio;
+    resource.coreUrl = RoutesInfo.expand('W2:app:core', {});
 
     resource.bundles = bundles;
 

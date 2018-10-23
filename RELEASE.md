@@ -2,6 +2,10 @@
 
 # Releases 1.3.x
 
+## 1.3.6 - 2018-10-23
+
+- fix for broken urls.
+
 ## 1.3.5 - 2018-10-23
 
 - #174 save inline editor tinymce field on blur.
