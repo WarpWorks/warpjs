@@ -70,9 +70,22 @@
   </div>
 
   <div class="warpjs-detail-image-preview">
-    <div class="form-group">
-      <label>Image preview</label>
-      <div class="warpjs-content"></div>
+    <div class="image-carousel-container">
+      {{#if item.images.length}}
+        <div id="warpjs-detail-image-carousel" class="carousel slide">
+          <div class="carousel-inner">
+            {{#each item.images as |image|}}
+              <div class="carousel-item item {{#unless @index}}active{{/unless}}">
+                <div style="background-image: url({{image._links.self.href}});" class="inline-editor-image"></div>
+              </div>
+            {{/each}}
+          </div>
+          <div class="carousel-controls">
+            <a class="carousel-control left" href="#warpjs-detail-image-carousel" data-slide="prev">&lsaquo;</a>
+            <a class="carousel-control right" href="#warpjs-detail-image-carousel" data-slide="next">&rsaquo;</a>
+          </div>
+        </div>
+      {{/if}}
     </div>
   </div>
 </div>

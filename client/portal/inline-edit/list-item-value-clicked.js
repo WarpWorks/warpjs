@@ -8,7 +8,6 @@ module.exports = ($, modal, clickedElement) => {
     $(clickedElement).closest('.warpjs-list-item').addClass('warpjs-list-item-selected');
 
     const isParagraph = $(clickedElement).data('warpjsType') === 'Paragraph';
-
     const item = {
         type: $(clickedElement).data('warpjsType'),
         id: $(clickedElement).data('warpjsId'),
@@ -20,7 +19,8 @@ module.exports = ($, modal, clickedElement) => {
             id: $(clickedElement).data('warpjsReferenceId'),
             name: $(clickedElement).data('warpjsReferenceName')
         },
-        canChangeName: isParagraph && $(clickedElement).data('warpjsReferenceType') === 'Relationship'
+        canChangeName: isParagraph && $(clickedElement).data('warpjsReferenceType') === 'Relationship',
+        images: $(clickedElement).data('warpjsImages')
     };
 
     if (isParagraph) {
@@ -35,6 +35,9 @@ module.exports = ($, modal, clickedElement) => {
 
         $('.warpjs-detail-container .warpjs-placeholder', modal).html(detailTemplate({item}));
         initializeWysiwyg($, modal, clickedElement);
+        $('.carousel').carousel({
+            interval: false
+        });
     } else {
         $('.warpjs-detail-container .warpjs-placeholder', modal).html(associationTemplate({item}));
         updateTypes($, modal, clickedElement);

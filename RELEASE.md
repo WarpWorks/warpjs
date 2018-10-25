@@ -2,6 +2,10 @@
 
 # Releases 1.3.x
 
+## 1.3.7 - 2018-10-23
+
+- #176 Inline editor images.
+
 ## 1.3.6 - 2018-10-23
 
 - fix for broken urls.

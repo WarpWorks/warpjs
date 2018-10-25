@@ -4,6 +4,7 @@ const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const ComplexTypes = require('./../../../lib/core/complex-types');
 const constants = require('./constants');
+const imagesByParagraph = require('./../../portal/resources/images-by-paragraph');
 const extractDataRelationship = require('./extract-data-relationship');
 const listTypes = require('./list-types');
 const serverUtils = require('./../../utils');
@@ -59,19 +60,30 @@ module.exports = (req, res) => {
                                                                 .then((paragraphs) => paragraphs.sort(warpjsUtils.byPositionThenName))
                                                                 .then((paragraphs) => Promise.map(
                                                                     paragraphs,
-                                                                    (paragraph) => warpjsUtils.createResource('', {
-                                                                        type: paragraph.type,
-                                                                        id: paragraph.id || paragraph._id,
-                                                                        level: paragraph.HeadingLevel || 'H1',
-                                                                        isOfHeadingLevel: constants.isOfHeadingLevel(paragraph.HeadingLevel || 'H1'),
-                                                                        name: paragraph.Heading,
-                                                                        description: paragraph.Content,
-                                                                        reference: {
-                                                                            type: relationship.type,
-                                                                            id: relationship.id,
-                                                                            name: relationship.name
-                                                                        }
-                                                                    })
+                                                                    (paragraph) => Promise.resolve()
+                                                                        .then(() => warpjsUtils.createResource('', {
+                                                                            type: paragraph.type,
+                                                                            id: paragraph.id || paragraph._id,
+                                                                            level: paragraph.HeadingLevel || 'H1',
+                                                                            isOfHeadingLevel: constants.isOfHeadingLevel(paragraph.HeadingLevel || 'H1'),
+                                                                            name: paragraph.Heading,
+                                                                            description: paragraph.Content,
+                                                                            reference: {
+                                                                                type: relationship.type,
+                                                                                id: relationship.id,
+                                                                                name: relationship.name
+                                                                            }
+                                                                        }))
+                                                                        .then((paragraphResource) => Promise.resolve()
+                                                                            .then(() => imagesByParagraph(persistence, relationship.getTargetEntity(), paragraph))
+                                                                            .then((images) => {
+                                                                                if (images && images.length) {
+                                                                                    paragraphResource.embed('images', images);
+                                                                                }
+                                                                            })
+                                                                            .then(() => paragraphResource)
+                                                                        )
+
                                                                 ))
                                                                 .then((paragraphs) => instanceResource.embed('items', paragraphs))
                                                             : Promise.reject(new Error(`Relationship ${relationship.name}'s target is not Paragraph.`))

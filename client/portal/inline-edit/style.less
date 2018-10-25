@@ -310,9 +310,35 @@
             padding-right: 15px;
             width: 150px;
 
-            .warpjs-content {
+            .image-carousel-container {
                 height: 100px;
                 background-color: #aaaaaa;
+
+                .carousel-item {
+                    width: 120px;
+                    height: 100px;
+
+                    .inline-editor-image {
+                        width: 120px;
+                        height: 100px;
+                        background-position: center center;
+                        background-size: contain;
+                        background-repeat: no-repeat;
+                    }
+                }
+
+                .carousel-controls {
+                    height:  20px;
+                    position: absolute;
+                    width: 120px;
+
+                    .carousel-control {
+                        opacity: 1;
+                        text-shadow: none;
+                        color: #5096b7;
+                        background-image: none
+                    }
+                }
             }
         }
 
