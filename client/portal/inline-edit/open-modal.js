@@ -21,7 +21,7 @@ module.exports = ($, element, res) => {
     const instance = res._embedded.instances[0];
     $('.warpjs-document-name > div > .warpjs-content', modal).text(instance.name);
     $.each(instance._embedded.items, (index, item) => {
-        const images = item._embedded ? item._embedded.images : '';
+        const images = item._embedded ? item._embedded.images : [];
         item.images = JSON.stringify(images);
     });
 

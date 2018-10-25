@@ -2,7 +2,11 @@
 
 # Releases 1.3.x
 
-## 1.3.7 - 2018-10-23
+## 1.3.8 - 2018-10-25
+
+- Fix inline editor images container when empty.
+
+## 1.3.7 - 2018-10-25
 
 - #176 Inline editor images.
 
