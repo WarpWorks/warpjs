@@ -8,6 +8,9 @@ module.exports = ($, element, res) => {
     const elementId = $(element).data('warpjsId');
 
     let modal = $(`[data-warpjs-modal="${constants.MODAL_NAME}"]`);
+    const instance = res._embedded.instances[0];
+    const items = instance._embedded ? instance._embedded.items : [];
+
     if (!modal.length) {
         $('body').append(template({
             MODAL_NAME: constants.MODAL_NAME,
@@ -15,17 +18,16 @@ module.exports = ($, element, res) => {
         }));
 
         modal = $(`[data-warpjs-modal="${constants.MODAL_NAME}"]`);
-        defineEvents($, modal);
+        defineEvents($, modal, items);
     }
 
-    const instance = res._embedded.instances[0];
     $('.warpjs-document-name > div > .warpjs-content', modal).text(instance.name);
-    $.each(instance._embedded.items, (index, item) => {
+    $.each(items, (index, item) => {
         const images = item._embedded ? item._embedded.images : [];
         item.images = JSON.stringify(images);
     });
 
-    $('.warpjs-document-elements > div > .warpjs-content', modal).html(itemsTemplate({items: instance._embedded.items}));
+    $('.warpjs-document-elements > div > .warpjs-content', modal).html(itemsTemplate({items: items}));
 
     modal.modal('show');
 

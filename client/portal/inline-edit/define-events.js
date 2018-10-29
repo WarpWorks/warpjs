@@ -4,9 +4,10 @@ const paragraphContentChanged = require('./events/paragraph-content-changed');
 const removeFromSelectionClicked = require('./events/remove-from-selection-clicked');
 const selectedDocumentDetailChanged = require('./events/selected-document-detail-changed');
 const selectedDocumentsItemClicked = require('./events/selected-documents-item-clicked');
+const movePosition = require('./events/move-position');
 const textModalEvents = require('./text-modal/events');
 
-module.exports = ($, modal) => {
+module.exports = ($, modal, items) => {
     modal.on('hidden.bs.modal', function() {
         if (modal.data('warpjsIsDirty')) {
             window.WarpJS.toast.loading($, "Data has been updated, please reload the page", "Reload needed");
@@ -39,6 +40,22 @@ module.exports = ($, modal) => {
 
     modal.on('click', '.warpjs-modal-advanced-edit', function() {
         document.location.href = $(this).data('warpjsUrl');
+    });
+
+    modal.on('click', '[data-warpjs-action="inline-edit-paragraph-move-to-first"]', (event) => {
+        movePosition($, modal, event, items, 'first');
+    });
+
+    modal.on('click', '[data-warpjs-action="inline-edit-paragraph-move-up"]', (event) => {
+        movePosition($, modal, event, items, -1);
+    });
+
+    modal.on('click', '[data-warpjs-action="inline-edit-paragraph-move-down"]', (event) => {
+        movePosition($, modal, event, items, 1);
+    });
+
+    modal.on('click', '[data-warpjs-action="inline-edit-paragraph-move-to-last"]', (event) => {
+        movePosition($, modal, event, items, 'last');
     });
 
     textModalEvents($, modal);
