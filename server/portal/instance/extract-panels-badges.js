@@ -1,4 +1,5 @@
 // const debug = require('debug')('W2:portal:instance/extract-panels-badges');
+const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const badgeCategoriesByEntity = require('./../resources/badge-categories-by-entity');
@@ -39,6 +40,7 @@ module.exports = async (persistence, entity, instance, entityPanels) => {
                             if (badgeDefinition.id === assignedBadgeDefinition._id) {
                                 const stars = assignedBadge.Stars;
                                 const image = badgeDefinition._embedded.images.find((image) => image.name === stars);
+                                badgeDefinition._links.self.href = RoutesInfo.expand('entity', assignedBadge);
                                 if (image) {
                                     badgeDefinition._links.image.href = image._links.self.href;
                                 }
