@@ -2,6 +2,10 @@
 
 # Releases 1.3.x
 
+## 1.3.9 - 2018-10-29
+
+- #178 Change assigned badges to link to actual badge.
+
 ## 1.3.8 - 2018-10-25
 
 - Fix inline editor images container when empty.
