@@ -2,9 +2,13 @@
 
 # Releases 1.3.x
 
+## 1.3.11 - 2018-10-30
+
+- #179 Inline editor position label
+
 ## 1.3.10 - 2018-10-30
 
-- #177 inline editor change position of paragraphs with position buttons.
+- #177 Inline editor change position of paragraphs with position buttons.
 
 ## 1.3.9 - 2018-10-29
 
