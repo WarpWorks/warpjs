@@ -2,6 +2,10 @@
 
 # Releases 1.3.x
 
+## 1.3.10 - 2018-10-30
+
+- #177 inline editor change position of paragraphs with position buttons.
+
 ## 1.3.9 - 2018-10-29
 
 - #178 Change assigned badges to link to actual badge.
