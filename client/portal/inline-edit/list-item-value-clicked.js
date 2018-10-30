@@ -11,7 +11,7 @@ module.exports = ($, modal, clickedElement) => {
     const item = {
         type: $(clickedElement).data('warpjsType'),
         id: $(clickedElement).data('warpjsId'),
-        position: $(clickedElement).data('warpjsPosition'),
+        position: $(clickedElement).data('warpjsPosition') + 1,
         name: $(clickedElement).data('warpjsName'),
         description: $(clickedElement).data('warpjsDescription'),
         reference: {

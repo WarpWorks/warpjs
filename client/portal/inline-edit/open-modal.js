@@ -10,7 +10,9 @@ module.exports = ($, element, res) => {
     let modal = $(`[data-warpjs-modal="${constants.MODAL_NAME}"]`);
     const instance = res._embedded.instances[0];
     const items = instance._embedded ? instance._embedded.items : [];
-
+    $.each(items, (index, item) => {
+        item.position = index;
+    });
     if (!modal.length) {
         $('body').append(template({
             MODAL_NAME: constants.MODAL_NAME,
