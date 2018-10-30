@@ -164,5 +164,14 @@
         "persona": "Persona"
       }
     }
+  }, {
+    "name": "user-settings",
+    "moduleName": "@warp-works/warpjs-user-settings-plugin",
+    "path": "/user-settings",
+    "type": "user-settings",
+    "config": {
+      "glyphicon": "user",
+      "label": "User Settings"
+    }
   }]
 }
