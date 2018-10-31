@@ -2,6 +2,10 @@
 
 # Releases 1.3.x
 
+## 1.3.13 - 2018-10-31
+
+- Update warpjs-utils version
+
 ## 1.3.12 - 2018-10-31
 
 - Update warpjs-utils version
