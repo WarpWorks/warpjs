@@ -3,13 +3,13 @@ const Promise = require('bluebird');
 const bodyTemplate = require('./body.hbs');
 const constants = require('./../../constants');
 
-module.exports = ($, element) => new Promise((resolve, reject) => {
+module.exports = ($, element, position = 'auto') => new Promise((resolve, reject) => {
     // Remove any existing popover.
     $(`.${constants.HAS_POPOVER}`).popover('destroy');
 
     const popoverOptions = {
         html: true,
-        placement: 'auto',
+        placement: position,
         title: `Delete confirmation`,
         content: bodyTemplate()
     };

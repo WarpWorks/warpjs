@@ -6,6 +6,7 @@ const ComplexTypes = require('./../../../lib/core/complex-types');
 const serverUtils = require('./../../utils');
 const updateDataBasicProperty = require('./update-data-basic-property');
 const updateDataRelationship = require('./update-data-relationship');
+const deleteDocumentFromRelationship = require('./delete-document-from-relationship');
 const utils = require('./../utils');
 
 const IMPLEMENTATIONS = {
@@ -25,7 +26,6 @@ module.exports = (req, res) => {
         id,
         body
     });
-
     warpjsUtils.wrapWith406(res, {
         [warpjsUtils.constants.HAL_CONTENT_TYPE]: () => Promise.resolve()
             .then(() => serverUtils.getPersistence(domain))
@@ -44,7 +44,11 @@ module.exports = (req, res) => {
                             if (body && body.reference) {
                                 const impl = IMPLEMENTATIONS[body.reference.type];
                                 if (impl) {
-                                    return impl(persistence, entity, instance, body);
+                                    if (body.action && body.action === 'delete') {
+                                        return deleteDocumentFromRelationship(res, req, persistence, entity, instance, body);
+                                    } else {
+                                        return impl(persistence, entity, instance, body);
+                                    }
                                 } else {
                                     debug(`TODO body.reference=`, body.reference);
                                 }

@@ -2,6 +2,10 @@
 
 # Releases 1.3.x
 
+## 1.3.17 - 2018-11-05
+
+- #180 Inline editor paragraph delete with confirmation.
+
 ## 1.3.16 - 2018-11-04
 
 - #181: Adding Individual-Contribution

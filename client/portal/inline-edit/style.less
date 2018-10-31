@@ -206,8 +206,6 @@
         background-color: #cccccc;
         color: #000000;
         height: calc(~"100% - 25px");
-        overflow-y: auto;
-        overflow-x: hidden;
 
         .warpjs-modal-global-menu {
             margin-bottom: 18px;
@@ -227,7 +225,7 @@
             line-height: 35px;
             padding-right: 15px;
 
-            [data-warpjs-action] {
+            [data-warpjs-action]:not(button) {
                 background-color: white;
                 border-width: 1px;
                 border-style: solid;

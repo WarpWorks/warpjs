@@ -1,3 +1,33 @@
+<div class="row warpjs-modal-global-menu">
+  <div class="warpjs-modal-title">EDIT</div>
+  <div class="warpjs-modal-top-menu">
+    <span class="dropdown">
+      <span class="dropdown-toggle"
+        id="warpjs-inline-edit-modal-language"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="true"
+        data-warpjs-action="inline-edit-language"
+        ><span class="text">English</span> <span class="caret"></span></span>
+      <ul class="dropdown-menu" aria-labelledby="warpjs-inline-edit-modal-language">
+        <li data-warpjs-action="inline-edit-language-change">Chinese</li>
+        <li data-warpjs-action="inline-edit-language-change">English</li>
+        <li data-warpjs-action="inline-edit-language-change">German</li>
+      </ul>
+    </span>
+    <span
+      data-warpjs-action="inline-edit-delete"
+      class="pagination-remove"
+      data-warpjs-id="{{item.id}}"
+      data-warpjs-reference-type="{{item.reference.type}}"
+      data-warpjs-reference-id="{{item.reference.id}}"
+      data-warpjs-reference-name="{{item.reference.name}}"
+    >
+      Delete
+    </span>
+    <span data-warpjs-action="inline-edit-history">History</span>
+  </div>
+</div>
 <div class="row">
   <div class="warpjs-navigation-menu" data-warpjs-id="{{item.id}}">
     <div class="warpjs-navigation"

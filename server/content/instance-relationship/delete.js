@@ -28,7 +28,7 @@ module.exports = (req, res) => {
                     .then(() => serverUtils.canEdit(persistence, entity, instance, req.warpjsUser))
                     .then((canEdit) => {
                         if (!canEdit) {
-                            throw new WarpWorksError(`You do not have permission to renove this entry.`);
+                            throw new WarpWorksError(`You do not have permission to remove this entry.`);
                         }
                     })
                     .then(() => {
