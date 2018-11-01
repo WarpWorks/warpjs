@@ -7,6 +7,8 @@ const constants = require('./constants');
 const editionConstants = require('./../edition/constants');
 const serverUtils = require('./../utils');
 
+const config = serverUtils.getConfig();
+
 function createResourceFromDocument(instance) {
     // FIXME: missing domain
     const data = {
@@ -36,6 +38,10 @@ function basicRender(bundles, data, req, res, isStudio) {
         } else {
             resource.link('warpjsUtilsJs', editionConstants.assets.content);
         }
+    }
+
+    if (config && config.analytics && config.analytics.apiKey) {
+        resource.analyticsApi = config.analytics.apiKey;
     }
 
     res.render('index-edition', resource.toJSON());

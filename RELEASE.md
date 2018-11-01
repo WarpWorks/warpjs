@@ -2,6 +2,10 @@
 
 # Releases 1.3.x
 
+## 1.3.14 - 2018-11-1
+
+- Update for #184 google analytics.
+
 ## 1.3.13 - 2018-10-31
 
 - Update warpjs-utils version
