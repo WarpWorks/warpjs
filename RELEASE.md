@@ -2,6 +2,10 @@
 
 # Releases 1.3.x
 
+## 1.3.15 - 2018-11-1
+
+- Add analitics var to rc file.
+
 ## 1.3.14 - 2018-11-1
 
 - Update for #184 google analytics.

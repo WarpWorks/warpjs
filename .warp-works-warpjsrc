@@ -31,6 +31,9 @@
     "disclaimer": ["Proposal", "IndividualContribution"],
     "inheritance": "InheritFromParent"
   },
+  "analytics": {
+    "apiKey": "UA-128177947-1"
+  },
   "headerItems": [{
     "label": "Overview",
     "type": "BSSL",
