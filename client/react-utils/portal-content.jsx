@@ -1,7 +1,7 @@
 import { Col } from 'react-bootstrap';
 
 const Component = (props) => (
-    <Col xs={12} sm={10}>
+    <Col xs={12} sm={10} {...props}>
         {props.children}
     </Col>
 );
