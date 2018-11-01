@@ -35,14 +35,19 @@ module.exports = {
             path: `${rootDir}/public/app`,
             filename: '[name].min.js'
         },
+        resolve: {
+            extensions: [ '.jsx', '.js' ]
+        },
         plugins: [
-            // new webpack.DefinePlugin({
-            //     'process.env': {
-            //         NODE_ENV: JSON.stringify('production')
-            //     }
-            // }),
+            new webpack.EnvironmentPlugin({
+                NODE_ENV: 'production',
+                DEBUG: false
+            }),
 
-            new WebpackVisualizer(),
+            new WebpackVisualizer({
+                filename: './../../reports/webpack-visualizer.html'
+            }),
+
             new webpack.optimize.CommonsChunkPlugin({
                 names: 'vendor',
                 minChunks: (module) => module.context && module.context.indexOf('node_modules') !== -1

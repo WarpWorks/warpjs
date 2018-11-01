@@ -4,5 +4,15 @@
     "react",
     "stage-0"
   ],
+  "plugins": [
+    [
+      "transform-async-to-generator",
+      {
+        "module": "bluebird",
+        "method": "coroutine"
+      }
+    ],
+    "transform-object-rest-spread"
+  ],
   "compact": false
 }

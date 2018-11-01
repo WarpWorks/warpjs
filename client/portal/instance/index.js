@@ -1,3 +1,5 @@
+import initReactBootstrapDisplayNames from './../../react-utils/init-react-bootstrap-display-names';
+
 const Promise = require('bluebird');
 
 const actionGoto = require('./../../shared/action-goto');
@@ -8,6 +10,7 @@ const tableOfContents = require('./../table-of-contents');
 const template = require('./template.hbs');
 const panelItems = require('./panel-items');
 const imageResizer = require('./image-resizer');
+const individualContribution = require('./individual-contribution');
 
 (($) => $(document).ready(() => Promise.resolve()
     .then(() => window.WarpJS.getCurrentPageHAL($))
@@ -33,6 +36,8 @@ const imageResizer = require('./image-resizer');
                     }
 
                     preview($);
+                    initReactBootstrapDisplayNames();
+                    individualContribution($, result.data);
                 }
 
                 panelItems($);
@@ -42,6 +47,7 @@ const imageResizer = require('./image-resizer');
                 documentStatus($, result.data);
 
                 window.WarpJS.displayCookiePopup(result.data.customMessages, result.data._links.acceptCookies);
+
 
                 // const React = require('react');
                 // const ReactDOM = require('react-dom');
