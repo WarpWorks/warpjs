@@ -1,4 +1,10 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+import IndividualContributionHeader from './individual-contribution-header';
 import initReactBootstrapDisplayNames from './../../react-utils/init-react-bootstrap-display-names';
+
+import debug from './../debug';
 
 const Promise = require('bluebird');
 
@@ -10,7 +16,7 @@ const tableOfContents = require('./../table-of-contents');
 const template = require('./template.hbs');
 const panelItems = require('./panel-items');
 const imageResizer = require('./image-resizer');
-const individualContribution = require('./individual-contribution');
+const log = debug('client/portal/instance/index');
 
 (($) => $(document).ready(() => Promise.resolve()
     .then(() => window.WarpJS.getCurrentPageHAL($))
@@ -36,8 +42,16 @@ const individualContribution = require('./individual-contribution');
                     }
 
                     preview($);
+
+                    const state = window.WarpJS.flattenHAL(result.data);
+                    log(`state=`, state);
+
                     initReactBootstrapDisplayNames();
-                    individualContribution($, result.data);
+
+                    const individualContributionHeaderPlaceholder = document.getElementById('warpjs-individual-contribution-header-placeholder');
+                    if (individualContributionHeaderPlaceholder) {
+                        ReactDOM.render(<IndividualContributionHeader page={state.pages[0]} />, individualContributionHeaderPlaceholder);
+                    }
                 }
 
                 panelItems($);
@@ -72,9 +86,12 @@ const individualContribution = require('./individual-contribution');
             }
         },
         (err) => {
-            console.err("Error processing response:", err);
+            console.error("Error contacting server:", err);
             window.WarpJS.toast.error($, err.message, "Error contacting server");
         }
     )
-    .catch((err) => window.WarpJS.toast.error($, err.message, "Error processing response"))
+    .catch((err) => {
+        console.error("Error processing response:", err);
+        window.WarpJS.toast.error($, err.message, "Error processing response");
+    })
 ))(jQuery);

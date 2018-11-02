@@ -2,9 +2,9 @@ import PropTypes from 'prop-types';
 import { Col, Glyphicon, Grid, Row } from 'react-bootstrap';
 
 import errorBoundary from './../../../react-utils/error-boundary';
-import IndividualContributionCommunity from './component-community';
-import IndividualContributionTitle from './component-title';
-import IndividualContributionTop from './component-top';
+import IndividualContributionCommunity from './components/community';
+import IndividualContributionTitle from './components/title';
+import IndividualContributionHeader from './components/header';
 import LeftRightMargin from './../../../react-utils/left-right-margin';
 import PortalContent from './../../../react-utils/portal-content';
 
@@ -22,12 +22,9 @@ const Component = (props) => {
     const users = [].concat(authors).concat(contributors);
     const displayedUsers = users.slice(0, 4);
 
-    log("users=", users);
-    log("displayedUsers=", displayedUsers);
-
     return (
         <div className="warpjs-individual-contribution-header">
-            <IndividualContributionTop customMessages={props.customMessages} />
+            <IndividualContributionHeader />
             <IndividualContributionCommunity users={users} />
             <IndividualContributionTitle name={props.page.name} />
         </div>
@@ -36,7 +33,6 @@ const Component = (props) => {
 Component.displayName = 'IndividualContribution';
 
 Component.propTypes = {
-    customMessages: PropTypes.object.isRequired,
     page: PropTypes.object.isRequired
 };
 
