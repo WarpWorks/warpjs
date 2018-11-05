@@ -2,6 +2,10 @@
 
 # Releases 1.3.x
 
+## 1.3.18 - 2018-11-05
+
+- #181: Fixed DOM and CSS for no authors/contributors. Fixed Oxford comma.
+
 ## 1.3.17 - 2018-11-05
 
 - #180 Inline editor paragraph delete with confirmation.

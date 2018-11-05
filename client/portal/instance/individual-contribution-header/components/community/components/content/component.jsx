@@ -73,9 +73,9 @@ const Component = (props) => {
         );
     } else {
         return (
-            <Col xs={12} className="warpjs-individual-contribution-no-community">
+            <div className="warpjs-individual-contribution-no-community">
                 No authors or contributors defined
-            </Col>
+            </div>
         );
     }
 

@@ -1,6 +1,7 @@
 // const debug = require('debug')('W2:WarpJS:utils');
 const hal = require('hal');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
+const warpjsPlugins = require('@warp-works/warpjs-plugins');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const constants = require('./constants');
@@ -48,12 +49,20 @@ function basicRender(bundles, data, req, res, isStudio) {
 }
 
 function sendHal(req, res, resource, status) {
+    const { domain, type, id } = req.params;
+
     resource.link('warpjsHome', RoutesInfo.expand(constants.routes.home, {}));
     if (req.params.domain) {
         resource.link('warpjsDomain', RoutesInfo.expand(constants.routes.domain, {
             domain: req.params.domain
         }));
     }
+
+    const menuPlugins = (domain)
+        ? warpjsPlugins.getPlugins([warpjsPlugins.RESERVED_PLUGIN_TYPES.CONTENT_DOMAIN_ACTION, warpjsPlugins.RESERVED_PLUGIN_TYPES.CONTENT_ACTION])
+        : warpjsPlugins.getPlugins(warpjsPlugins.RESERVED_PLUGIN_TYPES.CONTENT_ACTION)
+    ;
+    resource.embed('headerMenuItems', serverUtils.menuItems(menuPlugins, domain, type, id));
 
     serverUtils.sendHal(req, res, resource, status);
 }
