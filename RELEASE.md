@@ -2,7 +2,11 @@
 
 # Releases 1.3.x
 
-## 1.3.15 - 2018-11-1
+## 1.3.16 - 2018-11-04
+
+- #181: Adding Individual-Contribution
+
+## 1.3.15 - 2018-11-01
 
 - Add analitics var to rc file.
 
