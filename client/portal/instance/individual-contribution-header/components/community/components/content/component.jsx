@@ -3,8 +3,11 @@ import PropTypes from 'prop-types';
 import And from './../and';
 import AndMore from './../and-more';
 import errorBoundary from './../../../../../../../react-utils/error-boundary';
+import ResponsiveImage from './../../../responsive-image';
 import SeeAll from './../see-all';
 import UserName from './../user-name';
+
+const displayImages = (displayedUsers) => displayedUsers.map((user) => <ResponsiveImage key={user.id} src={user._links.image.href} />);
 
 const displayNames = (displayedUsers, moreUsers) => {
     // FIXME: Better logic than this hard-coded.
@@ -55,11 +58,17 @@ const Component = (props) => {
     const moreUsers = props.users.length - displayedUsers.length;
 
     if (displayedUsers.length) {
+        const displayedImages = displayImages(displayedUsers);
         const displayedNames = displayNames(displayedUsers, moreUsers);
 
         return (
-            <div className="warpjs-individual-contribution-names">
-                {displayedNames}
+            <div className="warpjs-individual-contribution-container">
+                <div className={`warpjs-individual-contribution-images warpjs-individual-contribution-images-${displayedUsers.length}`}>
+                    {displayedImages}
+                </div>
+                <div className="warpjs-individual-contribution-names">
+                    {displayedNames}
+                </div>
             </div>
         );
     } else {
