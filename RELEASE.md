@@ -2,6 +2,10 @@
 
 # Releases 1.3.x
 
+## 1.3.20 - 2018-11-06
+
+- #180 update: Keep inline editor modal open after delete.
+
 ## 1.3.19 - 2018-11-06
 
 - #181: Responsive for individual contribution, x-small screen.
