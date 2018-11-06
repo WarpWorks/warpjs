@@ -68,6 +68,5 @@ module.exports = ($, modal, items) => {
         })
     );
 
-
     textModalEvents($, modal);
 };

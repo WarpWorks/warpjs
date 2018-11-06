@@ -42,4 +42,8 @@ module.exports = ($, modal, clickedElement) => {
         $('.warpjs-detail-container .warpjs-placeholder', modal).html(associationTemplate({item}));
         updateTypes($, modal, clickedElement);
     }
+
+    $('[data-toggle="tooltip"]').tooltip({
+        container: 'body'
+    });
 };

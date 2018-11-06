@@ -103,7 +103,7 @@
     <div class="image-carousel-container">
       {{#if item.images.length}}
         <div id="warpjs-detail-image-carousel" class="carousel slide">
-          <div class="carousel-inner">
+          <div class="carousel-inner" data-toggle="tooltip" data-html="true" title="{{> image-tooltip}}" data-placement="bottom">
             {{#each item.images as |image|}}
               <div class="carousel-item item {{#unless @index}}active{{/unless}}">
                 <div style="background-image: url({{image._links.self.href}});" class="inline-editor-image"></div>
