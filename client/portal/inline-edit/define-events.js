@@ -16,6 +16,7 @@ module.exports = ($, modal, items) => {
         if (modal.data('warpjsIsDirty')) {
             window.WarpJS.toast.loading($, "Data has been updated, please reload the page", "Reload needed");
         }
+        modal.remove();
     });
 
     modal.on('click', '.warpjs-document-elements .warpjs-content .warpjs-list-item .warpjs-list-item-value', function() {

@@ -29,7 +29,7 @@ module.exports = (req, res) => {
     });
 
     warpjsUtils.wrapWith406(res, {
-        [warpjsUtils.constants.HAL_CONTENT_TYPE]: () => Promise.resolve()
+        [warpjsUtils.constants.HAL_CONTENT_TYPE]: async () => Promise.resolve()
             .then(() => serverUtils.getPersistence(domain))
             .then((persistence) => Promise.resolve()
                 .then(() => serverUtils.getEntity(domain, type))
@@ -52,7 +52,7 @@ module.exports = (req, res) => {
                                     ;
                                 } else {
                                     return Promise.resolve()
-                                        .then(() => {
+                                        .then(async () => {
                                             if (body && body.reference && body.reference.type) {
                                                 if (body.reference.type === ComplexTypes.Relationship) {
                                                     return Promise.resolve()
@@ -98,11 +98,11 @@ module.exports = (req, res) => {
                                                 } else {
                                                     debug(`TODO: body.reference.type=`, body.reference.type);
                                                 }
-                                            } else if (body && body.elementType === 'Relationship') {
-                                                return Promise.resolve()
-                                                    .then(() => extractDataRelationship(persistence, entity, instance, body))
-                                                    .then((items) => instanceResource.embed('items', items))
-                                                ;
+                                            } else if (body && body.elementType === 'Relationship' && body.elementId) {
+                                                const items = await extractDataRelationship(persistence, entity, instance, body);
+                                                instanceResource.embed('items', items);
+                                            } else {
+                                                debug(`TODO: Handle body=`, body);
                                             }
                                         })
                                     ;

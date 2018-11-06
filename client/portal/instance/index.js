@@ -1,3 +1,5 @@
+// eslint-disable-next-line no-unused-vars
+import regeneratorRuntime from 'babel-regenerator-runtime';
 import React from 'react';
 import ReactDOM from 'react-dom';
 

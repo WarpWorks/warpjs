@@ -1,3 +1,4 @@
+const associationModal = require('./association-modal');
 const comingSoon = require('./coming-soon');
 const textModal = require('./text-modal');
 
@@ -21,6 +22,10 @@ module.exports = ($) => {
         switch (elementType) {
             case 'Paragraph':
                 textModal($, this);
+                break;
+
+            case 'Relationship':
+                associationModal($, this);
                 break;
 
             default:
