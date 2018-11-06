@@ -1,4 +1,7 @@
+const Promise = require('bluebird');
+
 const addDocumentToSelection = require('./events/add-document-to-selection');
+const deleteClicked = require('./events/delete-clicked');
 const listItemValueClicked = require('./list-item-value-clicked');
 const paragraphContentChanged = require('./events/paragraph-content-changed');
 const removeFromSelectionClicked = require('./events/remove-from-selection-clicked');
@@ -57,6 +60,14 @@ module.exports = ($, modal, items) => {
     modal.on('click', '[data-warpjs-action="inline-edit-paragraph-move-to-last"]', (event) => {
         movePosition($, modal, event, items, 'last');
     });
+
+    modal.on('click', '[data-warpjs-action="inline-edit-delete"]', (event) => Promise.resolve()
+        .then(() => deleteClicked($, modal, event, items))
+        .then((updatedItems) => {
+            items = updatedItems;
+        })
+    );
+
 
     textModalEvents($, modal);
 };
