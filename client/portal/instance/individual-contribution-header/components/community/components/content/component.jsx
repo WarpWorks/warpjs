@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { Col } from 'react-bootstrap';
 
 import And from './../and';
 import AndMore from './../and-more';
@@ -62,20 +63,31 @@ const Component = (props) => {
         const displayedNames = displayNames(displayedUsers, moreUsers);
 
         return (
-            <div className="warpjs-individual-contribution-container">
-                <div className={`warpjs-individual-contribution-images warpjs-individual-contribution-images-${displayedUsers.length}`}>
-                    {displayedImages}
-                </div>
-                <div className="warpjs-individual-contribution-names">
-                    {displayedNames}
-                </div>
-            </div>
+            <React.Fragment>
+                <Col xs={12} xsHidden className="warpjs-individual-contribution-container">
+                    <div className={`warpjs-individual-contribution-images warpjs-individual-contribution-images-${displayedUsers.length}`}>
+                        {displayedImages}
+                    </div>
+                    <div className="warpjs-individual-contribution-names">
+                        {displayedNames}
+                    </div>
+                </Col>
+
+                <Col xs={12} smHidden mdHidden lgHidden className="warpjs-individual-contribution-container-xs">
+                    <div className="warpjs-individual-contribution-images">
+                        {displayedImages}
+                    </div>
+                    <div className="warpjs-individual-contribution-names">
+                        {displayedNames}
+                    </div>
+                </Col>
+            </React.Fragment>
         );
     } else {
         return (
-            <div className="warpjs-individual-contribution-no-community">
+            <Col xs={12} className="warpjs-individual-contribution-no-community">
                 No authors or contributors defined
-            </div>
+            </Col>
         );
     }
 

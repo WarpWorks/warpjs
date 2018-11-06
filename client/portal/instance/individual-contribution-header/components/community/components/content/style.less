@@ -5,10 +5,63 @@
 @warpjs-individual-contribution-images-3-width: @warpjs-individual-contribution-image-width * 3 - 2 * 15px + @warpjs-individual-contribution-image-padding;
 @warpjs-individual-contribution-images-4-width: @warpjs-individual-contribution-image-width * 4 - 3 * 15px + @warpjs-individual-contribution-image-padding;
 
+.warpjs-image-container-parent {
+    width: @warpjs-individual-contribution-image-width;
+    display: inline-block;
+}
+
+.warpjs-individual-contribution-names {
+    font-size: 24px;
+
+    .warpjs-individual-contribution-names-item {
+        text-transform: uppercase;
+    }
+
+    .warpjs-individual-contribution-names-and {
+        font-size: 80%;
+    }
+
+    .warpjs-individual-contribution-more {
+        font-size: 80%;
+    }
+
+    .warpjs-individual-contribution-see-all {
+    }
+}
+
+.warpjs-individual-contribution-images {
+    .warpjs-image-container-parent {
+        &:nth-child(4n+1) {
+            z-index: 200;
+        }
+
+        &:nth-child(4n+2) {
+            margin-left: -15px;
+            z-index: 199;
+        }
+
+        &:nth-child(4n+3) {
+            margin-left: -15px;
+            z-index: 198;
+        }
+
+        &:nth-child(4n+4) {
+            margin-left: -15px;
+            z-index: 197;
+        }
+    }
+}
+
 .warpjs-individual-contribution-container {
     display: table;
     width: 100%;
-    padding: 10px 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    &-xs {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
 
     .warpjs-individual-contribution-images {
         display: table-cell;
@@ -29,51 +82,11 @@
         &.warpjs-individual-contribution-images-4 {
             width: @warpjs-individual-contribution-images-4-width;
         }
-
-        .warpjs-image-container-parent {
-            width: @warpjs-individual-contribution-image-width;
-            display: inline-block;
-
-            &:nth-child(4n+1) {
-                z-index: 200;
-            }
-
-            &:nth-child(4n+2) {
-                margin-left: -15px;
-                z-index: 199;
-            }
-
-            &:nth-child(4n+3) {
-                margin-left: -15px;
-                z-index: 198;
-            }
-
-            &:nth-child(4n+4) {
-                margin-left: -15px;
-                z-index: 197;
-            }
-        }
     }
 
     .warpjs-individual-contribution-names {
         display: table-cell;
         vertical-align: middle;
-        font-size: 24px;
-
-        .warpjs-individual-contribution-names-item {
-            text-transform: uppercase;
-        }
-
-        .warpjs-individual-contribution-names-and {
-            font-size: 80%;
-        }
-
-        .warpjs-individual-contribution-more {
-            font-size: 80%;
-        }
-
-        .warpjs-individual-contribution-see-all {
-        }
 
     }
 }

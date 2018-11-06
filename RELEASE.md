@@ -2,6 +2,10 @@
 
 # Releases 1.3.x
 
+## 1.3.19 - 2018-11-06
+
+- #181: Responsive for individual contribution, x-small screen.
+
 ## 1.3.18 - 2018-11-05
 
 - #181: Fixed DOM and CSS for no authors/contributors. Fixed Oxford comma.

@@ -17,9 +17,7 @@ const Component = (props) => {
             <PortalContent>
                 <Grid fluid>
                     <Row>
-                        <Col xs={12}>
-                            <CommunityContent users={props.users} />
-                        </Col>
+                        <CommunityContent users={props.users} />
                     </Row>
                 </Grid>
             </PortalContent>
