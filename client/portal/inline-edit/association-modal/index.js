@@ -1,4 +1,14 @@
-const constants = require('./../constants');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+
+import createStore from './../../../react-utils/create-store';
+
+import * as actionCreators from './action-creators';
+import constants from './../constants';
+import Container from './container';
+import reducers from './reducers';
+
 
 module.exports = async ($, element) => {
     const data = {
@@ -12,16 +22,26 @@ module.exports = async ($, element) => {
 
     const toastLoading = window.WarpJS.toast.loading($, "Loading data...", "Loading");
     try {
-        const res = await window.WarpJS.proxy.post($, $(element).data('warpjsUrl'), data);
-        console.log("associationModal(): res=", res);
 
+        const res = await window.WarpJS.proxy.post($, $(element).data('warpjsUrl'), data);
         const state = window.WarpJS.flattenHAL(res);
-        console.log("state=", state);
+
+        const store = createStore(reducers, {});
+        if (state && state.instances && state.instances.length) {
+            store.dispatch(actionCreators.initializeState(state.instances[0]));
+        }
 
         const modal = window.WarpJS.bareModal($, constants.MODAL_NAME);
         modal.on('hidden.bs.modal', () => {
             modal.remove();
         });
+
+        ReactDOM.render(
+            <Provider store={store}>
+                <Container />
+            </Provider>,
+            $('.modal-dialog > .modal-content', modal).get(0)
+        );
 
         modal.modal('show');
     } catch (err) {

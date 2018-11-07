@@ -47,7 +47,7 @@
     "lint:test": "grunt eslint:test",
     "lint": "grunt eslint",
     "backup": "backup-data.js",
-    "build:dev": "DEBUG=W2:* grunt",
+    "build:dev": "DEBUG=W2:* NODE_ENV=development grunt",
     "dev": "DEBUG=W2:* npm start"
   },
   "bin": {
@@ -136,6 +136,8 @@
     "react-dom": "~16.5.2",
     "react-redux": "~5.0.7",
     "redux": "^4.0.1",
+    "redux-concatenate-reducers": "~1.0.0",
+    "redux-logger": "~3.0.6",
     "time-grunt": "1.4.0",
     "tinymce": "4.7.3",
     "webpack": "2.7.0",
