@@ -11,9 +11,9 @@ const Component = (props) => {
             <LeftRightMargin />
 
             <PortalContent>
-                <Grid fluid className="warpjs-individual-contribution-title">
+                <Grid fluid className="warpjs-individual-contribution-title-container">
                     <Row>
-                        <Col xs={12}>
+                        <Col xs={12} className="warpjs-individual-contribution-title">
                             {props.name}
                         </Col>
                     </Row>

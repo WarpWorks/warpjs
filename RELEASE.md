@@ -2,6 +2,10 @@
 
 # Releases 1.3.x
 
+## 1.3.22 - 2018-11-07
+
+- #181: First pass on CSS feedback.
+
 ## 1.3.21 - 2018-11-06
 
 - #186 Inline editor image tooltip.

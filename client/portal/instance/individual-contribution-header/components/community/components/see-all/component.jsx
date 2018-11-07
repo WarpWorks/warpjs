@@ -1,6 +1,8 @@
 const Component = (props) => {
     return (
-        <a className="warpjs-individual-contribution-see-all pull-right" href="#community">see all</a>
+        <div className="warpjs-individual-contribution-see-all pull-right">
+            <a href="#community">see all</a>
+        </div>
     );
 };
 
