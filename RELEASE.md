@@ -2,6 +2,10 @@
 
 # Releases 1.3.x
 
+## 1.3.23 - 2018-11-08
+
+- #175 Inline editor add paragraph button.
+
 ## 1.3.22 - 2018-11-07
 
 - #181: First pass on CSS feedback.
