@@ -56,6 +56,9 @@ module.exports = (req, res) => {
                                                         .then(() => entity.getRelationshipById(body.reference.id))
                                                         .then((relationship) => relationship.getTargetEntity().name === 'Paragraph'
                                                             ? Promise.resolve()
+                                                                .then(() => {
+                                                                    resource.body.reference.name = relationship.name;
+                                                                })
                                                                 .then(() => relationship.getDocuments(persistence, instance))
                                                                 .then((paragraphs) => paragraphs.sort(warpjsUtils.byPositionThenName))
                                                                 .then((paragraphs) => Promise.map(

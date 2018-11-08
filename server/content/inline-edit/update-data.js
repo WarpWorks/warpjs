@@ -2,6 +2,7 @@ const debug = require('debug')('W2:content:inline-edit/update-data');
 const Promise = require('bluebird');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const addDocumentToRelationship = require('./add-document-to-relationship');
 const ComplexTypes = require('./../../../lib/core/complex-types');
 const serverUtils = require('./../../utils');
 const updateDataBasicProperty = require('./update-data-basic-property');
@@ -41,7 +42,9 @@ module.exports = (req, res) => {
                             }
                         })
                         .then(() => {
-                            if (body && body.reference) {
+                            if (body && body.action && body.action === 'add') {
+                                return addDocumentToRelationship(req, persistence, entity, instance, resource, body);
+                            } else if (body && body.reference) {
                                 const impl = IMPLEMENTATIONS[body.reference.type];
                                 if (impl) {
                                     if (body.action && body.action === 'delete') {

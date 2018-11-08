@@ -1,6 +1,7 @@
 const Promise = require('bluebird');
 
 const addDocumentToSelection = require('./events/add-document-to-selection');
+const addParagraph = require('./events/add-paragraph');
 const deleteClicked = require('./events/delete-clicked');
 const listItemValueClicked = require('./list-item-value-clicked');
 const paragraphContentChanged = require('./events/paragraph-content-changed');
@@ -66,6 +67,9 @@ module.exports = ($, modal, items) => {
         .then((updatedItems) => {
             items = updatedItems;
         })
+    );
+    modal.on('click', '.warpjs-list-item-add', (event) => Promise.resolve()
+        .then(() => addParagraph($, modal, event, items))
     );
 
     textModalEvents($, modal);

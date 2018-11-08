@@ -17,7 +17,16 @@
 
             <div class="row warpjs-document-elements">
               <div class="col-xs-12">
-                <div class="warpjs-label">Document elements</div>
+                <div class="warpjs-label">
+                  Document elements
+                  <a href=""
+                    class="warpjs-list-item-add"
+                    data-warpjs-reference-type="{{body.reference.type}}"
+                    data-warpjs-reference-id="{{body.reference.id}}"
+                    data-warpjs-reference-name="{{body.reference.name}}"
+                    data-warpjs-doc-level="{{body.reference.type}}:{{body.reference.name}}"
+                  >Add new</a>
+                </div>
                 <div class="warpjs-content"></div>
               </div>
             </div>

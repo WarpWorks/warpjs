@@ -6,7 +6,6 @@ const template = require('./text-modal.hbs');
 module.exports = ($, element, res) => {
     const elementType = $(element).data('warpjsType');
     const elementId = $(element).data('warpjsId');
-
     let modal = $(`[data-warpjs-modal="${constants.MODAL_NAME}"]`);
     const instance = res._embedded.instances[0];
     const items = instance._embedded ? instance._embedded.items : [];
@@ -16,7 +15,8 @@ module.exports = ($, element, res) => {
     if (!modal.length) {
         $('body').append(template({
             MODAL_NAME: constants.MODAL_NAME,
-            EDIT_URL: $(element).data('warpjsAdvancedEditUrl')
+            EDIT_URL: $(element).data('warpjsAdvancedEditUrl'),
+            body: res.body
         }));
 
         modal = $(`[data-warpjs-modal="${constants.MODAL_NAME}"]`);
