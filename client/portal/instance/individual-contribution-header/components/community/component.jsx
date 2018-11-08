@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Col, Glyphicon, Grid, Row } from 'react-bootstrap';
+import { Grid, Row } from 'react-bootstrap';
 
 import CommunityContent from './components/content';
 import errorBoundary from './../../../../../react-utils/error-boundary';

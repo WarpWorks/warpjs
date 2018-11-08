@@ -1,3 +1,68 @@
 .warpjs-association-modal-list {
-    background-color: white;
+    .warpjs-association-modal-title-container {
+        .warpjs-label {
+        }
+
+        .warpjs-value {
+        }
+    }
+
+    .warpjs-association-modal-name-container {
+        .warpjs-label {
+        }
+
+        .warpjs-value {
+        }
+    }
+
+    .warpjs-association-modal-items-container {
+        .warpjs-label {
+
+            .warpjs-association-modal-add-item {
+                text-decoration: underline;
+                float: right;
+                color: blue;
+            }
+        }
+
+        .warpjs-value {
+            .list-group {
+                .list-group-item {
+                    .list-group-item-heading {
+                    }
+
+                    .list-group-item-text {
+
+                        .warpjs-actions {
+                            position: absolute;
+                            right: 15px;
+                            top: 12px;
+
+                            [data-warpjs-action="delete"] {
+                                color: red;
+                            }
+                        }
+                    }
+
+                    &:first-child {
+                        .warpjs-actions {
+                            [data-warpjs-action="move-up"] {
+                                color: #cccccc;
+                                pointer-events: none;
+                            }
+                        }
+                    }
+
+                    &:last-child {
+                        .warpjs-actions {
+                            [data-warpjs-action="move-down"] {
+                                color: #cccccc;
+                                pointer-events: none;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

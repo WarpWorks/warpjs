@@ -1,4 +1,4 @@
-const React = require('react');
+import PropTypes from 'prop-types';
 
 const ResponsiveImage = (props) => {
     return (
@@ -8,6 +8,12 @@ const ResponsiveImage = (props) => {
             </div>
         </div>
     );
+};
+
+ResponsiveImage.displayName = 'ResponsiveImage';
+
+ResponsiveImage.propTypes = {
+    src: PropTypes.string.isRequired
 };
 
 module.exports = ResponsiveImage;

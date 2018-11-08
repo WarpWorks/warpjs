@@ -1,15 +1,12 @@
 import PropTypes from 'prop-types';
-import { Col, Glyphicon, Grid, Row } from 'react-bootstrap';
 
 import errorBoundary from './../../../react-utils/error-boundary';
 import IndividualContributionCommunity from './components/community';
 import IndividualContributionTitle from './components/title';
 import IndividualContributionHeader from './components/header';
-import LeftRightMargin from './../../../react-utils/left-right-margin';
-import PortalContent from './../../../react-utils/portal-content';
 
-import debug from './../../debug';
-const log = debug('client/portal/instance/individual-contribution/component');
+// import debug from './../../debug';
+// const log = debug('client/portal/instance/individual-contribution/component');
 
 const Component = (props) => {
     const pageViews = props.page.pageViews;
@@ -20,7 +17,6 @@ const Component = (props) => {
     const authors = community && community.authors ? community.authors : [];
     const contributors = community && community.contributors ? community.contributors : [];
     const users = [].concat(authors).concat(contributors);
-    const displayedUsers = users.slice(0, 4);
 
     return (
         <div className="warpjs-individual-contribution-header">

@@ -1,6 +1,9 @@
-const ResponsiveImage = require('./../responsive-image');
+import PropTypes from 'prop-types';
+import { Row } from 'react-bootstrap';
 
-const CommunityUser = (props) => {
+import ResponsiveImage from './../responsive-image';
+
+const Component = (props) => {
     const { user } = props;
 
     const companies = user._embedded && user._embedded.companies
@@ -11,7 +14,7 @@ const CommunityUser = (props) => {
     ;
 
     return (
-        <ReactBootstrap.Row className="warpjs-user warpjs-table">
+        <Row className="warpjs-user warpjs-table">
           <div className="warpjs-community-image warpjs-cell">
             <ResponsiveImage src={user._links.image.href} />
           </div>
@@ -20,8 +23,14 @@ const CommunityUser = (props) => {
             <a className="warpjs-user-name" href={user._links.self.href}>{user.name}</a>
             <div className="warpjs-user-companies">{companies}</div>
           </div>
-        </ReactBootstrap.Row>
+        </Row>
     );
 };
 
-module.exports = CommunityUser;
+Component.displayName = 'CommunityUser';
+
+Component.propTypes = {
+    user: PropTypes.object.isRequired
+};
+
+module.exports = Component;

@@ -1,9 +1,6 @@
-import extend from 'lodash/extend';
-
 import namespace from './namespace';
+import namespaceKeys from './../../../react-utils/namespace-keys';
 
-export default Object.freeze(
-    [
-        'INITIAL_STATE'
-    ].reduce((map, key) => extend(map, { [key]: namespace(key) }), {})
-);
+export default namespaceKeys(namespace, [
+    'INITIAL_STATE'
+]);

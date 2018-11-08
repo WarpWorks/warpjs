@@ -32,7 +32,7 @@ export default (Component) => {
 
             return <Component {...this.props} />;
         }
-    };
+    }
 
     ErrorBoundary.displayName = `${baseComponentName(Component.displayName)}${SUFFIX}`;
     ErrorBoundary.propTypes = Component.propTypes;

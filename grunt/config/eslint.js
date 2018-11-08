@@ -1,7 +1,10 @@
 module.exports = {
     options: {
         fix: true,
-        useEslintrc: false
+        useEslintrc: false,
+        parserOptions: {
+            ecmaVersion: 6
+        }
     },
     node: {
         options: {
@@ -25,6 +28,11 @@ module.exports = {
     },
     client: {
         options: {
+            parserOptions: {
+                ecmaFeatures: {
+                    jsx: true
+                }
+            },
             baseConfig: {
                 root: true,
                 extends: [
@@ -38,15 +46,17 @@ module.exports = {
                 'node'
             ],
             globals: [
-                '$warp'
+                'React'
             ],
             rules: {
                 'no-console': 'off', // DEBUG
                 'standard/no-callback-literal': 'off', // DEBUG
-                'camelcase': 'off' // DEBUG
+                'camelcase': 'off', // DEBUG
+                'react/react-in-jsx-scope': 'off'
             }
         },
         src: [
+            'client/**/*.jsx',
             'client/**/*.js',
             '!client/**/*.test.js'
         ]
