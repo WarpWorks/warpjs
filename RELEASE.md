@@ -2,6 +2,10 @@
 
 # Releases 1.3.x
 
+## 1.3.24 - 2018-11-08
+
+- Inline Editor delete make docLevel dynamic, change log for add paragraph.
+
 ## 1.3.23 - 2018-11-08
 
 - #175 Inline editor add paragraph button.
