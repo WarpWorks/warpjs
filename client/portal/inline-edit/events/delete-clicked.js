@@ -13,6 +13,7 @@ const saveItemDelete = ($, modal, element, items) => {
                 id: $(element).data('warpjsReferenceId'),
                 name: $(element).data('warpjsReferenceName')
             },
+            docLevel: $(element).data('warpjsReferenceType') + ':' + $(element).data('warpjsReferenceName') + '.Entity:' + $(element).data('warpjsId'),
             action: 'delete'
         }))
         .then((data) => Promise.resolve()
