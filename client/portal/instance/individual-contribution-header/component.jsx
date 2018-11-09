@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 
-import errorBoundary from './../../../react-utils/error-boundary';
 import IndividualContributionCommunity from './components/community';
 import IndividualContributionTitle from './components/title';
 import IndividualContributionHeader from './components/header';
@@ -33,4 +32,4 @@ Component.propTypes = {
 };
 
 
-export default errorBoundary(Component);
+export default window.WarpJS.ReactUtils.errorBoundary(Component);

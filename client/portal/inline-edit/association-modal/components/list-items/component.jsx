@@ -4,7 +4,11 @@ import { ListGroup } from 'react-bootstrap';
 import Item from './../list-item';
 
 const Component = (props) => {
-    const items = props.items.map((item, index, items) => <Item key={item.id} item={item}  moveUp={() => props.moveUp(items, item)}/>);
+    const items = props.items.map((item, index, items) => (
+        <Item key={item.id} item={item}
+            moveDown={() => props.moveDown(items, item)}
+            moveUp={() => props.moveUp(items, item)} />
+    ));
 
     return (
         <ListGroup>
@@ -16,8 +20,9 @@ const Component = (props) => {
 Component.displayName = 'AssociationModalListItems';
 
 Component.propTypes = {
-    items: PropTypes.array,
-    moveUp: PropTypes.func.isRequired
+    moveDown: PropTypes.func.isRequired,
+    moveUp: PropTypes.func.isRequired,
+    items: PropTypes.array
 };
 
 export default Component;

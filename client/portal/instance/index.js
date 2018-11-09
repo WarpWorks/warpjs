@@ -4,7 +4,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import IndividualContributionHeader from './individual-contribution-header';
-import initReactBootstrapDisplayNames from './../../react-utils/init-react-bootstrap-display-names';
 
 import debug from './../debug';
 
@@ -48,7 +47,7 @@ const log = debug('client/portal/instance/index');
                     const state = window.WarpJS.flattenHAL(result.data);
                     log(`state=`, state);
 
-                    initReactBootstrapDisplayNames();
+                    window.WarpJS.ReactUtils.initReactBootstrapDisplayNames();
 
                     const individualContributionHeaderPlaceholder = document.getElementById('warpjs-individual-contribution-header-placeholder');
                     if (individualContributionHeaderPlaceholder) {

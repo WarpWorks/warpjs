@@ -28,6 +28,7 @@ module.exports = {
     },
     client: {
         options: {
+            fix: true,
             parserOptions: {
                 ecmaFeatures: {
                     jsx: true

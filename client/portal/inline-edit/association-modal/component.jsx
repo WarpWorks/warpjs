@@ -2,7 +2,6 @@ import { Col, Grid, Row } from 'react-bootstrap';
 
 import AssociationModalContent from './components/content';
 import AssociationModalList from './components/list';
-import errorBoundary from './../../../react-utils/error-boundary';
 
 const Component = (props) => {
     return (
@@ -20,4 +19,4 @@ const Component = (props) => {
 };
 Component.displayName = 'AssociationModal';
 
-export default errorBoundary(Component);
+export default window.WarpJS.ReactUtils.errorBoundary(Component);

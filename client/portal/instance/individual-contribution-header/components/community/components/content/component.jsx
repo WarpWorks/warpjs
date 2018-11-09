@@ -4,7 +4,6 @@ import { Col } from 'react-bootstrap';
 
 import And from './../and';
 import AndMore from './../and-more';
-import errorBoundary from './../../../../../../../react-utils/error-boundary';
 import ResponsiveImage from './../../../responsive-image';
 import SeeAll from './../see-all';
 import UserName from './../user-name';
@@ -100,4 +99,4 @@ Component.propTypes = {
     users: PropTypes.array.isRequired
 };
 
-export default errorBoundary(Component);
+export default window.WarpJS.ReactUtils.errorBoundary(Component);

@@ -1,10 +1,13 @@
+import cloneDeep from 'lodash/cloneDeep';
+
 import actions from './actions';
-import concatenateReducers from './../../../../../react-utils/concatenate-reducers';
 
 const updateItems = (state = {}, action) => {
-    return state;
+    const cloned = cloneDeep(state);
+    cloned.items[0].items = action.payload.items;
+    return cloned;
 };
 
-export default concatenateReducers([
+export default window.WarpJS.ReactUtils.concatenateReducers([
     { actions: [actions.UPDATE_ITEMS], reducer: updateItems }
 ]);

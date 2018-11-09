@@ -10,6 +10,7 @@ const fileUpload = require('./../edition/file-upload');
 const home = require('./home');
 const inlineEdit = require('./inline-edit');
 const inlineEditAssociation = require('./inline-edit-association');
+const inlineEditAssociationReorder = require('./inline-edit-association-reorder');
 const instances = require('./instances');
 const instance = require('./instance');
 const instanceHistory = require('./instance-history');
@@ -34,10 +35,12 @@ module.exports = (baseUrl) => {
     routesInfo.route(routes.instance, '/domain/{domain}/type/{type}/instance/{id}', instance, ROUTE_OPTIONS);
     routesInfo.route(routes.history, '/domain/{domain}/type/{type}/instance/{id}/history', instanceHistory);
     routesInfo.route(routes.sibling, '/domain/{domain}/type/{type}/instance/{id}/sibling', entitySibling);
-    routesInfo.route(routes.inlineEdit, '/domain/{domain}/type/{type}/instance/{id}/inline-edit{?view}', inlineEdit);
-    routesInfo.route(routes.inlineEditAssociation, '/domain/{domain}/type/{type}/instance/{id}/inline-edit/associations/{name}', inlineEditAssociation);
     routesInfo.route(routes.relationship, '/domain/{domain}/type/{type}/instance/{id}/relationship/{relationship}', instanceRelationship, ROUTE_OPTIONS);
     routesInfo.route(routes.relationshipPage, '/domain/{domain}/type/{type}/instance/{id}/relationship/{relationship}/page/{page}', instance);
+
+    routesInfo.route(routes.inlineEdit, '/domain/{domain}/type/{type}/instance/{id}/inline-edit{?view}', inlineEdit);
+    routesInfo.route(routes.inlineEditAssociation, '/domain/{domain}/type/{type}/instance/{id}/inline-edit/associations/{name}', inlineEditAssociation);
+    routesInfo.route(routes.inlineEditAssociationReorder, '/domain/{domain}/type/{type}/instance/{id}/inline-edit/associations/{name}/reorder', inlineEditAssociationReorder, ROUTE_OPTIONS);
 
     return routesInfo;
 };

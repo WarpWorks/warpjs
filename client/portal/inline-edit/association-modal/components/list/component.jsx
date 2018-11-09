@@ -32,7 +32,7 @@ const Component = (props) => {
                         </span>
                     </div>
                     <div className="warpjs-value">
-                        <AssociationModalListItems items={props.relationship.items} moveUp={props.moveUp} />
+                        <AssociationModalListItems items={props.relationship.items} moveUp={props.moveUp} moveDown={props.moveDown} />
                     </div>
                 </Col>
             </Row>
@@ -43,11 +43,12 @@ const Component = (props) => {
 Component.displayName = 'AssociationModalList';
 
 Component.propTypes = {
+    moveDown: PropTypes.func,
+    moveUp: PropTypes.func,
     name: PropTypes.string,
     relationship: PropTypes.shape({
         label: PropTypes.string,
         items: PropTypes.array
-    }),
-    moveUp: PropTypes.func
+    })
 };
 export default Component;

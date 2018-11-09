@@ -1,5 +1,4 @@
 import Component from './component';
-import wrapContainer from './../../../react-utils/wrap-container';
 
 const mapStateToProps = (state, ownProps) => {
 };
@@ -13,4 +12,4 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => Object.freeze({
     ...ownProps
 });
 
-export default wrapContainer(Component, mapStateToProps, mapDispatchToProps, mergeProps);
+export default window.WarpJS.ReactUtils.wrapContainer(Component, mapStateToProps, mapDispatchToProps, mergeProps);

@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import { Col, Grid, Row } from 'react-bootstrap';
 
-import errorBoundary from './../../../../../react-utils/error-boundary';
 import LeftRightMargin from './../../../../../react-utils/left-right-margin';
 import PortalContent from './../../../../../react-utils/portal-content';
 
@@ -31,4 +30,4 @@ Component.propTypes = {
     name: PropTypes.string.isRequired
 };
 
-export default errorBoundary(Component);
+export default window.WarpJS.ReactUtils.errorBoundary(Component);

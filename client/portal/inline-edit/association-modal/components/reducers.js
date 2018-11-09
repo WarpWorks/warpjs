@@ -1,6 +1,5 @@
-import concatenateReducers from './../../../../react-utils/concatenate-reducers';
 import listReducers from './list/reducers';
 
-export default concatenateReducers([
+export default window.WarpJS.ReactUtils.concatenateReducers([
     listReducers
 ]);

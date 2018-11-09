@@ -14,8 +14,10 @@ const docResource = (doc) => warpjsUtils.createResource('', {
 });
 
 module.exports = async (persistence, relationship, instance) => {
+    const domain = relationship.getDomain().name;
+
     const href = RoutesInfo.expand(routes.inlineEditRelationship, {
-        domain: relationship.getDomain().name,
+        domain,
         type: instance.type,
         id: instance.id,
         name: relationship.name
@@ -27,6 +29,16 @@ module.exports = async (persistence, relationship, instance) => {
         name: relationship.name,
         label: relationship.label || relationship.name,
         description: relationship.desc
+    });
+
+    resource.link('reorder', {
+        title: "Reorder associations",
+        href: RoutesInfo.expand(routes.inlineEditAssociationReorder, {
+            domain,
+            type: instance.type,
+            id: instance.id,
+            name: relationship.name
+        })
     });
 
     const documents = await relationship.getDocuments(persistence, instance);
