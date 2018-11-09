@@ -2,6 +2,10 @@
 
 # Releases 1.3.x
 
+## 1.3.26 - 2018-11-09
+
+- #187 Inline editor custom link.
+
 ## 1.3.25 - 2018-11-09
 
 - Inline Editor UX updates based on feedback.
