@@ -2,6 +2,10 @@
 
 # Releases 1.3.x
 
+## 1.3.27 - 2018-11-09
+
+- #188 Inline editor move history button to left menu.
+
 ## 1.3.26 - 2018-11-09
 
 - #187 Inline editor custom link.
