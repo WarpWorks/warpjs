@@ -150,6 +150,7 @@
                         color: #cccccc;
                         font-size: 30px;
                         width: 15px;
+                        display: none;
                     }
 
                     &.warpjs-list-item-level {
@@ -247,6 +248,14 @@
                     padding-left: 24px;
                 }
             }
+
+            > span:not(.dropdown) {
+                margin-left: 4px;
+            }
+
+            > span:not(.dropdown):not(:last-child) {
+                margin-right: 4px;
+            }
         }
 
         .warpjs-navigation-menu {
@@ -330,7 +339,8 @@
                 }
 
                 .carousel-controls {
-                    height:  20px;
+                    background-color: #ffffff;
+                    height: 22px;
                     position: absolute;
                     width: 120px;
 
@@ -338,7 +348,9 @@
                         opacity: 1;
                         text-shadow: none;
                         color: #5096b7;
-                        background-image: none
+                        background-image: none;
+                        font-size: 15px;
+                        line-height: 22px;
                     }
                 }
             }

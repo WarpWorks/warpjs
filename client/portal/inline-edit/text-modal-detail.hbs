@@ -103,7 +103,12 @@
     <div class="image-carousel-container">
       {{#if item.images.length}}
         <div id="warpjs-detail-image-carousel" class="carousel slide">
-          <div class="carousel-inner" data-toggle="tooltip" data-html="true" title="{{> image-tooltip}}" data-placement="bottom">
+          <div class="carousel-inner"
+            data-toggle="tooltip"
+            data-html="true"
+            title="{{> image-tooltip}}"
+            data-placement="bottom"
+          >
             {{#each item.images as |image|}}
               <div class="carousel-item item {{#unless @index}}active{{/unless}}">
                 <div style="background-image: url({{image._links.self.href}});" class="inline-editor-image"></div>
@@ -111,8 +116,8 @@
             {{/each}}
           </div>
           <div class="carousel-controls">
-            <a class="carousel-control left" href="#warpjs-detail-image-carousel" data-slide="prev">&lsaquo;</a>
-            <a class="carousel-control right" href="#warpjs-detail-image-carousel" data-slide="next">&rsaquo;</a>
+            <a class="carousel-control left glyphicon glyphicon-chevron-left" href="#warpjs-detail-image-carousel" data-slide="prev"></a>
+            <a class="carousel-control right glyphicon glyphicon-chevron-right" href="#warpjs-detail-image-carousel" data-slide="next"></a>
           </div>
         </div>
       {{/if}}
@@ -138,6 +143,6 @@
 
 <div class="row">
   <div class="col-xs-12 warpjs-comments">
-    <div class="warpjs-label">Comments</div>
+    <div class="warpjs-label">Comments: coming soon</div>
   </div>
 </div>

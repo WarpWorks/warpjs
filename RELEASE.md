@@ -2,6 +2,10 @@
 
 # Releases 1.3.x
 
+## 1.3.25 - 2018-11-09
+
+- Inline Editor UX updates based on feedback.
+
 ## 1.3.24 - 2018-11-08
 
 - Inline Editor delete make docLevel dynamic, change log for add paragraph.
