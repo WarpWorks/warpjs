@@ -1,7 +1,7 @@
+<div data-warpjs-status="instance" data-warpjs-url="{{res._links.self.href}}" data-warpjs-types-url="{{res._links.types.href}}"></div>
 <div class="modal fade" role="dialog" tabindex="-1" aria-hidden="true"
   data-warpjs-modal="{{MODAL_NAME}}"
   >
-
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-body">
@@ -21,10 +21,10 @@
                   Document elements
                   <a href=""
                     class="warpjs-list-item-add"
-                    data-warpjs-reference-type="{{body.reference.type}}"
-                    data-warpjs-reference-id="{{body.reference.id}}"
-                    data-warpjs-reference-name="{{body.reference.name}}"
-                    data-warpjs-doc-level="{{body.reference.type}}:{{body.reference.name}}"
+                    data-warpjs-reference-type="{{res.body.reference.type}}"
+                    data-warpjs-reference-id="{{res.body.reference.id}}"
+                    data-warpjs-reference-name="{{res.body.reference.name}}"
+                    data-warpjs-doc-level="{{res.body.reference.type}}:{{res.body.reference.name}}"
                   >Add new</a>
                 </div>
                 <div class="warpjs-content"></div>

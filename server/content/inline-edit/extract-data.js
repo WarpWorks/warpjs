@@ -1,5 +1,6 @@
 const debug = require('debug')('W2:content:inline-edit/extract-data');
 const Promise = require('bluebird');
+const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const ComplexTypes = require('./../../../lib/core/complex-types');
@@ -7,6 +8,7 @@ const constants = require('./constants');
 const imagesByParagraph = require('./../../portal/resources/images-by-paragraph');
 const extractDataRelationship = require('./extract-data-relationship');
 const listTypes = require('./list-types');
+const routesConstants = require('./../constants');
 const serverUtils = require('./../../utils');
 const utils = require('./../utils');
 
@@ -110,6 +112,10 @@ module.exports = (req, res) => {
 
                     )
                 )
+                .then(() => resource.link('types', RoutesInfo.expand(routesConstants.routes.entities, {
+                    domain,
+                    profile: 'linkable'
+                })))
                 .finally(() => persistence.close())
             )
             .then(() => utils.sendHal(req, res, resource))

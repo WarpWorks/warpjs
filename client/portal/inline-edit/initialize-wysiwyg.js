@@ -1,6 +1,9 @@
 const tinymce = require('tinymce'); require('tinymce/themes/modern/theme');
 const TEXT_SELECTOR = '#warpjs-inline-edit-content';
 
+// const openLinkSelectionModal = require('./../../edition/instance/wysiwyg-editor/open-link-selection-modal');
+const optionsSetup = require('./../../edition/instance/wysiwyg-editor/options-setup');
+
 module.exports = ($, modal, clickedElement) => {
     // Bug in tinymce
     $(document).on('focusin', (e) => {
@@ -12,6 +15,8 @@ module.exports = ($, modal, clickedElement) => {
     if (tinymce.editors.length) {
         tinymce.editors[0].remove();
     }
+
+    const instanceDoc = $('[data-warpjs-status="instance"]');
 
     tinymce.init({
         selector: TEXT_SELECTOR,
@@ -27,11 +32,7 @@ module.exports = ($, modal, clickedElement) => {
         plugins: 'lists link paste table',
         toolbar: 'warpjsSave bold italic numlist bullist link linkbutton | table',
         setup(editor) {
-            editor.addButton('linkbutton', {
-                text: 'Custom Link',
-                icon: false,
-                onclick: () => window.WarpJS.toast.warning($, "Implement Custom Link clicked", "TODO")
-            });
+            optionsSetup($, instanceDoc, editor);
 
             editor.addButton('warpjsSave', {
                 title: 'Save changes to server',

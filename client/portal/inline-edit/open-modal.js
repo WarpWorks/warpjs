@@ -16,7 +16,7 @@ module.exports = ($, element, res) => {
         $('body').append(template({
             MODAL_NAME: constants.MODAL_NAME,
             EDIT_URL: $(element).data('warpjsAdvancedEditUrl'),
-            body: res.body
+            res: res
         }));
 
         modal = $(`[data-warpjs-modal="${constants.MODAL_NAME}"]`);
