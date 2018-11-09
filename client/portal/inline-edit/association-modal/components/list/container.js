@@ -57,13 +57,13 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         moveDown: (url) => async (items, item) => moveItem(items, item, true, url),
         moveUp: (url) => async (items, item) => moveItem(items, item, false, url),
         removeItem: async (items, item) => {
-            const cloned = cloneDeep(items).filter((current) => current.id !== item.id);
+            const toastLoading = window.WarpJS.toast.loading($, "Removing...");
 
-            const toastLoading = window.WarpJS.toast.loading($, "saving...");
             try {
                 // TODO: Save toUpdate().
-                console.log("TODO: Send delete to server: item=", item);
+                await window.WarpJS.proxy.del($, item._links.self.href);
                 window.WarpJS.toast.success($, "Saved");
+                const cloned = cloneDeep(items).filter((current) => current.id !== item.id);
                 dispatch(actionCreators.updateItems(cloned));
             } catch (err) {
                 window.WarpJS.toast.error($, err.message, "Error!");

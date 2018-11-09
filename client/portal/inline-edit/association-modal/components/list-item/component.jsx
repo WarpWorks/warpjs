@@ -11,7 +11,7 @@ const Component = (props) => {
             <div className="warpjs-actions">
                 <Glyphicon glyph="arrow-up" data-warpjs-action="move-up" onClick={props.moveUp} />
                 <Glyphicon glyph="arrow-down" data-warpjs-action="move-down" onClick={props.moveDown} />
-                <Glyphicon glyph="trash" data-warpjs-action="delete" />
+                <Glyphicon glyph="trash" data-warpjs-action="delete" onClick={props.removeItem} />
             </div>
         </ListGroupItem>
     );
@@ -27,7 +27,8 @@ Component.propTypes = {
         relnDescription: PropTypes.string
     }),
     moveDown: PropTypes.func.isRequired,
-    moveUp: PropTypes.func.isRequired
+    moveUp: PropTypes.func.isRequired,
+    removeItem: PropTypes.func.isRequired
 };
 
 export default Component;

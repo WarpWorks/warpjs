@@ -1,17 +1,8 @@
 // const debug = require('debug')('W2:content:inline-edit/extract-data-associations');
-// const Promise = require('bluebird');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const { routes } = require('./../constants');
-
-const docResource = (doc) => warpjsUtils.createResource('', {
-    type: doc.type,
-    id: doc.id,
-    relnPosition: doc.relnPosition,
-    relnDescription: doc.relnDesc,
-    name: doc.Name
-});
 
 module.exports = async (persistence, relationship, instance) => {
     const domain = relationship.getDomain().name;
@@ -43,7 +34,23 @@ module.exports = async (persistence, relationship, instance) => {
 
     const documents = await relationship.getDocuments(persistence, instance);
 
-    resource.embed('items', documents.map(docResource));
+    resource.embed('items', documents.map((doc) => {
+        const href = RoutesInfo.expand(routes.instanceRelationshipItem, {
+            domain,
+            type: instance.type,
+            id: instance.id,
+            relationship: relationship.name,
+            itemId: doc._id || doc.id
+        });
+
+        return warpjsUtils.createResource(href, {
+            type: doc.type,
+            id: doc.id,
+            relnPosition: doc.relnPosition,
+            relnDescription: doc.relnDesc,
+            name: doc.Name
+        });
+    }));
 
     return resource;
 };

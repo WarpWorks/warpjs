@@ -7,7 +7,9 @@ const Component = (props) => {
     const items = props.items.map((item, index, items) => (
         <Item key={item.id} item={item}
             moveDown={() => props.moveDown(items, item)}
-            moveUp={() => props.moveUp(items, item)} />
+            moveUp={() => props.moveUp(items, item)}
+            removeItem={() => props.removeItem(items, item)}
+        />
     ));
 
     return (
@@ -22,7 +24,8 @@ Component.displayName = 'AssociationModalListItems';
 Component.propTypes = {
     moveDown: PropTypes.func.isRequired,
     moveUp: PropTypes.func.isRequired,
-    items: PropTypes.array
+    items: PropTypes.array,
+    removeItem: PropTypes.func.isRequired
 };
 
 export default Component;

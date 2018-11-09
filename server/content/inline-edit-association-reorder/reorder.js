@@ -3,7 +3,7 @@ const warpjsUtils = require('@warp-works/warpjs-utils');
 const serverUtils = require('./../../utils');
 const utils = require('./../utils');
 
-module.exports = async (req, res) => {
+module.exports = (req, res) => {
     const { domain, type, id, name } = req.params;
     const { body } = req;
 

@@ -10,6 +10,7 @@ const fileUpload = require('./../edition/file-upload');
 const home = require('./home');
 const inlineEdit = require('./inline-edit');
 const inlineEditAssociation = require('./inline-edit-association');
+const instanceRelationshipItem = require('./instance-relationship-item');
 const inlineEditAssociationReorder = require('./inline-edit-association-reorder');
 const instances = require('./instances');
 const instance = require('./instance');
@@ -36,6 +37,7 @@ module.exports = (baseUrl) => {
     routesInfo.route(routes.history, '/domain/{domain}/type/{type}/instance/{id}/history', instanceHistory);
     routesInfo.route(routes.sibling, '/domain/{domain}/type/{type}/instance/{id}/sibling', entitySibling);
     routesInfo.route(routes.relationship, '/domain/{domain}/type/{type}/instance/{id}/relationship/{relationship}', instanceRelationship, ROUTE_OPTIONS);
+    routesInfo.route(routes.instanceRelationshipItem, '/domain/{domain}/type/{type}/instance/{id}/relationship/{relationship}/items/{itemId}', instanceRelationshipItem, ROUTE_OPTIONS);
     routesInfo.route(routes.relationshipPage, '/domain/{domain}/type/{type}/instance/{id}/relationship/{relationship}/page/{page}', instance);
 
     routesInfo.route(routes.inlineEdit, '/domain/{domain}/type/{type}/instance/{id}/inline-edit{?view}', inlineEdit);
