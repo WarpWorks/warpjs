@@ -2,10 +2,12 @@
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const EntityTypes = require('./../../../lib/core/entity-types');
 const { routes } = require('./../constants');
 
 module.exports = async (persistence, relationship, instance) => {
     const domain = relationship.getDomain().name;
+    const targetEntity = relationship.getTargetEntity();
 
     const href = RoutesInfo.expand(routes.inlineEditRelationship, {
         domain,
@@ -32,6 +34,15 @@ module.exports = async (persistence, relationship, instance) => {
         })
     });
 
+    resource.link('types', {
+        title: "Target types",
+        href: RoutesInfo.expand(routes.entity, {
+            domain,
+            type: targetEntity.name,
+            profile: 'withChildren' // FIXME: Define a constant.
+        })
+    });
+
     const documents = await relationship.getDocuments(persistence, instance);
 
     resource.embed('items', documents.map((doc) => {
@@ -51,6 +62,28 @@ module.exports = async (persistence, relationship, instance) => {
             name: doc.Name
         });
     }));
+
+    const targetEntities = targetEntity.getChildEntities(true, true)
+        .concat(targetEntity)
+        .filter((anEntity) => !anEntity.isAbstract)
+        .filter((anEntity) => anEntity.entityType === EntityTypes.DOCUMENT)
+        .sort(warpjsUtils.byName)
+    ;
+
+    const targetEntityResources = targetEntities.map((anEntity) => anEntity.toResource());
+    resource.embed('targets', targetEntityResources);
+
+    const firstTargetEntity = targetEntities.length ? targetEntities[0] : null;
+    if (firstTargetEntity) {
+        const targetInstances = await firstTargetEntity.getDocuments(persistence);
+        targetEntityResources[0].selected = true;
+        targetEntityResources[0].embed('entities', targetInstances.map((targetInstance) => warpjsUtils.createResource('', {
+            type: targetInstance.type,
+            id: targetInstance.id,
+            name: targetInstance.Name,
+            description: targetInstance.Description
+        })));
+    }
 
     return resource;
 };

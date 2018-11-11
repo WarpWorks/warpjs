@@ -6,3 +6,10 @@ export const initializeState = (state) => Object.freeze({
         state
     }
 });
+
+export const updateItems = (items) => Object.freeze({
+    type: actions.UPDATE_ITEMS,
+    payload: {
+        items
+    }
+});

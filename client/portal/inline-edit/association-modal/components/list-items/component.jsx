@@ -13,7 +13,7 @@ const Component = (props) => {
     ));
 
     return (
-        <ListGroup>
+        <ListGroup className="warpjs-associations-list">
             {items}
         </ListGroup>
     );

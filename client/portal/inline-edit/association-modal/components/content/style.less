@@ -1,3 +1,38 @@
 .warpjs-association-modal-list {
     background-color: #cccccc;
 }
+
+.warpjs-association-modal-content {
+    .warpjs-types-select {
+        form.form-inline {
+            margin-bottom: 0;
+
+            .control-label {
+                margin-right: 12px;
+            }
+        }
+    }
+
+    .warpjs-modal-close-button-container {
+        float: right;
+        padding-right: 0px;
+        margin-right: -5px;
+    }
+
+    .warpjs-title {
+        font-size: 24px;
+        margin-bottom: 12px;
+        line-height: 1.4;
+    }
+
+    .warpjs-instances-list {
+        max-height: calc(~"100% - 150px");
+        overflow-y: auto;
+
+        .warpjs-instances-item {
+            [data-warpjs-action] {
+                float: right;
+            }
+        }
+    }
+}

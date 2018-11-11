@@ -8,10 +8,10 @@ const Component = (props) => {
         <Grid fluid className="warpjs-association-modal">
             <Row>
                 <Col xs={6} className="warpjs-association-modal-list">
-                    <AssociationModalList />
+                    <AssociationModalList {...props} />
                 </Col>
                 <Col xs={6} className="warpjs-association-modal-content">
-                    <AssociationModalContent />
+                    <AssociationModalContent {...props} />
                 </Col>
             </Row>
         </Grid>

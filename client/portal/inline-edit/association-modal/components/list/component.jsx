@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { Col, Grid, Row } from 'react-bootstrap';
 
 import AssociationModalListItems from './../list-items';
+import * as shapes from './../../../../../react-utils/shapes';
 
 const Component = (props) => {
     return (
@@ -26,10 +27,6 @@ const Component = (props) => {
                 <Col xs={12} className="warpjs-association-modal-items-container">
                     <div className="warpjs-label">
                         Associations
-
-                        <span className="warpjs-association-modal-add-item">
-                            Add new
-                        </span>
                     </div>
                     <div className="warpjs-value">
                         <AssociationModalListItems {...props} items={props.relationship.items} />
@@ -44,9 +41,6 @@ Component.displayName = 'AssociationModalList';
 
 Component.propTypes = {
     name: PropTypes.string,
-    relationship: PropTypes.shape({
-        label: PropTypes.string,
-        items: PropTypes.array
-    })
+    relationship: shapes.relationship
 };
 export default Component;
