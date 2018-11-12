@@ -1,6 +1,12 @@
-# WarpJS's Releases Notes
+# <a name="top"></a>WarpJS's Releases Notes
 
-# Releases 1.3.x
+- [Releases 1.3.x](#releases-1.3) from 2018-10-16 to date
+- [Releases 1.2.x](#releases-1.2) from 2017-10-11 to 2018-10-15
+- [Releases 1.0.x](#releases-1.0) from 2017-05-31 to 2017-06-10
+- [Releases 0.6.x](#releases-0.6) up to 2017-05-12
+
+
+# <a name="releases-1.3"></a>Releases 1.3.x [top](#top)
 
 ## 1.3.29 - 2018-11-12
 
@@ -118,7 +124,7 @@
 
 - #158: Implementation for path alias.
 
-# Releases 1.2.x
+# <a name="releases-1.2"></a>Releases 1.2.x [top](#top)
 
 ## 1.2.114 - 2018-10-15
 
@@ -817,7 +823,7 @@
 - Refactored views and partials to be in other repos.
 - Updated dependencies.
 
-# Releases 1.0.x
+# <a name="releases-1.0"></a>Releases 1.0.x [top](#top)
 
 ## 1.0.0-rc17 - 2017-06-10
 
@@ -894,7 +900,7 @@
 
 - Full front-end rework for embedded documents.
 
-# Releases 0.x
+# <a name="releases-0.6"></a>Releases 0.6.x [top](#top)
 
 ## 0.6.6 - 2017-05-12
 
