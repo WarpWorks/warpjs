@@ -4,10 +4,15 @@ const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const imagesByRelationship = require('./images-by-relationship');
+const serverUtils = require('./../../utils');
 const routes = require('./../../../lib/constants/routes');
 
+const config = serverUtils.getConfig();
+const publicStatus = config.status.public;
+
 module.exports = async (persistence, relationship, instance) => {
-    const badgeDefinitions = await relationship.getDocuments(persistence, instance);
+    const documents = await relationship.getDocuments(persistence, instance);
+    const badgeDefinitions = documents.filter((doc) => publicStatus.indexOf(doc.Status) !== -1);
 
     const badgeDefinitionResources = await Promise.map(
         badgeDefinitions,

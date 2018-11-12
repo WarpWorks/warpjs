@@ -2,6 +2,10 @@
 
 # Releases 1.3.x
 
+## 1.3.28 - 2018-11-12
+
+- #189: Only display `BadgeDefinition` that have a public page status.
+
 ## 1.3.27 - 2018-11-09
 
 - #188 Inline editor move history button to left menu.
