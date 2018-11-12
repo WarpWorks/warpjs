@@ -2,6 +2,10 @@
 
 # Releases 1.3.x
 
+## 1.3.29 - 2018-11-12
+
+- #181: Updated with Nov8th IndividualContribution style feedback.
+
 ## 1.3.28 - 2018-11-12
 
 - #189: Only display `BadgeDefinition` that have a public page status.
