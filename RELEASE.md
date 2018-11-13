@@ -8,6 +8,10 @@
 
 # <a name="releases-1.3"></a>Releases 1.3.x [top](#top)
 
+## 1.3.30 - 2018-11-13
+
+- #190 Inline editor add history functionality.
+
 ## 1.3.29 - 2018-11-12
 
 - #181: Updated with Nov8th IndividualContribution style feedback.
