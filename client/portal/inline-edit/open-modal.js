@@ -1,3 +1,4 @@
+const ChangeLogs = require('./change-logs');
 const constants = require('./constants');
 const defineEvents = require('./define-events');
 const itemsTemplate = require('./text-modal-elements.hbs');
@@ -35,4 +36,7 @@ module.exports = ($, element, res) => {
 
     $(`.warpjs-list-item-value[data-warpjs-type="${elementType}"][data-warpjs-id="${elementId}"]`, modal).trigger('click');
     modal.data('warpjsUrl', res._links.self.href);
+
+    const instanceDoc = $('[data-warpjs-status="instance"]');
+    ChangeLogs.init($, res, instanceDoc, element);
 };

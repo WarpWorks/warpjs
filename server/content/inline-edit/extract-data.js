@@ -1,3 +1,4 @@
+const ChangeLogs = require('@warp-works/warpjs-change-logs');
 const debug = require('debug')('W2:content:inline-edit/extract-data');
 const Promise = require('bluebird');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
@@ -109,7 +110,15 @@ module.exports = (req, res) => {
                             })
 
                         )
-
+                        // Changelogs
+                        .then(() => ChangeLogs.toFormResource(
+                            instance,
+                            domain,
+                            persistence,
+                            constants.routes.instance,
+                            entity.getDomain().getEntityByName('User') // FIXME: Hard-coded
+                        ))
+                        .then((changeLogs) => resource.embed('changeLogs', changeLogs))
                     )
                 )
                 .then(() => resource.link('types', RoutesInfo.expand(routesConstants.routes.entities, {

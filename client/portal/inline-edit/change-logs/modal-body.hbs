@@ -1,0 +1,20 @@
+<div class="row warpjs-modal-global-menu">
+  <div class="warpjs-modal-title history-title">
+    HISTORY
+    &nbsp;&nbsp;&nbsp;
+    <a href="" class="back-to-edit">back to editing</a>
+  </div>
+</div>
+<div class="history-container">
+  {{#if changeLogs.length}}
+    <ul class="list-group">
+      {{#each changeLogs as |changeLog|}}
+        <li class="list-group-item">
+          {{> ./../../../edition/change-logs/item changeLog}}
+        </li>
+      {{/each}}
+    </ul>
+  {{else}}
+      No changes.
+  {{/if}}
+</div>

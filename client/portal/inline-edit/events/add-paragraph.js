@@ -1,5 +1,6 @@
 const Promise = require('bluebird');
 
+const ChangeLogs = require('./../change-logs');
 const itemsTemplate = require('./../text-modal-elements.hbs');
 const moveAndSave = require('./../move-and-save');
 
@@ -17,6 +18,7 @@ module.exports = ($, modal, event, items) => {
                 .then(() => window.WarpJS.proxy.patch($, modal.data('warpjsUrl'), data))
                 .then((newInstance) => Promise.resolve()
                     .then(() => modal.data('warpjsIsDirty', true))
+                    .then(() => ChangeLogs.dirty())
                     .then(() => {
                         if (newInstance.newParagraph) {
                             const newParagraph = newInstance.newParagraph;
