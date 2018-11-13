@@ -142,7 +142,7 @@
 
 - #166: Fixed image upload size set
 
-##1.2.113 - 2018-10-12
+## 1.2.113 - 2018-10-12
 
 - #145 Preview Popover on ImageArea to follow mouse.
 

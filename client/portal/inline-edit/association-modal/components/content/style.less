@@ -31,7 +31,16 @@
 
         .warpjs-instances-item {
             [data-warpjs-action] {
-                float: right;
+                vertical-align: top;
+            }
+
+            .warpjs-value {
+                max-width: calc(~"100% - 25px");
+                display: inline-block;
+                margin-left: 5px;
+                line-height: 1.4em;
+                max-height: 3.7em;
+                overflow: hidden;
             }
         }
     }

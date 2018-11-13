@@ -1,3 +1,3 @@
 import packageJson from './../package.json';
 
-export default (key) => `${packageJson.name}.${key}`.replace(/@/g, '').replace(/[/_]/g, '-').toUpperCase();
+export default (key) => window.WarpJS.ReactUtils.namespace(`${packageJson.name}.${key}`);

@@ -3,6 +3,9 @@ import { Button, Col, ControlLabel, Form, FormControl, FormGroup, Glyphicon, Gri
 
 import * as shapes from './../../../../../react-utils/shapes';
 
+import debug from './../../../../debug';
+const log = debug('client/portal/inline-editor/association-modal/components/content/component');
+
 
 const Component = (props) => {
     const defineOptions = (items) => items.map((item) => (
@@ -25,12 +28,23 @@ const Component = (props) => {
     };
 
 
-    const defineTargets = (items) => items.map((item) => (
-        <ListGroupItem key={item.id} className="warpjs-instances-item">
-            <span className="warpjs-value">{item.name}</span>
-            <Glyphicon glyph="plus" data-warpjs-action="add-association" />
-        </ListGroupItem>
-    ))
+    const defineTargets = (items) => {
+        const alreadyAdded = props.relationship.items.map((item) => item.id);
+        log("alreadyAdded=", alreadyAdded);
+
+        return items.map((item) => {
+            if (alreadyAdded.indexOf(item.id) === -1) {
+                return (
+                    <ListGroupItem key={item.id} className="warpjs-instances-item">
+                        <Glyphicon glyph="arrow-left" data-warpjs-action="add-association" />
+                        <span className="warpjs-value">{item.name}</span>
+                    </ListGroupItem>
+                );
+            } else {
+                return null;
+            }
+        });
+    };
 
     return (
         <Grid fluid className="">

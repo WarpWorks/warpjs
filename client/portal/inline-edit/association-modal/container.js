@@ -7,6 +7,7 @@ const mapStateToProps = (state, ownProps) => Object.freeze({
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => Object.freeze({
+    addAssociation: (items, item, url) => orchestrators.addItem(dispatch, items, item, url),
     moveDown: (url) => (items, item) => orchestrators.moveItem(dispatch, items, item, true, url),
     moveUp: (url) => (items, item) => orchestrators.moveItem(dispatch, items, item, false, url),
     removeItem: (items, item) => orchestrators.removeItem(dispatch, items, item)

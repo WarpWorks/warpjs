@@ -13,5 +13,6 @@ const updateItems = (state = {}, action) => {
 
 export default window.WarpJS.ReactUtils.concatenateReducers([
     { actions: [actions.INITIAL_STATE], reducer: initializeState },
-    { actions: [actions.UPDATE_ITEMS], reducer: updateItems }
+    { actions: [actions.UPDATE_ITEMS], reducer: updateItems },
+    window.WarpJS.ReactUtils.reducers
 ]);
