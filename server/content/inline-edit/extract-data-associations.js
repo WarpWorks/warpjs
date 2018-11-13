@@ -43,6 +43,16 @@ module.exports = async (persistence, relationship, instance) => {
         })
     });
 
+    resource.link('items', {
+        title: `Relationship ${relationship.name}`,
+        href: RoutesInfo.expand(routes.instanceRelationshipItems, {
+            domain,
+            type: instance.type,
+            id: instance.id,
+            relationship: relationship.name
+        })
+    });
+
     const documents = await relationship.getDocuments(persistence, instance);
 
     resource.embed('items', documents.map((doc) => {
