@@ -1,6 +1,8 @@
 const debug = require('debug')('W2:content:instance-relationship-items/add-relationship');
+const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const { routes } = require('./../constants');
 const serverUtils = require('./../../utils');
 const utils = require('./../utils');
 
@@ -10,6 +12,14 @@ module.exports = async (req, res) => {
 
     debug(`(): domain=${domain}, type=${type}, id=${id}, relationship=${relationship}`);
     debug(`(): body=`, body);
+
+    const resource = warpjsUtils.createResource(req, {
+        domain,
+        type,
+        id,
+        relationship,
+        body
+    });
 
     const persistence = serverUtils.getPersistence(domain);
 
@@ -30,17 +40,33 @@ module.exports = async (req, res) => {
 
         // TODO: Add history
         await entity.updateDocument(persistence, instance);
-        res.status(204).send();
-    } catch (err) {
-        console.error(`add-relationship item ERROR: err=`, err);
-        const resource = warpjsUtils.createResource(req, {
+
+        const href = RoutesInfo.expand(routes.instanceRelationshipItem, {
             domain,
             type,
             id,
             relationship,
-            body,
-            message: err.message
+            itemId: body.id
         });
+
+        const refResource = warpjsUtils.createResource(href, {
+            domain,
+            type,
+            id,
+            relationship,
+            itemId: body.id
+        });
+
+        resource.embedded('references', refResource);
+
+        resource.link('item', {
+            title: "URL to new reference"
+        });
+
+        utils.sendHal(req, res, resource);
+    } catch (err) {
+        console.error(`add-relationship item ERROR: err=`, err);
+        resource.message = err.message;
         utils.sendErrorHal(req, res, resource, err);
     } finally {
         persistence.close();

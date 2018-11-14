@@ -32,9 +32,7 @@ module.exports = async ($, element) => {
         }
 
         const modal = window.WarpJS.bareModal($, constants.MODAL_NAME);
-        modal.on('hidden.bs.modal', () => {
-            modal.remove();
-        });
+        constants.onClose(modal);
 
         ReactDOM.render(
             <Provider store={store}>

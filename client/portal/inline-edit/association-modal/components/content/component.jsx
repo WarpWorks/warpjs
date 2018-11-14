@@ -3,8 +3,8 @@ import { Button, Col, ControlLabel, Form, FormControl, FormGroup, Glyphicon, Gri
 
 import * as shapes from './../../../../../react-utils/shapes';
 
-import debug from './../../../../debug';
-const log = debug('client/portal/inline-editor/association-modal/components/content/component');
+// import debug from './../../../../debug';
+// const log = debug('client/portal/inline-editor/association-modal/components/content/component');
 
 
 const Component = (props) => {
@@ -38,8 +38,6 @@ const Component = (props) => {
 
     const defineTargets = (target) => {
         const alreadyAdded = props.relationship.items.map((item) => item.id);
-        log("alreadyAdded=", alreadyAdded);
-        log("_links=", props.relationship._links);
 
         return target.entities.map((item) => {
             if (alreadyAdded.indexOf(item.id) === -1) {

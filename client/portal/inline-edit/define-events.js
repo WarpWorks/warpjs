@@ -2,6 +2,7 @@ const Promise = require('bluebird');
 
 const addDocumentToSelection = require('./events/add-document-to-selection');
 const addParagraph = require('./events/add-paragraph');
+const constants = require('./constants');
 const deleteClicked = require('./events/delete-clicked');
 const listItemValueClicked = require('./list-item-value-clicked');
 const paragraphContentChanged = require('./events/paragraph-content-changed');
@@ -12,12 +13,7 @@ const movePosition = require('./events/move-position');
 const textModalEvents = require('./text-modal/events');
 
 module.exports = ($, modal, items) => {
-    modal.on('hidden.bs.modal', function() {
-        if (modal.data('warpjsIsDirty')) {
-            window.WarpJS.toast.loading($, "Data has been updated, please reload the page", "Reload needed");
-        }
-        modal.remove();
-    });
+    constants.onClose(modal);
 
     modal.on('click', '.warpjs-document-elements .warpjs-content .warpjs-list-item .warpjs-list-item-value', function() {
         listItemValueClicked($, modal, this);

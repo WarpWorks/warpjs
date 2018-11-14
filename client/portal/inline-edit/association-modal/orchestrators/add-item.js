@@ -1,10 +1,11 @@
 import cloneDeep from 'lodash/cloneDeep';
 
 import * as actionCreators from './../action-creators';
+import constants from './../../constants';
 import setPositions from './set-positions';
 
-import debug from './../../../debug';
-const log = debug('inline-edit/association-modal/orchestrators/add-item');
+// import debug from './../../../debug';
+// const log = debug('inline-edit/association-modal/orchestrators/add-item');
 
 export default async (dispatch, items, item, itemUrl, reorderUrl) => {
     const cloned = cloneDeep(items);
@@ -20,11 +21,11 @@ export default async (dispatch, items, item, itemUrl, reorderUrl) => {
             desc: '',
             position: items.length + 1
         };
-        log("newItem=", newItem);
 
         let toastLoading = window.WarpJS.toast.loading($, "Adding...");
         try {
-            await window.WarpJS.proxy.post($, itemUrl, newItem);
+            const result = await window.WarpJS.proxy.post($, itemUrl, newItem);
+            log("result=", result);
             window.WarpJS.toast.success($, "Added");
             cloned.push({
                 type: newItem.type,
@@ -34,6 +35,8 @@ export default async (dispatch, items, item, itemUrl, reorderUrl) => {
                 name: item.name
             });
 
+            constants.setDirty();
+
             const toUpdate = setPositions(cloned);
             if (toUpdate.length) {
                 toastLoading = window.WarpJS.toast.loading($, "Updating positions...");
@@ -41,12 +44,14 @@ export default async (dispatch, items, item, itemUrl, reorderUrl) => {
                     await window.WarpJS.proxy.patch($, reorderUrl, toUpdate);
                     window.WarpJS.toast.success($, "Updated positions");
                 } catch (err) {
+                    console.error("Error updating positions: err=", err);
                     window.WarpJS.toast.error($, err.message, "Error updating positions!");
                 }
             }
 
             dispatch(actionCreators.updateItems(cloned));
         } catch (err) {
+            console.error("Error! err=", err);
             window.WarpJS.toast.error($, err.message, "Error!");
         } finally {
             window.WarpJS.toast.close($, toastLoading);

@@ -2,6 +2,7 @@ const _ = require('lodash');
 const Promise = require('bluebird');
 
 const ChangeLogs = require('./../change-logs');
+const constants = require('./../constants');
 const deleteConfirm = require('./../../../edition/delete-confirm');
 const itemsTemplate = require('./../text-modal-elements.hbs');
 
@@ -19,7 +20,7 @@ const saveItemDelete = ($, modal, element, items) => {
         }))
         .then((data) => Promise.resolve()
             .then(() => window.WarpJS.proxy.patch($, modal.data('warpjsUrl'), data))
-            .then(() => modal.data('warpjsIsDirty', true))
+            .then(() => constants.setDirty())
             .then(() => ChangeLogs.dirty())
             .then(() => {
                 items = _.filter(items, (item) => {

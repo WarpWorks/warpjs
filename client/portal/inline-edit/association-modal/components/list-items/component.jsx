@@ -9,6 +9,8 @@ const Component = (props) => {
             moveDown={() => props.moveDown(items, item)}
             moveUp={() => props.moveUp(items, item)}
             removeItem={() => props.removeItem(items, item)}
+            syncAssociationDescription={props.syncAssociationDescription}
+            updateAssociationDescription={props.updateAssociationDescription}
         />
     ));
 
@@ -25,7 +27,9 @@ Component.propTypes = {
     moveDown: PropTypes.func.isRequired,
     moveUp: PropTypes.func.isRequired,
     items: PropTypes.array,
-    removeItem: PropTypes.func.isRequired
+    removeItem: PropTypes.func.isRequired,
+    syncAssociationDescription: PropTypes.func.isRequired,
+    updateAssociationDescription: PropTypes.func.isRequired
 };
 
 export default Component;

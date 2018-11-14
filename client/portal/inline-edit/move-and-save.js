@@ -1,6 +1,7 @@
 const _ = require('lodash');
 const Promise = require('bluebird');
 
+const constants = require('./constants');
 const itemsTemplate = require('./text-modal-elements.hbs');
 
 Array.prototype.moveOnePosition = function(element, offset) {
@@ -23,7 +24,7 @@ Array.prototype.moveToAnEnd = function(element, position) {
 };
 
 const saveItemPosition = ($, modal, item, index) => {
-    if(index !== item.position) {
+    if (index !== item.position) {
         return Promise.resolve()
             .then(() => $('.warpjs-list-item-value[data-warpjs-id="' + item.id + '"]'))
             .then((itemElement) => Promise.resolve()
@@ -39,7 +40,7 @@ const saveItemPosition = ($, modal, item, index) => {
                     newValue: index
                 }))
                 .then((data) => window.WarpJS.proxy.patch($, modal.data('warpjsUrl'), data))
-                .then(() => modal.data('warpjsIsDirty', true))
+                .then(() => constants.setDirty())
                 .then(() => true)
                 .catch((err) => window.WarpJS.toast.error($, err.message, "Failed"))
             )

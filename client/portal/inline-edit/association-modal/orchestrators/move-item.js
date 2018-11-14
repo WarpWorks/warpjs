@@ -1,6 +1,7 @@
 import cloneDeep from 'lodash/cloneDeep';
 
 import * as actionCreators from './../action-creators';
+import constants from './../../constants';
 import setPositions from './set-positions';
 import swapArrayItems from './swap-array-items';
 
@@ -18,6 +19,8 @@ export default async (dispatch, items, item, moveDown, url) => {
     const toastLoading = window.WarpJS.toast.loading($, "saving...");
     try {
         await window.WarpJS.proxy.patch($, url, toUpdate);
+
+        constants.setDirty();
 
         window.WarpJS.toast.success($, "Saved");
         dispatch(actionCreators.updateItems(cloned));

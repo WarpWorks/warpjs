@@ -1,5 +1,7 @@
 const Promise = require('bluebird');
 
+const constants = require('./constants');
+
 module.exports = ($, modal, element) => Promise.resolve()
     .then(() => window.WarpJS.toast.loading($, "Saving..."))
     .then((toastLoading) => Promise.resolve()
@@ -15,7 +17,7 @@ module.exports = ($, modal, element) => Promise.resolve()
         }))
         .then((data) => window.WarpJS.proxy.patch($, modal.data('warpjsUrl'), data))
         .then(() => window.WarpJS.toast.success($, "Data updated"))
-        .then(() => modal.data('warpjsIsDirty', true))
+        .then(() => constants.setDirty())
         .then(() => true)
 
         .catch((err) => window.WarpJS.toast.error($, err.message, "Failed"))

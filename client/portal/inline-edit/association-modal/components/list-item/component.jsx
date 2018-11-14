@@ -6,6 +6,8 @@ const Component = (props) => {
         <ListGroupItem header={props.item.name}>
             <FormControl type="text" value={props.item.relnDescription}
                 placeholder="Enter relationship description"
+                onChange={(event) => props.updateAssociationDescription(event, props.item)}
+                onBlur={(event) => props.syncAssociationDescription(event, props.item)}
             />
 
             <div className="warpjs-actions">
@@ -28,7 +30,9 @@ Component.propTypes = {
     }),
     moveDown: PropTypes.func.isRequired,
     moveUp: PropTypes.func.isRequired,
-    removeItem: PropTypes.func.isRequired
+    removeItem: PropTypes.func.isRequired,
+    syncAssociationDescription: PropTypes.func.isRequired,
+    updateAssociationDescription: PropTypes.func.isRequired
 };
 
 export default Component;
