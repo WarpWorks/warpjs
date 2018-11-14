@@ -8,6 +8,10 @@
 
 # <a name="releases-1.3"></a>Releases 1.3.x [top](#top)
 
+## 1.3.32 - 2018-11-14
+
+- #193 Tinymce height issue fix.
+
 ## 1.3.31 - 2018-11-14
 
 - #192 Inline editor add change logs where missing.
