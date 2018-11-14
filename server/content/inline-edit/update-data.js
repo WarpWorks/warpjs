@@ -50,7 +50,7 @@ module.exports = (req, res) => {
                                     if (body.action && body.action === 'delete') {
                                         return deleteDocumentFromRelationship(res, req, persistence, entity, instance, body);
                                     } else {
-                                        return impl(persistence, entity, instance, body);
+                                        return impl(persistence, entity, instance, body, req);
                                     }
                                 } else {
                                     debug(`TODO body.reference=`, body.reference);

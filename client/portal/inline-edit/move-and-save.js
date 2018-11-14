@@ -23,25 +23,28 @@ Array.prototype.moveToAnEnd = function(element, position) {
 };
 
 const saveItemPosition = ($, modal, item, index) => {
-    return Promise.resolve()
-        .then(() => $('.warpjs-list-item-value[data-warpjs-id="' + item.id + '"]'))
-        .then((itemElement) => Promise.resolve()
-            .then(() => ({
-                id: item.id,
-                field: 'Position',
-                reference: {
-                    type: $(itemElement).data('warpjsReferenceType'),
-                    id: $(itemElement).data('warpjsReferenceId'),
-                    name: $(itemElement).data('warpjsReferenceName')
-                },
-                newValue: index
-            }))
-            .then((data) => window.WarpJS.proxy.patch($, modal.data('warpjsUrl'), data))
-            .then(() => modal.data('warpjsIsDirty', true))
-            .then(() => true)
-            .catch((err) => window.WarpJS.toast.error($, err.message, "Failed"))
-        )
-    ;
+    if(index !== item.position) {
+        return Promise.resolve()
+            .then(() => $('.warpjs-list-item-value[data-warpjs-id="' + item.id + '"]'))
+            .then((itemElement) => Promise.resolve()
+                .then(() => ({
+                    id: item.id,
+                    field: 'Position',
+                    reference: {
+                        type: $(itemElement).data('warpjsReferenceType'),
+                        id: $(itemElement).data('warpjsReferenceId'),
+                        name: $(itemElement).data('warpjsReferenceName')
+                    },
+                    oldValue: item.position,
+                    newValue: index
+                }))
+                .then((data) => window.WarpJS.proxy.patch($, modal.data('warpjsUrl'), data))
+                .then(() => modal.data('warpjsIsDirty', true))
+                .then(() => true)
+                .catch((err) => window.WarpJS.toast.error($, err.message, "Failed"))
+            )
+        ;
+    }
 };
 
 module.exports = ($, modal, itemId, items, offset) => Promise.resolve()

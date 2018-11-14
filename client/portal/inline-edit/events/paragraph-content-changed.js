@@ -1,5 +1,7 @@
 const Promise = require('bluebird');
 
+const ChangeLogs = require('./../change-logs');
+
 module.exports = ($, modal, changedElement) => {
     const url = modal.data('warpjsUrl');
     const id = $(changedElement).data('warpjsId');
@@ -23,6 +25,7 @@ module.exports = ($, modal, changedElement) => {
             .then(() => window.WarpJS.toast.success($, "Data updated"))
             .then(() => {
                 modal.data('warpjsIsDirty', true);
+                ChangeLogs.dirty();
                 $(`.warpjs-document-elements .warpjs-list-item .warpjs-list-item-value[data-warpjs-id="${id}"]`, modal)
                     .data('warpjsDescription', newValue)
                 ;

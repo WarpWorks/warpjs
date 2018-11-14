@@ -1,5 +1,6 @@
 const Promise = require('bluebird');
 
+const ChangeLogs = require('./../../change-logs');
 const patchData = require('./../../patch-data');
 
 module.exports = ($, modal) => {
@@ -8,6 +9,7 @@ module.exports = ($, modal) => {
             .then(() => patchData($, modal, this))
             .then((success) => {
                 if (success) {
+                    ChangeLogs.dirty();
                     const id = $(this).data('warpjsId');
                     const newValue = $(this).val().trim();
 
