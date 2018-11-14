@@ -2,8 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
-import createStore from './../../../react-utils/create-store';
-
 import * as actionCreators from './action-creators';
 import constants from './../constants';
 import Container from './container';
@@ -26,7 +24,7 @@ module.exports = async ($, element) => {
         const res = await window.WarpJS.proxy.post($, $(element).data('warpjsUrl'), data);
         const state = window.WarpJS.flattenHAL(res);
 
-        const store = createStore(reducers, {});
+        const store = window.WarpJS.ReactUtils.createStore(reducers, {}, [], process.env.NODE_ENV === 'development');
         if (state && state.instances && state.instances.length) {
             store.dispatch(actionCreators.initializeState(state.instances[0]));
         }

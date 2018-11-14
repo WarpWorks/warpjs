@@ -1,13 +1,18 @@
 import PropTypes from 'prop-types';
-import { FormControl, Glyphicon, ListGroupItem } from 'react-bootstrap';
+// import { FormControl, Glyphicon, ListGroupItem } from 'react-bootstrap';
+import { Glyphicon, ListGroupItem } from 'react-bootstrap';
 
 const Component = (props) => {
+    const AutoSaveField = window.WarpJS.ReactComponents.AutoSaveField;
+
     return (
         <ListGroupItem header={props.item.name}>
-            <FormControl type="text" value={props.item.relnDescription}
+            <AutoSaveField
+                componentId={props.item.id}
                 placeholder="Enter relationship description"
-                onChange={(event) => props.updateAssociationDescription(event, props.item)}
-                onBlur={(event) => props.syncAssociationDescription(event, props.item)}
+                changed={props.updateAssociationDescription(props.item)}
+                save={props.syncAssociationDescription(props.item)}
+                value={props.item.relnDescription}
             />
 
             <div className="warpjs-actions">
@@ -17,7 +22,6 @@ const Component = (props) => {
             </div>
         </ListGroupItem>
     );
-
 };
 
 Component.displayName = 'AssociationModalListItem';
@@ -25,6 +29,7 @@ Component.displayName = 'AssociationModalListItem';
 Component.propTypes = {
     deleteItem: PropTypes.func.isRequired,
     item: PropTypes.shape({
+        id: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
         relnDescription: PropTypes.string
     }),

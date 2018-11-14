@@ -8,6 +8,10 @@
 
 # <a name="releases-1.3"></a>Releases 1.3.x [top](#top)
 
+## 1.3.33 - 2018-11-14
+
+- #127: Inline editor association modal. Still some work to do.
+
 ## 1.3.32 - 2018-11-14
 
 - #193 Tinymce height issue fix.

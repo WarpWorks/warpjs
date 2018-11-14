@@ -1,5 +1,3 @@
-import debounce from 'lodash/debounce';
-
 import Component from './component';
 import * as orchestrators from './orchestrators';
 
@@ -13,8 +11,8 @@ const mapDispatchToProps = (dispatch, ownProps) => Object.freeze({
     moveDown: (url) => (items, item) => orchestrators.moveItem(dispatch, items, item, true, url),
     moveUp: (url) => (items, item) => orchestrators.moveItem(dispatch, items, item, false, url),
     removeItem: (items, item) => orchestrators.removeItem(dispatch, items, item),
-    syncAssociationDescription: (relationship) => (event, item) => orchestrators.syncAssociationDescription(dispatch, relationship, event, item),
-    updateAssociationDescription: (relationship) => (event, item) => orchestrators.updateAssociationDescription(dispatch, relationship, event, item)
+    syncAssociationDescription: (item) => (event) => orchestrators.syncAssociationDescription(dispatch, item),
+    updateAssociationDescription: (relationship) => (item) => (event) => orchestrators.updateAssociationDescription(dispatch, relationship, event, item)
 });
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => Object.freeze({
@@ -22,7 +20,6 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => Object.freeze({
     ...dispatchProps,
     moveDown: dispatchProps.moveDown(stateProps.relationship._links.reorder.href),
     moveUp: dispatchProps.moveUp(stateProps.relationship._links.reorder.href),
-    syncAssociationDescription: debounce(dispatchProps.syncAssociationDescription(stateProps.relationship), 250),
     updateAssociationDescription: dispatchProps.updateAssociationDescription(stateProps.relationship),
     ...ownProps
 });

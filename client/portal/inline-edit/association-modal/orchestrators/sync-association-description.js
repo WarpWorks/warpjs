@@ -1,4 +1,7 @@
-export default async (dispatch, relationship, event, item) => {
+// import debug from './../../../debug';
+// const log = debug('inline-edit/association-modal/orchestrators/sync-association-description');
+
+export default async (dispatch, item) => {
     const url = item._links.self.href;
     const data = {
         field: 'desc',
