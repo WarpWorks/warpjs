@@ -19,6 +19,7 @@ module.exports = ($, modal, clickedElement) => {
     const instanceDoc = $('[data-warpjs-status="instance"]');
 
     tinymce.init({
+        height: 100,
         selector: TEXT_SELECTOR,
         menubar: false,
         elementpath: false,
