@@ -9,7 +9,7 @@ export default async (dispatch, items, item) => {
     try {
         await window.WarpJS.proxy.del($, item._links.self.href);
         constants.setDirty();
-        window.WarpJS.toast.success($, "Saved");
+        window.WarpJS.toast.success($, "Removed");
         const cloned = cloneDeep(items).filter((current) => current.id !== item.id);
         dispatch(actionCreators.updateItems(cloned));
     } catch (err) {

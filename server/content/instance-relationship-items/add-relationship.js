@@ -57,11 +57,7 @@ module.exports = async (req, res) => {
             itemId: body.id
         });
 
-        resource.embedded('references', refResource);
-
-        resource.link('item', {
-            title: "URL to new reference"
-        });
+        resource.embed('references', refResource);
 
         utils.sendHal(req, res, resource);
     } catch (err) {

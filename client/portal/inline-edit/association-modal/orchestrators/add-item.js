@@ -25,31 +25,33 @@ export default async (dispatch, items, item, itemUrl, reorderUrl) => {
         let toastLoading = window.WarpJS.toast.loading($, "Adding...");
         try {
             const result = await window.WarpJS.proxy.post($, itemUrl, newItem);
-            log("result=", result);
-            window.WarpJS.toast.success($, "Added");
-            cloned.push({
-                type: newItem.type,
-                id: newItem.id,
-                relnDescription: newItem.desc,
-                relnPosition: newItem.position,
-                name: item.name
-            });
+            if (result && result._embedded && result._embedded.references && result._embedded.references.length) {
+                window.WarpJS.toast.success($, "Added");
+                cloned.push({
+                    _links: result._embedded.references[0]._links,
+                    type: newItem.type,
+                    id: newItem.id,
+                    relnDescription: newItem.desc,
+                    relnPosition: newItem.position,
+                    name: item.name
+                });
 
-            constants.setDirty();
+                constants.setDirty();
 
-            const toUpdate = setPositions(cloned);
-            if (toUpdate.length) {
-                toastLoading = window.WarpJS.toast.loading($, "Updating positions...");
-                try {
-                    await window.WarpJS.proxy.patch($, reorderUrl, toUpdate);
-                    window.WarpJS.toast.success($, "Updated positions");
-                } catch (err) {
-                    console.error("Error updating positions: err=", err);
-                    window.WarpJS.toast.error($, err.message, "Error updating positions!");
+                const toUpdate = setPositions(cloned);
+                if (toUpdate.length) {
+                    toastLoading = window.WarpJS.toast.loading($, "Updating positions...");
+                    try {
+                        await window.WarpJS.proxy.patch($, reorderUrl, toUpdate);
+                        window.WarpJS.toast.success($, "Updated positions");
+                    } catch (err) {
+                        console.error("Error updating positions: err=", err);
+                        window.WarpJS.toast.error($, err.message, "Error updating positions!");
+                    }
                 }
-            }
 
-            dispatch(actionCreators.updateItems(cloned));
+                dispatch(actionCreators.updateItems(cloned));
+            }
         } catch (err) {
             console.error("Error! err=", err);
             window.WarpJS.toast.error($, err.message, "Error!");
