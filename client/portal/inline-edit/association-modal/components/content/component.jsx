@@ -8,6 +8,9 @@ import * as shapes from './../../../../../react-utils/shapes';
 
 
 const Component = (props) => {
+    const { FilterableList } = window.WarpJS.ReactComponents;
+
+
     const defineOptions = (items) => items.map((item) => (
         <option key={item.id} value={item.id} selected={item.selected}>{item.name}</option>
     ));
@@ -36,23 +39,30 @@ const Component = (props) => {
         );
     };
 
-    const defineTargets = (target) => {
-        const alreadyAdded = props.relationship.items.map((item) => item.id);
+    // Do not display element that are already part of the relationship.
+    const alreadyAdded = props.relationship.items.map((item) => item.id);
 
-        return target.entities.map((item) => {
-            if (alreadyAdded.indexOf(item.id) === -1) {
-                return (
-                    <ListGroupItem key={item.id} className="warpjs-instances-item">
-                        <Glyphicon glyph="arrow-left" data-warpjs-action="add-association"
-                            onClick={() => addAssociation(item)}
-                        />
-                        <span className="warpjs-value">{item.name}</span>
-                    </ListGroupItem>
-                );
-            } else {
-                return null;
-            }
-        });
+    const filter = (filterValue, item) => {
+        if (alreadyAdded.indexOf(item.id) === -1) {
+            return item.name.toLowerCase().indexOf(filterValue.toLowerCase()) !== -1;
+        }
+    }
+
+    const listRender = (items, itemsRenderer) => {
+        return (
+            <ListGroup>
+                {itemsRenderer()}
+            </ListGroup>
+        );
+    };
+
+    const itemRender = (item) => {
+        return (
+            <ListGroupItem key={item.id} className="warpjs-instances-item" onClick={() => addAssociation(item)}>
+                <Glyphicon glyph="arrow-left" data-warpjs-action="add-association" />
+                <span className="warpjs-value">{item.name}</span>
+            </ListGroupItem>
+        );
     };
 
     return (
@@ -77,9 +87,13 @@ const Component = (props) => {
                         </ListGroupItem>
 
                         <ListGroupItem className="warpjs-instances-list">
-                            <ListGroup>
-                                {defineTargets(props.relationship.targets[0])}
-                            </ListGroup>
+                            <FilterableList
+                                componentId="association-modal-content"
+                                filter={filter}
+                                items={props.relationship.targets[0].entities}
+                                listRender={listRender}
+                                itemRender={itemRender}
+                            />
                         </ListGroupItem>
                     </ListGroup>
                 </Col>

@@ -11,7 +11,8 @@ module.exports = Object.freeze({
         modal = modal || $(this.selector);
         modal.on('hidden.bs.modal', () => {
             if (modal.data(this.IS_DIRTY)) {
-                window.WarpJS.toast.loading($, "Data has been updated, please reload the page", "Reload needed");
+                window.WarpJS.toast.loading($, "Data has been updated, page will be reloaded.", "Reload needed");
+                setTimeout(() => document.location.reload(), 2500);
             }
             modal.remove();
         });

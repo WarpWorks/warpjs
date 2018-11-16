@@ -21,20 +21,25 @@
 
         .warpjs-value {
             .list-group.warpjs-associations-list {
+                max-height: calc(~"100% - 200px");
+                overflow-y: auto;
+
                 .list-group-item {
                     .list-group-item-heading {
                         max-width: calc(~"100% - 85px");
                     }
 
                     .list-group-item-text {
+                        .form-control {
+                            font-size: 13px;
+                            border: none;
+                            background-color: transparent;
+                        }
+
                         .warpjs-actions {
                             position: absolute;
                             right: 15px;
                             top: 12px;
-
-                            [data-warpjs-action="delete"] {
-                                color: red;
-                            }
                         }
                     }
 

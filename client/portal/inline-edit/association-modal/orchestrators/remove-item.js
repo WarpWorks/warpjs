@@ -4,12 +4,12 @@ import * as actionCreators from './../action-creators';
 import constants from './../../constants';
 
 export default async (dispatch, items, item) => {
-    const toastLoading = window.WarpJS.toast.loading($, "Removing...");
+    const toastLoading = window.WarpJS.toast.loading($, "Unlinking...");
 
     try {
         await window.WarpJS.proxy.del($, item._links.self.href);
         constants.setDirty();
-        window.WarpJS.toast.success($, "Removed");
+        window.WarpJS.toast.success($, "Unlinked");
         const cloned = cloneDeep(items).filter((current) => current.id !== item.id);
         dispatch(actionCreators.updateItems(cloned));
     } catch (err) {

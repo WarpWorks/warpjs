@@ -16,13 +16,13 @@ export default async (dispatch, items, item, moveDown, url) => {
     const toUpdate = setPositions(cloned);
     cloned.sort((a, b) => a.relnPosition - b.relnPosition);
 
-    const toastLoading = window.WarpJS.toast.loading($, "saving...");
+    const toastLoading = window.WarpJS.toast.loading($, "Reordering...");
     try {
         await window.WarpJS.proxy.patch($, url, toUpdate);
 
         constants.setDirty();
 
-        window.WarpJS.toast.success($, "Saved");
+        window.WarpJS.toast.success($, "Reordered");
         dispatch(actionCreators.updateItems(cloned));
     } catch (err) {
         console.error("error patch:", err);
