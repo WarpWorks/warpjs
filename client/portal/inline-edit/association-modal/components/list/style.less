@@ -1,63 +1,51 @@
 .warpjs-association-modal-list {
-    .warpjs-association-modal-title-container {
-        .warpjs-label {
-        }
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 
-        .warpjs-value {
-        }
-    }
+    .warpjs-association-modal-list-item-items {
+        background-color: inherit;
+        flex: 2;
+        overflow-y: auto;
+        margin-bottom: 20px;
 
-    .warpjs-association-modal-name-container {
-        .warpjs-label {
-        }
+        .list-group.warpjs-associations-list {
+            margin-bottom: 0px;
 
-        .warpjs-value {
-        }
-    }
+            .list-group-item {
+                .list-group-item-heading {
+                    max-width: calc(~"100% - 85px");
+                }
 
-    .warpjs-association-modal-items-container {
-        .warpjs-label {
-        }
-
-        .warpjs-value {
-            .list-group.warpjs-associations-list {
-                max-height: calc(~"100% - 200px");
-                overflow-y: auto;
-
-                .list-group-item {
-                    .list-group-item-heading {
-                        max-width: calc(~"100% - 85px");
+                .list-group-item-text {
+                    .form-control {
+                        font-size: 13px;
+                        border: none;
+                        background-color: transparent;
                     }
 
-                    .list-group-item-text {
-                        .form-control {
-                            font-size: 13px;
-                            border: none;
-                            background-color: transparent;
-                        }
+                    .warpjs-actions {
+                        position: absolute;
+                        right: 15px;
+                        top: 12px;
+                    }
+                }
 
-                        .warpjs-actions {
-                            position: absolute;
-                            right: 15px;
-                            top: 12px;
+                &:first-child {
+                    .warpjs-actions {
+                        [data-warpjs-action="move-up"] {
+                            color: #cccccc;
+                            pointer-events: none;
                         }
                     }
+                }
 
-                    &:first-child {
-                        .warpjs-actions {
-                            [data-warpjs-action="move-up"] {
-                                color: #cccccc;
-                                pointer-events: none;
-                            }
-                        }
-                    }
-
-                    &:last-child {
-                        .warpjs-actions {
-                            [data-warpjs-action="move-down"] {
-                                color: #cccccc;
-                                pointer-events: none;
-                            }
+                &:last-child {
+                    .warpjs-actions {
+                        [data-warpjs-action="move-down"] {
+                            color: #cccccc;
+                            pointer-events: none;
                         }
                     }
                 }

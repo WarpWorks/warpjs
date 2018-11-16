@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Col, Glyphicon, Grid, ListGroup, ListGroupItem, Row } from 'react-bootstrap';
+import { Glyphicon, ListGroup, ListGroupItem } from 'react-bootstrap';
 
 import * as shapes from './../../../../../react-utils/shapes';
 
@@ -39,37 +39,23 @@ const Component = (props) => {
     };
 
     return (
-        <Grid fluid className="warpjs-association-modal-list">
-            <Row>
-                <Col xs={12} className="warpjs-association-modal-title-container">
-                    <div className="warpjs-label">
-                        Document Name
-                    </div>
-                    <div className="warpjs-value">
-                        {props.name}
-                    </div>
-                </Col>
-                <Col xs={12} className="warpjs-association-modal-name-container">
-                    <div className="warpjs-label">
-                        Association Name
-                    </div>
-                    <div className="warpjs-value">
-                        {props.relationship.label}
-                    </div>
-                </Col>
-                <Col xs={12} className="warpjs-association-modal-items-container">
-                    <div className="warpjs-label">
-                        Associations
-                    </div>
-                    <div className="warpjs-value">
-                        <BaseList items={items}
-                            listRender={listRender}
-                            itemRender={itemRender}
-                        />
-                    </div>
-                </Col>
-            </Row>
-        </Grid>
+        <div className="warpjs-association-modal-list">
+            <div className="warpjs-label">
+                Document Name
+            </div>
+            <div className="warpjs-value">
+                {props.name}
+            </div>
+            <div className="warpjs-label">
+                {props.relationship.label}
+            </div>
+            <div className="warpjs-association-modal-list-item-items">
+                <BaseList items={items}
+                    listRender={listRender}
+                    itemRender={itemRender}
+                />
+            </div>
+        </div>
     );
 };
 

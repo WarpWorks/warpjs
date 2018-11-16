@@ -7,7 +7,7 @@ const Component = (props) => {
     return (
         <Grid fluid className="warpjs-association-modal">
             <Row>
-                <Col xs={6} className="warpjs-association-modal-list">
+                <Col xs={6} className="warpjs-association-modal-list-container">
                     <AssociationModalList {...props} />
                 </Col>
                 <Col xs={6} className="warpjs-association-modal-content">
