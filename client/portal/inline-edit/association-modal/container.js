@@ -12,6 +12,7 @@ const mapDispatchToProps = (dispatch, ownProps) => Object.freeze({
     moveUp: (url) => (items, item) => orchestrators.moveItem(dispatch, items, item, false, url),
     removeItem: (items, item) => orchestrators.removeItem(dispatch, items, item),
     syncAssociationDescription: (item) => (event) => orchestrators.syncAssociationDescription(dispatch, item),
+    typeSelected: (relationship) => (event) => orchestrators.typeSelected(dispatch, relationship, event),
     updateAssociationDescription: (relationship) => (item) => (event) => orchestrators.updateAssociationDescription(dispatch, relationship, event, item)
 });
 
@@ -20,6 +21,7 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => Object.freeze({
     ...dispatchProps,
     moveDown: dispatchProps.moveDown(stateProps.relationship._links.reorder.href),
     moveUp: dispatchProps.moveUp(stateProps.relationship._links.reorder.href),
+    typeSelected: dispatchProps.typeSelected(stateProps.relationship),
     updateAssociationDescription: dispatchProps.updateAssociationDescription(stateProps.relationship),
     ...ownProps
 });

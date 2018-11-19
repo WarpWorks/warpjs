@@ -24,6 +24,7 @@ const Component = (props) => {
                 <ControlLabel>Select type: </ControlLabel>
                 <FormControl componentClass="select" placeholder="Select type"
                     defaultValue={selected.id}
+                    onChange={props.typeSelected}
                     >
                     {defineOptions(props.relationship.targets)}
                 </FormControl>
@@ -66,6 +67,9 @@ const Component = (props) => {
         );
     };
 
+    const selectedTarget = props.relationship.targets.find((target) => target.selected);
+    const targetItems = selectedTarget ? selectedTarget.entities : [];
+
     return (
         <Fragment>
             <div className="warpjs-modal-close-button-container">
@@ -79,7 +83,7 @@ const Component = (props) => {
                 <FilterableList
                     componentId="association-modal-content"
                     filter={filter}
-                    items={props.relationship.targets[0].entities}
+                    items={targetItems}
                     listRender={listRender}
                     itemRender={itemRender}
                     className="warpjs-instances-list"
@@ -92,8 +96,9 @@ const Component = (props) => {
 Component.displayName = 'AssociationModalContent';
 
 Component.propTypes = {
+    addAssociation: PropTypes.func.isRequired,
     relationship: shapes.relationship,
-    addAssociation: PropTypes.func.isRequired
+    typeSelected: PropTypes.func.isRequired
 };
 
 export default Component;

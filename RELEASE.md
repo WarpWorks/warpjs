@@ -8,6 +8,10 @@
 
 # <a name="releases-1.3"></a>Releases 1.3.x [top](#top)
 
+## 1.3.36 - 2018-11-19
+
+- #127: Implemented selection of different type selection.
+
 ## 1.3.35 - 2018-11-19
 
 - #127: Converted display to flex to align list bottoms.
