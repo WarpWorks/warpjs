@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
-import { Button, Col, ControlLabel, Form, FormControl, FormGroup, Glyphicon, Grid, ListGroup, ListGroupItem, Row } from 'react-bootstrap';
+import { Fragment } from 'react';
+import { Button, ControlLabel, Form, FormControl, FormGroup, Glyphicon, ListGroup, ListGroupItem } from 'react-bootstrap';
 
 import * as shapes from './../../../../../react-utils/shapes';
 
@@ -66,39 +67,25 @@ const Component = (props) => {
     };
 
     return (
-        <Grid fluid className="">
-            <Row>
-                <Col xs={12} className="warpjs-modal-close-button-container">
-                    <Button className="close" data-dismiss="modal" arial-label="Close" aria-hidden="true">&times;</Button>
-                </Col>
-            </Row>
-            <Row>
-                <Col xs={12} className="warpjs-title">
-                    Select association to add:
-                </Col>
-            </Row>
-            <Row>
-                <Col xs={12} className="">
-                    <ListGroup>
-                        <ListGroupItem className="warpjs-types-select">
-                            <Form inline>
-                                {defineSelect()}
-                            </Form>
-                        </ListGroupItem>
-
-                        <ListGroupItem className="warpjs-instances-list">
-                            <FilterableList
-                                componentId="association-modal-content"
-                                filter={filter}
-                                items={props.relationship.targets[0].entities}
-                                listRender={listRender}
-                                itemRender={itemRender}
-                            />
-                        </ListGroupItem>
-                    </ListGroup>
-                </Col>
-            </Row>
-        </Grid>
+        <Fragment>
+            <div className="warpjs-modal-close-button-container">
+                <Button className="close" data-dismiss="modal" arial-label="Close" aria-hidden="true">&times;</Button>
+            </div>
+            <div className="warpjs-title">Select to add {props.relationship.label}</div>
+            <Form inline className="warpjs-types-select">
+                {defineSelect()}
+            </Form>
+            <div className="warpjs-instances-list">
+                <FilterableList
+                    componentId="association-modal-content"
+                    filter={filter}
+                    items={props.relationship.targets[0].entities}
+                    listRender={listRender}
+                    itemRender={itemRender}
+                    className="warpjs-instances-list"
+                />
+            </div>
+        </Fragment>
     );
 };
 

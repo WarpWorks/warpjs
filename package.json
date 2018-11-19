@@ -1,6 +1,6 @@
 {
   "name": "@warp-works/warpjs",
-  "version": "1.3.34",
+  "version": "1.3.35",
   "description": "Content management system for WarpWorks in javascript",
   "repository": {
     "type": "git",
@@ -94,7 +94,7 @@
     "@warp-works/warpjs-plugins": "latest",
     "@warp-works/warpjs-session-plugin": "latest",
     "@warp-works/warpjs-survey-tool-plugin": "~1.2.27",
-    "@warp-works/warpjs-utils": "~1.2.71",
+    "@warp-works/warpjs-utils": "~1.2.72",
     "babel-core": "6.26.x",
     "babel-loader": "7.1.x",
     "babel-plugin-transform-async-to-generator": "~6.24.1",
@@ -146,7 +146,7 @@
   "peerDependencies": {
     "@warp-works/warpjs-plugins": ">=1.2.2",
     "@warp-works/warpjs-session-plugin": ">=1.2.9",
-    "@warp-works/warpjs-utils": ">=1.2.71",
+    "@warp-works/warpjs-utils": ">=1.2.72",
     "body-parser": ">=1.17.0",
     "cookie-parser": ">=1.4.0",
     "express": ">=4.0.0"

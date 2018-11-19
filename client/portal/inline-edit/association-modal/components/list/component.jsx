@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { Fragment } from 'react';
 import { Glyphicon, ListGroup, ListGroupItem } from 'react-bootstrap';
 
 import * as shapes from './../../../../../react-utils/shapes';
@@ -39,7 +40,7 @@ const Component = (props) => {
     };
 
     return (
-        <div className="warpjs-association-modal-list">
+        <Fragment>
             <div className="warpjs-label">
                 Document Name
             </div>
@@ -55,7 +56,7 @@ const Component = (props) => {
                     itemRender={itemRender}
                 />
             </div>
-        </div>
+        </Fragment>
     );
 };
 

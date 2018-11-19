@@ -1,47 +1,45 @@
-.warpjs-association-modal-list {
-    background-color: #cccccc;
+.warpjs-modal-close-button-container {
+    float: right;
+    padding-right: 0px;
+    margin-right: -5px;
 }
 
-.warpjs-association-modal-content {
-    .warpjs-types-select {
-        form.form-inline {
-            margin-bottom: 0;
+.warpjs-title {
+    font-size: 24px;
+    margin-bottom: 12px;
+    line-height: 1.4;
+}
 
-            .control-label {
-                margin-right: 12px;
+form.form-inline.warpjs-types-select {
+    .control-label {
+        margin-right: 12px;
+    }
+}
+
+.warpjs-instances-list {
+    overflow-y: auto;
+    flex: 2;
+
+    .warpjs-filterable-list {
+        .warpjs-filterable-list-results {
+            .list-group {
+                margin-bottom: 0;
             }
         }
     }
 
-    .warpjs-modal-close-button-container {
-        float: right;
-        padding-right: 0px;
-        margin-right: -5px;
-    }
+    .warpjs-instances-item {
+        [data-warpjs-action] {
+            vertical-align: top;
+        }
 
-    .warpjs-title {
-        font-size: 24px;
-        margin-bottom: 12px;
-        line-height: 1.4;
-    }
-
-    .warpjs-instances-list {
-        height: calc(~"100% - 150px");
-        overflow-y: auto;
-
-        .warpjs-instances-item {
-            [data-warpjs-action] {
-                vertical-align: top;
-            }
-
-            .warpjs-value {
-                max-width: calc(~"100% - 25px");
-                display: inline-block;
-                margin-left: 5px;
-                line-height: 1.4em;
-                max-height: 3.7em;
-                overflow: hidden;
-            }
+        .warpjs-value {
+            max-width: calc(~"100% - 25px");
+            display: inline-block;
+            margin-left: 5px;
+            line-height: 1.4em;
+            max-height: 3.7em;
+            overflow: hidden;
         }
     }
 }

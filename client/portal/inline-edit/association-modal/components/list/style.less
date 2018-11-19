@@ -1,52 +1,44 @@
-.warpjs-association-modal-list {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
+.warpjs-association-modal-list-item-items {
+    background-color: inherit;
+    flex: 2;
+    overflow-y: auto;
 
-    .warpjs-association-modal-list-item-items {
-        background-color: inherit;
-        flex: 2;
-        overflow-y: auto;
-        margin-bottom: 20px;
+    .list-group.warpjs-associations-list {
+        margin-bottom: 0px;
 
-        .list-group.warpjs-associations-list {
-            margin-bottom: 0px;
+        .list-group-item {
+            .list-group-item-heading {
+                max-width: calc(~"100% - 85px");
+            }
 
-            .list-group-item {
-                .list-group-item-heading {
-                    max-width: calc(~"100% - 85px");
+            .list-group-item-text {
+                .form-control {
+                    font-size: 13px;
+                    border: none;
+                    background-color: transparent;
                 }
 
-                .list-group-item-text {
-                    .form-control {
-                        font-size: 13px;
-                        border: none;
-                        background-color: transparent;
-                    }
+                .warpjs-actions {
+                    position: absolute;
+                    right: 15px;
+                    top: 12px;
+                }
+            }
 
-                    .warpjs-actions {
-                        position: absolute;
-                        right: 15px;
-                        top: 12px;
+            &:first-child {
+                .warpjs-actions {
+                    [data-warpjs-action="move-up"] {
+                        color: #cccccc;
+                        pointer-events: none;
                     }
                 }
+            }
 
-                &:first-child {
-                    .warpjs-actions {
-                        [data-warpjs-action="move-up"] {
-                            color: #cccccc;
-                            pointer-events: none;
-                        }
-                    }
-                }
-
-                &:last-child {
-                    .warpjs-actions {
-                        [data-warpjs-action="move-down"] {
-                            color: #cccccc;
-                            pointer-events: none;
-                        }
+            &:last-child {
+                .warpjs-actions {
+                    [data-warpjs-action="move-down"] {
+                        color: #cccccc;
+                        pointer-events: none;
                     }
                 }
             }
