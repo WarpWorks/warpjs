@@ -21,6 +21,7 @@ module.exports = Object.freeze({
     PAGE_VIEW_STYLES: Object.freeze({
         Plain: 'Plain',
         BoK: 'BoK',
+        IndividualContribution: 'IndividualContribution',
         Insight: 'Insight',
         Testbed: 'Testbed'
     }),
@@ -30,7 +31,19 @@ module.exports = Object.freeze({
     },
 
     isSpecializedPageViewStyle(style) {
-        return style && (style !== this.PAGE_VIEW_STYLES.Plain);
+        switch (style) {
+            case this.PAGE_VIEW_STYLES.Plain:
+            case this.PAGE_VIEW_STYLES.IndividualContribution:
+                return false;
+
+            case this.PAGE_VIEW_STYLES.BoK:
+            case this.PAGE_VIEW_STYLES.Insight:
+            case this.PAGE_VIEW_STYLES.Testbed:
+                return true;
+
+            default:
+                return false;
+        }
     },
 
     PANEL_NAMES: Object.freeze({

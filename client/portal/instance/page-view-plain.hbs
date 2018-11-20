@@ -1,3 +1,4 @@
+<div id="warpjs-individual-contribution-header-placeholder"></div>
 {{> page-header-image page=page image=page._embedded.headerImages.[0]}}
 
 {{#each pageView._embedded.mainBodyPanels as |panel|}}
@@ -16,7 +17,7 @@
 
 {{#each pageView._embedded.communities as |community|}}
   {{#if community.showPanel}}
-    <div class="row warpjs-panel">
+    <div id="community" class="row warpjs-panel">
         {{> left-right-margin}}
 
         <div class="col-xs-12 col-sm-8 col-sm-offset-1 warpjs-content">
@@ -32,4 +33,3 @@
     </div>
   {{/if}}
 {{/each}}
-
