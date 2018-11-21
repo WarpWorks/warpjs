@@ -48,7 +48,10 @@ module.exports = (req, persistence, entity, instance) => Promise.resolve()
         typeId: entity.id,
         typeName: entity.name,
         typeLabel: entity.label || entity.name,
-        name: entity.getDisplayName(instance)
+        name: entity.getDisplayName(instance),
+        isHomePage: req.params.type === config.domainName,
+        hasGA: config.analytics && config.analytics.apiKey
+
     }))
     .then((resource) => Promise.resolve()
         // Breadcrumb

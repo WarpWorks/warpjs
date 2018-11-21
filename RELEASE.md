@@ -8,6 +8,10 @@
 
 # <a name="releases-1.3"></a>Releases 1.3.x [top](#top)
 
+## 1.3.38 - 2018-11-21
+
+- #194: Adding GA events on home page.
+
 ## 1.3.37 - 2018-11-20
 
 - #191: Converting IndividualContribution to look like Plain page view style.

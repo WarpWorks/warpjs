@@ -2,6 +2,7 @@
 import regeneratorRuntime from 'babel-regenerator-runtime';
 import ReactDOM from 'react-dom';
 
+import addGoogleAnalyticsIfNeeded from './add-google-analytics-if-needed';
 import IndividualContributionHeader from './individual-contribution-header';
 
 import debug from './../debug';
@@ -63,6 +64,7 @@ const log = debug('client/portal/instance/index');
                 window.WarpJS.displayCookiePopup(result.data.customMessages, result.data._links.acceptCookies);
 
                 imageResizer($);
+                addGoogleAnalyticsIfNeeded($);
             }
         },
         (err) => {
