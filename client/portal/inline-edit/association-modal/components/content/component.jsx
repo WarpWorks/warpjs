@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { Fragment } from 'react';
-import { Button, ControlLabel, Form, FormControl, FormGroup, Glyphicon, ListGroup, ListGroupItem } from 'react-bootstrap';
+import { Button, Form, FormControl, Glyphicon, ListGroup, ListGroupItem } from 'react-bootstrap';
 
 import * as shapes from './../../../../../react-utils/shapes';
 
@@ -11,26 +11,20 @@ import * as shapes from './../../../../../react-utils/shapes';
 const Component = (props) => {
     const { FilterableList } = window.WarpJS.ReactComponents;
 
+    const selected = props.relationship.targets.find((target) => target.selected);
 
-    const defineOptions = (items) => items.map((item) => (
-        <option key={item.id} value={item.id} selected={item.selected}>{item.name}</option>
-    ));
-
-    const defineSelect = () => {
-        const selected = props.relationship.targets.find((target) => target.selected);
-
-        return (
-            <FormGroup controlId="types-select">
-                <ControlLabel>Select type: </ControlLabel>
-                <FormControl componentClass="select" placeholder="Select type"
-                    defaultValue={selected.id}
-                    onChange={props.typeSelected}
-                    >
-                    {defineOptions(props.relationship.targets)}
-                </FormControl>
-            </FormGroup>
-        );
-    };
+    const selectComponent = (
+        <FormControl componentClass="select" placeholder="Select type"
+            defaultValue={selected.id}
+            onChange={props.typeSelected}
+            >
+                {
+                    props.relationship.targets.map((item) => (
+                        <option key={item.id} value={item.id} selected={item.selected}>{item.name}</option>
+                    ))
+                }
+        </FormControl>
+    );
 
     const addAssociation = (item) => {
         return props.addAssociation(
@@ -44,51 +38,50 @@ const Component = (props) => {
     // Do not display element that are already part of the relationship.
     const alreadyAdded = props.relationship.items.map((item) => item.id);
 
-    const filter = (filterValue, item) => {
-        if (alreadyAdded.indexOf(item.id) === -1) {
-            return item.name.toLowerCase().indexOf(filterValue.toLowerCase()) !== -1;
-        }
-    }
-
-    const listRender = (items, itemsRenderer) => {
-        return (
-            <ListGroup>
-                {itemsRenderer()}
-            </ListGroup>
-        );
-    };
-
-    const itemRender = (item) => {
-        return (
-            <ListGroupItem key={item.id} className="warpjs-instances-item" onClick={() => addAssociation(item)}>
-                <Glyphicon glyph="arrow-left" data-warpjs-action="add-association" />
-                <span className="warpjs-value">{item.name}</span>
-            </ListGroupItem>
-        );
-    };
-
     const selectedTarget = props.relationship.targets.find((target) => target.selected);
     const targetItems = selectedTarget ? selectedTarget.entities : [];
+
+    const componentRender = (inputComponent, filterValue) => {
+        filterValue = (filterValue || '').toLowerCase();
+
+        const items = targetItems
+            .filter((item) => {
+                if (alreadyAdded.indexOf(item.id) === -1) {
+                    const name = item.name.toLowerCase();
+                    return name.indexOf(filterValue) !== -1;
+                } else {
+                    return false;
+                }
+            })
+            .map((item) => (
+                <ListGroupItem key={item.id} className="warpjs-instances-item" onClick={() => addAssociation(item)}>
+                    <Glyphicon glyph="arrow-left" data-warpjs-action="add-association" />
+                    <span className="warpjs-value">{item.name}</span>
+                </ListGroupItem>
+            ))
+        ;
+
+        return (
+            <Fragment>
+                <div>
+                    <Form className="warpjs-types-select">{selectComponent}</Form>
+                    <div className="warpjs-instances-list-filter">{inputComponent}</div>
+                </div>
+                <ListGroup className="warpjs-instances-list">{items}</ListGroup>
+            </Fragment>
+        );
+    };
 
     return (
         <Fragment>
             <div className="warpjs-modal-close-button-container">
                 <Button className="close" data-dismiss="modal" arial-label="Close" aria-hidden="true">&times;</Button>
             </div>
-            <div className="warpjs-title">Select to add {props.relationship.label}</div>
-            <Form inline className="warpjs-types-select">
-                {defineSelect()}
-            </Form>
-            <div className="warpjs-instances-list">
-                <FilterableList
-                    componentId="association-modal-content"
-                    filter={filter}
-                    items={targetItems}
-                    listRender={listRender}
-                    itemRender={itemRender}
-                    className="warpjs-instances-list"
-                />
-            </div>
+            <div className="warpjs-title">Add more {props.relationship.label}</div>
+            <FilterableList
+                componentId="association-modal-content"
+                componentRender={componentRender}
+            />
         </Fragment>
     );
 };
