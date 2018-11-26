@@ -11,7 +11,11 @@ module.exports = (persistence, panel, instance) => Promise.resolve()
         name: panel.name,
         description: panel.desc,
         label: panel.label || panel.name,
-        style: panel.style
+        style: panel.style,
+        reference: {
+            type: "Relationship",
+            id: "32"
+        }
     }))
     .then((resource) => Promise.resolve()
         .then(() => panelItemsByPanel(persistence, panel, instance))

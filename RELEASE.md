@@ -8,6 +8,10 @@
 
 # <a name="releases-1.3"></a>Releases 1.3.x [top](#top)
 
+## 1.3.41 - 2018-11-28
+
+- #195: Inline editor for sidebar paragraphs.
+
 ## 1.3.40 - 2018-11-27
 
 - #194: Fixed for image area click.

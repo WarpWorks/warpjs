@@ -21,7 +21,7 @@
                     {{else if section.isOfType.BasicPropertyPanelItem}}
                       {{#if section.typeOfProperty.isText}}
                         {{{section.value}}}
-                        {{> ../inline-edit/context-button page=../../page elementId=section.id elementType='Paragraph'}}
+                        {{> ../inline-edit/context-button page=../../page elementId=section.id elementType='BasicProperty'}}
                       {{else}}
                         {{section.value}}
                       {{/if}}

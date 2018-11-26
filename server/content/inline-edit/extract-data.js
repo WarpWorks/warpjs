@@ -101,6 +101,20 @@ module.exports = (req, res) => {
                                             } else if (body && body.elementType === 'Relationship' && body.elementId) {
                                                 const items = await extractDataRelationship(persistence, entity, instance, body);
                                                 instanceResource.embed('items', items);
+                                            } else if (body && body.elementType === 'BasicProperty' && !body.reference.type) {
+                                                const domainModel = entity.getDomain();
+                                                const panelElement = domainModel.getElementById(body.elementId);
+                                                const basicPropertyElement = domainModel.getElementById(panelElement.basicProperty[0].id);
+                                                const basicPropertyValue = basicPropertyElement.getValue(instance);
+
+                                                return Promise.resolve()
+                                                    .then(() => warpjsUtils.createResource(req, {
+                                                        id: basicPropertyElement.id,
+                                                        name: basicPropertyElement.name,
+                                                        value: basicPropertyValue
+                                                    }))
+                                                    .then((basicPropertyResource) => instanceResource.embed('basicProperties', basicPropertyResource))
+                                                ;
                                             } else {
                                                 debug(`TODO: Handle body=`, body);
                                             }

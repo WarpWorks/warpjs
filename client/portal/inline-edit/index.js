@@ -1,4 +1,5 @@
 const associationModal = require('./association-modal');
+const basicPropertyModal = require('./basic-property-modal');
 const comingSoon = require('./coming-soon');
 const textModal = require('./text-modal');
 
@@ -26,6 +27,10 @@ module.exports = ($) => {
 
             case 'Relationship':
                 associationModal($, this);
+                break;
+
+            case 'BasicProperty':
+                basicPropertyModal($, this);
                 break;
 
             default:
