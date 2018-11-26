@@ -22,7 +22,13 @@ const Component = (props) => {
         const removeItem = () => props.removeItem(items, item);
 
         return (
-            <ListGroupItem key={item.id} header={item.name}>
+            <ListGroupItem key={item.id}>
+                <div className="warpjs-actions">
+                    <Glyphicon glyph="arrow-up" data-warpjs-action="move-up" onClick={moveUp} />
+                    <Glyphicon glyph="arrow-down" data-warpjs-action="move-down" onClick={moveDown} />
+                    <Glyphicon glyph="remove" data-warpjs-action="delete" onClick={removeItem} />
+                </div>
+                <div className="warpjs-header">{item.name}</div>
                 <AutoSaveField componentId={item.id}
                     placeholder="Enter relationship description"
                     changed={props.updateAssociationDescription(item)}
@@ -30,11 +36,6 @@ const Component = (props) => {
                     value={item.relnDescription}
                 />
 
-                <div className="warpjs-actions">
-                    <Glyphicon glyph="arrow-up" data-warpjs-action="move-up" onClick={moveUp} />
-                    <Glyphicon glyph="arrow-down" data-warpjs-action="move-down" onClick={moveDown} />
-                    <Glyphicon glyph="arrow-right" data-warpjs-action="delete" onClick={removeItem} />
-                </div>
             </ListGroupItem>
         );
     };

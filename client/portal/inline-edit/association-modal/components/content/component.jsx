@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { Fragment } from 'react';
-import { Button, Form, FormControl, Glyphicon, ListGroup, ListGroupItem } from 'react-bootstrap';
+import { Button, Form, FormControl, ListGroup, ListGroupItem } from 'react-bootstrap';
 
 import * as shapes from './../../../../../react-utils/shapes';
 
@@ -55,7 +55,7 @@ const Component = (props) => {
             })
             .map((item) => (
                 <ListGroupItem key={item.id} className="warpjs-instances-item" onClick={() => addAssociation(item)}>
-                    <Glyphicon glyph="arrow-left" data-warpjs-action="add-association" />
+                    <Button bsStyle="primary" className="warpjs-action">add</Button>
                     <span className="warpjs-value">{item.name}</span>
                 </ListGroupItem>
             ))

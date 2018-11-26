@@ -7,22 +7,28 @@
         margin-bottom: 0px;
 
         .list-group-item {
-            .list-group-item-heading {
-                max-width: calc(~"100% - 85px");
+            .warpjs-actions {
+                font-size: 18px;
+                position: absolute;
+                right: 15px;
+                top: 20px;
             }
 
-            .list-group-item-text {
+            .warpjs-header {
+                font-size: 18px;
+                margin-bottom: 9px;
+                max-width: calc(~"100% - 100px");
+            }
+
+            .warpjs-auto-save-field {
+                max-width: calc(~"100% - 100px");
+
                 .form-control {
                     font-size: 13px;
                     border: none;
-                    background-color: transparent;
+                    background-color: #f5f5f5;
                 }
 
-                .warpjs-actions {
-                    position: absolute;
-                    right: 15px;
-                    top: 12px;
-                }
             }
 
             &:first-child {
