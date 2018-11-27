@@ -27,7 +27,7 @@ export default ($) => {
             $(element).on('click', (event) => {
                 event.preventDefault();
 
-                const href = $(event.target).attr('href');
+                const href = $(element).attr('href') || $(element).attr('xlink:href');
 
                 // log(`<a> clicked: ${href}`);
 

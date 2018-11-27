@@ -8,7 +8,11 @@
 
 # <a name="releases-1.3"></a>Releases 1.3.x [top](#top)
 
-## 1.3.29 - 2018-11-27
+## 1.3.40 - 2018-11-27
+
+- #194: Fixed for image area click.
+
+## 1.3.39 - 2018-11-27
 
 - #194: Fixing using gtag() instead of ga().
 
