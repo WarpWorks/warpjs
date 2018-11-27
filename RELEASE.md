@@ -8,6 +8,10 @@
 
 # <a name="releases-1.3"></a>Releases 1.3.x [top](#top)
 
+## 1.3.29 - 2018-11-27
+
+- #194: Fixing using gtag() instead of ga().
+
 ## 1.3.38 - 2018-11-21
 
 - #194: Adding GA events on home page.
