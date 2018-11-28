@@ -32,33 +32,26 @@
     "inheritance": "InheritFromParent"
   },
   "analytics": {
-    "apiKey": "UA-128177947-1"
+    "apiKey": "UA-130031232-1"
   },
   "headerItems": [{
     "label": "Overview",
-    "type": "BSSL",
-    "id": "593699e552ad09000f5675a3"
+    "href": "/alias/overview"
   }, {
     "label": "Testbeds",
-    "type": "I3C",
-    "id": "5935a892109ab6000ff06b27",
-    "view": "Testbed_Overview"
+    "href": "/alias/testbeds"
   }, {
     "label": "Project Explorer",
-    "href": "/survey-tool/5b683a769e3c940010310dda"
+    "href": "/alias/project-explorer"
   }, {
     "label": "BoK",
-    "type": "BodyOfKnowledge",
-    "id": "5935a8b3109ab6000ff06b28"
+    "href": "/alias/body-of-knowledge"
   }, {
     "label": "Vocabulary",
-    "type": "Glossary",
-    "id": "59ad7c93c36c57490631d340"
+    "href": "/alias/vocabulary"
   }, {
     "label": "Ecosystem",
-    "type": "I3C",
-    "id": "5935a892109ab6000ff06b27",
-    "view": "Ecosystem_Overview"
+    "href": "/alias/ecosystem"
   }],
   "plugins": [{
     "name": "I3C MapBrowser plugin",
