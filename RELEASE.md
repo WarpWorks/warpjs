@@ -8,6 +8,10 @@
 
 # <a name="releases-1.3"></a>Releases 1.3.x [top](#top)
 
+## 1.3.43 - 2018-11-30
+
+- #195 update: remove console.log.
+
 ## 1.3.42 - 2018-11-29
 
 - #127: Redesign after feedback.
