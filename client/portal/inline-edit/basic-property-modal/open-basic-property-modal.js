@@ -6,7 +6,6 @@ const paragraphContentChanged = require('./../events/paragraph-content-changed')
 const template = require('./basic-property-modal.hbs');
 
 module.exports = ($, element, res) => {
-    console.log('response::::', res);
     const elementType = $(element).data('warpjsType');
     const elementId = $(element).data('warpjsId');
     let modal = $(`[data-warpjs-modal="${constants.MODAL_NAME}"]`);
