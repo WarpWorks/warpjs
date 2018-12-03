@@ -8,6 +8,10 @@
 
 # <a name="releases-1.3"></a>Releases 1.3.x [top](#top)
 
+## 1.3.44 - 2018-12-03
+
+- #199: Force page to load link when analytics is not working.
+
 ## 1.3.43 - 2018-11-30
 
 - #195 update: remove console.log.
