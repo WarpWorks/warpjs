@@ -14,6 +14,7 @@ module.exports = (persistence, imageEntity, imageInstance) => Promise.resolve()
         description: imageInstance.Caption,
         width: imageInstance.Width,
         height: imageInstance.Height,
+        maxWidth: imageInstance.MaxWidth,
         imageType: imageInstance.Type,
         imageBackground: imageInstance.ImageBackground || 'Transparent'
     }))
