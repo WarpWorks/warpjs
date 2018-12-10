@@ -47,7 +47,8 @@
     "lint": "grunt eslint",
     "backup": "backup-data.js",
     "build:dev": "DEBUG=W2:* NODE_ENV=development grunt",
-    "dev": "DEBUG=W2:* npm start"
+    "dev": "DEBUG=W2:* npm start",
+    "start": "babel-node server.js"
   },
   "bin": {
     "warpjs-backup": "./scripts/backup-data.js",
@@ -59,6 +60,7 @@
     "@quoin/node-rc": "~0.1.2",
     "@warp-works/warpjs-change-logs": "1.0.x",
     "@warp-works/warpjs-filter-box": "~1.0.0",
+    "babel-cli": "~6.26.0",
     "bcrypt-nodejs": "0.0.3",
     "bluebird": "~3.5.2",
     "debug": "~4.1.1",
