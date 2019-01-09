@@ -88,7 +88,7 @@
     "@warp-works/warpjs-domain-json-exporter-plugin": "1.2",
     "@warp-works/warpjs-elasticsearch-plugin": "latest",
     "@warp-works/warpjs-imagemap-editor-plugin": "1.2.3",
-    "@warp-works/warpjs-map-plugin": "release-1.2",
+    "@warp-works/warpjs-map-plugin": "latest",
     "@warp-works/warpjs-mongo-persistence": "0.1.x",
     "@warp-works/warpjs-plugins": "latest",
     "@warp-works/warpjs-session-plugin": "latest",
