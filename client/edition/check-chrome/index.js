@@ -1,7 +1,10 @@
 const template = require('./template.hbs');
 
 module.exports = ($) => {
-    if (window && window.chrome && window.chrome.webstore) {
+    if (window
+            && window.chrome
+            && (window.chrome.webstore || window.chrome.runtime)
+            ) {
         return;
     }
 
