@@ -44,7 +44,7 @@ module.exports = (req, res) => {
             )
         )
         .catch((err) => {
-            logger(req, `Failed ${ACTION}`, {err});
+            logger(req, `Failed ${ACTION}`, { err });
             serverUtils.sendError(req, res, err);
         })
         .finally(() => persistence.close())

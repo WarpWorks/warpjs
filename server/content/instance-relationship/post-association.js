@@ -25,7 +25,7 @@ module.exports = (req, res, persistence, entity, instance, resource) => {
         .then(() => res.status(204).send())
         .catch((err) => {
             const message = `Failed ${action}`;
-            logger(req, message, {err});
+            logger(req, message, { err });
             // console.log(message, err);
             res.status(500).send(err.message); // FIXME: Don't send the err.
         })

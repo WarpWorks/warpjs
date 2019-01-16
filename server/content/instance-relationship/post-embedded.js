@@ -21,7 +21,7 @@ module.exports = (req, res, persistence, entity, instance, resource) => {
         .catch((err) => {
             // eslint-disable-next-line no-console
             console.error("ERROR:", err);
-            logger(req, "Failed create new embedded", {err});
+            logger(req, "Failed create new embedded", { err });
             res.status(500).send(err.message); // FIXME: Don't send the err.
         })
     ;

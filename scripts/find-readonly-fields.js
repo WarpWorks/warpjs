@@ -32,7 +32,7 @@ function table(items) {
         {}
     );
 
-    row({entity: 'Entity', pageView: 'PageView', panel: 'Panel', panelItem: 'PanelItem'}, lengths);
+    row({ entity: 'Entity', pageView: 'PageView', panel: 'Panel', panelItem: 'PanelItem' }, lengths);
     row({}, lengths, '=');
     items.forEach((item) => row(item, lengths));
 }

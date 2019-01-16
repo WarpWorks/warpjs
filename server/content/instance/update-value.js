@@ -57,7 +57,7 @@ module.exports = (req, res, persistence, entity, instance) => {
         .catch((err) => {
             // eslint-disable-next-line no-console
             console.error("updateValue(): ERROR: err=", err);
-            logger(req, `Failed ${action}`, {err});
+            logger(req, `Failed ${action}`, { err });
             utils.sendErrorHal(req, res, resource, err);
         })
     ;

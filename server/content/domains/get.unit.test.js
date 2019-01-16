@@ -32,7 +32,7 @@ describe("lib/controllers/domains/get", () => {
             }
         };
 
-        const {req, res} = testHelpers.createMocks(reqOptions);
+        const { req, res } = testHelpers.createMocks(reqOptions);
 
         moduleToTest(req, res);
 
@@ -54,7 +54,7 @@ describe("lib/controllers/domains/get", () => {
             }
         };
 
-        const {req, res} = testHelpers.createMocks(reqOptions);
+        const { req, res } = testHelpers.createMocks(reqOptions);
         moduleToTest(req, res);
 
         expect(res._getStatusCode()).to.equal(200);

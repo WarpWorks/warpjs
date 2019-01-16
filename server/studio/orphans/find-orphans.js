@@ -32,7 +32,7 @@ module.exports = (req, res) => {
                 .then(() => warpCore.getCoreDomain())
                 .then((coreDomain) => coreDomain.getEntityByName(ComplexTypes.Domain))
                 .then((domainEntity) => Promise.resolve()
-                    .then(() => domainEntity.getDocuments(persistence, {name: domain}))
+                    .then(() => domainEntity.getDocuments(persistence, { name: domain }))
                     .then((documents) => documents && documents.length ? documents[0] : {})
                     .then((domainJSON) => Promise.resolve()
                         .then(() => new Domain(warpCore, domainJSON.name, domainJSON.desc, false))

@@ -87,7 +87,7 @@ module.exports = (req, res) => {
                     .then(() => serverUtils.getEntity(domain, type))
                     .then((entity) => Promise.resolve()
                         // FIXME: We can't use the entity ID because old data doesn't have this info.
-                        .then(() => entity.getDocuments(persistence, {type: entity.name}))
+                        .then(() => entity.getDocuments(persistence, { type: entity.name }))
                         .then((documents) => documents.sort(warpjsUtils.byName))
                         .then((documents) => documents.filter((d) => d.Name !== 'TEMPLATE'))
                         .then((documents) => Promise.map(

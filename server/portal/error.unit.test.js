@@ -16,7 +16,7 @@ describe("server/portal/error", () => {
         });
 
         it("should initialize", () => {
-            const e = new I3CError("a message", {an: 'error'});
+            const e = new I3CError("a message", { an: 'error' });
 
             expect(e).to.have.property('name');
             expect(e.name).to.equal('I3CPortal.I3CError');
@@ -27,7 +27,7 @@ describe("server/portal/error", () => {
             expect(e).to.have.property('stack');
 
             expect(e).to.have.property('originalError');
-            expect(e.originalError).to.deep.equal({an: 'error'});
+            expect(e.originalError).to.deep.equal({ an: 'error' });
         });
     });
 
@@ -43,11 +43,11 @@ describe("server/portal/error", () => {
         it("should throw new error with params", () => {
             const ErrorClass = testHelpers.stub();
             try {
-                I3CError.rethrow(ErrorClass, "a message", {an: 'error'});
+                I3CError.rethrow(ErrorClass, "a message", { an: 'error' });
                 expect(null).to.be.undefined();
             } catch (e) {
                 expect(ErrorClass).to.have.been.called();
-                expect(ErrorClass).to.have.been.calledWith("a message", {an: 'error'});
+                expect(ErrorClass).to.have.been.calledWith("a message", { an: 'error' });
             }
         });
     });

@@ -2,7 +2,7 @@ const _ = require('lodash');
 const testHelpers = require('@quoin/node-test-helpers');
 
 const moduleToTest = require('./middlewares');
-const {WarpJSError} = require('@warp-works/warpjs-utils');
+const { WarpJSError } = require('@warp-works/warpjs-utils');
 
 const expect = testHelpers.expect;
 
@@ -28,7 +28,7 @@ describe("lib/middlewares", () => {
         const canAccessAsAdmin = moduleToTest.canAccessAsAdmin;
 
         it("should call next() with error if no user", () => {
-            const {req, res} = testHelpers.createMocks();
+            const { req, res } = testHelpers.createMocks();
             const next = testHelpers.stub();
 
             canAccessAsAdmin(userObjectProperty, req, res, next);
@@ -42,7 +42,7 @@ describe("lib/middlewares", () => {
         });
 
         it("should call next() with error if roles undefined", () => {
-            const {req, res} = testHelpers.createMocks();
+            const { req, res } = testHelpers.createMocks();
             req[userObjectProperty] = {}; // Fake user data.
             const next = testHelpers.stub();
 
@@ -55,7 +55,7 @@ describe("lib/middlewares", () => {
         });
 
         it("should call next() with error if no role", () => {
-            const {req, res} = testHelpers.createMocks();
+            const { req, res } = testHelpers.createMocks();
             req[userObjectProperty] = {
                 Roles: []
             }; // Fake user data.
@@ -70,7 +70,7 @@ describe("lib/middlewares", () => {
         });
 
         it("should call next() with error if role not admin", () => {
-            const {req, res} = testHelpers.createMocks();
+            const { req, res } = testHelpers.createMocks();
             req[userObjectProperty] = {
                 Roles: [{
                     label: "not admin"
@@ -87,7 +87,7 @@ describe("lib/middlewares", () => {
         });
 
         it("should call next() with error if roles not admin", () => {
-            const {req, res} = testHelpers.createMocks();
+            const { req, res } = testHelpers.createMocks();
             req[userObjectProperty] = {
                 Roles: [{
                     label: "not admin"
@@ -106,7 +106,7 @@ describe("lib/middlewares", () => {
         });
 
         it("should call next() without arguments when role is admin", () => {
-            const {req, res} = testHelpers.createMocks();
+            const { req, res } = testHelpers.createMocks();
             req[userObjectProperty] = {
                 Roles: [{
                     label: "admin"
@@ -122,7 +122,7 @@ describe("lib/middlewares", () => {
         });
 
         it("should call next() without arguments when at least one role is admin", () => {
-            const {req, res} = testHelpers.createMocks();
+            const { req, res } = testHelpers.createMocks();
             req[userObjectProperty] = {
                 Roles: [{
                     label: "not-admin"

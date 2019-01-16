@@ -28,7 +28,7 @@ module.exports = (req, res, persistence, entity, instance) => {
         .catch((err) => {
             // eslint-disable-next-line no-console
             console.error(`Failed ${action}`, err);
-            logger(req, `Failed ${action}`, {err});
+            logger(req, `Failed ${action}`, { err });
             res.status(500).send(err.message); // FIXME: Do not use err
         });
 };

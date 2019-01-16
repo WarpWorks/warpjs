@@ -52,7 +52,7 @@ module.exports = (req, res) => {
             )
         )
         .catch((err) => {
-            logger(req, "Failed", {err});
+            logger(req, "Failed", { err });
             serverUtils.sendError(req, res, err);
         })
         .finally(() => persistence.close());

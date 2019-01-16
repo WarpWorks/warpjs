@@ -3,7 +3,7 @@ module.exports = {
         fix: true,
         useEslintrc: false,
         parserOptions: {
-            ecmaVersion: 6
+            ecmaVersion: 8
         }
     },
     node: {
@@ -30,7 +30,9 @@ module.exports = {
         options: {
             fix: true,
             parserOptions: {
+                ecmaVersion: 8,
                 ecmaFeatures: {
+                    experimentalObjectRestSpread: true,
                     jsx: true
                 }
             },

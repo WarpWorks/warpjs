@@ -36,7 +36,7 @@ module.exports = (baseUrl, staticUrlPath) => {
         () => {}
     );
 
-    app.set('sendfile-options', {root: buildDir});
+    app.set('sendfile-options', { root: buildDir });
     app.set('base-url', baseUrl);
     app.set('static-url', staticPath);
     app.set(PUBLIC_FOLDER_KEY, path.join(config.folders.w2projects, 'public'));
