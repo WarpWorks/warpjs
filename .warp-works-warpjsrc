@@ -147,7 +147,8 @@
         "result": "Result",
         "relevantHigh": "Relevant_If_High",
         "relevantLow": "Relevant_If_Low",
-        "content": "Content"
+        "content": "Content",
+        "surveyToolFeedback": "SurveyToolFeedback"
       }
     }
   }]
