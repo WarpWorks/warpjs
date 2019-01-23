@@ -8,6 +8,10 @@
 
 # <a name="releases-1.3"></a>Releases 1.3.x [top](#top)
 
+## 1.3.47 - 2019-01-23
+
+- add surveytoolfeedback to rc file.
+
 ## 1.3.46 - 2019-01-09
 
 - Move routes-info to dev dependencies.
