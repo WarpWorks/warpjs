@@ -8,6 +8,10 @@
 
 # <a name="releases-1.3"></a>Releases 1.3.x [top](#top)
 
+## 1.3.49 - 2019-01-30
+
+- Update survey tool plugin version.
+
 ## 1.3.48 - 2019-01-30
 
 - Update survey tool plugin version.
