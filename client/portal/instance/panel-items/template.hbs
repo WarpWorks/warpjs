@@ -4,7 +4,7 @@
     <div class="col-xs-11 col-xs-offset-1 col-sm-9 col-sm-offset-0 warpjs-value">
       {{> ./csv/template items=section._embedded.items}}
       {{#if section.isAssociation}}
-        {{> ../../inline-edit/context-button page=page elementId=section.id elementType='Relationship'}}
+        {{> ../../inline-edit/context-button page=page elementId=section.id elementType='Relationship' reference=null}}
       {{/if}}
     </div>
   {{else if section.isOfStyle.CSV_Columns}}
@@ -12,26 +12,26 @@
     <div class="col-xs-11 col-xs-offset-1 col-sm-9 col-sm-offset-0 warpjs-value">
       {{> ./csv-columns/template items=section._embedded.items}}
       {{#if section.isAssociation}}
-        {{> ../../inline-edit/context-button page=page elementId=section.id elementType='Relationship'}}
+        {{> ../../inline-edit/context-button page=page elementId=section.id elementType='Relationship' reference=null}}
       {{/if}}
     </div>
   {{else if section.isOfStyle.Tile}}
     <div class="col-xs-12 warpjs-value">
       {{> ./tile/template items=section._embedded.items}}
       {{#if section.isAssociation}}
-        {{> ../../inline-edit/context-button page=page elementId=section.id elementType='Relationship'}}
+        {{> ../../inline-edit/context-button page=page elementId=section.id elementType='Relationship' reference=null}}
       {{/if}}
     </div>
   {{else if section.isOfStyle.Basic_Tile}}
       {{> ./basic-tile/template items=section._embedded.items}}
       {{#if section.isAssociation}}
-        {{> ../../inline-edit/context-button page=page elementId=section.id elementType='Relationship'}}
+        {{> ../../inline-edit/context-button page=page elementId=section.id elementType='Relationship' reference=null}}
       {{/if}}
   {{else if section.isOfStyle.Preview}}
     <div class="col-xs-12 warpjs-value">
       {{> ./preview/template items=section._embedded.items}}
       {{#if section.isAssociation}}
-        {{> ../../inline-edit/context-button page=page elementId=section.id elementType='Relationship'}}
+        {{> ../../inline-edit/context-button page=page elementId=section.id elementType='Relationship' reference=null}}
       {{/if}}
     </div>
   {{else if section.isOfStyle.Document}}
@@ -44,7 +44,7 @@
     <div class="col-xs-12 warpjs-value">
       {{> ./vocabulary/template items=section._embedded.items}}
       {{#if section.isAssociation}}
-        {{> ../../inline-edit/context-button page=page elementId=section.id elementType='Relationship'}}
+        {{> ../../inline-edit/context-button page=page elementId=section.id elementType='Relationship' reference=null}}
       {{/if}}
     </div>
   {{else}}
