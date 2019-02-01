@@ -1,10 +1,11 @@
+const { detect } = require('detect-browser');
+
 const template = require('./template.hbs');
 
 module.exports = ($) => {
-    if (window
-            && window.chrome
-            && (window.chrome.webstore || window.chrome.runtime)
-            ) {
+    const browser = detect();
+
+    if (browser.name === 'chrome') {
         return;
     }
 
