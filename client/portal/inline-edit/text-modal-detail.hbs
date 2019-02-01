@@ -113,6 +113,12 @@
                 <div style="background-image: url({{image._links.self.href}});" class="inline-editor-image"></div>
               </div>
             {{/each}}
+            <div class="carousel-item item {{#unless item.images.length}}active{{/unless}} upload-image">
+              <form>
+              <button type="button" class="btn warpjs-inline-edit-image-upload-button">Upload image</button>
+              <input type="file" class="warpjs-inline-edit-image-upload" />
+              </form>
+            </div>
           </div>
           <div class="carousel-controls">
             <a class="carousel-control left glyphicon glyphicon-chevron-left" href="#warpjs-detail-image-carousel" data-slide="prev"></a>
