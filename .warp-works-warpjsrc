@@ -86,6 +86,11 @@
         "admin": "admin",
         "content": "content"
       },
+      "casSSO": {
+        "enabled": true,
+        "urlPrefix": "https://www.iiconsortium.org/sso/",
+        "userAttribute": "ssoID"
+      },
       "users": {
         "entity": "Account",
         "usernameField": "UserName",

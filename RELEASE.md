@@ -8,6 +8,13 @@
 
 # <a name="releases-1.3"></a>Releases 1.3.x [top](#top)
 
+## 1.3.51 - 2019-02-01
+
+- #202: Fixed association inline-edit for mainBody
+- #121: Using library for detecting Chrome, but that use UA which is not best
+- #203: Added button and warning coming soon.
+- WarpWorks/warpjs-session-plugin#5: Added SSO support.
+
 ## 1.3.50 - 2019-02-01
 
 - Update survey tool plugin version.
