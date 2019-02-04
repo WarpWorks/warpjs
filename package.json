@@ -1,6 +1,6 @@
 {
   "name": "@warp-works/warpjs",
-  "version": "1.3.52",
+  "version": "1.3.53",
   "description": "Content management system for WarpWorks in javascript",
   "repository": {
     "type": "git",
@@ -92,7 +92,7 @@
     "@warp-works/warpjs-mongo-persistence": "0.1.x",
     "@warp-works/warpjs-plugins": "latest",
     "@warp-works/warpjs-session-plugin": "~1.2.10",
-    "@warp-works/warpjs-survey-tool-plugin": "~1.2.51",
+    "@warp-works/warpjs-survey-tool-plugin": "~1.2.55",
     "@warp-works/warpjs-utils": "~1.2.75",
     "babel-core": "6.26.x",
     "babel-loader": "7.1.x",
@@ -107,7 +107,7 @@
     "detect-browser": "~4.0.4",
     "eslint": "~5.13.0",
     "eslint-config-standard": "~12.0.0",
-    "eslint-plugin-html": "~5.0.0",
+    "eslint-plugin-html": "~5.0.3",
     "eslint-plugin-import": "~2.16.0",
     "eslint-plugin-json": "~1.3.2",
     "eslint-plugin-node": "~8.0.1",

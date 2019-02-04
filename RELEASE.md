@@ -8,6 +8,10 @@
 
 # <a name="releases-1.3"></a>Releases 1.3.x [top](#top)
 
+## 1.3.53 - 2019-02-04
+
+- #204: Allow edit of text in main body.
+
 ## 1.3.52 - 2019-02-01
 
 - Update survey tool plugin version.
