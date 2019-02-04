@@ -107,7 +107,7 @@
     "detect-browser": "~4.1.0",
     "eslint": "~5.15.1",
     "eslint-config-standard": "~12.0.0",
-    "eslint-plugin-html": "~5.0.0",
+    "eslint-plugin-html": "~5.0.3",
     "eslint-plugin-import": "~2.16.0",
     "eslint-plugin-json": "~1.4.0",
     "eslint-plugin-node": "~8.0.1",

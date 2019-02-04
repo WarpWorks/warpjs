@@ -10,6 +10,9 @@
       <div class="col-xs-12 col-sm-3 warpjs-label">{{section.label}}</div>
       <div class="col-xs-11 col-xs-offset-1 col-sm-9 col-sm-offset-0 warpjs-value">
         {{> panel-item-basic-property-value item=section}}
+        {{#if section.typeOfProperty.isText}}
+          {{> ../inline-edit/context-button page=page elementId=section.id elementType="BasicProperty" reference=null}}
+        {{/if}}
       </div>
     {{else if section.isOfType.EnumPanelItem}}
       <div class="col-xs-12 col-sm-3 warpjs-label">{{section.label}}</div>
