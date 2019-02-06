@@ -8,7 +8,7 @@
 
 # <a name="releases-1.3"></a>Releases 1.3.x [top](#top)
 
-## 1.3.53 - 2019-02-06
+## 1.3.54 - 2019-02-06
 
 - Add email to schema for survey tool plugin.
 
