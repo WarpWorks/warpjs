@@ -1,6 +1,8 @@
 const _ = require('lodash');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
+const RoutesInfoPackageJson = require('@quoin/expressjs-routes-info/package.json');
 const warpjsPlugins = require('@warp-works/warpjs-plugins');
+const warpjsUtilsPackageJson = require('@warp-works/warpjs-utils/package.json');
 
 const packageJson = require('./../package.json');
 
@@ -22,6 +24,10 @@ module.exports = (req, res) => {
         .send(JSON.stringify({
             version: packageJson.version,
             serverStarted,
+            misc: {
+                warpjsUtils: warpjsUtilsPackageJson.version,
+                routesInfo: RoutesInfoPackageJson.version
+            },
             routes: getRoutes(),
             plugins: warpjsPlugins.info()
         }, null, 2))
