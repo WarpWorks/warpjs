@@ -16,7 +16,7 @@
             <div class="warpjs-content">{{{item.description}}}</div>
           {{/unless}}
 
-          {{> ../../see-more title=item.name href=item._links.self.href}}
+          {{> ../../see-more title=item.name href=item._links.self.href remoteMoreLink=item._links.remoteMoreLink.href}}
         </div>
       </div>
     </div>

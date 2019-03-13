@@ -2,6 +2,7 @@ const Promise = require('bluebird');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+// const debug = require('./debug')('preview-by-entity');
 const overviewByEntity = require('./overview-by-entity');
 const previewImageByEntity = require('./preview-image-by-entity');
 const routes = require('./../../../lib/constants/routes');
@@ -43,6 +44,18 @@ module.exports = (persistence, entity, instance) => Promise.resolve()
                 }
             })
         )
+
+        // External link?
+        .then(() => {
+            // FIXME: Use the BasicProperty
+            if (instance.RemoteMoreLink) {
+                resource.link('remoteMoreLink', {
+                    title: "External Link",
+                    href: instance.RemoteMoreLink
+                });
+            }
+        })
+
         .then(() => resource)
     )
 ;

@@ -8,6 +8,10 @@
 
 # <a name="releases-1.3"></a>Releases 1.3.x [top](#top)
 
+## 1.3.56 - 2019-03-13
+
+- #206: Allow the "-> More" to link to external links.
+
 ## 1.3.55 - 2019-02-08
 
 - Added more details in server `_status` page.
