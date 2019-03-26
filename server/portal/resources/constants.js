@@ -4,6 +4,7 @@ const _ = require('lodash');
 const BasicTypes = require('./../../../lib/core/basic-types');
 const ComplexTypes = require('./../../../lib/core/complex-types');
 const HeadingLevels = require('./../../../lib/core/heading-levels');
+const RELATIONSHIP_PANEL_ITEM_STYLES = require('./../../../lib/core/relationship-panel-item-styles');
 
 function generateIndicators(obj, itemToCompare) {
     // debug(`generateIndicators(obj, itemToCompare='${itemToCompare}'): obj=`, obj);
@@ -68,20 +69,8 @@ module.exports = Object.freeze({
         return _.values(this.PANEL_ITEM_NAMES).indexOf(name) !== -1;
     },
 
-    RELATIONSHIP_PANEL_ITEM_STYLES: Object.freeze({
-        Csv: 'CSV',
-        CsvColumns: 'CSV_Columns',
-        Carousel: 'Carousel',
-        Table: 'Table',
-        Preview: 'Preview',
-        Tile: 'Tile',
-        Vocabulary: 'Vocabulary',
-        Document: 'Document',
-        Basic_Tile: 'Basic_Tile'
-    }),
-
     isOfRelationshipPanelItemStyle(panelItem) {
-        return generateIndicators(this.RELATIONSHIP_PANEL_ITEM_STYLES, panelItem.style);
+        return generateIndicators(RELATIONSHIP_PANEL_ITEM_STYLES, panelItem.style);
     },
 
     PANEL_ITEM_TYPES: Object.freeze({
