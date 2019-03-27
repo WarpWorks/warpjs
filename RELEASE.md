@@ -8,6 +8,10 @@
 
 # <a name="releases-1.3"></a>Releases 1.3.x [top](#top)
 
+## 1.3.57 - 2019-03-27
+
+- #208: Modified to enable schema and data migration.
+
 ## 1.3.56 - 2019-03-13
 
 - #206: Allow the "-> More" to link to external links.
