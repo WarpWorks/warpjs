@@ -35,7 +35,7 @@ module.exports = async (req, res) => {
             // TODO: This cannot handle creating an embedded yet.
             throw new Error(`Unexpected embedded relationship '${relationship}'.`);
         } else {
-            relationshipEntity.addAssociation(instance, body);
+            await relationshipEntity.addAssociation(instance, body, persistence);
         }
 
         // TODO: Add history

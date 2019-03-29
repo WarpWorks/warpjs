@@ -12,7 +12,7 @@ module.exports = (req, res, persistence, entity, instance, resource) => {
 
     return Promise.resolve()
         .then(() => logger(req, `Trying ${action}`, req.body))
-        .then(() => relationshipEntity.addAssociation(instance, req.body))
+        .then(() => relationshipEntity.addAssociation(instance, req.body, persistence))
         .then(() => getTargetInstance(req, persistence, instance, relationshipEntity))
         .then((targetInstance) => ChangeLogs.add(action, req.warpjsUser, instance, {
             key: relationship,
@@ -25,6 +25,7 @@ module.exports = (req, res, persistence, entity, instance, resource) => {
         .then(() => res.status(204).send())
         .catch((err) => {
             const message = `Failed ${action}`;
+            console.error(err);
             logger(req, message, { err });
             // console.log(message, err);
             res.status(500).send(err.message); // FIXME: Don't send the err.
