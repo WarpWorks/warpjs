@@ -25,6 +25,7 @@ module.exports = (req, res, persistence, entity, instance, resource) => {
         .then(() => res.status(204).send())
         .catch((err) => {
             const message = `Failed ${action}`;
+            // eslint-disable-next-line no-console
             console.error(err);
             logger(req, message, { err });
             // console.log(message, err);

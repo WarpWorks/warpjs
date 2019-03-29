@@ -61,6 +61,7 @@ module.exports = async (req, res) => {
 
         utils.sendHal(req, res, resource);
     } catch (err) {
+        // eslint-disable-next-line no-console
         console.error(`add-relationship item ERROR: err=`, err);
         resource.message = err.message;
         utils.sendErrorHal(req, res, resource, err);

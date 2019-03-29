@@ -24,6 +24,7 @@ module.exports = async (req, res) => {
         }
         res.status(204).send();
     } catch (err) {
+        // eslint-disable-next-line no-console
         console.error("Update relationship item ERROR: body=", body, "; err=", err);
         const resource = warpjsUtils.createResource(req, {
             domain,

@@ -85,6 +85,7 @@ function sendHalOnly(req, res, resource, status) {
 }
 
 function basicRenderOld(name, data, req, res) {
+    // eslint-disable-next-line no-console
     console.warn('*** DEPRECATED basicRenderOld()... ***');
     const resource = (data instanceof hal.Resource) ? data : warpjsUtils.createResource(req, data);
     resource.baseUrl = '/static';

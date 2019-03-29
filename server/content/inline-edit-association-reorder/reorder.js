@@ -31,6 +31,7 @@ module.exports = (req, res) => {
 
                     res.status(204).send();
                 } catch (err) {
+                    // eslint-disable-next-line no-console
                     console.error("reorder ERROR: err=", err);
                     const resource = warpjsUtils.createResource(req, {
                         domain,
