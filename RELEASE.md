@@ -8,6 +8,11 @@
 
 # <a name="releases-1.3"></a>Releases 1.3.x [top](#top)
 
+## 1.3.58 - 2019-03-29
+
+- #208: Implemented Relationship.addAssociation and
+  Relationship.removeAssociation to handle bi-directional.
+
 ## 1.3.57 - 2019-03-27
 
 - #208: Modified to enable schema and data migration.
