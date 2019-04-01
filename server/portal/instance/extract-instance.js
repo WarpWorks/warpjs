@@ -1,5 +1,4 @@
-// const debug = require('debug')('W2:portal:instance:extract-instance');
-const Promise = require('bluebird');
+// const debug = require('./debug')('extract-instance');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
@@ -20,38 +19,37 @@ module.exports = (req, res) => {
     warpjsUtils.wrapWith406(res, {
         html: () => warpjsUtils.sendPortalIndex(req, res, RoutesInfo, 'Entity', 'portal'),
 
-        [warpjsUtils.constants.HAL_CONTENT_TYPE]: () => Promise.resolve()
-            .then(() => serverUtils.getPersistence())
-            .then((persistence) => Promise.resolve()
-                .then(() => serverUtils.getEntity(null, type))
-                .then((entity) => Promise.resolve()
-                    .then(async () => {
-                        const w2cookies = (req.signedCookies && req.signedCookies.w2cookies) ? JSON.parse(req.signedCookies.w2cookies) : {};
+        [warpjsUtils.constants.HAL_CONTENT_TYPE]: async () => {
+            const persistence = await serverUtils.getPersistence();
+            try {
+                const entity = await serverUtils.getEntity(null, type);
 
-                        resource.customMessages = await warpjsUtils.server.getCustomMessagesByPrefix(persistence, config, entity.getDomain(), 'Portal');
+                const w2cookies = (req.signedCookies && req.signedCookies.w2cookies) ? JSON.parse(req.signedCookies.w2cookies) : {};
 
-                        if (!w2cookies.accepted) {
-                            resource.link('acceptCookies', {
-                                href: RoutesInfo.expand(routes.portal.acceptCookies, {}),
-                                title: "Accept Cookies"
-                            });
-                        }
-                    })
+                resource.customMessages = await warpjsUtils.server.getCustomMessagesByPrefix(persistence, config, entity.getDomain(), 'Portal');
 
-                    .then(() => entity.getInstance(persistence, id))
-                    .then((instance) => Promise.resolve()
-                        .then(() => {
-                            if (!instance.id) {
-                                throw new warpjsUtils.WarpJSError(`Invalid document '${type}' with id='${id}'.`);
-                            }
-                        })
-                        .then(() => extractPage(req, persistence, entity, instance, pageViewName))
-                        .then((pageResource) => resource.embed('pages', pageResource))
-                    )
-                )
-                .finally(() => persistence.close())
-            )
-            .then(() => warpjsUtils.sendHal(req, res, resource, RoutesInfo))
-            .catch((err) => warpjsUtils.sendErrorHal(req, res, resource, err, RoutesInfo))
+                if (!w2cookies.accepted) {
+                    resource.link('acceptCookies', {
+                        href: RoutesInfo.expand(routes.portal.acceptCookies, {}),
+                        title: "Accept Cookies"
+                    });
+                }
+
+                const instance = await entity.getInstance(persistence, id);
+
+                if (!instance.id) {
+                    throw new warpjsUtils.WarpJSError(`Invalid document '${type}' with id='${id}'.`);
+                }
+
+                const pageResource = await extractPage(req, persistence, entity, instance, pageViewName);
+                resource.embed('pages', pageResource);
+
+                warpjsUtils.sendHal(req, res, resource, RoutesInfo);
+            } catch (err) {
+                warpjsUtils.sendErrorHal(req, res, resource, err, RoutesInfo);
+            } finally {
+                persistence.close();
+            }
+        }
     });
 };

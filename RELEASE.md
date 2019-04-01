@@ -8,6 +8,10 @@
 
 # <a name="releases-1.3"></a>Releases 1.3.x [top](#top)
 
+## 1.3.59 - 2019-04-01
+
+- Include missing branch released 1.3.53.
+
 ## 1.3.58 - 2019-03-29
 
 - #208: Implemented Relationship.addAssociation and
