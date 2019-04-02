@@ -259,6 +259,16 @@
           "constraints": null,
           "examples": null,
           "propertyType": "string"
+        },
+        {
+          "name": "visibleInEditOnly",
+          "desc": "Visible in edit mode only",
+          "type": "BasicProperty",
+          "id": 582,
+          "defaultValue": false,
+          "constraints": null,
+          "examples": null,
+          "propertyType": "boolean"
         }
       ],
       "enums": [],
@@ -315,6 +325,17 @@
                   "label": "Label",
                   "basicProperty": [
                     78
+                  ]
+                },
+                {
+                  "name": "visibleInEditOnly",
+                  "desc": "Visible in edit mode only",
+                  "type": "BasicPropertyPanelItem",
+                  "id": 583,
+                  "position": 4,
+                  "label": "Visible in Edit Only?",
+                  "basicProperty": [
+                    582
                   ]
                 }
               ],
@@ -559,7 +580,7 @@
                   "type": "RelationshipPanelItem",
                   "style": "CSV",
                   "id": 494,
-                  "position": 6,
+                  "position": 5,
                   "label": "BasicProperty",
                   "relationship": [
                     89
@@ -616,10 +637,21 @@
                   "desc": "Tooltip for readOnly",
                   "type": "BasicPropertyPanelItem",
                   "id": 492,
-                  "position": 5,
+                  "position": 6,
                   "label": "Is read-only?",
                   "basicProperty": [
                     79
+                  ]
+                },
+                {
+                  "name": "visibleInEditOnly",
+                  "desc": "Visible in edit mode only",
+                  "type": "BasicPropertyPanelItem",
+                  "id": 584,
+                  "position": 7,
+                  "label": "Visible in Edit Only?",
+                  "basicProperty": [
+                    582
                   ]
                 }
               ],
@@ -1311,7 +1343,7 @@
                   "type": "RelationshipPanelItem",
                   "style": "CSV",
                   "id": 520,
-                  "position": 6,
+                  "position": 5,
                   "label": "Enumeration",
                   "relationship": [
                     91
@@ -1368,10 +1400,21 @@
                   "desc": "Tooltip for readOnly",
                   "type": "BasicPropertyPanelItem",
                   "id": 518,
-                  "position": 5,
+                  "position": 6,
                   "label": "Is read-only?",
                   "basicProperty": [
                     79
+                  ]
+                },
+                {
+                  "name": "visibleInEditOnly",
+                  "desc": "Visible in edit mode only",
+                  "type": "BasicPropertyPanelItem",
+                  "id": 585,
+                  "position": 7,
+                  "label": "Visible in Edit Only?",
+                  "basicProperty": [
+                    582
                   ]
                 }
               ],
@@ -2432,6 +2475,17 @@
                   "basicProperty": [
                     79
                   ]
+                },
+                {
+                  "name": "visibleInEditOnly",
+                  "desc": "Visible in edit mode only",
+                  "type": "BasicPropertyPanelItem",
+                  "id": 586,
+                  "position": 6,
+                  "label": "Visible in Edit Only?",
+                  "basicProperty": [
+                    582
+                  ]
                 }
               ],
               "enumPanelItems": [],
@@ -2935,7 +2989,7 @@
                   "type": "RelationshipPanelItem",
                   "style": "CSV",
                   "id": 466,
-                  "position": 7,
+                  "position": 6,
                   "label": "Relationship",
                   "relationship": [
                     87
@@ -2992,10 +3046,21 @@
                   "desc": "Tooltip for readOnly",
                   "type": "BasicPropertyPanelItem",
                   "id": 462,
-                  "position": 5,
+                  "position": 7,
                   "label": "Is read-only?",
                   "basicProperty": [
                     79
+                  ]
+                },
+                {
+                  "name": "visibleInEditOnly",
+                  "desc": "Visible in edit mode only",
+                  "type": "BasicPropertyPanelItem",
+                  "id": 587,
+                  "position": 8,
+                  "label": "Visible in Edit Only?",
+                  "basicProperty": [
+                    582
                   ]
                 }
               ],
@@ -3005,7 +3070,7 @@
                   "desc": "Tooltip for style",
                   "type": "EnumPanelItem",
                   "id": 464,
-                  "position": 6,
+                  "position": 5,
                   "label": "Display Style",
                   "enumeration": [
                     83
@@ -3135,6 +3200,17 @@
                   "label": "Is read-only?",
                   "basicProperty": [
                     79
+                  ]
+                },
+                {
+                  "name": "visibleInEditOnly",
+                  "desc": "Visible in edit mode only",
+                  "type": "BasicPropertyPanelItem",
+                  "id": 588,
+                  "position": 6,
+                  "label": "Visible in Edit Only?",
+                  "basicProperty": [
+                    582
                   ]
                 }
               ],
