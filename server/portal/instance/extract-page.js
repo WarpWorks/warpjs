@@ -1,11 +1,10 @@
-const _ = require('lodash');
-// const debug = require('debug')('W2:portal:instance/extract-page');
-const Promise = require('bluebird');
+const indexOf = require('lodash/indexOf');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const breadcrumbsByEntity = require('./../resources/breadcrumbs-by-entity');
 const contentConstants = require('./../../content/constants');
+// const debug = require('./debug')('extract-page');
 const extractPageView = require('./extract-page-view');
 const headerImageByEntity = require('./../resources/header-image-by-entity');
 const serverUtils = require('./../../utils');
@@ -14,36 +13,33 @@ const targetPreviewsByEntity = require('./../resources/target-previews-by-entity
 const config = serverUtils.getConfig();
 const statusConfig = config.status;
 
-function computeDocumentStatus(persistence, entity, instance) {
+const computeDocumentStatus = async (persistence, entity, instance) => {
     // debug(`computeDocumentStatus()...`);
     const instanceStatus = instance[statusConfig.property];
 
-    return Promise.resolve()
-        .then(() => (instanceStatus === statusConfig.inheritance)
-            ? computeParentDocumentStatus(persistence, entity, instance)
-            : instanceStatus
-        )
-        .then((currentOrParentStatus) => currentOrParentStatus || instanceStatus)
+    const currentOrParentStatus = (instanceStatus === statusConfig.inheritance)
+        ? await computeParentDocumentStatus(persistence, entity, instance)
+        : instanceStatus
     ;
-}
 
-function computeParentDocumentStatus(persistence, entity, instance) {
+    return currentOrParentStatus || instanceStatus;
+};
+
+const computeParentDocumentStatus = async (persistence, entity, instance) => {
     // debug(`computeParentDocumentStatus()...`);
-    return Promise.resolve()
-        // .then(() => debug(`computeParentDocumentStatus(): entity=`, entity.constructor.name))
-        .then(() => entity.getParentInstance(persistence, instance))
-        .then((parentInstances) => parentInstances.pop())
-        .then((parentInstance) => (parentInstance)
-            ? Promise.resolve()
-                .then(() => entity.getParentEntity(instance))
-                .then((parentEntity) => computeDocumentStatus(persistence, parentEntity, parentInstance))
-            : null
-        )
-    ;
-}
+    // debug(`computeParentDocumentStatus(): entity=`, entity.constructor.name);
+    const parentInstances = await entity.getParentInstance(persistence, instance);
+    const parentInstance = parentInstances.pop();
+    if (parentInstance) {
+        const parentEntity = await entity.getParentEntity(instance);
+        await computeDocumentStatus(persistence, parentEntity, parentInstance);
+    } else {
+        return null;
+    }
+};
 
-module.exports = (req, persistence, entity, instance) => Promise.resolve()
-    .then(() => warpjsUtils.createResource(req, {
+module.exports = async (req, persistence, entity, instance) => {
+    const resource = warpjsUtils.createResource(req, {
         id: instance.id,
         typeId: entity.id,
         typeName: entity.name,
@@ -52,70 +48,57 @@ module.exports = (req, persistence, entity, instance) => Promise.resolve()
         isHomePage: req.params.type === config.domainName,
         hasGA: config.analytics && config.analytics.apiKey
 
-    }))
-    .then((resource) => Promise.resolve()
-        // Breadcrumb
-        .then(() => breadcrumbsByEntity(persistence, entity, instance))
-        .then((breadcrumbs) => resource.embed('breadcrumbs', breadcrumbs))
+    });
 
-        .then(() => serverUtils.canEdit(persistence, entity, instance, req.warpjsUser))
-        .then((canEdit) => Promise.resolve()
-            .then(() => {
-                // WriteAccess
-                if (canEdit) {
-                    resource.link('edit', {
-                        href: RoutesInfo.expand(contentConstants.routes.instance, {
-                            domain: config.domainName,
-                            type: instance.type,
-                            id: instance.id
-                        }),
-                        title: `Edit "${resource.name}"`
-                    });
+    // Breadcrumb
+    const breadcrumbs = await breadcrumbsByEntity(persistence, entity, instance);
+    resource.embed('breadcrumbs', breadcrumbs);
 
-                    resource.link('inlineEdit', {
-                        href: RoutesInfo.expand(contentConstants.routes.inlineEdit, {
-                            domain: config.domainName,
-                            type: instance.type,
-                            id: instance.id,
-                            view: req.query.view
-                        }),
-                        title: `In-line edit "${resource.name}"`
-                    });
-                }
-            })
+    const canEdit = await serverUtils.canEdit(persistence, entity, instance, req.warpjsUser);
 
-            // Document status
-            .then(() => computeDocumentStatus(persistence, entity, instance))
-            .then((documentStatus) => Promise.resolve()
-                .then(() => {
-                    resource.status = {
-                        documentStatus,
-                        isPublic: (_.indexOf(statusConfig.public, documentStatus) !== -1),
-                        showDisclaimer: (_.indexOf(statusConfig.disclaimer, documentStatus) !== -1)
-                    };
+    // WriteAccess
+    if (canEdit) {
+        resource.link('edit', {
+            href: RoutesInfo.expand(contentConstants.routes.instance, {
+                domain: config.domainName,
+                type: instance.type,
+                id: instance.id
+            }),
+            title: `Edit "${resource.name}"`
+        });
 
-                    resource.status.isVisible = resource.status.isPublic || canEdit || false;
-                })
-            )
+        resource.link('inlineEdit', {
+            href: RoutesInfo.expand(contentConstants.routes.inlineEdit, {
+                domain: config.domainName,
+                type: instance.type,
+                id: instance.id,
+                view: req.query.view
+            }),
+            title: `In-line edit "${resource.name}"`
+        });
+    }
 
-            // Page content
-            .then(() => {
-                if (resource.status.isVisible) {
-                    return Promise.resolve()
-                        .then(() => headerImageByEntity(persistence, entity, instance))
-                        .then((headerImages) => resource.embed('headerImages', headerImages))
+    // Document status
+    const documentStatus = await computeDocumentStatus(persistence, entity, instance);
+    resource.status = {
+        documentStatus,
+        isPublic: (indexOf(statusConfig.public, documentStatus) !== -1),
+        showDisclaimer: (indexOf(statusConfig.disclaimer, documentStatus) !== -1)
+    };
+    resource.status.isVisible = resource.status.isPublic || canEdit || false;
 
-                        .then(() => targetPreviewsByEntity(persistence, entity, instance))
-                        .then((targetPreviews) => resource.embed('previews', targetPreviews))
+    // Page content
+    if (resource.status.isVisible) {
+        const headerImages = await headerImageByEntity(persistence, entity, instance);
+        resource.embed('headerImages', headerImages);
 
-                        .then(() => entity.getPageView(req.query.view, config.views.portal))
-                        .then((pageView) => extractPageView(persistence, pageView, instance, req.query.style))
-                        .then((pageViewResource) => resource.embed('pageViews', pageViewResource))
-                    ;
-                }
-            })
-        )
+        const targetPreviews = await targetPreviewsByEntity(persistence, entity, instance);
+        resource.embed('previews', targetPreviews);
 
-        .then(() => resource)
-    )
-;
+        const pageView = await entity.getPageView(req.query.view, config.views.portal);
+        const pageViewResource = await extractPageView(persistence, pageView, instance, req.query.style);
+        resource.embed('pageViews', pageViewResource);
+    }
+
+    return resource;
+};
