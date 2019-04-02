@@ -8,6 +8,10 @@
 
 # <a name="releases-1.3"></a>Releases 1.3.x [top](#top)
 
+## 1.3.60 - 2019-04-02
+
+- #210: Fixed issue due to conversion Promise -> async/await.
+
 ## 1.3.59 - 2019-04-01
 
 - Include missing branch released 1.3.53.
