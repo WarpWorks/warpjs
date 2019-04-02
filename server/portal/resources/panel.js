@@ -1,11 +1,10 @@
-// const debug = require('debug')('W2:portal:resources/panel');
-const Promise = require('bluebird');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+// const debug = require('./debug')('panel');
 const panelItemsByPanel = require('./panel-items-by-panel');
 
-module.exports = (persistence, panel, instance) => Promise.resolve()
-    .then(() => warpjsUtils.createResource('', {
+module.exports = async (persistence, panel, instance) => {
+    const resource = warpjsUtils.createResource('', {
         type: panel.type,
         id: panel.id,
         name: panel.name,
@@ -16,16 +15,12 @@ module.exports = (persistence, panel, instance) => Promise.resolve()
             type: "Relationship",
             id: "32"
         }
-    }))
-    .then((resource) => Promise.resolve()
-        .then(() => panelItemsByPanel(persistence, panel, instance))
-        .then((panelItems) => {
-            if (panelItems && panelItems.length) {
-                resource.showPanel = true;
-                resource.embed('items', panelItems);
-            }
-        })
+    });
 
-        .then(() => resource)
-    )
-;
+    const panelItems = await panelItemsByPanel(persistence, panel, instance);
+    resource.embed('items', panelItems);
+    resource.showPanel = Boolean(panelItems && panelItems.length);
+    resource.visibleInEditOnly = panelItems.filter((pi) => !pi.visibleInEditOnly).length === 0;
+
+    return resource;
+};

@@ -1,20 +1,21 @@
-// const debug = require('debug')('W2:portal:instance/extract-panels-main-body');
 const Promise = require('bluebird');
 
 const constants = require('./../resources/constants');
+// const debug = require('./debug')('extract-panels-main-body');
 const panelResource = require('./../resources/panel');
 
-module.exports = (persistence, entity, instance, entityPanels, isSpecializedPageViewStyle) => Promise.resolve()
-    .then(() => entityPanels.filter((panel) => {
+module.exports = async (persistence, entity, instance, entityPanels, isSpecializedPageViewStyle) => {
+    const panels = entityPanels.filter((panel) => {
         if (!isSpecializedPageViewStyle) {
             // Take all the panels.
             return true;
         }
 
         return !constants.isSpecializedPanel(panel.name);
-    }))
-    .then((panels) => Promise.map(
+    });
+
+    return Promise.map(
         panels,
-        (panel) => panelResource(persistence, panel, instance)
-    ))
-;
+        async (panel) => panelResource(persistence, panel, instance)
+    );
+};
