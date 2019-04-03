@@ -1779,6 +1779,11 @@
               "id": 581,
               "type": "Literal",
               "name": "IndividualContribution"
+            },
+            {
+              "id": 589,
+              "type": "Literal",
+              "name": "UserProfile"
             }
           ]
         }
