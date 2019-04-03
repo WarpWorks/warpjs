@@ -27,16 +27,14 @@ module.exports = async (persistence, panel, instance) => {
         }
     );
 
-    const filteredPanelItemResources = panelItemResources.filter((panelItemResource) => panelItemResource.showItem);
-
     // We want to make sure that the list doesn't end with a separator.
     while (true) {
-        const len = filteredPanelItemResources.length;
-        if (len && filteredPanelItemResources[len - 1].isOfType.SeparatorPanelItem) {
-            filteredPanelItemResources.pop();
+        const len = panelItemResources.length;
+        if (len && panelItemResources[len - 1].isOfType.SeparatorPanelItem) {
+            panelItemResources.pop();
         } else {
             break;
         }
     }
-    return filteredPanelItemResources;
+    return panelItemResources;
 };

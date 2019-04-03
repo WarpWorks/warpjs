@@ -13,14 +13,13 @@ module.exports = async (persistence, panelItem, instance) => {
 
     const basicProperty = panelItem.hasBasicProperty() ? panelItem.getBasicProperty() : null;
 
-    if (basicProperty) {
-        resource.propertyName = basicProperty.name;
-        resource.propertyType = basicProperty.propertyType;
-        resource.typeOfProperty = constants.isOfPropertyType(basicProperty.propertyType);
+    resource.propertyName = basicProperty.name;
+    resource.propertyType = basicProperty.propertyType;
+    resource.typeOfProperty = constants.isOfPropertyType(basicProperty.propertyType);
 
-        const value = basicProperty.getValue(instance);
-        resource.value = (resource.propertyType === BasicTypes.Text) ? convertCustomLinks(value) : value;
-        resource.showItem = !isUndefined(resource.value) && resource.value !== '';
-    }
+    const value = basicProperty.getValue(instance);
+    resource.value = (resource.propertyType === BasicTypes.Text) ? convertCustomLinks(value) : value;
+    resource.showItem = !isUndefined(resource.value) && resource.value !== '';
+
     return resource;
 };

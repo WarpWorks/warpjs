@@ -16,6 +16,7 @@ const preview = require('./../preview');
 const tableOfContents = require('./../table-of-contents');
 const template = require('./template.hbs');
 const panelItems = require('./panel-items');
+const processSeparatorPanelItem = require('./process-separator-panel-item');
 const imageResizer = require('./image-resizer');
 const log = debug('client/portal/instance/index');
 
@@ -65,6 +66,7 @@ const log = debug('client/portal/instance/index');
 
                 imageResizer($);
                 addGoogleAnalyticsIfNeeded($);
+                processSeparatorPanelItem($);
             }
         },
         (err) => {

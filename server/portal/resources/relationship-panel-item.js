@@ -116,10 +116,8 @@ module.exports = async (persistence, panelItem, instance) => {
         }
     }
 
-    if (items && items.length) {
-        resource.showItem = true;
-        resource.embed('items', items);
-    }
+    resource.showItem = Boolean(items && items.length);
+    resource.embed('items', items);
 
     return resource;
 };

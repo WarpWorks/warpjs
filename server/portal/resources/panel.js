@@ -1,5 +1,6 @@
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const ComplexTypes = require('./../../../lib/core/complex-types');
 // const debug = require('./debug')('panel');
 const panelItemsByPanel = require('./panel-items-by-panel');
 
@@ -19,7 +20,9 @@ module.exports = async (persistence, panel, instance) => {
 
     const panelItems = await panelItemsByPanel(persistence, panel, instance);
     resource.embed('items', panelItems);
-    resource.showPanel = Boolean(panelItems && panelItems.length);
+    resource.showPanel = Boolean(panelItems.filter(
+        (pi) => pi.showItem && !pi.visibleInEditOnly && pi.type !== ComplexTypes.SeparatorPanelItem
+    ).length);
     resource.visibleInEditOnly = panelItems.filter((pi) => !pi.visibleInEditOnly).length === 0;
 
     return resource;

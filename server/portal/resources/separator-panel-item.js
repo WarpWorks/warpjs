@@ -1,18 +1,15 @@
-const _ = require('lodash');
-// const debug = require('debug')('W2:portal:resources/separator-panel-item');
-const Promise = require('bluebird');
+const extend = require('lodash/extend');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const basePanelItemInfo = require('./base-panel-item-info');
+// const debug = require('./debug')('separator-panel-item');
 
-module.exports = (persistence, panelItem, instance) => Promise.resolve()
+module.exports = async (persistence, panelItem, instance) => {
     // .then(() => debug(panelItem))
-    .then(() => basePanelItemInfo(panelItem))
-    .then((basePanelItemInfo) => _.extend({}, basePanelItemInfo, {
+    const panelItemInfo = await basePanelItemInfo(panelItem);
+    const resourceInfo = extend({}, panelItemInfo, {
         showItem: true
-    }))
-    .then((resourceInfo) => warpjsUtils.createResource('', resourceInfo))
-    .then((resource) => Promise.resolve()
-        .then(() => resource)
-    )
-;
+    });
+    const resource = warpjsUtils.createResource('', resourceInfo);
+    return resource;
+};
