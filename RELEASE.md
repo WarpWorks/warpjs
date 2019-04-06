@@ -5,6 +5,10 @@
 - [Releases 1.0.x](RELEASE-1.0.md) from 2017-05-31 to 2017-06-10
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
+## 1.3.64 - 2019-04-06
+
+- #212: Missing relationship document sorting for some types of target.
+
 ## 1.3.63 - 2019-04-03
 
 - #137: Add empty section as hidden to be able to display in edit mode.
