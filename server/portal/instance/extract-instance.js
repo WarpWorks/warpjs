@@ -1,7 +1,7 @@
-// const debug = require('./debug')('extract-instance');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+// const debug = require('./debug')('extract-instance');
 const extractPage = require('./extract-page');
 const routes = require('./../../../lib/constants/routes');
 const serverUtils = require('./../../utils');
@@ -16,8 +16,16 @@ module.exports = (req, res) => {
         customMessages: {}
     });
 
+    if (req.warpjsUser) {
+        if (req.warpjsUser.type === type && req.warpjsUser.id === id) {
+            resource.myPage = true;
+        }
+    }
+
     warpjsUtils.wrapWith406(res, {
-        html: () => warpjsUtils.sendPortalIndex(req, res, RoutesInfo, 'Entity', 'portal'),
+        html: async () => {
+            await warpjsUtils.sendPortalIndex(req, res, RoutesInfo, 'Entity', 'portal');
+        },
 
         [warpjsUtils.constants.HAL_CONTENT_TYPE]: async () => {
             const persistence = await serverUtils.getPersistence();

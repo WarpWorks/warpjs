@@ -24,7 +24,8 @@ module.exports = Object.freeze({
         BoK: 'BoK',
         IndividualContribution: 'IndividualContribution',
         Insight: 'Insight',
-        Testbed: 'Testbed'
+        Testbed: 'Testbed',
+        UserProfile: 'UserProfile'
     }),
 
     isOfPageViewStyle(style) {
@@ -35,6 +36,7 @@ module.exports = Object.freeze({
         switch (style) {
             case this.PAGE_VIEW_STYLES.Plain:
             case this.PAGE_VIEW_STYLES.IndividualContribution:
+            case this.PAGE_VIEW_STYLES.UserProfile:
                 return false;
 
             case this.PAGE_VIEW_STYLES.BoK:
