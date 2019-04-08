@@ -32,7 +32,7 @@ const computeParentDocumentStatus = async (persistence, entity, instance) => {
     const parentInstance = parentInstances.pop();
     if (parentInstance) {
         const parentEntity = await entity.getParentEntity(instance);
-        await computeDocumentStatus(persistence, parentEntity, parentInstance);
+        return computeDocumentStatus(persistence, parentEntity, parentInstance);
     } else {
         return null;
     }
