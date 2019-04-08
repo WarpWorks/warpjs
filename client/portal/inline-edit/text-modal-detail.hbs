@@ -114,10 +114,7 @@
               </div>
             {{/each}}
             <div class="carousel-item item {{#unless item.images.length}}active{{/unless}} upload-image">
-              <form>
-              <button type="button" class="btn warpjs-inline-edit-image-upload-button">Upload image</button>
-              <input type="file" class="warpjs-inline-edit-image-upload" />
-              </form>
+              <button type="button" class="btn warpjs-inline-edit-image-upload-button" data-warpjs-action="file-upload" data-warpjs-url="/content/domain/IIC/file-upload">Upload image</button>
             </div>
           </div>
           <div class="carousel-controls">

@@ -63,6 +63,7 @@ module.exports = (req, res) => {
                     });
                 }))
                 .then((res) => {
+                    console.log('res', res);
                     debug(`file-type=`, res);
                     if (res.toLowerCase().startsWith('image/')) {
                         const dimensions = imageSize(dest);
