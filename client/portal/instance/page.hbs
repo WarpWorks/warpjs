@@ -6,6 +6,8 @@
       {{> page-breadcrumb breadcrumbs=page._embedded.breadcrumbs}}
     </div>
     <div class="col-xs-4 col-sm-3 col-lg-2 no-padding breadcrumb-actions warpjs-actions">
+      <span id="warpjs-following-toggle" />
+
       {{#if page._links.edit}}
         <span class="warpjs-breadcrumb-action-button warpjs-breadcrumb-action-button-with-label warpjs-inline-edit-enable"
           data-warpjs-action="inline-edit-toggle"

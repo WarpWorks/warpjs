@@ -9,6 +9,7 @@ import debug from './../debug';
 
 const actionGoto = require('./../../shared/action-goto');
 const documentStatus = require('./../document-status');
+const followDocument = require('./follow-document');
 const imageResizer = require('./image-resizer');
 const inlineEdit = require('./../inline-edit');
 const log = debug('client/portal/instance/index');
@@ -74,6 +75,7 @@ const userProfile = require('./user-profile');
             addGoogleAnalyticsIfNeeded($);
             processSeparatorPanelItem($);
             userProfile($);
+            followDocument($, result.data);
         }
     } catch (err) {
         console.error("Error processing response:", err);
