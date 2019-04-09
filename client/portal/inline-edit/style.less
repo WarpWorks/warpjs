@@ -448,12 +448,12 @@
 .warpjs-inline-edit-context {
     display: none;
     position: absolute;
-    bottom: 0;
+    top: 0;
     right: 10px;
     background-color: @inline-edit-bg;
     color: @inline-edit-fg;
-    font-size: 24px;
-    padding: 12px !important;
+    font-size: 18px;
+    padding: 8px !important;
     border-radius: 50%;
     cursor: pointer;
 }
@@ -497,6 +497,31 @@
 
     .warpjs-hide-spi {
         display: block;
+    }
+
+    .warpjs-section-content {
+        .warpjs-inline-edit-context {
+            position: absolute;
+            top: 8px;
+        }
+    }
+
+    .warpjs-page-view-side-section, .warpjs-panel-section {
+        position: relative;
+        border: thin dotted #5d922a;
+        border-radius: 8px;
+        padding: 8px;
+        margin-top: 8px;
+        min-height: 50px;
+
+        &.warpjs-panel-section-SeparatorPanelItem {
+            border: none;
+        }
+
+        .warpjs-inline-edit-context {
+            position: absolute;
+            top: 8px;
+        }
     }
 }
 

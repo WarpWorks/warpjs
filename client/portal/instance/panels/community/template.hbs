@@ -1,8 +1,6 @@
 {{#each panels as |panel|}}
-  {{#if panel.showPanel}}
-    <div id="community" class="row warpjs-secondary-bg warpjs-page-view-side-panel warpjs-page-view-community">
-      {{> ./section page=../page title="Authors" users=panel._embedded.authors}}
-      {{> ./section page=../page title="Contributors" users=panel._embedded.contributors}}
-    </div>
-  {{/if}}
+  <div id="community" class="row warpjs-secondary-bg warpjs-page-view-side-panel warpjs-page-view-community warpjs-show-item-{{panel.showPanel}}">
+    {{> ./section page=../page title="Authors" users=panel._embedded.authors}}
+    {{> ./section page=../page title="Contributors" users=panel._embedded.contributors}}
+  </div>
 {{/each}}

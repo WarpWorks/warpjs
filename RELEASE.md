@@ -5,6 +5,12 @@
 - [Releases 1.0.x](RELEASE-1.0.md) from 2017-05-31 to 2017-06-10
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
+## 1.3.66 - 2019-04-08
+
+- #213: Reduced pencil size.
+- Also style work to put pencil on top of section.
+- Added missing empty sections in community.
+
 ## 1.3.65 - 2019-04-08
 
 - Fixed document status inheritance issue.
