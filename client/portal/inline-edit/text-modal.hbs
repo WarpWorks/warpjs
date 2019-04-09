@@ -1,7 +1,18 @@
-<div data-warpjs-status="instance" data-warpjs-url="{{res._links.self.href}}" data-warpjs-types-url="{{res._links.types.href}}"></div>
-<div class="modal fade" role="dialog" tabindex="-1" aria-hidden="true"
+<div
+  data-warpjs-status="instance"
+  data-warpjs-url="{{res._links.self.href}}"
+  data-warpjs-types-url="{{res._links.types.href}}"
+></div>
+<div
+  class="modal fade"
+  role="dialog"
+  tabindex="-1"
+  aria-hidden="true"
   data-warpjs-modal="{{MODAL_NAME}}"
-  >
+  data-warpjs-id="{{res.id}}"
+  data-warpjs-type="{{res.type}}"
+  data-warpjs-domain="{{res.domain}}"
+>
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-body">
