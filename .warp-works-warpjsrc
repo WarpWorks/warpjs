@@ -87,7 +87,7 @@
         "content": "content"
       },
       "casSSO": {
-        "enabled": true,
+        "enabled": false,
         "urlPrefix": "https://www.iiconsortium.org/sso/",
         "userAttribute": "ssoID"
       },
