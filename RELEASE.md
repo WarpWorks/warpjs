@@ -5,6 +5,10 @@
 - [Releases 1.0.x](RELEASE-1.0.md) from 2017-05-31 to 2017-06-10
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
+## 1.3.69 - 2019-04-10
+
+- Set SSO to false.
+
 ## 1.3.68 - 2019-04-10
 
 - #203 update: Fix modal for upload and double upload issue.
