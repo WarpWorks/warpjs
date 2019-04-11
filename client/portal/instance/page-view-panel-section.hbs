@@ -1,27 +1,29 @@
-<div class="row warpjs-panel-section warpjs-panel-section-{{section.type}} warpjs-show-item-{{section.showItem}} warpjs-visibleInEditOnly-{{section.visibleInEditOnly}} warpjs-show-item-{{section.showItem}}">
-  {{#if section.documentStyle}}
-    {{> paragraph page=page paragraph=section reference=reference}}
-  {{else if section.isOfType.SeparatorPanelItem}}
-    <div class="col-xs-12">
-      <hr />
-    </div>
-  {{else if section.isOfType.BasicPropertyPanelItem}}
-    <div class="col-xs-12 col-sm-3 warpjs-label">{{section.label}}</div>
-    <div class="col-xs-11 col-xs-offset-1 col-sm-9 col-sm-offset-0 warpjs-value">
-      {{> panel-item-basic-property-value item=section}}
-    </div>
-    {{#if section.typeOfProperty.isText}}
-      {{> ../inline-edit/context-button page=page elementId=section.id elementType="BasicProperty" reference=null}}
+{{#if section.isOfType.RelationshipPanelItem}}
+  {{> ./panel-items/template page=page section=section}}
+  {{#if section.isAssociation}}
+    {{> ../inline-edit/context-button page=page elementId=section.id elementType='Relationship' reference=null}}
     {{/if}}
-  {{else if section.isOfType.EnumPanelItem}}
-    <div class="col-xs-12 col-sm-3 warpjs-label">{{section.label}}</div>
-    <div class="col-xs-11 col-xs-offset-1 col-sm-9 col-sm-offset-0 warpjs-value">{{section.value}}</div>
-  {{else if section.isOfType.RelationshipPanelItem}}
-    {{> ./panel-items/template page=page section=section}}
-    {{#if section.isAssociation}}
-      {{> ../inline-edit/context-button page=page elementId=section.id elementType='Relationship' reference=null}}
+{{else}}
+  <div class="row warpjs-panel-section warpjs-panel-section-{{section.type}} warpjs-show-item-{{section.showItem}} warpjs-visibleInEditOnly-{{section.visibleInEditOnly}} warpjs-show-item-{{section.showItem}}">
+    {{#if section.documentStyle}}
+      {{> paragraph page=page paragraph=section reference=reference}}
+    {{else if section.isOfType.SeparatorPanelItem}}
+      <div class="col-xs-12">
+        <hr />
+      </div>
+    {{else if section.isOfType.BasicPropertyPanelItem}}
+      <div class="col-xs-12 col-sm-3 warpjs-label">{{section.label}}</div>
+      <div class="col-xs-11 col-xs-offset-1 col-sm-9 col-sm-offset-0 warpjs-value">
+        {{> panel-item-basic-property-value item=section}}
+      </div>
+      {{#if section.typeOfProperty.isText}}
+        {{> ../inline-edit/context-button page=page elementId=section.id elementType="BasicProperty" reference=null}}
+      {{/if}}
+    {{else if section.isOfType.EnumPanelItem}}
+      <div class="col-xs-12 col-sm-3 warpjs-label">{{section.label}}</div>
+      <div class="col-xs-11 col-xs-offset-1 col-sm-9 col-sm-offset-0 warpjs-value">{{section.value}}</div>
+    {{else}}
+      <div class="col-xs-12">TODO: Implement panel-section for {{section.type}}</div>
     {{/if}}
-  {{else}}
-    <div class="col-xs-12">TODO: Implement panel-section for {{section.type}}</div>
-  {{/if}}
-</div>
+  </div>
+{{/if}}
