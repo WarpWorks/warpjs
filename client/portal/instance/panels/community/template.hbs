@@ -1,5 +1,5 @@
 {{#each panels as |panel|}}
-  <div id="community" class="row warpjs-secondary-bg warpjs-page-view-side-panel warpjs-page-view-community warpjs-show-item-{{panel.showPanel}}">
+  <div id="community" class="warpjs-secondary-bg warpjs-page-view-side-panel warpjs-page-view-community warpjs-show-item-{{panel.showPanel}}">
     {{> ./section page=../page title="Authors" users=panel._embedded.authors}}
     {{> ./section page=../page title="Contributors" users=panel._embedded.contributors}}
   </div>
