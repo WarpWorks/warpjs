@@ -2,24 +2,30 @@
   <div class="row warpjs-secondary-bg breadcrumb-container">
     {{> left-right-margin}}
 
-    <div class="col-xs-10 col-sm-8 col-lg-9 no-padding">
+    <div class="col-xs-8 col-sm-7 col-lg-8 no-padding">
       {{> page-breadcrumb breadcrumbs=page._embedded.breadcrumbs}}
     </div>
-    <div class="col-xs-2 col-lg-1 no-padding breadcrumb-actions warpjs-actions">
+    <div class="col-xs-4 col-sm-3 col-lg-2 no-padding breadcrumb-actions warpjs-actions">
       {{#if page._links.edit}}
-        <span class="glyphicon glyphicon-pencil warpjs-inline-edit-enable"
+        <span class="warpjs-breadcrumb-action-button warpjs-breadcrumb-action-button-with-label warpjs-inline-edit-enable"
+          data-warpjs-action="inline-edit-toggle"
           title="Show inline edit"
-          data-warpjs-action="inline-edit-toggle"
-          ></span>
-        <span class="glyphicon glyphicon-eye-open warpjs-inline-edit-toggle warpjs-inline-edit-disable"
-          title="Hide inline edit"
-          data-warpjs-action="inline-edit-toggle"
-          ></span>
-        <span class="glyphicon glyphicon-cog warpjs-inline-edit-content"
-          title="Edit document in CMS"
+          >
+          <span class="glyphicon glyphicon-pencil"></span> Edit
+        </span>
+        <span class="warpjs-breadcrumb-action-button warpjs-inline-edit-content"
           data-warpjs-action="goto"
           data-warpjs-url="{{page._links.edit.href}}"
-          ></span>
+          title="Edit document in CMS"
+          >
+          <span class="glyphicon glyphicon-cog"></span>
+        </span>
+        <span class="warpjs-breadcrumb-action-button warpjs-breadcrumb-action-button-with-label warpjs-inline-edit-disable"
+          title="Hide inline edit"
+          data-warpjs-action="inline-edit-toggle"
+          >
+          <span class="glyphicon glyphicon-pencil"></span> Stop editing
+        </span>
       {{/if}}
     </div>
 
