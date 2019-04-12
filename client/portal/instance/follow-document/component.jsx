@@ -1,19 +1,28 @@
 import PropTypes from 'prop-types';
 
+// import _debug from './debug'; const debug = _debug('component');
+import BreadcrumbActionButton from './../../components/breadcrumb-action-button';
+
+
 const Component = (props) => {
+    const onClick = () => {
+        const url = props.following ? props.unfollowUrl : props.followUrl;
+        props.updateFollow(url, props.following);
+    };
+
+    const label = props.following ? 'Stop following' : 'Follow';
+
     return (
-        <span className={`warpjs-breadcrumb-action-button warpjs-breadcrumb-action-button-with-label warpjs-follow-document warpjs-follow-document-${Boolean(props.following)}`}
-            onClick={() => props.updateFollow(!props.following)}
-            >
-            <span className="glyphicon glyphicon-ok" /> {props.following ? 'Following' : 'Follow'}
-        </span>
+        <BreadcrumbActionButton click={onClick} glyph='ok' label={label} />
     );
 };
 
 Component.displayName = 'FollowDocument';
 
 Component.propTypes = {
-    following: PropTypes.bool,
+    following: PropTypes.bool.isRequired,
+    followUrl: PropTypes.string.isRequired,
+    unfollowUrl: PropTypes.string.isRequired,
     updateFollow: PropTypes.func.isRequired
 };
 

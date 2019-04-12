@@ -1,7 +1,7 @@
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
-const debug = require('./debug')('extract-instance');
+// const debug = require('./debug')('extract-instance');
 const extractPage = require('./extract-page');
 const routes = require('./../../../lib/constants/routes');
 const serverUtils = require('./../../utils');
@@ -43,9 +43,7 @@ module.exports = (req, res) => {
             try {
                 if (req.warpjsUser) {
                     const user = await User.fromJWT(persistence, config.domainName, req.warpjsUser);
-                    if (await user.isFollowing(persistence, type, id)) {
-                        debug(`isFollowing...`);
-                    }
+                    resource.isFollowing = await user.isFollowing(persistence, type, id);
                 }
 
                 const entity = await serverUtils.getEntity(null, type);

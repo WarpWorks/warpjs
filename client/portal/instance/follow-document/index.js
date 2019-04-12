@@ -15,7 +15,9 @@ module.exports = async ($, data) => {
     debug(`data=`, data);
 
     const store = window.WarpJS.ReactUtils.createStore(reducers, {}, [], process.env.NODE_ENV === 'development');
-    store.dispatch(actionCreators.initializeState(true, 'some-url'));
+    if (data.warpjsUser) {
+        store.dispatch(actionCreators.initializeState(data.isFollowing, data._links.follow.href, data._links.unfollow.href));
+    }
 
     ReactDOM.render(
         <Provider store={store}>
