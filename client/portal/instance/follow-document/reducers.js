@@ -1,28 +1,22 @@
+// const debug = require('./debug')('reducers');
+
 import extend from 'lodash/extend';
 import pick from 'lodash/pick';
 
 import actions from './actions';
-import _debug from './debug';
 import namespace from './namespace';
 
 const NAMESPACE = namespace();
-const debug = _debug('reducers');
 
 const initializeState = (state = {}, action) => {
-    debug(`initializeState(): state=`, state);
-    debug(`initializeState(): action=`, action);
-    const substate = pick(action.payload, ['following', 'url']);
-
+    const substate = pick(action.payload, ['following', 'followUrl', 'unfollowUrl']);
     const newState = extend({}, state, { [NAMESPACE]: substate });
-    debug(`initializeState(): newState=`, newState);
     return newState;
 };
 
 const updateFollow = (state = {}, action) => {
     const substate = state[NAMESPACE] || {};
-
     substate.state = Boolean(action.payload.state);
-
     return extend({}, state, { [NAMESPACE]: substate });
 };
 
