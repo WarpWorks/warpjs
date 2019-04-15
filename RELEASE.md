@@ -5,6 +5,10 @@
 - [Releases 1.0.x](RELEASE-1.0.md) from 2017-05-31 to 2017-06-10
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
+## 1.3.73 - 2019-04-15
+
+- Nested panels update: fix missing panel for CSVs.
+
 ## 1.3.72 - 2019-04-11
 
 - #217 update: fix nested panels on homepage.

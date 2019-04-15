@@ -1,8 +1,14 @@
 {{#if section.isOfType.RelationshipPanelItem}}
+  {{#if section.isOfStyle.CSV}}
+    <div class="row warpjs-panel-section warpjs-panel-section-{{section.type}} warpjs-show-item-{{section.showItem}} warpjs-visibleInEditOnly-{{section.visibleInEditOnly}} warpjs-show-item-{{section.showItem}}">
+  {{/if}}
   {{> ./panel-items/template page=page section=section}}
   {{#if section.isAssociation}}
     {{> ../inline-edit/context-button page=page elementId=section.id elementType='Relationship' reference=null}}
-    {{/if}}
+  {{/if}}
+  {{#if section.isOfStyle.CSV}}
+    </div>
+  {{/if}}
 {{else}}
   <div class="row warpjs-panel-section warpjs-panel-section-{{section.type}} warpjs-show-item-{{section.showItem}} warpjs-visibleInEditOnly-{{section.visibleInEditOnly}} warpjs-show-item-{{section.showItem}}">
     {{#if section.documentStyle}}
