@@ -1,4 +1,3 @@
-
 import actions from './actions';
 
 const actionCreator = window.WarpJS.ReactUtils.actionCreator;

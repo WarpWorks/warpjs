@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import { Col, Grid, Row } from 'react-bootstrap';
 
-import LeftRightMargin from './../../../../../react-utils/left-right-margin';
-import PortalContent from './../../../../../react-utils/portal-content';
+import LeftRightMargin from './../../../../components/left-right-margin';
+import PortalContent from './../../../../components/portal-content';
 
 const Component = (props) => {
     return (

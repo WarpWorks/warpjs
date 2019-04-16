@@ -10,8 +10,7 @@ const NAMESPACE = namespace();
 
 const initializeState = (state = {}, action) => {
     const substate = pick(action.payload, ['following', 'followUrl', 'unfollowUrl']);
-    const newState = extend({}, state, { [NAMESPACE]: substate });
-    return newState;
+    return extend({}, state, { [NAMESPACE]: substate });
 };
 
 const updateFollow = (state = {}, action) => {

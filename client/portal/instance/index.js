@@ -3,22 +3,21 @@ import regeneratorRuntime from 'babel-regenerator-runtime';
 import ReactDOM from 'react-dom';
 
 import addGoogleAnalyticsIfNeeded from './add-google-analytics-if-needed';
+import followDocument from './follow-document';
 import IndividualContributionHeader from './individual-contribution-header';
+import userProfileMenu from './../components/user-profile-menu';
 
-import debug from './../debug';
+import _debug from './debug'; const debug = _debug('index');
 
 const actionGoto = require('./../../shared/action-goto');
 const documentStatus = require('./../document-status');
-const followDocument = require('./follow-document');
 const imageResizer = require('./image-resizer');
 const inlineEdit = require('./../inline-edit');
-const log = debug('client/portal/instance/index');
 const panelItems = require('./panel-items');
 const preview = require('./../preview');
 const processSeparatorPanelItem = require('./process-separator-panel-item');
 const tableOfContents = require('./../table-of-contents');
 const template = require('./template.hbs');
-const userProfile = require('./user-profile');
 
 (($) => $(document).ready(async () => {
     try {
@@ -53,7 +52,7 @@ const userProfile = require('./user-profile');
                 preview($);
 
                 const state = window.WarpJS.flattenHAL(result.data);
-                log(`state=`, state);
+                debug(`state=`, state);
 
                 window.WarpJS.ReactUtils.initReactBootstrapDisplayNames();
 
@@ -74,8 +73,10 @@ const userProfile = require('./user-profile');
             imageResizer($);
             addGoogleAnalyticsIfNeeded($);
             processSeparatorPanelItem($);
-            userProfile($);
+
+            // React components.
             followDocument($, result.data);
+            userProfileMenu($, result.data);
         }
     } catch (err) {
         console.error("Error processing response:", err);

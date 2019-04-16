@@ -1,16 +1,13 @@
 import cloneDeep from 'lodash/cloneDeep';
 
 import Component from './component';
-// import _debug from './debug'; const debug = _debug('container');
 import namespace from './namespace';
-import * as orchestrators from './orchestrators';
 
 const NAMESPACE = namespace();
 
-const mapStateToProps = (state, ownProps) => Object.freeze(cloneDeep(state[NAMESPACE] || {}));
+const mapStateToProps = (state, ownProps) => Object.freeze(cloneDeep([NAMESPACE] || {}));
 
 const mapDispatchToProps = (dispatch, ownProps) => Object.freeze({
-    updateFollow: (url, current) => orchestrators.updateFollow(dispatch, url, current)
 });
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => Object.freeze({
