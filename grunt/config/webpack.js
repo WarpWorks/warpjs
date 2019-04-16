@@ -54,6 +54,7 @@ module.exports = {
             }),
             new webpack.optimize.UglifyJsPlugin({
                 compress: false,
+                sourceMap: true,
                 output: {
                     ascii_only: true
                 }
