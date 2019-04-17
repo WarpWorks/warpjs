@@ -5,7 +5,7 @@ import namespace from './namespace';
 
 const NAMESPACE = namespace();
 
-const mapStateToProps = (state, ownProps) => Object.freeze(cloneDeep([NAMESPACE] || {}));
+const mapStateToProps = (state, ownProps) => Object.freeze(cloneDeep(state[NAMESPACE] || {}));
 
 const mapDispatchToProps = (dispatch, ownProps) => Object.freeze({
 });

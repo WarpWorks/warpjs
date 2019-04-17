@@ -8,10 +8,11 @@ import reducers from './reducers';
 
 import _debug from './debug'; const debug = _debug('index');
 
-const PLACEHOLDER = '#warpjs-user-profile-menu';
+const PLACEHOLDER = 'warpjs-user-profile-menu';
 
 export default async ($, data) => {
     debug(`data=`, data);
+    debug(`reducers=`, reducers);
 
     if (data.warpjsUser && data.myPage) {
         const store = window.WarpJS.ReactUtils.createStore(reducers, {}, [], process.env.NODE_ENV === 'development');
@@ -19,10 +20,10 @@ export default async ($, data) => {
         store.dispatch(actionCreators.initializeState(data.myPage));
 
         ReactDOM.render(
-            <Provider store={store}>
+            <Provider store={store} id={PLACEHOLDER}>
                 <Container />
             </Provider>,
-            $(PLACEHOLDER).get(0)
+            $(`#${PLACEHOLDER}`).get(0)
         );
     }
 };

@@ -3,7 +3,7 @@ import { Button, Row } from 'react-bootstrap';
 
 import LeftRightMargin from './../left-right-margin';
 import PortalContent from './../portal-content';
-import userProfileDocuments from './../user-profile-documents';
+import UserProfileDocuments from './../user-profile-documents';
 
 import _debug from './debug'; const debug = _debug('component');
 
@@ -19,7 +19,7 @@ const Component = (props) => {
                     <Button bsStyle="primary">Notifications</Button>
 
                     <Button bsStyle="primary" onClick={props.showDocuments}>Your Documents</Button>
-                    <userProfileDocuments.Component />
+                    <UserProfileDocuments />
                 </PortalContent>
 
                 <LeftRightMargin />
