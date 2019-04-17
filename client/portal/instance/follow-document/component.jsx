@@ -5,16 +5,20 @@ import BreadcrumbActionButton from './../../components/breadcrumb-action-button'
 
 
 const Component = (props) => {
-    const onClick = () => {
-        const url = props.following ? props.unfollowUrl : props.followUrl;
-        props.updateFollow(url, props.following);
-    };
+    if (props.followUrl && props.unfollowUrl) {
+        const onClick = () => {
+            const url = props.following ? props.unfollowUrl : props.followUrl;
+            props.updateFollow(url, props.following);
+        };
 
-    const label = props.following ? 'Stop following' : 'Follow';
+        const label = props.following ? 'Stop following' : 'Follow';
 
-    return (
-        <BreadcrumbActionButton click={onClick} glyph='ok' label={label} />
-    );
+        return (
+            <BreadcrumbActionButton click={onClick} glyph='ok' label={label} />
+        );
+    } else {
+        return null;
+    }
 };
 
 Component.displayName = 'FollowDocument';
