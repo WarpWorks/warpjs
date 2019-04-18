@@ -16,7 +16,7 @@ const Component = (props) => {
                 <LeftRightMargin />
 
                 <PortalContent>
-                    <Button bsStyle="primary">Notifications</Button>
+                    {/* <Button bsStyle="primary">Notifications</Button> */}
 
                     <Button bsStyle="primary" onClick={props.showDocuments}>Your Documents</Button>
                     <UserProfileDocuments />

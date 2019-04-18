@@ -3,6 +3,7 @@ import extend from 'lodash/extend';
 
 import actions from './actions';
 import namespace from './namespace';
+import { reducers as userProfileDocumentsReducers } from './../user-profile-documents';
 
 const NAMESPACE = namespace();
 
@@ -13,5 +14,6 @@ const initializeState = (state = {}, action) => {
 
 export default window.WarpJS.ReactUtils.concatenateReducers([
     { actions: [ actions.INITIAL_STATE ], reducer: initializeState },
+    userProfileDocumentsReducers,
     window.WarpJS.ReactComponents.reducers
 ]);
