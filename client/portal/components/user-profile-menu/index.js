@@ -12,12 +12,11 @@ const PLACEHOLDER = 'warpjs-user-profile-menu';
 
 export default async ($, data) => {
     debug(`data=`, data);
-    debug(`reducers=`, reducers);
 
     if (data.warpjsUser && data.myPage) {
         const store = window.WarpJS.ReactUtils.createStore(reducers, {}, [], process.env.NODE_ENV === 'development');
 
-        store.dispatch(actionCreators.initializeState(data.myPage));
+        store.dispatch(actionCreators.initializeState(data.myPage, data._links.myDocuments.href));
 
         ReactDOM.render(
             <Provider store={store} id={PLACEHOLDER}>

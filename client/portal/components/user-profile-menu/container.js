@@ -11,12 +11,13 @@ const NAMESPACE = namespace();
 const mapStateToProps = (state, ownProps) => Object.freeze(cloneDeep(state[NAMESPACE] || {}));
 
 const mapDispatchToProps = (dispatch, ownProps) => Object.freeze({
-    showDocuments: () => orchestrators.showDocuments(dispatch)
+    showDocuments: (url) => () => orchestrators.showDocuments(dispatch, url)
 });
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => Object.freeze({
     ...stateProps,
     ...dispatchProps,
+    showDocuments: dispatchProps.showDocuments(stateProps.documentsUrl),
     ...omit(ownProps, ['onClick']),
 });
 

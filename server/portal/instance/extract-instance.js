@@ -20,6 +20,11 @@ module.exports = (req, res) => {
     if (req.warpjsUser) {
         if (req.warpjsUser.type === type && req.warpjsUser.id === id) {
             resource.myPage = true;
+
+            resource.link('myDocuments', {
+                title: "List of my documents",
+                href: RoutesInfo.expand(routes.portal.userProfileDocuments, {})
+            });
         }
 
         resource.link('follow', {

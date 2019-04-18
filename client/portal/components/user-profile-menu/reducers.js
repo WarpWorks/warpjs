@@ -1,5 +1,5 @@
+import cloneDeep from 'lodash/cloneDeep';
 import extend from 'lodash/extend';
-import pick from 'lodash/pick';
 
 import actions from './actions';
 import namespace from './namespace';
@@ -7,7 +7,7 @@ import namespace from './namespace';
 const NAMESPACE = namespace();
 
 const initializeState = (state = {}, action) => {
-    const substate = pick(action.payload, ['myPage']);
+    const substate = cloneDeep(action.payload);
     return extend({}, state, { [NAMESPACE]: substate });
 };
 
