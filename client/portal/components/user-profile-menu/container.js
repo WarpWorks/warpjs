@@ -1,4 +1,3 @@
-import cloneDeep from 'lodash/cloneDeep';
 import omit from 'lodash/omit';
 
 import Component from './component';
@@ -6,9 +5,9 @@ import namespace from './namespace';
 
 import * as orchestrators from './orchestrators';
 
-const NAMESPACE = namespace();
+const getSubstate = window.WarpJS.ReactUtils.getNamespaceSubstate;
 
-const mapStateToProps = (state, ownProps) => Object.freeze(cloneDeep(state[NAMESPACE] || {}));
+const mapStateToProps = (state, ownProps) => getSubstate(state, namespace);
 
 const mapDispatchToProps = (dispatch, ownProps) => Object.freeze({
     showDocuments: (url) => () => orchestrators.showDocuments(dispatch, url)

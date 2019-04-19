@@ -7,7 +7,7 @@ import followDocument from './follow-document';
 import IndividualContributionHeader from './individual-contribution-header';
 import userProfileMenu from './../components/user-profile-menu';
 
-import _debug from './debug'; const debug = _debug('index');
+/// import _debug from './debug'; const debug = _debug('index');
 
 const actionGoto = require('./../../shared/action-goto');
 const documentStatus = require('./../document-status');
@@ -52,7 +52,6 @@ const template = require('./template.hbs');
                 preview($);
 
                 const state = window.WarpJS.flattenHAL(result.data);
-                debug(`state=`, state);
 
                 window.WarpJS.ReactUtils.initReactBootstrapDisplayNames();
 

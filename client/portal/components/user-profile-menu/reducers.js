@@ -1,15 +1,14 @@
 import cloneDeep from 'lodash/cloneDeep';
-import extend from 'lodash/extend';
 
 import actions from './actions';
 import namespace from './namespace';
 import { reducers as userProfileDocumentsReducers } from './../user-profile-documents';
 
-const NAMESPACE = namespace();
+const setSubstate = window.WarpJS.ReactUtils.setNamespaceSubstate;
 
 const initializeState = (state = {}, action) => {
     const substate = cloneDeep(action.payload);
-    return extend({}, state, { [NAMESPACE]: substate });
+    return setSubstate(state, namespace, substate);
 };
 
 export default window.WarpJS.ReactUtils.concatenateReducers([
