@@ -10,6 +10,7 @@ const mapStateToProps = (state, ownProps) => getSubstate(state, namespace);
 
 const mapDispatchToProps = (dispatch, ownProps) => Object.freeze({
     updateFilter: async (attribute, nextState) => orchestrators.updateFilter(dispatch, attribute, nextState),
+    updateSortBy: async (event) => orchestrators.updateSortBy(dispatch, event),
 });
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => Object.freeze({
