@@ -1,8 +1,6 @@
-const Promise = require('bluebird');
-
 const openModal = require('./open-modal');
 
-module.exports = ($, element) => {
+module.exports = async ($, element) => {
     const data = {
         elementType: $(element).data('warpjsType'),
         elementId: $(element).data('warpjsId'),
@@ -12,16 +10,14 @@ module.exports = ($, element) => {
         }
     };
 
-    Promise.resolve()
-        .then(() => window.WarpJS.toast.loading($, "Loading data...", "Loading"))
-        .then((toastLoading) => Promise.resolve()
-            .then(() => window.WarpJS.proxy.post($, $(element).data('warpjsUrl'), data))
-            .then((res) => openModal($, element, res))
-            .catch((err) => {
-                console.error("Error:", err);
-                window.WarpJS.toast.error($, err.message, "Error getting data");
-            })
-            .finally(() => window.WarpJS.toast.close($, toastLoading))
-        )
-    ;
+    const toastLoading = await window.WarpJS.toast.loading($, "Loading data...", "Loading");
+    try {
+        const res = await window.WarpJS.proxy.post($, $(element).data('warpjsUrl'), data);
+        await openModal($, element, res);
+    } catch (err) {
+        console.error("Error:", err);
+        await window.WarpJS.toast.error($, err.message, "Error getting data");
+    } finally {
+        await window.WarpJS.toast.close($, toastLoading);
+    }
 };
