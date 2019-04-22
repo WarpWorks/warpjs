@@ -34,6 +34,19 @@ module.exports = (req, res) => {
 
             try {
                 const entity = await serverUtils.getEntity(domain, type);
+
+                const aggregations = entity.getRelationships()
+                    .filter((reln) => reln.isAggregation)
+                    .filter((reln) => reln.getTargetEntity().isDocument())
+                    .map((reln) => warpjsUtils.createResource('', {
+                        type: reln.type,
+                        id: reln.id,
+                        name: reln.name,
+                        label: reln.label || reln.name
+                    }))
+                ;
+                resource.embed('aggregations', aggregations);
+
                 const instance = await entity.getInstance(persistence, id);
                 const instanceResource = warpjsUtils.createResource(req, {
                     id: instance.id,
