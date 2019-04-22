@@ -29,23 +29,38 @@ module.exports = (req, res) => {
                     })
 
                     .then(() => DocLevel.fromString(body.docLevel))
-                    .then((docLevel) => {
-                        return Promise.resolve()
-                            .then(() => docLevel.getData(persistence, entity, instance, 0))
-                            .then((docLevelData) => {
-                                const newData = docLevelData.model.createTargetInstance();
-                                newData.instance.ImageURL = body.url;
-                                newData.instance.Height = body.height;
-                                newData.instance.Width = body.width;
-                                docLevelData.model.addTargetInstance(persistence, docLevelData.instance, newData.instance);
+                    .then((docLevel) => Promise.resolve()
+                        .then(() => docLevel.getData(persistence, entity, instance, 0))
+                        .then((docLevelData) => Promise.resolve()
+                            .then(() => docLevelData.model.getDocuments(persistence, docLevelData.instance))
+                            .then((imageDocuments) => {
+                                if (imageDocuments && imageDocuments.length > 0) {
+                                    return Promise.resolve()
+                                        .then(() => {
+                                            imageDocuments[0].ImageURL = body.url;
+                                            imageDocuments[0].Height = body.height;
+                                            imageDocuments[0].Width = body.width;
+                                        })
+                                    ;
+                                } else {
+                                    return Promise.resolve()
+                                        .then(() => docLevelData.model.createTargetInstance())
+                                        .then((newData) => {
+                                            newData.instance.ImageURL = body.url;
+                                            newData.instance.Height = body.height;
+                                            newData.instance.Width = body.width;
+                                            return newData;
+                                        })
+                                        .then((newData) => docLevelData.model.addTargetInstance(persistence, docLevelData.instance, newData.instance))
+                                    ;
+                                }
                             })
-                        ;
-                    })
-
+                        )
+                    )
                     .then(() => ChangeLogs.add(ChangeLogs.ACTIONS.EMBEDDED_ADDED, req.warpjsUser, instance, {
                         key: body.docLevel,
                         type: body.type,
-                        id: body.id
+                        id: id
                     }))
                     .then(() => entity.updateDocument(persistence, instance))
                     .then(() => logger(req, `Success add embedded association`))

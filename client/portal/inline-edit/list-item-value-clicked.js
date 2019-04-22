@@ -38,11 +38,6 @@ module.exports = ($, modal, clickedElement) => {
         $('.carousel').carousel({
             interval: false
         });
-        $('.carousel-inner').each((index, element) => {
-            if ($(element).children('div').length === 1) {
-                $(element).siblings('.carousel-controls').hide();
-            }
-        });
     } else {
         $('.warpjs-detail-container .warpjs-placeholder', modal).html(associationTemplate({item}));
         updateTypes($, modal, clickedElement);

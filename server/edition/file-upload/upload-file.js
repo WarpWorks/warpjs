@@ -35,7 +35,6 @@ function generateUniqueName(publicDir, filename) {
 
 module.exports = (req, res) => {
     const { domain } = req.params;
-
     const resource = warpjsUtils.createResource(req, {
         title: "File upload",
         domain

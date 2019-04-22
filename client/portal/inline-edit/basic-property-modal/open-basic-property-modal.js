@@ -28,9 +28,6 @@ module.exports = ($, element, res) => {
 
     $('.warpjs-detail-container .warpjs-placeholder', modal).html(detailTemplate({item: res._embedded.instances[0]._embedded.basicProperties[0]}));
     initializeWysiwyg($, modal, 'test');
-    $('.carousel').carousel({
-        interval: false
-    });
 
     modal.data('warpjsUrl', res._links.self.href);
     const instanceDoc = $('[data-warpjs-status="instance"]');

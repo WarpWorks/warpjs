@@ -43,7 +43,6 @@ module.exports = ($, modal) => {
                 e.preventDefault();
                 const input = $('form input[type="file"]').get(0);
                 const files = input.files;
-                console.log('confirm upload', files[0], files[0].name);
                 if (files.length) {
                     const data = new FormData();
                     data.append('file', files[0], files[0].name);
@@ -65,15 +64,17 @@ module.exports = ($, modal) => {
                             .then((res) => {
                                 window.WarpJS.toast.success($, "File uploaded successfully.", TITLE);
                                 imageUploadModal.modal('hide');
-
                                 const uploadUrl = $('[data-warpjs-action="file-upload"]').data('warpjsAddImageUrl');
                                 const docLevel = $('[data-warpjs-action="file-upload"]').data('warpjsDocLevel');
+                                const itemId = $('[data-warpjs-action="file-upload"]').data('warpjsItemId');
+
                                 const data = {
-                                  "width": res.info.Width,
-                                  "height": res.info.Height,
-                                  "url": res._links.uploadedFile.href,
-                                  "docLevel": docLevel
-                                }
+                                    "width": res.info.Width,
+                                    "height": res.info.Height,
+                                    "url": res._links.uploadedFile.href,
+                                    "docLevel": docLevel,
+                                    "id": itemId
+                                };
 
                                 Promise.resolve()
                                     .then(() => $.ajax({
