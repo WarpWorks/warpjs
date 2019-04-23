@@ -21,7 +21,7 @@ module.exports = ($, element, res) => {
         }));
 
         modal = $(`[data-warpjs-modal="${constants.MODAL_NAME}"]`);
-        $(modal).data('aggregations', res._embedded.aggregations);
+        $(modal).data('warpjsAggregations', res._embedded.aggregations);
         defineEvents($, modal, items);
     }
 

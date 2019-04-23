@@ -1,0 +1,50 @@
+.warpjs-paragraph-aggregations {
+    position: relative;
+
+    .warpjs-paragraph-aggregations-dropdown {
+        .dropdown-toggle {
+            &:extend(.base-inline-label);
+
+            .text {
+                width: calc(~"100% - 150px");
+                display: inline-block;
+                overflow-x: hidden;
+                text-overflow: ellipsis;
+                vertical-align: bottom;
+            }
+        }
+
+        .dropdown-menu {
+            border: 1px solid @inline-blue;
+            color: @inline-blue;
+            border-radius: unset;
+            max-width: 100%;
+
+            li {
+                padding: 4px 24px;
+                white-space: nowrap;
+                overflow-x: hidden;
+                text-overflow: ellipsis;
+                cursor: pointer;
+
+                &.warpjs-paragraph-aggregations-option-selected {
+                    font-weight: bold;
+                    font-size: 100%;
+                }
+            }
+        }
+
+        .warpjs-paragraph-aggregations-none {
+            font-style: italic;
+        }
+    }
+
+    .warpjs-paragraph-aggregations-edit-button {
+        &:extend(.base-inline-label);
+        margin-top: -6px;
+        float: right;
+        color: @inline-white;
+        background-color: @inline-blue;
+    }
+
+}

@@ -1,3 +1,5 @@
+import paragraphAggregations from './../components/paragraph-aggregations';
+
 const associationTemplate = require('./association.hbs');
 const detailTemplate = require('./text-modal-detail.hbs');
 const initializeWysiwyg = require('./initialize-wysiwyg');
@@ -38,6 +40,13 @@ module.exports = ($, modal, clickedElement) => {
         $('.carousel').carousel({
             interval: false
         });
+        $('.carousel-inner').each((index, element) => {
+            if ($(element).children('div').length === 1) {
+                $(element).siblings('.carousel-controls').hide();
+            }
+        });
+
+        paragraphAggregations($, modal, clickedElement);
     } else {
         $('.warpjs-detail-container .warpjs-placeholder', modal).html(associationTemplate({item}));
         updateTypes($, modal, clickedElement);

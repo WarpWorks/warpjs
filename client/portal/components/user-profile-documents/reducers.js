@@ -4,6 +4,8 @@ import { reducers as componentsReducers } from './components';
 import actions from './actions';
 import namespace from './namespace';
 
+// import _debug from './debug'; const debug = _debug('reducers');
+
 const getSubstate = window.WarpJS.ReactUtils.getNamespaceSubstate;
 const setSubstate = window.WarpJS.ReactUtils.setNamespaceSubstate;
 
