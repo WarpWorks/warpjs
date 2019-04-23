@@ -1,8 +1,9 @@
+import constants from './../../inline-edit/constants';
 import * as actionCreators from './action-creators';
 
 // import _debug from './debug'; const debug = _debug('orchestrators');
 
-export const updateAggregation = async (dispatch, aggregations, warpjsData, currentAggregationId, aggregationId) => {
+export const updateAggregation = async (dispatch, aggregations, warpjsData, currentAggregationId, clickedElement, aggregationId) => {
     if (currentAggregationId === aggregationId) {
         // Same selection, ignore.
         return;
@@ -25,6 +26,8 @@ export const updateAggregation = async (dispatch, aggregations, warpjsData, curr
         } else {
             await window.WarpJS.toast.success($, "Updated aggregation");
             dispatch(actionCreators.updateAggregation(aggregationId));
+            $(clickedElement).data('warpjsSubdocuments', aggregationId);
+            constants.setDirty();
         }
     } catch (err) {
         await window.WarpJS.toast.error($, "Unable to update aggregation");

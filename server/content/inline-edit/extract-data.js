@@ -94,6 +94,7 @@ module.exports = (req, res) => {
                                         isOfHeadingLevel: constants.isOfHeadingLevel(paragraph.HeadingLevel || 'H1'),
                                         name: paragraph.Heading,
                                         description: paragraph.Content,
+                                        subDocuments: paragraph.SubDocumentsAggregation || '-1',
                                         reference: {
                                             type: relationship.type,
                                             id: relationship.id,

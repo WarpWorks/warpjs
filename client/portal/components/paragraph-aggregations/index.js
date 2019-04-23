@@ -12,7 +12,7 @@ const PLACEHOLDER = 'warpjs-paragraph-aggregations';
 export default async ($, modal, clickedElement) => {
     // debug(`clickedElement=`, clickedElement);
 
-    const aggregationSelected = $(clickedElement).data('warpjsAggregation');
+    const aggregationSelected = parseInt($(clickedElement).data('warpjsSubdocuments') || -1, 10);
     const aggregations = $(modal).data('warpjsAggregations');
 
     const warpjsData = {
@@ -25,7 +25,7 @@ export default async ($, modal, clickedElement) => {
     };
 
     const store = window.WarpJS.ReactUtils.createStore(reducers, {}, [], process.env.NODE_ENV === 'development');
-    store.dispatch(initialize(aggregations, aggregationSelected, warpjsData));
+    store.dispatch(initialize(aggregations, aggregationSelected, warpjsData, clickedElement));
 
     ReactDOM.render(
         <Provider store={store} id={PLACEHOLDER}>
