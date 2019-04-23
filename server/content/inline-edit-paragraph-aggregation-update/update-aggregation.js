@@ -37,7 +37,7 @@ module.exports = async (req, res) => {
         const documentToModify = documents.find((doc) => doc._id === body.id);
         if (documentToModify) {
             const paragraphEntity = await serverUtils.getEntity(domain, 'Paragraph');
-            const subDocumentAggregationBasicProperty = paragraphEntity.getBasicPropertyByName('SubDocumentsAggregation');
+            const subDocumentAggregationBasicProperty = paragraphEntity.getBasicPropertyByName('SubDocuments');
             const changeSet = await subDocumentAggregationBasicProperty.setValue(documentToModify, reln);
             await ChangeLogs.add(
                 ChangeLogs.ACTIONS.UPDATE_VALUE,
