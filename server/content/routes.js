@@ -14,6 +14,7 @@ const instanceRelationshipItem = require('./instance-relationship-item');
 const instanceRelationshipItems = require('./instance-relationship-items');
 const inlineEditAssociationReorder = require('./inline-edit-association-reorder');
 const inlineEditAddImage = require('./inline-edit-add-image');
+const inlineEditParagraphAggregationUpdate = require('./inline-edit-paragraph-aggregation-update');
 const instances = require('./instances');
 const instance = require('./instance');
 const instanceHistory = require('./instance-history');
@@ -48,5 +49,6 @@ module.exports = (baseUrl) => {
     routesInfo.route(routes.inlineEditAssociationReorder, '/domain/{domain}/type/{type}/instance/{id}/inline-edit/associations/{name}/reorder', inlineEditAssociationReorder, ROUTE_OPTIONS);
 
     routesInfo.route(routes.inlineEditAddImage, '/domain/{domain}/type/{type}/instance/{id}/inline-edit-add-image', inlineEditAddImage);
+    routesInfo.route(routes.inlineEditParagraphAggregationUpdate, '/domain/{domain}/type/{type}/instance/{id}/update-paragraph-aggregation/{reln}', inlineEditParagraphAggregationUpdate);
     return routesInfo;
 };

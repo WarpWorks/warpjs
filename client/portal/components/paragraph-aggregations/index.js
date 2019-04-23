@@ -15,8 +15,17 @@ export default async ($, modal, clickedElement) => {
     const aggregationSelected = $(clickedElement).data('warpjsAggregation');
     const aggregations = $(modal).data('warpjsAggregations');
 
+    const warpjsData = {
+        type: $(clickedElement).data('warpjsType'),
+        id: $(clickedElement).data('warpjsId'),
+        reference: {
+            type: $(clickedElement).data('warpjsReferenceType'),
+            id: $(clickedElement).data('warpjsReferenceId')
+        }
+    };
+
     const store = window.WarpJS.ReactUtils.createStore(reducers, {}, [], process.env.NODE_ENV === 'development');
-    store.dispatch(initialize(aggregations, aggregationSelected));
+    store.dispatch(initialize(aggregations, aggregationSelected, warpjsData));
 
     ReactDOM.render(
         <Provider store={store} id={PLACEHOLDER}>

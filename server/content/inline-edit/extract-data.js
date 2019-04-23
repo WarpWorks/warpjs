@@ -38,14 +38,31 @@ module.exports = (req, res) => {
                 const aggregations = entity.getRelationships()
                     .filter((reln) => reln.isAggregation)
                     .filter((reln) => reln.getTargetEntity().isDocument())
-                    .map((reln) => warpjsUtils.createResource('', {
-                        type: reln.type,
-                        id: reln.id,
-                        name: reln.name,
-                        label: reln.label || reln.name
-                    }))
                 ;
-                resource.embed('aggregations', aggregations);
+
+                const aggregationsResources = [{
+                    type: 'Relationship',
+                    id: -1,
+                    name: 'No aggregations selected'
+                }]
+                    .concat(aggregations)
+                    .map((reln) => {
+                        const href = RoutesInfo.expand(routesConstants.routes.inlineEditParagraphAggregationUpdate, {
+                            domain,
+                            type,
+                            id,
+                            reln: reln.id
+                        });
+
+                        return warpjsUtils.createResource(href, {
+                            type: reln.type,
+                            id: reln.id,
+                            name: reln.name,
+                            label: reln.label || reln.name
+                        });
+                    })
+                ;
+                resource.embed('aggregations', aggregationsResources);
 
                 const instance = await entity.getInstance(persistence, id);
                 const instanceResource = warpjsUtils.createResource(req, {

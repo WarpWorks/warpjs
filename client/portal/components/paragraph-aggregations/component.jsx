@@ -8,17 +8,10 @@ import { NAME } from './constants';
 
 const Component = (props) => {
     if (props.aggregations.length) {
-        const aggregations = [{
-            type: "",
-            id: -1,
-            label: "No aggregations selected",
-            name: ""
-        }].concat(props.aggregations);
-
-        const selectedAggregation = aggregations.find((aggregation) => aggregation.id === props.aggregationSelected);
+        const selectedAggregation = props.aggregations.find((aggregation) => aggregation.id === props.aggregationSelected);
         const selectedAggregationLabel = selectedAggregation ? selectedAggregation.label : '';
 
-        const options = aggregations.map((option) => {
+        const options = props.aggregations.map((option) => {
             const classNames = classnames({
                 'warpjs-paragraph-aggregations-none': option.id === -1,
                 'warpjs-paragraph-aggregations-option-selected': option.id === props.aggregationSelected

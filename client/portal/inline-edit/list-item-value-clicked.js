@@ -1,5 +1,7 @@
 import paragraphAggregations from './../components/paragraph-aggregations';
 
+// import _debug from './debug'; const debug = _debug('list-item-value-clicked');
+
 const associationTemplate = require('./association.hbs');
 const detailTemplate = require('./text-modal-detail.hbs');
 const initializeWysiwyg = require('./initialize-wysiwyg');
