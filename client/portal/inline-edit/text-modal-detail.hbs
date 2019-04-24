@@ -101,28 +101,34 @@
   <div class="warpjs-detail-image-preview">
     <div class="image-carousel-container">
       <div id="warpjs-detail-image-carousel" class="carousel slide">
+        {{#if item.images.length}}
+          <a
+            class="warpjs-inline-edit-image-delete-button" data-warpjs-action="file-delete"
+            data-warpjs-delete-image-url="/content/domain/{{domain}}/type/{{type}}/instance/{{id}}/inline-edit-delete-image"
+            data-warpjs-doc-level="{{item.reference.type}}:{{item.reference.name}}.Entity:{{item.id}}.Relationship:Images"
+            data-warpjs-item-id="{{item.id}}"
+          >x</a>
+        {{/if}}
         <div class="carousel-inner"
           data-toggle="tooltip"
           data-html="true"
           title="{{> image-tooltip}}"
           data-placement="bottom"
         >
-          {{#each item.images as |image|}}
-            <div class="carousel-item item {{#unless @index}}active{{/unless}}">
-              <div style="background-image: url({{image._links.self.href}});" class="inline-editor-image"></div>
-            </div>
-          {{/each}}
-        </div>
-          <div class="carousel-controls">
-            <a
-              class="warpjs-inline-edit-image-upload-button" data-warpjs-action="file-upload"
-              data-warpjs-url="/content/domain/{{domain}}/file-upload"
-              data-warpjs-add-image-url="/content/domain/{{domain}}/type/{{type}}/instance/{{id}}/inline-edit-add-image"
-              data-warpjs-doc-level="{{item.reference.type}}:{{item.reference.name}}.Entity:{{item.id}}.Relationship:Images"
-              data-warpjs-item-id="{{item.id}}"
-            >upload</a>
+          <div class="carousel-item item active">
+            <div style="background-image: url({{item.images.0._links.self.href}});" class="inline-editor-image"></div>
           </div>
         </div>
+        <div class="carousel-controls">
+          <a
+            class="warpjs-inline-edit-image-upload-button" data-warpjs-action="file-upload"
+            data-warpjs-url="/content/domain/{{domain}}/file-upload"
+            data-warpjs-add-image-url="/content/domain/{{domain}}/type/{{type}}/instance/{{id}}/inline-edit-add-image"
+            data-warpjs-doc-level="{{item.reference.type}}:{{item.reference.name}}.Entity:{{item.id}}.Relationship:Images"
+            data-warpjs-item-id="{{item.id}}"
+          >upload</a>
+        </div>
+      </div>
     </div>
   </div>
 </div>
