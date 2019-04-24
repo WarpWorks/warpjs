@@ -4,7 +4,7 @@ const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const previewByEntity = require('./preview-by-entity');
 
-const debug = require('./debug')('sub-documents-by-paragraph');
+// const debug = require('./debug')('sub-documents-by-paragraph');
 
 module.exports = async (persistence, domain, documentJson, paragraphJson) => {
     // debug(`documentJson=`, documentJson);
@@ -17,13 +17,6 @@ module.exports = async (persistence, domain, documentJson, paragraphJson) => {
         const targetDocuments = await relationship.getDocuments(persistence, documentJson);
         // debug(`targetDocuments=`, targetDocuments);
 
-        const resource = warpjsUtils.createResource('', {
-            type: relationship.type,
-            id: relationship.id,
-            name: relationship.name,
-            label: relationship.label || relationship.name
-        });
-
         const resources = await Promise.map(
             targetDocuments,
             async (targetDocument) => {
@@ -32,8 +25,19 @@ module.exports = async (persistence, domain, documentJson, paragraphJson) => {
                 return resource;
             }
         );
-        resource.embed('items', resources);
 
-        return resource;
+        if (resources && resources.length) {
+            const resource = warpjsUtils.createResource('', {
+                type: relationship.type,
+                id: relationship.id,
+                name: relationship.name,
+                label: relationship.label || relationship.name
+            });
+
+            resource.embed('items', resources);
+            return resource;
+        } else {
+            return null;
+        }
     }
 };

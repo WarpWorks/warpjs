@@ -3,7 +3,7 @@ const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const EntityTypes = require('./../../../lib/core/entity-types');
 
-const debug = require('./debug')('overview-by-entity');
+// const debug = require('./debug')('overview-by-entity');
 
 function buildTOCLevel(items, level, index) {
     let cumulator = [];

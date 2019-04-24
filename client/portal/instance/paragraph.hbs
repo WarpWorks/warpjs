@@ -43,5 +43,13 @@
     </div>
   {{/if}}
 
+  {{#if paragraph._embedded.subDocuments}}
+    <div class="row">
+      <div class="col-xs-12 content">
+        {{> paragraph-sub-documents relationship=paragraph._embedded.subDocuments.[0]}}
+      </div>
+    </div>
+  {{/if}}
+
   {{> ../inline-edit/context-button page=page elementId=paragraph.id elementType='Paragraph' reference=reference}}
 </div>
