@@ -41,7 +41,7 @@ module.exports = async (persistence, relationship, instance) => {
             }
 
             const subDocuments = await subDocumetsByParagraph(persistence, relationship.getDomain(), instance, paragraph);
-            if (subDocuments) {
+            if (subDocuments && subDocuments.length) {
                 paragraphResource.embed('subDocuments', subDocuments);
             }
 

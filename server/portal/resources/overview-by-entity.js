@@ -27,19 +27,12 @@ function buildTOCLevel(items, level, index) {
 
             if (item._embedded && item._embedded.subDocuments) {
                 // debug(`buildTOCLevel(level=${level}): build subDocuments=`, item._embedded.subDocuments);
-                const relationship = item._embedded.subDocuments[0];
-                const subDocumentRelationship = warpjsUtils.createResource('', {
-                    name: relationship.label,
-                    tocType: 'sub-document-label'
-                });
-
-                const subDocuments = relationship._embedded.items.map((subDocument) => warpjsUtils.createResource(subDocument._links.self.href, {
+                const subDocuments = item._embedded.subDocuments.map((subDocument) => warpjsUtils.createResource(subDocument._links.self.href, {
                     name: subDocument.label,
                     tocType: 'sub-document-item'
                 }));
-                subDocumentRelationship.embed('items', subDocuments);
 
-                resource.embed('items', subDocumentRelationship);
+                resource.embed('items', subDocuments);
             }
 
             resource.embed('items', buildTOCLevel(items, level + 1, i + 1));
