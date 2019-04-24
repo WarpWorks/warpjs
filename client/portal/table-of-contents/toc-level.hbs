@@ -3,7 +3,15 @@
     {{#each items as |item|}}
       {{#if item.name}}
         <li>
-          <span class="toc-item" data-warpjs-id="{{item.id}}" data-dismiss="modal">{{item.name}}</span>
+          <span class="toc-item" data-warpjs-id="{{item.id}}" data-dismiss="modal"
+            data-warpjs-toc-type="{{item.tocType}}"
+            data-warpjs-url="{{item._links.self.href}}"
+            >
+            {{item.name}}
+            {{#if item._links.self.href}}
+              <span class="glyphicon glyphicon-arrow-right"></span>
+            {{/if}}
+          </span>
           {{> toc-level items=item._embedded.items}}
         </li>
       {{/if}}

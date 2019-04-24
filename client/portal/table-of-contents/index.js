@@ -14,10 +14,15 @@ module.exports = ($) => {
     });
 
     $('#overview-toc-modal .modal-body .toc-item').on('click', function() {
-        const targetId = $(this).data('warpjsId');
-        const target = $(`#toc-${targetId}`).get(0);
-        if (target) {
-            target.scrollIntoView(true);
+        const href = $(this).data('warpjsUrl');
+        if (href) {
+            document.location.href = href;
+        } else {
+            const targetId = $(this).data('warpjsId');
+            const target = $(`#toc-${targetId}`).get(0);
+            if (target) {
+                target.scrollIntoView(true);
+            }
         }
     });
 

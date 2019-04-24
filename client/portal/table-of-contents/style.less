@@ -5,6 +5,14 @@
     [data-warpjs-modal="overview-toc"] {
         .toc-item {
             cursor: pointer;
+
+            &[data-warpjs-toc-type="sub-document-label"] {
+                font-style: italic;
+                cursor: default;
+            }
+
+            &[data-warpjs-toc-type="sub-document-item"] {
+            }
         }
     }
 
