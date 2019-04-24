@@ -1,9 +1,9 @@
-// const debug = require('debug')('W2:portal:resources/overview-by-entity');
 const Promise = require('bluebird');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const EntityTypes = require('./../../../lib/core/entity-types');
-const paragraphsByRelationship = require('./paragraphs-by-relationship');
+
+const debug = require('./debug')('overview-by-entity');
 
 function buildTOCLevel(items, level, index) {
     let cumulator = [];
@@ -52,7 +52,10 @@ module.exports = (persistence, entity, instance, isSpecializedPageViewStyle, pag
                     };
                 }
             })
-            .then(() => paragraphsByRelationship(persistence, relationship, instance))
+            .then(() => {
+                const paragraphsByRelationship = require('./paragraphs-by-relationship');
+                return paragraphsByRelationship(persistence, relationship, instance);
+            })
         )
         .then((items) => {
             if (items && items.length) {

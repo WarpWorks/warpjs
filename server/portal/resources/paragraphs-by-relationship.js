@@ -6,6 +6,7 @@ const constants = require('./constants');
 const convertCustomLinks = require('./convert-custom-links');
 const iframesByParagraph = require('./iframes-by-paragraph');
 const imagesByParagraph = require('./images-by-paragraph');
+const subDocumetsByParagraph = require('./sub-documents-by-paragraph');
 
 module.exports = async (persistence, relationship, instance) => {
     const paragraphs = relationship ? await relationship.getDocuments(persistence, instance) : [];
@@ -37,6 +38,11 @@ module.exports = async (persistence, relationship, instance) => {
             const callouts = await calloutsByParagraph(persistence, relationship.getTargetEntity(), paragraph);
             if (callouts && callouts.length) {
                 paragraphResource.embed('callouts', callouts);
+            }
+
+            const subDocuments = await subDocumetsByParagraph(persistence, relationship.getDomain(), instance, paragraph);
+            if (subDocuments) {
+                paragraphResource.embed('subDocuments', subDocuments);
             }
 
             return paragraphResource;
