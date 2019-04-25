@@ -43,58 +43,131 @@
       data-warpjs-action="inline-edit-paragraph-move-to-last"
       >&gt;&gt;</div>
   </div>
+  <div class="form-group warpjs-inline-edit-visibility">
+    <select class="form-control" id="warpjs-inline-edit-visibility"
+      value="{{item.position}}"
+      data-warpjs-id="{{item.id}}"
+      data-warpjs-field="Visibility"
+      data-warpjs-reference-type="{{item.reference.type}}"
+      data-warpjs-reference-id="{{item.reference.id}}"
+      data-warpjs-reference-name="{{item.reference.name}}"
+      {{#unless item.canChangeName}}readonly{{/unless}}
+      >
+      <option value="Web" {{#if item.isVisibility.Web}}selected{{/if}}>Visible on Web</option>
+      <option value="PDF" {{#if item.isVisibility.PDF}}selected{{/if}}>Visible on PDF</option>
+      <option value="WebAndPDF" {{#if item.isVisibility.WebAndPDF}}selected{{/if}}>Visible on Web &amp; PDF</option>
+    </select>
+  </div>
 </div>
 
 <div class="row">
   <div class="warpjs-detail-heading">
     <div class="form-group">
       <label for="warpjs-inline-edit-heading">Heading</label>
-      <textarea class="form-control" rows="3" id="warpjs-inline-edit-heading"
-          data-warpjs-id="{{item.id}}"
-          data-warpjs-field="Heading"
-          data-warpjs-reference-type="{{item.reference.type}}"
-          data-warpjs-reference-id="{{item.reference.id}}"
-          data-warpjs-reference-name="{{item.reference.name}}"
-          {{#unless item.canChangeName}}readonly{{/unless}}
-        >{{item.name}}</textarea>
-    </div>
-
-    <div class="form-inline">
-      <div class="form-group warpjs-inline-edit-level">
-        <label for="warpjs-inline-edit-level">Level</label>
-        <select class="form-control" id="warpjs-inline-edit-level"
+      <div class="btn-group heading-level-container"
+        id="warpjs-inline-edit-level"
+        {{#unless item.canChangeName}}readonly{{/unless}}
+        data-toggle="buttons"
+      >
+        <label class="btn heading-buttons">
+          <input
+            type="radio"
+            name="warpjs-inline-edit-level"
+            id=H1"
+            value="H1"
+            {{#if item.isHeadingLevel.H1}}checked{{/if}}
             data-warpjs-id="{{item.id}}"
             data-warpjs-field="HeadingLevel"
             data-warpjs-reference-type="{{item.reference.type}}"
             data-warpjs-reference-id="{{item.reference.id}}"
             data-warpjs-reference-name="{{item.reference.name}}"
-            {{#unless item.canChangeName}}readonly{{/unless}}
           >
-          <option value="H1" {{#if item.isHeadingLevel.H1}}selected{{/if}}>H1</option>
-          <option value="H2" {{#if item.isHeadingLevel.H2}}selected{{/if}}>H2</option>
-          <option value="H3" {{#if item.isHeadingLevel.H3}}selected{{/if}}>H3</option>
-          <option value="H4" {{#if item.isHeadingLevel.H4}}selected{{/if}}>H4</option>
-          <option value="H5" {{#if item.isHeadingLevel.H5}}selected{{/if}}>H5</option>
-          <option value="H6" {{#if item.isHeadingLevel.H6}}selected{{/if}}>H6</option>
-        </select>
-      </div>
-
-      <div class="form-group warpjs-inline-edit-visibility">
-        <label for="warpjs-inline-edit-visibility">Visibility</label>
-        <select class="form-control" id="warpjs-inline-edit-visibility"
-          value="{{item.position}}"
-          data-warpjs-id="{{item.id}}"
-          data-warpjs-field="Visibility"
-          data-warpjs-reference-type="{{item.reference.type}}"
-          data-warpjs-reference-id="{{item.reference.id}}"
-          data-warpjs-reference-name="{{item.reference.name}}"
-          {{#unless item.canChangeName}}readonly{{/unless}}
+          <span class="heading-label">H1</span>
+        </label>
+        <label class="btn heading-buttons">
+          <input
+            type="radio"
+            name="warpjs-inline-edit-level"
+            id="H2"
+            value="H2"
+            {{#if item.isHeadingLevel.H2}}checked{{/if}}
+            data-warpjs-id="{{item.id}}"
+            data-warpjs-field="HeadingLevel"
+            data-warpjs-reference-type="{{item.reference.type}}"
+            data-warpjs-reference-id="{{item.reference.id}}"
+            data-warpjs-reference-name="{{item.reference.name}}"
           >
-          <option value="Web" {{#if item.isVisibility.Web}}selected{{/if}}>Web</option>
-          <option value="PDF" {{#if item.isVisibility.PDF}}selected{{/if}}>PDF</option>
-          <option value="WebAndPDF" {{#if item.isVisibility.WebAndPDF}}selected{{/if}}>Web &amp; PDF</option>
-        </select>
+          <span class="heading-label">H2</span>
+        </label>
+        <label class="btn heading-buttons">
+          <input
+            type="radio"
+            name="warpjs-inline-edit-level"
+            id="H3"
+            value="H3"
+            {{#if item.isHeadingLevel.H3}}checked{{/if}}
+            data-warpjs-id="{{item.id}}"
+            data-warpjs-field="HeadingLevel"
+            data-warpjs-reference-type="{{item.reference.type}}"
+            data-warpjs-reference-id="{{item.reference.id}}"
+            data-warpjs-reference-name="{{item.reference.name}}"
+          >
+          <span class="heading-label">H3</span>
+        </label>
+        <label class="btn heading-buttons">
+          <input
+            type="radio"
+            name="warpjs-inline-edit-level"
+            id="H4"
+            value="H4"
+            {{#if item.isHeadingLevel.H4}}checked{{/if}}
+            data-warpjs-id="{{item.id}}"
+            data-warpjs-field="HeadingLevel"
+            data-warpjs-reference-type="{{item.reference.type}}"
+            data-warpjs-reference-id="{{item.reference.id}}"
+            data-warpjs-reference-name="{{item.reference.name}}"
+          >
+          <span class="heading-label">H4</span>
+        </label>
+        <label class="btn heading-buttons">
+          <input
+            type="radio"
+            name="warpjs-inline-edit-level"
+            id="H5"
+            value="H5"
+            {{#if item.isHeadingLevel.H5}}checked{{/if}}
+            data-warpjs-id="{{item.id}}"
+            data-warpjs-field="HeadingLevel"
+            data-warpjs-reference-type="{{item.reference.type}}"
+            data-warpjs-reference-id="{{item.reference.id}}"
+            data-warpjs-reference-name="{{item.reference.name}}"
+          >
+          <span class="heading-label">H5</span>
+        </label>
+        <label class="btn heading-buttons">
+          <input
+            type="radio"
+            name="warpjs-inline-edit-level"
+            id="H6"
+            value="H6"
+            {{#if item.isHeadingLevel.H6}}checked{{/if}}
+            data-warpjs-id="{{item.id}}"
+            data-warpjs-field="HeadingLevel"
+            data-warpjs-reference-type="{{item.reference.type}}"
+            data-warpjs-reference-id="{{item.reference.id}}"
+            data-warpjs-reference-name="{{item.reference.name}}"
+          >
+          <span class="heading-label">H6</span>
+        </label>
       </div>
+      <textarea class="form-control" rows="3" id="warpjs-inline-edit-heading"
+        data-warpjs-id="{{item.id}}"
+        data-warpjs-field="Heading"
+        data-warpjs-reference-type="{{item.reference.type}}"
+        data-warpjs-reference-id="{{item.reference.id}}"
+        data-warpjs-reference-name="{{item.reference.name}}"
+        {{#unless item.canChangeName}}readonly{{/unless}}
+      >{{item.name}}</textarea>
     </div>
   </div>
 

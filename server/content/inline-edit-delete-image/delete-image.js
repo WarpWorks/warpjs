@@ -1,5 +1,5 @@
 /**
- *  This module allows the addition of an association on embedded entities.
+ *  This module allows the deletion of an association on embedded entities.
  */
 const ChangeLogs = require('@warp-works/warpjs-change-logs');
 const Promise = require('bluebird');
