@@ -42,7 +42,7 @@ module.exports = (req, res) => {
                             })
                         )
                     )
-                    .then(() => ChangeLogs.add(ChangeLogs.ACTIONS.EMBEDDED_ADDED, req.warpjsUser, instance, {
+                    .then(() => ChangeLogs.add(ChangeLogs.ACTIONS.EMBEDDED_REMOVED, req.warpjsUser, instance, {
                         key: body.docLevel,
                         type: body.type,
                         id: id

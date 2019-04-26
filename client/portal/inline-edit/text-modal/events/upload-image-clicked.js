@@ -1,6 +1,7 @@
 // const FileUpload = require('./../../../../edition/file-upload');
 
 const constants = require('./../../../../edition/file-upload/constants.js');
+const inlineConstants = require('./../../constants.js');
 const modalTemplate = require('./../../../../edition/file-upload/modal.hbs');
 const TITLE = "File Upload";
 
@@ -88,6 +89,8 @@ module.exports = ($, modal) => {
                                     })
                                 ;
                             })
+                            .then(() => inlineConstants.setDirty())
+                            .then(() => true)
                             .catch((err) => {
                                 // eslint-disable-next-line no-console
                                 console.error("Error upload-file:", err);

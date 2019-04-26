@@ -1,4 +1,5 @@
 const constants = require('./../../../../edition/file-upload/constants.js');
+const inlineConstants = require('./../../constants.js');
 const modalTemplate = require('./delete-file.hbs');
 const TITLE = "Delete image";
 
@@ -54,9 +55,9 @@ module.exports = ($, modal) => {
                             contentType: 'application/json; charset=utf-8',
                             data: JSON.stringify(data)
                         }))
-                        .then((res) => {
-                            window.WarpJS.toast.success($, "File deleted successfully.", TITLE);
-                        })
+                        .then((res) => window.WarpJS.toast.success($, "File deleted successfully.", TITLE))
+                        .then(() => inlineConstants.setDirty())
+                        .then(() => true)
                         .catch((err) => {
                             // eslint-disable-next-line no-console
                             console.error("Error delete-file:", err);
