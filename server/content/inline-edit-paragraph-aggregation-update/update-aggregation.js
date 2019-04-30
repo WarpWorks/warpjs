@@ -45,7 +45,7 @@ module.exports = async (req, res) => {
                 instance,
                 extend({}, changeSet, { key: `Relationship:${relationship.name}.Entity:${body.id}.Basic:${subDocumentAggregationBasicProperty.name}` })
             );
-            await entity.updateDocument(persistence, instance);
+            await entity.updateDocument(persistence, instance, true);
         }
 
         await warpjsUtils.sendHal(req, res, resource, RoutesInfo);

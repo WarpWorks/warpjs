@@ -27,7 +27,7 @@ module.exports = (req, res) => {
                     });
 
                     // FIXME: Add to History.
-                    await entity.updateDocument(persistence, instance);
+                    await entity.updateDocument(persistence, instance, true);
 
                     res.status(204).send();
                 } catch (err) {

@@ -50,7 +50,7 @@ function handleAggregation(req, res, resource, persistence, instanceData) {
                             type: newDoc.type,
                             id: newDoc.id
                         }))
-                        .then(() => instanceData.entity.updateDocument(persistence, instanceData.instance))
+                        .then(() => instanceData.entity.updateDocument(persistence, instanceData.instance, true))
                         .then(() => {
                             const redirectUrl = RoutesInfo.expand(constants.routes.instance, {
                                 domain,
@@ -78,7 +78,7 @@ function handleAssociation(req, res, resource, persistence, instanceData) {
         .then(() => DocLevel.fromString(body.docLevel))
         .then((docLevel) => docLevel.getData(persistence, instanceData.entity, instanceData.instance))
         .then((docLevelData) => docLevelData.model.addValue(persistence, body.type, body.id, docLevelData.instance))
-        .then(() => instanceData.entity.updateDocument(persistence, instanceData.instance))
+        .then(() => instanceData.entity.updateDocument(persistence, instanceData.instance, true))
         .then(() => logger(req, `Success ${ACTION}`))
     ;
 }
@@ -107,7 +107,7 @@ function handleEmbedded(req, res, resource, persistence, instanceData) {
         .then((newInstance) => {
             // TODO: ChangeLog
         })
-        .then(() => instanceData.entity.updateDocument(persistence, instanceData.instance))
+        .then(() => instanceData.entity.updateDocument(persistence, instanceData.instance, true))
         .then(() => logger(req, `Success ${ACTION}`))
     ;
 }

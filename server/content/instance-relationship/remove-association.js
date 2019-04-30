@@ -24,7 +24,7 @@ module.exports = async (req, res, persistence, entity, instance) => {
         });
 
         await relationshipEntity.removeAssociation(instance, req.body, persistence);
-        await entity.updateDocument(persistence, instance);
+        await entity.updateDocument(persistence, instance, true);
 
         logger(req, `Success ${action}`);
         res.status(204).send();

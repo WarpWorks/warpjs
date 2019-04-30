@@ -62,7 +62,7 @@ module.exports = (req, res) => {
                         type: body.type,
                         id: id
                     }))
-                    .then(() => entity.updateDocument(persistence, instance))
+                    .then(() => entity.updateDocument(persistence, instance, true))
                     .then(() => logger(req, `Success add embedded association`))
                     .then(() => res.status(204).send())
                 )

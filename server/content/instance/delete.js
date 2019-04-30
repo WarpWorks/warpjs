@@ -47,7 +47,7 @@ module.exports = async (req, res) => {
                 id: instance.id
             });
 
-            await parentData.entity.updateDocument(persistence, parentData.instance);
+            await parentData.entity.updateDocument(persistence, parentData.instance, true);
 
             resource.link('redirect', {
                 title: "Parent document",

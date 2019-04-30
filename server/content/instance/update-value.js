@@ -51,7 +51,7 @@ module.exports = (req, res, persistence, entity, instance) => {
                 newValue: valueInfo.newValue
             });
         })
-        .then(() => entity.updateDocument(persistence, instance))
+        .then(() => entity.updateDocument(persistence, instance, true))
         .then(() => search.indexDocument(persistence, entity, instance))
         .then(() => res.status(204).send())
         .catch((err) => {

@@ -19,7 +19,7 @@ module.exports = async (req, res) => {
         if (indexOf !== -1) {
             refs.splice(indexOf, 1);
             // FIXME: Add history.
-            await entity.updateDocument(persistence, instance);
+            await entity.updateDocument(persistence, instance, true);
         }
 
         res.status(204).send();

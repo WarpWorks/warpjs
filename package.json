@@ -57,7 +57,7 @@
   },
   "dependencies": {
     "@quoin/node-rc": "~0.1.2",
-    "@warp-works/warpjs-change-logs": "1.0.x",
+    "@warp-works/warpjs-change-logs": "~1.0.5",
     "@warp-works/warpjs-filter-box": "~1.0.0",
     "bcrypt-nodejs": "0.0.3",
     "bluebird": "~3.5.2",

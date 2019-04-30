@@ -1,4 +1,3 @@
-const Promise = require('bluebird');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
@@ -7,55 +6,47 @@ const overviewByEntity = require('./overview-by-entity');
 const previewImageByEntity = require('./preview-image-by-entity');
 const routes = require('./../../../lib/constants/routes');
 
-module.exports = (persistence, entity, instance) => Promise.resolve()
-    .then(() => RoutesInfo.expand(routes.portal.entity, {
+module.exports = async (persistence, entity, instance) => {
+    const href = RoutesInfo.expand(routes.portal.entity, {
         type: instance.type,
         id: instance.id
-    }))
-    .then((href) => warpjsUtils.createResource(href, {
+    });
+
+    const resource = warpjsUtils.createResource(href, {
         type: instance.type,
         typeLabel: entity.getDomain().getEntityLabelByEntityName(instance.type),
         id: instance.id,
         name: instance.Name,
-        label: instance.Label || instance.Name
-    }))
-    .then((resource) => Promise.resolve()
-        .then(() => RoutesInfo.expand(routes.portal.preview, {
-            type: instance.type,
-            id: instance.id
-        }))
-        .then((previewHref) => resource.link('preview', previewHref))
+        label: entity.getDisplayName(instance)
+    });
 
-        .then(() => overviewByEntity(persistence, entity, instance))
-        .then((overview) => overview && overview._embedded ? overview._embedded.items : null)
-        .then((paragraphs) => paragraphs && paragraphs.length ? paragraphs[0] : null)
-        .then((paragraph) => Promise.resolve()
-            .then(() => paragraph ? paragraph.description : null)
-            .then((description) => {
-                if (description) {
-                    resource.description = description;
-                }
-            })
+    const previewHref = RoutesInfo.expand(routes.portal.preview, {
+        type: instance.type,
+        id: instance.id
+    });
+    resource.link('preview', previewHref);
 
-            .then(() => previewImageByEntity(persistence, entity, instance))
-            .then((previewImageUrl) => {
-                if (previewImageUrl) {
-                    resource.link('image', previewImageUrl);
-                }
-            })
-        )
+    const overview = await overviewByEntity(persistence, entity, instance);
+    const paragraphs = overview && overview._embedded ? overview._embedded.items : null;
+    const paragraph = paragraphs && paragraphs.length ? paragraphs[0] : null;
+    const description = paragraph ? paragraph.description : null;
+    if (description) {
+        resource.description = description;
+    }
 
-        // External link?
-        .then(() => {
-            // FIXME: Use the BasicProperty
-            if (instance.RemoteMoreLink) {
-                resource.link('remoteMoreLink', {
-                    title: "External Link",
-                    href: instance.RemoteMoreLink
-                });
-            }
-        })
+    const previewImageUrl = await previewImageByEntity(persistence, entity, instance);
+    if (previewImageUrl) {
+        resource.link('image', previewImageUrl);
+    }
 
-        .then(() => resource)
-    )
-;
+    // External link?
+    // FIXME: Use the BasicProperty
+    if (instance.RemoteMoreLink) {
+        resource.link('remoteMoreLink', {
+            title: "External Link",
+            href: instance.RemoteMoreLink
+        });
+    }
+
+    return resource;
+};

@@ -11,13 +11,13 @@ const sendErrorHal = require('./send-error-hal');
 const sendHal = require('./send-hal');
 
 module.exports = Object.freeze({
-    canEdit: (persistance, entity, instance, user) => canEdit(persistance, entity, instance, user),
+    canEdit: async (persistance, entity, instance, user) => canEdit(persistance, entity, instance, user),
     documentDoesNotExist: (req, res) => documentDoesNotExist(req, res),
     getConfig: () => getConfig(),
-    getDomain: (domainName) => getDomain(domainName),
-    getEntity: (domainName, type) => getEntity(domainName, type),
+    getDomain: async (domainName) => getDomain(domainName),
+    getEntity: async (domainName, type) => getEntity(domainName, type),
     getPersistence: (domainName) => getPersistence(domainName),
-    getRootEntity: (domainName) => getRootEntity(domainName),
+    getRootEntity: async (domainName) => getRootEntity(domainName),
     menuItems: (plugins, domain, type, id) => menuItems(plugins, domain, type, id),
     sendError: (req, res, err) => sendError(req, res, err),
     sendHal: (req, res, resource, status) => sendHal(req, res, resource, status),

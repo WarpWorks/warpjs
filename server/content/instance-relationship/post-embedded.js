@@ -15,7 +15,7 @@ module.exports = (req, res, persistence, entity, instance, resource) => {
             type: newInstance.type,
             id: newInstance._id
         }))
-        .then(() => entity.updateDocument(persistence, instance))
+        .then(() => entity.updateDocument(persistence, instance, true))
         .then(() => logger(req, `Success ${action}`))
         .then(() => utils.sendHal(req, res, resource))
         .catch((err) => {
