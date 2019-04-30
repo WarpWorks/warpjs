@@ -25,6 +25,7 @@
     >
       Delete
     </span>
+    <button type="button" class="close" data-dismiss="modal" arial-label="Close" aria-hidden="true">×</button>
   </div>
 </div>
 <div class="row">
@@ -172,6 +173,7 @@
   </div>
 
   <div class="warpjs-detail-image-preview">
+    <label for="warpjs-inline-image-preview">Image preview</label>
     <div class="image-carousel-container">
       <div id="warpjs-detail-image-carousel" class="carousel slide">
         {{#if item.images.length}}
@@ -223,5 +225,28 @@
 </div>
 
 <div class="row">
-  <div class="col-xs-12 warpjs-paragraph-aggregations"></div>
+  <div class="col-xs-12 advanced-content">
+    <div class="advanced-content-header">
+      <span class="advanced-features-title">Advanced features</span>
+      <span
+        class="show-advanced collapsed"
+        data-toggle="collapse"
+        href="#collapseExample"
+        role="button"
+        aria-expanded="false"
+        aria-controls="collapseExample"
+      >show</span>
+      <span
+        class="hide-advanced collapsed"
+        data-toggle="collapse"
+        href="#collapseExample"
+        role="button"
+        aria-expanded="false"
+        aria-controls="collapseExample"
+      >hide</span>
+    </div>
+    <div class="advanced-content-container collapse" id="collapseExample">
+      <div class="warpjs-paragraph-aggregations"></div>
+    </div>
+  </div>
 </div>

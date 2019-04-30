@@ -5,6 +5,10 @@
 - [Releases 1.0.x](RELEASE-1.0.md) from 2017-05-31 to 2017-06-10
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
+## 1.3.89 - 2019-04-30
+
+- #227: Inline editor overall style changes.
+
 ## 1.3.88 - 2019-04-26
 
 - Inline editor image change set dirty, fix changelog.
