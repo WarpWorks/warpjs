@@ -62,7 +62,7 @@ module.exports = (req, res) => {
                     }))
 
                     // FIXME: assume "admin" so allow can update.
-                    .then(() => instanceData.entity.updateDocument(persistence, instanceData.instance))
+                    .then(() => instanceData.entity.updateDocument(persistence, instanceData.instance, true))
                 )
             )
             .then(() => warpCore.removeDomainFromCache(domain))

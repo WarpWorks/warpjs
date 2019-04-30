@@ -39,7 +39,7 @@ module.exports = async (req, res) => {
         }
 
         // TODO: Add history
-        await entity.updateDocument(persistence, instance);
+        await entity.updateDocument(persistence, instance, true);
 
         const href = RoutesInfo.expand(routes.instanceRelationshipItem, {
             domain,

@@ -34,7 +34,7 @@ module.exports = (req, res, persistence, entity, instance, resource) => {
                     type: newDoc.type,
                     id: newDoc.id
                 }))
-                .then(() => entity.updateDocument(persistence, instance))
+                .then(() => entity.updateDocument(persistence, instance, true))
                 .then(() => {
                     const redirectUrl = RoutesInfo.expand(constants.routes.instance, {
                         domain,

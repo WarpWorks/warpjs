@@ -20,7 +20,7 @@ module.exports = (req, res, persistence, entity, instance, resource) => {
             type: req.body.type,
             id: req.body.id
         }))
-        .then(() => entity.updateDocument(persistence, instance))
+        .then(() => entity.updateDocument(persistence, instance, true))
         .then(() => logger(req, `Success ${action}`))
         .then(() => res.status(204).send())
         .catch((err) => {

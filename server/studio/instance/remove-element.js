@@ -70,7 +70,7 @@ module.exports = (req, res) => {
                                         type: instanceData.instance.type,
                                         id: instanceData.instance.id
                                     }))
-                                    .then(() => parentData.entity.updateDocument(persistence, parentData.instance))
+                                    .then(() => parentData.entity.updateDocument(persistence, parentData.instance, true))
                                 ;
                             }
                         })

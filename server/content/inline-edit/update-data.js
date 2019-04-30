@@ -63,7 +63,7 @@ module.exports = (req, res) => {
                             // TODO: Add changelog.
                             debug(`changes=`, changes);
                         })
-                        .then(() => entity.updateDocument(persistence, instance))
+                        .then(() => entity.updateDocument(persistence, instance, true))
                     )
                 )
                 .finally(() => persistence.close())

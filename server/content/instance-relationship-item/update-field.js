@@ -1,4 +1,4 @@
-const debug = require('debug')('W2:content:instance-relationship-item/update-field');
+// const debug = require('./debug')('update-field');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const serverUtils = require('./../../utils');
@@ -16,11 +16,10 @@ module.exports = async (req, res) => {
         const relationshipEntity = entity.getRelationshipByName(relationship);
         const refs = relationshipEntity.getTargetReferences(instance);
         const item = refs.find((ref) => ref._id === itemId);
-        debug("item=", item);
         if (item) {
             // TODO: History
             item[body.field] = body.value;
-            await entity.updateDocument(persistence, instance);
+            await entity.updateDocument(persistence, instance, true);
         }
         res.status(204).send();
     } catch (err) {

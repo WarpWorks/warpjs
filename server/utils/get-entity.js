@@ -1,8 +1,6 @@
-const Promise = require('bluebird');
-
 const getDomain = require('./get-domain');
 
-module.exports = (domainName, type) => Promise.resolve()
-    .then(() => getDomain(domainName))
-    .then((domain) => domain.getEntityByName(type))
-;
+module.exports = async (domainName, type) => {
+    const domain = await getDomain(domainName);
+    return domain.getEntityByName(type);
+};
