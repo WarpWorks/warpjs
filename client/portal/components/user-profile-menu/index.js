@@ -14,7 +14,7 @@ export default async ($, data) => {
     if (data.warpjsUser && data.myPage) {
         const store = window.WarpJS.ReactUtils.createStore(reducers, {}, [], process.env.NODE_ENV === 'development');
 
-        store.dispatch(actionCreators.initializeState(data.myPage, data._links.myDocuments.href));
+        store.dispatch(actionCreators.initializeState(data.myPage, data._links.myDocuments.href, data._links.myNotifications.href));
 
         ReactDOM.render(
             <Provider store={store} id={PLACEHOLDER}>
