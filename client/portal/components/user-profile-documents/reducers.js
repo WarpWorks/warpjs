@@ -11,7 +11,6 @@ const setSubstate = window.WarpJS.ReactUtils.setNamespaceSubstate;
 
 const error = (state = {}, action) => {
     const substate = getSubstate(state, namespace);
-
     substate.error = true;
     substate.errorMessage = action.payload.message;
     substate.err = action.payload.err;
@@ -20,12 +19,10 @@ const error = (state = {}, action) => {
 
 const results = (state = {}, action) => {
     const substate = getSubstate(state, namespace);
-
     substate.error = false;
     substate.errorMessage = undefined;
     substate.err = undefined;
     substate.documents = cloneDeep(action.payload.documents);
-
     return setSubstate(state, namespace, substate);
 };
 
