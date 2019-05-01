@@ -25,6 +25,11 @@ module.exports = (req, res) => {
                 title: "List of my documents",
                 href: RoutesInfo.expand(routes.portal.userProfileDocuments, {})
             });
+
+            resource.link('myNotifications', {
+                title: "List of my notifications",
+                href: RoutesInfo.expand(routes.portal.userProfileNotifications, {})
+            });
         }
 
         resource.link('follow', {

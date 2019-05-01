@@ -4,6 +4,7 @@ import { Button, Row } from 'react-bootstrap';
 import LeftRightMargin from './../left-right-margin';
 import PortalContent from './../portal-content';
 import UserProfileDocuments from './../user-profile-documents';
+import UserProfileNotifications from './../user-profile-notifications';
 
 // import _debug from './debug'; const debug = _debug('component');
 
@@ -14,7 +15,8 @@ const Component = (props) => {
                 <LeftRightMargin />
 
                 <PortalContent>
-                    {/* <Button bsStyle="primary">Notifications</Button> */}
+                    <Button bsStyle="primary" onClick={props.showNotifications}>Notifications</Button>
+                    <UserProfileNotifications />
 
                     <Button bsStyle="primary" onClick={props.showDocuments}>My Documents</Button>
                     <UserProfileDocuments />
@@ -32,7 +34,8 @@ Component.displayName = 'UserProfileMenu';
 
 Component.propTypes = {
     myPage: PropTypes.bool,
-    showDocuments: PropTypes.func.isRequired
+    showDocuments: PropTypes.func.isRequired,
+    showNotifications: PropTypes.func.isRequired
 };
 
 export default window.WarpJS.ReactUtils.errorBoundary(Component);
