@@ -1,7 +1,6 @@
 const tinymce = require('tinymce'); require('tinymce/themes/modern/theme');
 const TEXT_SELECTOR = '#warpjs-inline-edit-content';
 
-// const openLinkSelectionModal = require('./../../edition/instance/wysiwyg-editor/open-link-selection-modal');
 const optionsSetup = require('./../../edition/instance/wysiwyg-editor/options-setup');
 
 module.exports = ($, modal, clickedElement) => {
@@ -31,7 +30,7 @@ module.exports = ($, modal, clickedElement) => {
         paste_as_text: true,
         extended_valid_elements: 'span[!class]',
         plugins: 'lists link paste table',
-        toolbar: 'warpjsSave bold italic numlist bullist link linkbutton | table',
+        toolbar: 'warpjsSave bold italic numlist bullist linkbutton linkDropdown | table',
         setup(editor) {
             optionsSetup($, instanceDoc, editor);
 
