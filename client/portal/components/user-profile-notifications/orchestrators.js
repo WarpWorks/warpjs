@@ -20,3 +20,7 @@ export const show = async (dispatch, url) => {
         dispatch(actionCreators.error(`Error fetching user notifications`, err));
     }
 };
+
+export const showDetails = async (dispatch, type, id) => {
+    dispatch(actionCreators.showDetails(type, id));
+};
