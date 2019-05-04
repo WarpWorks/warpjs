@@ -9,8 +9,9 @@ const setSubstate = window.WarpJS.ReactUtils.setNamespaceSubstate;
 const init = (state = {}, action) => {
     const substate = getSubstate(state, namespace);
     substate.error = false;
-    substate.errorMessage = undefined;
-    substate.err = undefined;
+    substate.errorMessage = null;
+    substate.err = null;
+    substate.showDetailsFor = null;
     return setSubstate(state, namespace, substate);
 };
 
@@ -31,8 +32,15 @@ const results = (state = {}, action) => {
     return setSubstate(state, namespace, substate);
 };
 
+const showDetails = (state = {}, action) => {
+    const substate = getSubstate(state, namespace);
+    substate.showDetailsFor = cloneDeep(action.payload);
+    return setSubstate(state, namespace, substate);
+};
+
 export default window.WarpJS.ReactUtils.concatenateReducers([
     { actions: [ window.WarpJS.ReactUtils.INIT_TYPE ], reducer: init },
     { actions: [ actions.ERROR ], reducer: error },
     { actions: [ actions.RESULTS ], reducer: results },
+    { actions: [ actions.SHOW_DETAILS ], reducer: showDetails },
 ]);
