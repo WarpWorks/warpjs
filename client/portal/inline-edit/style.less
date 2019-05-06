@@ -86,7 +86,6 @@
     .warpjs-list-container {
         padding-top: 15px;
         background-color: #ffffff;
-        height: 100%;
         width: 300px;
         overflow-y: auto;
         overflow-x: hidden;
@@ -205,14 +204,14 @@
 
     }
 
+    .add-flex {
+        display: flex;
+    }
+
     .warpjs-detail-container {
         padding-top: 5px;
         color: #000000;
-        height: calc(~"100% - 25px");
         width: calc(100% - 300px);
-        position: absolute;
-        left: 300px;
-        top: 0px;
 
         .warpjs-inline-edit-heading,
         .warpjs-inline-image-preview {
@@ -637,6 +636,10 @@
             position: absolute;
             top: 8px;
         }
+    }
+
+    .advanced-content {
+        margin-bottom: 10px;
     }
 
     .advanced-content-header {

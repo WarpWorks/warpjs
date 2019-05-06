@@ -18,42 +18,44 @@
       <div class="modal-body">
         <button type="button" class="close" data-dismiss="modal" arial-label="Close" aria-hidden="true">&times;</button>
         <div class="row">
-          <div class="col-sm-4 warpjs-list-container">
-            <div class="row warpjs-document-name">
-              <div class="col-xs-12">
-                <div class="warpjs-label">
-                  Document Name
-                  <a
-                    href=""
-                    data-warpjs-action="inline-edit-history"
-                  >History</a>
+          <div class="add-flex">
+            <div class="col-sm-4 warpjs-list-container">
+              <div class="row warpjs-document-name">
+                <div class="col-xs-12">
+                  <div class="warpjs-label">
+                    Document Name
+                    <a
+                      href=""
+                      data-warpjs-action="inline-edit-history"
+                    >History</a>
+                  </div>
+                  <div class="warpjs-content"></div>
                 </div>
-                <div class="warpjs-content"></div>
+              </div>
+
+              <div class="row warpjs-document-elements">
+                <div class="col-xs-12">
+                  <div class="warpjs-label">
+                    Document elements
+                    <a href=""
+                      class="warpjs-list-item-add"
+                      data-warpjs-reference-type="{{res.body.reference.type}}"
+                      data-warpjs-reference-id="{{res.body.reference.id}}"
+                      data-warpjs-reference-name="{{res.body.reference.name}}"
+                      data-warpjs-doc-level="{{res.body.reference.type}}:{{res.body.reference.name}}"
+                    >Add new</a>
+                  </div>
+                  <div class="warpjs-content"></div>
+                </div>
               </div>
             </div>
 
-            <div class="row warpjs-document-elements">
-              <div class="col-xs-12">
-                <div class="warpjs-label">
-                  Document elements
-                  <a href=""
-                    class="warpjs-list-item-add"
-                    data-warpjs-reference-type="{{res.body.reference.type}}"
-                    data-warpjs-reference-id="{{res.body.reference.id}}"
-                    data-warpjs-reference-name="{{res.body.reference.name}}"
-                    data-warpjs-doc-level="{{res.body.reference.type}}:{{res.body.reference.name}}"
-                  >Add new</a>
-                </div>
-                <div class="warpjs-content"></div>
+            <div class="col-sm-8 warpjs-detail-container">
+              <div class="warpjs-placeholder">
+                &lt;--- Select an item to edit.
               </div>
-            </div>
-          </div>
 
-          <div class="col-sm-8 warpjs-detail-container">
-            <div class="warpjs-placeholder">
-              &lt;--- Select an item to edit.
             </div>
-
           </div>
         </div>
         <div class="row">

@@ -5,9 +5,13 @@
 - [Releases 1.0.x](RELEASE-1.0.md) from 2017-05-31 to 2017-06-10
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
+## 1.3.91 - 2019-05-06
+
+- #229: Inline editor css height issue fix.
+
 ## 1.3.90 - 2019-05-03
 
-- #228 Inline Editor move link buttons in tinymce to dropdown.
+- #228: Inline Editor move link buttons in tinymce to dropdown.
 
 ## 1.3.89 - 2019-04-30
 
