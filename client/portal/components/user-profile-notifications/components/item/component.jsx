@@ -1,8 +1,7 @@
-import moment from 'moment';
 import PropTypes from 'prop-types';
-import { Col, Grid, Panel, Row } from 'react-bootstrap';
+import { Col, Glyphicon, Grid, Panel, Row } from 'react-bootstrap';
 
-import Diff from './../diff';
+import DetailItem from './../detail-item';
 
 
 const Component = (props) => {
@@ -23,17 +22,13 @@ const Component = (props) => {
                     <Panel className="warpjs-change-log">
                         <Panel.Body>
                             <Grid fluid>
-                                <Row>
-                                    <Col xs={3} className="warpjs-display-image">
-                                        <img src={user.image} />
-                                    </Col>
-                                    <Col xs={9} className="warpjs-content">
-                                        <div className="warpjs-show-details pull-right"
-                                            onClick={() => props.showDetails(props.item.type, props.item.id)}
-                                            >show details</div>
-                                        <div>By <span className="warpjs-user">{user.name}</span> - <span className="warpjs-timestamp">{moment(timestamp).fromNow()}</span></div>
-                                        <Diff data={changeLog.data} />
-                                    </Col>
+                                <Row className="warpjs-body">
+                                    <DetailItem user={user} timestamp={timestamp} changeLog={changeLog} />
+                                    <div className="warpjs-show-details" onClick={() => props.showDetails(props.item.type, props.item.id)}>
+                                        show details
+                                        {' '}
+                                        <Glyphicon glyph="arrow-right" />
+                                    </div>
                                 </Row>
                             </Grid>
                         </Panel.Body>

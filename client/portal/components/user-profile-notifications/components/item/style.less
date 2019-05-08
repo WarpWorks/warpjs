@@ -8,29 +8,23 @@
         white-space: nowrap;
     }
 
-    .warpjs-show-details {
-        text-align: right;
-    }
-
     .warpjs-change-log {
         border: thin dotted grey;
         border-radius: 12px;
 
-        .warpjs-display-image {
-            img {
-                width: 100%;
-                max-width: 120px;
-                border-radius: 50%;
+        .warpjs-body {
+            position: relative;
+
+            @import './../detail-item/style';
+
+            .warpjs-show-details {
+                cursor: pointer;
+                position: absolute;
+                bottom: 0;
+                right: 0;
             }
+
         }
 
-        .warpjs-content {
-            .warpjs-user {
-                color: blue;
-            }
-
-            .warpjs-timestamp {
-            }
-        }
     }
 }
