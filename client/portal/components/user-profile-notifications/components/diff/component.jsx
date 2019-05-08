@@ -5,7 +5,7 @@ const TOO_MUCH_TEXT_LENGTH = 100;
 const TOO_MUCH_TEXT_PART_LENGTH = (TOO_MUCH_TEXT_LENGTH - 5) / 2;
 
 const Component = (props) => {
-    const diffParts = diffChars(props.data.oldValue || '', props.data.newValue || '');
+    const diffParts = diffChars(props.changeLog.data.oldValue || '', props.changeLog.data.newValue || '');
     const content = diffParts.map((part, index, arr) => {
         if (part.added) {
             return <span key={index} className="added">{part.value}</span>;
@@ -39,7 +39,7 @@ const Component = (props) => {
 Component.displayName = 'UserProfileNotificationsDiff';
 
 Component.propTypes = {
-    data: PropTypes.object.isRequired
+    changeLog: PropTypes.object.isRequired
 };
 
 export default window.WarpJS.ReactUtils.errorBoundary(Component);

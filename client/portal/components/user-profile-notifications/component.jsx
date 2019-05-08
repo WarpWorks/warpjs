@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 
 import { NAME } from './constants';
 import Content from './components/content';
+import Details from './components/details';
 
 const ModalContainer = window.WarpJS.ReactComponents.ModalContainer;
 const Spinner = window.WarpJS.ReactComponents.Spinner;
@@ -30,8 +31,13 @@ Component.propTypes = {
     error: PropTypes.bool,
     errorMessage: PropTypes.string,
     notifications: PropTypes.array.isRequired,
+    hideDetails: PropTypes.func.isRequired,
     showDetails: PropTypes.func.isRequired,
     showDetailsFor: PropTypes.object,
+};
+
+Component.defaultProps = {
+    notifications: []
 };
 
 export default window.WarpJS.ReactUtils.errorBoundary(Component);

@@ -23,6 +23,12 @@ const error = (state = {}, action) => {
     return setSubstate(state, namespace, substate);
 };
 
+const hideDetails = (state = {}, action) => {
+    const substate = getSubstate(state, namespace);
+    substate.showDetailsFor = null;
+    return setSubstate(state, namespace, substate);
+};
+
 const results = (state = {}, action) => {
     const substate = getSubstate(state, namespace);
     substate.error = false;
@@ -41,6 +47,7 @@ const showDetails = (state = {}, action) => {
 export default window.WarpJS.ReactUtils.concatenateReducers([
     { actions: [ window.WarpJS.ReactUtils.INIT_TYPE ], reducer: init },
     { actions: [ actions.ERROR ], reducer: error },
+    { actions: [ actions.HIDE_DETAILS ], reducer: hideDetails },
     { actions: [ actions.RESULTS ], reducer: results },
     { actions: [ actions.SHOW_DETAILS ], reducer: showDetails },
 ]);

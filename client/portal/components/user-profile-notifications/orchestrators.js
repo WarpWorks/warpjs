@@ -24,3 +24,7 @@ export const show = async (dispatch, url) => {
 export const showDetails = async (dispatch, type, id) => {
     dispatch(actionCreators.showDetails(type, id));
 };
+
+export const hideDetails = async (dispatch) => {
+    dispatch(actionCreators.hideDetails());
+};
