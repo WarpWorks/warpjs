@@ -1,4 +1,4 @@
-import { diffChars } from 'diff';
+import { diffWords } from 'diff';
 // import PropTypes from 'prop-types';
 
 // import { ACTIONS } from '@warp-works/warpjs-change-logs';
@@ -7,7 +7,7 @@ const TOO_MUCH_TEXT_LENGTH = 100;
 const TOO_MUCH_TEXT_PART_LENGTH = (TOO_MUCH_TEXT_LENGTH - 5) / 2;
 
 const diffText = (changeLog) => {
-    const diffParts = diffChars(changeLog.data.oldValue || '', changeLog.data.newValue || '');
+    const diffParts = diffWords(changeLog.data.oldValue || '', changeLog.data.newValue || '');
     const content = diffParts.map((part, index, arr) => {
         if (part.added) {
             return <span key={index} className="added">{part.value}</span>;
