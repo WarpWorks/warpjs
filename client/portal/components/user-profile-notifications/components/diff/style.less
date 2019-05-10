@@ -9,4 +9,49 @@
         font-weight: bold;
         text-decoration: line-through;
     }
+
+    .same {
+    }
+}
+
+.warpjs-diff-enum {
+    .warpjs-change-log-fromTo {
+        &-from-label, &-to-label {
+            font-weight: bold;
+        }
+
+        &-from-value, &-to-value {
+            &.warpjs-document-status {
+                padding: 3px 12px;
+                border-radius: 10px;
+                font-size: 10px;
+                color: white;
+                border: 0;
+
+                &.warpjs-document-status-InheritFromParent {
+                    background-color: #30c;
+                }
+
+                &.warpjs-document-status-Draft {
+                    background-color: #39f;
+                }
+
+                &.warpjs-document-status-Proposal {
+                    background-color: #960;
+                }
+
+                &.warpjs-document-status-Approved {
+                    background-color: #030;
+                }
+
+                &.warpjs-document-status-Declined {
+                    background-color: #600;
+                }
+
+                &.warpjs-document-status-Retired {
+                    background-color: #999;
+                }
+            }
+        }
+    }
 }

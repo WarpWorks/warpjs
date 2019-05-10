@@ -1,11 +1,13 @@
 import { diffChars } from 'diff';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
+
+// import { ACTIONS } from '@warp-works/warpjs-change-logs';
 
 const TOO_MUCH_TEXT_LENGTH = 100;
 const TOO_MUCH_TEXT_PART_LENGTH = (TOO_MUCH_TEXT_LENGTH - 5) / 2;
 
-const Component = (props) => {
-    const diffParts = diffChars(props.changeLog.data.oldValue || '', props.changeLog.data.newValue || '');
+const diffText = (changeLog) => {
+    const diffParts = diffChars(changeLog.data.oldValue || '', changeLog.data.newValue || '');
     const content = diffParts.map((part, index, arr) => {
         if (part.added) {
             return <span key={index} className="added">{part.value}</span>;
@@ -36,10 +38,35 @@ const Component = (props) => {
     );
 };
 
+const diffStatus = (changeLog) => {
+    return (
+        <div className="warpjs-diff-enum">
+            <div>
+                <span className="warpjs-change-log-fromTo-from-label">from</span>
+                {' '}
+                <span className={`warpjs-change-log-fromTo-from-value ${changeLog.data.fromClass || ''}`}>{changeLog.data.oldValue}</span>
+            </div>
+            <div>
+                <span className="warpjs-change-log-fromTo-to-label">to</span>
+                {' '}
+                <span className={`warpjs-change-log-fromTo-to-value ${changeLog.data.newClass || ''}`}>{changeLog.data.newValue}</span>
+            </div>
+        </div>
+    );
+};
+
+const Component = ({ changeLog }) => {
+    if (changeLog.isEnum) {
+        return diffStatus(changeLog);
+    } else {
+        return diffText(changeLog);
+    }
+};
+
 Component.displayName = 'UserProfileNotificationsDiff';
 
-Component.propTypes = {
-    changeLog: PropTypes.object.isRequired
-};
+// Component.propTypes = {
+// changeLog: PropTypes.object.isRequired
+// };
 
 export default window.WarpJS.ReactUtils.errorBoundary(Component);
