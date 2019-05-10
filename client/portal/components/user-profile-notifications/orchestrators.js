@@ -28,3 +28,7 @@ export const showDetails = async (dispatch, type, id) => {
 export const hideDetails = async (dispatch) => {
     dispatch(actionCreators.hideDetails());
 };
+
+export const resetModal = async (dispatch) => {
+    dispatch(actionCreators.resetModal());
+};

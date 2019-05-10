@@ -19,7 +19,8 @@ const Component = (props) => {
     }
 
     return (
-        <ModalContainer className="warpjs-user-profile-notifications" id={NAME} title="My Notifications">
+        <ModalContainer className="warpjs-user-profile-notifications" id={NAME} title="My Notifications"
+            onHide={() => props.resetModal()}>
             {content}
         </ModalContainer>
     );
@@ -32,6 +33,7 @@ Component.propTypes = {
     errorMessage: PropTypes.string,
     notifications: PropTypes.array.isRequired,
     hideDetails: PropTypes.func.isRequired,
+    resetModal: PropTypes.func.isRequired,
     showDetails: PropTypes.func.isRequired,
     showDetailsFor: PropTypes.object,
 };
