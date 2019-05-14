@@ -2,16 +2,17 @@ import PropTypes from 'prop-types';
 import { Fragment } from 'react';
 import { Col, Grid, Row } from 'react-bootstrap';
 
+import DocumentFilters from './../../../document-filters';
 import Items from './../items';
 
 const Component = (props) => {
-    // TODO: Add sorting and filters.
     return (
         <Fragment>
             <Grid fluid>
                 <Row>
                     <Col xs={12}>
                         Coming soon... sort and filter.
+                        <DocumentFilters filters={props.filters} updateFilter={props.updateFilter} />
                     </Col>
                 </Row>
             </Grid>
@@ -23,8 +24,10 @@ const Component = (props) => {
 Component.displayName = 'UserProfileNotificationsContent';
 
 Component.propTypes = {
+    filters: PropTypes.object,
     items: PropTypes.array.isRequired,
-    showDetails: PropTypes.func.isRequired
+    showDetails: PropTypes.func.isRequired,
+    updateFilter: PropTypes.func.isRequired,
 };
 
 

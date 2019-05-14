@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
-import { Checkbox, FormControl, FormGroup } from 'react-bootstrap';
+import { FormControl } from 'react-bootstrap';
 
+import DocumentFilters from './../../../document-filters';
 import ComponentItems from './../items';
 import * as constants from './constants';
 
@@ -19,19 +20,6 @@ const byName = (documentA, documentB) => {
 };
 
 const Component = (props) => {
-    const filters = constants.KEYS.map((key) => {
-        const currentStatus = Boolean(props.filters && props.filters[key])
-
-        return (
-            <Checkbox inline key={key}
-                checked={currentStatus}
-                onChange={() => props.updateFilter(key, !currentStatus)}
-                >
-                {constants.CHECKBOX_LABELS[key]}
-            </Checkbox>
-        );
-    });
-
     const filteredItems = (props.items || []).filter((item) => {
         if (!props.filters) {
             return true;
@@ -70,7 +58,9 @@ const Component = (props) => {
                 >
                 {sorting}
             </FormControl>
-            <FormGroup className="warpjs-user-profile-documents-filters">{filters}</FormGroup>
+            <DocumentFilters filters={props.filters} updateFilter={props.updateFilter} RenderComponent={ComponentItems}
+                byDate={byDate} byName={byName}
+            />
             <ComponentItems items={filteredItems} />
         </div>
     );
@@ -79,7 +69,11 @@ const Component = (props) => {
 Component.displayName = 'UserProfileDocumentsContent';
 
 Component.propTypes = {
-    filters: PropTypes.object,
+    filters: PropTypes.shape({
+        AUTHOR: PropTypes.bool,
+        CONTRIBUTOR: PropTypes.bool,
+        FOLLOW: PropTypes.bool,
+    }).isRequired,
     items: PropTypes.array,
     sortBy: PropTypes.string.isRequired,
     updateFilter: PropTypes.func.isRequired,
