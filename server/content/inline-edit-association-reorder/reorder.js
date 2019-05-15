@@ -1,5 +1,7 @@
+const ChangeLogs = require('@warp-works/warpjs-change-logs');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+// const debug = require('./debug')('reorder');
 const serverUtils = require('./../../utils');
 const utils = require('./../utils');
 
@@ -22,11 +24,16 @@ module.exports = (req, res) => {
                     body.forEach((refToChange) => {
                         const foundRef = refs.find((ref) => ref.type === refToChange.type && ref._id === refToChange.id);
                         if (foundRef) {
+                            ChangeLogs.add(ChangeLogs.ACTIONS.UPDATE_VALUE, req.warpjsUser, instance, {
+                                key: `Relationship:${name}.Entity:${foundRef._id}.Basic:Position`,
+                                newValue: refToChange.relnPosition,
+                                oldValue: foundRef.position
+                            });
+
                             foundRef.position = refToChange.relnPosition;
                         }
                     });
 
-                    // FIXME: Add to History.
                     await entity.updateDocument(persistence, instance, true);
 
                     res.status(204).send();
