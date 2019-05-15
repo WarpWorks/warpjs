@@ -2,10 +2,16 @@
   <div class="row warpjs-secondary-bg breadcrumb-container">
     {{> left-right-margin}}
 
-    <div class="col-xs-12 col-md-6 no-padding">
+    <div class="col-xs-12 col-md-10 no-padding">
       {{> page-breadcrumb breadcrumbs=page._embedded.breadcrumbs}}
     </div>
-    <div class="col-xs-12 col-md-4 no-padding breadcrumb-actions warpjs-actions">
+
+    {{> left-right-margin}}
+  </div>
+  <div class="row">
+    {{> left-right-margin}}
+
+    <div class="col-xs-12 col-md-10 no-padding breadcrumb-actions warpjs-actions">
       <span id="warpjs-following-toggle" />
 
       {{#if page._links.edit}}
