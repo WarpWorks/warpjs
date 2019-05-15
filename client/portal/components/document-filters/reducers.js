@@ -1,4 +1,7 @@
+import isUndefined from 'lodash/isUndefined';
+
 import actions from './actions';
+import { KEYS } from './constants';
 import namespace from './namespace';
 
 // import _debug from './debug'; const debug = _debug('reducers');
@@ -13,7 +16,20 @@ const updateFilter = (state = {}, action) => {
         substate[action.payload.id] = {};
     }
 
-    substate[action.payload.id][action.payload.attribute] = action.payload.nextState;
+    const substateId = substate[action.payload.id];
+
+    if (!substateId.filters) {
+        substateId.filters = {};
+    }
+
+    substateId.filters[action.payload.attribute] = action.payload.nextState;
+
+    KEYS.forEach((key) => {
+        if (isUndefined(substateId.filters[key])) {
+            substateId.filters[key] = true;
+        }
+    });
+
     return setSubstate(state, namespace, substate);
 };
 
@@ -22,7 +38,9 @@ const updateSortBy = (state = {}, action) => {
     if (!substate[action.payload.id]) {
         substate[action.payload.id] = {};
     }
-    substate[action.payload.id] = action.payload.value;
+    const substateId = substate[action.payload.id];
+
+    substateId.sortBy = action.payload.value;
     return setSubstate(state, namespace, substate);
 };
 

@@ -1,33 +1,51 @@
 import PropTypes from 'prop-types';
-import { Fragment } from 'react';
 import { Col, Grid, Row } from 'react-bootstrap';
 
 import DocumentFilters from './../../../document-filters';
 import Items from './../items';
 
+// import _debug from './debug'; const debug = _debug('component');
+
+const COMPONENT_NAME = 'UserProfileNotificationsContent';
+
+const byDate = (documentA, documentB) => {
+    const lastUpdatedA = (new Date(documentA.lastUpdated)).getTime();
+    const lastUpdatedB = (new Date(documentB.lastUpdated)).getTime();
+    // We want the most recent on top.
+    return lastUpdatedB - lastUpdatedA;
+};
+
+const byName = (documentA, documentB) => {
+    const nameA = documentA.name.toLowerCase();
+    const nameB = documentB.name.toLowerCase();
+
+    return nameA.toString().localeCompare(nameB.toString());
+};
+
 const Component = (props) => {
+    const SubComponent = (someProps) => {
+        return <Items showDetails={props.showDetails} {...someProps} />;
+    };
+
     return (
-        <Fragment>
-            <Grid fluid>
-                <Row>
-                    <Col xs={12}>
-                        Coming soon... sort and filter.
-                        <DocumentFilters filters={props.filters} updateFilter={props.updateFilter} />
-                    </Col>
-                </Row>
-            </Grid>
-            <Items items={props.items} showDetails={props.showDetails} />
-        </Fragment>
+        <Grid fluid>
+            <Row>
+                <Col xs={12}>
+                    <DocumentFilters className="warpjs-user-profile-notifications-content"
+                        id={COMPONENT_NAME} RenderComponent={SubComponent} items={props.items}
+                        byDate={byDate} byName={byName}
+                    />
+                </Col>
+            </Row>
+        </Grid>
     );
 };
 
-Component.displayName = 'UserProfileNotificationsContent';
+Component.displayName = COMPONENT_NAME;
 
 Component.propTypes = {
-    filters: PropTypes.object,
     items: PropTypes.array.isRequired,
-    showDetails: PropTypes.func.isRequired,
-    updateFilter: PropTypes.func.isRequired,
+    showDetails: PropTypes.func.isRequired
 };
 
 

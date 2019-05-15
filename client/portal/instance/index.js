@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 import addGoogleAnalyticsIfNeeded from './add-google-analytics-if-needed';
 import followDocument from './follow-document';
 import IndividualContributionHeader from './individual-contribution-header';
-import userProfileMenu from './../components/user-profile-menu';
+import userProfileMenu from './../react-apps/user-profile-menu';
 
 /// import _debug from './debug'; const debug = _debug('index');
 

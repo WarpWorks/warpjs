@@ -41,12 +41,12 @@ const diffText = (changeLog) => {
 const diffStatus = (changeLog) => {
     return (
         <div className="warpjs-diff-enum">
-            <div>
+            <div className="warpjs-diff-enum-item">
                 <span className="warpjs-change-log-fromTo-from-label">from</span>
                 {' '}
                 <span className={`warpjs-change-log-fromTo-from-value ${changeLog.data.fromClass || ''}`}>{changeLog.data.oldValue}</span>
             </div>
-            <div>
+            <div className="warpjs-diff-enum-item">
                 <span className="warpjs-change-log-fromTo-to-label">to</span>
                 {' '}
                 <span className={`warpjs-change-log-fromTo-to-value ${changeLog.data.newClass || ''}`}>{changeLog.data.newValue}</span>

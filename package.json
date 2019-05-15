@@ -1,6 +1,6 @@
 {
   "name": "@warp-works/warpjs",
-  "version": "1.3.92",
+  "version": "1.3.93",
   "description": "Content management system for WarpWorks in javascript",
   "repository": {
     "type": "git",
@@ -57,7 +57,7 @@
   },
   "dependencies": {
     "@quoin/node-rc": "~0.1.2",
-    "@warp-works/warpjs-change-logs": "~1.0.5",
+    "@warp-works/warpjs-change-logs": "~1.0.7",
     "@warp-works/warpjs-filter-box": "~1.0.0",
     "bcrypt-nodejs": "0.0.3",
     "bluebird": "~3.5.2",
@@ -93,7 +93,7 @@
     "@warp-works/warpjs-map-plugin": "~1.2.11",
     "@warp-works/warpjs-mongo-persistence": "0.1.x",
     "@warp-works/warpjs-plugins": "latest",
-    "@warp-works/warpjs-session-plugin": "~1.2.15",
+    "@warp-works/warpjs-session-plugin": "~1.2.20",
     "@warp-works/warpjs-survey-tool-plugin": "~1.2.96",
     "@warp-works/warpjs-utils": "~1.2.93",
     "babel-core": "6.26.x",
@@ -109,7 +109,7 @@
     "detect-browser": "~4.5.0",
     "eslint": "~5.16.0",
     "eslint-config-standard": "~12.0.0",
-    "eslint-plugin-html": "~5.0.3",
+    "eslint-plugin-html": "~5.0.5",
     "eslint-plugin-import": "~2.17.0",
     "eslint-plugin-json": "~1.4.0",
     "eslint-plugin-node": "~9.0.1",

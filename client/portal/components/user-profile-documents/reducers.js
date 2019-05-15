@@ -1,5 +1,4 @@
 import cloneDeep from 'lodash/cloneDeep';
-import { reducers as componentsReducers } from './components';
 
 import actions from './actions';
 import namespace from './namespace';
@@ -28,6 +27,5 @@ const results = (state = {}, action) => {
 
 export default window.WarpJS.ReactUtils.concatenateReducers([
     { actions: [ actions.RESULTS ], reducer: results },
-    { actions: [ actions.ERROR ], reducer: error },
-    componentsReducers
+    { actions: [ actions.ERROR ], reducer: error }
 ]);

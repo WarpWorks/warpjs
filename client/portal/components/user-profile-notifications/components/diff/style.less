@@ -1,4 +1,6 @@
 .warpjs-diff {
+    margin-top: 12px;
+
     .added {
         color: green;
         font-weight: bold;
@@ -15,18 +17,27 @@
 }
 
 .warpjs-diff-enum {
+    .warpjs-diff-enum-item {
+        margin-top: 8px;
+    }
+
     .warpjs-change-log-fromTo {
         &-from-label, &-to-label {
             font-weight: bold;
+            display: inline-block;
+            width: 50px;
         }
 
         &-from-value, &-to-value {
+            padding: 3px 12px;
+            border-radius: 10px;
+            font-size: 10px;
+            color: white;
+            border: 0;
+            background-color: black;
+
+
             &.warpjs-document-status {
-                padding: 3px 12px;
-                border-radius: 10px;
-                font-size: 10px;
-                color: white;
-                border: 0;
 
                 &.warpjs-document-status-InheritFromParent {
                     background-color: #30c;

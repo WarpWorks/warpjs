@@ -1,7 +1,9 @@
+import cloneDeep from 'lodash/cloneDeep';
+import { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { Checkbox, FormGroup } from 'react-bootstrap';
+import { Checkbox, FormControl, FormGroup } from 'react-bootstrap';
 
-import { LABELS, KEYS } from './constants';
+import { LABELS, KEYS, SORT_KEYS, SORT_KEYS_LIST, SORT_LABELS } from './constants';
 
 const Component = (props) => {
     const filters = KEYS.map((key) => {
@@ -17,10 +19,34 @@ const Component = (props) => {
         );
     });
 
+    const sortedItems = cloneDeep(props.items);
+    switch (props.sortBy) {
+        case SORT_KEYS.DATE:
+            sortedItems.sort(props.byDate);
+            break;
+
+        case SORT_KEYS.NAME:
+            sortedItems.sort(props.byName);
+            break;
+
+        default:
+            console.error(`Unknown sortBy='${props.sortBy}'.`);
+            break;
+    }
+
+    const sorting = SORT_KEYS_LIST.map((key) => <option key={key} value={key}>{SORT_LABELS[key]}</option>);
+
     return (
-        <FormGroup className="warpjs-document-filters">
-            {filters}
-        </FormGroup>
+        <Fragment>
+            <FormControl className="warpjs-document-sort-by" componentClass="select" value={props.sortBy}
+                onChange={(event) => props.updateSortBy(event)}>
+                {sorting}
+            </FormControl>
+            <FormGroup className="warpjs-document-filters">
+                {filters}
+            </FormGroup>
+            <props.RenderComponent items={sortedItems} filters={props.filters} />
+        </Fragment>
     )
 };
 
@@ -29,8 +55,15 @@ Component.displayName = 'DocumentFilters';
 Component.propTypes = {
     byDate: PropTypes.func.isRequired,
     byName: PropTypes.func.isRequired,
-    filters: PropTypes.object,
+    filters: PropTypes.shape({
+        AUTHOR: PropTypes.bool,
+        CONTRIBUTOR: PropTypes.bool,
+        FOLLOW: PropTypes.bool,
+    }).isRequired,
+    items: PropTypes.array.isRequired,
+    sortBy: PropTypes.string.isRequired,
     updateFilter: PropTypes.func.isRequired,
+    updateSortBy: PropTypes.func.isRequired,
 };
 
 export default window.WarpJS.ReactUtils.errorBoundary(Component);

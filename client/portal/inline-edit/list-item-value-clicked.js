@@ -1,4 +1,4 @@
-import paragraphAggregations from './../components/paragraph-aggregations';
+import paragraphAggregations from './../react-apps/paragraph-aggregations';
 
 // import _debug from './debug'; const debug = _debug('list-item-value-clicked');
 
