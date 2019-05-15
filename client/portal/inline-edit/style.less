@@ -727,5 +727,40 @@
     }
 }
 
+.text-expand-button {
+    background-color: transparent;
+    border: none;
+    color: 5a9cbb;
+    text-decoration: underline;
+    float: right;
+}
+
+.content-field-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.show-expanded-text {
+    display: none;
+}
+
+.expanded-text {
+    .hide-expanded-text {
+        display: none;
+    }
+
+    .show-expanded-text {
+        display: block;
+    }
+
+    #warpjs-inline-edit-content {
+        min-height: 600px;
+    }
+
+    .warpjs-detail-content {
+        margin-top: -35px;
+    }
+}
+
 @import './change-logs/style';
 @import './association-modal/style.less';

@@ -1,3 +1,5 @@
+const tinymce = require('tinymce');
+
 const ChangeLogs = require('./change-logs');
 const constants = require('./constants');
 const defineEvents = require('./define-events');
@@ -39,4 +41,24 @@ module.exports = ($, element, res) => {
 
     const instanceDoc = $('[data-warpjs-status="instance"]');
     ChangeLogs.init($, res, instanceDoc, element);
+
+    let currentHeight = 0;
+
+    const resizeEditor = (myHeight) => {
+        const myEditor = tinymce.get('warpjs-inline-edit-content');
+        if (myEditor) {
+            myEditor.theme.resizeTo('100%', myHeight);
+        }
+    }
+
+    $('body').on('click', '.text-open', (event) => {
+        currentHeight = $('.mce-tinymce.mce-container.mce-panel').outerHeight() - 58;
+        $(event.target).closest('.warpjs-modal-global-menu-wrapper').addClass('expanded-text');
+        resizeEditor(500);
+    });
+
+    $('body').on('click', '.text-close', (event) => {
+        $(event.target).closest('.warpjs-modal-global-menu-wrapper').removeClass('expanded-text');
+        resizeEditor(currentHeight);
+    });
 };

@@ -1,252 +1,259 @@
-<div class="row warpjs-modal-global-menu">
-  <div class="warpjs-modal-title">EDIT</div>
-  <div class="warpjs-modal-top-menu">
-    <span class="dropdown">
-      <span class="dropdown-toggle"
-        id="warpjs-inline-edit-modal-language"
-        data-toggle="dropdown"
-        aria-haspopup="true"
-        aria-expanded="true"
-        data-warpjs-action="inline-edit-language"
-        ><span class="text">English</span> <span class="caret"></span></span>
-      <ul class="dropdown-menu" aria-labelledby="warpjs-inline-edit-modal-language">
-        <li data-warpjs-action="inline-edit-language-change">Chinese</li>
-        <li data-warpjs-action="inline-edit-language-change">English</li>
-        <li data-warpjs-action="inline-edit-language-change">German</li>
-      </ul>
-    </span>
-    <span
-      data-warpjs-action="inline-edit-delete"
-      class="pagination-remove"
-      data-warpjs-id="{{item.id}}"
-      data-warpjs-reference-type="{{item.reference.type}}"
-      data-warpjs-reference-id="{{item.reference.id}}"
-      data-warpjs-reference-name="{{item.reference.name}}"
-    >
-      Delete
-    </span>
-    <button type="button" class="close" data-dismiss="modal" arial-label="Close" aria-hidden="true">×</button>
-  </div>
-</div>
-<div class="row">
-  <div class="warpjs-navigation-menu" data-warpjs-id="{{item.id}}">
-    <div class="warpjs-navigation"
-      data-warpjs-action="inline-edit-paragraph-move-to-first"
-      >&lt;&lt;</div>
-    <div class="warpjs-navigation"
-      data-warpjs-action="inline-edit-paragraph-move-up"
-      >&lt;</div>
-    <div class="warpjs-navigation warpjs-navigation-position">Position {{item.position}}</div>
-    <div class="warpjs-navigation"
-      data-warpjs-action="inline-edit-paragraph-move-down"
-      >&gt;</div>
-    <div class="warpjs-navigation"
-      data-warpjs-action="inline-edit-paragraph-move-to-last"
-      >&gt;&gt;</div>
-  </div>
-  <div class="form-group warpjs-inline-edit-visibility">
-    <select class="form-control" id="warpjs-inline-edit-visibility"
-      value="{{item.position}}"
-      data-warpjs-id="{{item.id}}"
-      data-warpjs-field="Visibility"
-      data-warpjs-reference-type="{{item.reference.type}}"
-      data-warpjs-reference-id="{{item.reference.id}}"
-      data-warpjs-reference-name="{{item.reference.name}}"
-      {{#unless item.canChangeName}}readonly{{/unless}}
-      >
-      <option value="Web" {{#if item.isVisibility.Web}}selected{{/if}}>Visible on Web</option>
-      <option value="PDF" {{#if item.isVisibility.PDF}}selected{{/if}}>Visible on PDF</option>
-      <option value="WebAndPDF" {{#if item.isVisibility.WebAndPDF}}selected{{/if}}>Visible on Web &amp; PDF</option>
-    </select>
-  </div>
-</div>
-
-<div class="row">
-  <div class="warpjs-detail-heading">
-    <div class="form-group">
-      <label for="warpjs-inline-edit-heading">Heading</label>
-      <div class="btn-group heading-level-container"
-        id="warpjs-inline-edit-level"
-        {{#unless item.canChangeName}}readonly{{/unless}}
-        data-toggle="buttons"
-      >
-        <label class="btn heading-buttons">
-          <input
-            type="radio"
-            name="warpjs-inline-edit-level"
-            id=H1"
-            value="H1"
-            {{#if item.isHeadingLevel.H1}}checked{{/if}}
-            data-warpjs-id="{{item.id}}"
-            data-warpjs-field="HeadingLevel"
-            data-warpjs-reference-type="{{item.reference.type}}"
-            data-warpjs-reference-id="{{item.reference.id}}"
-            data-warpjs-reference-name="{{item.reference.name}}"
-          >
-          <span class="heading-label">H1</span>
-        </label>
-        <label class="btn heading-buttons">
-          <input
-            type="radio"
-            name="warpjs-inline-edit-level"
-            id="H2"
-            value="H2"
-            {{#if item.isHeadingLevel.H2}}checked{{/if}}
-            data-warpjs-id="{{item.id}}"
-            data-warpjs-field="HeadingLevel"
-            data-warpjs-reference-type="{{item.reference.type}}"
-            data-warpjs-reference-id="{{item.reference.id}}"
-            data-warpjs-reference-name="{{item.reference.name}}"
-          >
-          <span class="heading-label">H2</span>
-        </label>
-        <label class="btn heading-buttons">
-          <input
-            type="radio"
-            name="warpjs-inline-edit-level"
-            id="H3"
-            value="H3"
-            {{#if item.isHeadingLevel.H3}}checked{{/if}}
-            data-warpjs-id="{{item.id}}"
-            data-warpjs-field="HeadingLevel"
-            data-warpjs-reference-type="{{item.reference.type}}"
-            data-warpjs-reference-id="{{item.reference.id}}"
-            data-warpjs-reference-name="{{item.reference.name}}"
-          >
-          <span class="heading-label">H3</span>
-        </label>
-        <label class="btn heading-buttons">
-          <input
-            type="radio"
-            name="warpjs-inline-edit-level"
-            id="H4"
-            value="H4"
-            {{#if item.isHeadingLevel.H4}}checked{{/if}}
-            data-warpjs-id="{{item.id}}"
-            data-warpjs-field="HeadingLevel"
-            data-warpjs-reference-type="{{item.reference.type}}"
-            data-warpjs-reference-id="{{item.reference.id}}"
-            data-warpjs-reference-name="{{item.reference.name}}"
-          >
-          <span class="heading-label">H4</span>
-        </label>
-        <label class="btn heading-buttons">
-          <input
-            type="radio"
-            name="warpjs-inline-edit-level"
-            id="H5"
-            value="H5"
-            {{#if item.isHeadingLevel.H5}}checked{{/if}}
-            data-warpjs-id="{{item.id}}"
-            data-warpjs-field="HeadingLevel"
-            data-warpjs-reference-type="{{item.reference.type}}"
-            data-warpjs-reference-id="{{item.reference.id}}"
-            data-warpjs-reference-name="{{item.reference.name}}"
-          >
-          <span class="heading-label">H5</span>
-        </label>
-        <label class="btn heading-buttons">
-          <input
-            type="radio"
-            name="warpjs-inline-edit-level"
-            id="H6"
-            value="H6"
-            {{#if item.isHeadingLevel.H6}}checked{{/if}}
-            data-warpjs-id="{{item.id}}"
-            data-warpjs-field="HeadingLevel"
-            data-warpjs-reference-type="{{item.reference.type}}"
-            data-warpjs-reference-id="{{item.reference.id}}"
-            data-warpjs-reference-name="{{item.reference.name}}"
-          >
-          <span class="heading-label">H6</span>
-        </label>
-      </div>
-      <textarea class="form-control" rows="3" id="warpjs-inline-edit-heading"
+<div class="warpjs-modal-global-menu-wrapper">
+  <div class="row warpjs-modal-global-menu">
+    <div class="warpjs-modal-title hide-expanded-text">EDIT</div>
+    <div class="warpjs-modal-title show-expanded-text">CONTENT</div>
+    <div class="warpjs-modal-top-menu hide-expanded-text">
+      <span class="dropdown">
+        <span class="dropdown-toggle"
+          id="warpjs-inline-edit-modal-language"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="true"
+          data-warpjs-action="inline-edit-language"
+          ><span class="text">English</span> <span class="caret"></span></span>
+        <ul class="dropdown-menu" aria-labelledby="warpjs-inline-edit-modal-language">
+          <li data-warpjs-action="inline-edit-language-change">Chinese</li>
+          <li data-warpjs-action="inline-edit-language-change">English</li>
+          <li data-warpjs-action="inline-edit-language-change">German</li>
+        </ul>
+      </span>
+      <span
+        data-warpjs-action="inline-edit-delete"
+        class="pagination-remove"
         data-warpjs-id="{{item.id}}"
-        data-warpjs-field="Heading"
+        data-warpjs-reference-type="{{item.reference.type}}"
+        data-warpjs-reference-id="{{item.reference.id}}"
+        data-warpjs-reference-name="{{item.reference.name}}"
+      >
+        Delete
+      </span>
+      <button type="button" class="close" data-dismiss="modal" arial-label="Close" aria-hidden="true">×</button>
+    </div>
+  </div>
+  <div class="row hide-expanded-text">
+    <div class="warpjs-navigation-menu" data-warpjs-id="{{item.id}}">
+      <div class="warpjs-navigation"
+        data-warpjs-action="inline-edit-paragraph-move-to-first"
+        >&lt;&lt;</div>
+      <div class="warpjs-navigation"
+        data-warpjs-action="inline-edit-paragraph-move-up"
+        >&lt;</div>
+      <div class="warpjs-navigation warpjs-navigation-position">Position {{item.position}}</div>
+      <div class="warpjs-navigation"
+        data-warpjs-action="inline-edit-paragraph-move-down"
+        >&gt;</div>
+      <div class="warpjs-navigation"
+        data-warpjs-action="inline-edit-paragraph-move-to-last"
+        >&gt;&gt;</div>
+    </div>
+    <div class="form-group warpjs-inline-edit-visibility">
+      <select class="form-control" id="warpjs-inline-edit-visibility"
+        value="{{item.position}}"
+        data-warpjs-id="{{item.id}}"
+        data-warpjs-field="Visibility"
         data-warpjs-reference-type="{{item.reference.type}}"
         data-warpjs-reference-id="{{item.reference.id}}"
         data-warpjs-reference-name="{{item.reference.name}}"
         {{#unless item.canChangeName}}readonly{{/unless}}
-      >{{item.name}}</textarea>
+        >
+        <option value="Web" {{#if item.isVisibility.Web}}selected{{/if}}>Visible on Web</option>
+        <option value="PDF" {{#if item.isVisibility.PDF}}selected{{/if}}>Visible on PDF</option>
+        <option value="WebAndPDF" {{#if item.isVisibility.WebAndPDF}}selected{{/if}}>Visible on Web &amp; PDF</option>
+      </select>
     </div>
   </div>
 
-  <div class="warpjs-detail-image-preview">
-    <label for="warpjs-inline-image-preview">Image preview</label>
-    <div class="image-carousel-container">
-      <div id="warpjs-detail-image-carousel" class="carousel slide">
-        {{#if item.images.length}}
-          <a
-            class="warpjs-inline-edit-image-delete-button" data-warpjs-action="file-delete"
-            data-warpjs-delete-image-url="/content/domain/{{domain}}/type/{{type}}/instance/{{id}}/inline-edit-delete-image"
-            data-warpjs-doc-level="{{item.reference.type}}:{{item.reference.name}}.Entity:{{item.id}}.Relationship:Images"
-            data-warpjs-item-id="{{item.id}}"
-          >x</a>
-        {{/if}}
-        <div class="carousel-inner"
-          data-toggle="tooltip"
-          data-html="true"
-          title="{{> image-tooltip}}"
-          data-placement="bottom"
+  <div class="row hide-expanded-text">
+    <div class="warpjs-detail-heading">
+      <div class="form-group">
+        <label for="warpjs-inline-edit-heading">Heading</label>
+        <div class="btn-group heading-level-container"
+          id="warpjs-inline-edit-level"
+          {{#unless item.canChangeName}}readonly{{/unless}}
+          data-toggle="buttons"
         >
-          <div class="carousel-item item active">
-            <div style="background-image: url({{item.images.0._links.self.href}});" class="inline-editor-image"></div>
-          </div>
+          <label class="btn heading-buttons">
+            <input
+              type="radio"
+              name="warpjs-inline-edit-level"
+              id=H1"
+              value="H1"
+              {{#if item.isHeadingLevel.H1}}checked{{/if}}
+              data-warpjs-id="{{item.id}}"
+              data-warpjs-field="HeadingLevel"
+              data-warpjs-reference-type="{{item.reference.type}}"
+              data-warpjs-reference-id="{{item.reference.id}}"
+              data-warpjs-reference-name="{{item.reference.name}}"
+            >
+            <span class="heading-label">H1</span>
+          </label>
+          <label class="btn heading-buttons">
+            <input
+              type="radio"
+              name="warpjs-inline-edit-level"
+              id="H2"
+              value="H2"
+              {{#if item.isHeadingLevel.H2}}checked{{/if}}
+              data-warpjs-id="{{item.id}}"
+              data-warpjs-field="HeadingLevel"
+              data-warpjs-reference-type="{{item.reference.type}}"
+              data-warpjs-reference-id="{{item.reference.id}}"
+              data-warpjs-reference-name="{{item.reference.name}}"
+            >
+            <span class="heading-label">H2</span>
+          </label>
+          <label class="btn heading-buttons">
+            <input
+              type="radio"
+              name="warpjs-inline-edit-level"
+              id="H3"
+              value="H3"
+              {{#if item.isHeadingLevel.H3}}checked{{/if}}
+              data-warpjs-id="{{item.id}}"
+              data-warpjs-field="HeadingLevel"
+              data-warpjs-reference-type="{{item.reference.type}}"
+              data-warpjs-reference-id="{{item.reference.id}}"
+              data-warpjs-reference-name="{{item.reference.name}}"
+            >
+            <span class="heading-label">H3</span>
+          </label>
+          <label class="btn heading-buttons">
+            <input
+              type="radio"
+              name="warpjs-inline-edit-level"
+              id="H4"
+              value="H4"
+              {{#if item.isHeadingLevel.H4}}checked{{/if}}
+              data-warpjs-id="{{item.id}}"
+              data-warpjs-field="HeadingLevel"
+              data-warpjs-reference-type="{{item.reference.type}}"
+              data-warpjs-reference-id="{{item.reference.id}}"
+              data-warpjs-reference-name="{{item.reference.name}}"
+            >
+            <span class="heading-label">H4</span>
+          </label>
+          <label class="btn heading-buttons">
+            <input
+              type="radio"
+              name="warpjs-inline-edit-level"
+              id="H5"
+              value="H5"
+              {{#if item.isHeadingLevel.H5}}checked{{/if}}
+              data-warpjs-id="{{item.id}}"
+              data-warpjs-field="HeadingLevel"
+              data-warpjs-reference-type="{{item.reference.type}}"
+              data-warpjs-reference-id="{{item.reference.id}}"
+              data-warpjs-reference-name="{{item.reference.name}}"
+            >
+            <span class="heading-label">H5</span>
+          </label>
+          <label class="btn heading-buttons">
+            <input
+              type="radio"
+              name="warpjs-inline-edit-level"
+              id="H6"
+              value="H6"
+              {{#if item.isHeadingLevel.H6}}checked{{/if}}
+              data-warpjs-id="{{item.id}}"
+              data-warpjs-field="HeadingLevel"
+              data-warpjs-reference-type="{{item.reference.type}}"
+              data-warpjs-reference-id="{{item.reference.id}}"
+              data-warpjs-reference-name="{{item.reference.name}}"
+            >
+            <span class="heading-label">H6</span>
+          </label>
         </div>
-        <div class="carousel-controls">
-          <a
-            class="warpjs-inline-edit-image-upload-button" data-warpjs-action="file-upload"
-            data-warpjs-url="/content/domain/{{domain}}/file-upload"
-            data-warpjs-add-image-url="/content/domain/{{domain}}/type/{{type}}/instance/{{id}}/inline-edit-add-image"
-            data-warpjs-doc-level="{{item.reference.type}}:{{item.reference.name}}.Entity:{{item.id}}.Relationship:Images"
-            data-warpjs-item-id="{{item.id}}"
-          >upload</a>
+        <textarea class="form-control" rows="3" id="warpjs-inline-edit-heading"
+          data-warpjs-id="{{item.id}}"
+          data-warpjs-field="Heading"
+          data-warpjs-reference-type="{{item.reference.type}}"
+          data-warpjs-reference-id="{{item.reference.id}}"
+          data-warpjs-reference-name="{{item.reference.name}}"
+          {{#unless item.canChangeName}}readonly{{/unless}}
+        >{{item.name}}</textarea>
+      </div>
+    </div>
+
+    <div class="warpjs-detail-image-preview">
+      <label for="warpjs-inline-image-preview">Image preview</label>
+      <div class="image-carousel-container">
+        <div id="warpjs-detail-image-carousel" class="carousel slide">
+          {{#if item.images.length}}
+            <a
+              class="warpjs-inline-edit-image-delete-button" data-warpjs-action="file-delete"
+              data-warpjs-delete-image-url="/content/domain/{{domain}}/type/{{type}}/instance/{{id}}/inline-edit-delete-image"
+              data-warpjs-doc-level="{{item.reference.type}}:{{item.reference.name}}.Entity:{{item.id}}.Relationship:Images"
+              data-warpjs-item-id="{{item.id}}"
+            >x</a>
+          {{/if}}
+          <div class="carousel-inner"
+            data-toggle="tooltip"
+            data-html="true"
+            title="{{> image-tooltip}}"
+            data-placement="bottom"
+          >
+            <div class="carousel-item item active">
+              <div style="background-image: url({{item.images.0._links.self.href}});" class="inline-editor-image"></div>
+            </div>
+          </div>
+          <div class="carousel-controls">
+            <a
+              class="warpjs-inline-edit-image-upload-button" data-warpjs-action="file-upload"
+              data-warpjs-url="/content/domain/{{domain}}/file-upload"
+              data-warpjs-add-image-url="/content/domain/{{domain}}/type/{{type}}/instance/{{id}}/inline-edit-add-image"
+              data-warpjs-doc-level="{{item.reference.type}}:{{item.reference.name}}.Entity:{{item.id}}.Relationship:Images"
+              data-warpjs-item-id="{{item.id}}"
+            >upload</a>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-<div class="row">
-  <div class="col-xs-12 warpjs-detail-content">
-    <div class="form-group">
-      <label for="warpjs-inline-edit-content">Content</label>
-      <textarea class="form-control" id="warpjs-inline-edit-content" rows="12"
-          data-warpjs-id="{{item.id}}"
-          data-warpjs-field="Content"
-          data-warpjs-reference-type="{{item.reference.type}}"
-          data-warpjs-reference-id="{{item.reference.id}}"
-          data-warpjs-reference-name="{{item.reference.name}}"
-          readonly
-        >{{item.description}}</textarea>
+  <div class="row">
+    <div class="col-xs-12 warpjs-detail-content">
+      <div class="form-group">
+        <div class="content-field-container">
+        <label for="warpjs-inline-edit-content" class="hide-expanded-text">Content</label>
+        <button class="text-expand-button text-open hide-expanded-text">maximize text area</button>
+        <button class="text-expand-button text-close show-expanded-text">back to overview</button>
+        </div>
+        <textarea class="form-control" id="warpjs-inline-edit-content" rows="12"
+            data-warpjs-id="{{item.id}}"
+            data-warpjs-field="Content"
+            data-warpjs-reference-type="{{item.reference.type}}"
+            data-warpjs-reference-id="{{item.reference.id}}"
+            data-warpjs-reference-name="{{item.reference.name}}"
+            readonly
+          >{{item.description}}</textarea>
+      </div>
     </div>
   </div>
-</div>
 
-<div class="row">
-  <div class="col-xs-12 advanced-content">
-    <div class="advanced-content-header">
-      <span class="advanced-features-title">Advanced features</span>
-      <span
-        class="show-advanced collapsed"
-        data-toggle="collapse"
-        href="#collapseExample"
-        role="button"
-        aria-expanded="false"
-        aria-controls="collapseExample"
-      >show</span>
-      <span
-        class="hide-advanced collapsed"
-        data-toggle="collapse"
-        href="#collapseExample"
-        role="button"
-        aria-expanded="false"
-        aria-controls="collapseExample"
-      >hide</span>
-    </div>
-    <div class="advanced-content-container collapse" id="collapseExample">
-      <div class="warpjs-paragraph-aggregations"></div>
+  <div class="row hide-expanded-text">
+    <div class="col-xs-12 advanced-content">
+      <div class="advanced-content-header">
+        <span class="advanced-features-title">Advanced features</span>
+        <span
+          class="show-advanced collapsed"
+          data-toggle="collapse"
+          href="#collapseExample"
+          role="button"
+          aria-expanded="false"
+          aria-controls="collapseExample"
+        >show</span>
+        <span
+          class="hide-advanced collapsed"
+          data-toggle="collapse"
+          href="#collapseExample"
+          role="button"
+          aria-expanded="false"
+          aria-controls="collapseExample"
+        >hide</span>
+      </div>
+      <div class="advanced-content-container collapse" id="collapseExample">
+        <div class="warpjs-paragraph-aggregations"></div>
+      </div>
     </div>
   </div>
 </div>
