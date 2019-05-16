@@ -5,6 +5,10 @@
 - [Releases 1.0.x](RELEASE-1.0.md) from 2017-05-31 to 2017-06-10
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
+## 1.3.97 - 2019-05-16
+
+- #214: Handling display of null in diff notifications.
+
 ## 1.3.96 - 2019-05-15
 
 - #214: Handling display of numbers in diff notifications.

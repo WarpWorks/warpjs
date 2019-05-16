@@ -1,4 +1,6 @@
 import { diffWords } from 'diff';
+import isUndefined from 'lodash/isUndefined';
+import isNull from 'lodash/isNull';
 // import PropTypes from 'prop-types';
 
 // import { ACTIONS } from '@warp-works/warpjs-change-logs';
@@ -7,7 +9,16 @@ const TOO_MUCH_TEXT_LENGTH = 100;
 const TOO_MUCH_TEXT_PART_LENGTH = (TOO_MUCH_TEXT_LENGTH - 5) / 2;
 
 const diffText = (changeLog) => {
-    const diffParts = diffWords(changeLog.data.oldValue.toString() || '', changeLog.data.newValue.toString() || '');
+    const oldValue = isUndefined(changeLog.data.oldValue) || isNull(changeLog.data.oldValue)
+        ? ''
+        : changeLog.data.oldValue.toString()
+    ;
+    const newValue = isUndefined(changeLog.data.newValue) || isNull(changeLog.data.newValue)
+        ? ''
+        : changeLog.data.newValue.toString()
+    ;
+
+    const diffParts = diffWords(oldValue, newValue);
     const content = diffParts.map((part, index, arr) => {
         if (part.added) {
             return <span key={index} className="added">{part.value}</span>;
