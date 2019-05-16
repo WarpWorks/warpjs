@@ -5,6 +5,10 @@
 - [Releases 1.0.x](RELEASE-1.0.md) from 2017-05-31 to 2017-06-10
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
+## 1.3.98 - 2019-05-16
+
+- #232 update: Inline editor expand tinymce to fill height of modal. 
+
 ## 1.3.97 - 2019-05-16
 
 - #214: Handling display of null in diff notifications.

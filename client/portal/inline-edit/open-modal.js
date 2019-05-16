@@ -52,9 +52,10 @@ module.exports = ($, element, res) => {
     }
 
     $('body').on('click', '.text-open', (event) => {
-        currentHeight = $('.mce-tinymce.mce-container.mce-panel').outerHeight() - 58;
+        const newHeight = $('.warpjs-detail-container').outerHeight() - 125;
+        currentHeight = $('.mce-tinymce.mce-container.mce-panel').outerHeight() - 67;
         $(event.target).closest('.warpjs-modal-global-menu-wrapper').addClass('expanded-text');
-        resizeEditor(500);
+        resizeEditor(newHeight);
     });
 
     $('body').on('click', '.text-close', (event) => {
