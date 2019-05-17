@@ -5,6 +5,10 @@
 - [Releases 1.0.x](RELEASE-1.0.md) from 2017-05-31 to 2017-06-10
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
+## 1.3.100 - 2019-05-16
+
+- #231: Only keep the 10 last backups.
+
 ## 1.3.99 - 2019-05-16
 
 - When adding association, also update position and desc.
