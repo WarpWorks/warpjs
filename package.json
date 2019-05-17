@@ -45,7 +45,7 @@
     "lint:node": "grunt eslint:node",
     "lint:test": "grunt eslint:test",
     "lint": "grunt eslint",
-    "backup": "backup-data.js",
+    "backup": "node ./scripts/backup-data.js",
     "build:dev": "DEBUG=W2:* NODE_ENV=development grunt",
     "dev": "DEBUG=W2:* npm start"
   },
