@@ -1,7 +1,6 @@
 const Promise = require('bluebird');
-const RoutesInfo = require('@quoin/expressjs-routes-info');
 
-const routes = require('./../../../lib/constants/routes');
+const debug = require('./debug')('redirect-alias');
 const serverUtils = require('./../../utils');
 
 const cache = {
@@ -24,29 +23,38 @@ module.exports = async (req, res) => {
             pathAliases,
             async (memo, pathAlias) => {
                 if (pathAlias.URL) {
-                    memo[pathAlias.Name] = pathAlias.URL;
+                    memo[pathAlias.Name] = Object.freeze({
+                        url: pathAlias.URL
+                    });
                 } else {
                     const references = await relationship.getTargetReferences(pathAlias);
                     if (references && references.length) {
-                        const reference = {
+                        memo[pathAlias.Name] = Object.freeze({
                             id: references[0]._id,
                             type: references[0].type,
-                            view: pathAlias.View
-                        };
-
-                        memo[pathAlias.Name] = RoutesInfo.expand(routes.portal.entity, reference);
+                            view: pathAlias.View || undefined
+                        });
                     }
                 }
                 return memo;
             },
             {}
         );
+
+        debug(`cache=`, cache);
     }
 
     if (cache && cache.aliases && cache.aliases[alias]) {
-        // Sending 307 because this path may change, so we want the user to come
-        // back and double check next time.
-        res.redirect(307, cache.aliases[alias]);
+        const documentInfo = cache.aliases[alias];
+        debug(`documentInfo=`, documentInfo);
+        if (documentInfo.url) {
+            // Sending 307 because this path may change, so we want the user to
+            // come back and double check next time.
+            res.redirect(307, documentInfo.url);
+        } else {
+            const extractInstance = require('./../../portal/instance/extract-instance');
+            await extractInstance(req, res, documentInfo.type, documentInfo.id, documentInfo.view);
+        }
     } else {
         res.status(404).send();
     }

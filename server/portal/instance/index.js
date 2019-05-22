@@ -1,5 +1,5 @@
-const extractInstance = require('./extract-instance');
+const get = require('./get');
 
 module.exports = {
-    get: (req, res) => extractInstance(req, res)
+    get: async (req, res) => get(req, res)
 };

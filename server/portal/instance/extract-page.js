@@ -38,14 +38,14 @@ const computeParentDocumentStatus = async (persistence, entity, instance) => {
     }
 };
 
-module.exports = async (req, persistence, entity, instance) => {
+module.exports = async (req, persistence, entity, instance, pageViewName) => {
     const resource = warpjsUtils.createResource(req, {
         id: instance.id,
         typeId: entity.id,
         typeName: entity.name,
         typeLabel: entity.label || entity.name,
         name: entity.getDisplayName(instance),
-        isHomePage: req.params.type === config.domainName,
+        isHomePage: entity.name === config.domainName,
         hasGA: config.analytics && config.analytics.apiKey
 
     });
@@ -72,7 +72,7 @@ module.exports = async (req, persistence, entity, instance) => {
                 domain: config.domainName,
                 type: instance.type,
                 id: instance.id,
-                view: req.query.view
+                view: pageViewName
             }),
             title: `In-line edit "${resource.name}"`
         });
@@ -95,7 +95,7 @@ module.exports = async (req, persistence, entity, instance) => {
         const targetPreviews = await targetPreviewsByEntity(persistence, entity, instance);
         resource.embed('previews', targetPreviews);
 
-        const pageView = await entity.getPageView(req.query.view, config.views.portal);
+        const pageView = await entity.getPageView(pageViewName, config.views.portal);
         const pageViewResource = await extractPageView(persistence, pageView, instance, req.query.style);
         resource.embed('pageViews', pageViewResource);
     }

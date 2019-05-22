@@ -1,12 +1,31 @@
-const RoutesInfo = require('@quoin/expressjs-routes-info');
+const express = require('express');
+const hbs = require('hbs');
+const hbsUtils = require('hbs-utils')(hbs);
 
-const alias = require('./alias');
-const routes = require('./../../lib/constants/routes');
+const warpjsUtils = require('@warp-works/warpjs-utils');
+
+const routes = require('./routes');
 
 module.exports = (baseUrl, staticUrlPath) => {
-    const routesInfo = new RoutesInfo('/', baseUrl);
+    const app = express();
 
-    routesInfo.route(routes.pathAlias.path, '/{alias}', alias);
+    app.set('view engine', 'hbs');
+    app.set('views', warpjsUtils.getHandlebarsViewsDir());
 
-    return routesInfo.router;
+    const handlebarsPartialsDir = warpjsUtils.getHandlebarsPartialsDir();
+    hbsUtils.registerWatchedPartials(
+        handlebarsPartialsDir,
+        {
+            precompile: true,
+            name: (template) => {
+                const newTemplateName = template.replace(/_/g, '-');
+                return newTemplateName;
+            }
+        },
+        () => {}
+    );
+
+    app.use(routes(baseUrl).router);
+
+    return app;
 };
