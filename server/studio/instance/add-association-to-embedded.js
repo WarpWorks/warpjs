@@ -79,7 +79,7 @@ module.exports = (req, res) => {
                             .then(() => {
                                 // TODO: Changelog
                             })
-                            .then(() => instanceData.entity.updateDocument(persistence, instanceData.instance, true))
+                            .then(() => instanceData.entity.updateDocument(persistence, instanceData.instance, false))
                             .then(() => {
                                 // TODO: logger
                             })

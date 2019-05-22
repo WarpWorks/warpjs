@@ -40,7 +40,7 @@ module.exports = (req, res) => {
                             const indexOf = references.findIndex((ref) => ref._id === value);
                             if (indexOf !== -1) {
                                 references.splice(indexOf, 1);
-                                return instanceData.entity.updateDocument(persistence, instanceData.instance, true);
+                                return instanceData.entity.updateDocument(persistence, instanceData.instance, false);
                             }
                         }
                     })
