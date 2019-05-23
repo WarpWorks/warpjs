@@ -36,22 +36,22 @@
   },
   "headerItems": [{
     "label": "Overview",
-    "href": "/alias/overview"
+    "href": "/overview"
   }, {
     "label": "Testbeds",
-    "href": "/alias/testbeds"
+    "href": "/testbeds"
   }, {
     "label": "Project Explorer",
-    "href": "/alias/project-explorer"
+    "href": "/project-explorer"
   }, {
     "label": "BoK",
-    "href": "/alias/body-of-knowledge"
+    "href": "/body-of-knowledge"
   }, {
     "label": "Vocabulary",
-    "href": "/alias/vocabulary"
+    "href": "/vocabulary"
   }, {
     "label": "Ecosystem",
-    "href": "/alias/ecosystem"
+    "href": "/ecosystem"
   }],
   "plugins": [{
     "name": "I3C MapBrowser plugin",

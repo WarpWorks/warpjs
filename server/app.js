@@ -4,6 +4,8 @@ const debug = require('debug')('W2:WarpJS:app');
 const express = require('express');
 const expressBusboy = require('express-busboy');
 const expressUserAgent = require('express-useragent');
+const hbs = require('hbs');
+const hbsUtils = require('hbs-utils')(hbs);
 const path = require('path');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsPlugins = require('@warp-works/warpjs-plugins');
@@ -36,6 +38,21 @@ module.exports = (baseUrl, staticUrl) => {
     app.set('base-url', baseUrl);
     app.set('static-url', staticUrl);
 
+    app.set('view engine', 'hbs');
+    app.set('views', warpjsUtils.getHandlebarsViewsDir());
+    const handlebarsPartialsDir = warpjsUtils.getHandlebarsPartialsDir();
+    hbsUtils.registerWatchedPartials(
+        handlebarsPartialsDir,
+        {
+            precompile: true,
+            name: (template) => {
+                const newTemplateName = template.replace(/_/g, '-');
+                return newTemplateName;
+            }
+        },
+        () => {}
+    );
+
     const logFolder = path.join(config.folders.w2projects, 'logs');
     logFiles(app, logFolder);
 
@@ -47,6 +64,7 @@ module.exports = (baseUrl, staticUrl) => {
     RoutesInfo.staticPath('W2:app:core', app, baseUrl, '/core', coreStaticPath);
 
     app.use(favicon(path.join(ROOT_DIR, 'public', 'images', 'favicon.ico')));
+
     app.use(bodyParser.json());
     expressBusboy.extend(app, {
         upload: true,
@@ -60,6 +78,7 @@ module.exports = (baseUrl, staticUrl) => {
     }));
 
     app.use(middlewares.requestToken);
+    app.use(middlewares.aliases);
 
     warpjsPlugins.init(config.domainName, config.persistence, config.plugins);
 
