@@ -23,6 +23,11 @@ module.exports = {
             'public/libs/bootstrap/bootstrap*.map'
         ]
     },
+    ssr: {
+        src: [
+            'server/portal/entity-html/ssr'
+        ]
+    },
     nyc: {
         src: [
             '.nyc_output'

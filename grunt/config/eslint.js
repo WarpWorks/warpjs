@@ -23,7 +23,8 @@ module.exports = {
             '!lib/**/*.test.js',
             'scripts/*.js',
             'server/**/*.js',
-            '!server/**/*.test.js'
+            '!server/**/*.test.js',
+            '!server/portal/entity-html/ssr/**/*.js'
         ]
     },
     client: {
@@ -82,7 +83,8 @@ module.exports = {
         src: [
             'client/**/*.jsx',
             'client/**/*.js',
-            '!client/**/*.test.js'
+            '!client/**/*.test.js',
+            'server/portal/entity-html/components/**/*.jsx'
         ]
     },
     test: {

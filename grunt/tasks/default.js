@@ -5,6 +5,7 @@ module.exports = (grunt) => {
         'jscpd',
         'copy',
         'less',
+        'babel',
         'webpack'
     ]);
 };
