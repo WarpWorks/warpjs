@@ -26,12 +26,17 @@ module.exports = async (req, persistence, entity, document, viewName, level = 0)
                 const extractDocument = require('./extract-document');
 
                 const subDocumentRelationship = entity.getRelationshipById(paragraph.SubDocuments);
-                const subDocuments = await subDocumentRelationship.getDocuments(persistence, document);
-                const subDocumentResources = await Promise.map(
-                    subDocuments,
-                    async (subDocument) => extractDocument(req, persistence, subDocument.type, subDocument.id, viewName, level + 1)
-                );
-                resource.embed('items', subDocumentResources);
+                if (subDocumentRelationship) {
+                    const subDocuments = await subDocumentRelationship.getDocuments(persistence, document);
+                    const subDocumentResources = await Promise.map(
+                        subDocuments,
+                        async (subDocument) => extractDocument(req, persistence, subDocument.type, subDocument.id, viewName, level + 1)
+                    );
+                    resource.embed('items', subDocumentResources);
+                } else {
+                    // eslint-disable-next-line no-console
+                    console.error(`Invalid paragraph.SubDocuments='${paragraph.SubDocuments}'.`);
+                }
             }
 
             return resource;

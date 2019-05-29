@@ -5,6 +5,10 @@
 - [Releases 1.0.x](RELEASE-1.0.md) from 2017-05-31 to 2017-06-10
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
+## 1.3.106 - 2019-05-29
+
+- #235: Adding additional check to find error in DEV.
+
 ## 1.3.105 - 2019-05-28
 
 - #235: Adding POC for html export.
