@@ -28,7 +28,7 @@ export default async ($, modal, clickedElement) => {
 
     ReactDOM.render(
         <Provider store={store} id={PLACEHOLDER}>
-            <ParagraphAggregations />
+            <ParagraphAggregations.Container />
         </Provider>,
         $(`.${PLACEHOLDER}`).get(0)
     );
