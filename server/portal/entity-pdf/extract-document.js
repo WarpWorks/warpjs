@@ -42,6 +42,11 @@ module.exports = async (req, persistence, type, id, viewName, level = 0) => {
 
     // Only keep the community at the first level.
     if (!level) {
+        const editorResources = await extractCommunity(req, persistence, entity, document, 'Editors');
+        if (editorResources) {
+            resource.embed('items', editorResources);
+        }
+
         const authorsResource = await extractCommunity(req, persistence, entity, document, 'Authors');
         if (authorsResource) {
             resource.embed('items', authorsResource);
