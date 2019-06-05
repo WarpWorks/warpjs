@@ -5,6 +5,10 @@
 - [Releases 1.0.x](RELEASE-1.0.md) from 2017-05-31 to 2017-06-10
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
+## 1.3.109 - 2019-06-05
+
+- #200: Add the current document title.
+
 ## 1.3.108 - 2019-06-04
 
 - Adding some schema utils.

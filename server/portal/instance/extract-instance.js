@@ -43,7 +43,15 @@ module.exports = (req, res, type, id, pageViewName) => {
 
     warpjsUtils.wrapWith406(res, {
         html: async () => {
-            await warpjsUtils.sendPortalIndex(req, res, RoutesInfo, 'Entity', 'portal');
+            const persistence = await serverUtils.getPersistence();
+            try {
+                const entity = await serverUtils.getEntity(null, type);
+                const instance = await entity.getInstance(persistence, id);
+
+                await warpjsUtils.sendPortalIndex(req, res, RoutesInfo, instance ? instance.Name : 'Entity', 'portal');
+            } finally {
+                persistence.close();
+            }
         },
 
         [warpjsUtils.constants.HAL_CONTENT_TYPE]: async () => {
