@@ -78,7 +78,6 @@ module.exports = (baseUrl, staticUrl) => {
     }));
 
     app.use(middlewares.requestToken);
-    app.use(middlewares.aliases);
 
     warpjsPlugins.init(config.domainName, config.persistence, config.plugins);
 
@@ -88,6 +87,8 @@ module.exports = (baseUrl, staticUrl) => {
         debug(`auth middlewares detected`);
         app.use(authMiddlewares.warpjsUser);
     }
+
+    app.use(middlewares.aliases);
 
     const adminPrefix = `${baseUrl}/studio`;
     const adminParams = [adminPrefix];
