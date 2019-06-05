@@ -24,6 +24,8 @@ attic/
 /public/app/*.js.map
 /public/app/*.js
 /public/app/*.min.css
+/server/portal/entity-html/ssr
+
 # Copied from NPM
 /public/libs/bootstrap/bootstrap*
 /public/libs/bootstrap/jquery*

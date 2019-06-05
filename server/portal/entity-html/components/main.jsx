@@ -26,21 +26,18 @@ const STYLE = `
     }
 
     .community-item {
-      width: 33%;
-      float: left;
-      padding-bottom: 10px;
+      margin-bottom: 12px;
     }
 
     .community-item .community-image {
       max-width: 50px;
       max-height: 50px;
       border-radius: 50%;
-      float: left;
+      vertical-align: middle;
+      margin-right: 12px;
     }
 
     .community-item .community-info {
-      padding-top: 30px;
-      padding-left: 120px;
     }
 `;
 

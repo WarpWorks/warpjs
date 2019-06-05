@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import BackToToc from './back-to-toc';
 import constants from './../../entity-pdf/constants';
 // import _debug from './debug'; const debug = _debug('content');
 import Community from './community';
@@ -17,8 +18,8 @@ const Component = (props) => {
         }
 
         return (
-            <div key={item.id} id={item.id} className="content-section">
-                <div className="title">{item.heading || item.name} (<a href={`#${item.id}-TOC`}>TOC</a>)</div>
+            <div key={item.id} id={`section-${item.tocNumber}`} className="content-section">
+                <div className="title">{item.tocNumber} {item.heading || item.name} <BackToToc item={item} /></div>
                 {subContent}
             </div>
         );

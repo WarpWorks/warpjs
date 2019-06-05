@@ -14,3 +14,6 @@
 
 # in case 'npm pack' was run on this folder.
 /*.tgz
+
+# Don't include source because it's transpiled.
+/server/portal/entity-html/components

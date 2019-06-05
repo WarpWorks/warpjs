@@ -4,7 +4,7 @@ const warpjsUtils = require('@warp-works/warpjs-utils');
 const Document = require('./../../../lib/core/first-class/document');
 const extractCommunity = require('./extract-community');
 const extractOverview = require('./extract-overview');
-// const extractPageViewPanels = require('./extract-page-view-panels');
+const generateTocNumbers = require('./generate-toc-numbers');
 const serverUtils = require('./../../utils');
 
 module.exports = async (req, persistence, type, id, viewName, level = 0) => {
@@ -56,6 +56,8 @@ module.exports = async (req, persistence, type, id, viewName, level = 0) => {
         if (contributorsResource) {
             resource.embed('items', contributorsResource);
         }
+
+        generateTocNumbers(resource);
     }
 
     return resource;

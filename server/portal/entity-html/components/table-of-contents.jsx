@@ -8,11 +8,8 @@ const Component = (props) => {
     const content = (items) =>  items.map((item) => {
         // debug(`document level item=`, item);
 
-        let subContent;
-        if (item.type === constants.TYPES.COMMUNITY) {
-            // debug(`community item`);
-            subContent = null;
-        } else if (item.type === constants.TYPES.PARAGRAPH) {
+        let subContent = null;
+        if (item.type === constants.TYPES.PARAGRAPH) {
             // debug(`paragraph item`);
             if (item._embedded && item._embedded.items && item._embedded.items.length) {
                 // debug(`paragraph has aggregation. Need add to TOC:`, item._embedded.items);
@@ -42,7 +39,7 @@ const Component = (props) => {
         }
 
         return (
-            <li key={item.id}><a href={`#${item.id}`} id={`${item.id}-TOC`}>{item.heading || item.name}</a>{subContent}</li>
+            <li key={item.id}>{item.tocNumber} <a href={`#section-${item.tocNumber}`} id={`toc-${item.tocNumber}`}>{item.heading || item.name}</a>{subContent}</li>
         );
     });
 
