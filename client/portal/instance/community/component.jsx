@@ -8,6 +8,7 @@ const Community = (props) => {
 
         return (
             <div className="row warpjs-secondary-bg warpjs-page-view-side-panel warpjs-page-view-community">
+              <CommunitySection page={page} title="Editors" users={community._embedded.editors} />
               <CommunitySection page={page} title="Authors" users={community._embedded.authors} />
               <CommunitySection page={page} title="Contributors" users={community._embedded.contributors} />
             </div>

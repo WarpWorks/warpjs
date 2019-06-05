@@ -25,6 +25,7 @@
         <div class="col-xs-12 col-sm-8 col-sm-offset-1 warpjs-content">
           <div class="panel panel-item panel-default warpjs-panel-style-Transparent">
             <div class="panel-body panel-item-body">
+              {{> ./panels/community/section page=../page title="Editors" users=community._embedded.editors}}
               {{> ./panels/community/section page=../page title="Authors" users=community._embedded.authors}}
               {{> ./panels/community/section page=../page title="Contributors" users=community._embedded.contributors}}
             </div>

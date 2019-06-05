@@ -1,31 +1,28 @@
-// const debug = require('debug')('W2:portal:resources/community-by-entity');
-const Promise = require('bluebird');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+// const debug = require('./debug')('community-by-entity');
 const usersByRelationship = require('./users-by-relationship');
 
-module.exports = (persistence, entity, instance) => Promise.resolve()
-    .then(() => warpjsUtils.createResource('', {
-    }))
-    .then((resource) => Promise.resolve()
-        .then(() => entity.getRelationshipByName('Authors'))
-        .then((relationship) => usersByRelationship(persistence, relationship, instance))
-        .then((authors) => {
-            if (authors && authors.length) {
-                resource.showPanel = true;
-                resource.embed('authors', authors);
-            }
-        })
+const embed = async (persistence, entity, instance, resource, relationshipName, embedName) => {
+    const relationship = entity.getRelationshipByName(relationshipName);
+    if (!relationship) {
+        return;
+    }
 
-        .then(() => entity.getRelationshipByName('Contributors'))
-        .then((relationship) => usersByRelationship(persistence, relationship, instance))
-        .then((contributors) => {
-            if (contributors && contributors.length) {
-                resource.showPanel = true;
-                resource.embed('contributors', contributors);
-            }
-        })
+    const documents = await usersByRelationship(persistence, relationship, instance);
+    if (documents && documents.length) {
+        resource.showPanel = true;
+        resource.embed(embedName, documents);
+    }
+};
 
-        .then(() => resource)
-    )
-;
+module.exports = async (persistence, entity, instance) => {
+    const resource = warpjsUtils.createResource('', {
+    });
+
+    await embed(persistence, entity, instance, resource, 'Editors', 'editors');
+    await embed(persistence, entity, instance, resource, 'Authors', 'authors');
+    await embed(persistence, entity, instance, resource, 'Contributors', 'contributors');
+
+    return resource;
+};
