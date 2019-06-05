@@ -1,7 +1,7 @@
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
-const debug = require('./debug')('extract-instance');
+// const debug = require('./debug')('extract-instance');
 const extractPage = require('./extract-page');
 const routes = require('./../../../lib/constants/routes');
 const serverUtils = require('./../../utils');
@@ -9,8 +9,8 @@ const User = require('./../../../lib/core/first-class/user');
 
 const config = serverUtils.getConfig();
 
-module.exports = (req, res, type, id, pageViewName) => {
-    debug(`type=${type}, id=${id}, pageViewName=${pageViewName}`);
+module.exports = async (req, res, type, id, pageViewName) => {
+    // debug(`type=${type}, id=${id}, pageViewName=${pageViewName}`);
 
     const resource = warpjsUtils.createResource(req, {
         customMessages: {}
