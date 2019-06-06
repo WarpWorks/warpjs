@@ -6,6 +6,7 @@ import constants from './../../entity-pdf/constants';
 // import _debug from './debug'; const debug = _debug('content');
 import Community from './community';
 import Paragraph from './paragraph';
+import TocNumber from './toc-number';
 
 const Component = (props) => {
     const content = (items) => items.map((item) => {
@@ -19,7 +20,11 @@ const Component = (props) => {
 
         return (
             <div key={item.id} id={`section-${item.tocNumber}`} className="content-section">
-                <div className="title">{item.tocNumber} {item.heading || item.name} <BackToToc item={item} /></div>
+                <div className="title">
+                    <TocNumber item={item} />
+                    {item.heading || item.name}
+                    <BackToToc item={item} />
+                </div>
                 {subContent}
             </div>
         );

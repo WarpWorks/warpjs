@@ -1,7 +1,7 @@
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
-const debug = require('./debug')('generate-pdf');
+// const debug = require('./debug')('get');
 const extractDocument = require('./../entity-pdf/extract-document');
 const serverUtils = require('./../../utils');
 const ssr = require('./ssr');
@@ -19,7 +19,6 @@ module.exports = async (req, res) => {
     try {
         const documentResource = await extractDocument(req, persistence, type, id, viewName);
         if (documentResource) {
-            debug(`Need generate pdf from content. documentResource=`, documentResource);
             const html = ssr.default(documentResource);
             res.status(200).send(html);
         } else {

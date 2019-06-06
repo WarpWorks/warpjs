@@ -3,6 +3,7 @@ import React from 'react';
 
 import constants from './../../entity-pdf/constants';
 // import _debug from './debug'; const debug = _debug('table-of-contents');
+import TocNumber from './toc-number';
 
 const Component = (props) => {
     const content = (items) =>  items.map((item) => {
@@ -27,7 +28,11 @@ const Component = (props) => {
                     }
 
                     return (
-                        <li key={subDocument.id}><a href={`#${subDocument.id}`} id={`${subDocument.id}-TOC`}>{subDocument.name}</a>{subDocumentTOC}</li>
+                        <li key={subDocument.id} id={`${subDocument.id}-TOC`}>
+                            <TocNumber item={subDocument} />
+                            <a href={`#${subDocument.id}`}>{subDocument.name}</a>
+                            {subDocumentTOC}
+                        </li>
                     );
                 });
                 subContent = (
@@ -39,7 +44,11 @@ const Component = (props) => {
         }
 
         return (
-            <li key={item.id}>{item.tocNumber} <a href={`#section-${item.tocNumber}`} id={`toc-${item.tocNumber}`}>{item.heading || item.name}</a>{subContent}</li>
+            <li key={item.id} id={`toc-${item.tocNumber}`}>
+                <TocNumber item={item} />
+                <a href={`#section-${item.tocNumber}`}>{item.heading || item.name}</a>
+                {subContent}
+            </li>
         );
     });
 

@@ -9,6 +9,10 @@ const STYLE = `
       margin-left: 50px;
     }
 
+    .toc-number {
+      margin-right: 15px;
+    }
+
     .sub-document {
       margin-left: 10px;
       padding-left: 10px;
