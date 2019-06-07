@@ -87,7 +87,6 @@ module.exports = (req, res) => {
                                 paragraphs.sort(warpjsUtils.byPositionThenName);
 
                                 const paragraphResources = await Promise.map(paragraphs, async (paragraph) => {
-                                    console.log('paragraph:::', paragraph);
                                     const paragraphResource = warpjsUtils.createResource('', {
                                         type: paragraph.type,
                                         id: paragraph.id || paragraph._id,
