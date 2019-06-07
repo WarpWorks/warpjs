@@ -13,6 +13,7 @@ module.exports = async ($, element) => {
     const toastLoading = await window.WarpJS.toast.loading($, "Loading data...", "Loading");
     try {
         const res = await window.WarpJS.proxy.post($, $(element).data('warpjsUrl'), data);
+        await console.log("res", res);
         await openModal($, element, res);
     } catch (err) {
         console.error("Error:", err);

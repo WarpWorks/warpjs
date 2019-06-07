@@ -37,6 +37,12 @@ module.exports = ($, modal, clickedElement) => {
             H6: $(clickedElement).data('warpjsLevel') === 'H6'
         };
 
+        item.isVisibility = {
+            Web: $(clickedElement).data('warpjsVisibility') === 'Web',
+            PDF: $(clickedElement).data('warpjsVisibility') === 'PDF',
+            WebAndPDF: $(clickedElement).data('warpjsVisibility') === 'WebAndPDF'
+        }
+
         $('.warpjs-detail-container .warpjs-placeholder', modal).html(detailTemplate({item, id: $(modal).data('warpjsId'), type: $(modal).data('warpjsType'), domain: $(modal).data('warpjsDomain')}));
         initializeWysiwyg($, modal, clickedElement);
         $('.carousel').carousel({
