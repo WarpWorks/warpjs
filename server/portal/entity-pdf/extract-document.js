@@ -1,5 +1,6 @@
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const convertDocumentToTree = require('./convert-document-to-tree');
 // const debug = require('./debug')('extract-document');
 const Document = require('./../../../lib/core/first-class/document');
 const extractCommunity = require('./extract-community');
@@ -42,6 +43,8 @@ module.exports = async (req, persistence, type, id, viewName, level = 0) => {
 
     // Only keep the community at the first level.
     if (!level) {
+        // debug(`overview=`, overview);
+
         const editorResources = await extractCommunity(req, persistence, entity, document, 'Editors');
         if (editorResources) {
             resource.embed('items', editorResources);
@@ -57,7 +60,9 @@ module.exports = async (req, persistence, type, id, viewName, level = 0) => {
             resource.embed('items', contributorsResource);
         }
 
-        generateTocNumbers(resource);
+        const newResource = convertDocumentToTree(resource);
+        generateTocNumbers(newResource);
+        return newResource;
     }
 
     return resource;

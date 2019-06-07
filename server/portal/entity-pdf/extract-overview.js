@@ -8,6 +8,9 @@ const isParagraphVisible = require('./is-paragraph-visible');
 module.exports = async (req, persistence, entity, document, viewName, level = 0) => {
     const overviewRelationship = entity.getRelationshipByName('Overview');
     const paragraphs = await overviewRelationship.getDocuments(persistence, document);
+
+    // debug(`paragraphs=`, paragraphs);
+
     const visibleParagraphs = paragraphs.filter(isParagraphVisible);
 
     return Promise.map(
@@ -19,7 +22,8 @@ module.exports = async (req, persistence, entity, document, viewName, level = 0)
                 position: paragraph.Position,
                 headingLevel: paragraph.HeadingLevel || 'H1',
                 heading: paragraph.Heading,
-                content: paragraph.Content
+                content: paragraph.Content,
+                visibility: paragraph.Visibility || 'WebAndPDF'
             });
 
             if (paragraph.SubDocuments) {

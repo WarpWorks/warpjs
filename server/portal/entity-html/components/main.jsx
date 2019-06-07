@@ -13,10 +13,14 @@ const STYLE = `
       margin-right: 15px;
     }
 
+    .back-to-toc {
+      margin-left: 15px;
+    }
+
     .sub-document {
-      margin-left: 10px;
-      padding-left: 10px;
-      border-left: thin solid;
+      /* margin-left: 10px; */
+      /* padding-left: 10px; */
+      /* border-left: thin solid; */
     }
 
     .title {
@@ -26,7 +30,7 @@ const STYLE = `
     }
 
     .content-section {
-      padding-left: 10px;
+      /* padding-left: 10px; */
     }
 
     .community-item {

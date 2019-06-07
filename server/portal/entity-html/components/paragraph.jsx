@@ -3,7 +3,9 @@ import React from 'react';
 
 import BackToToc from './back-to-toc';
 import Content from './content';
+import TocNumber from './toc-number';
 
+const constants = require('./../../entity-pdf/constants');
 // import _debug from './debug'; const debug = _debug('paragraph');
 
 const Component = (props) => {
@@ -14,10 +16,21 @@ const Component = (props) => {
         subDocumentContent = props.item._embedded.items.map((item) => {
             // debug(`subDocumentContent item=`, item);
 
+            const subContent = item.type === constants.TYPES.PARAGRAPH
+                ? <Component item={item} />
+                : item._embedded
+                    ? <Content items={item._embedded.items} />
+                    : null
+            ;
+
             return (
                 <div key={item.id} className="sub-document" id={`section-${item.tocNumber}`}>
-                    <div className="title">{item.tocNumber} {item.name} <BackToToc item={item} /></div>
-                    <Content items={item._embedded.items} />
+                    <div className="title">
+                        <TocNumber item={item} />
+                        {item.name || item.heading}
+                        <BackToToc item={item} />
+                    </div>
+                    {subContent}
                 </div>
             );
         });

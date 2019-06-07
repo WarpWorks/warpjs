@@ -1,6 +1,15 @@
 // const debug = require('./debug')('generate-toc-numbers');
-const generateTocNumbersForDocumentItems = require('./generate-toc-numbers-for-document-items');
+const setTocNumber = require('./set-toc-number');
 
-module.exports = (resource) => {
-    generateTocNumbersForDocumentItems(resource._embedded.items);
+const generateTocNumbers = (items, parentVersion) => {
+    if (items) {
+        items.forEach((item, index) => {
+            const newParentVersion = setTocNumber(item, parentVersion, index + 1);
+            if (item._embedded) {
+                generateTocNumbers(item._embedded.items, newParentVersion);
+            }
+        });
+    }
 };
+
+module.exports = (resource) => generateTocNumbers(resource._embedded.items);
