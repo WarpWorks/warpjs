@@ -1,10 +1,11 @@
 // eslint-disable-next-line no-unused-vars
 import regeneratorRuntime from 'babel-regenerator-runtime';
-import ReactDOM from 'react-dom';
 
 import addGoogleAnalyticsIfNeeded from './add-google-analytics-if-needed';
-import followDocument from './follow-document';
-import IndividualContributionHeader from './individual-contribution-header';
+import createNewVersion from './../react-apps/create-new-version';
+import followDocument from './../react-apps/follow-document';
+import individualContributionHeader from './../react-apps/individual-contribution-header';
+import reducers from './../components/reducers';
 import userProfileMenu from './../react-apps/user-profile-menu';
 
 /// import _debug from './debug'; const debug = _debug('index');
@@ -33,6 +34,11 @@ const template = require('./template.hbs');
         if (result.error) {
             $(window.WarpJS.CONTENT_PLACEHOLDER).html(window.WarpJS.error(result.data));
         } else {
+            // Get everything ready for React.
+            window.WarpJS.ReactUtils.initReactBootstrapDisplayNames();
+            window.WarpJS.STORE = window.WarpJS.ReactUtils.createStore(reducers, {}, [], process.env.NODE_ENV === 'development');
+            window.WarpJS.PAGE_HAL = window.WarpJS.flattenHAL(result.data);
+
             $(window.WarpJS.CONTENT_PLACEHOLDER).html(template(result.data));
 
             if (result.data && result.data._embedded && result.data._embedded.pages) {
@@ -51,14 +57,7 @@ const template = require('./template.hbs');
 
                 preview($);
 
-                const state = window.WarpJS.flattenHAL(result.data);
-
-                window.WarpJS.ReactUtils.initReactBootstrapDisplayNames();
-
-                const individualContributionHeaderPlaceholder = document.getElementById('warpjs-individual-contribution-header-placeholder');
-                if (individualContributionHeaderPlaceholder) {
-                    ReactDOM.render(<IndividualContributionHeader page={state.pages[0]} />, individualContributionHeaderPlaceholder);
-                }
+                individualContributionHeader();
             }
 
             panelItems($);
@@ -76,8 +75,10 @@ const template = require('./template.hbs');
             // React components.
             followDocument($, result.data);
             userProfileMenu($, result.data);
+            createNewVersion();
         }
     } catch (err) {
+        // eslint-disable-next-line no-console
         console.error("Error processing response:", err);
         window.WarpJS.toast.error($, err.message, "Error processing response");
     }

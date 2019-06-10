@@ -1,6 +1,7 @@
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 
 const acceptCookies = require('./accept-cookies');
+const createNewVersion = require('./create-new-version');
 const entityHtml = require('./entity-html');
 const entityPdf = require('./entity-pdf');
 const feedback = require('./feedback');
@@ -23,6 +24,7 @@ module.exports = (baseUrl) => {
     routesInfo.route(routes.portal.entity, '/{type}/{id}{?view,style}', instance);
     routesInfo.route(routes.portal.entityHtml, '/{type}/{id}/html{?viewName}', entityHtml);
     routesInfo.route(routes.portal.entityPdf, '/{type}/{id}/pdf{?viewName}', entityPdf);
+    routesInfo.route(routes.portal.createNewVersion, '/{type}/{id}/new-version', createNewVersion);
     routesInfo.route(routes.portal.follow, '/{type}/{id}/follow-document/{yesno}', followDocument);
     routesInfo.route(routes.portal.preview, '/{type}/{id}/preview', preview);
 

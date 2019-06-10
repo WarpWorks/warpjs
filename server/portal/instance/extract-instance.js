@@ -39,6 +39,11 @@ module.exports = async (req, res, type, id, pageViewName) => {
             title: "Unfollow this page",
             href: RoutesInfo.expand(routes.portal.follow, { type, id, yesno: 'no' })
         });
+
+        resource.link('createNewVersion', {
+            href: RoutesInfo.expand(routes.portal.createNewVersion, { type, id }),
+            title: `Create a new version`
+        });
     }
 
     warpjsUtils.wrapWith406(res, {
