@@ -31,6 +31,7 @@ module.exports = ($, modal, event, items) => {
                                 level: "H1",
                                 name: newParagraph.Heading,
                                 position: 0,
+                                visibility: newParagraph.Visibility,
                                 reference: {
                                     type: $(element).data('warpjsReferenceType'),
                                     id: $(element).data('warpjsReferenceId'),

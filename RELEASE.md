@@ -5,6 +5,10 @@
 - [Releases 1.0.x](RELEASE-1.0.md) from 2017-05-31 to 2017-06-10
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
+## 1.3.113 - 2019-06-12
+
+- #244 update: Set default visibility of new paragraph created by inline editor.
+
 ## 1.3.112 - 2019-06-07
 
 - #244: Inline editor: visibility dropdown functionality, image to paragraph limit to 1 on server side.
