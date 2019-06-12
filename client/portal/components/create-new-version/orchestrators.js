@@ -1,18 +1,17 @@
 import * as actionCreators from './action-creators';
 import { NAME } from './constants';
 
-import _debug from './debug'; const debug = _debug('orchestrators');
+// import _debug from './debug'; const debug = _debug('orchestrators');
 
 export const createVersion = async (dispatch, url, nextVersion) => {
-    debug(`createVersion(): url=${url}; nextVersion=${nextVersion}`);
     const toastLoading = await window.WarpJS.toast.loading($, `Creating version '${nextVersion}'...`, "Creating...");
     try {
         const res = await window.WarpJS.proxy.post($, url, { nextVersion });
-        debug(`res=`, res);
         await window.WarpJS.toast.success($, "Done");
         window.location.href = res._links.newVersion.href;
     } catch (err) {
-        await window.WarpJS.toast.error($, err.message, `Error creating version '${nextVersion}'`)
+        const message = err && err.responseJSON ? err.responseJSON.message : 'Unknown';
+        await window.WarpJS.toast.error($, message, `Error creating version '${nextVersion}'`)
     } finally {
         window.WarpJS.toast.close($, toastLoading);
     }
