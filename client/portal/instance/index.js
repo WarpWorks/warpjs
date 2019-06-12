@@ -2,6 +2,7 @@
 import regeneratorRuntime from 'babel-regenerator-runtime';
 
 import addGoogleAnalyticsIfNeeded from './add-google-analytics-if-needed';
+import { init as pageHalInit } from './../components/page-hal/action-creators';
 import createNewVersion from './../react-apps/create-new-version';
 import followDocument from './../react-apps/follow-document';
 import individualContributionHeader from './../react-apps/individual-contribution-header';
@@ -38,6 +39,7 @@ const template = require('./template.hbs');
             window.WarpJS.ReactUtils.initReactBootstrapDisplayNames();
             window.WarpJS.STORE = window.WarpJS.ReactUtils.createStore(reducers, {}, [], process.env.NODE_ENV === 'development');
             window.WarpJS.PAGE_HAL = window.WarpJS.flattenHAL(result.data);
+            window.WarpJS.STORE.dispatch(pageHalInit(window.WarpJS.PAGE_HAL));
 
             $(window.WarpJS.CONTENT_PLACEHOLDER).html(template(result.data));
 
