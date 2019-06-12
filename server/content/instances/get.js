@@ -21,7 +21,8 @@ function documentMapper(persistence, entity, domain, instance) {
             type: instance.type,
             name: entity.getDisplayName(instance),
             description: instance.Description,
-            status: instance.Status
+            status: instance.Status,
+            version: instance.Version
         }))
         .then((resource) => Promise.resolve()
             .then(() => resource.link('portal', RoutesInfo.expand('entity', {
