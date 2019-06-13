@@ -4,6 +4,7 @@ import regeneratorRuntime from 'babel-regenerator-runtime';
 import addGoogleAnalyticsIfNeeded from './add-google-analytics-if-needed';
 import { init as pageHalInit } from './../components/page-hal/action-creators';
 import createNewVersion from './../react-apps/create-new-version';
+import documentEdition from './../react-apps/document-edition';
 import followDocument from './../react-apps/follow-document';
 import individualContributionHeader from './../react-apps/individual-contribution-header';
 import reducers from './../components/reducers';
@@ -78,6 +79,7 @@ const template = require('./template.hbs');
             followDocument($, result.data);
             userProfileMenu($, result.data);
             createNewVersion();
+            documentEdition();
         }
     } catch (err) {
         // eslint-disable-next-line no-console

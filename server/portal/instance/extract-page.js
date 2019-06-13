@@ -47,7 +47,10 @@ module.exports = async (req, persistence, entity, instance, pageViewName) => {
         name: entity.getDisplayName(instance),
         isHomePage: entity.name === config.domainName,
         hasGA: config.analytics && config.analytics.apiKey,
-        version: instance.Version || '1.0' // FIXME: Use BasicProperty.
+        version: instance.Version || '1.0', // FIXME: Use BasicProperty.
+        description: instance.Description,
+        keywords: instance.Keywords,
+        authors: instance.Author
 
     });
 

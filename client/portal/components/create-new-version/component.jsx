@@ -31,7 +31,7 @@ const Component = (props) => {
 
     return (
         <Fragment>
-            <span className={CLASSNAMES} title="Create new version" onClick={() => props.showModal()}>
+            <span className={CLASSNAMES} title="Create new version" onClick={props.showModal}>
                 <Glyphicon glyph="duplicate" />
                 New version
             </span>
