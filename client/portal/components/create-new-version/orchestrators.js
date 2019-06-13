@@ -1,5 +1,4 @@
 import * as actionCreators from './action-creators';
-import { NAME } from './constants';
 
 // import _debug from './debug'; const debug = _debug('orchestrators');
 
@@ -17,8 +16,8 @@ export const createVersion = async (dispatch, url, nextVersion) => {
     }
 };
 
-export const hideModal = async (dispatch) => {
-    await window.WarpJS.ReactComponents.hideModalContainer(dispatch, NAME);
+export const hide = (dispatch) => {
+    dispatch(actionCreators.hide());
     resetVersion(dispatch);
 };
 
@@ -26,8 +25,8 @@ export const resetVersion = (dispatch) => {
     dispatch(actionCreators.resetVersion());
 };
 
-export const showModal = async (dispatch, url) => {
-    await window.WarpJS.ReactComponents.showModalContainer(dispatch, NAME);
+export const show = (dispatch) => {
+    dispatch(actionCreators.show());
 };
 
 export const updateVersion = (dispatch, event) => {

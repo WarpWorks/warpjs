@@ -1,6 +1,6 @@
 import Component from './component';
 import namespace from './namespace';
-import { createVersion, hideModal, resetVersion, showModal, updateVersion } from './orchestrators';
+import { createVersion, hide, resetVersion, show, updateVersion } from './orchestrators';
 import pageHalNamespace from './../page-hal/namespace';
 
 // import _debug from './debug'; const debug = _debug('container');
@@ -41,8 +41,8 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => Object.freeze({
-    showModal: (url) => async () => showModal(dispatch, url),
-    hideModal: async () => hideModal(dispatch),
+    show: () => show(dispatch),
+    hide: () => hide(dispatch),
     createVersion: (url, nextVersion) => async () => createVersion(dispatch, url, nextVersion),
     resetVersion: () => resetVersion(dispatch),
     updateVersion: (newValue) => updateVersion(dispatch, newValue),
@@ -52,7 +52,6 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => Object.freeze({
     ...stateProps,
     ...dispatchProps,
     createVersion: dispatchProps.createVersion(stateProps.url, stateProps.nextVersion),
-    showModal: dispatchProps.showModal(stateProps.url),
     ...ownProps
 });
 
