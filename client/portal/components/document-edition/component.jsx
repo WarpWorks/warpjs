@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { Fragment } from 'react';
 import { ControlLabel, Form, FormControl, FormGroup, Glyphicon } from 'react-bootstrap';
 
+import CreateNewVersion from './../create-new-version';
 import { NAME } from './constants';
 
 const ModalContainer = window.WarpJS.ReactComponents.ModalContainer;
@@ -46,7 +47,7 @@ const Component = (props) => {
 
                     <FormGroup controlId={PROPERTIES.VERSION}>
                         <ControlLabel>Version:</ControlLabel>
-                        <FormControl.Static>{props.page.version}</FormControl.Static>
+                        <FormControl.Static>{props.page.version} <CreateNewVersion /></FormControl.Static>
                     </FormGroup>
 
                     <FormGroup controlId={PROPERTIES.STATUS}>

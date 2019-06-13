@@ -1,16 +1,11 @@
-import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import { Fragment } from 'react';
 import { ControlLabel, Form, FormControl, FormGroup, Glyphicon, InputGroup } from 'react-bootstrap';
 
 import { NAME } from './constants';
 
+const Button = window.WarpJS.ReactComponents.Button;
 const ModalContainer = window.WarpJS.ReactComponents.ModalContainer;
-
-const CLASSNAMES = classnames(
-    'warpjs-breadcrumb-action-button',
-    'warpjs-breadcrumb-action-button-with-label'
-);
 
 const Component = (props) => {
     if (!props.url) {
@@ -31,10 +26,7 @@ const Component = (props) => {
 
     return (
         <Fragment>
-            <span className={CLASSNAMES} title="Create new version" onClick={props.showModal}>
-                <Glyphicon glyph="duplicate" />
-                New version
-            </span>
+            <Button label="New version" glyph="duplicate" style="primary" onClick={props.showModal} />
             <ModalContainer id={NAME} size="small" title="Create new version of document" footerButtons={buttons}>
                 <div>
                     <p>
