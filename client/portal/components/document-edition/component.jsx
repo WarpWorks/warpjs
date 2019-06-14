@@ -5,7 +5,7 @@ import { ControlLabel, Form, FormControl, FormGroup, Glyphicon } from 'react-boo
 import CreateNewVersion from './../create-new-version';
 import { NAME } from './constants';
 
-const ModalContainer = window.WarpJS.ReactComponents.ModalContainer;
+const { AutoSaveField, ModalContainer } = window.WarpJS.ReactComponents;
 
 const PROPERTIES = {
     AUTHOR: 'document-edition-property-author',
@@ -42,7 +42,12 @@ const Component = (props) => {
                 <Form>
                     <FormGroup controlId={PROPERTIES.TITLE}>
                         <ControlLabel>Title:</ControlLabel>
-                        <FormControl type="text" value={props.page.name} placeholder="Enter document name" />
+                        <AutoSaveField componentId={PROPERTIES.TITLE}
+                            placeholder="Enter document name"
+                            value={props.page.name}
+                            changed={(event) => props.updateValue('name', event.target.value)}
+                            save={() => props.saveValue('name', props.page.name)}
+                        />
                     </FormGroup>
 
                     <FormGroup controlId={PROPERTIES.VERSION}>
@@ -57,17 +62,32 @@ const Component = (props) => {
 
                     <FormGroup controlId={PROPERTIES.DESCRIPTION}>
                         <ControlLabel>Description:</ControlLabel>
-                        <FormControl type="text" value={props.page.description} />
+                        <AutoSaveField componentId={PROPERTIES.DESCRIPTION}
+                            placeholder="Enter SEO description for document"
+                            value={props.page.description}
+                            changed={(event) => props.updateValue('description', event.target.value)}
+                            save={() => props.saveValue('description', props.page.name)}
+                        />
                     </FormGroup>
 
                     <FormGroup controlId={PROPERTIES.KEYWORDS}>
                         <ControlLabel>Keywords:</ControlLabel>
-                        <FormControl type="text" value={props.page.keywords} />
+                        <AutoSaveField componentId={PROPERTIES.KEYWORDS}
+                            placeholder="Enter SEO keywords for document"
+                            value={props.page.keywords}
+                            changed={(event) => props.updateValue('keywords', event.target.value)}
+                            save={() => props.saveValue('keywords', props.page.name)}
+                        />
                     </FormGroup>
 
                     <FormGroup controlId={PROPERTIES.AUTHOR}>
-                        <ControlLabel>Authors:</ControlLabel>
-                        <FormControl type="text" value={props.page.author} />
+                        <ControlLabel>Authors: (leave blank to auto-generate from associated authors)</ControlLabel>
+                        <AutoSaveField componentId={PROPERTIES.AUTHOR}
+                            placeholder="Enter SEO author for document (comma-separated)"
+                            value={props.page.author}
+                            changed={(event) => props.updateValue('author', event.target.value)}
+                            save={() => props.saveValue('author', props.page.name)}
+                        />
                     </FormGroup>
                 </Form>
             </ModalContainer>
@@ -80,7 +100,9 @@ Component.displayName = NAME;
 Component.propTypes = {
     hideModal: PropTypes.func.isRequired,
     page: PropTypes.object,
-    showModal: PropTypes.func.isRequired
+    saveValue: PropTypes.func.isRequired,
+    showModal: PropTypes.func.isRequired,
+    updateValue: PropTypes.func.isRequired,
 };
 
 export default window.WarpJS.ReactUtils.errorBoundary(Component);

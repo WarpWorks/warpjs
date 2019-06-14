@@ -1,12 +1,16 @@
+import extend from 'lodash/extend';
+
 import pageHalNamespace from './../page-hal/namespace';
 import Component from './component';
 import namespace from './namespace';
-import { hideModal, showModal } from './orchestrators';
 
-const getSubstate = window.WarpJS.ReactUtils.getNamespaceSubstate;
+import { orchestrators } from './flux';
+
+const { getNamespaceSubstate } = window.WarpJS.ReactUtils;
+const { hideModal, saveValue, showModal, updateValue } = orchestrators;
 
 const mapStateToProps = (state, ownProps) => {
-    const pageHalSubstate = getSubstate(state, pageHalNamespace);
+    const pageHalSubstate = getNamespaceSubstate(state, pageHalNamespace);
 
     if (pageHalSubstate.warpjsUser &&
         pageHalSubstate.pages &&
@@ -14,11 +18,13 @@ const mapStateToProps = (state, ownProps) => {
         pageHalSubstate.pages[0]._links &&
         pageHalSubstate.pages[0]._links.edit) {
 
-        const page = pageHalSubstate.pages[0];
+        const substate = getNamespaceSubstate(state, namespace);
+
+        const page = extend({}, pageHalSubstate.pages[0], substate.editedValues);
 
         return {
             page,
-            ...getSubstate(state, namespace),
+            ...substate
         };
 
     } else {
@@ -29,11 +35,14 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => Object.freeze({
     hideModal: async () => hideModal(dispatch),
     showModal: async () => showModal(dispatch),
+    saveValue: (url) => async (key, value) => saveValue(dispatch, url, key, value),
+    updateValue: (key, value) => updateValue(dispatch, key, value)
 });
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => Object.freeze({
     ...stateProps,
     ...dispatchProps,
+    saveValue: dispatchProps.saveValue(stateProps.page._links.self.href),
     ...ownProps
 });
 
