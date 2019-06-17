@@ -21,12 +21,13 @@ const Component = (props) => {
             </Fragment>
         );
     } else {
-        content = (
-            <Fragment>
-                <FormControl.Static>{props.version}</FormControl.Static>
-                <InputGroup.Button><Button label="New version" glyph="duplicate" style="primary" onClick={props.show} /></InputGroup.Button>
-            </Fragment>
-        );
+        // content = (
+        //     <Fragment>
+        //         <FormControl.Static>{props.version}</FormControl.Static>
+        //         <InputGroup.Button><Button label="New version" glyph="duplicate" style="primary" onClick={props.show} /></InputGroup.Button>
+        //     </Fragment>
+        // );
+        content = <FormControl.Static>{props.version}</FormControl.Static>
     }
 
     return (

@@ -3,7 +3,10 @@ module.exports = {
         fix: true,
         useEslintrc: false,
         parserOptions: {
-            ecmaVersion: 8
+            ecmaVersion: 8,
+            ecmaFeatures: {
+                experimentalObjectRestSpread: true
+            }
         }
     },
     node: {

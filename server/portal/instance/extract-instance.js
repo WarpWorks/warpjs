@@ -11,8 +11,8 @@ const usersByRelationship = require('./../resources/users-by-relationship');
 const config = serverUtils.getConfig();
 
 const getAuthors = async (persistence, entity, instance) => {
-    if (instance.author) {
-        return instance.author;
+    if (instance.Author) {
+        return instance.Author;
     }
 
     const authorRelationship = entity.getRelationshipByName('Authors');

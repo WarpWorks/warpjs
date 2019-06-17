@@ -50,7 +50,7 @@ module.exports = async (req, persistence, entity, instance, pageViewName) => {
         version: instance.Version || '1.0', // FIXME: Use BasicProperty.
         description: instance.Description,
         keywords: instance.Keywords,
-        authors: instance.Author
+        author: instance.Author
 
     });
 
