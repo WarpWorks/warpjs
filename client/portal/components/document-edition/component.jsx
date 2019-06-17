@@ -40,7 +40,7 @@ const Component = (props) => {
             <Glyphicon glyph="cog" className="warpjs-breadcrumb-action-button" onClick={props.showModal} />
             <ModalContainer id={NAME} title="Document properties" footerButtons={buttons}>
                 <Form>
-                    <FormGroup controlId={PROPERTIES.TITLE}>
+                    <FormGroup controlId={PROPERTIES.TITLE} className={`warpjs-${PROPERTIES.TITLE}`}>
                         <ControlLabel>Title:</ControlLabel>
                         <AutoSaveField componentId={PROPERTIES.TITLE}
                             placeholder="Enter document name"
@@ -50,17 +50,17 @@ const Component = (props) => {
                         />
                     </FormGroup>
 
-                    <FormGroup controlId={PROPERTIES.VERSION}>
+                    <FormGroup controlId={PROPERTIES.VERSION} className={`warpjs-${PROPERTIES.VERSION}`}>
                         <ControlLabel>Version:</ControlLabel>
-                        <FormControl.Static>{props.page.version} <CreateNewVersion /></FormControl.Static>
+                        <CreateNewVersion version={props.page.version} />
                     </FormGroup>
 
-                    <FormGroup controlId={PROPERTIES.STATUS}>
+                    <FormGroup controlId={PROPERTIES.STATUS} className={`warpjs-${PROPERTIES.STATUS}`}>
                         <ControlLabel>Status:</ControlLabel>
                         <FormControl.Static>{props.page.status.documentStatus}</FormControl.Static>
                     </FormGroup>
 
-                    <FormGroup controlId={PROPERTIES.DESCRIPTION}>
+                    <FormGroup controlId={PROPERTIES.DESCRIPTION} className={`warpjs-${PROPERTIES.DESCRIPTION}`}>
                         <ControlLabel>Description:</ControlLabel>
                         <AutoSaveField componentId={PROPERTIES.DESCRIPTION}
                             placeholder="Enter SEO description for document"
@@ -70,7 +70,7 @@ const Component = (props) => {
                         />
                     </FormGroup>
 
-                    <FormGroup controlId={PROPERTIES.KEYWORDS}>
+                    <FormGroup controlId={PROPERTIES.KEYWORDS} className={`warpjs-${PROPERTIES.KEYWORDS}`}>
                         <ControlLabel>Keywords:</ControlLabel>
                         <AutoSaveField componentId={PROPERTIES.KEYWORDS}
                             placeholder="Enter SEO keywords for document"
@@ -80,7 +80,7 @@ const Component = (props) => {
                         />
                     </FormGroup>
 
-                    <FormGroup controlId={PROPERTIES.AUTHOR}>
+                    <FormGroup controlId={PROPERTIES.AUTHOR} className={`warpjs-${PROPERTIES.AUTHOR}`}>
                         <ControlLabel>Authors: (leave blank to auto-generate from associated authors)</ControlLabel>
                         <AutoSaveField componentId={PROPERTIES.AUTHOR}
                             placeholder="Enter SEO author for document (comma-separated)"
