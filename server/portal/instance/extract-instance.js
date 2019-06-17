@@ -6,8 +6,21 @@ const extractPage = require('./extract-page');
 const routes = require('./../../../lib/constants/routes');
 const serverUtils = require('./../../utils');
 const User = require('./../../../lib/core/first-class/user');
+const usersByRelationship = require('./../resources/users-by-relationship');
 
 const config = serverUtils.getConfig();
+
+const getAuthors = async (persistence, entity, instance) => {
+    if (instance.author) {
+        return instance.author;
+    }
+
+    const authorRelationship = entity.getRelationshipByName('Authors');
+    if (authorRelationship) {
+        const userResources = await usersByRelationship(persistence, authorRelationship, instance);
+        return userResources.map((userResource) => userResource.label).join(', ');
+    }
+};
 
 module.exports = async (req, res, type, id, pageViewName) => {
     // debug(`type=${type}, id=${id}, pageViewName=${pageViewName}`);
@@ -53,7 +66,11 @@ module.exports = async (req, res, type, id, pageViewName) => {
                 const entity = await serverUtils.getEntity(null, type);
                 const instance = await entity.getInstance(persistence, id);
 
-                await warpjsUtils.sendPortalIndex(req, res, RoutesInfo, instance ? instance.Name : 'Entity', 'portal');
+                await warpjsUtils.sendPortalIndex(req, res, RoutesInfo, instance ? instance.Name : 'Entity', 'portal', undefined, {
+                    description: instance.Description,
+                    keywords: instance.Keywords,
+                    author: await getAuthors(persistence, entity, instance)
+                });
             } finally {
                 persistence.close();
             }
