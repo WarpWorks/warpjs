@@ -18,8 +18,8 @@ module.exports = async (req, res) => {
     try {
         const documentResource = await extractDocument(req, persistence, type, id, viewName);
         if (documentResource) {
-            debug(`Need generate pdf from content. documentResource=`, documentResource);
             // FIXME: Send PDF file.
+            resource.embed('pages', documentResource);
             warpjsUtils.sendHal(req, res, resource, RoutesInfo);
         } else {
             throw new Error(`Document '${type}/${id}' is not visible.`);
