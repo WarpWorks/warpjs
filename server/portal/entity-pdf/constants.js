@@ -3,5 +3,6 @@ module.exports = Object.freeze({
     TYPES: Object.freeze({
         COMMUNITY: 'RESERVED-TYPE-COMMUNITY',
         PARAGRAPH: 'Paragraph'
-    })
+    }),
+    MAX_TOC_DEEP_LEVEL: 10
 });

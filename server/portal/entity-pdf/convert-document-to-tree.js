@@ -3,11 +3,9 @@ const warpjsUtils = require('@warp-works/warpjs-utils');
 // const debug = require('./debug')('convert-document-to-tree');
 const rebuildItemsTree = require('./rebuild-items-tree');
 
-const MAX_DEEP_LEVEL = 7;
+const { MAX_TOC_DEEP_LEVEL } = require('./constants');
 
-module.exports = (resource, deepLevelsRemaining = MAX_DEEP_LEVEL) => {
-    // debug(`resource=`, resource);
-
+module.exports = (resource, tocLevel = 1) => {
     const newResource = warpjsUtils.createResource(resource._links.self.href, {
         type: resource.type,
         typeID: resource.typeID,
@@ -17,8 +15,8 @@ module.exports = (resource, deepLevelsRemaining = MAX_DEEP_LEVEL) => {
         status: resource.status
     });
 
-    if (resource._embedded && resource._embedded.items) {
-        newResource.embed('items', rebuildItemsTree(resource._embedded.items, 1, 0, deepLevelsRemaining));
+    if ((tocLevel < MAX_TOC_DEEP_LEVEL) && resource._embedded && resource._embedded.items) {
+        newResource.embed('items', rebuildItemsTree(resource._embedded.items, 1, 0, tocLevel));
     }
 
     return newResource;
