@@ -1,9 +1,32 @@
+const Writable = require('stream').Writable;
+
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
-const debug = require('./debug')('generate-pdf');
+const debug = require('./debug')('get');
 const extractDocument = require('./extract-document');
+const generatePdf = require('./generate-pdf');
 const serverUtils = require('./../../utils');
+
+const createWriteStream = (res) => {
+    const ws = new Writable();
+
+    ws._write = (chunk, enc, cb) => {
+        res.write(chunk);
+        cb();
+    };
+
+    ws.on('finish', () => {
+        res.end();
+    });
+
+    return ws;
+};
+
+const generatePdfFilename = (documentResource) => {
+    const name = documentResource.name.replace(/\W+/g, '-').toLowerCase();
+    return `${name}-v${documentResource.version}`;
+};
 
 module.exports = async (req, res) => {
     const { type, id } = req.params;
@@ -20,7 +43,16 @@ module.exports = async (req, res) => {
         if (documentResource) {
             // FIXME: Send PDF file.
             resource.embed('pages', documentResource);
-            warpjsUtils.sendHal(req, res, resource, RoutesInfo);
+            const pdfDoc = await generatePdf(documentResource);
+
+            const ws = createWriteStream(res);
+
+            res.set('Content-Disposition', `attachment; filename=${generatePdfFilename(documentResource)}.pdf`);
+
+            res.type('appplication/pdf');
+            res.status(200);
+            pdfDoc.pipe(ws);
+            pdfDoc.end();
         } else {
             throw new Error(`Document '${type}/${id}' is not visible.`);
         }

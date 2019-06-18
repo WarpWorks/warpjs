@@ -11,8 +11,12 @@ module.exports = (resource, tocLevel = 1) => {
         typeID: resource.typeID,
         id: resource.id,
         name: resource.name,
+        version: resource.version,
         lastUpdated: resource.lastUpdated,
-        status: resource.status
+        status: resource.status,
+        description: resource.description,
+        keywords: resource.keywords,
+        author: resource.author
     });
 
     if ((tocLevel < MAX_TOC_DEEP_LEVEL) && resource._embedded && resource._embedded.items) {

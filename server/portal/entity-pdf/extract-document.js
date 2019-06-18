@@ -26,8 +26,12 @@ module.exports = async (req, persistence, type, id, viewName, level = 0) => {
         typeID: document.typeID || entity.id,
         id: document.id,
         name: document.Name,
+        version: document.Version || '1.0',
         lastUpdated: document.lastUpdated,
-        status: document.Status
+        status: document.Status,
+        description: document.Description,
+        keywords: document.Keywords,
+        author: await Document.getAuthors(persistence, entity, document)
     }, req);
 
     if (!level) {
