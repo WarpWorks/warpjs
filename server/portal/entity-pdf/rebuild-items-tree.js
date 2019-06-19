@@ -49,6 +49,11 @@ const rebuildItemsTree = (items, level, index, tocLevel) => {
 
             cumulator.push(currentSameLevelElement);
         } else if (currentLevel === level + 1) {
+            if (!currentSameLevelElement) {
+                // Mismatch of levels.
+                continue;
+            }
+
             // Find all the elements that are consecutives, and lower than the
             // current level.
             const childLevelElement = warpjsUtils.createResource('', {
