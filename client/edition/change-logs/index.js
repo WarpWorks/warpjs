@@ -1,7 +1,8 @@
 const moment = require('moment');
-const Promise = require('bluebird');
 
 const bodyTemplate = require('./modal-body.hbs');
+
+const { proxy, toast } = window.WarpJS;
 
 const constants = {
     ACTION_SELECTOR: '[data-warpjs-action="change-logs"]',
@@ -12,30 +13,32 @@ const constants = {
 
 class ChangeLogs {
     static init($, instanceDoc) {
-        instanceDoc.on('click', constants.ACTION_SELECTOR, function() {
-            Promise.resolve()
-                .then(() => ChangeLogs.isDirty
-                    ? Promise.resolve()
-                        .then(() => window.WarpJS.toast.loading($, "Updating change logs...", constants.TOAST_TITLE))
-                        .then((toastLoading) => Promise.resolve()
-                            .then(() => window.WarpJS.proxy.get($, $(this).data('warpjsUrl'), true))
-                            .then((res) => bodyTemplate({ changeLogs: res._embedded.changeLogs }))
-                            .then((content) => $(`${constants.MODAL_SELECTOR} .modal-body`, instanceDoc).html(content))
-                            .then(() => window.WarpJS.toast.close($, toastLoading))
-                        )
-                    : null
-                )
-                .then(() => {
-                    // Make sure to update the time before displaying.
-                    $(`${constants.MODAL_SELECTOR} .warpjs-change-log-date-value`, instanceDoc).each((index, element) => {
-                        const timestamp = $(element).data('warpjsTimestamp');
-                        $(element).text(moment(timestamp).fromNow());
-                    });
-                })
-                .then(() => $(constants.MODAL_SELECTOR, instanceDoc).modal('show'))
-                .then(() => ChangeLogs.clean())
-                .catch(() => window.WarpJS.toast.error($, "Trouble getting the change logs", constants.TOAST_TITLE))
-            ;
+        instanceDoc.on('click', constants.ACTION_SELECTOR, async () => {
+            try {
+                if (ChangeLogs.isDirty) {
+                    const toastLoading = toast.loading($, "Updating change logs...", constants.TOAST_TITLE);
+                    try {
+                        const res = await proxy.get($, $(this).data('warpjsUrl'), true);
+                        const content = bodyTemplate({ changeLogs: res._embedded.changeLogs });
+                        $(`${constants.MODAL_SELECTOR} .modal-body`, instanceDoc).html(content);
+                    } catch (err) {
+                        throw err;
+                    } finally {
+                        toast.close($, toastLoading);
+                    }
+                }
+
+                // Make sure to update the time before displaying.
+                $(`${constants.MODAL_SELECTOR} .warpjs-change-log-date-value`, instanceDoc).each((index, element) => {
+                    const timestamp = $(element).data('warpjsTimestamp');
+                    $(element).text(moment(timestamp).fromNow());
+                });
+
+                $(constants.MODAL_SELECTOR, instanceDoc).modal('show');
+                ChangeLogs.clean();
+            } catch (err) {
+                toast.error($, "Trouble getting the change logs", constants.TOAST_TITLE);
+            }
         });
     }
 
