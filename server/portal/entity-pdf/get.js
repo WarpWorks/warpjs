@@ -3,7 +3,7 @@ const Writable = require('stream').Writable;
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
-const debug = require('./debug')('get');
+// const debug = require('./debug')('get');
 const extractDocument = require('./extract-document');
 const generatePdf = require('./generate-pdf');
 const serverUtils = require('./../../utils');
