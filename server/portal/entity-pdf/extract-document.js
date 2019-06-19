@@ -51,17 +51,17 @@ module.exports = async (req, persistence, type, id, viewName, level = 0) => {
 
         const editorResources = await extractCommunity(req, persistence, entity, document, 'Editors');
         if (editorResources) {
-            resource.embed('items', editorResources);
+            resource.embed('editors', editorResources);
         }
 
         const authorsResource = await extractCommunity(req, persistence, entity, document, 'Authors');
         if (authorsResource) {
-            resource.embed('items', authorsResource);
+            resource.embed('authors', authorsResource);
         }
 
         const contributorsResource = await extractCommunity(req, persistence, entity, document, 'Contributors');
         if (contributorsResource) {
-            resource.embed('items', contributorsResource);
+            resource.embed('contributors', contributorsResource);
         }
 
         const newResource = convertDocumentToTree(resource);

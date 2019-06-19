@@ -7,7 +7,6 @@ const extractPage = require('./extract-page');
 const routes = require('./../../../lib/constants/routes');
 const serverUtils = require('./../../utils');
 const User = require('./../../../lib/core/first-class/user');
-const usersByRelationship = require('./../resources/users-by-relationship');
 
 const config = serverUtils.getConfig();
 

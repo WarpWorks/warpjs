@@ -7,6 +7,7 @@ const contentConstants = require('./../../content/constants');
 // const debug = require('./debug')('extract-page');
 const extractPageView = require('./extract-page-view');
 const headerImageByEntity = require('./../resources/header-image-by-entity');
+const routes = require('./../../../lib/constants/routes');
 const serverUtils = require('./../../utils');
 const targetPreviewsByEntity = require('./../resources/target-previews-by-entity');
 
@@ -52,6 +53,11 @@ module.exports = async (req, persistence, entity, instance, pageViewName) => {
         keywords: instance.Keywords,
         author: instance.Author
 
+    });
+
+    resource.link('pdfExport', {
+        href: RoutesInfo.expand(routes.portal.entityPdf, instance),
+        title: "Get the document in PDF"
     });
 
     // Breadcrumb
