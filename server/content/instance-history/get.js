@@ -20,7 +20,7 @@ module.exports = async (req, res) => {
             const persistence = serverUtils.getPersistence(domain);
 
             try {
-                const entity = serverUtils.getEntity(domain, type);
+                const entity = await serverUtils.getEntity(domain, type);
                 const instance = await entity.getInstance(persistence, id);
                 const changeLogs = await ChangeLogs.toFormResource(
                     instance,
