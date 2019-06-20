@@ -34,7 +34,6 @@ const oxfordComma = (items) => {
     }
 };
 
-
 module.exports = (documentResource) => {
     const year = (new Date()).getFullYear();
 
@@ -42,8 +41,9 @@ module.exports = (documentResource) => {
         text: `Copyright © ${year}, Industrial Internet Consortium`,
         pageBreak: 'before'
     }, {
-        text: 'ACKNOWLEDGEMENTS',
+        text: 'Acknowledgements',
         bold: true,
+        headlineLevel: 1,
     }, {
         text: "TODO: This document is a work product of the Industrial Internet Consortium (IIC) ...WG and its ...TG."
     }];
@@ -51,8 +51,8 @@ module.exports = (documentResource) => {
     if (documentResource._embedded) {
         if (documentResource._embedded.editors && documentResource._embedded.editors.length) {
             content.push({
-                text: 'EDITORS',
-                bold: true,
+                text: 'Editors',
+                bold: true
             });
 
             const names = extractUsers(documentResource._embedded.editors);
@@ -63,8 +63,8 @@ module.exports = (documentResource) => {
 
         if (documentResource._embedded.authors && documentResource._embedded.authors.length) {
             content.push({
-                text: 'AUTHORS',
-                bold: true,
+                text: 'Authors',
+                bold: true
             });
 
             content.push({
@@ -79,7 +79,7 @@ module.exports = (documentResource) => {
 
         if (documentResource._embedded.contributors && documentResource._embedded.contributors.length) {
             content.push({
-                text: 'CONTRIBUTORS',
+                text: 'Contributors',
                 bold: true
             });
 
