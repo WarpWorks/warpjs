@@ -1,7 +1,10 @@
-module.exports = (documentResource) => ({
+module.exports = (documentResource) => [{
+    text: '',
+    pageBreak: 'before',
+}, {
     toc: {
-        id: 'mainTod',
-        title: { text: 'INDEX', style: 'header' },
-        pageBreak: 'before'
-    }
-});
+        id: 'mainToc',
+        title: { text: 'Contents', style: 'header' },
+    },
+    headlineLevel: 1,
+}];

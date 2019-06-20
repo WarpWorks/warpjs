@@ -36,21 +36,20 @@ const FONTS = {
 module.exports = async (documentResource) => {
     const printer = new PdfMake(FONTS);
 
-    debug(`documentResource=`, documentResource);
-
     const generatedPages = pages(documentResource);
 
     const docDefinition = {
         defaultStyle: generatedPages.defaultStyle,
         styles: generatedPages.styles,
         footer: generatedPages.footer,
-        header: generatedPages.header,
+        header: (currentPage, pageCount, pageSize) => generatedPages.header(documentResource, currentPage, pageCount, pageSize, docDefinition),
         info: generatedPages.meta,
 
         content: []
             .concat(generatedPages.coverPage)
             .concat(generatedPages.acknowledgements)
-            //.concat(generatedPages.tableOfContents)
+            .concat(generatedPages.tableOfContents)
+            .concat(generatedPages.content)
     };
 
     const options = {
