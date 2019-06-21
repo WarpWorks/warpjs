@@ -1,4 +1,3 @@
-const { TOC_NAME } = require('./../constants');
 // const debug = require('./debug')('content');
 const itemElement = require('./item-element');
 
