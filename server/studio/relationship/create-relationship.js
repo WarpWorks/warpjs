@@ -69,6 +69,7 @@ function handleAggregation(req, res, resource, persistence, instanceData) {
 }
 
 function handleAssociation(req, res, resource, persistence, instanceData) {
+    console.log('got to handleAssociation');
     const { body } = req;
 
     const ACTION = actions.ADD_ASSOCIATION;
@@ -88,6 +89,8 @@ function handleEmbedded(req, res, resource, persistence, instanceData) {
     const { domain } = req.params;
 
     const ACTION = actions.ADD_EMBEDDED;
+
+    console.log('body.docLevel:::::', body.docLevel, 'instanceData.entity:::', instanceData.entity, 'instanceData.instance::::', instanceData.instance);
 
     return Promise.resolve()
         .then(() => logger(req, `Trying ${ACTION}`, body))

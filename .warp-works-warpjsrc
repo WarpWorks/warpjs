@@ -158,7 +158,8 @@
         "relevantLow": "Relevant_If_Low",
         "content": "Content",
         "surveyToolFeedback": "SurveyToolFeedback",
-        "email": "Email"
+        "email": "Email",
+        "persona": "Persona"
       }
     }
   }]
