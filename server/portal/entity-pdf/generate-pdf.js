@@ -1,7 +1,8 @@
 const PdfMake = require('pdfmake');
 const pdfFonts = require('pdfmake/build/vfs_fonts');
 
-const debug = require('./debug')('generate-pdf');
+const { PAGE_MARGIN, PAGE_HEADER_SIZE, PAGE_FOOTER_SIZE } = require('./constants');
+// const debug = require('./debug')('generate-pdf');
 const pages = require('./pages');
 
 PdfMake.vfs = pdfFonts.pdfMake.vfs;
@@ -39,6 +40,8 @@ module.exports = async (documentResource) => {
     const generatedPages = pages(documentResource);
 
     const docDefinition = {
+        pageMargins: [ PAGE_MARGIN, PAGE_MARGIN + PAGE_HEADER_SIZE, PAGE_MARGIN, PAGE_MARGIN + PAGE_FOOTER_SIZE ],
+
         defaultStyle: generatedPages.defaultStyle,
         styles: generatedPages.styles,
         footer: generatedPages.footer,

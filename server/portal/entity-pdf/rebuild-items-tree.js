@@ -40,6 +40,10 @@ const rebuildItemsTree = (items, level, index, tocLevel) => {
                 content: item.content
             });
 
+            if (item._embedded && item._embedded.images) {
+                currentSameLevelElement.embed('images', item._embedded.images);
+            }
+
             if (tocLevel < MAX_TOC_DEEP_LEVEL) {
                 if (item._embedded && item._embedded.items) {
                     const subDocumentResources = item._embedded.items.map((subDocument) => convertDocumentToTree(subDocument, tocLevel + 1));
@@ -64,6 +68,10 @@ const rebuildItemsTree = (items, level, index, tocLevel) => {
                 heading: item.heading,
                 content: item.content
             });
+
+            if (item._embedded && item._embedded.images) {
+                currentSameLevelElement.embed('images', item._embedded.images);
+            }
 
             currentSameLevelElement.embed('items', childLevelElement);
 

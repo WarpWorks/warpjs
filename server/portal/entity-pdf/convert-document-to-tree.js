@@ -31,6 +31,10 @@ module.exports = (resource, tocLevel = 1) => {
         newResource.embed('contributors', resource._embedded.contributors);
     }
 
+    if (resource._embedded.images) {
+        newResource.embed('images', resource._embedded.images);
+    }
+
     if ((tocLevel < MAX_TOC_DEEP_LEVEL) && resource._embedded && resource._embedded.items) {
         newResource.embed('items', rebuildItemsTree(resource._embedded.items, 1, 0, tocLevel));
     }

@@ -43,7 +43,7 @@ module.exports = (documentResource) => {
     }, {
         text: 'Acknowledgements',
         bold: true,
-        headlineLevel: 1,
+        headlineLevel: 1
     }, {
         text: "TODO: This document is a work product of the Industrial Internet Consortium (IIC) ...WG and its ...TG."
     }];

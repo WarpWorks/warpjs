@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import { TYPES } from './../../entity-pdf/constants';
 import BackToToc from './back-to-toc';
 import Content from './content';
 import TocNumber from './toc-number';
 
-const constants = require('./../../entity-pdf/constants');
 // import _debug from './debug'; const debug = _debug('paragraph');
+
 
 const Component = (props) => {
     // debug(`props=`, props);
@@ -16,7 +17,7 @@ const Component = (props) => {
         subDocumentContent = props.item._embedded.items.map((item) => {
             // debug(`subDocumentContent item=`, item);
 
-            const subContent = item.type === constants.TYPES.PARAGRAPH
+            const subContent = item.type === TYPES.PARAGRAPH
                 ? <Component item={item} />
                 : item._embedded
                     ? <Content items={item._embedded.items} />
@@ -34,6 +35,14 @@ const Component = (props) => {
                 </div>
             );
         });
+    }
+
+    let paragraphImage = null;
+    if (props.item._embedded && props.item._embedded.images) {
+        const image = props.item._embedded.images[0];
+        paragraphImage = (
+            <img src={image.base64} alt={image.caption} />
+        );
     }
 
     return (
