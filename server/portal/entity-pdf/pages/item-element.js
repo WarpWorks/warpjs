@@ -2,7 +2,7 @@ const { JSDOM } = require('jsdom');
 const htmlToPdfmake = require('html-to-pdfmake');
 
 const { DEFAULT_FONT_SIZE, DEFAULT_TOC_FONT_SIZE, FONT_SIZE, IMAGE_TOC_NAME, TOC_FONT_SIZE, TOC_NAME, TYPES } = require('./../constants');
-const debug = require('./debug')('item-element');
+// const debug = require('./debug')('item-element');
 
 const heading = (resource, headlineLevel) => {
     const fontSize = FONT_SIZE[headlineLevel] || DEFAULT_FONT_SIZE;
@@ -76,9 +76,34 @@ const itemElement = (resource, headlineLevel = 1) => {
             if (resource.content) {
                 const jsdomWindow = (new JSDOM('')).window;
                 const converted = htmlToPdfmake(resource.content, jsdomWindow);
-                elements.push({
-                    text: converted
-                });
+
+                // Let's separate the paragraph (double '\n') into their own.
+                // Abuse of `.reduce` to keep current value.
+                converted.reduce(
+                    (memo, segment, index, array) => {
+                        if (segment === '\n') {
+                            if (memo.length) {
+                                // Something was added in before, so add it to
+                                // the elements.
+                                elements.push({
+                                    text: memo,
+                                    style: 'paragraph'
+                                });
+                            }
+                            return [];
+                        } else if (index === array.length - 1) {
+                            // Last element, so we need to add it.
+                            memo.push(segment);
+                            elements.push({
+                                text: memo,
+                                style: 'paragraph'
+                            });
+                        } else {
+                            return memo.concat(segment);
+                        }
+                    },
+                    []
+                );
             }
 
             if (resource._embedded && resource._embedded.items && resource._embedded.items.length) {

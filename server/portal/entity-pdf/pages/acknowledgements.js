@@ -34,7 +34,7 @@ const oxfordComma = (items) => {
     }
 };
 
-module.exports = (documentResource) => {
+module.exports = async (documentResource) => {
     const year = (new Date()).getFullYear();
 
     const content = [{

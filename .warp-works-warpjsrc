@@ -53,6 +53,7 @@
     "label": "Ecosystem",
     "href": "/ecosystem"
   }],
+  "pdfCoverImage": "public/app/pdf-cover.png",
   "plugins": [{
     "name": "I3C MapBrowser plugin",
     "moduleName": "@warp-works/warpjs-map-plugin",

@@ -1,6 +1,6 @@
 const { IMAGE_TOC_NAME, TOC_NAME } = require('./../constants');
 
-module.exports = (documentResource) => [{
+module.exports = async (documentResource) => [{
     text: '',
     pageBreak: 'before'
 }, {

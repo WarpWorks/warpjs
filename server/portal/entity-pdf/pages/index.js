@@ -9,13 +9,13 @@ const styles = require('./styles');
 const tableOfContents = require('./table-of-contents');
 
 module.exports = (documentResource) => Object.freeze({
-    acknowledgements: acknowledgements(documentResource),
-    content: content(documentResource),
-    coverPage: coverPage(documentResource),
-    defaultStyle: defaultStyle(documentResource),
-    footer: footer(documentResource),
-    header: (documentResource, currentPage, pageCount, pageSize, docDefinition) => header(documentResource, currentPage, pageCount, pageSize, docDefinition),
-    meta: meta(documentResource),
-    styles: styles(documentResource),
-    tableOfContents: tableOfContents(documentResource)
+    acknowledgements: async () => acknowledgements(documentResource),
+    content: async () => content(documentResource),
+    coverPage: async () => coverPage(documentResource),
+    defaultStyle: async () => defaultStyle(documentResource),
+    footer: async () => footer(documentResource),
+    header: (currentPage, pageCount, pageSize, docDefinition) => header(documentResource, currentPage, pageCount, pageSize, docDefinition),
+    meta: async () => meta(documentResource),
+    styles: async () => styles(documentResource),
+    tableOfContents: async () => tableOfContents(documentResource)
 });
