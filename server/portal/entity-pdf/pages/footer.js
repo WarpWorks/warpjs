@@ -1,7 +1,7 @@
 const { LINE_COLOR, PAGE_MARGIN } = require('./../constants');
 // const debug = require('./debug')('footer');
 
-module.exports = (documentResource) => (currentPage, pageCount, pageSize) => {
+module.exports = async (documentResource) => (currentPage, pageCount, pageSize) => {
     if (currentPage === 1) {
         return null;
     }

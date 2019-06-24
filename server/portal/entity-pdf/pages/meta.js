@@ -1,4 +1,4 @@
-module.exports = (documentResource) => ({
+module.exports = async (documentResource) => ({
     title: documentResource.name,
     author: documentResource.author,
     subject: documentResource.description,
