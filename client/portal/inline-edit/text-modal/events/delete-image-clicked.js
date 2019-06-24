@@ -55,7 +55,11 @@ module.exports = ($, modal) => {
                             contentType: 'application/json; charset=utf-8',
                             data: JSON.stringify(data)
                         }))
-                        .then((res) => window.WarpJS.toast.success($, "File deleted successfully.", TITLE))
+                        .then((res) => {
+                            window.WarpJS.toast.success($, "File deleted successfully.", TITLE)
+                            $('.inline-editor-image').css('background-image', '');
+                            $('.warpjs-inline-edit-image-delete-button').addClass('hide-delete-button');
+                        })
                         .then(() => inlineConstants.setDirty())
                         .then(() => true)
                         .catch((err) => {

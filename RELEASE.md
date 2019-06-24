@@ -5,6 +5,10 @@
 - [Releases 1.0.x](RELEASE-1.0.md) from 2017-05-31 to 2017-06-10
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
+## 1.3.118 - 2019-06-24
+
+- #248: Inline editor: adding an image should show the image right away.
+
 ## 1.3.117 - 2019-06-19
 
 - #235: Fixed error when tree skips one level (first paragraph was H2).

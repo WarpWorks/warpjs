@@ -178,14 +178,12 @@
       <label for="warpjs-inline-image-preview">Image preview</label>
       <div class="image-carousel-container">
         <div id="warpjs-detail-image-carousel" class="carousel slide">
-          {{#if item.images.length}}
-            <a
-              class="warpjs-inline-edit-image-delete-button" data-warpjs-action="file-delete"
-              data-warpjs-delete-image-url="/content/domain/{{domain}}/type/{{type}}/instance/{{id}}/inline-edit-delete-image"
-              data-warpjs-doc-level="{{item.reference.type}}:{{item.reference.name}}.Entity:{{item.id}}.Relationship:Images"
-              data-warpjs-item-id="{{item.id}}"
-            >x</a>
-          {{/if}}
+          <a
+            class="warpjs-inline-edit-image-delete-button {{#unless item.images.length}}hide-delete-button{{/unless}}" data-warpjs-action="file-delete"
+            data-warpjs-delete-image-url="/content/domain/{{domain}}/type/{{type}}/instance/{{id}}/inline-edit-delete-image"
+            data-warpjs-doc-level="{{item.reference.type}}:{{item.reference.name}}.Entity:{{item.id}}.Relationship:Images"
+            data-warpjs-item-id="{{item.id}}"
+          >x</a>
           <div class="carousel-inner"
             data-toggle="tooltip"
             data-html="true"

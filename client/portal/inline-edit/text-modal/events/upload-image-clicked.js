@@ -69,6 +69,10 @@ module.exports = ($, modal) => {
                                 const docLevel = $('[data-warpjs-action="file-upload"]').data('warpjsDocLevel');
                                 const itemId = $('[data-warpjs-action="file-upload"]').data('warpjsItemId');
 
+                                $('.inline-editor-image').css('background-image', 'url(' + res._links.uploadedFile.href + ')');
+                                $('.warpjs-inline-edit-image-delete-button').removeClass('hide-delete-button');
+                                $('.warpjs-inline-edit-image-delete-button').data('warpjsItemId', itemId);
+
                                 const data = {
                                     "width": res.info.Width,
                                     "height": res.info.Height,
