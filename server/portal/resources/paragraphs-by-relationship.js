@@ -8,6 +8,8 @@ const iframesByParagraph = require('./iframes-by-paragraph');
 const imagesByParagraph = require('./images-by-paragraph');
 const subDocumetsByParagraph = require('./sub-documents-by-paragraph');
 
+const VISIBLE_ON_WEB = [ 'WebAndPDF', 'Web' ];
+
 module.exports = async (persistence, relationship, instance) => {
     const paragraphs = relationship ? await relationship.getDocuments(persistence, instance) : [];
     paragraphs.sort(warpjsUtils.byPositionThenName);
@@ -15,8 +17,11 @@ module.exports = async (persistence, relationship, instance) => {
     return Promise.map(
         paragraphs,
         async (paragraph) => {
+            // Default visibility to both.
+            paragraph.Visibility = paragraph.Visibility || 'WebAndPDF';
+
             const paragraphResource = warpjsUtils.createResource('', {
-                showItem: true,
+                showItem: VISIBLE_ON_WEB.indexOf(paragraph.Visibility) !== -1,
                 documentStyle: true,
                 id: paragraph.id || paragraph._id,
                 name: paragraph.Heading,

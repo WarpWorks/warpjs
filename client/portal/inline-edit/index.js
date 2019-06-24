@@ -14,6 +14,8 @@ module.exports = ($) => {
         } else {
             $('body').addClass(classes.IN_EDIT);
         }
+
+        $(window).trigger('resize');
     });
 
     $(document).on('click', `.${classes.IN_EDIT} .warpjs-inline-edit-context`, function() {

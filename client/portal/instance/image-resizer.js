@@ -1,4 +1,4 @@
-const _ = require('lodash');
+const throttle = require('lodash/throttle');
 
 module.exports = ($) => {
     const resizeImage = () => {
@@ -13,6 +13,6 @@ module.exports = ($) => {
         });
     };
 
-    $(window).resize(_.debounce(resizeImage, 100));
+    $(window).resize(throttle(resizeImage, 100, { leading: true, trailing: true }));
     $(window).trigger('resize');
 };
