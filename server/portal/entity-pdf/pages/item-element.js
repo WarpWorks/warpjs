@@ -55,14 +55,14 @@ const itemElement = (resource, headlineLevel = 1) => {
                         tocItem: IMAGE_TOC_NAME,
                         tocStyle: {
                             fontSize: DEFAULT_TOC_FONT_SIZE,
-                            lineHeight: 1,
+                            lineHeight: 1
                         },
                         tocNumberStyle: {
                             fontSize: DEFAULT_TOC_FONT_SIZE,
-                            lineHeight: 1,
+                            lineHeight: 1
                         },
-                        tocMargin: [ 0, 0, 0, 0],
-                        alignment: 'center',
+                        tocMargin: [ 0, 0, 0, 0 ],
+                        alignment: 'center'
                     });
                 }
 

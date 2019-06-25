@@ -1,6 +1,4 @@
-const clone = require('lodash/clone');
-
-// const debug = require('./debug')('acknowledgements');
+const oxfordComma = require('./../../../../lib/utils/oxford-comma');
 
 const extractUsers = (items) => items.reduce(
     (memo, item) => {
@@ -19,20 +17,6 @@ const extractUsers = (items) => items.reduce(
     },
     []
 );
-
-const oxfordComma = (items) => {
-    if (!items.length) {
-        return '';
-    } else if (items.length === 1) {
-        return items[0];
-    } else if (items.length === 2) {
-        return items.join(' and ');
-    } else {
-        const clones = clone(items);
-        clones[clones.length - 1] = ` and ${clones[clones.length - 1]}`;
-        return clones.join(', ');
-    }
-};
 
 module.exports = async (documentResource) => {
     const year = (new Date()).getFullYear();

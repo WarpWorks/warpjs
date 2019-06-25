@@ -1,8 +1,8 @@
 const PdfMake = require('pdfmake');
 const pdfFonts = require('pdfmake/build/vfs_fonts');
 
-const { PAGE_MARGIN, PAGE_HEADER_SIZE, PAGE_FOOTER_SIZE } = require('./constants');
-const debug = require('./debug')('generate-pdf');
+const { DEFAULT_PAGE_SIZE, PAGE_MARGIN, PAGE_HEADER_SIZE, PAGE_FOOTER_SIZE } = require('./constants');
+// const debug = require('./debug')('generate-pdf');
 const pages = require('./pages');
 
 PdfMake.vfs = pdfFonts.pdfMake.vfs;
@@ -39,7 +39,12 @@ module.exports = async (documentResource) => {
 
     const generatedPages = pages(documentResource);
 
+    // TODO: How to define which of `LETTER` or `A4` to use?
+    const pageSize = DEFAULT_PAGE_SIZE;
+
     const docDefinition = {
+        pageSize,
+        pageOrientation: 'portrait',
         pageMargins: [ PAGE_MARGIN, PAGE_MARGIN + PAGE_HEADER_SIZE, PAGE_MARGIN, PAGE_MARGIN + PAGE_FOOTER_SIZE ],
 
         defaultStyle: await generatedPages.defaultStyle(),
@@ -56,7 +61,7 @@ module.exports = async (documentResource) => {
             // Prevent the last node on the page to be a headline.
             // if (currentNode.headlineLevel) {
             //     debug(`pageBreakBefore()... ${currentNode.headlineLevel}: ${currentNode.text}`);
-            //     debug(`pageBreakBefore(): followingNodesOnPage=`, followingNodesOnPage);
+            //     debug(`pageBreakBefore(): followingNodesOnPage: length=${followingNodesOnPage.length}`, followingNodesOnPage);
             // }
 
             // Let's add a break if the element is on two pages. But not three,
@@ -74,9 +79,8 @@ module.exports = async (documentResource) => {
             // debug(`pageBreakBefore(): currentNode=`, currentNode);
         },
 
-
         content: []
-            .concat(await generatedPages.coverPage())
+            .concat(await generatedPages.coverPage(this))
             .concat(await generatedPages.acknowledgements())
             .concat(await generatedPages.tableOfContents())
             .concat(await generatedPages.content())
