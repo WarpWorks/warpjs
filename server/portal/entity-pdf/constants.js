@@ -4,6 +4,10 @@ module.exports = Object.freeze({
         COMMUNITY: 'RESERVED-TYPE-COMMUNITY',
         PARAGRAPH: 'Paragraph'
     }),
+
+    DEFAULT_PAGE_SIZE: 'LETTER',
+    DEFAULT_PAGE_ORIENTATION: 'portrait',
+
     MAX_TOC_DEEP_LEVEL: 10,
     TOC_NAME: 'mainToc',
     IMAGE_TOC_NAME: 'imagesToc',
@@ -25,7 +29,7 @@ module.exports = Object.freeze({
 
     LINE_COLOR: '#fc0d1b',
 
-    PAGE_MARGIN: 40,
+    PAGE_MARGIN: 70,
     PAGE_HEADER_SIZE: 50,
-    PAGE_FOOTER_SIZE: 20,
+    PAGE_FOOTER_SIZE: 20
 });

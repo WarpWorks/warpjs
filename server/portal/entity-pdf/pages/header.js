@@ -36,7 +36,7 @@ module.exports = (documentResource, currentPage, pageCount, pageSize, docDefinit
             width: '50%',
             margin: [ 0, PAGE_MARGIN, PAGE_MARGIN, 0 ]
         }],
-        margin: 0,
+        margin: 0
     }, {
         canvas: [{
             type: 'line',
@@ -47,6 +47,6 @@ module.exports = (documentResource, currentPage, pageCount, pageSize, docDefinit
             lineWidth: 2,
             lineColor: LINE_COLOR
         }],
-        margin: 0,
+        margin: 0
     }];
 };

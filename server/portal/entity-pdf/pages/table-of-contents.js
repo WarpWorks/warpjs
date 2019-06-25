@@ -6,7 +6,7 @@ module.exports = async (documentResource) => [{
 }, {
     toc: {
         id: TOC_NAME,
-        title: { text: 'Contents', style: 'header' },
+        title: { text: 'Contents', style: 'header' }
     },
     headlineLevel: 1
 }, {

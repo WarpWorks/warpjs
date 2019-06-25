@@ -16,7 +16,7 @@ module.exports = async (documentResource) => (currentPage, pageCount, pageSize) 
             lineWidth: 2,
             lineColor: LINE_COLOR
         }],
-        margin: 0,
+        margin: 0
     }, {
         columns: [{
             text: "<TODO: PublicationDate>",
@@ -34,6 +34,6 @@ module.exports = async (documentResource) => (currentPage, pageCount, pageSize) 
             width: '40%',
             margin: [ 0, 5, PAGE_MARGIN, 0 ]
         }],
-        margin: 0,
+        margin: 0
     }];
 };
