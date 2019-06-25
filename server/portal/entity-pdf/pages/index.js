@@ -10,7 +10,7 @@ const tableOfContents = require('./table-of-contents');
 
 module.exports = (documentResource) => Object.freeze({
     acknowledgements: async () => acknowledgements(documentResource),
-    content: async () => content(documentResource),
+    content: async (docDefinition) => content(documentResource, docDefinition),
     coverPage: async (docDefinition) => coverPage(documentResource, docDefinition),
     defaultStyle: async () => defaultStyle(documentResource),
     footer: async () => footer(documentResource),

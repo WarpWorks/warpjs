@@ -83,7 +83,7 @@ module.exports = async (documentResource) => {
             .concat(await generatedPages.coverPage(this))
             .concat(await generatedPages.acknowledgements())
             .concat(await generatedPages.tableOfContents())
-            .concat(await generatedPages.content())
+            .concat(await generatedPages.content(this))
     };
 
     const options = {
