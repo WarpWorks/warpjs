@@ -6,17 +6,32 @@ module.exports = (documentResource, currentPage, pageCount, pageSize, docDefinit
         return null;
     }
 
-    const headlines = docDefinition.content.filter((item) => item.headlineLevel === 1);
+    const headlines = docDefinition.content.filter((item) => {
+        // debug(`filter for headlines(): item=`, item);
+        if (item.stack) {
+            return item.stack.find((stackItem) => stackItem.headlineLevel === 1);
+        } else {
+            return item.headlineLevel === 1;
+        }
+    });
+    // debug(`headlines=`, headlines);
 
     const currentSection = headlines.reduce(
         (currentHeadline, headline, index) => {
+            // debug(`looking headline=`, headline);
+
             const positions = headline.toc ? headline.toc.title.positions : headline.positions;
             if (positions && positions.length) {
                 const positionInfo = positions[0];
                 if (positionInfo.pageNumber > currentPage) {
                     return currentHeadline;
+                } else if (headline.stack) {
+                    const headlineItem = headline.stack.find((stackItem) => stackItem.headlineLevel === 1);
+                    return headlineItem.text;
+                } else if (headline.toc) {
+                    return headline.toc.title.text;
                 } else {
-                    return headline.toc ? headline.toc.title.text : headline.text;
+                    return headline.text;
                 }
             }
             return currentHeadline;

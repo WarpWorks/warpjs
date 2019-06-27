@@ -29,7 +29,7 @@ module.exports = async (documentResource) => {
         text: 'Acknowledgements',
         bold: true,
         headlineLevel: 1,
-        style: 'headline1',
+        style: 'headline1'
     }, {
         text: "TODO: This document is a work product of the Industrial Internet Consortium (IIC) ...WG and its ...TG.",
         style: 'paragraph'
@@ -39,7 +39,7 @@ module.exports = async (documentResource) => {
         if (documentResource._embedded.editors && documentResource._embedded.editors.length) {
             content.push({
                 text: 'Editors',
-                style: 'headline',
+                style: 'headline'
             });
 
             const names = extractUsers(documentResource._embedded.editors);
@@ -51,7 +51,7 @@ module.exports = async (documentResource) => {
         if (documentResource._embedded.authors && documentResource._embedded.authors.length) {
             content.push({
                 text: 'Authors',
-                style: 'headline',
+                style: 'headline'
             });
 
             content.push({
@@ -69,7 +69,7 @@ module.exports = async (documentResource) => {
         if (documentResource._embedded.contributors && documentResource._embedded.contributors.length) {
             content.push({
                 text: 'Contributors',
-                style: 'headline',
+                style: 'headline'
             });
 
             content.push({
@@ -80,13 +80,13 @@ module.exports = async (documentResource) => {
             const names = extractUsers(documentResource._embedded.contributors);
             content.push({
                 text: oxfordComma(names),
-                style: 'paragraph',
+                style: 'paragraph'
             });
         }
 
         content.push({
             text: "IIC ISSUE REPORTING",
-            style: 'headline',
+            style: 'headline'
         });
 
         content.push({
@@ -102,7 +102,7 @@ module.exports = async (documentResource) => {
                 },
                 "."
             ],
-            style: 'paragraph',
+            style: 'paragraph'
         });
     }
 

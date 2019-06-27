@@ -8,7 +8,7 @@ module.exports = async (documentResource) => (currentPage, pageCount, pageSize) 
 
     return [{
         text: [{
-            text: `<TODO: PublicationDate> | version ${documentResource.version}`,
+            text: `<TODO: PublicationDate> | version ${documentResource.version}`
         }, {
             text: `   page ${currentPage}`,
             bold: true

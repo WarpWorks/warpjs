@@ -3,7 +3,7 @@ const PdfMake = require('pdfmake');
 const pdfFonts = require('pdfmake/build/vfs_fonts');
 
 const constants = require('./constants');
-const debug = require('./debug')('generate-pdf');
+// const debug = require('./debug')('generate-pdf');
 const makePdfmakeVfsFonts = require('./make-pdfmake-vfs-fonts');
 const pages = require('./pages');
 
@@ -125,6 +125,7 @@ module.exports = async (documentResource) => {
     try {
         return printer.createPdfKitDocument(docDefinition, options);
     } catch (err) {
+        // eslint-disable-next-line no-console
         console.error(`*** ERROR *** createPdfKitDocument():`, err);
     }
 };
