@@ -41,16 +41,15 @@ module.exports = async (req, res) => {
     try {
         const documentResource = await extractDocument(req, persistence, type, id, viewName);
         if (documentResource) {
-            // FIXME: Send PDF file.
             resource.embed('pages', documentResource);
             const pdfDoc = await generatePdf(documentResource);
 
-            const ws = createWriteStream(res);
-
-            res.set('Content-Disposition', `attachment; filename=${generatePdfFilename(documentResource)}.pdf`);
-
-            res.type('appplication/pdf');
+            res.type('application/pdf');
+            res.set('Content-Disposition', `inline; filename="${generatePdfFilename(documentResource)}.pdf"`);
+            // res.set('Content-Disposition', `attachment; filename="${generatePdfFilename(documentResource)}.pdf"`);
             res.status(200);
+
+            const ws = createWriteStream(res);
             pdfDoc.pipe(ws);
             pdfDoc.end();
         } else {
