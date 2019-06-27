@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const debug = require('./debug')('make-pdfmake-vfs-fonts');
+// const debug = require('./debug')('make-pdfmake-vfs-fonts');
 
 let initialized;
 

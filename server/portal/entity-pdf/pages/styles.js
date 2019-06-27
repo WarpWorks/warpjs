@@ -23,14 +23,14 @@ module.exports = async (documentResource) => ({
         color: '#000000',
         marginTop: 40,
         marginBottom: HEADLINE_MARGIN_TOP,
-        lineHeight: 1,
+        lineHeight: 1
     },
 
     coverPageText: {
         font: DEFAULT_FONT,
         fontSize: 9,
         marginBottom: PARAGRAPH_SPACING,
-        lineHeight: 1,
+        lineHeight: 1
     },
 
     pageHeader: {
@@ -46,12 +46,12 @@ module.exports = async (documentResource) => ({
     header: {
         fontSize: 22,
         bold: true,
-        marginTop: HEADLINE_MARGIN_TOP,
+        marginTop: HEADLINE_MARGIN_TOP
     },
     paragraph: {
         font: DEFAULT_FONT,
         lineHeight: 1,
-        marginBottom: PARAGRAPH_SPACING,
+        marginBottom: PARAGRAPH_SPACING
     },
 
     headline1: {
@@ -60,7 +60,7 @@ module.exports = async (documentResource) => ({
         bold: true,
         marginTop: HEADLINE_MARGIN_TOP,
         marginBottom: HEADLINE1_MARGIN_BOTTOM,
-        lineHeight: 1,
+        lineHeight: 1
     },
 
     headline: {
@@ -68,7 +68,7 @@ module.exports = async (documentResource) => ({
         fontSize: HEADLINE_FONT_SIZE,
         bold: true,
         marginTop: HEADLINE_MARGIN_TOP,
-        marginBottom: HEADLINE_MARGIN_BOTTOM,
+        marginBottom: HEADLINE_MARGIN_BOTTOM
     },
 
     toc1: {
@@ -76,7 +76,7 @@ module.exports = async (documentResource) => ({
         fontSize: HEADLINE_FONT_SIZE,
         bold: true,
         marginBottom: constants.PARAGRAPH_SPACING,
-        lineHeight: 1,
+        lineHeight: 1
     },
 
     toc1_number: {
@@ -84,7 +84,7 @@ module.exports = async (documentResource) => ({
         fontSize: HEADLINE_FONT_SIZE,
         bold: true,
         marginBottom: constants.PARAGRAPH_SPACING,
-        lineHeight: 1,
+        lineHeight: 1
     },
 
     toc2: {
@@ -102,10 +102,10 @@ module.exports = async (documentResource) => ({
     normal: {
         font: DEFAULT_FONT,
         fontSize: 11,
-        lineHeight: 1,
+        lineHeight: 1
     },
 
     link: {
         italics: true
-    },
+    }
 });

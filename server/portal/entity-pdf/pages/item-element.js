@@ -1,13 +1,10 @@
 const { JSDOM } = require('jsdom');
 const htmlToPdfmake = require('html-to-pdfmake');
 
-const { DEFAULT_TOC_FONT_SIZE, FONT_SIZE, IMAGE_TOC_NAME, LINE_COLOR, PAGE_MARGIN_SIDE, TOC_FONT_SIZE, TOC_NAME, TYPES } = require('./../constants');
-const pageSize = require('./page-size');
+const { DEFAULT_TOC_FONT_SIZE, IMAGE_TOC_NAME, TOC_NAME, TYPES } = require('./../constants');
 // const debug = require('./debug')('item-element');
 
 const heading = (resource, docDefinition, headlineLevel) => {
-    const fontSize = FONT_SIZE[headlineLevel];
-
     const headlineContent = [{
         id: `heading-${resource.tocNumber}`,
         text: `${resource.tocNumber} ${resource.heading || resource.name}`,
@@ -18,7 +15,7 @@ const heading = (resource, docDefinition, headlineLevel) => {
         tocItem: TOC_NAME,
         tocStyle: (headlineLevel === 1) ? 'toc1' : 'toc2',
         tocNumberStyle: (headlineLevel === 1) ? 'toc1_number' : 'toc_number',
-        tocMargin: [ ((headlineLevel - 1) * 20), headlineLevel === 1 ? 10 : 5, 0, 0 ],
+        tocMargin: [ ((headlineLevel - 1) * 20), headlineLevel === 1 ? 10 : 5, 0, 0 ]
     }];
 
     return headlineContent;
