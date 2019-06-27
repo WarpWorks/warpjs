@@ -1,5 +1,6 @@
 module.exports = async (documentResource) => ({
-    font: 'Muli',
+    // font: 'Muli',
+    font: 'Courier',
     fontSize: 11,
-    lineHeight: 1.4
+    lineHeight: 1.5
 });

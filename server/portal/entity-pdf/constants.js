@@ -21,7 +21,6 @@ module.exports = Object.freeze({
         6: 12,
         7: 11
     },
-    DEFAULT_FONT_SIZE: 10,
     TOC_FONT_SIZE: {
         1: 12,
         2: 11
@@ -32,7 +31,7 @@ module.exports = Object.freeze({
 
     PAGE_MARGIN_SIDE: 70,
     PAGE_MARGIN_TOP: 40,
-    PAGE_MARGIN_BOTTOM: 30,
+    PAGE_MARGIN_BOTTOM: 80,
 
     PAGE_HEADER_LINE_WIDTH: 1,
     PAGE_HEADER_LINE_COLOR: '#f0f0f0',
@@ -44,6 +43,4 @@ module.exports = Object.freeze({
     COVER_PAGE_IMAGE_OFFSET: 30,
     COVER_PAGE_MARGIN_BELOW_IMAGE: 15,
     COVER_PAGE_BOTTOM_TEXT_HEIGHT: 60,
-
-    PARAGRAPH_SPACING: 8,
 });

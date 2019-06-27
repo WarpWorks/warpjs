@@ -1,14 +1,12 @@
 const { IMAGE_TOC_NAME, TOC_NAME } = require('./../constants');
 
 module.exports = async (documentResource) => [{
-    text: '',
-    pageBreak: 'before'
-}, {
     toc: {
         id: TOC_NAME,
         title: { text: 'Contents', style: 'header' }
     },
-    headlineLevel: 1
+    headlineLevel: 1,
+    pageBreak: 'before'
 }, {
     toc: {
         id: IMAGE_TOC_NAME,

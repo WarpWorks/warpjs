@@ -23,20 +23,23 @@ module.exports = async (documentResource) => {
 
     const content = [{
         text: `Copyright © ${year}, Industrial Internet Consortium`,
+        style: 'paragraph',
         pageBreak: 'before'
     }, {
         text: 'Acknowledgements',
         bold: true,
-        headlineLevel: 1
+        headlineLevel: 1,
+        style: 'headline1',
     }, {
-        text: "TODO: This document is a work product of the Industrial Internet Consortium (IIC) ...WG and its ...TG."
+        text: "TODO: This document is a work product of the Industrial Internet Consortium (IIC) ...WG and its ...TG.",
+        style: 'paragraph'
     }];
 
     if (documentResource._embedded) {
         if (documentResource._embedded.editors && documentResource._embedded.editors.length) {
             content.push({
                 text: 'Editors',
-                bold: true
+                style: 'headline',
             });
 
             const names = extractUsers(documentResource._embedded.editors);
@@ -48,38 +51,42 @@ module.exports = async (documentResource) => {
         if (documentResource._embedded.authors && documentResource._embedded.authors.length) {
             content.push({
                 text: 'Authors',
-                bold: true
+                style: 'headline',
             });
 
             content.push({
-                text: "The following persons have written substantial portion of material content in this document:"
+                text: "The following persons have written substantial portion of material content in this document:",
+                style: 'paragraph'
             });
 
             const names = extractUsers(documentResource._embedded.authors);
             content.push({
-                text: oxfordComma(names)
+                text: oxfordComma(names),
+                style: 'paragraph'
             });
         }
 
         if (documentResource._embedded.contributors && documentResource._embedded.contributors.length) {
             content.push({
                 text: 'Contributors',
-                bold: true
+                style: 'headline',
             });
 
             content.push({
-                text: "The following persons have contributed valuable ideas and feedback that significantly improve the content and quality of this document:"
+                text: "The following persons have contributed valuable ideas and feedback that significantly improve the content and quality of this document:",
+                style: 'paragraph'
             });
 
             const names = extractUsers(documentResource._embedded.contributors);
             content.push({
-                text: oxfordComma(names)
+                text: oxfordComma(names),
+                style: 'paragraph',
             });
         }
 
         content.push({
             text: "IIC ISSUE REPORTING",
-            bold: true
+            style: 'headline',
         });
 
         content.push({
@@ -88,9 +95,14 @@ module.exports = async (documentResource) => {
                 "As part of this process, we encourage readers to report any ambiguities, ",
                 "inconsistencies or inaccuracies they may find in this Document or ",
                 "other IIC materials by sending an email to ",
-                { text: "admin@iiconsortium.org", italics: true },
+                {
+                    text: "admin@iiconsortium.org",
+                    link: 'mailto:admin@iiconsortium.org',
+                    style: 'link'
+                },
                 "."
-            ]
+            ],
+            style: 'paragraph',
         });
     }
 

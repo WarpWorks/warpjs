@@ -14,10 +14,10 @@ let defaultCoverImage;
 let coverLogo;
 
 module.exports = async (documentResource, docDefinition) => {
-    debug(`pageSize: ${constants.DEFAULT_PAGE_SIZE}`);
     const nodes = [];
 
     const { width, height } = pageSize(docDefinition);
+    debug(`pageSize: ${constants.DEFAULT_PAGE_SIZE}: { ${width}, ${height} }`);
 
     // Cover logo
     if (!coverLogo) {
@@ -104,7 +104,7 @@ module.exports = async (documentResource, docDefinition) => {
     // Cover image
     const ABSOLUTE_Y_IMAGE = (height / 2) - constants.COVER_PAGE_IMAGE_OFFSET;
     const MAX_IMAGE_WIDTH = width - (2 * constants.PAGE_MARGIN_SIDE);
-    const MAX_IMAGE_HEIGHT = height - ABSOLUTE_Y_IMAGE - constants.PAGE_MARGIN_BOTTOM - constants.COVER_PAGE_MARGIN_BELOW_IMAGE - constants.COVER_PAGE_BOTTOM_TEXT_HEIGHT;
+    const MAX_IMAGE_HEIGHT = height - ABSOLUTE_Y_IMAGE - constants.PAGE_MARGIN_BOTTOM - constants.COVER_PAGE_MARGIN_BELOW_IMAGE;
     debug(`cover image fit: { ${constants.PAGE_MARGIN_SIDE}, ${ABSOLUTE_Y_IMAGE} } - [ ${MAX_IMAGE_WIDTH}, ${MAX_IMAGE_HEIGHT} ]`);
 
     if (!defaultCoverImage) {
@@ -124,8 +124,11 @@ module.exports = async (documentResource, docDefinition) => {
         fit: [ MAX_IMAGE_WIDTH, MAX_IMAGE_HEIGHT ]
     });
 
+
     // Bottom text
     const ABSOLUTE_Y_BOTTOM_TEXT = ABSOLUTE_Y_IMAGE + MAX_IMAGE_HEIGHT + constants.COVER_PAGE_MARGIN_BELOW_IMAGE;
+    debug(`ABSOLUTE_Y_BOTTOM_TEXT = ${ABSOLUTE_Y_IMAGE} + ${MAX_IMAGE_HEIGHT} + ${constants.COVER_PAGE_MARGIN_BELOW_IMAGE}`);;
+    debug(`cover page bottom text: { ${constants.PAGE_MARGIN_SIDE}, ${ABSOLUTE_Y_BOTTOM_TEXT} }`);
     nodes.push({
         absolutePosition: { x: constants.PAGE_MARGIN_SIDE, y: ABSOLUTE_Y_BOTTOM_TEXT },
         text: [{
@@ -144,8 +147,14 @@ module.exports = async (documentResource, docDefinition) => {
         }, {
             text: 'XXXX'
         }],
+        style: 'coverPageText',
         color: '#ffffff',
-        style: 'coverPageText'
+    });
+
+    // Just placeholder
+    nodes.push({
+        absolutePosition: { x: constants.PAGE_MARGIN_SIDE, y: ABSOLUTE_Y_BOTTOM_TEXT },
+        canvas: [{ type: 'rect', x: 0, y: 0, w: 200, h: 10, color: '#ffffff' }]
     });
 
     return nodes;

@@ -1,30 +1,111 @@
 const constants = require('./../constants');
 
+// Don't understand why it doesn't work as the default style, so explicitely
+// defining it here.
+const DEFAULT_FONT = 'Muli';
+
+const HEADLINE_MARGIN_TOP = 30;
+const HEADLINE_MARGIN_BOTTOM = 15;
+
+const HEADLINE1_FONT = 'Oswald';
+const HEADLINE1_FONT_SIZE = 28;
+const HEADLINE1_MARGIN_BOTTOM = 40;
+
+const HEADLINE_FONT = 'Muli';
+const HEADLINE_FONT_SIZE = 14;
+
+const PARAGRAPH_SPACING = 8;
+
 module.exports = async (documentResource) => ({
     coverTitle: {
-        // font: 'Oswald',
-        fontSize: 28,
+        font: HEADLINE1_FONT,
+        fontSize: HEADLINE1_FONT_SIZE,
         color: '#000000',
         marginTop: 40,
-        marginBottom: 30,
-        lineHeight: 1
+        marginBottom: HEADLINE_MARGIN_TOP,
+        lineHeight: 1,
     },
 
     coverPageText: {
-        // font: 'Muli',
+        font: DEFAULT_FONT,
         fontSize: 9,
-        marginBottom: constants.PARAGRAPH_SPACING,
+        marginBottom: PARAGRAPH_SPACING,
+        lineHeight: 1,
+    },
+
+    pageHeader: {
+        font: DEFAULT_FONT,
+        lineHeight: 1
+    },
+
+    pageFooter: {
+        font: DEFAULT_FONT,
+        lineHeight: 1
     },
 
     header: {
         fontSize: 22,
-        bold: true
+        bold: true,
+        marginTop: HEADLINE_MARGIN_TOP,
     },
     paragraph: {
-        fontSize: constants.DEFAULT_FONT_SIZE,
-        margin: [ 0, 0, 0, 12 ]
+        font: DEFAULT_FONT,
+        lineHeight: 1,
+        marginBottom: PARAGRAPH_SPACING,
     },
 
     headline1: {
-    }
+        font: HEADLINE1_FONT,
+        fontSize: HEADLINE1_FONT_SIZE,
+        bold: true,
+        marginTop: HEADLINE_MARGIN_TOP,
+        marginBottom: HEADLINE1_MARGIN_BOTTOM,
+        lineHeight: 1,
+    },
+
+    headline: {
+        font: HEADLINE_FONT,
+        fontSize: HEADLINE_FONT_SIZE,
+        bold: true,
+        marginTop: HEADLINE_MARGIN_TOP,
+        marginBottom: HEADLINE_MARGIN_BOTTOM,
+    },
+
+    toc1: {
+        font: DEFAULT_FONT,
+        fontSize: HEADLINE_FONT_SIZE,
+        bold: true,
+        marginBottom: constants.PARAGRAPH_SPACING,
+        lineHeight: 1,
+    },
+
+    toc1_number: {
+        font: DEFAULT_FONT,
+        fontSize: HEADLINE_FONT_SIZE,
+        bold: true,
+        marginBottom: constants.PARAGRAPH_SPACING,
+        lineHeight: 1,
+    },
+
+    toc2: {
+        // font: DEFAULT_FONT, // FIXME: Why is this not working?
+        fontSize: 11,
+        marginBottom: constants.PARAGRAPH_SPACING
+    },
+
+    toc_number: {
+        // font: DEFAULT_FONT, // FIXME: Why is this not working?
+        fontSize: 11,
+        marginBottom: constants.PARAGRAPH_SPACING
+    },
+
+    normal: {
+        font: DEFAULT_FONT,
+        fontSize: 11,
+        lineHeight: 1,
+    },
+
+    link: {
+        italics: true
+    },
 });

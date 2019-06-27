@@ -1,50 +1,25 @@
 const { JSDOM } = require('jsdom');
 const htmlToPdfmake = require('html-to-pdfmake');
 
-const { DEFAULT_FONT_SIZE, DEFAULT_TOC_FONT_SIZE, FONT_SIZE, IMAGE_TOC_NAME, LINE_COLOR, PAGE_MARGIN_SIDE, TOC_FONT_SIZE, TOC_NAME, TYPES } = require('./../constants');
+const { DEFAULT_TOC_FONT_SIZE, FONT_SIZE, IMAGE_TOC_NAME, LINE_COLOR, PAGE_MARGIN_SIDE, TOC_FONT_SIZE, TOC_NAME, TYPES } = require('./../constants');
 const pageSize = require('./page-size');
 // const debug = require('./debug')('item-element');
 
 const heading = (resource, docDefinition, headlineLevel) => {
-    const fontSize = FONT_SIZE[headlineLevel] || DEFAULT_FONT_SIZE;
+    const fontSize = FONT_SIZE[headlineLevel];
 
     const headlineContent = [{
         id: `heading-${resource.tocNumber}`,
         text: `${resource.tocNumber} ${resource.heading || resource.name}`,
         headlineLevel,
-        bold: true,
-        fontSize,
-        margin: [ 0, fontSize, 0, headlineLevel === 1 ? 0 : fontSize / 2 ],
+        style: (headlineLevel === 1) ? 'headline1' : 'headline',
         pageBreak: (headlineLevel === 1) ? 'before' : null,
 
         tocItem: TOC_NAME,
-        tocStyle: {
-            bold: headlineLevel <= 2,
-            fontSize: TOC_FONT_SIZE[headlineLevel] || DEFAULT_TOC_FONT_SIZE
-        },
-        tocNumberStyle: {
-            bold: headlineLevel <= 2,
-            fontSize: TOC_FONT_SIZE[headlineLevel] || DEFAULT_TOC_FONT_SIZE
-        },
-        tocMargin: [ ((headlineLevel - 1) * 20), headlineLevel === 1 ? 10 : 5, 0, 0 ]
+        tocStyle: (headlineLevel === 1) ? 'toc1' : 'toc2',
+        tocNumberStyle: (headlineLevel === 1) ? 'toc1_number' : 'toc_number',
+        tocMargin: [ ((headlineLevel - 1) * 20), headlineLevel === 1 ? 10 : 5, 0, 0 ],
     }];
-
-    // TODO: Add a line if headlineLevel === 1.
-    if (headlineLevel === 1) {
-        const { width } = pageSize(docDefinition);
-        headlineContent.push({
-            canvas: [{
-                type: 'line',
-                x1: 0,
-                y1: 0,
-                x2: width - (2 * PAGE_MARGIN_SIDE),
-                y2: 0,
-                lineWidth: 0.5,
-                lineColor: LINE_COLOR
-            }],
-            margin: [ 0, 0, 0, fontSize / 2 ]
-        });
-    }
 
     return headlineContent;
 };

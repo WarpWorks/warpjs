@@ -34,9 +34,10 @@ module.exports = (documentResource, currentPage, pageCount, pageSize, docDefinit
             text: currentSection,
             alignment: 'right',
             width: '50%',
-            margin: [ 0, constants.PAGE_MARGIN_SIDE, constants.PAGE_MARGIN_TOP, 0 ]
+            margin: [ 0, constants.PAGE_MARGIN_TOP, constants.PAGE_MARGIN_SIDE, 0 ]
         }],
-        margin: 0
+        margin: 0,
+        style: 'pageHeader'
     }, {
         canvas: [{
             type: 'line',
