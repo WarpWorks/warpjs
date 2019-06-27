@@ -1,4 +1,4 @@
-const { LINE_COLOR, PAGE_MARGIN } = require('./../constants');
+const { LINE_COLOR, PAGE_MARGIN_SIDE } = require('./../constants');
 // const debug = require('./debug')('footer');
 
 module.exports = async (documentResource) => (currentPage, pageCount, pageSize) => {
@@ -9,9 +9,9 @@ module.exports = async (documentResource) => (currentPage, pageCount, pageSize) 
     return [{
         canvas: [{
             type: 'line',
-            x1: PAGE_MARGIN,
+            x1: PAGE_MARGIN_SIDE,
             y1: 0,
-            x2: pageSize.width - PAGE_MARGIN,
+            x2: pageSize.width - PAGE_MARGIN_SIDE,
             y2: 0,
             lineWidth: 2,
             lineColor: LINE_COLOR
@@ -22,7 +22,7 @@ module.exports = async (documentResource) => (currentPage, pageCount, pageSize) 
             text: "<TODO: PublicationDate>",
             alignment: 'left',
             width: '40%',
-            margin: [ PAGE_MARGIN, 5, 0, 0 ]
+            margin: [ PAGE_MARGIN_SIDE, 5, 0, 0 ]
         }, {
             text: `- ${currentPage} -`,
             alignment: 'center',
@@ -32,7 +32,7 @@ module.exports = async (documentResource) => (currentPage, pageCount, pageSize) 
             text: `Version ${documentResource.version}`,
             alignment: 'right',
             width: '40%',
-            margin: [ 0, 5, PAGE_MARGIN, 0 ]
+            margin: [ 0, 5, PAGE_MARGIN_SIDE, 0 ]
         }],
         margin: 0
     }];

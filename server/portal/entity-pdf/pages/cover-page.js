@@ -2,7 +2,7 @@ const imageToBase64 = require('image-to-base64');
 const mimeTypes = require('mime-types');
 const path = require('path');
 
-const { PAGE_MARGIN } = require('./../constants');
+const constants = require('./../constants');
 const debug = require('./debug')('cover-page');
 const oxfordComma = require('./../../../../lib/utils/oxford-comma');
 const pageSize = require('./page-size');
@@ -14,6 +14,7 @@ let defaultCoverImage;
 let coverLogo;
 
 module.exports = async (documentResource, docDefinition) => {
+    debug(`pageSize: ${constants.DEFAULT_PAGE_SIZE}`);
     const nodes = [];
 
     const { width, height } = pageSize(docDefinition);
@@ -31,18 +32,16 @@ module.exports = async (documentResource, docDefinition) => {
         }
     }
     nodes.push({
+        absolutePosition: { x: constants.PAGE_MARGIN_SIDE, y: constants.PAGE_MARGIN_TOP },
         image: coverLogo,
         alignment: 'left',
-        fit: [ 100, 100 ]
+        fit: [ constants.COVER_PAGE_LOGO_MAX_HEIGHT, width - (2 * constants.PAGE_MARGIN_SIDE) ]
     });
 
     // Document title
     nodes.push({
         text: documentResource.name,
-        fontSize: 28,
-        bold: false,
-        alignment: 'left',
-        marginTop: 20
+        style: 'coverTitle'
     });
 
     // Authors
@@ -60,14 +59,14 @@ module.exports = async (documentResource, docDefinition) => {
                     }, {
                         text: authorNames
                     }],
-                    marginTop: 20
+                    style: 'coverPageText'
                 });
             }
         };
     }
 
     // Contributors
-    debug(`documentResource=`, documentResource);
+    // debug(`documentResource=`, documentResource);
     if (documentResource._embedded && documentResource._embedded.contributors && documentResource._embedded.contributors.length) {
         const contributorsResource = documentResource._embedded.contributors[0];
 
@@ -82,44 +81,72 @@ module.exports = async (documentResource, docDefinition) => {
                     }, {
                         text: contributorNames
                     }],
-                    marginTop: 8
+                    style: 'coverPageText'
                 });
             }
         }
     }
 
     // Red block
+    debug(`Red block: { 0, ${height / 2} } - [ ${width}, ${height / 2 + 1} ]`);
     nodes.push({
-        absolutePosition: { x: 0, y: height / 2 + PAGE_MARGIN },
+        absolutePosition: { x: 0, y: height / 2 },
         canvas: [{
             type: 'rect',
             x: 0,
             y: 0,
             w: width,
-            h: height / 2 - PAGE_MARGIN + 1, // +1 just in case of missing decimal.
+            h: height / 2 + 1, // +1 just in case of missing decimal.
             color: '#dd2b0d'
         }]
     });
 
     // Cover image
+    const ABSOLUTE_Y_IMAGE = (height / 2) - constants.COVER_PAGE_IMAGE_OFFSET;
+    const MAX_IMAGE_WIDTH = width - (2 * constants.PAGE_MARGIN_SIDE);
+    const MAX_IMAGE_HEIGHT = height - ABSOLUTE_Y_IMAGE - constants.PAGE_MARGIN_BOTTOM - constants.COVER_PAGE_MARGIN_BELOW_IMAGE - constants.COVER_PAGE_BOTTOM_TEXT_HEIGHT;
+    debug(`cover image fit: { ${constants.PAGE_MARGIN_SIDE}, ${ABSOLUTE_Y_IMAGE} } - [ ${MAX_IMAGE_WIDTH}, ${MAX_IMAGE_HEIGHT} ]`);
+
     if (!defaultCoverImage) {
         try {
             const imageFilePath = path.join(config.folders.w2projects, config.pdfExport.coverImage);
             const base64 = await imageToBase64(imageFilePath);
             const mime = mimeTypes.lookup(imageFilePath);
             defaultCoverImage = `data:${mime};base64,${base64}`;
-
-            nodes.push({
-                absolutePosition: { x: PAGE_MARGIN, y: height / 2 + PAGE_MARGIN - 20},
-                image: defaultCoverImage,
-                width: Math.min(width - (2 * PAGE_MARGIN), 500),
-                height: Math.min(height / 2 - 2 * PAGE_MARGIN, 360)
-            });
         } catch (err) {
             // eslint-disable-next-line no-console
             console.error(`Error getting defaultCoverImage:`, err);
         }
     };
+    nodes.push({
+        absolutePosition: { x: constants.PAGE_MARGIN_SIDE, y: ABSOLUTE_Y_IMAGE },
+        image: defaultCoverImage,
+        fit: [ MAX_IMAGE_WIDTH, MAX_IMAGE_HEIGHT ]
+    });
+
+    // Bottom text
+    const ABSOLUTE_Y_BOTTOM_TEXT = ABSOLUTE_Y_IMAGE + MAX_IMAGE_HEIGHT + constants.COVER_PAGE_MARGIN_BELOW_IMAGE;
+    nodes.push({
+        absolutePosition: { x: constants.PAGE_MARGIN_SIDE, y: ABSOLUTE_Y_BOTTOM_TEXT },
+        text: [{
+            text: 'Date: ',
+            bold: true,
+        }, {
+            text: 'xx.xx.xxx\n'
+        }, {
+            text: 'Version: ',
+            bold: true,
+        }, {
+            text: `${documentResource.version}\n`,
+        }, {
+            text: 'Document Number: ',
+            bold: true
+        }, {
+            text: 'XXXX'
+        }],
+        color: '#ffffff',
+        style: 'coverPageText'
+    });
 
     return nodes;
 };

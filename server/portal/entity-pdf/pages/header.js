@@ -1,4 +1,4 @@
-const { LINE_COLOR, PAGE_MARGIN } = require('./../constants');
+const constants = require('./../constants');
 // const debug = require('./debug')('header');
 
 module.exports = (documentResource, currentPage, pageCount, pageSize, docDefinition) => {
@@ -29,23 +29,23 @@ module.exports = (documentResource, currentPage, pageCount, pageSize, docDefinit
             text: documentResource.name,
             alignment: 'left',
             width: '50%',
-            margin: [ PAGE_MARGIN, PAGE_MARGIN, 0, 0 ]
+            margin: [ constants.PAGE_MARGIN_SIDE, constants.PAGE_MARGIN_TOP, 0, 0 ]
         }, {
             text: currentSection,
             alignment: 'right',
             width: '50%',
-            margin: [ 0, PAGE_MARGIN, PAGE_MARGIN, 0 ]
+            margin: [ 0, constants.PAGE_MARGIN_SIDE, constants.PAGE_MARGIN_TOP, 0 ]
         }],
         margin: 0
     }, {
         canvas: [{
             type: 'line',
-            x1: PAGE_MARGIN,
+            x1: constants.PAGE_MARGIN_SIDE,
             y1: 0,
-            x2: pageSize.width - PAGE_MARGIN,
+            x2: pageSize.width - constants.PAGE_MARGIN_SIDE,
             y2: 0,
-            lineWidth: 2,
-            lineColor: LINE_COLOR
+            lineWidth: constants.PAGE_HEADER_LINE_WIDTH,
+            lineColor: constants.PAGE_HEADER_LINE_COLOR
         }],
         margin: 0
     }];

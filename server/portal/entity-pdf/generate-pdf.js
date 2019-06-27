@@ -1,13 +1,32 @@
+const path = require('path');
 const PdfMake = require('pdfmake');
 const pdfFonts = require('pdfmake/build/vfs_fonts');
 
-const { DEFAULT_PAGE_SIZE, PAGE_MARGIN, PAGE_HEADER_SIZE, PAGE_FOOTER_SIZE } = require('./constants');
-// const debug = require('./debug')('generate-pdf');
+const constants = require('./constants');
+const debug = require('./debug')('generate-pdf');
+const makePdfmakeVfsFonts = require('./make-pdfmake-vfs-fonts');
 const pages = require('./pages');
 
-PdfMake.vfs = pdfFonts.pdfMake.vfs;
+const baseFontDir = path.join('public', 'fonts');
 
 const FONTS = {
+    // https://github.com/vernnobile/MuliFont/tree/master/version-2.0
+    Muli: {
+        normal: path.join(baseFontDir, 'Muli.ttf'),
+        bold: path.join(baseFontDir, 'Muli-Bold.ttf'),
+        italics: path.join(baseFontDir, 'Muli-Italic.ttf'),
+        bolditalics: path.join(baseFontDir, 'Muli-BoldItalic.ttf')
+    },
+
+    // https://github.com/vernnobile/OswaldFont/tree/master/3.0
+    Oswald: {
+        normal: path.join(baseFontDir, 'Oswald-Regular.ttf'),
+        bold: path.join(baseFontDir, 'Oswald-Bold.ttf'),
+        italics: path.join(baseFontDir, 'Oswald-Regular.ttf'),
+        bolditalics: path.join(baseFontDir, 'Oswald-Bold.ttf')
+    },
+
+    // Standard 14 fonts
     Courier: {
         normal: 'Courier',
         bold: 'Courier-Bold',
@@ -31,21 +50,33 @@ const FONTS = {
     },
     ZapfDingbats: {
         normal: 'ZapfDingbats'
+    },
+
+    // https://github.com/bpampuch/pdfmake/tree/master/examples/fonts
+    Roboto: {
+        normal: path.join(baseFontDir, 'Roboto-Regular.ttf'),
+        bold: path.join(baseFontDir, 'Roboto-Medium.ttf'),
+        italics: path.join(baseFontDir, 'Roboto-Italic.ttf'),
+        bolditalics: path.join(baseFontDir, 'Roboto-MediumItalic.ttf')
     }
 };
 
+PdfMake.vfs = pdfFonts.pdfMake.vfs;
+
 module.exports = async (documentResource) => {
+    makePdfmakeVfsFonts(baseFontDir, PdfMake.vfs);
+
     const printer = new PdfMake(FONTS);
 
     const generatedPages = pages(documentResource);
 
     // TODO: How to define which of `LETTER` or `A4` to use?
-    const pageSize = DEFAULT_PAGE_SIZE;
+    const pageSize = constants.DEFAULT_PAGE_SIZE;
 
     const docDefinition = {
         pageSize,
         pageOrientation: 'portrait',
-        pageMargins: [ PAGE_MARGIN, PAGE_MARGIN + PAGE_HEADER_SIZE, PAGE_MARGIN, PAGE_MARGIN + PAGE_FOOTER_SIZE ],
+        pageMargins: [ constants.PAGE_MARGIN_SIDE, constants.PAGE_MARGIN_TOP + constants.PAGE_HEADER_SIZE, constants.PAGE_MARGIN_SIDE, constants.PAGE_MARGIN_BOTTOM ],
 
         defaultStyle: await generatedPages.defaultStyle(),
         styles: await generatedPages.styles(),
@@ -91,5 +122,9 @@ module.exports = async (documentResource) => {
         fontLayoutCache: true
     };
 
-    return printer.createPdfKitDocument(docDefinition, options);
+    try {
+        return printer.createPdfKitDocument(docDefinition, options);
+    } catch (err) {
+        console.error(`*** ERROR *** createPdfKitDocument():`, err);
+    }
 };
