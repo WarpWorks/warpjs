@@ -1,7 +1,7 @@
 const { JSDOM } = require('jsdom');
 const htmlToPdfmake = require('html-to-pdfmake');
 
-const { DEFAULT_FONT_SIZE, DEFAULT_TOC_FONT_SIZE, FONT_SIZE, IMAGE_TOC_NAME, LINE_COLOR, PAGE_MARGIN, TOC_FONT_SIZE, TOC_NAME, TYPES } = require('./../constants');
+const { DEFAULT_FONT_SIZE, DEFAULT_TOC_FONT_SIZE, FONT_SIZE, IMAGE_TOC_NAME, LINE_COLOR, PAGE_MARGIN_SIDE, TOC_FONT_SIZE, TOC_NAME, TYPES } = require('./../constants');
 const pageSize = require('./page-size');
 // const debug = require('./debug')('item-element');
 
@@ -37,14 +37,13 @@ const heading = (resource, docDefinition, headlineLevel) => {
                 type: 'line',
                 x1: 0,
                 y1: 0,
-                x2: width - (2 * PAGE_MARGIN),
+                x2: width - (2 * PAGE_MARGIN_SIDE),
                 y2: 0,
                 lineWidth: 0.5,
                 lineColor: LINE_COLOR
             }],
             margin: [ 0, 0, 0, fontSize / 2 ]
         });
-
     }
 
     return headlineContent;
