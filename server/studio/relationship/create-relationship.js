@@ -90,8 +90,6 @@ function handleEmbedded(req, res, resource, persistence, instanceData) {
 
     const ACTION = actions.ADD_EMBEDDED;
 
-    console.log('body.docLevel:::::', body.docLevel, 'instanceData.entity:::', instanceData.entity, 'instanceData.instance::::', instanceData.instance);
-
     return Promise.resolve()
         .then(() => logger(req, `Trying ${ACTION}`, body))
         .then(() => DocLevel.fromString(body.docLevel))
