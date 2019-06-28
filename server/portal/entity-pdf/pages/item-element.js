@@ -24,7 +24,8 @@ const heading = (resource, docDefinition, headlineLevel) => {
 };
 
 const itemElement = (resource, docDefinition, headlineLevel = 1) => {
-    const { width, height } = pageSize(docDefinition);
+    // const { width, height } = pageSize(docDefinition);
+    const { width } = pageSize(docDefinition);
 
     try {
         let elements = [];
@@ -58,7 +59,7 @@ const itemElement = (resource, docDefinition, headlineLevel = 1) => {
                             fontSize: constants.DEFAULT_TOC_FONT_SIZE,
                             lineHeight: 1
                         },
-                        tocMargin: [ 0, 0, 0, 0 ],
+                        tocMargin: [ 0, 0, 0, 0 ]
                     });
                 }
 
