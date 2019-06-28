@@ -59,6 +59,7 @@ module.exports = ($, modal) => {
                             window.WarpJS.toast.success($, "File deleted successfully.", TITLE)
                             $('.inline-editor-image').css('background-image', '');
                             $('.warpjs-inline-edit-image-delete-button').addClass('hide-delete-button');
+                            $('.warpjs-list-item.warpjs-list-item-selected .warpjs-list-item-value').data('warpjsImages', []);
                         })
                         .then(() => inlineConstants.setDirty())
                         .then(() => true)

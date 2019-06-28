@@ -73,6 +73,7 @@ module.exports = ($, modal) => {
                                 $('.warpjs-inline-edit-image-delete-button').removeClass('hide-delete-button');
                                 $('.warpjs-inline-edit-image-delete-button').data('warpjsItemId', itemId);
 
+
                                 const data = {
                                     "width": res.info.Width,
                                     "height": res.info.Height,
@@ -88,9 +89,7 @@ module.exports = ($, modal) => {
                                         contentType: 'application/json; charset=utf-8',
                                         data: JSON.stringify(data)
                                     }))
-                                    .then((res) => {
-
-                                    })
+                                    .then((res) => $('.warpjs-list-item.warpjs-list-item-selected .warpjs-list-item-value').data('warpjsImages', JSON.stringify(res)))
                                 ;
                             })
                             .then(() => inlineConstants.setDirty())

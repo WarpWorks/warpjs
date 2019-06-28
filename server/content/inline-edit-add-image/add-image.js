@@ -3,11 +3,13 @@
  */
 const ChangeLogs = require('@warp-works/warpjs-change-logs');
 const Promise = require('bluebird');
+const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const DocLevel = require('./../../../lib/doc-level');
 const logger = require('./../../loggers');
 const serverUtils = require('./../../utils');
 const WarpWorksError = require('./../../../lib/core/error');
+const utils = require('./../utils');
 
 module.exports = (req, res) => {
     const { domain, type, id } = req.params;
@@ -55,16 +57,26 @@ module.exports = (req, res) => {
                                     ;
                                 }
                             })
+                            .then(() => docLevelData.model.getDocuments(persistence, docLevelData.instance))
+                            .then((imageDocs) => Promise.resolve()
+                                .then(() => ChangeLogs.add(ChangeLogs.ACTIONS.EMBEDDED_ADDED, req.warpjsUser, instance, {
+                                    key: body.docLevel,
+                                    type: body.type,
+                                    id: id
+                                }))
+                                .then(() => entity.updateDocument(persistence, instance, true))
+                                .then(() => logger(req, `Success add embedded association`))
+                                .then(() => warpjsUtils.createResource(req, imageDocs[0]))
+                                .then((resource) => Promise.resolve()
+                                    .then(() => {
+                                        resource._links = {};
+                                        resource.link('self', imageDocs[0].ImageURL);
+                                    })
+                                    .then(() => utils.sendHal(req, res, resource))
+                                )
+                            )
                         )
                     )
-                    .then(() => ChangeLogs.add(ChangeLogs.ACTIONS.EMBEDDED_ADDED, req.warpjsUser, instance, {
-                        key: body.docLevel,
-                        type: body.type,
-                        id: id
-                    }))
-                    .then(() => entity.updateDocument(persistence, instance, true))
-                    .then(() => logger(req, `Success add embedded association`))
-                    .then(() => res.status(204).send())
                 )
             )
             .catch((err) => {
