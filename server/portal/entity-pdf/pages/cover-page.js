@@ -124,37 +124,5 @@ module.exports = async (documentResource, docDefinition) => {
         fit: [ MAX_IMAGE_WIDTH, MAX_IMAGE_HEIGHT ]
     });
 
-    // Bottom text
-    const ABSOLUTE_Y_BOTTOM_TEXT = ABSOLUTE_Y_IMAGE + MAX_IMAGE_HEIGHT + constants.COVER_PAGE_MARGIN_BELOW_IMAGE;
-    // debug(`ABSOLUTE_Y_BOTTOM_TEXT = ${ABSOLUTE_Y_IMAGE} + ${MAX_IMAGE_HEIGHT} + ${constants.COVER_PAGE_MARGIN_BELOW_IMAGE}`); ;
-    // debug(`cover page bottom text: { ${constants.PAGE_MARGIN_SIDE}, ${ABSOLUTE_Y_BOTTOM_TEXT} }`);
-    nodes.push({
-        absolutePosition: { x: constants.PAGE_MARGIN_SIDE, y: ABSOLUTE_Y_BOTTOM_TEXT },
-        text: [{
-            text: 'Date: ',
-            bold: true
-        }, {
-            text: 'xx.xx.xxx\n'
-        }, {
-            text: 'Version: ',
-            bold: true
-        }, {
-            text: `${documentResource.version}\n`
-        }, {
-            text: 'Document Number: ',
-            bold: true
-        }, {
-            text: 'XXXX'
-        }],
-        style: 'coverPageText',
-        color: '#ffffff'
-    });
-
-    // Just placeholder
-    nodes.push({
-        absolutePosition: { x: constants.PAGE_MARGIN_SIDE, y: ABSOLUTE_Y_BOTTOM_TEXT },
-        canvas: [{ type: 'rect', x: 0, y: 0, w: 200, h: 10, color: '#ffffff' }]
-    });
-
     return nodes;
 };

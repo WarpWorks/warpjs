@@ -5,8 +5,8 @@ module.exports = Object.freeze({
         PARAGRAPH: 'Paragraph'
     }),
 
-    DEFAULT_PAGE_SIZE: 'LETTER',
-    // DEFAULT_PAGE_SIZE: 'A4',
+    // DEFAULT_PAGE_SIZE: 'LETTER',
+    DEFAULT_PAGE_SIZE: 'A4',
     DEFAULT_PAGE_ORIENTATION: 'portrait',
 
     MAX_TOC_DEEP_LEVEL: 10,

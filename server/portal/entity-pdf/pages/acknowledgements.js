@@ -27,7 +27,6 @@ module.exports = async (documentResource) => {
         pageBreak: 'before'
     }, {
         text: 'Acknowledgements',
-        bold: true,
         headlineLevel: 1,
         style: 'headline1'
     }, {
