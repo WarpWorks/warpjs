@@ -3,6 +3,7 @@ const constants = require('./../constants');
 // Don't understand why it doesn't work as the default style, so explicitely
 // defining it here.
 const DEFAULT_FONT = 'Muli';
+const HEADER_FOOTER_FONT_SIZE = 8;
 
 const HEADLINE_MARGIN_TOP = 30;
 const HEADLINE_MARGIN_BOTTOM = 15;
@@ -35,11 +36,13 @@ module.exports = async (documentResource) => ({
 
     pageHeader: {
         font: DEFAULT_FONT,
+        fontSize: HEADER_FOOTER_FONT_SIZE,
         lineHeight: 1
     },
 
     pageFooter: {
         font: DEFAULT_FONT,
+        fontSize: HEADER_FOOTER_FONT_SIZE,
         lineHeight: 1
     },
 
@@ -54,9 +57,26 @@ module.exports = async (documentResource) => ({
         marginBottom: PARAGRAPH_SPACING
     },
 
+    imageCaption: {
+        font: DEFAULT_FONT,
+        fontSize: 8,
+        alignment: 'left',
+        marginTop: 15,
+    },
+
     headline1: {
         font: HEADLINE1_FONT,
         fontSize: HEADLINE1_FONT_SIZE,
+        bold: false,
+        color: '#e12726',
+        marginTop: HEADLINE_MARGIN_TOP,
+        marginBottom: HEADLINE1_MARGIN_BOTTOM,
+        lineHeight: 1
+    },
+
+    headline2: {
+        font: HEADLINE_FONT,
+        fontSize: HEADLINE_FONT_SIZE,
         bold: true,
         marginTop: HEADLINE_MARGIN_TOP,
         marginBottom: HEADLINE1_MARGIN_BOTTOM,
@@ -66,7 +86,7 @@ module.exports = async (documentResource) => ({
     headline: {
         font: HEADLINE_FONT,
         fontSize: HEADLINE_FONT_SIZE,
-        bold: true,
+        bold: false,
         marginTop: HEADLINE_MARGIN_TOP,
         marginBottom: HEADLINE_MARGIN_BOTTOM
     },
@@ -89,12 +109,16 @@ module.exports = async (documentResource) => ({
 
     toc2: {
         // font: DEFAULT_FONT, // FIXME: Why is this not working?
+        // font: 'Times', // FIXME: DEBUG
+        color: '#808000', // FIXME: DEBUG
         fontSize: 11,
         marginBottom: constants.PARAGRAPH_SPACING
     },
 
-    toc_number: {
+    toc2_number: {
         // font: DEFAULT_FONT, // FIXME: Why is this not working?
+        // font: 'Times', // FIXME: DEBUG
+        color: '#808000', // FIXME: DEBUG
         fontSize: 11,
         marginBottom: constants.PARAGRAPH_SPACING
     },
