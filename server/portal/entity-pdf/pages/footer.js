@@ -1,16 +1,15 @@
 const { PAGE_MARGIN_SIDE } = require('./../constants');
-const debug = require('./debug')('footer');
+// const debug = require('./debug')('footer');
 
-const PAGE_BOTTOM_MARGIN = 30;
-const APPROXIMATE_TEXT_HEIGHT = 10;
+// const PAGE_BOTTOM_MARGIN = 30;
+// const APPROXIMATE_TEXT_HEIGHT = 10;
 
 module.exports = async (documentResource) => (currentPage, pageCount, pageSize) => {
-
     if (currentPage === 1) {
         return [{
             text: [{
                 text: 'Date: ',
-                bold: true,
+                bold: true
             }, {
                 text: 'xx.xx.xxxx\n'
             }, {
@@ -20,7 +19,7 @@ module.exports = async (documentResource) => (currentPage, pageCount, pageSize) 
                 text: `${documentResource.version}\n`
             }, {
                 text: 'Document Number: ',
-                bold: true,
+                bold: true
             }, {
                 text: 'XXXX'
             }],
@@ -39,7 +38,7 @@ module.exports = async (documentResource) => (currentPage, pageCount, pageSize) 
             alignment: 'right',
             style: 'pageFooter',
             marginRight: PAGE_MARGIN_SIDE,
-            marginTop: 40,
+            marginTop: 40
         }];
     }
 };

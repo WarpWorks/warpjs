@@ -61,7 +61,7 @@ module.exports = async (documentResource) => ({
         font: DEFAULT_FONT,
         fontSize: 8,
         alignment: 'left',
-        marginTop: 15,
+        marginTop: 15
     },
 
     headline1: {
