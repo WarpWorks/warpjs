@@ -39,30 +39,37 @@ module.exports = (documentResource, currentPage, pageCount, pageSize, docDefinit
         ''
     );
 
-    return [{
-        columns: [{
-            text: documentResource.name,
-            alignment: 'left',
-            width: '50%',
-            margin: [ constants.PAGE_MARGIN_SIDE, constants.PAGE_MARGIN_TOP, 0, 0 ]
-        }, {
-            text: currentSection,
-            alignment: 'right',
-            width: '50%',
-            margin: [ 0, constants.PAGE_MARGIN_TOP, constants.PAGE_MARGIN_SIDE, 0 ]
-        }],
-        margin: 0,
-        style: 'pageHeader'
-    }, {
-        canvas: [{
-            type: 'line',
-            x1: constants.PAGE_MARGIN_SIDE,
-            y1: 0,
-            x2: pageSize.width - constants.PAGE_MARGIN_SIDE,
-            y2: 0,
-            lineWidth: constants.PAGE_HEADER_LINE_WIDTH,
-            lineColor: constants.PAGE_HEADER_LINE_COLOR
-        }],
-        margin: 0
-    }];
+    return [
+        {
+            columns: [
+                {
+                    stack: [
+                        {
+                            text: documentResource.name,
+                            style: 'pageHeader'
+                        },
+                        {
+                            text: currentSection,
+                            style: 'pageHeader'
+                        }
+                    ],
+                    alignment: 'left',
+                    width: '100%',
+                    margin: [ constants.PAGE_MARGIN_SIDE, constants.PAGE_MARGIN_TOP, 0, 5 ]
+                }
+            ]
+        },
+        {
+            canvas: [{
+                type: 'line',
+                x1: constants.PAGE_MARGIN_SIDE,
+                y1: 0,
+                x2: pageSize.width - constants.PAGE_MARGIN_SIDE,
+                y2: 0,
+                lineWidth: constants.PAGE_HEADER_LINE_WIDTH,
+                lineColor: constants.PAGE_HEADER_LINE_COLOR
+            }],
+            margin: 0
+        }
+    ];
 };
