@@ -1,12 +1,12 @@
 const Writable = require('stream').Writable;
 
-const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
 // const debug = require('./debug')('get');
 const extractDocument = require('./extract-document');
 const generatePdf = require('./generate-pdf');
 const serverUtils = require('./../../utils');
+const getHtml = require('./../entity-html/get');
 
 const createWriteStream = (res) => {
     const ws = new Writable();
@@ -37,13 +37,14 @@ module.exports = async (req, res) => {
     }, req);
 
     const persistence = await serverUtils.getPersistence();
-
     try {
         const documentResource = await extractDocument(req, persistence, type, id, viewName);
         if (documentResource) {
             resource.embed('pages', documentResource);
             const pdfDoc = await generatePdf(documentResource);
-
+            if (!pdfDoc) {
+                throw new Error('issue generating PDF');
+            }
             res.type('application/pdf');
             res.set('Content-Disposition', `inline; filename="${generatePdfFilename(documentResource)}.pdf"`);
             // res.set('Content-Disposition', `attachment; filename="${generatePdfFilename(documentResource)}.pdf"`);
@@ -56,8 +57,7 @@ module.exports = async (req, res) => {
             throw new Error(`Document '${type}/${id}' is not visible.`);
         }
     } catch (err) {
-        warpjsUtils.sendErrorHal(req, res, resource, err, RoutesInfo);
-        // FIXME: Send HTML page to be rendered.
+        getHtml(req, res);
     } finally {
         await persistence.close();
     }
