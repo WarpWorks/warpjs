@@ -1,13 +1,14 @@
 const Writable = require('stream').Writable;
 
+// const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
 // const debug = require('./debug')('get');
+
 const extractDocument = require('./extract-document');
 const generatePdf = require('./generate-pdf');
 const serverUtils = require('./../../utils');
-const getHtml = require('./../entity-html/get');
-
+const ssr = require('./ssr');
 const createWriteStream = (res) => {
     const ws = new Writable();
 
@@ -43,7 +44,7 @@ module.exports = async (req, res) => {
             resource.embed('pages', documentResource);
             const pdfDoc = await generatePdf(documentResource);
             if (!pdfDoc) {
-                throw new Error('issue generating PDF');
+                throw new Error('Error generating PDF');
             }
             res.type('application/pdf');
             res.set('Content-Disposition', `inline; filename="${generatePdfFilename(documentResource)}.pdf"`);
@@ -57,7 +58,13 @@ module.exports = async (req, res) => {
             throw new Error(`Document '${type}/${id}' is not visible.`);
         }
     } catch (err) {
-        getHtml(req, res);
+        const html = ssr.default({
+            name: 'PDF Error',
+            label: 'Error',
+            error: err.message
+        });
+
+        res.status(200).send(html);
     } finally {
         await persistence.close();
     }
