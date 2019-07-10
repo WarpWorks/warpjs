@@ -15,6 +15,8 @@ const HEADLINE1_MARGIN_BOTTOM = 40;
 const HEADLINE_FONT = 'Muli';
 const HEADLINE_FONT_SIZE = 14;
 
+const TOC_FONT = 'Helvetica';
+
 const PARAGRAPH_SPACING = 8;
 
 module.exports = async (documentResource) => ({
@@ -108,7 +110,7 @@ module.exports = async (documentResource) => ({
     },
 
     toc2: {
-        font: 'Helvetica',
+        font: TOC_FONT,
         // font: DEFAULT_FONT, // FIXME: Why is this not working?
         color: '#808000', // FIXME: DEBUG
         fontSize: 11,
@@ -116,7 +118,7 @@ module.exports = async (documentResource) => ({
     },
 
     toc2_number: {
-        font: 'Helvetica',
+        font: TOC_FONT,
         // font: DEFAULT_FONT, // FIXME: Why is this not working?
         // font: 'Times', // FIXME: DEBUG
         color: '#808000', // FIXME: DEBUG
