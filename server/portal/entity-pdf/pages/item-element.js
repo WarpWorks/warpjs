@@ -1,9 +1,11 @@
 const { JSDOM } = require('jsdom');
 const htmlToPdfmake = require('html-to-pdfmake');
 
-const pageSize = require('./page-size');
+const RoutesInfo = require('@quoin/expressjs-routes-info');
 
+const pageSize = require('./page-size');
 const constants = require('./../constants');
+const CONTENT_LINK_RE = require('./../../../../lib/core/content-link-re');
 // const debug = require('./debug')('item-element');
 
 const heading = (resource, docDefinition, headlineLevel) => {
@@ -21,6 +23,11 @@ const heading = (resource, docDefinition, headlineLevel) => {
     }];
 
     return headlineContent;
+};
+
+const contentLinkReplacer = (match, label, type, id) => {
+    const href = RoutesInfo.expand('entity', { type, id });
+    return `<a href="${href}">${label}<span class="glyphicon glyphicon-link"></span></a>`;
 };
 
 const itemElement = (resource, docDefinition, headlineLevel = 1) => {
@@ -72,6 +79,11 @@ const itemElement = (resource, docDefinition, headlineLevel = 1) => {
 
             if (resource.content) {
                 const jsdomWindow = (new JSDOM('')).window;
+
+                if (resource.content && typeof resource.content === 'string') {
+                    resource.content = resource.content.replace(CONTENT_LINK_RE, contentLinkReplacer);
+                }
+
                 const converted = htmlToPdfmake(resource.content, jsdomWindow);
 
                 // Let's separate the paragraph (double '\n') into their own.
