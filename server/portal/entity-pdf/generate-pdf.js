@@ -83,7 +83,6 @@ module.exports = async (documentResource) => {
         footer: await generatedPages.footer(),
         header: (currentPage, pageCount, pageSize) => generatedPages.header(currentPage, pageCount, pageSize, docDefinition),
         info: await generatedPages.meta(),
-
         pageBreakBefore: (currentNode, followingNodesOnPage, nodesOnNextPage, previousNodesOnPage) => {
             // This call is not recursive, as if we change a node, previous
             // nodes are not rechecked. So we have to put all the logic on this
@@ -116,6 +115,27 @@ module.exports = async (documentResource) => {
             .concat(await generatedPages.tableOfContents())
             .concat(await generatedPages.content(this))
     };
+
+    const getFirst = (item) => {
+        if (Array.isArray(item)) {
+            return getFirst(item[0]);
+        }
+
+        return item;
+    };
+
+    docDefinition.content.forEach((item, index) => {
+        const actualItem = getFirst(item);
+        const actualNext = getFirst(docDefinition.content[index + 1]);
+        const actualPrev = getFirst(docDefinition.content[index - 1]);
+
+        if (actualItem.headlineLevel && actualNext && actualNext.headlineLevel) {
+            getFirst(docDefinition.content[index]).style = actualItem.style + 'NospaceBottom';
+        }
+        if (actualItem.headlineLevel && actualPrev && actualPrev.headlineLevel) {
+            getFirst(docDefinition.content[index]).style = actualItem.style + 'NospaceTop';
+        }
+    });
 
     const options = {
         bufferPages: false,
