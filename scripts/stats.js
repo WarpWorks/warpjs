@@ -29,7 +29,7 @@ Promise.resolve()
             entities,
             (entity) => Promise.resolve()
                 .then(() => entity.getDocuments(persistence))
-                .then((docs) => [entity.name, docs.length].join(','))
+                .then((docs) => [ entity.name, docs.length ].join(','))
         ))
         .finally(() => persistence.close())
     )

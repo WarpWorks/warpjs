@@ -24,7 +24,7 @@ module.exports = (req, res, persistence, entity, instance) => {
     const deleteAssociation = Boolean(body && body.patchAction && body.patchAction === 'remove');
 
     const action = deleteAssociation ? ChangeLogs.ACTIONS.ASSOCIATION_REMOVED : ChangeLogs.ACTIONS.UPDATE_VALUE;
-    const patchAction = deleteAssociation ? [body.patchAction, body.type, body.id].join(':') : null;
+    const patchAction = deleteAssociation ? [ body.patchAction, body.type, body.id ].join(':') : null;
 
     if (body.field) {
         body.updatePath += `.Field:${body.field}`;

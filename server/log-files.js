@@ -20,7 +20,7 @@ const BASIC_LOG_CHUNKS = [
 ];
 
 morgan.format('access-log', BASIC_LOG_CHUNKS.join(' '));
-morgan.format('error-log', BASIC_LOG_CHUNKS.concat(['":warpjs-error"']).join(' '));
+morgan.format('error-log', BASIC_LOG_CHUNKS.concat([ '":warpjs-error"' ]).join(' '));
 
 function logStream(logFolder, name) {
     return fileStreamRotator.getStream({

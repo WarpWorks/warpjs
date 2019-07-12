@@ -59,7 +59,7 @@ function sendHal(req, res, resource, status) {
     }
 
     const menuPlugins = (domain)
-        ? warpjsPlugins.getPlugins([warpjsPlugins.RESERVED_PLUGIN_TYPES.CONTENT_DOMAIN_ACTION, warpjsPlugins.RESERVED_PLUGIN_TYPES.CONTENT_ACTION])
+        ? warpjsPlugins.getPlugins([ warpjsPlugins.RESERVED_PLUGIN_TYPES.CONTENT_DOMAIN_ACTION, warpjsPlugins.RESERVED_PLUGIN_TYPES.CONTENT_ACTION ])
         : warpjsPlugins.getPlugins(warpjsPlugins.RESERVED_PLUGIN_TYPES.CONTENT_ACTION)
     ;
     resource.embed('headerMenuItems', serverUtils.menuItems(menuPlugins, domain, type, id));

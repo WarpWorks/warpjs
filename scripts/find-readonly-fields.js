@@ -5,7 +5,7 @@ const Promise = require('bluebird');
 
 const serverUtils = require('./../server/utils');
 
-const KEYS = ['entity', 'pageView', 'panel', 'panelItem'];
+const KEYS = [ 'entity', 'pageView', 'panel', 'panelItem' ];
 
 function pad(s, length, filler) {
     s = s || '';

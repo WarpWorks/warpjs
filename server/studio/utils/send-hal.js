@@ -10,7 +10,7 @@ module.exports = (req, res, resource, status) => {
     // debug(`(): domain=${domain}, type=${type}, id=${id}`);
 
     const menuPlugins = (domain)
-        ? warpjsPlugins.getPlugins([warpjsPlugins.RESERVED_PLUGIN_TYPES.STUDIO_DOMAIN_ACTION, warpjsPlugins.RESERVED_PLUGIN_TYPES.STUDIO_ACTION])
+        ? warpjsPlugins.getPlugins([ warpjsPlugins.RESERVED_PLUGIN_TYPES.STUDIO_DOMAIN_ACTION, warpjsPlugins.RESERVED_PLUGIN_TYPES.STUDIO_ACTION ])
         : warpjsPlugins.getPlugins(warpjsPlugins.RESERVED_PLUGIN_TYPES.STUDIO_ACTION)
     ;
 

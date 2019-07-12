@@ -91,10 +91,10 @@ module.exports = (baseUrl, staticUrl) => {
     app.use(middlewares.aliases);
 
     const adminPrefix = `${baseUrl}/studio`;
-    const adminParams = [adminPrefix];
+    const adminParams = [ adminPrefix ];
 
     const contentPrefix = `${baseUrl}/content`;
-    const contentParams = [contentPrefix];
+    const contentParams = [ contentPrefix ];
 
     if (authMiddlewares) {
         adminParams.push(authMiddlewares.requiresWarpjsUser);

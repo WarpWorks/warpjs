@@ -4,22 +4,22 @@ const Promise = require('bluebird');
 const constants = require('./constants');
 const itemsTemplate = require('./text-modal-elements.hbs');
 
-Array.prototype.moveOnePosition = function(element, offset) {
-    const index = this.indexOf(element);
+const moveOnePosition = (items, element, offset) => {
+    const index = items.indexOf(element);
     const newIndex = index + offset;
-    if (newIndex > -1 && newIndex < this.length) {
-        const removedElement = this.splice(index, 1)[0];
-        this.splice(newIndex, 0, removedElement);
+    if (newIndex > -1 && newIndex < items.length) {
+        const removedElement = items.splice(index, 1)[0];
+        items.splice(newIndex, 0, removedElement);
     }
 };
 
-Array.prototype.moveToAnEnd = function(element, position) {
-    const index = this.indexOf(element);
-    const removedElement = this.splice(index, 1)[0];
+const moveToAnEnd = (items, element, position) => {
+    const index = items.indexOf(element);
+    const removedElement = items.splice(index, 1)[0];
     if (position === 'first') {
-        this.unshift(removedElement);
+        items.unshift(removedElement);
     } else if (position === 'last') {
-        this.push(removedElement);
+        items.push(removedElement);
     }
 };
 
@@ -54,9 +54,9 @@ module.exports = ($, modal, itemId, items, offset) => Promise.resolve()
         .then(() => _.findIndex(items, ['id', itemId]))
         .then((foundItemIndex) => {
             if (isNaN(offset)) {
-                items.moveToAnEnd(foundItem, offset);
+                moveToAnEnd(items, foundItem, offset);
             } else {
-                items.moveOnePosition(foundItem, offset);
+                moveOnePosition(items, foundItem, offset);
             }
         })
     )

@@ -1,7 +1,7 @@
 module.exports = {
     options: {
         sourceMap: false,
-        presets: ['env', 'react']
+        presets: [ 'env', 'react' ]
     },
     ssr: {
         files: [
