@@ -89,11 +89,13 @@ module.exports = async (documentResource) => {
             // node.
 
             // Prevent the last node on the page to be a headline.
-            // if (currentNode.headlineLevel) {
-            //     debug(`pageBreakBefore()... ${currentNode.headlineLevel}: ${currentNode.text}`);
-            //     debug(`pageBreakBefore(): followingNodesOnPage: length=${followingNodesOnPage.length}`, followingNodesOnPage);
-            // }
+            const filteredFollowingNodes = followingNodesOnPage.filter((node) => {
+                return node.style !== 'pageFooter' && node.style !== 'pageHeader' && !node.canvas && (node.text || node.image || node.headlineLevel);
+            });
 
+            if (currentNode.headlineLevel && filteredFollowingNodes.length === 0) {
+                return true;
+            }
             // Let's add a break if the element is on two pages. But not three,
             // since the content is too long anyways.
             if (currentNode.pageNumbers.length === 2) {
