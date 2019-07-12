@@ -10,13 +10,11 @@ const updateTypes = require('./update-types');
 module.exports = ($, modal, clickedElement) => {
     $(clickedElement).closest('.warpjs-document-elements').find('.warpjs-list-item').removeClass('warpjs-list-item-selected');
     $(clickedElement).closest('.warpjs-list-item').addClass('warpjs-list-item-selected');
-    console.log('type of ', typeof $(clickedElement).data('warpjsImages'));
     let itemImages = $(clickedElement).data('warpjsImages');
     if (typeof itemImages === 'string') {
         const parsedImages = jQuery.parseJSON($(clickedElement).data('warpjsImages'));
         itemImages = [ parsedImages ];
     }
-    console.log('itemImages', itemImages);
     const isParagraph = $(clickedElement).data('warpjsType') === 'Paragraph';
     const item = {
         type: $(clickedElement).data('warpjsType'),

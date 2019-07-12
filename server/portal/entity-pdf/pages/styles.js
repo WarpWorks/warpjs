@@ -12,6 +12,9 @@ const HEADLINE1_FONT = 'Oswald';
 const HEADLINE1_FONT_SIZE = 28;
 const HEADLINE1_MARGIN_BOTTOM = 40;
 
+const HEADLINE_NOSPACE_BOTTOM = 5;
+const HEADLINE_NOSPACE_TOP = 5;
+
 const HEADLINE_FONT = 'Muli';
 const HEADLINE_FONT_SIZE = 14;
 
@@ -91,6 +94,60 @@ module.exports = async (documentResource) => ({
         bold: false,
         marginTop: HEADLINE_MARGIN_TOP,
         marginBottom: HEADLINE_MARGIN_BOTTOM
+    },
+
+    headline1NospaceTop: {
+        font: HEADLINE1_FONT,
+        fontSize: HEADLINE1_FONT_SIZE,
+        bold: false,
+        color: '#e12726',
+        marginTop: HEADLINE_NOSPACE_TOP,
+        marginBottom: HEADLINE1_MARGIN_BOTTOM,
+        lineHeight: 1
+    },
+
+    headline2NospaceTop: {
+        font: HEADLINE_FONT,
+        fontSize: HEADLINE_FONT_SIZE,
+        bold: true,
+        marginTop: HEADLINE_NOSPACE_TOP,
+        marginBottom: HEADLINE1_MARGIN_BOTTOM,
+        lineHeight: 1
+    },
+
+    headlineNospaceTop: {
+        font: HEADLINE_FONT,
+        fontSize: HEADLINE_FONT_SIZE,
+        bold: false,
+        marginTop: HEADLINE_NOSPACE_TOP,
+        marginBottom: HEADLINE_MARGIN_BOTTOM
+    },
+
+    headline1NospaceBottom: {
+        font: HEADLINE1_FONT,
+        fontSize: HEADLINE1_FONT_SIZE,
+        bold: false,
+        color: '#e12726',
+        marginTop: HEADLINE_MARGIN_TOP,
+        marginBottom: HEADLINE_NOSPACE_BOTTOM,
+        lineHeight: 1
+    },
+
+    headline2NospaceBottom: {
+        font: HEADLINE_FONT,
+        fontSize: HEADLINE_FONT_SIZE,
+        bold: true,
+        marginTop: HEADLINE_MARGIN_TOP,
+        marginBottom: HEADLINE_NOSPACE_BOTTOM,
+        lineHeight: 1
+    },
+
+    headlineNospaceBottom: {
+        font: HEADLINE_FONT,
+        fontSize: HEADLINE_FONT_SIZE,
+        bold: false,
+        marginTop: HEADLINE_MARGIN_TOP,
+        marginBottom: HEADLINE_NOSPACE_BOTTOM
     },
 
     toc1: {
