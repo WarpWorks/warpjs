@@ -1,13 +1,7 @@
 module.exports = {
     options: {
         fix: true,
-        useEslintrc: false,
-        parserOptions: {
-            ecmaVersion: 8,
-            ecmaFeatures: {
-                experimentalObjectRestSpread: true
-            }
-        }
+        useEslintrc: false
     },
     node: {
         options: {
@@ -34,9 +28,7 @@ module.exports = {
         options: {
             fix: true,
             parserOptions: {
-                ecmaVersion: 8,
                 ecmaFeatures: {
-                    experimentalObjectRestSpread: true,
                     jsx: true
                 }
             },
@@ -79,6 +71,11 @@ module.exports = {
     },
     test: {
         options: {
+            parserOptions: {
+                ecmaFeatures: {
+                    jsx: true
+                }
+            },
             baseConfig: {
                 root: true,
                 extends: '@quoin/eslint-config-quoin/node-test'
