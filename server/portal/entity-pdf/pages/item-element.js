@@ -60,11 +60,13 @@ const itemElement = (resource, docDefinition, headlineLevel = 1) => {
                         tocItem: constants.IMAGE_TOC_NAME,
                         tocStyle: {
                             fontSize: constants.DEFAULT_TOC_FONT_SIZE,
-                            lineHeight: 1
+                            lineHeight: 1,
+                            font: 'Helvetica'
                         },
                         tocNumberStyle: {
                             fontSize: constants.DEFAULT_TOC_FONT_SIZE,
-                            lineHeight: 1
+                            lineHeight: 1,
+                            font: 'Helvetica'
                         },
                         tocMargin: [ 0, 0, 0, 0 ]
                     });
