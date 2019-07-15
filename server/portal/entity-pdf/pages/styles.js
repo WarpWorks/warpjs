@@ -169,7 +169,6 @@ module.exports = async (documentResource) => ({
     toc2: {
         font: TOC_FONT,
         // font: DEFAULT_FONT, // FIXME: Why is this not working?
-        color: '#808000', // FIXME: DEBUG
         fontSize: 11,
         marginBottom: constants.PARAGRAPH_SPACING
     },
@@ -178,7 +177,6 @@ module.exports = async (documentResource) => ({
         font: TOC_FONT,
         // font: DEFAULT_FONT, // FIXME: Why is this not working?
         // font: 'Times', // FIXME: DEBUG
-        color: '#808000', // FIXME: DEBUG
         fontSize: 11,
         marginBottom: constants.PARAGRAPH_SPACING
     },
