@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
 import { Fragment } from 'react';
-import { ControlLabel, Form, FormControl, FormGroup, Glyphicon, Tab, Tabs } from 'react-bootstrap';
+import { ControlLabel, Form, FormControl, FormGroup, Tab, Tabs } from 'react-bootstrap';
 
+import BreadcrumbActionButton from './../../components/breadcrumb-action-button';
 import CreateNewVersion from './../create-new-version';
 import { NAME } from './constants';
 
@@ -48,7 +49,7 @@ const Component = (props) => {
 
     return (
         <Fragment>
-            <Glyphicon glyph="cog" className="warpjs-breadcrumb-action-button" onClick={props.showModal} />
+            <BreadcrumbActionButton click={props.showModal} glyph='list-alt' label="Meta" />
             <ModalContainer id={NAME} title="Document properties" footerButtons={buttons}>
                 <Form>
                     <Tabs id="warpjs-document-edition-tab" animation={false}>
