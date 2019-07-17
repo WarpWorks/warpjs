@@ -19,14 +19,16 @@ class ChangeLogs {
                     ? Promise.resolve()
                         .then(() => window.WarpJS.toast.loading($, "Updating change logs...", constants.TOAST_TITLE))
                         .then((toastLoading) => Promise.resolve()
-                            .then(() => { return {
-                                elementType: $(element).data('warpjsType'),
-                                elementId: $(element).data('warpjsId'),
-                                reference: {
-                                    type: $(element).data('warpjsReferenceType'),
-                                    id: $(element).data('warpjsReferenceId')
-                                }
-                            };})
+                            .then(() => {
+                                return {
+                                    elementType: $(element).data('warpjsType'),
+                                    elementId: $(element).data('warpjsId'),
+                                    reference: {
+                                        type: $(element).data('warpjsReferenceType'),
+                                        id: $(element).data('warpjsReferenceId')
+                                    }
+                                };
+                            })
                             .then((data) => window.WarpJS.proxy.post($, $(element).data('warpjsUrl'), data))
                             .then((res) => bodyTemplate({ changeLogs: res._embedded.changeLogs }))
                             .then((content) => $('.warpjs-detail-container .warpjs-placeholder').html(content))

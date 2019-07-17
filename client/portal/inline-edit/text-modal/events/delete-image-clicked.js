@@ -1,3 +1,5 @@
+const Promise = require('bluebird');
+
 const constants = require('./../../../../edition/file-upload/constants.js');
 const inlineConstants = require('./../../constants.js');
 const modalTemplate = require('./delete-file.hbs');
@@ -8,7 +10,6 @@ function getModal($, instanceDoc) {
 }
 
 module.exports = ($, modal) => {
-
     modal.on('click', '.warpjs-inline-edit-image-delete-button', function(e) {
         e.stopPropagation();
         e.preventDefault();
@@ -42,8 +43,8 @@ module.exports = ($, modal) => {
                 const itemId = $('[data-warpjs-action="file-delete"]').data('warpjsItemId');
 
                 const data = {
-                    "docLevel": docLevel,
-                    "id": itemId
+                    docLevel: docLevel,
+                    id: itemId
                 };
 
                 Promise.resolve()
@@ -56,7 +57,7 @@ module.exports = ($, modal) => {
                             data: JSON.stringify(data)
                         }))
                         .then((res) => {
-                            window.WarpJS.toast.success($, "File deleted successfully.", TITLE)
+                            window.WarpJS.toast.success($, "File deleted successfully.", TITLE);
                             $('.inline-editor-image').css('background-image', '');
                             $('.warpjs-inline-edit-image-delete-button').addClass('hide-delete-button');
                             $('.warpjs-list-item.warpjs-list-item-selected .warpjs-list-item-value').data('warpjsImages', []);

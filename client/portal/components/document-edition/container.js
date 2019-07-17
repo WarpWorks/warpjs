@@ -17,7 +17,6 @@ const mapStateToProps = (state, ownProps) => {
         pageHalSubstate.pages.length &&
         pageHalSubstate.pages[0]._links &&
         pageHalSubstate.pages[0]._links.edit) {
-
         const substate = getNamespaceSubstate(state, namespace);
 
         const page = extend({}, pageHalSubstate.pages[0], substate.editedValues);
@@ -26,7 +25,6 @@ const mapStateToProps = (state, ownProps) => {
             page,
             ...substate
         };
-
     } else {
         return {};
     }

@@ -3,7 +3,6 @@ import { Col, Glyphicon, Grid, Panel, Row } from 'react-bootstrap';
 
 import DetailItem from './../detail-item';
 
-
 const Component = (props) => {
     const changeLog = props.item.changeLogs[0];
     const timestamp = (new Date(props.item.lastUpdated)).getTime();

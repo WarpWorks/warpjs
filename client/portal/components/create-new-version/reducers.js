@@ -42,5 +42,5 @@ export default window.WarpJS.ReactUtils.concatenateReducers([
     { actions: [ actions.HIDE ], reducer: hide },
     { actions: [ actions.RESET_VERSION ], reducer: resetVersion },
     { actions: [ actions.SHOW ], reducer: show },
-    { actions: [ actions.UPDATE_VERSION ], reducer: updateVersion },
+    { actions: [ actions.UPDATE_VERSION ], reducer: updateVersion }
 ]);

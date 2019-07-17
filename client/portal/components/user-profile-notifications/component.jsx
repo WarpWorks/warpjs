@@ -35,7 +35,7 @@ Component.propTypes = {
     hideDetails: PropTypes.func.isRequired,
     resetModal: PropTypes.func.isRequired,
     showDetails: PropTypes.func.isRequired,
-    showDetailsFor: PropTypes.object,
+    showDetailsFor: PropTypes.object
 };
 
 Component.defaultProps = {

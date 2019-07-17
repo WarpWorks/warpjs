@@ -14,6 +14,6 @@ module.exports = ($, instanceDoc) => {
         }))
         .get();
 
-    const content = template({entities});
+    const content = template({ entities });
     $(`${constants.DIALOG_SELECTOR} .warpjs-selected-entities`, instanceDoc).html(content);
 };

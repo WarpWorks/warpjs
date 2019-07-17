@@ -38,7 +38,7 @@ const Component = (props) => {
 
     return (
         <div className="paragraph">
-            <div className="paragraph-content" dangerouslySetInnerHTML={{__html: props.item.content}} />
+            <div className="paragraph-content" dangerouslySetInnerHTML={{ __html: props.item.content }} />
             {subDocumentContent}
         </div>
     );
@@ -50,7 +50,7 @@ Component.propTypes = {
     item: PropTypes.shape({
         heading: PropTypes.string,
         content: PropTypes.string,
-        _embedded: PropTypes.object,
+        _embedded: PropTypes.object
     })
 };
 

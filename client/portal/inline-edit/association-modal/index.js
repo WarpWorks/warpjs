@@ -7,7 +7,6 @@ import constants from './../constants';
 import Container from './container';
 import reducers from './reducers';
 
-
 module.exports = async ($, element) => {
     const data = {
         elementType: $(element).data('warpjsType'),
@@ -20,7 +19,6 @@ module.exports = async ($, element) => {
 
     const toastLoading = window.WarpJS.toast.loading($, "Loading data...", "Loading");
     try {
-
         const res = await window.WarpJS.proxy.post($, $(element).data('warpjsUrl'), data);
         const state = window.WarpJS.flattenHAL(res);
 

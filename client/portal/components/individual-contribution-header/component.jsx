@@ -18,7 +18,6 @@ const Component = (props) => {
         const contributors = community && community.contributors ? community.contributors : [];
         const users = [].concat(authors).concat(contributors);
 
-
         return (
             <div className="warpjs-individual-contribution-header">
                 <IndividualContributionHeader />
@@ -36,6 +35,5 @@ Component.displayName = 'IndividualContribution';
 Component.propTypes = {
     page: PropTypes.object.isRequired
 };
-
 
 export default window.WarpJS.ReactUtils.errorBoundary(Component);

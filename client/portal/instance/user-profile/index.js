@@ -8,5 +8,4 @@ module.exports = ($) => {
     $('.warpjs-page-view-UserProfile').on('click', '.warpjs-user-profile-documents', async (event) => {
         comingSoon($, "Showing documents");
     });
-
 };

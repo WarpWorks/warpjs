@@ -33,7 +33,7 @@ module.exports = ($, element, res) => {
         item.images = JSON.stringify(images);
     });
 
-    $('.warpjs-document-elements > div > .warpjs-content', modal).html(itemsTemplate({items: items}));
+    $('.warpjs-document-elements > div > .warpjs-content', modal).html(itemsTemplate({ items: items }));
 
     modal.modal('show');
     $(`.warpjs-list-item-value[data-warpjs-type="${elementType}"][data-warpjs-id="${elementId}"]`, modal).trigger('click');
@@ -49,7 +49,7 @@ module.exports = ($, element, res) => {
         if (myEditor) {
             myEditor.theme.resizeTo('100%', myHeight);
         }
-    }
+    };
 
     $('body').on('click', '.text-open', (event) => {
         const newHeight = $('.warpjs-detail-container').outerHeight() - 125;

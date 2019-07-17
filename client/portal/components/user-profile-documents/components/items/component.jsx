@@ -19,7 +19,6 @@ const Component = (props) => {
 
     const items = filteredItems.map((item) => <ComponentItem key={item.id} item={item} />);
 
-
     const content = items.length
         ? items
         : <div className="warpjs-user-profile-documents-items-empty">No documents found.</div>
@@ -38,7 +37,7 @@ Component.propTypes = {
     filters: PropTypes.shape({
         AUTHOR: PropTypes.bool,
         CONTRIBUTOR: PropTypes.bool,
-        FOLLOW: PropTypes.bool,
+        FOLLOW: PropTypes.bool
     }).isRequired,
     items: PropTypes.array
 };

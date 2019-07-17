@@ -6,7 +6,7 @@ const Component = (props) => <span className="toc-number">{props.item.tocNumber}
 Component.displayName = 'HtmlExportTocNumber';
 
 Component.propTypes = {
-    item: PropTypes.object.isRequired,
+    item: PropTypes.object.isRequired
 };
 
 export default Component;

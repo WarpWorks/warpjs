@@ -90,7 +90,6 @@ const Component = (props) => {
             </Col>
         );
     }
-
 };
 
 Component.displayName = 'IndividualContributionHeaderCommunityContent';

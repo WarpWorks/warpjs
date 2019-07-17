@@ -34,4 +34,4 @@ export const updateAggregation = async (dispatch, aggregations, warpjsData, curr
     } finally {
         await window.WarpJS.toast.close($, toastLoading);
     }
-}
+};

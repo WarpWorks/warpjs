@@ -26,7 +26,7 @@ const saveItemDelete = ($, modal, element, items) => {
                 items = _.filter(items, (item) => {
                     return item.id !== data.id;
                 });
-                $('.warpjs-document-elements > div > .warpjs-content', modal).html(itemsTemplate({items: items}));
+                $('.warpjs-document-elements > div > .warpjs-content', modal).html(itemsTemplate({ items: items }));
                 if (items.length) {
                     $('.warpjs-list-container .warpjs-list-item:first-child .warpjs-list-item-value').trigger('click');
                 } else {

@@ -5,5 +5,5 @@ export default window.WarpJS.ReactUtils.namespaceKeys(namespace, [
     'HIDE_DETAILS',
     'RESET_MODAL',
     'RESULTS',
-    'SHOW_DETAILS',
+    'SHOW_DETAILS'
 ]);

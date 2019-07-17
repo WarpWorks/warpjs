@@ -29,7 +29,7 @@ module.exports = ($, modal, elementToAdd) => {
                     if (!$('.warpjs-section-selected-documents .warpjs-section-item').length) {
                         $('.warpjs-section-selected-documents .warpjs-no-documents').remove();
                     }
-                    $('.warpjs-section-selected-documents', modal).append(selectedDocumentsItemTemplate({doc}));
+                    $('.warpjs-section-selected-documents', modal).append(selectedDocumentsItemTemplate({ doc }));
                 })
                 .then(() => findAddedSelection($, modal, doc))
         )

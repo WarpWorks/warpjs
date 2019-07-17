@@ -7,7 +7,7 @@ const { actionCreator, concatenateReducers, getNamespaceSubstate, namespaceKeys,
 const { hideModalContainer, showModalContainer } = window.WarpJS.ReactComponents;
 
 export const actions = namespaceKeys(namespace, [
-    'UPDATE_VALUE',
+    'UPDATE_VALUE'
 ]);
 
 export const actionCreators = Object.freeze({

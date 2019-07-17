@@ -16,7 +16,7 @@ module.exports = ($, instanceDoc) => {
     return Promise.resolve()
         .then(() => window.WarpJS.proxy.get($, $(element).data('warpjsTypesUrl')))
         .then((res) => {
-            const content = selectOptionsTemplate({entities: res._embedded.entities});
+            const content = selectOptionsTemplate({ entities: res._embedded.entities });
             $(`${constants.DIALOG_SELECTOR} .${constants.SELECTION_TYPES}`, instanceDoc).html(content);
         })
         .then(() => updateSelectionEntities($, instanceDoc))

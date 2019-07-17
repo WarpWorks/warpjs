@@ -4,6 +4,9 @@
 const DATA_KEY = 'warpjsGAalreadyAdded';
 
 const forceCallOnTimeout = (callback, delay) => {
+    // Need eslint to ignore this because we need `fn` that uses closure on
+    // `timeout`
+    //      eslint-disable-next-line prefer-const
     let timeout;
 
     const fn = () => {

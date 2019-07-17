@@ -22,7 +22,7 @@ export default async (dispatch, items, item, itemUrl, reorderUrl) => {
             position: items.length + 1
         };
 
-        let toastLoading = window.WarpJS.toast.loading($, "Linking...");
+        const toastLoading = window.WarpJS.toast.loading($, "Linking...");
         try {
             const result = await window.WarpJS.proxy.post($, itemUrl, newItem);
             if (result && result._embedded && result._embedded.references && result._embedded.references.length) {

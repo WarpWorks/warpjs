@@ -9,7 +9,7 @@ const getSubstate = window.WarpJS.ReactUtils.getNamespaceSubstate;
 const setSubstate = window.WarpJS.ReactUtils.setNamespaceSubstate;
 
 const initializeState = (state = {}, action) => {
-    const substate = pick(action.payload, ['following', 'followUrl', 'unfollowUrl']);
+    const substate = pick(action.payload, [ 'following', 'followUrl', 'unfollowUrl' ]);
     return setSubstate(state, namespace, substate);
 };
 
@@ -23,5 +23,5 @@ const updateFollow = (state = {}, action) => {
 
 export default window.WarpJS.ReactUtils.concatenateReducers([
     { actions: [ actions.INITIAL_STATE ], reducer: initializeState },
-    { actions: [ actions.UPDATE_FOLLOW ], reducer: updateFollow },
+    { actions: [ actions.UPDATE_FOLLOW ], reducer: updateFollow }
 ]);

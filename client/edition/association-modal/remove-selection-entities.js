@@ -22,7 +22,7 @@ module.exports = ($, instanceDoc) => {
 
         // Call server async
         Promise.resolve()
-            .then(() => window.WarpJS.proxy.patch($, $(element).data('warpjsUrl'), {id, type, updatePath, patchAction}))
+            .then(() => window.WarpJS.proxy.patch($, $(element).data('warpjsUrl'), { id, type, updatePath, patchAction }))
             .then(() => ChangeLogs.dirty())
             .catch((err) => {
                 console.error("Error removing association", err);

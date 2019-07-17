@@ -48,5 +48,4 @@ Component.propTypes = {
     showDetails: PropTypes.func.isRequired
 };
 
-
 export default window.WarpJS.ReactUtils.errorBoundary(Component);

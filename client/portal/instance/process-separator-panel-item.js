@@ -43,7 +43,6 @@ const process = ($, body) => {
     }
 };
 
-
 module.exports = ($) => {
     $('.warpjs-is-overview-panel- + .panel-body').each((index, panelBody) => process($, panelBody));
     $('.warpjs-page-view-sidebar-body').each((index, sidebarBody) => process($, sidebarBody));

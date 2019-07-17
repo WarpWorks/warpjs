@@ -69,8 +69,8 @@ module.exports = ($, modal, items) => {
         .then(() => addParagraph($, modal, event, items))
     );
 
-    //fix second modal appearing behind first
-    $(document).on('show.bs.modal', '.modal', function () {
+    // fix second modal appearing behind first
+    $(document).on('show.bs.modal', '.modal', function() {
         var zIndex = 1040 + (10 * $('.modal:visible').length);
         $(this).css('z-index', zIndex);
         setTimeout(function() {

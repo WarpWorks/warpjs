@@ -27,7 +27,7 @@ module.exports = ($, modal, event, items) => {
                                 description: newParagraph.Content,
                                 id: newParagraph._id,
                                 images: "[]",
-                                isOfHeadingLevel: {H1: true, H2: false, H3: false, H4: false, H5: false, h6: false},
+                                isOfHeadingLevel: { H1: true, H2: false, H3: false, H4: false, H5: false, h6: false },
                                 level: "H1",
                                 name: newParagraph.Heading,
                                 position: 0,
@@ -38,11 +38,11 @@ module.exports = ($, modal, event, items) => {
                                     name: $(element).data('warpjsReferenceName')
                                 },
                                 type: "Paragraph"
-                            }
+                            };
                             items.push(newItem);
                         }
                     })
-                    .then(() => $('.warpjs-document-elements > div > .warpjs-content', modal).html(itemsTemplate({items: items})))
+                    .then(() => $('.warpjs-document-elements > div > .warpjs-content', modal).html(itemsTemplate({ items: items })))
                     .then(() => moveAndSave($, modal, newInstance.newParagraph._id, items, 'last'))
                     .then(() => $('.warpjs-list-item-value[data-warpjs-id="' + newInstance.newParagraph._id + '"]').trigger('click'))
                 )

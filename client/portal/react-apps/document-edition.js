@@ -11,7 +11,7 @@ export default () => {
     if (placeholder) {
         ReactDOM.render(
             <Provider store={window.WarpJS.STORE} id={PLACEHOLDER}>
-              <DocumentEdition />
+                <DocumentEdition />
             </Provider>,
             placeholder
         );

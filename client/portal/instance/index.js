@@ -37,7 +37,9 @@ const template = require('./template.hbs');
         } else {
             // Get everything ready for React.
             window.WarpJS.ReactUtils.initReactBootstrapDisplayNames();
+            //  eslint-disable-next-line require-atomic-updates
             window.WarpJS.STORE = window.WarpJS.ReactUtils.createStore(reducers, {}, [], process.env.NODE_ENV === 'development');
+            //  eslint-disable-next-line require-atomic-updates
             window.WarpJS.PAGE_HAL = window.WarpJS.flattenHAL(result.data);
             window.WarpJS.STORE.dispatch(pageHalInit(window.WarpJS.PAGE_HAL));
 

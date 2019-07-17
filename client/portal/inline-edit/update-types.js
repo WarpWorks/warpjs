@@ -23,18 +23,18 @@ module.exports = ($, modal, clickedElement) => Promise.resolve()
         if (instance) {
             if (instance._embedded) {
                 if (instance._embedded.types) {
-                    $('#warpjs-inline-edit-type-selector', modal).html(typeOptionsTemplate({types: instance._embedded.types}));
+                    $('#warpjs-inline-edit-type-selector', modal).html(typeOptionsTemplate({ types: instance._embedded.types }));
                     $('#warpjs-inline-edit-type-selector', modal).prop('disabled', (instance._embedded.types.length <= 1));
                 } else {
                     window.WarpJS.toast.error($, "Could not find any types.");
                 }
 
                 if (instance._embedded.documents) {
-                    $('.warpjs-section-type-documents', modal).html(typeDocumentsTemplate({documents: instance._embedded.documents}));
+                    $('.warpjs-section-type-documents', modal).html(typeDocumentsTemplate({ documents: instance._embedded.documents }));
                 }
 
                 if (instance._embedded.associations) {
-                    $('.warpjs-section-selected-documents', modal).html(selectedDocumentsTemplate({documents: instance._embedded.associations}));
+                    $('.warpjs-section-selected-documents', modal).html(selectedDocumentsTemplate({ documents: instance._embedded.associations }));
                 }
             }
         } else {

@@ -32,7 +32,7 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => Object.freeze({
     ...dispatchProps,
     updateFilter: dispatchProps.updateFilter(ownProps.id),
     updateSortBy: dispatchProps.updateSortBy(ownProps.id),
-    ...omit(ownProps, [ 'updateFilter', 'updateSortBy' ]),
+    ...omit(ownProps, [ 'updateFilter', 'updateSortBy' ])
 });
 
 const Container = window.WarpJS.ReactUtils.wrapContainer(Component, mapStateToProps, mapDispatchToProps, mergeProps);
@@ -42,7 +42,7 @@ Container.propTypes = {
     RenderComponent: PropTypes.element.isRequired,
     items: PropTypes.array,
     byDate: PropTypes.func.isRequired,
-    byName: PropTypes.func.isRequired,
+    byName: PropTypes.func.isRequired
 };
 
 export default Container;

@@ -18,5 +18,5 @@ const updateAggregation = (state = {}, action) => {
 
 export default window.WarpJS.ReactUtils.concatenateReducers([
     { actions: [ actions.INITIAL_STATE ], reducer: initialize },
-    { actions: [ actions.UPDATE_AGGREGATION ], reducer: updateAggregation },
+    { actions: [ actions.UPDATE_AGGREGATION ], reducer: updateAggregation }
 ]);

@@ -20,7 +20,7 @@ const Component = (props) => {
             return (
                 <li key={option.id} className={classNames} title={option.label}
                     onClick={() => props.updateAggregation(option.id)}
-                    >{option.label}</li>
+                >{option.label}</li>
             );
         });
 

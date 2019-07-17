@@ -15,7 +15,7 @@ const PROPERTIES = {
     KEYWORDS: 'document-edition-property-keywords',
     STATUS: 'document-edition-property-status',
     TITLE: 'document-edition-property-title',
-    VERSION: 'document-edition-property-version',
+    VERSION: 'document-edition-property-version'
 };
 
 const Component = (props) => {
@@ -36,7 +36,7 @@ const Component = (props) => {
         label: "Done",
         glyph: 'ok',
         style: 'primary',
-        onClick: props.hideModal,
+        onClick: props.hideModal
     }];
 
     const pageView = page && page.pageViews && page.pageViews.length ? page.pageViews[0] : null;
@@ -119,7 +119,7 @@ Component.propTypes = {
     page: PropTypes.object,
     saveValue: PropTypes.func.isRequired,
     showModal: PropTypes.func.isRequired,
-    updateValue: PropTypes.func.isRequired,
+    updateValue: PropTypes.func.isRequired
 };
 
 export default window.WarpJS.ReactUtils.errorBoundary(Component);

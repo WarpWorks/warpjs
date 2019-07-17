@@ -41,7 +41,7 @@ const Component = (props) => {
 Component.displayName = 'HtmlExportCommunity';
 
 Component.propTypes = {
-    items: PropTypes.array.isRequired,
+    items: PropTypes.array.isRequired
 };
 
 export default Component;

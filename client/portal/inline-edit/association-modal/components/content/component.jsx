@@ -7,7 +7,6 @@ import * as shapes from './../../../../../react-utils/shapes';
 // import debug from './../../../../debug';
 // const log = debug('client/portal/inline-editor/association-modal/components/content/component');
 
-
 const Component = (props) => {
     const { FilterableList } = window.WarpJS.ReactComponents;
 
@@ -17,12 +16,12 @@ const Component = (props) => {
         <FormControl componentClass="select" placeholder="Select type"
             defaultValue={selected.id}
             onChange={props.typeSelected}
-            >
-                {
-                    props.relationship.targets.map((item) => (
-                        <option key={item.id} value={item.id} selected={item.selected}>{item.name}</option>
-                    ))
-                }
+        >
+            {
+                props.relationship.targets.map((item) => (
+                    <option key={item.id} value={item.id} selected={item.selected}>{item.name}</option>
+                ))
+            }
         </FormControl>
     );
 

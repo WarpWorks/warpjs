@@ -28,7 +28,7 @@ Component.displayName = 'BreadcrumbActionButton';
 Component.propTypes = {
     click: PropTypes.func,
     glyph: PropTypes.string,
-    label: PropTypes.string,
+    label: PropTypes.string
 };
 
 export default window.WarpJS.ReactUtils.errorBoundary(Component);

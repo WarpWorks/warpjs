@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 // import _debug from './debug'; const debug = _debug('component');
 import BreadcrumbActionButton from './../../components/breadcrumb-action-button';
 
-
 const Component = (props) => {
     if (props.followUrl && props.unfollowUrl) {
         const onClick = () => {

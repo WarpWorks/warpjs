@@ -35,7 +35,7 @@ Component.propTypes = {
     filters: PropTypes.shape({
         AUTHOR: PropTypes.bool,
         CONTRIBUTOR: PropTypes.bool,
-        FOLLOW: PropTypes.bool,
+        FOLLOW: PropTypes.bool
     }).isRequired,
     items: PropTypes.array,
     showDetails: PropTypes.func.isRequired

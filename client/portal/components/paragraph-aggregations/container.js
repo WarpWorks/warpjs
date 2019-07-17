@@ -7,7 +7,7 @@ const getSubstate = window.WarpJS.ReactUtils.getNamespaceSubstate;
 const mapStateToProps = (state, ownProps) => getSubstate(state, namespace);
 
 const mapDispatchToProps = (dispatch, ownProps) => Object.freeze({
-    updateAggregation: (aggregations, warpjsData, currentId, clickedElement) => (newId) => orchestrators.updateAggregation(dispatch, aggregations, warpjsData, currentId, clickedElement, newId),
+    updateAggregation: (aggregations, warpjsData, currentId, clickedElement) => (newId) => orchestrators.updateAggregation(dispatch, aggregations, warpjsData, currentId, clickedElement, newId)
 });
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => Object.freeze({

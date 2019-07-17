@@ -11,7 +11,7 @@ const mapStateToProps = (state, ownProps) => getSubstate(state, namespace);
 
 const mapDispatchToProps = (dispatch, ownProps) => Object.freeze({
     showDocuments: (url) => async () => orchestrators.showDocuments(dispatch, url),
-    showNotifications: (url) => async => orchestrators.showNotifications(dispatch, url),
+    showNotifications: (url) => async => orchestrators.showNotifications(dispatch, url)
 });
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => Object.freeze({
@@ -19,7 +19,7 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => Object.freeze({
     ...dispatchProps,
     showDocuments: dispatchProps.showDocuments(stateProps.documentsUrl),
     showNotifications: dispatchProps.showNotifications(stateProps.notificationsUrl),
-    ...omit(ownProps, ['onClick']),
+    ...omit(ownProps, [ 'onClick' ])
 });
 
 export default window.WarpJS.ReactUtils.wrapContainer(Component, mapStateToProps, mapDispatchToProps, mergeProps);

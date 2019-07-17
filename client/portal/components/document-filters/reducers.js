@@ -46,5 +46,5 @@ const updateSortBy = (state = {}, action) => {
 
 export default window.WarpJS.ReactUtils.concatenateReducers([
     { actions: [ actions.UPDATE_FILTER ], reducer: updateFilter },
-    { actions: [ actions.UPDATE_SORT_BY ], reducer: updateSortBy },
+    { actions: [ actions.UPDATE_SORT_BY ], reducer: updateSortBy }
 ]);

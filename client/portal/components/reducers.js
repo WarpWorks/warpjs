@@ -17,5 +17,5 @@ export default window.WarpJS.ReactUtils.concatenateReducers([
     pageHalReducers,
     userProfileDocumentsReducers,
     userProfileMenuReducers,
-    userProfileNotificationsReducers,
+    userProfileNotificationsReducers
 ]);

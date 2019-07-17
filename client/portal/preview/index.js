@@ -20,7 +20,7 @@ function position(popover, evt) {
 
     const left = Math.max(0, svgOffset.left + evt.offsetX - (popover.width() / 2));
     const top = Math.max(0, svgOffset.top + evt.offsetY - popover.height() - 20);
-    popover.offset({left, top});
+    popover.offset({ left, top });
 }
 
 function findPopover($) {

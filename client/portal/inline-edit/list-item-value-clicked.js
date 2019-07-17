@@ -14,7 +14,7 @@ module.exports = ($, modal, clickedElement) => {
     let itemImages = $(clickedElement).data('warpjsImages');
     if (typeof itemImages === 'string') {
         const parsedImages = jQuery.parseJSON($(clickedElement).data('warpjsImages'));
-        itemImages = [parsedImages];
+        itemImages = [ parsedImages ];
     }
     console.log('itemImages', itemImages);
     const isParagraph = $(clickedElement).data('warpjsType') === 'Paragraph';
@@ -47,9 +47,9 @@ module.exports = ($, modal, clickedElement) => {
             Web: $(clickedElement).data('warpjsVisibility') === 'Web',
             PDF: $(clickedElement).data('warpjsVisibility') === 'PDF',
             WebAndPDF: $(clickedElement).data('warpjsVisibility') === 'WebAndPDF'
-        }
+        };
 
-        $('.warpjs-detail-container .warpjs-placeholder', modal).html(detailTemplate({item, id: $(modal).data('warpjsId'), type: $(modal).data('warpjsType'), domain: $(modal).data('warpjsDomain')}));
+        $('.warpjs-detail-container .warpjs-placeholder', modal).html(detailTemplate({ item, id: $(modal).data('warpjsId'), type: $(modal).data('warpjsType'), domain: $(modal).data('warpjsDomain') }));
         initializeWysiwyg($, modal, clickedElement);
         $('.carousel').carousel({
             interval: false
@@ -57,7 +57,7 @@ module.exports = ($, modal, clickedElement) => {
 
         paragraphAggregations($, modal, clickedElement);
     } else {
-        $('.warpjs-detail-container .warpjs-placeholder', modal).html(associationTemplate({item}));
+        $('.warpjs-detail-container .warpjs-placeholder', modal).html(associationTemplate({ item }));
         updateTypes($, modal, clickedElement);
     }
 

@@ -7,7 +7,7 @@ import TocNumber from './toc-number';
 // import _debug from './debug'; const debug = _debug('table-of-contents');
 
 const Component = (props) => {
-    const content = (items) =>  items.map((item) => {
+    const content = (items) => items.map((item) => {
         const subContent = item.type !== constants.TYPES.COMMUNITY && item._embedded && item._embedded.items && item._embedded.items.length
             ? <ul>{content(item._embedded.items)}</ul>
             : null;
@@ -34,7 +34,7 @@ const Component = (props) => {
 Component.displayName = 'HtmlExportTableOfContents';
 
 Component.propTypes = {
-    items: PropTypes.array.isRequired,
+    items: PropTypes.array.isRequired
 };
 
 export default Component;

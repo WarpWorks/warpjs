@@ -59,5 +59,5 @@ export default window.WarpJS.ReactUtils.concatenateReducers([
     { actions: [ actions.HIDE_DETAILS ], reducer: hideDetails },
     { actions: [ actions.RESET_MODAL ], reducer: resetModal },
     { actions: [ actions.RESULTS ], reducer: results },
-    { actions: [ actions.SHOW_DETAILS ], reducer: showDetails },
+    { actions: [ actions.SHOW_DETAILS ], reducer: showDetails }
 ]);

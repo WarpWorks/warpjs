@@ -14,7 +14,6 @@ const mapStateToProps = (state, ownProps) => {
         pageHalSubstate.pages.length &&
         pageHalSubstate.pages[0]._links &&
         pageHalSubstate.pages[0]._links.edit) {
-
         const url = pageHalSubstate._links && pageHalSubstate._links.createNewVersion
             ? pageHalSubstate._links.createNewVersion.href
             : null
@@ -33,7 +32,7 @@ const mapStateToProps = (state, ownProps) => {
             url,
             version,
             nextVersion,
-            ...getSubstate(state, namespace),
+            ...getSubstate(state, namespace)
         };
     } else {
         return {};
@@ -45,7 +44,7 @@ const mapDispatchToProps = (dispatch, ownProps) => Object.freeze({
     hide: () => hide(dispatch),
     createVersion: (url, nextVersion) => async () => createVersion(dispatch, url, nextVersion),
     resetVersion: () => resetVersion(dispatch),
-    updateVersion: (newValue) => updateVersion(dispatch, newValue),
+    updateVersion: (newValue) => updateVersion(dispatch, newValue)
 });
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => Object.freeze({

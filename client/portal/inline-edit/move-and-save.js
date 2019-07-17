@@ -49,9 +49,9 @@ const saveItemPosition = ($, modal, item, index) => {
 };
 
 module.exports = ($, modal, itemId, items, offset) => Promise.resolve()
-    .then(() => _.find(items, ['id', itemId]))
+    .then(() => _.find(items, [ 'id', itemId ]))
     .then((foundItem) => Promise.resolve()
-        .then(() => _.findIndex(items, ['id', itemId]))
+        .then(() => _.findIndex(items, [ 'id', itemId ]))
         .then((foundItemIndex) => {
             if (isNaN(offset)) {
                 moveToAnEnd(items, foundItem, offset);
@@ -67,11 +67,11 @@ module.exports = ($, modal, itemId, items, offset) => Promise.resolve()
         .finally(() => window.WarpJS.toast.close($, toastLoading))
     )
     .then(() => {
-        $('.warpjs-document-elements > div > .warpjs-content', modal).html(itemsTemplate({items: items}));
+        $('.warpjs-document-elements > div > .warpjs-content', modal).html(itemsTemplate({ items: items }));
         $('.warpjs-list-item-value[data-warpjs-id="' + itemId + '"]').closest('.warpjs-list-item').addClass('warpjs-list-item-selected');
         $.each(items, (index, item) => {
             $('.warpjs-list-item-value[data-warpjs-id="' + item.id + '"]').data('warpjsPosition', index);
         });
-        $('.warpjs-navigation.warpjs-navigation-position').html('Position ' + (_.findIndex(items, ['id', itemId]) + 1));
+        $('.warpjs-navigation.warpjs-navigation-position').html('Position ' + (_.findIndex(items, [ 'id', itemId ]) + 1));
     })
 ;

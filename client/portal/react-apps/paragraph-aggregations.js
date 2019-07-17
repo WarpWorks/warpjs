@@ -31,4 +31,3 @@ export default async ($, modal, clickedElement) => {
         $(`.${PLACEHOLDER}`).get(0)
     );
 };
-

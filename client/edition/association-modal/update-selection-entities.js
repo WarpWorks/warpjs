@@ -12,7 +12,7 @@ module.exports = ($, instanceDoc) => {
         .then(() => $(`${constants.DIALOG_SELECTOR} .${constants.SELECTION_ENTITIES}`, instanceDoc).html(loadingTemplate()))
         .then(() => window.WarpJS.proxy.get($, option.data('warpjsUrl')))
         .then((res) => {
-            const content = template({entities: res._embedded.entities});
+            const content = template({ entities: res._embedded.entities });
             $(`${constants.DIALOG_SELECTOR} .${constants.SELECTION_ENTITIES}`, instanceDoc).html(content);
         })
         .catch((err) => {

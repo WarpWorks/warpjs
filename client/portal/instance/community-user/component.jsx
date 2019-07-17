@@ -15,14 +15,14 @@ const Component = (props) => {
 
     return (
         <Row className="warpjs-user warpjs-table">
-          <div className="warpjs-community-image warpjs-cell">
-            <ResponsiveImage src={user._links.image.href} />
-          </div>
+            <div className="warpjs-community-image warpjs-cell">
+                <ResponsiveImage src={user._links.image.href} />
+            </div>
 
-          <div className="warpjs-user-info warpjs-cell">
-            <a className="warpjs-user-name" href={user._links.self.href}>{user.name}</a>
-            <div className="warpjs-user-companies">{companies}</div>
-          </div>
+            <div className="warpjs-user-info warpjs-cell">
+                <a className="warpjs-user-name" href={user._links.self.href}>{user.name}</a>
+                <div className="warpjs-user-companies">{companies}</div>
+            </div>
         </Row>
     );
 };

@@ -8,7 +8,7 @@ const EntityTypes = require('./../../../lib/core/entity-types');
 function buildTOCLevel(items, level, index) {
     // debug(`buildTOCLevel(level=${level}): items=`, items);
 
-    let cumulator = [];
+    const cumulator = [];
 
     for (let i = index; i < items.length; i++) {
         const item = items[i];

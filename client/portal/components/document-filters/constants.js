@@ -28,5 +28,5 @@ export const SORT_KEYS_LIST = [
 
 export const SORT_LABELS = Object.freeze({
     DATE: "Sort by last updated",
-    NAME: "Sort by document name",
+    NAME: "Sort by document name"
 });

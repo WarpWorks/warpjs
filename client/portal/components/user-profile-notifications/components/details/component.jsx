@@ -51,7 +51,7 @@ Component.displayName = 'UserProfileNotificationsDetails';
 Component.propTypes = {
     detailsFor: PropTypes.object.isRequired,
     hideDetails: PropTypes.func.isRequired,
-    items: PropTypes.array.isRequired,
+    items: PropTypes.array.isRequired
 };
 
 export default window.WarpJS.ReactUtils.errorBoundary(Component);

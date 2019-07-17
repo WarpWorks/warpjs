@@ -25,8 +25,7 @@ module.exports = ($, element, res) => {
     modal.modal('show');
     $(`.warpjs-list-item-value[data-warpjs-type="${elementType}"][data-warpjs-id="${elementId}"]`, modal).trigger('click');
 
-
-    $('.warpjs-detail-container .warpjs-placeholder', modal).html(detailTemplate({item: res._embedded.instances[0]._embedded.basicProperties[0]}));
+    $('.warpjs-detail-container .warpjs-placeholder', modal).html(detailTemplate({ item: res._embedded.instances[0]._embedded.basicProperties[0] }));
     initializeWysiwyg($, modal, 'test');
 
     modal.data('warpjsUrl', res._links.self.href);

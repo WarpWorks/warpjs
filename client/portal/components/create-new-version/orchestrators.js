@@ -6,11 +6,12 @@ export const createVersion = async (dispatch, url, nextVersion) => {
     const toastLoading = await window.WarpJS.toast.loading($, `Creating version '${nextVersion}'...`, "Creating...");
     try {
         const res = await window.WarpJS.proxy.post($, url, { nextVersion });
-        await window.WarpJS.toast.success($, "Done");
+        window.WarpJS.toast.success($, "Done");
+        // eslint-disable-next-line require-atomic-updates
         window.location.href = res._links.newVersion.href;
     } catch (err) {
         const message = err && err.responseJSON ? err.responseJSON.message : 'Unknown';
-        await window.WarpJS.toast.error($, message, `Error creating version '${nextVersion}'`)
+        window.WarpJS.toast.error($, message, `Error creating version '${nextVersion}'`);
     } finally {
         window.WarpJS.toast.close($, toastLoading);
     }

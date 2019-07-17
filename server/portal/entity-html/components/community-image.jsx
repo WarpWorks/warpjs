@@ -14,9 +14,9 @@ Component.displayName = 'HtmlExportCommunityImage';
 Component.propTypes = {
     image: PropTypes.shape({
         href: PropTypes.string.isRequired,
-        title: PropTypes.string,
+        title: PropTypes.string
     }),
-    label: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired
 };
 
 export default Component;

@@ -40,7 +40,7 @@ const Component = (props) => {
 Component.displayName = 'HtmlExportContent';
 
 Component.propTypes = {
-    items: PropTypes.array.isRequired,
+    items: PropTypes.array.isRequired
 };
 
 export default Component;

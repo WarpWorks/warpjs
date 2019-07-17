@@ -21,8 +21,6 @@ class ChangeLogs {
                         const res = await proxy.get($, $(this).data('warpjsUrl'), true);
                         const content = bodyTemplate({ changeLogs: res._embedded.changeLogs });
                         $(`${constants.MODAL_SELECTOR} .modal-body`, instanceDoc).html(content);
-                    } catch (err) {
-                        throw err;
                     } finally {
                         toast.close($, toastLoading);
                     }

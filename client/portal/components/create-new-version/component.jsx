@@ -27,7 +27,7 @@ const Component = (props) => {
         //         <InputGroup.Button><Button label="New version" glyph="duplicate" style="primary" onClick={props.show} /></InputGroup.Button>
         //     </Fragment>
         // );
-        content = <FormControl.Static>{props.version}</FormControl.Static>
+        content = <FormControl.Static>{props.version}</FormControl.Static>;
     }
 
     return (
@@ -45,7 +45,7 @@ Component.propTypes = {
     show: PropTypes.func,
     showCreate: PropTypes.bool,
     updateVersion: PropTypes.func.isRequired,
-    version: PropTypes.string.isRequired,
+    version: PropTypes.string.isRequired
 };
 
 export default window.WarpJS.ReactUtils.errorBoundary(Component);

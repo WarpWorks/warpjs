@@ -13,7 +13,7 @@ const Component = (props) => {
             <Checkbox inline key={key}
                 checked={currentStatus}
                 onChange={() => props.updateFilter(key, !currentStatus)}
-                >
+            >
                 {LABELS[key]}
             </Checkbox>
         );
@@ -47,7 +47,7 @@ const Component = (props) => {
             </FormGroup>
             <props.RenderComponent items={sortedItems} filters={props.filters} />
         </Fragment>
-    )
+    );
 };
 
 Component.displayName = 'DocumentFilters';
@@ -58,12 +58,12 @@ Component.propTypes = {
     filters: PropTypes.shape({
         AUTHOR: PropTypes.bool,
         CONTRIBUTOR: PropTypes.bool,
-        FOLLOW: PropTypes.bool,
+        FOLLOW: PropTypes.bool
     }).isRequired,
     items: PropTypes.array.isRequired,
     sortBy: PropTypes.string.isRequired,
     updateFilter: PropTypes.func.isRequired,
-    updateSortBy: PropTypes.func.isRequired,
+    updateSortBy: PropTypes.func.isRequired
 };
 
 export default window.WarpJS.ReactUtils.errorBoundary(Component);

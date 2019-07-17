@@ -1,3 +1,5 @@
+const Promise = require('bluebird');
+
 // const FileUpload = require('./../../../../edition/file-upload');
 
 const constants = require('./../../../../edition/file-upload/constants.js');
@@ -73,13 +75,12 @@ module.exports = ($, modal) => {
                                 $('.warpjs-inline-edit-image-delete-button').removeClass('hide-delete-button');
                                 $('.warpjs-inline-edit-image-delete-button').data('warpjsItemId', itemId);
 
-
                                 const data = {
-                                    "width": res.info.Width,
-                                    "height": res.info.Height,
-                                    "url": res._links.uploadedFile.href,
-                                    "docLevel": docLevel,
-                                    "id": itemId
+                                    width: res.info.Width,
+                                    height: res.info.Height,
+                                    url: res._links.uploadedFile.href,
+                                    docLevel: docLevel,
+                                    id: itemId
                                 };
 
                                 Promise.resolve()

@@ -10,10 +10,8 @@ const oxfordComma = (relationships) => {
 
         default:
             return `${relationships[0]}, ${relationships[1]}, and ${relationships[2]}`;
-
     }
 };
-
 
 const Component = (props) => {
     const lastUpdated = (new Date(props.item.lastUpdated)).toString();

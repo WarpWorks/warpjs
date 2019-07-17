@@ -9,7 +9,7 @@ const mapStateToProps = (state, ownProps) => getSubstate(state, namespace);
 const mapDispatchToProps = (dispatch, ownProps) => Object.freeze({
     hideDetails: async () => hideDetails(dispatch),
     resetModal: async () => resetModal(dispatch),
-    showDetails: async (type, id) => showDetails(dispatch, type, id),
+    showDetails: async (type, id) => showDetails(dispatch, type, id)
 });
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => Object.freeze({

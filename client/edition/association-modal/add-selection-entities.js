@@ -18,7 +18,7 @@ module.exports = ($, instanceDoc) => {
 
         const groupSelector = `${constants.DIALOG_SELECTOR} .warpjs-selected-entities`;
         const selector = `${groupSelector} [data-warpjs-id="${id}"][data-warpjs-type="${type}"]`;
-        const docLevel = [$(element).data('warpjsDocLevel'), `Entity:${id}`].join('.');
+        const docLevel = [ $(element).data('warpjsDocLevel'), `Entity:${id}` ].join('.');
 
         const templateData = {
             idx: -1,
