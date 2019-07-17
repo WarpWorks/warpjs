@@ -11,9 +11,10 @@ const Component = (props) => {
         };
 
         const label = props.following ? 'Stop following' : 'Follow';
+        const glyph = props.following ? 'remove' : 'ok';
 
         return (
-            <BreadcrumbActionButton click={onClick} glyph='ok' label={label} />
+            <BreadcrumbActionButton click={onClick} glyph={glyph} label={label} />
         );
     } else {
         return null;
