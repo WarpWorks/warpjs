@@ -20,6 +20,8 @@ const HEADLINE_FONT_SIZE = 14;
 
 const TOC_FONT = 'Helvetica';
 
+const GLYPH_FONT = 'Glyphicons';
+
 const PARAGRAPH_SPACING = 8;
 
 module.exports = async (documentResource) => ({
@@ -189,5 +191,12 @@ module.exports = async (documentResource) => ({
 
     link: {
         italics: true
+    },
+
+    icon: {
+        font: GLYPH_FONT,
+        lineHeight: 1,
+        fontSize: 8,
+        color: '#000000'
     }
 });

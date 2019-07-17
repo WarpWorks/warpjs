@@ -58,17 +58,22 @@ const FONTS = {
         bold: path.join(baseFontDir, 'Roboto-Medium.ttf'),
         italics: path.join(baseFontDir, 'Roboto-Italic.ttf'),
         bolditalics: path.join(baseFontDir, 'Roboto-MediumItalic.ttf')
+    },
+
+    Glyphicons: {
+        normal: path.join(baseFontDir, 'glyphicons-halflings-regular.ttf')
     }
+
 };
 
 PdfMake.vfs = pdfFonts.pdfMake.vfs;
 
-module.exports = async (documentResource) => {
+module.exports = async (documentResource, req) => {
     makePdfmakeVfsFonts(baseFontDir, PdfMake.vfs);
 
     const printer = new PdfMake(FONTS);
 
-    const generatedPages = pages(documentResource);
+    const generatedPages = pages(documentResource, req);
 
     // TODO: How to define which of `LETTER` or `A4` to use?
     const pageSize = constants.DEFAULT_PAGE_SIZE;
@@ -115,7 +120,7 @@ module.exports = async (documentResource) => {
             .concat(await generatedPages.coverPage(this))
             .concat(await generatedPages.acknowledgements())
             .concat(await generatedPages.tableOfContents())
-            .concat(await generatedPages.content(this))
+            .concat(await generatedPages.content(this, req))
     };
 
     const getFirst = (item) => {
