@@ -42,7 +42,7 @@ module.exports = async (req, res) => {
         const documentResource = await extractDocument(req, persistence, type, id, viewName);
         if (documentResource) {
             resource.embed('pages', documentResource);
-            const pdfDoc = await generatePdf(documentResource);
+            const pdfDoc = await generatePdf(documentResource, req);
             if (!pdfDoc) {
                 throw new Error('Error generating PDF');
             }

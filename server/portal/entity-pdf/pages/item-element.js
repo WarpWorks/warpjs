@@ -6,6 +6,7 @@ const RoutesInfo = require('@quoin/expressjs-routes-info');
 const pageSize = require('./page-size');
 const constants = require('./../constants');
 const CONTENT_LINK_RE = require('./../../../../lib/core/content-link-re');
+
 // const debug = require('./debug')('item-element');
 
 const heading = (resource, docDefinition, headlineLevel) => {
@@ -25,14 +26,21 @@ const heading = (resource, docDefinition, headlineLevel) => {
     return headlineContent;
 };
 
-const contentLinkReplacer = (match, label, type, id) => {
-    const href = RoutesInfo.expand('entity', { type, id });
-    return `<a href="${href}">${label}<span class="glyphicon glyphicon-link"></span></a>`;
+const contentExternalLinkReplacer = () => {
+    const icon = String.fromCharCode(0xe135);
+
+    return `<a class="icon">${icon}</a></a>`;
 };
 
-const itemElement = (resource, docDefinition, headlineLevel = 1) => {
+const itemElement = (resource, docDefinition, headlineLevel = 1, req) => {
     // const { width, height } = pageSize(docDefinition);
     const { width } = pageSize(docDefinition);
+    const contentLinkReplacer = (match, label, type, id) => {
+        const href = RoutesInfo.expand('entity', { type, id }, req);
+        const icon = String.fromCharCode(0xe144);
+
+        return `<a href="${href}">${label}<a class="icon">${icon}</a></a>`;
+    };
 
     try {
         let elements = [];
@@ -83,6 +91,7 @@ const itemElement = (resource, docDefinition, headlineLevel = 1) => {
                 const jsdomWindow = (new JSDOM('')).window;
 
                 if (resource.content && typeof resource.content === 'string') {
+                    resource.content = resource.content.replace(/<\/a>/g, contentExternalLinkReplacer);
                     resource.content = resource.content.replace(CONTENT_LINK_RE, contentLinkReplacer);
                 }
 
@@ -119,7 +128,7 @@ const itemElement = (resource, docDefinition, headlineLevel = 1) => {
 
             if (resource._embedded && resource._embedded.items && resource._embedded.items.length) {
                 resource._embedded.items.forEach((subItem) => {
-                    elements = elements.concat(itemElement(subItem, docDefinition, headlineLevel + 1));
+                    elements = elements.concat(itemElement(subItem, docDefinition, headlineLevel + 1, req));
                 });
             }
         } else {
@@ -128,7 +137,7 @@ const itemElement = (resource, docDefinition, headlineLevel = 1) => {
                 elements.push(heading(resource, docDefinition, headlineLevel));
 
                 resource._embedded.items.forEach((subItem) => {
-                    elements = elements.concat(itemElement(subItem, docDefinition, headlineLevel + 1));
+                    elements = elements.concat(itemElement(subItem, docDefinition, headlineLevel + 1, req));
                 });
             }
         }

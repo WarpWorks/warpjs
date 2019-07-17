@@ -8,9 +8,9 @@ const meta = require('./meta');
 const styles = require('./styles');
 const tableOfContents = require('./table-of-contents');
 
-module.exports = (documentResource) => Object.freeze({
+module.exports = (documentResource, req) => Object.freeze({
     acknowledgements: async () => acknowledgements(documentResource),
-    content: async (docDefinition) => content(documentResource, docDefinition),
+    content: async (docDefinition, req) => content(documentResource, docDefinition, req),
     coverPage: async (docDefinition) => coverPage(documentResource, docDefinition),
     defaultStyle: async () => defaultStyle(documentResource),
     footer: async () => footer(documentResource),

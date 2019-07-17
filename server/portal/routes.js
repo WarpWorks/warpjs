@@ -21,9 +21,9 @@ module.exports = (baseUrl) => {
     routesInfo.route(routes.portal.feedback, '/feedback', feedback);
     routesInfo.route(routes.portal.userProfileDocuments, '/user-profile/documents', userProfileDocuments);
     routesInfo.route(routes.portal.userProfileNotifications, '/user-profile/notifications', userProfileNotifications);
+    routesInfo.route(routes.portal.entityPdf, '/{type}/{id}.pdf{?viewName}', entityPdf);
+    routesInfo.route(routes.portal.entityHtml, '/{type}/{id}.html{?viewName}', entityHtml);
     routesInfo.route(routes.portal.entity, '/{type}/{id}{?view,style}', instance);
-    routesInfo.route(routes.portal.entityHtml, '/{type}/{id}/html{?viewName}', entityHtml);
-    routesInfo.route(routes.portal.entityPdf, '/{type}/{id}/pdf{?viewName}', entityPdf);
     routesInfo.route(routes.portal.createNewVersion, '/{type}/{id}/new-version', createNewVersion);
     routesInfo.route(routes.portal.follow, '/{type}/{id}/follow-document/{yesno}', followDocument);
     routesInfo.route(routes.portal.preview, '/{type}/{id}/preview', preview);
