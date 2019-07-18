@@ -8,7 +8,6 @@ import TocNumber from './toc-number';
 
 // import _debug from './debug'; const debug = _debug('paragraph');
 
-
 const Component = (props) => {
     // debug(`props=`, props);
 
@@ -36,7 +35,7 @@ const Component = (props) => {
             );
         });
     }
-
+    // eslint-disable-next-line no-unused-vars
     let paragraphImage = null;
     if (props.item._embedded && props.item._embedded.images) {
         const image = props.item._embedded.images[0];

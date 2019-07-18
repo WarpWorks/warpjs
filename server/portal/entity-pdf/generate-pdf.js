@@ -154,5 +154,6 @@ module.exports = async (documentResource, req) => {
     } catch (err) {
         // eslint-disable-next-line no-console
         console.error(`*** ERROR *** createPdfKitDocument():`, err);
+        throw new Error(`*** ERROR *** createPdfKitDocument(): ${err}`);
     }
 };
