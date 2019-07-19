@@ -10,26 +10,7 @@
   </div>
   <div class="row">
     {{> left-right-margin}}
-
-    <div class="col-xs-12 col-md-10 no-padding breadcrumb-actions warpjs-actions">
-      <span id="warpjs-following-toggle" />
-      {{#if page._links.edit}}
-        <span class="warpjs-breadcrumb-action-button warpjs-breadcrumb-action-button-with-label warpjs-inline-edit-enable"
-          data-warpjs-action="inline-edit-toggle"
-          title="Show inline edit"
-          >
-          <span class="glyphicon glyphicon-pencil"></span>Edit
-        </span>
-        <span class="warpjs-breadcrumb-action-button warpjs-breadcrumb-action-button-with-label warpjs-inline-edit-disable"
-          title="Hide inline edit"
-          data-warpjs-action="inline-edit-toggle"
-          >
-          <span class="glyphicon glyphicon-remove"></span>Stop editing
-        </span>
-        <span id="warpjs-document-edition"></span>
-      {{/if}}
-    </div>
-
+    <div id="warpjs-breadcrumb-actions" class="col-xs-12 col-md-10 no-padding text-right"></div>
     {{> left-right-margin}}
   </div>
 </div>

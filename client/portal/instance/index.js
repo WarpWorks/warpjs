@@ -3,8 +3,7 @@ import regeneratorRuntime from 'babel-regenerator-runtime';
 
 import addGoogleAnalyticsIfNeeded from './add-google-analytics-if-needed';
 import { init as pageHalInit } from './../components/page-hal/action-creators';
-import documentEdition from './../react-apps/document-edition';
-import followDocument from './../react-apps/follow-document';
+import breadcrumbActions from './../react-apps/breadcrumb-actions';
 import individualContributionHeader from './../react-apps/individual-contribution-header';
 import reducers from './../components/reducers';
 import userProfileMenu from './../react-apps/user-profile-menu';
@@ -77,9 +76,8 @@ const template = require('./template.hbs');
             processSeparatorPanelItem($);
 
             // React components.
-            followDocument($, result.data);
+            breadcrumbActions();
             userProfileMenu($, result.data);
-            documentEdition();
         }
     } catch (err) {
         // eslint-disable-next-line no-console

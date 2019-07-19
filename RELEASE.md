@@ -5,6 +5,11 @@
 - [Releases 1.0.x](RELEASE-1.0.md) from 2017-05-31 to 2017-06-10
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
+## 1.3.123 - 2019-07-19
+
+- #264: Implemented BreadcrumbActions as React component. Switched order of
+  buttons.
+
 ## 1.3.122 - 2019-07-17
 
 - #264: Implementation of first phase of header items and header actions.
