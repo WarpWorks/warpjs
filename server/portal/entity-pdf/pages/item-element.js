@@ -94,9 +94,7 @@ const itemElement = (resource, docDefinition, headlineLevel = 1, req) => {
                     resource.content = resource.content.replace(/<\/a>/g, contentExternalLinkReplacer);
                     resource.content = resource.content.replace(CONTENT_LINK_RE, contentLinkReplacer);
                 }
-
                 const converted = htmlToPdfmake(resource.content, jsdomWindow);
-
                 // Let's separate the paragraph (double '\n') into their own.
                 // Abuse of `.reduce` to keep current value.
                 converted.reduce(
@@ -110,6 +108,20 @@ const itemElement = (resource, docDefinition, headlineLevel = 1, req) => {
                                     style: 'paragraph'
                                 });
                             }
+                            return [];
+                        } else if (segment.table) {
+                            segment.table.widths = [];
+                            for(let i = 0; i < segment.table.body[0].length; i ++) {
+                                segment.table.widths.push('*');
+                            }
+                            if (memo.length) {
+                                elements.push({
+                                    text: memo,
+                                    style: 'paragraph'
+                                });
+                            }
+                            elements.push(segment);
+
                             return [];
                         } else if (index === array.length - 1) {
                             // Last element, so we need to add it.
