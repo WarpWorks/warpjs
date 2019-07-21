@@ -29,6 +29,11 @@ module.exports = async (req, res, type, id, pageViewName) => {
         customMessages: {}
     });
 
+    // Because of aliases, let's use the URL with the id.
+    if (resource._links && resource._links.self) {
+        resource._links.self.href = RoutesInfo.expand(routes.portal.entity, { type, id });
+    }
+
     if (req.warpjsUser) {
         if (req.warpjsUser.type === type && req.warpjsUser.id === id) {
             resource.myPage = true;

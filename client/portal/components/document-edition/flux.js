@@ -1,3 +1,5 @@
+import inlineEditConstants from './../../inline-edit/constants';
+
 import { NAME } from './constants';
 import namespace from './namespace';
 
@@ -27,6 +29,7 @@ export const orchestrators = Object.freeze({
         const toastLoading = toast.loading($, "Saving...");
         try {
             await proxy.patch($, url, { key, value });
+            inlineEditConstants.setDirty();
             toast.success($, "Saved");
         } catch (err) {
             // eslint-disable-next-line no-console
