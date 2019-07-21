@@ -111,7 +111,7 @@ const itemElement = (resource, docDefinition, headlineLevel = 1, req) => {
                             return [];
                         } else if (segment.table) {
                             segment.table.widths = [];
-                            for(let i = 0; i < segment.table.body[0].length; i ++) {
+                            for (let i = 0; i < segment.table.body[0].length; i++) {
                                 segment.table.widths.push('*');
                             }
                             if (memo.length) {

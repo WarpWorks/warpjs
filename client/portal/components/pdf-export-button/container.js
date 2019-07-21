@@ -1,39 +1,37 @@
-import extend from 'lodash/extend';
-
 import pageHalNamespace from './../page-hal/namespace';
 import Component from './component';
-import namespace from './namespace';
 
-import { orchestrators } from './flux';
+// import _debug from './debug'; const debug = _debug('container');
 
 const { getNamespaceSubstate, wrapContainer } = window.WarpJS.ReactUtils;
-const { setEditMode, unsetEditMode } = orchestrators;
 
 const mapStateToProps = (state, ownProps) => {
     const pageHalSubstate = getNamespaceSubstate(state, pageHalNamespace);
 
-    const componentProps = {
-        warpjsUser: pageHalSubstate.warpjsUser
-    };
-
-    if (pageHalSubstate.pages &&
-        pageHalSubstate.pages.length) {
-        componentProps.page = pageHalSubstate.pages[0];
+    if (pageHalSubstate.pages && pageHalSubstate.pages.length) {
+        const page = pageHalSubstate.pages[0];
+        if (page._links && page._links.pdfExport) {
+            return {
+                show: true,
+                url: page._links.pdfExport.href
+            };
+        }
     }
-
-    const subState = getNamespaceSubstate(state, namespace);
-
-    return extend({}, componentProps, subState);
+    return {};
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => Object.freeze({
-    setEditMode: () => setEditMode(dispatch),
-    unsetEditMode: () => unsetEditMode(dispatch)
+    click: (url) => () => {
+        if (url) {
+            document.location.href = url;
+        }
+    }
 });
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => Object.freeze({
     ...stateProps,
     ...dispatchProps,
+    click: dispatchProps.click(stateProps.url),
     ...ownProps
 });
 

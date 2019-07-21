@@ -1,6 +1,6 @@
 {
   "name": "@warp-works/warpjs",
-  "version": "1.3.124",
+  "version": "1.3.125",
   "description": "Content management system for WarpWorks in javascript",
   "repository": {
     "type": "git",
@@ -75,9 +75,7 @@
     "image-to-base64": "~2.0.1",
     "jsdom": "~15.1.1",
     "lodash": "~4.17.15",
-    "lodash": "~4.17.14",
     "mime-types": "~2.1.24",
-    "lodash": "~4.17.14",
     "html-to-pdfmake": "~1.0.3",
     "pdfmake": "~0.1.57",
     "mkdirp": "0.5.1",

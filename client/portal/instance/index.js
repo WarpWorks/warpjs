@@ -5,6 +5,7 @@ import addGoogleAnalyticsIfNeeded from './add-google-analytics-if-needed';
 import { init as pageHalInit } from './../components/page-hal/action-creators';
 import breadcrumbActions from './../react-apps/breadcrumb-actions';
 import individualContributionHeader from './../react-apps/individual-contribution-header';
+import pdfExportButton from './../react-apps/pdf-export-button';
 import reducers from './../components/reducers';
 import userProfileMenu from './../react-apps/user-profile-menu';
 
@@ -77,6 +78,7 @@ const template = require('./template.hbs');
 
             // React components.
             breadcrumbActions();
+            pdfExportButton();
             userProfileMenu($, result.data);
         }
     } catch (err) {
