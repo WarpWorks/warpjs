@@ -63,7 +63,7 @@ module.exports = async (req, persistence, entity, document, viewName, level = 0)
                 }
             };
 
-            if (paragraph.SubDocuments) {
+            if (paragraph.SubDocuments && paragraph.SubDocuments !== '-1') {
                 const extractDocument = require('./extract-document');
 
                 const subDocumentRelationship = entity.getRelationshipById(paragraph.SubDocuments);

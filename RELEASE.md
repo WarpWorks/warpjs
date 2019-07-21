@@ -5,6 +5,10 @@
 - [Releases 1.0.x](RELEASE-1.0.md) from 2017-05-31 to 2017-06-10
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
+## 1.3.127 - 2019-07-21
+
+- #235: Tentative when no sub-documents.
+
 ## 1.3.126 - 2019-07-21
 
 - #235: Fixed font paths to be absolute.
