@@ -7,7 +7,9 @@ const constants = require('./constants');
 const makePdfmakeVfsFonts = require('./make-pdfmake-vfs-fonts');
 const pages = require('./pages');
 
-const baseFontDir = path.join('public', 'fonts');
+const packageFolder = path.dirname(require.resolve('./../../../package.json'));
+
+const baseFontDir = path.join(packageFolder, 'public', 'fonts');
 
 const FONTS = {
     // https://github.com/vernnobile/MuliFont/tree/master/version-2.0
