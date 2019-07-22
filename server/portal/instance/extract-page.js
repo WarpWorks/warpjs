@@ -63,10 +63,11 @@ module.exports = async (req, persistence, entity, instance, pageViewName) => {
         });
     }
 
-    resource.link('pdfExport', {
-        href: RoutesInfo.expand(routes.portal.entityPdf, instance),
-        title: "Get the document in PDF"
-    });
+    //  FIXME: Put back once it's working again.
+    // resource.link('pdfExport', {
+    //     href: RoutesInfo.expand(routes.portal.entityPdf, instance),
+    //     title: "Get the document in PDF"
+    // });
 
     // Breadcrumb
     const breadcrumbs = await breadcrumbsByEntity(persistence, entity, instance);
