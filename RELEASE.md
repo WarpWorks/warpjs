@@ -5,6 +5,10 @@
 - [Releases 1.0.x](RELEASE-1.0.md) from 2017-05-31 to 2017-06-10
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
+## 1.3.129 - 2019-07-23
+
+- #245: Fixed login issues on protected pages.
+
 ## 1.3.128 - 2019-07-22
 
 - #235: Removed button from UI because there is an issue that needs to be fixed.
