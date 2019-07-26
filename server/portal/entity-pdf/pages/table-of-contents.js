@@ -1,16 +1,73 @@
+const omit = require('lodash/omit');
+
+const debug = require('./debug')('table-of-contents');
+
 const { IMAGE_TOC_NAME, TOC_NAME } = require('./../constants');
 
-module.exports = async (documentResource) => [{
-    toc: {
-        id: TOC_NAME,
-        title: { text: 'Contents', style: 'header' }
-    },
-    headlineLevel: 1,
-    pageBreak: 'before'
-}, {
-    toc: {
-        id: IMAGE_TOC_NAME,
-        title: { text: 'Figures', style: 'header' }
-    },
-    margin: [ 0, 24, 0, 12 ]
-}];
+const findTocs = (memo, item) => {
+    debug(`findTocs(): item=`, item);
+
+    if (!memo.headings) {
+        memo.headings = Boolean(item.heading);
+
+        // Still no headings? Look for child elements.
+        if (item._embedded && item._embedded.items && item._embedded.items.length) {
+            // The paragraph has sub-documents, so we know there will be at
+            // least a document name for the heading TOC.
+            debug(`findTocs(): item._embedded.items=`, item._embedded.items);
+            memo.headings = true;
+        }
+    }
+
+    if (!memo.figures) {
+        if (item && item._embedded && item._embedded.images) {
+            // There are some images.
+            memo.figures = Boolean(item._embedded.images.find((image) => {
+                debug(`findTocs(): figures: image=`, omit(image, [ 'base64' ]));
+                return Boolean(image.caption);
+            }));
+        }
+
+        if (!memo.figures) {
+            // We still have not found any images. Try child items.
+            if (item && item._embedded && item._embedded.items && item._embedded.items.length) {
+                debug(`Need to check child items for image.`);
+                return item._embedded.items.reduce(findTocs, memo);
+            }
+        }
+    }
+
+    return memo;
+};
+
+module.exports = async (documentResource) => {
+    // Because of an issue in pdfmake, we need to figure out each table of
+    // content to NOT be empty.
+
+    const tocs = documentResource._embedded.items.reduce(findTocs, {});
+
+    const tableOfContents = [];
+
+    if (tocs.headings) {
+        tableOfContents.push({
+            toc: {
+                id: TOC_NAME,
+                title: { text: 'Contents', style: 'header' }
+            },
+            headlineLevel: 1,
+            pageBreak: 'before'
+        });
+    }
+
+    if (tocs.figures) {
+        tableOfContents.push({
+            toc: {
+                id: IMAGE_TOC_NAME,
+                title: { text: 'Figures', style: 'header' }
+            },
+            margin: [ 0, 24, 0, 12 ]
+        });
+    }
+
+    return tableOfContents;
+};
