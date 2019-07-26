@@ -1,37 +1,56 @@
-const omit = require('lodash/omit');
+// const omit = require('lodash/omit');
 
 const debug = require('./debug')('table-of-contents');
 
-const { IMAGE_TOC_NAME, TOC_NAME } = require('./../constants');
+const { IMAGE_TOC_NAME, TOC_NAME, TYPES } = require('./../constants');
 
 const findTocs = (memo, item) => {
-    debug(`findTocs(): item=`, item);
+    if (item.type === TYPES.PARAGRAPH) {
+        // debug(`findTocs(): a paragraph: item=`, item);
 
-    if (!memo.headings) {
-        memo.headings = Boolean(item.heading);
+        if (!memo.headings) {
+            memo.headings = Boolean(item.heading);
 
-        // Still no headings? Look for child elements.
-        if (item._embedded && item._embedded.items && item._embedded.items.length) {
-            // The paragraph has sub-documents, so we know there will be at
-            // least a document name for the heading TOC.
-            debug(`findTocs(): item._embedded.items=`, item._embedded.items);
-            memo.headings = true;
-        }
-    }
-
-    if (!memo.figures) {
-        if (item && item._embedded && item._embedded.images) {
-            // There are some images.
-            memo.figures = Boolean(item._embedded.images.find((image) => {
-                debug(`findTocs(): figures: image=`, omit(image, [ 'base64' ]));
-                return Boolean(image.caption);
-            }));
+            // Still no headings? Look for child elements.
+            if (item._embedded && item._embedded.items && item._embedded.items.length) {
+                // The paragraph has sub-documents, so we know there will be at
+                // least a document name for the heading TOC.
+                // debug(`findTocs(): item._embedded.items=`, item._embedded.items);
+                memo.headings = true;
+            }
         }
 
         if (!memo.figures) {
-            // We still have not found any images. Try child items.
-            if (item && item._embedded && item._embedded.items && item._embedded.items.length) {
-                debug(`Need to check child items for image.`);
+            if (item && item._embedded && item._embedded.images) {
+                // There are some images.
+                memo.figures = Boolean(item._embedded.images.find((image) => {
+                    // debug(`findTocs(): figures: image=`, omit(image, [ 'base64' ]));
+                    return Boolean(image.caption);
+                }));
+            }
+
+            if (!memo.figures) {
+                // We still have not found any images. Try child items.
+                if (item && item._embedded && item._embedded.items && item._embedded.items.length) {
+                    // debug(`Need to check child items for image.`);
+                    return item._embedded.items.reduce(findTocs, memo);
+                }
+            }
+        }
+    } else if (item.type === TYPES.COMMUNITY) {
+        debug(`findTocs(): Is community?: item=`, item);
+    } else {
+        // Other are documents.
+        // debug(`findTocs(): Other type: item=`, item);
+        if (!memo.headings) {
+            // The document should have a title, but let's be sure.
+            if (item.name) {
+                memo.headings = true;
+            }
+        }
+
+        if (!memo.figures) {
+            if (item._embedded && item._embedded.items && item._embedded.items.length) {
                 return item._embedded.items.reduce(findTocs, memo);
             }
         }
