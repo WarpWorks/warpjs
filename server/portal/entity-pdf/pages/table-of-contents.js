@@ -71,7 +71,8 @@ module.exports = async (documentResource) => {
         tableOfContents.push({
             toc: {
                 id: TOC_NAME,
-                title: { text: 'Contents', style: 'header' }
+                title: { text: 'Contents', style: 'headline1' }
+
             },
             headlineLevel: 1,
             pageBreak: 'before'
@@ -82,7 +83,7 @@ module.exports = async (documentResource) => {
         tableOfContents.push({
             toc: {
                 id: IMAGE_TOC_NAME,
-                title: { text: 'Figures', style: 'header' }
+                title: { text: 'Figures', style: 'headline1' }
             },
             margin: [ 0, 24, 0, 12 ]
         });
