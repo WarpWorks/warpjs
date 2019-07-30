@@ -5,6 +5,14 @@
 - [Releases 1.0.x](RELEASE-1.0.md) from 2017-05-31 to 2017-06-10
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
+## 1.3.133 - 2019-07-30
+
+- #150: Remove previous predecessor association.
+- #150: Handling versions with aliases.
+- #150: Added link to other versions. Don't display create new if already has successor.
+- #150: Displaying version in CMS/Studio breadcrumbs
+- #150: Adding version to CMS/Studio CSV relationship-panel-item.
+
 ## 1.3.132 - 2019-07-30
 
 - #271: PDF generator: heading on table of contents should be like other headings.
