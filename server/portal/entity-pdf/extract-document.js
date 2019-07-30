@@ -1,5 +1,6 @@
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const { DEFAULT_VERSION } = require('./../../../lib/constants');
 const convertDocumentToTree = require('./convert-document-to-tree');
 // const debug = require('./debug')('extract-document');
 const Document = require('./../../../lib/core/first-class/document');
@@ -26,7 +27,7 @@ module.exports = async (req, persistence, type, id, viewName, level = 0) => {
         typeID: document.typeID || entity.id,
         id: document.id,
         name: document.Name,
-        version: document.Version || '1.0',
+        version: document.Version || DEFAULT_VERSION,
         lastUpdated: document.lastUpdated,
         status: document.Status,
         description: document.Description,

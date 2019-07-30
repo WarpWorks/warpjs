@@ -2,6 +2,7 @@ const indexOf = require('lodash/indexOf');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const { DEFAULT_VERSION } = require('./../../../lib/constants');
 const breadcrumbsByEntity = require('./../resources/breadcrumbs-by-entity');
 const contentConstants = require('./../../content/constants');
 // const debug = require('./debug')('extract-page');
@@ -48,7 +49,7 @@ module.exports = async (req, persistence, entity, instance, pageViewName) => {
         name: entity.getDisplayName(instance),
         isHomePage: entity.name === config.domainName,
         hasGA: config.analytics && config.analytics.apiKey,
-        version: instance.Version || '1.0', // FIXME: Use BasicProperty.
+        version: instance.Version || DEFAULT_VERSION, // FIXME: Use BasicProperty.
         description: instance.Description,
         keywords: instance.Keywords,
         author: instance.Author

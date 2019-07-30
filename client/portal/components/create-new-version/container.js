@@ -1,3 +1,4 @@
+import { DEFAULT_VERSION } from './../../../../lib/constants';
 import Component from './component';
 import namespace from './namespace';
 import { createVersion, hide, resetVersion, show, updateVersion } from './orchestrators';
@@ -20,8 +21,8 @@ const mapStateToProps = (state, ownProps) => {
         ;
 
         const version = pageHalSubstate.pages && pageHalSubstate.pages.length
-            ? pageHalSubstate.pages[0].version || '1.0'
-            : '1.0'
+            ? pageHalSubstate.pages[0].version || DEFAULT_VERSION
+            : DEFAULT_VERSION
         ;
 
         const versionFragments = version.split('.');

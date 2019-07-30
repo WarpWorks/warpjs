@@ -3,8 +3,11 @@
     <li class="breadcrumb-item">
       {{#if @last}}
         {{breadcrumb.name}}
+        {{#if breadcrumb.version}}
+        ({{breadcrumb.version}})
+        {{/if}}
       {{else}}
-        <a href="{{breadcrumb._links.self.href}}" title="{{breadcrumb.name}}">{{breadcrumb.name}}</a>
+        <a href="{{breadcrumb._links.self.href}}" title="{{breadcrumb.name}}">{{breadcrumb.name}}{{#if breadcrumb.version}} ({{breadcrumb.version}}){{/if}}</a>
       {{/if}}
     </li>
   {{/each}}

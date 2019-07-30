@@ -3,6 +3,7 @@ const Promise = require('bluebird');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const { DEFAULT_VERSION } = require('./../../../lib/constants');
 const constants = require('./../constants');
 const editionConstants = require('./../../edition/constants');
 const serverUtils = require('./../../utils');
@@ -22,7 +23,7 @@ function documentMapper(persistence, entity, domain, instance) {
             name: entity.getDisplayName(instance),
             description: instance.Description,
             status: instance.Status,
-            version: instance.Version
+            version: instance.Version || DEFAULT_VERSION
         }))
         .then((resource) => Promise.resolve()
             .then(() => resource.link('portal', RoutesInfo.expand('entity', {
