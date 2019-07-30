@@ -6,6 +6,17 @@ import { NAME } from './constants';
 
 const Button = window.WarpJS.ReactComponents.Button;
 
+const addVersionLink = (elements, link, label) => {
+    if (link) {
+        elements.push(
+            <Fragment>
+                {' '}
+                <a href={link.href}>{label} ({link.title})</a>
+            </Fragment>
+        );
+    }
+};
+
 const Component = (props) => {
     let content;
     if (props.showCreate) {
@@ -21,10 +32,21 @@ const Component = (props) => {
             </Fragment>
         );
     } else {
+        const elements = [];
+
+        elements.push(props.version);
+        addVersionLink(elements, props.page._links.versionPredecessor, "Previous");
+        addVersionLink(elements, props.page._links.versionSuccessor, "Next");
+        addVersionLink(elements, props.page._links.lastVersionSuccessor, "Last");
+
+        const newVersionButton = props.page._links.versionSuccessor
+            ? null
+            : <InputGroup.Button><Button label="New version" glyph="duplicate" style="primary" onClick={props.show} /></InputGroup.Button>;
+
         content = (
             <Fragment>
-                <FormControl.Static>{props.version}</FormControl.Static>
-                <InputGroup.Button><Button label="New version" glyph="duplicate" style="primary" onClick={props.show} /></InputGroup.Button>
+                <FormControl.Static>{elements}</FormControl.Static>
+                {newVersionButton}
             </Fragment>
         );
     }
@@ -40,6 +62,7 @@ Component.propTypes = {
     createVersion: PropTypes.func.isRequired,
     hide: PropTypes.func.isRequired,
     nextVersion: PropTypes.string,
+    page: PropTypes.object,
     resetVersion: PropTypes.func.isRequired,
     show: PropTypes.func,
     showCreate: PropTypes.bool,

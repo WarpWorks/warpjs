@@ -120,5 +120,46 @@ module.exports = async (req, persistence, entity, instance, pageViewName) => {
         resource.embed('pageViews', pageViewResource);
     }
 
+    // Versions
+    const predecessorRelationship = entity.getRelationshipByName('Predecessor');
+    if (predecessorRelationship) {
+        await predecessorOrSuccessorLink(persistence, instance, resource, predecessorRelationship, 'versionPredecessor');
+
+        const successorRelationship = predecessorRelationship.getReverseRelationship();
+        await predecessorOrSuccessorLink(persistence, instance, resource, successorRelationship, 'versionSuccessor');
+        await predecessorOrSuccessorLink(persistence, instance, resource, successorRelationship, 'lastVersionSuccessor', true);
+    }
+
     return resource;
+};
+
+const predecessorOrSuccessorLink = async (persistence, instance, resource, relationship, linkName, recursive) => {
+    if (relationship) {
+        const documents = await relationship.getDocuments(persistence, instance);
+        if (documents && documents.length) {
+            let foundRecursion = false;
+
+            if (recursive) {
+                // We need to check if the same relationship can be applied
+                // again.
+                const nextGenerationDocuments = await relationship.getDocuments(persistence, documents[0]);
+                if (nextGenerationDocuments && nextGenerationDocuments.length) {
+                    await predecessorOrSuccessorLink(persistence, documents[0], resource, relationship, linkName, recursive);
+                    foundRecursion = true;
+                }
+            }
+
+            if (!foundRecursion) {
+                const href = RoutesInfo.expand('entity', {
+                    type: documents[0].type,
+                    id: documents[0].id
+                });
+
+                resource.link(linkName, {
+                    href,
+                    title: documents[0].Version || DEFAULT_VERSION
+                });
+            }
+        }
+    }
 };

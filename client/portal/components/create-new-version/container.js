@@ -33,6 +33,7 @@ const mapStateToProps = (state, ownProps) => {
             url,
             version,
             nextVersion,
+            page: pageHalSubstate.pages[0],
             ...getSubstate(state, namespace)
         };
     } else {
