@@ -66,7 +66,7 @@ const Component = (props) => {
 
                             <FormGroup controlId={PROPERTIES.VERSION} className={`warpjs-${PROPERTIES.VERSION}`}>
                                 <ControlLabel>Version:</ControlLabel>
-                                <CreateNewVersion version={page.version} />
+                                <CreateNewVersion />
                             </FormGroup>
 
                             <FormGroup controlId={PROPERTIES.STATUS} className={`warpjs-${PROPERTIES.STATUS}`}>
