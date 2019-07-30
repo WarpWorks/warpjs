@@ -1,19 +1,20 @@
 <ol class="breadcrumb">
-  {{#if isRootInstance}}
-    <li class="breadcrumb-item"><a href="{{_links.self.href}}">{{type}}</a></li>
-  {{else}}
-    {{#each _embedded.breadcrumbs}}
-      {{#if @last}}
-        <li class="active">{{_links.self.title}}
-          {{#if displayType}}
-            [<a href="{{_links.instances.href}}" title="{{_links.instances.title}}">{{displayType}}</a>]
-          {{/if}}
-        </li>
-      {{else}}
-        <li class="breadcrumb-item">
-          <a href="{{_links.self.href}}" data-toggle="tooltip" title="{{type}}">{{_links.self.title}}</a>
-        </li>
-      {{/if}}
-    {{/each}}
-  {{/if}}
+  {{#each _embedded.breadcrumbs as |breadcrumb|}}
+    {{#if @last}}
+      <li class="active">
+        {{breadcrumb.name}}
+        ({{breadcrumb.version}})
+        {{#if displayType}}
+          [<a href="{{breadcrumb._links.instances.href}}" title="{{breadcrumb._links.instances.title}}">{{displayType}}</a>]
+        {{/if}}
+      </li>
+    {{else}}
+      <li class="breadcrumb-item">
+        <a href="{{breadcrumb._links.self.href}}" data-toggle="tooltip" title="{{type}}">
+          {{breadcrumb.name}}
+          ({{breadcrumb.version}})
+        </a>
+      </li>
+    {{/if}}
+  {{/each}}
 </ol>
