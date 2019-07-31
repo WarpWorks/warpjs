@@ -95,6 +95,7 @@ const itemElement = (resource, docDefinition, headlineLevel = 1, req) => {
                     resource.content = resource.content.replace(CONTENT_LINK_RE, contentLinkReplacer);
                 }
                 const converted = htmlToPdfmake(resource.content, jsdomWindow);
+
                 // Let's separate the paragraph (double '\n') into their own.
                 // Abuse of `.reduce` to keep current value.
                 converted.reduce(
@@ -121,6 +122,19 @@ const itemElement = (resource, docDefinition, headlineLevel = 1, req) => {
                                 });
                             }
                             elements.push(segment);
+
+                            return [];
+                        } else if (segment.ul || segment.ol) {
+                            if (memo.length) {
+                                elements.push({
+                                    text: memo,
+                                    style: 'paragraph'
+                                });
+                            }
+                            elements.push({
+                                stack: [segment],
+                                style: 'paragraph'
+                            });
 
                             return [];
                         } else if (index === array.length - 1) {
