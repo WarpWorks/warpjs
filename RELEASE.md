@@ -6,6 +6,10 @@
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
 
+## 1.3.135 - 2019-08-01
+
+- #273: PDF generator: png javascript error.
+
 ## 1.3.134 - 2019-07-31
 
 - #270: PDF generator: lists not showing in pdf.

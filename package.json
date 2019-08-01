@@ -1,6 +1,6 @@
 {
   "name": "@warp-works/warpjs",
-  "version": "1.3.134",
+  "version": "1.3.135",
   "description": "Content management system for WarpWorks in javascript",
   "repository": {
     "type": "git",
@@ -81,6 +81,7 @@
     "mmmagic": "~0.5.0",
     "morgan": "~1.9.0",
     "pdfmake": "~0.1.57",
+    "pngjs": "^3.4.0",
     "random-words": "0.0.1",
     "react": "~16.8.4",
     "react-dom": "~16.8.4",

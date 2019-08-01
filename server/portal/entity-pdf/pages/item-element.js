@@ -132,7 +132,7 @@ const itemElement = (resource, docDefinition, headlineLevel = 1, req) => {
                                 });
                             }
                             elements.push({
-                                stack: [segment],
+                                stack: [ segment ],
                                 style: 'paragraph'
                             });
 
