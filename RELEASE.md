@@ -6,6 +6,10 @@
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
 
+## 1.3.136 - 2019-08-02
+
+- Fix for survey tool and aliases.
+
 ## 1.3.135 - 2019-08-01
 
 - #273: PDF generator: png javascript error.

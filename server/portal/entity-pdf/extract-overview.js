@@ -58,7 +58,6 @@ module.exports = async (req, persistence, entity, document, viewName, level = 0)
                     const imageFilePath = path.join(config.folders.w2projects, image.ImageURL);
                     const mime = mimeTypes.lookup(imageFilePath);
 
-
                     // const imageType = require('image-type');
 
                     let buffer = fs.readFileSync(imageFilePath);
