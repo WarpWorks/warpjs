@@ -1,3 +1,4 @@
+import { reducers as aliasSelectorReducers } from './alias-selector';
 import { reducers as breadcrumbActionsReducers } from './breadcrumb-actions';
 import { reducers as createNewVersionReducers } from './create-new-version';
 import { reducers as documentEditionReducers } from './document-edition';
@@ -10,6 +11,7 @@ import { reducers as userProfileMenuReducers } from './user-profile-menu';
 import { reducers as userProfileNotificationsReducers } from './user-profile-notifications';
 
 export default window.WarpJS.ReactUtils.concatenateReducers([
+    aliasSelectorReducers,
     breadcrumbActionsReducers,
     createNewVersionReducers,
     documentEditionReducers,

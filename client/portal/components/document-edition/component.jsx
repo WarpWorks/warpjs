@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { Fragment } from 'react';
 import { ControlLabel, Form, FormControl, FormGroup, Tab, Tabs } from 'react-bootstrap';
 
+import AliasSelector from './../alias-selector';
 import BreadcrumbActionButton from './../../components/breadcrumb-action-button';
 import CreateNewVersion from './../create-new-version';
 import { NAME } from './constants';
@@ -11,6 +12,7 @@ import { NAME } from './constants';
 const { AutoSaveField, ModalContainer } = window.WarpJS.ReactComponents;
 
 const PROPERTIES = {
+    ALIAS: 'document-edition-property-alias',
     AUTHOR: 'document-edition-property-author',
     DESCRIPTION: 'document-edition-property-description',
     KEYWORDS: 'document-edition-property-keywords',
@@ -72,6 +74,11 @@ const Component = (props) => {
                             <FormGroup controlId={PROPERTIES.STATUS} className={`warpjs-${PROPERTIES.STATUS}`}>
                                 <ControlLabel>Status:</ControlLabel>
                                 <FormControl.Static>{page.status.documentStatus}</FormControl.Static>
+                            </FormGroup>
+
+                            <FormGroup controlId={PROPERTIES.ALIAS} className={`warpjs-${PROPERTIES.ALIAS}`}>
+                                <ControlLabel>Alias:</ControlLabel>
+                                <AliasSelector />
                             </FormGroup>
                         </Tab>
                         <Tab eventKey={2} title="SEO">

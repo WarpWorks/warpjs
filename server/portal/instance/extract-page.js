@@ -130,6 +130,18 @@ module.exports = async (req, persistence, entity, instance, pageViewName) => {
         await predecessorOrSuccessorLink(persistence, instance, resource, successorRelationship, 'lastVersionSuccessor', true);
     }
 
+    // Aliases
+    const aliasRelationship = entity.getRelationshipByName('Alias');
+    if (aliasRelationship) {
+        const aliasDocuments = await aliasRelationship.getDocuments(persistence, instance);
+        if (aliasDocuments && aliasDocuments.length) {
+            resource.embed('aliases', aliasDocuments.map((aliasDocument) => warpjsUtils.createResource('', {
+                name: aliasDocument.Name,
+                view: aliasDocument.View
+            })));
+        }
+    }
+
     return resource;
 };
 
