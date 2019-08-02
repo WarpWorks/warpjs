@@ -55,21 +55,22 @@ module.exports = async (req, persistence, entity, document, viewName, level = 0)
 
                 try {
                     // Image are now on local disk, so let's find it.
-                    const imageFilePath = path.join(config.folders.w2projects, image.ImageURL);
+                    let imageFilePath = path.join(config.folders.w2projects, image.ImageURL);
                     const mime = mimeTypes.lookup(imageFilePath);
-
-                    // const imageType = require('image-type');
-
                     let buffer = fs.readFileSync(imageFilePath);
                     switch (mime) {
                         case 'image/png':
                             const png = PNG.sync.read(buffer);
                             if (png.interlace) {
-                                buffer = PNG.sync.write(png, { interlace: false });
-                                fs.writeFileSync(imageFilePath, buffer);
+                                imageFilePath = imageFilePath.replace(".png", "-non-interlace.png");
+                                if (!fs.existsSync(imageFilePath)) {
+                                    buffer = PNG.sync.write(png, { interlace: false });
+                                    fs.writeFileSync(imageFilePath, buffer);
+                                }
                             }
                             break;
                     }
+
                     const base64 = await imageToBase64(imageFilePath);
                     imageResource.base64 = `data:${mime};base64,${base64}`;
                 } catch (err) {
