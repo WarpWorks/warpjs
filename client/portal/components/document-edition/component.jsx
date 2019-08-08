@@ -5,6 +5,7 @@ import { ControlLabel, Form, FormControl, FormGroup, Tab, Tabs } from 'react-boo
 import AliasSelector from './../alias-selector';
 import BreadcrumbActionButton from './../../components/breadcrumb-action-button';
 import CreateNewVersion from './../create-new-version';
+import DocumentEditionFormGroup from './form-group';
 import { NAME } from './constants';
 
 // import _debug from './debug'; const debug = _debug('component');
@@ -66,20 +67,21 @@ const Component = (props) => {
                                 />
                             </FormGroup>
 
-                            <FormGroup controlId={PROPERTIES.VERSION} className={`warpjs-${PROPERTIES.VERSION}`}>
-                                <ControlLabel>Version:</ControlLabel>
-                                <CreateNewVersion />
-                            </FormGroup>
+                            <DocumentEditionFormGroup
+                                controlId={PROPERTIES.VERSION}
+                                className={`warpjs-${PROPERTIES.VERSION}`}
+                                label="Version"
+                                content={<CreateNewVersion />}
+                            />
 
-                            <FormGroup controlId={PROPERTIES.STATUS} className={`warpjs-${PROPERTIES.STATUS}`}>
-                                <ControlLabel>Status:</ControlLabel>
-                                <FormControl.Static>{page.status.documentStatus}</FormControl.Static>
-                            </FormGroup>
+                            <DocumentEditionFormGroup
+                                controlId={PROPERTIES.STATUS}
+                                className={`warpjs-${PROPERTIES.STATUS}`}
+                                label="Status"
+                                content={<FormControl.Static>{page.status.documentStatus}</FormControl.Static>}
+                            />
 
-                            <FormGroup controlId={PROPERTIES.ALIAS} className={`warpjs-${PROPERTIES.ALIAS}`}>
-                                <ControlLabel>Alias:</ControlLabel>
-                                <AliasSelector />
-                            </FormGroup>
+                            <AliasSelector controlId={PROPERTIES.ALIAS} />
                         </Tab>
                         <Tab eventKey={2} title="SEO">
                             <FormGroup controlId={PROPERTIES.DESCRIPTION} className={`warpjs-${PROPERTIES.DESCRIPTION}`}>

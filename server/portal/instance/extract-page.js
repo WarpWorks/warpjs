@@ -96,6 +96,14 @@ module.exports = async (req, persistence, entity, instance, pageViewName) => {
             }),
             title: `In-line edit "${resource.name}"`
         });
+
+        resource.link('alias', {
+            href: RoutesInfo.expand(routes.portal.alias, {
+                type: instance.type,
+                id: instance.id
+            }),
+            title: 'Aliases'
+        });
     }
 
     // Document status
