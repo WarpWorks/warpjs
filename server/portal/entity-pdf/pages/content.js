@@ -2,8 +2,8 @@
 const itemElement = require('./item-element');
 
 module.exports = async (documentResource, docDefinition, req) => {
-    if (!documentResource || !documentResource._embedded || !documentResource._embedded.items) {
-        return;
+    if (!documentResource || !documentResource._embedded || !documentResource._embedded.items || !documentResource._embedded.items.length) {
+        throw new Error('No content for PDF.');
     }
 
     return documentResource._embedded.items.reduce(

@@ -6,6 +6,10 @@
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
 
+## 1.3.138 - 2019-08-07
+
+- #268: PDF generator: fix issue with homepage pdf. Error when there is no content.
+
 ## 1.3.137 - 2019-08-02
 
 - #277: PDF generator: create new png to fix interlace issue.
