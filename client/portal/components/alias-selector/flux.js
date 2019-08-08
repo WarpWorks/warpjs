@@ -44,11 +44,7 @@ export const orchestrators = Object.freeze({
 
         const toastLoading = toast.loading($, "Renaming...");
         try {
-            const data = {
-                value
-            };
-
-            const res = await proxy.patch($, url, data);
+            const res = await proxy.patch($, url, { value });
             debug(`renameAlias(): res=`, res);
             dispatch(actionCreators.updateEditValueState('success'));
             setTimeout(() => dispatch(actionCreators.updateEditValueState(null)), 2000);
@@ -60,6 +56,7 @@ export const orchestrators = Object.freeze({
                 () => {
                     dispatch(actionCreators.updateEditValueState('warning'));
                     dispatch(actionCreators.valueMessage(null));
+                    dispatch(actionCreators.enableActionButton(true));
                 },
                 2000
             );
