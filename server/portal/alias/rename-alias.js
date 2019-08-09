@@ -1,6 +1,7 @@
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const aliasUtils = require('./../../../lib/core/first-class/aliases');
 const aliasNameValidator = require('./../../../lib/core/validators/alias-name');
 const routes = require('./../../../lib/constants/routes');
 const serverUtils = require('./../../utils');
@@ -68,6 +69,10 @@ module.exports = async (req, res) => {
         aliasDocument.Name = body.value;
 
         // TODO: Add changelog
+
+        // Removing the old alias and caching the new one.
+        aliasUtils.remove(oldName);
+        aliasUtils.get(body.value); // We don't need to wait for it to complete.
 
         await aliasEntity.updateDocument(persistence, aliasDocument, true);
 

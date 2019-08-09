@@ -1,9 +1,10 @@
 import namespace from './namespace';
+import pageHalNamespace from './../page-hal/namespace';
 import aliasNameValidator from './../../../../lib/core/validators/alias-name';
 
 import _debug from './debug'; const debug = _debug('flux');
 
-const { actionCreator, baseAttributeReducer, concatenateReducers, namespaceKeys } = window.WarpJS.ReactUtils;
+const { actionCreator, baseAttributeReducer, concatenateReducers, getNamespaceSubstate, namespaceKeys, setNamespaceSubstate } = window.WarpJS.ReactUtils;
 const { proxy, toast } = window.WarpJS;
 
 //
@@ -16,6 +17,7 @@ const actions = namespaceKeys(namespace, [
     'UPDATE_ALIAS',
     'UPDATE_EDIT_VALUE',
     'UPDATE_EDIT_VALUE_STATE',
+    'UPDATE_PAGE_ALIAS',
     'VALUE_MESSAGE'
 ]);
 
@@ -29,6 +31,7 @@ const actionCreators = Object.freeze({
     updateAlias: (value) => actionCreator(actions.UPDATE_ALIAS, { value }),
     updateEditValue: (value) => actionCreator(actions.UPDATE_EDIT_VALUE, { value }),
     updateEditValueState: (value) => actionCreator(actions.UPDATE_EDIT_VALUE_STATE, { value }),
+    updatePageAlias: (value) => actionCreator(actions.UPDATE_PAGE_ALIAS, { value }),
     valueMessage: (value) => actionCreator(actions.VALUE_MESSAGE, { value })
 });
 
@@ -44,10 +47,10 @@ export const orchestrators = Object.freeze({
 
         const toastLoading = toast.loading($, "Renaming...");
         try {
-            const res = await proxy.patch($, url, { value });
-            debug(`renameAlias(): res=`, res);
-            dispatch(actionCreators.updateEditValueState('success'));
-            setTimeout(() => dispatch(actionCreators.updateEditValueState(null)), 2000);
+            await proxy.patch($, url, { value });
+            // TODO: Change value on page.
+            orchestrators.unsetEditMode(dispatch);
+            dispatch(actionCreators.updatePageAlias(value));
         } catch (err) {
             debug(`renameAlias(): err=`, err);
             toast.error($, "Unable to rename alias");
@@ -82,7 +85,6 @@ export const orchestrators = Object.freeze({
     },
     updateAlias: (dispatch, value) => dispatch(actionCreators.updateAlias(value)),
     updateEditValue: (dispatch, value, aliases, currentValue) => {
-        // TODO: Check if alias already exists.
         dispatch(actionCreators.enableActionButton(false));
         dispatch(actionCreators.updateEditValueState('warning'));
         dispatch(actionCreators.updateEditValue(value));
@@ -121,6 +123,15 @@ export const reducers = concatenateReducers([{
 }, {
     actions: [ actions.UPDATE_EDIT_VALUE_STATE ],
     reducer: (state = {}, action) => baseAttributeReducer(state, namespace, 'editValueState', action.payload.value)
+}, {
+    actions: [ actions.UPDATE_PAGE_ALIAS ],
+    reducer: (state = {}, action) => {
+        const pageHalSubstate = getNamespaceSubstate(state, pageHalNamespace);
+        const page = pageHalSubstate.pages[0];
+        const alias = page.aliases[0];
+        alias.name = action.payload.value;
+        return setNamespaceSubstate(state, pageHalNamespace, pageHalSubstate);
+    }
 }, {
     actions: [ actions.VALUE_MESSAGE ],
     reducer: (state = {}, action) => baseAttributeReducer(state, namespace, 'valueMessage', action.payload.value)
