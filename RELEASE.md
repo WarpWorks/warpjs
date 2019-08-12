@@ -6,6 +6,10 @@
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
 
+## 1.3.139 - 2019-08-12
+
+- warpjs-survey-tool-plugin #123: Converting one path to async/await.
+
 ## 1.3.138 - 2019-08-07
 
 - #268: PDF generator: fix issue with homepage pdf. Error when there is no content.
