@@ -34,6 +34,7 @@ const Component = (props) => {
     } else {
         const elements = [];
         elements.push(props.version);
+        addVersionLink(elements, props.page._links.firstVersionPredecessor, "First");
         addVersionLink(elements, props.page._links.versionPredecessor, "Previous");
         addVersionLink(elements, props.page._links.versionSuccessor, "Next");
         addVersionLink(elements, props.page._links.lastVersionSuccessor, "Last");

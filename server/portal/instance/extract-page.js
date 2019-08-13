@@ -134,6 +134,7 @@ module.exports = async (req, persistence, entity, instance, pageViewName) => {
     const predecessorRelationship = entity.getRelationshipByName('Predecessor');
     if (predecessorRelationship) {
         await predecessorOrSuccessorLink(persistence, instance, resource, predecessorRelationship, 'versionPredecessor');
+        await predecessorOrSuccessorLink(persistence, instance, resource, predecessorRelationship, 'firstVersionPredecessor', true);
 
         const successorRelationship = predecessorRelationship.getReverseRelationship();
         await predecessorOrSuccessorLink(persistence, instance, resource, successorRelationship, 'versionSuccessor');
