@@ -39,8 +39,34 @@ const actionCreators = Object.freeze({
 //  Orchestrators
 //
 export const orchestrators = Object.freeze({
+    createAlias: async (dispatch, url, value) => {
+        debug(`orchestrators.createAlias(dispatch, url=${url}, value=${value}`);
+        dispatch(actionCreators.enableActionButton(false));
+        dispatch(actionCreators.valueMessage(null));
+        dispatch(actionCreators.updateEditValueState('warning'));
+
+        const toastLoading = toast.loading($, "Creating...");
+        try {
+            await proxy.post($, url, { value });
+            orchestrators.unsetEditMode(dispatch);
+            dispatch(actionCreators.updatePageAlias(value));
+        } catch (err) {
+            console.error(`orchestrators.createAlias(): err=`, err);
+            toast.error($, "Unable to create alias");
+            dispatch(actionCreators.updateEditValueState('error'));
+            setTimeout(
+                () => {
+                    dispatch(actionCreators.updateEditValueState('warning'));
+                    dispatch(actionCreators.valueMessage(null));
+                    dispatch(actionCreators.enableActionButton(true));
+                },
+                2000
+            );
+        } finally {
+            toast.close($, toastLoading);
+        }
+    },
     renameAlias: async (dispatch, url, value) => {
-        debug(`orchestrators.renameAlias(dispatch, url=${url}, value=${value}`);
         dispatch(actionCreators.enableActionButton(false));
         dispatch(actionCreators.valueMessage(null));
         dispatch(actionCreators.updateEditValueState('warning'));
@@ -48,7 +74,6 @@ export const orchestrators = Object.freeze({
         const toastLoading = toast.loading($, "Renaming...");
         try {
             await proxy.patch($, url, { value });
-            // TODO: Change value on page.
             orchestrators.unsetEditMode(dispatch);
             dispatch(actionCreators.updatePageAlias(value));
         } catch (err) {
@@ -72,7 +97,7 @@ export const orchestrators = Object.freeze({
         dispatch(actionCreators.enableActionButton(false));
         dispatch(actionCreators.valueMessage(null));
         try {
-            const res = await proxy.get($, url);
+            const res = await proxy.get($, url, true);
             dispatch(actionCreators.setListOfExistingAliases(res.items));
         } catch (err) {
             debug(`error proxy.get(): err=`, err);
@@ -128,6 +153,7 @@ export const reducers = concatenateReducers([{
     reducer: (state = {}, action) => {
         const pageHalSubstate = getNamespaceSubstate(state, pageHalNamespace);
         const page = pageHalSubstate.pages[0];
+        page.aliases = page.aliases || [{}];
         const alias = page.aliases[0];
         alias.name = action.payload.value;
         return setNamespaceSubstate(state, pageHalNamespace, pageHalSubstate);

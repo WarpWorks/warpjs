@@ -15,7 +15,7 @@ const mapStateToProps = (state, ownProps) => {
     if (pageHalSubstate.pages && pageHalSubstate.pages.length) {
         const subState = getNamespaceSubstate(state, namespace);
 
-        subState.currentValue = page.aliases.length ? page.aliases[0].name : null;
+        subState.currentValue = (page.aliases && page.aliases.length) ? page.aliases[0].name : null;
         subState.editValue = subState.editValue || subState.currentValue;
 
         return Object.freeze({
@@ -28,6 +28,7 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => Object.freeze({
+    createAlias: (url, value) => async () => orchestrators.createAlias(dispatch, url, value),
     setEditMode: (url) => async () => orchestrators.setEditMode(dispatch, url),
     renameAlias: (url, value) => async () => orchestrators.renameAlias(dispatch, url, value),
     unsetEditMode: () => orchestrators.unsetEditMode(dispatch),
@@ -37,6 +38,7 @@ const mapDispatchToProps = (dispatch, ownProps) => Object.freeze({
 const mergeProps = (stateProps, dispatchProps, ownProps) => Object.freeze({
     ...stateProps,
     ...dispatchProps,
+    createAlias: dispatchProps.createAlias(stateProps.page._links.alias.href, stateProps.editValue),
     renameAlias: dispatchProps.renameAlias(stateProps.page._links.alias.href, stateProps.editValue),
     setEditMode: dispatchProps.setEditMode(stateProps.page._links.alias.href),
     updateEditValue: dispatchProps.updateEditValue(stateProps.aliases, stateProps.currentValue),

@@ -6,9 +6,9 @@ const aliasNameValidator = require('./../../../lib/core/validators/alias-name');
 const routes = require('./../../../lib/constants/routes');
 const serverUtils = require('./../../utils');
 
-// const debug = require('./debug')('rename-alias');
+const { ALIAS_RELATIONSHIP_NAME } = require('./constants');
 
-const ALIAS_RELATIONSHIP_NAME = 'Alias'; // FIXME: Put outside.
+// const debug = require('./debug')('rename-alias');
 
 module.exports = async (req, res) => {
     const { type, id } = req.params;
@@ -35,10 +35,11 @@ module.exports = async (req, res) => {
         }
 
         const typeEntity = await serverUtils.getEntity(null, type);
+        if (!typeEntity) {
+            throw new Error(`Cannot find entity '${type}'`);
+        }
 
         const typeDocument = await typeEntity.getInstance(persistence, id);
-        // debug(`typeDocument=`, typeDocument);
-
         if (!typeDocument) {
             throw new Error(`Cannot find document ${type}/${id}.`);
         }

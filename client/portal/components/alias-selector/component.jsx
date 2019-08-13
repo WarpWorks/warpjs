@@ -41,10 +41,14 @@ const Component = (props) => {
         }
     } else if (props.inEditMode) {
         content = (
-            <InputGroup>
-                <InputGroup.Button><Button label="Cancel" glyph="remove" style="danger" onClick={props.unsetEditMode} /></InputGroup.Button>
-                <InputGroup.Button><Button label="Create" glyph="ok" style="primary" /></InputGroup.Button>
-            </InputGroup>
+            <Fragment>
+                <InputGroup>
+                    <FormControl value={props.editValue} onChange={(event) => props.updateEditValue(event.target.value)} />
+                    <InputGroup.Button><Button label="Cancel" glyph="remove" style="danger" onClick={props.unsetEditMode} /></InputGroup.Button>
+                    <InputGroup.Button><Button label="Create" glyph="ok" style="primary" disabled={!props.actionButtonEnabled} onClick={props.createAlias} /></InputGroup.Button>
+                </InputGroup>
+                {props.valueMessage ? <HelpBlock>${props.valueMessage}</HelpBlock> : null}
+            </Fragment>
         );
     } else {
         content = (
@@ -70,6 +74,7 @@ Component.displayName = NAME;
 Component.propTypes = {
     actionButtonEnabled: PropTypes.bool,
     controlId: PropTypes.string,
+    createAlias: PropTypes.func.isRequired,
     editValue: PropTypes.string,
     editValueState: PropTypes.string,
     inEditMode: PropTypes.bool,
@@ -81,7 +86,7 @@ Component.propTypes = {
         })),
         _links: PropTypes.object
     }),
-    renameAlias: PropTypes.func,
+    renameAlias: PropTypes.func.isRequired,
     setEditMode: PropTypes.func,
     unsetEditMode: PropTypes.func,
     updateEditValue: PropTypes.func,
