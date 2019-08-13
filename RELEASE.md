@@ -6,6 +6,10 @@
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
 
+## 1.3.140 - 2019-08-13
+
+- #275: Alias edition on meta document editor.
+
 ## 1.3.139 - 2019-08-12
 
 - warpjs-survey-tool-plugin #123: Converting one path to async/await.

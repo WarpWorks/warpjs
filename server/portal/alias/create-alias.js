@@ -9,13 +9,11 @@ const serverUtils = require('./../../utils');
 
 const { ALIAS_RELATIONSHIP_NAME, PREDECESSOR_RELATIONSHIP_NAME } = require('./constants');
 
-const debug = require('./debug')('create-alias');
+// const debug = require('./debug')('create-alias');
 
 module.exports = async (req, res) => {
     const { type, id } = req.params;
     const { body } = req;
-
-    debug(`type=${type}, id=${id}, body=`, body);
 
     const resource = warpjsUtils.createResource(
         req,
@@ -60,7 +58,6 @@ module.exports = async (req, res) => {
         const newAliasInstance = aliasEntity.newInstance(aliasRelationship);
         newAliasInstance.Name = body.value; // FIXME: Use BasicProperty.
         const newAliasDocument = await aliasEntity.createDocument(persistence, newAliasInstance);
-        debug(`newAliasDocument=`, newAliasDocument);
 
         const aliasData = {
             type: newAliasDocument.type,
@@ -70,16 +67,14 @@ module.exports = async (req, res) => {
             position: 0
         };
         await aliasRelationship.addAssociation(typeDocument, aliasData, persistence);
-        debug(`aliasRelationship.addAssociation() done.`);
 
         // Find all predecessors and successor and add the Association.
-        debug(`Getting relationship ${PREDECESSOR_RELATIONSHIP_NAME}`);
         const predecessorRelationship = typeEntity.getRelationshipByName(PREDECESSOR_RELATIONSHIP_NAME);
         if (predecessorRelationship) {
-            await recursiveAdd(persistence, predecessorRelationship, typeDocument, aliasData);
+            await recursiveAdd(persistence, predecessorRelationship, typeDocument, aliasRelationship, aliasData);
 
             const successorRelationship = predecessorRelationship.getReverseRelationship();
-            await recursiveAdd(persistence, successorRelationship, typeDocument, aliasData);
+            await recursiveAdd(persistence, successorRelationship, typeDocument, aliasRelationship, aliasData);
         }
         await typeEntity.updateDocument(persistence, typeDocument);
 
@@ -108,28 +103,23 @@ module.exports = async (req, res) => {
     }
 };
 
-const recursiveAdd = async (persistence, relationship, document, aliasData) => {
-    debug(`recursiveAdd(): relationship=${relationship.name}, document=`, document);
+const recursiveAdd = async (persistence, relationship, document, aliasRelationship, aliasData) => {
     const relatedDocments = await relationship.getDocuments(persistence, document);
     if (relatedDocments && relatedDocments.length) {
-        debug(`recursiveAdd(): relatedDocments=`, relatedDocments);
         const domain = relationship.getDomain();
         await Promise.each(
             relatedDocments,
             async (relatedDocument) => {
                 try {
-                    debug(`recursiveAdd(): Promise.each(): relatedDocument=`, relatedDocument);
-                    await relationship.addAssociation(relatedDocument, aliasData, persistence);
+                    await aliasRelationship.addAssociation(relatedDocument, aliasData, persistence);
                     const relatedDocumentEntity = domain.getEntityByInstance(relatedDocument);
                     // TODO: Add ChangeLog
                     await relatedDocumentEntity.updateDocument(persistence, relatedDocument);
-                    await recursiveAdd(persistence, relationship, relatedDocument, aliasData);
+                    await recursiveAdd(persistence, relationship, relatedDocument, aliasRelationship, aliasData);
                 } catch (err) {
                     console.error(`Error in Promise.each(): err=`, err);
                 }
             }
         );
-    } else {
-        debug(`recursiveAdd(): no relatedDocuments`);
     }
 };
