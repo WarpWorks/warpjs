@@ -6,6 +6,10 @@
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
 
+## 1.3.141 - 2019-08-13
+
+- warpjs-survey-tool-plugin #142: Personas.
+
 ## 1.3.140 - 2019-08-13
 
 - #275: Alias edition on meta document editor.

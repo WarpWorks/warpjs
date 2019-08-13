@@ -69,7 +69,6 @@ function handleAggregation(req, res, resource, persistence, instanceData) {
 }
 
 function handleAssociation(req, res, resource, persistence, instanceData) {
-    console.log('got to handleAssociation');
     const { body } = req;
 
     const ACTION = actions.ADD_ASSOCIATION;
