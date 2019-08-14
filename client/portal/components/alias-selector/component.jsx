@@ -47,7 +47,7 @@ const Component = (props) => {
                     <InputGroup.Button><Button label="Cancel" glyph="remove" style="danger" onClick={props.unsetEditMode} /></InputGroup.Button>
                     <InputGroup.Button><Button label="Create" glyph="ok" style="primary" disabled={!props.actionButtonEnabled} onClick={props.createAlias} /></InputGroup.Button>
                 </InputGroup>
-                {props.valueMessage ? <HelpBlock>${props.valueMessage}</HelpBlock> : null}
+                {props.valueMessage ? <HelpBlock>{props.valueMessage}</HelpBlock> : null}
             </Fragment>
         );
     } else {
