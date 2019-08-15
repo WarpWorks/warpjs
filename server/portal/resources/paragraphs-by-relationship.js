@@ -27,7 +27,7 @@ module.exports = async (persistence, relationship, instance) => {
                 name: paragraph.Heading,
                 level: paragraph.HeadingLevel || 'H1',
                 isOfHeadingLevel: constants.isOfHeadingLevel(paragraph.HeadingLevel || 'H1'),
-                description: convertCustomLinks(paragraph.Content)
+                description: await convertCustomLinks(persistence, relationship.getDomain(), paragraph.Content)
             });
 
             const images = await imagesByParagraph(persistence, relationship.getTargetEntity(), paragraph);

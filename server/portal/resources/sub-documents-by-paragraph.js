@@ -1,5 +1,6 @@
 const Promise = require('bluebird');
 
+const Documents = require('./../../../lib/core/first-class/documents');
 const previewByEntity = require('./preview-by-entity');
 
 // const debug = require('./debug')('sub-documents-by-paragraph');
@@ -11,11 +12,15 @@ module.exports = async (persistence, domain, documentJson, paragraphJson) => {
     if (subDocumentsEntityId && subDocumentsEntityId !== '-1') {
         const relationship = domain.getElementById(subDocumentsEntityId);
         const targetDocuments = await relationship.getDocuments(persistence, documentJson);
+
+        const bestDocuments = await Documents.bestDocuments(persistence, domain, targetDocuments);
+
         const resources = await Promise.map(
-            targetDocuments,
-            async (targetDocument) => {
-                const targetEntity = domain.getEntityByInstance(targetDocument);
-                const resource = await previewByEntity(persistence, targetEntity, targetDocument);
+            bestDocuments,
+            async (bestDocument) => {
+                const bestDocumentEntity = domain.getEntityByInstance(bestDocument);
+
+                const resource = await previewByEntity(persistence, bestDocumentEntity, bestDocument);
                 return resource;
             }
         );

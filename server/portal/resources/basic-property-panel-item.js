@@ -18,7 +18,7 @@ module.exports = async (persistence, panelItem, instance) => {
     resource.typeOfProperty = constants.isOfPropertyType(basicProperty.propertyType);
 
     const value = basicProperty.getValue(instance);
-    resource.value = (resource.propertyType === BasicTypes.Text) ? convertCustomLinks(value) : value;
+    resource.value = (resource.propertyType === BasicTypes.Text) ? await convertCustomLinks(persistence, panelItem.getDomain(), value) : value;
     resource.showItem = !isUndefined(resource.value) && resource.value !== '';
 
     return resource;

@@ -7,51 +7,53 @@ const convertCustomLinks = require('./convert-custom-links');
 const serverUtils = require('./../../utils');
 const walkExtract = require('./walk-extract');
 
-module.exports = (req, res) => {
+module.exports = async (req, res) => {
     const { type, id } = req.params;
 
-    warpjsUtils.wrapWith406(res, {
-        [warpjsUtils.constants.HAL_CONTENT_TYPE]: () => {
-            // Try if in index first
-            Promise.resolve()
-                .then(() => warpjsPlugins.getPlugin('search'))
-                .then((plugin) => plugin ? plugin.module.getDocument(plugin.config, type, id) : null)
-                .then((indexed) => {
-                    if (indexed) {
-                        return warpjsUtils.createResource(req, {
-                            title: indexed.title,
-                            desc: null,
-                            content: convertCustomLinks(indexed.snippet),
-                            type,
-                            id
-                        });
-                    } else {
-                        const persistence = serverUtils.getPersistence();
-                        const config = serverUtils.getConfig();
+    const persistence = serverUtils.getPersistence();
+    const config = serverUtils.getConfig();
 
-                        return Promise.resolve()
-                            .then(() => serverUtils.getEntity(null, type))
-                            .then((entity) => Promise.resolve()
-                                .then(() => entity.getInstance(persistence, id))
-                                .then((instance) => Promise.resolve()
-                                    .then(() => walkExtract(persistence, entity, instance, [], config.previews.overviewPath))
-                                    .then((overviews) => (overviews.length && overviews[0]) || null)
-                                    .then((overview) => warpjsUtils.createResource(req, {
-                                        title: instance.Name,
-                                        desc: instance.desc,
-                                        content: convertCustomLinks(overview && overview.Content), // FIXME: Hard-coded attribute.
-                                        type,
-                                        id
-                                    }))
-                                )
-                            )
-                            .finally(() => persistence.close())
-                        ;
-                    }
-                })
-                .then((resource) => warpjsUtils.sendHal(req, res, resource, RoutesInfo))
-                .catch((err) => serverUtils.sendError(req, res, err))
-            ;
+    try {
+        const entity = await serverUtils.getEntity(null, type);
+        const domain = entity.getDomain();
+
+        // Try if in index first
+        const plugin = warpjsPlugins.getPlugin('search');
+        const indexed = plugin ? plugin.module.getDocument(plugin.config, type, id) : null;
+
+        let resource;
+        if (indexed) {
+            const content = await convertCustomLinks(persistence, domain, indexed.snippet);
+            resource = warpjsUtils.createResource(req, {
+                type,
+                id,
+                title: indexed.title,
+                desc: null,
+                content,
+            });
+        } else {
+            const instance = await entity.getInstance(persistence, id);
+            const overviews = await walkExtract(persistence, entity, instance, [], config.previews.overviewPath);
+            const overview = overviews.length ? overviews[0] : null;
+
+            const content = await convertCustomLinks(persistence, domain, overview ? overview.Content : null);
+            resource = warpjsUtils.createResource(
+                req,
+                {
+                    type,
+                    id,
+                    title: domain.getDisplayName(instance),
+                    desc: instance.desc,
+                    content
+                },
+                req
+            );
         }
-    });
+
+        warpjsUtils.sendHal(req, res, resource, RoutesInfo);
+    } catch (err) {
+        serverUtils.sendError(req, res, err);
+    } finally {
+        persistence.close();
+    }
 };
