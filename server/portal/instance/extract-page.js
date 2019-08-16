@@ -52,8 +52,9 @@ module.exports = async (req, persistence, entity, instance, pageViewName) => {
         version: instance.Version || DEFAULT_VERSION, // FIXME: Use BasicProperty.
         description: instance.Description,
         keywords: instance.Keywords,
-        author: instance.Author
-
+        author: instance.Author,
+        releaseableContent: instance.ReleaseableContent,
+        versionable: instance.Versionable
     });
 
     // Because of aliases, let's use the URL with the id.
@@ -64,11 +65,12 @@ module.exports = async (req, persistence, entity, instance, pageViewName) => {
         });
     }
 
-    // TODO: remove PDF link for now
-    // resource.link('pdfExport', {
-    //     href: RoutesInfo.expand(routes.portal.entityPdf, instance),
-    //     title: "Get the document in PDF"
-    // });
+    if (resource.releaseableContent) {
+        resource.link('pdfExport', {
+            href: RoutesInfo.expand(routes.portal.entityPdf, instance),
+            title: "Get the document in PDF"
+        });
+    }
 
     // Breadcrumb
     const breadcrumbs = await breadcrumbsByEntity(persistence, entity, instance);

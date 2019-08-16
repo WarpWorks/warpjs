@@ -11,7 +11,7 @@ const Component = (props) => {
         return (
             <BreadcrumbActionButton
                 click={props.click}
-                glyph="file"
+                glyph="book"
                 label="PDF Download"
                 title="Download PDF of document"
                 type="file"

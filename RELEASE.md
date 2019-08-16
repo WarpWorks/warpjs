@@ -6,6 +6,10 @@
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
 
+## 1.3.142 - 2019-08-16
+
+- #281: new content feature flags for versionable and releaseable content.
+
 ## 1.3.141 - 2019-08-13
 
 - warpjs-survey-tool-plugin #142: Personas.

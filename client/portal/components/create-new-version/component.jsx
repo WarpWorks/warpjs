@@ -33,13 +33,12 @@ const Component = (props) => {
         );
     } else {
         const elements = [];
-
         elements.push(props.version);
         addVersionLink(elements, props.page._links.versionPredecessor, "Previous");
         addVersionLink(elements, props.page._links.versionSuccessor, "Next");
         addVersionLink(elements, props.page._links.lastVersionSuccessor, "Last");
 
-        const newVersionButton = props.page._links.versionSuccessor
+        const newVersionButton = props.page._links.versionSuccessor || !props.page.versionable
             ? null
             : <InputGroup.Button><Button label="New version" glyph="duplicate" style="primary" onClick={props.show} /></InputGroup.Button>;
 
