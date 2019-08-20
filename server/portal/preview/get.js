@@ -1,4 +1,4 @@
-const Promise = require('bluebird');
+// const Promise = require('bluebird');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsPlugins = require('@warp-works/warpjs-plugins');
 const warpjsUtils = require('@warp-works/warpjs-utils');
@@ -29,7 +29,7 @@ module.exports = async (req, res) => {
                 id,
                 title: indexed.title,
                 desc: null,
-                content,
+                content
             });
         } else {
             const instance = await entity.getInstance(persistence, id);
