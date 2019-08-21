@@ -5,6 +5,7 @@ const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const { DEFAULT_VERSION } = require('./../../../lib/constants');
 const constants = require('./../constants');
+const Documents = require('./../../../lib/core/first-class/documents');
 const editionConstants = require('./../../edition/constants');
 const serverUtils = require('./../../utils');
 const utils = require('./../utils');
@@ -92,8 +93,12 @@ module.exports = (req, res) => {
                         .then(() => entity.getDocuments(persistence, { type: entity.name }))
                         .then((documents) => documents.sort(warpjsUtils.byName))
                         .then((documents) => documents.filter((d) => d.Name !== 'TEMPLATE'))
-                        .then((documents) => Promise.map(
-                            documents,
+                        .then((documents) => Promise.resolve()
+                            .then(() => serverUtils.getDomain(domain))
+                            .then((domainFull) => Documents.bestDocuments(persistence, domainFull, documents))
+                        )
+                        .then((documentsBest) => Promise.map(
+                            documentsBest,
                             (instance) => documentMapper(persistence, entity, domain, instance)
                         ))
                         .then((embedded) => resource.embed('entities', embedded))
