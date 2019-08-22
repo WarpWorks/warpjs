@@ -6,6 +6,7 @@ const CONTENT_LINK_RE = require('./../../../lib/core/content-link-re');
 const Document = require('./../../../lib/core/first-class/document');
 const { matchAll } = require('./../../../lib/core/utils');
 const routes = require('./../../../lib/constants/routes');
+const serverUtils = require('./../../utils');
 
 const debug = require('./debug')('convert-custom-links');
 
@@ -27,8 +28,18 @@ module.exports = async (persistence, domain, content) => {
                 const document = await Document.getDocument(persistence, type, id);
                 const bestDocument = await document.bestDocument(persistence);
 
-                const href = RoutesInfo.expand(routes.portal.entity, { type: bestDocument.type, id: bestDocument.id });
+                let href = RoutesInfo.expand(routes.portal.entity, { type: bestDocument.type, id: bestDocument.id });
                 const previewUrl = RoutesInfo.expand(routes.portal.preview, { type: bestDocument.type, id: bestDocument.id });
+
+                const entity = await serverUtils.getEntity(null, type);
+                const instance = await entity.getInstance(persistence, id);
+                const aliasRelationship = entity.getRelationshipByName('Alias');
+                if (aliasRelationship) {
+                    const aliasDocuments = await aliasRelationship.getDocuments(persistence, instance);
+                    if (aliasDocuments && aliasDocuments.length) {
+                        href = '/' + aliasDocuments[0].Name;
+                    }
+                }
 
                 const aTag = `<a href="${href}" data-warpjs-action="preview" data-warpjs-preview-url="${previewUrl}">${label}<span class="glyphicon glyphicon-link"></span></a>`;
                 debug(`        need to replace '${str}' with ${aTag}`);
