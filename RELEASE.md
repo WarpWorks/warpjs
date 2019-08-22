@@ -6,6 +6,10 @@
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
 
+## 1.3.144 - 2019-08-22
+
+- #287: Inline editor: change done button label to capitalized.
+
 ## 1.3.143 - 2019-08-16
 
 - #286: Inline editor: remove x and done buttons, new done button at top right.
