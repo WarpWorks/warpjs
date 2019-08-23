@@ -151,6 +151,8 @@
         "option": "OptionQ",
         "imageLibrary": "IMGLIB",
         "image": "Image",
+        "iconImage": "IconImage",
+        "logoImage": "LogoImage",
         "map": "Map",
         "resultSet": "ResultSet",
         "result": "Result",

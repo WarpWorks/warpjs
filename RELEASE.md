@@ -6,6 +6,10 @@
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
 
+## 1.3.145 - 2019-08-23
+
+- warpjs-survey-tool-plugin #145: Modules view: add image field for icon, image field for logo, and description.
+
 ## 1.3.144 - 2019-08-22
 
 - #287: Inline editor: change done button label to capitalized.
