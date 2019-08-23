@@ -7,10 +7,18 @@ const previewImageByEntity = require('./preview-image-by-entity');
 const routes = require('./../../../lib/constants/routes');
 
 module.exports = async (persistence, entity, instance) => {
-    const href = RoutesInfo.expand(routes.portal.entity, {
+    let href = RoutesInfo.expand(routes.portal.entity, {
         type: instance.type,
         id: instance.id
     });
+
+    const aliasRelationship = entity.getRelationshipByName('Alias');
+    if (aliasRelationship) {
+        const aliasDocuments = await aliasRelationship.getDocuments(persistence, instance);
+        if (aliasDocuments && aliasDocuments.length) {
+            href = '/' + aliasDocuments[0].Name;
+        }
+    }
 
     const resource = warpjsUtils.createResource(href, {
         type: instance.type,
