@@ -104,7 +104,7 @@
     "@warp-works/warpjs-mongo-persistence": "~0.1.9",
     "@warp-works/warpjs-plugins": "~1.2.7",
     "@warp-works/warpjs-session-plugin": "~1.2.27",
-    "@warp-works/warpjs-survey-tool-plugin": "file:../warpjs-ipt-plugin/warp-works-warpjs-survey-tool-plugin-1.2.109.tgz",
+    "@warp-works/warpjs-survey-tool-plugin": "1.2.109",
     "@warp-works/warpjs-utils": "~1.2.100",
     "babel-core": "6.26.x",
     "babel-loader": "7.1.x",
