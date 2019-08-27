@@ -72,20 +72,24 @@ module.exports = async (req, res) => {
 
                     // FIXME: Hard-coded
                     switch (relationship) {
-                        case 'basicProperty':
+                        case 'basicProperty': {
                             elements = entityModel.getBasicProperties();
                             break;
+                        }
 
-                        case 'relationship':
+                        case 'relationship': {
                             elements = entityModel.getRelationships();
                             break;
+                        }
 
-                        case 'enumeration':
+                        case 'enumeration': {
                             elements = entityModel.getEnums();
                             break;
+                        }
 
-                        default:
+                        default: {
                             throw new Error(`Unknown relationship='${relationship}'.`);
+                        }
                     }
 
                     const entities = elements.map((element) => warpjsUtils.createResource('', {

@@ -59,7 +59,7 @@ module.exports = async (req, persistence, entity, document, viewName, level = 0)
                     const mime = mimeTypes.lookup(imageFilePath);
                     let buffer = fs.readFileSync(imageFilePath);
                     switch (mime) {
-                        case 'image/png':
+                        case 'image/png': {
                             const png = PNG.sync.read(buffer);
                             if (png.interlace) {
                                 imageFilePath = imageFilePath.replace(".png", "-non-interlace.png");
@@ -69,6 +69,7 @@ module.exports = async (req, persistence, entity, document, viewName, level = 0)
                                 }
                             }
                             break;
+                        }
                     }
 
                     const base64 = await imageToBase64(imageFilePath);

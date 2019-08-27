@@ -21,17 +21,20 @@ const Component = (props) => {
 
     const sortedItems = cloneDeep(props.items);
     switch (props.sortBy) {
-        case SORT_KEYS.DATE:
+        case SORT_KEYS.DATE: {
             sortedItems.sort(props.byDate);
             break;
+        }
 
-        case SORT_KEYS.NAME:
+        case SORT_KEYS.NAME: {
             sortedItems.sort(props.byName);
             break;
+        }
 
-        default:
+        default: {
             console.error(`Unknown sortBy='${props.sortBy}'.`);
             break;
+        }
     }
 
     const sorting = SORT_KEYS_LIST.map((key) => <option key={key} value={key}>{SORT_LABELS[key]}</option>);

@@ -35,23 +35,27 @@ module.exports = (req, res) => {
                                 if (body.type && body.id) {
                                     if (docLevelData.model.type === ComplexTypes.Relationship) {
                                         switch (docLevelData.instance.type) {
-                                            case ComplexTypes.RelationshipPanelItem:
+                                            case ComplexTypes.RelationshipPanelItem: {
                                                 // debug(`Found rel: docLevelData.instance=`, docLevelData.instance);
                                                 docLevelData.instance.relationship = parseInt(body.id, 10);
                                                 break;
+                                            }
 
-                                            case ComplexTypes.BasicPropertyPanelItem:
+                                            case ComplexTypes.BasicPropertyPanelItem: {
                                                 // debug(`Found BP: docLevelData.instance=`, docLevelData.instance);
                                                 docLevelData.instance.basicProperty = parseInt(body.id, 10);
                                                 break;
+                                            }
 
-                                            case ComplexTypes.EnumPanelItem:
+                                            case ComplexTypes.EnumPanelItem: {
                                                 // debug(`Found Enum: docLevelData.instance=`, docLevelData.instance);
                                                 docLevelData.instance.enumeration = parseInt(body.id, 10);
                                                 break;
+                                            }
 
-                                            default:
+                                            default: {
                                                 throw new Error(`Unexpected type=${docLevelData.instsance.type}`);
+                                            }
                                         }
                                     } else {
                                         throw new Error(`Unexpected model.type='${docLevelData.model.type}'.`);

@@ -2,14 +2,17 @@ import PropTypes from 'prop-types';
 
 const oxfordComma = (relationships) => {
     switch (relationships.length) {
-        case 1:
+        case 1: {
             return relationships[0];
+        }
 
-        case 2:
+        case 2: {
             return `${relationships[0]} and ${relationships[1]}`;
+        }
 
-        default:
+        default: {
             return `${relationships[0]}, ${relationships[1]}, and ${relationships[2]}`;
+        }
     }
 };
 

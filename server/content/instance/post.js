@@ -33,7 +33,7 @@ module.exports = (req, res) => {
                     .then(() => DocLevel.fromString(body.docLevel))
                     .then((docLevel) => {
                         switch (body.action) {
-                            case actions.ADD_CAROUSEL_CHILD:
+                            case actions.ADD_CAROUSEL_CHILD: {
                                 return Promise.resolve()
                                     .then(() => docLevel.getData(persistence, entity, instance, 0))
                                     .then((docLevelData) => {
@@ -41,8 +41,9 @@ module.exports = (req, res) => {
                                         docLevelData.model.addTargetInstance(persistence, docLevelData.instance, newData.instance);
                                     })
                                 ;
+                            }
 
-                            case actions.ADD_ASSOCIATION:
+                            case actions.ADD_ASSOCIATION: {
                                 return Promise.resolve()
                                     .then(() => docLevel.getData(persistence, entity, instance, 1))
                                     .then((docLevelData) => {
@@ -52,9 +53,11 @@ module.exports = (req, res) => {
                                         });
                                     })
                                 ;
+                            }
 
-                            default:
+                            default: {
                                 throw new WarpWorksError(`Need to implement action=${body.action}.`);
+                            }
                         }
                     })
 

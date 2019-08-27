@@ -23,21 +23,25 @@ module.exports = ($) => {
         const elementId = $(this).data('warpjsId');
 
         switch (elementType) {
-            case 'Paragraph':
+            case 'Paragraph': {
                 textModal($, this);
                 break;
+            }
 
-            case 'Relationship':
+            case 'Relationship': {
                 associationModal($, this);
                 break;
+            }
 
-            case 'BasicProperty':
+            case 'BasicProperty': {
                 basicPropertyModal($, this);
                 break;
+            }
 
-            default:
+            default: {
                 console.log(`Handling of {type:${elementType}, id:${elementId}}`);
                 comingSoon($, "This functionality is coming soon.");
+            }
         }
     });
 };
