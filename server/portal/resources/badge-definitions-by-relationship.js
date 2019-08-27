@@ -1,11 +1,13 @@
-// const debug = require('debug')('W2:portal:resources/badge-definitions-by-relationship');
 const Promise = require('bluebird');
-const RoutesInfo = require('@quoin/expressjs-routes-info');
+
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const Document = require('./../../../lib/core/first-class/document');
+const Documents = require('./../../../lib/core/first-class/documents');
 const imagesByRelationship = require('./images-by-relationship');
 const serverUtils = require('./../../utils');
-const routes = require('./../../../lib/constants/routes');
+
+// const debug = require('./debug')('badge-definitions-by-relationship');
 
 const config = serverUtils.getConfig();
 const publicStatus = config.status.public;
@@ -13,11 +15,14 @@ const publicStatus = config.status.public;
 module.exports = async (persistence, relationship, instance) => {
     const documents = await relationship.getDocuments(persistence, instance);
     const badgeDefinitions = documents.filter((doc) => publicStatus.indexOf(doc.Status) !== -1);
+    const domain = relationship.getDomain();
+
+    const bestDocuments = Documents.bestDocuments(persistence, domain, badgeDefinitions);
 
     const badgeDefinitionResources = await Promise.map(
-        badgeDefinitions,
+        bestDocuments,
         async (badgeDefinition) => {
-            const href = RoutesInfo.expand(routes.portal.entity, badgeDefinition);
+            const href = await Document.getPortalUrl(persistence, domain.getEntityByInstance(badgeDefinition), badgeDefinition);
             const resource = warpjsUtils.createResource(href, {
                 type: badgeDefinition.type,
                 typeID: badgeDefinition.typeID,

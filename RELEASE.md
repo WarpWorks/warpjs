@@ -6,6 +6,11 @@
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
 
+## 1.3.147 - 2019-08-27
+
+- #285: Applying logic to find the best version and display alias for most
+  links. Still working to find out more places to apply the fix.
+
 ## 1.3.146 - 2019-08-26
 
 - #280: Remove display of multi-version sub-documents as duplicate.

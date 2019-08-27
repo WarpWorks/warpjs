@@ -2,6 +2,7 @@
 const Promise = require('bluebird');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 
+const Documents = require('./../../../lib/core/first-class/documents');
 const previewByEntity = require('./preview-by-entity');
 const visibleOnly = require('./visible-only');
 const workingForByUser = require('./working-for-by-user');
@@ -12,9 +13,10 @@ module.exports = async (persistence, relationship, instance) => {
 
         const users = await relationship.getDocuments(persistence, instance);
         const visibleUsers = users.filter(visibleOnly);
+        const bestDocuments = Documents.bestDocuments(persistence, targetEntity.getDomain(), visibleUsers);
 
         const userResources = await Promise.map(
-            visibleUsers,
+            bestDocuments,
             async (user) => {
                 const resource = await previewByEntity(persistence, targetEntity, user);
 

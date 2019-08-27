@@ -3,21 +3,24 @@ const Promise = require('bluebird');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const Document = require('./../../../lib/core/first-class/document');
 const Documents = require('./../../../lib/core/first-class/documents');
+const routes = require('./../../../lib/constants/routes');
 const visibleOnly = require('./visible-only');
 
-module.exports = (persistence, relationship, instance) => Promise.resolve()
-    .then(() => relationship.getDocuments(persistence, instance))
-    .then((documents) => Documents.bestDocuments(persistence, relationship.getDomain(), documents))
-    .then((bestDocuments) => bestDocuments.filter(visibleOnly))
-    .then((filteredDocuments) => Promise.map(
+module.exports = async (persistence, relationship, instance) => {
+    const documents = await relationship.getDocuments(persistence, instance);
+    const bestDocuments = await Documents.bestDocuments(persistence, relationship.getDomain(), documents);
+    const filteredDocuments = bestDocuments.filter(visibleOnly);
+
+    const domain = relationship.getDomain();
+
+    return Promise.map(
         filteredDocuments,
-        (document) => Promise.resolve()
-            .then(() => RoutesInfo.expand('entity', {
-                type: document.type,
-                id: document.id
-            }))
-            .then((href) => warpjsUtils.createResource(href, {
+        async (document) => {
+            const href = await Document.getPortalUrl(persistence, domain.getEntityByInstance(document), document);
+
+            const resource = warpjsUtils.createResource(href, {
                 type: document.type,
                 typeLabel: relationship.getTargetEntity().label || relationship.getTargetEntity().name,
                 id: document.id,
@@ -25,12 +28,11 @@ module.exports = (persistence, relationship, instance) => Promise.resolve()
                 relnDesc: document.relnDesc,
                 relnPosition: document.relnPosition,
                 label: relationship.getDisplayName(document)
-            }))
-            .then((resource) => Promise.resolve()
-                // Preview
-                .then(() => resource.link('preview', RoutesInfo.expand('W2:portal:preview', { type: document.type, id: document.id })))
+            });
 
-                .then(() => resource)
-            )
-    ))
-;
+            resource.link('preview', RoutesInfo.expand(routes.portal.preview, { type: document.type, id: document.id }));
+
+            return resource;
+        }
+    );
+};

@@ -1,11 +1,13 @@
-// const debug = require('debug')('W2:portal:resources/badge-categories-by-entity');
 const Promise = require('bluebird');
-const RoutesInfo = require('@quoin/expressjs-routes-info');
+
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const Document = require('./../../../lib/core/first-class/document');
+const Documents = require('./../../../lib/core/first-class/documents');
 const badgeDefinitionsByRelationship = require('./badge-definitions-by-relationship');
 const imagesByRelationship = require('./images-by-relationship');
-const routes = require('./../../../lib/constants/routes');
+
+// const debug = require('./debug')('badge-categories-by-entity');
 
 function createEmptyBadgeDefinition(resource) {
     const empty = warpjsUtils.createResource(resource._links.self.href, {});
@@ -22,10 +24,12 @@ module.exports = async (persistence, entity, instance) => {
     const badgeDefinitionsRelationship = badgeCategoryEntity.getRelationshipByName('BadgeDefinitions');
 
     const badgeCategories = await badgeCategoryEntity.getDocuments(persistence);
+    const bestDocuments = await Documents.bestDocuments(persistence, domainModel, badgeCategories);
+
     const badgeCategoryResources = await Promise.map(
-        badgeCategories.sort(warpjsUtils.byPositionThenByName),
+        bestDocuments.sort(warpjsUtils.byPositionThenByName),
         async (badgeCategory) => {
-            const href = RoutesInfo.expand(routes.portal.entity, badgeCategory);
+            const href = await Document.getPortalUrl(persistence, domainModel.getEntityByInstance(badgeCategory), badgeCategory);
             const resource = warpjsUtils.createResource(href, {
                 type: badgeCategory.type,
                 id: badgeCategory.id,

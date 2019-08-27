@@ -2,23 +2,13 @@ const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
 // const debug = require('./debug')('preview-by-entity');
+const Document = require('./../../../lib/core/first-class/document');
 const overviewByEntity = require('./overview-by-entity');
 const previewImageByEntity = require('./preview-image-by-entity');
 const routes = require('./../../../lib/constants/routes');
 
 module.exports = async (persistence, entity, instance) => {
-    let href = RoutesInfo.expand(routes.portal.entity, {
-        type: instance.type,
-        id: instance.id
-    });
-
-    const aliasRelationship = entity.getRelationshipByName('Alias');
-    if (aliasRelationship) {
-        const aliasDocuments = await aliasRelationship.getDocuments(persistence, instance);
-        if (aliasDocuments && aliasDocuments.length) {
-            href = '/' + aliasDocuments[0].Name;
-        }
-    }
+    const href = await Document.getPortalUrl(persistence, entity, instance);
 
     const resource = warpjsUtils.createResource(href, {
         type: instance.type,

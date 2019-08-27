@@ -1,9 +1,13 @@
-// const debug = require('debug')('W2:portal:instance/extract-panels-badges');
-const RoutesInfo = require('@quoin/expressjs-routes-info');
+const Promise = require('bluebird');
+
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const Document = require('./../../../lib/core/first-class/document');
+const Documents = require('./../../../lib/core/first-class/documents');
 const badgeCategoriesByEntity = require('./../resources/badge-categories-by-entity');
 const constants = require('./../resources/constants');
+
+// const debug = require('./debug')('extract-panels-badges');
 
 module.exports = async (persistence, entity, instance, entityPanels) => {
     const panel = entityPanels.find((panel) => panel.name === constants.PANEL_NAMES.Badges);
@@ -25,30 +29,44 @@ module.exports = async (persistence, entity, instance, entityPanels) => {
         const panelItem = panel.getPanelItems().find((panelItem) => panelItem.name === constants.PANEL_ITEM_NAMES.Badges);
         if (panelItem) {
             const relationship = panelItem.getRelationship();
+            const domain = relationship.getDomain();
             const assignedBadges = await relationship.getDocuments(persistence, instance);
+            const bestDocuments = await Documents.bestDocuments(persistence, domain, assignedBadges);
 
-            assignedBadges.forEach((assignedBadge) => {
-                const domain = relationship.getDomain();
-                const entity = domain.getEntityByInstance(assignedBadge);
-                const assignedBadgeDefinitionRelationship = entity.getRelationshipByName('BadgeDefinition');
-                const assignedBadgeDefinitions = assignedBadgeDefinitionRelationship.getTargetReferences(assignedBadge);
+            await Promise.each(
+                bestDocuments,
+                async (assignedBadge) => {
+                    const entity = domain.getEntityByInstance(assignedBadge);
+                    const assignedBadgeDefinitionRelationship = entity.getRelationshipByName('BadgeDefinition');
+                    const assignedBadgeDefinitions = assignedBadgeDefinitionRelationship.getTargetReferences(assignedBadge);
 
-                assignedBadgeDefinitions.forEach((assignedBadgeDefinition) => {
-                    panelResource._embedded.badgeCategories.forEach((badgeCategory) => {
-                        badgeCategory._embedded.badgeDefinitions.forEach((badgeDefinition) => {
-                            // Update image url to matched stars level.
-                            if (badgeDefinition.id === assignedBadgeDefinition._id) {
-                                const stars = assignedBadge.Stars;
-                                const image = badgeDefinition._embedded.images.find((image) => image.name === stars);
-                                badgeDefinition._links.self.href = RoutesInfo.expand('entity', assignedBadge);
-                                if (image) {
-                                    badgeDefinition._links.image.href = image._links.self.href;
+                    await Promise.each(
+                        assignedBadgeDefinitions,
+                        async (assignedBadgeDefinition) => {
+                            await Promise.each(
+                                panelResource._embedded.badgeCategories,
+                                async (badgeCategory) => {
+                                    await Promise.each(
+                                        badgeCategory._embedded.badgeDefinitions,
+                                        async (badgeDefinition) => {
+                                            // Update image url to matched stars level.
+                                            if (badgeDefinition.id === assignedBadgeDefinition._id) {
+                                                const stars = assignedBadge.Stars;
+                                                const image = badgeDefinition._embedded.images.find((image) => image.name === stars);
+
+                                                badgeDefinition._links.self.href = await Document.getPortalUrl(persistence, domain.getEntityByInstance(assignedBadge), assignedBadge);
+                                                if (image) {
+                                                    badgeDefinition._links.image.href = image._links.self.href;
+                                                }
+                                            }
+                                        }
+                                    );
                                 }
-                            };
-                        });
-                    });
-                });
-            });
+                            );
+                        }
+                    );
+                }
+            );
         }
 
         return panelResource;
