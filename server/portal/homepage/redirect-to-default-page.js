@@ -1,10 +1,5 @@
-const Promise = require('bluebird');
-
-const RoutesInfo = require('@quoin/expressjs-routes-info');
-
 const Document = require('./../../../lib/core/first-class/document');
 const Documents = require('./../../../lib/core/first-class/documents');
-const routes = require('./../../../lib/constants/routes');
 const serverUtils = require('./../../utils');
 
 // const debug = require('./debug')('redirect-to-default-page');
