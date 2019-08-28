@@ -1,5 +1,5 @@
 const linkSelector = require('./../link-selector');
 
-module.exports = ($, instanceDoc) => {
-    linkSelector($, instanceDoc);
+module.exports = async ($, instanceDoc, specificType) => {
+    linkSelector($, instanceDoc, specificType);
 };

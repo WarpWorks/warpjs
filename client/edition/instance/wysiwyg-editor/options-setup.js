@@ -18,6 +18,12 @@ module.exports = ($, instanceDoc, editor) => {
         onclick: openLinkSelectionModal.bind(null, $, instanceDoc)
     });
 
+    menuItems.push({
+        text: 'Glossary item',
+        icon: false,
+        onclick: openLinkSelectionModal.bind(null, $, instanceDoc, 'GlossaryItem')
+    });
+
     editor.addButton('linkDropdown', {
         type: 'menubutton',
         text: '',

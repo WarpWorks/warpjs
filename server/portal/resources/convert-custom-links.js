@@ -34,7 +34,8 @@ module.exports = async (persistence, domain, content) => {
 
                 const href = await Document.getPortalUrl(persistence, entity, bestDocument);
 
-                const aTag = `<a href="${href}" data-warpjs-action="preview" data-warpjs-preview-url="${previewUrl}">${label}<span class="glyphicon glyphicon-link"></span></a>`;
+                const glyph = type === 'GlossaryItem' ? 'book' : 'link';
+                const aTag = `<a href="${href}" data-warpjs-action="preview" data-warpjs-preview-url="${previewUrl}" data-warpjs-link-type="${type}">${label}<span class="glyphicon glyphicon-${glyph}"></span></a>`;
                 // debug(`        need to replace '${str}' with ${aTag}`);
                 return cumulator.replace(str, aTag);
             },
