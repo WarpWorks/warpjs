@@ -8,7 +8,7 @@
 
 ## 1.3.148 - 2019-08-28
 
-- #285: versioning and alias of breadcrumb, image areas, and home page.
+- #285: versioning and alias of breadcrumb, image areas, vocabulary, and home page.
 
 ## 1.3.147 - 2019-08-27
 
