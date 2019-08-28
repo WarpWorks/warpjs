@@ -6,6 +6,10 @@
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
 
+## 1.3.148 - 2019-08-28
+
+- #285: versioning and alias of breadcrumb, image areas, and home page.
+
 ## 1.3.147 - 2019-08-27
 
 - #285: Applying logic to find the best version and display alias for most
