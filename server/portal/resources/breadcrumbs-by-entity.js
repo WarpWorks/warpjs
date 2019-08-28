@@ -1,17 +1,24 @@
-// const debug = require('debug')('W2:portal:resources/breadcrumbs-by-entity');
 const Promise = require('bluebird');
-const RoutesInfo = require('@quoin/expressjs-routes-info');
+
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
-module.exports = (persistence, entity, instance) => Promise.resolve()
-    .then(() => entity.getInstancePath(persistence, instance))
-    .then((breadcrumbs) => Promise.map(
+const Document = require('./../../../lib/core/first-class/document');
+
+// const debug = require('./debug')('breadcrumbs-by-entity');
+
+module.exports = async (persistence, entity, instance) => {
+    const breadcrumbs = await entity.getInstancePath(persistence, instance);
+
+    const domain = entity.getDomain();
+
+    return Promise.map(
         breadcrumbs,
-        (breadcrumb) => Promise.resolve()
-            .then(() => RoutesInfo.expand('entity', {
-                type: breadcrumb.type,
-                id: breadcrumb.id
-            }))
-            .then((href) => warpjsUtils.createResource(href, breadcrumb))
-    ))
-;
+        async (breadcrumb) => {
+            const entity = domain.getEntityByInstance(breadcrumb);
+            const document = await entity.getInstance(persistence, breadcrumb.id);
+
+            const href = await Document.getPortalUrl(persistence, entity, document);
+            return warpjsUtils.createResource(href, breadcrumb);
+        }
+    );
+};

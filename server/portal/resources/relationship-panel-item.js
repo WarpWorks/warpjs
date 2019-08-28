@@ -1,17 +1,20 @@
 const extend = require('lodash/extend');
 const Promise = require('bluebird');
-const RoutesInfo = require('@quoin/expressjs-routes-info');
+
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const Document = require('./../../../lib/core/first-class/document');
+const Documents = require('./../../../lib/core/first-class/documents');
 const baseInfoByRelationship = require('./base-info-by-relationship');
 const basePanelItemInfo = require('./base-panel-item-info');
 const constants = require('./constants');
-const debug = require('./debug')('relationship-panel-item');
 const paragraphsByRelationship = require('./paragraphs-by-relationship');
 const previewByEntity = require('./preview-by-entity');
 const RELATIONSHIP_PANEL_ITEM_STYLES = require('./../../../lib/core/relationship-panel-item-styles');
 const sortIntoColumns = require('./sort-into-columns');
 const visibleOnly = require('./visible-only');
+
+const debug = require('./debug')('relationship-panel-item');
 
 module.exports = async (persistence, panelItem, instance) => {
     const panelItemInfo = basePanelItemInfo(panelItem);
@@ -28,6 +31,8 @@ module.exports = async (persistence, panelItem, instance) => {
     let items;
 
     if (relationship) {
+        const domain = relationship.getDomain();
+
         resource.isAssociation = !relationship.isAggregation;
         resource.id = relationship.id;
 
@@ -52,10 +57,7 @@ module.exports = async (persistence, panelItem, instance) => {
             items = await Promise.map(
                 sortedDocs,
                 async (doc) => {
-                    const href = RoutesInfo.expand('entity', {
-                        type: doc.type,
-                        id: doc.id
-                    });
+                    const href = await Document.getPortalUrl(persistence, domain.getEntityByInstance(doc), doc);
                     return warpjsUtils.createResource(href, {
                         id: doc.id,
                         type: doc.type,
@@ -77,9 +79,13 @@ module.exports = async (persistence, panelItem, instance) => {
         } else if (resource.style === RELATIONSHIP_PANEL_ITEM_STYLES.Vocabulary) {
             const docs = await relationship.getDocuments(persistence, instance);
             const visibleOnlyDocs = docs.filter(visibleOnly);
-            const docResources = visibleOnlyDocs.map(
-                (doc) => {
-                    const href = RoutesInfo.expand('entity', doc);
+
+            const bestDocuments = await Documents.bestDocuments(persistence, domain, visibleOnlyDocs);
+
+            const docResources = await Promise.map(
+                bestDocuments,
+                async (doc) => {
+                    const href = await Document.getPortalUrl(persistence, domain.getEntityByInstance(doc), doc);
                     return warpjsUtils.createResource(href, {
                         type: doc.type,
                         id: doc.id,

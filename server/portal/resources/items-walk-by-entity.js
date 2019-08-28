@@ -1,33 +1,30 @@
-// const debug = require('debug')('W2:portal:resources/items-walk-by-entity');
 const Promise = require('bluebird');
 
-function walk(persistence, entity, instance, relationshipNames) {
+// const debug = require('./debug')('items-walk-by-entity');
+
+const walk = async (persistence, entity, instance, relationshipNames) => {
     const nextRelationshipName = relationshipNames && relationshipNames.length ? relationshipNames[0] : null;
     const remainingRelationshipNames = nextRelationshipName ? relationshipNames.slice(1) : null;
 
     if (nextRelationshipName) {
-        return Promise.resolve()
-            .then(() => entity ? entity.getRelationshipByName(nextRelationshipName) : null)
-            .then((relationship) => Promise.resolve()
-                .then(() => relationship ? relationship.getDocuments(persistence, instance) : [])
-                .then((items) => Promise.reduce(items,
-                    (accumulator, item) => Promise.resolve()
-                        .then(() => walk(persistence, relationship.getTargetEntity(), item, remainingRelationshipNames))
-                        .then((items) => items.filter((item) => item))
-                        .then((items) => accumulator.concat(items))
-                    ,
-                    []
-                ))
-            )
-        ;
+        const relationship = entity ? entity.getRelationshipByName(nextRelationshipName) : null;
+        const items = relationship ? await relationship.getDocuments(persistence, instance) : [];
+
+        return Promise.reduce(
+            items,
+            async (accumulator, item) => {
+                const items = await walk(persistence, relationship.getTargetEntity(), item, remainingRelationshipNames);
+                const filteredItems = items.filter((item) => item);
+                return accumulator.concat(filteredItems);
+            },
+            []
+        );
     } else {
         return [{
             entity,
             instance
         }];
     }
-}
+};
 
-module.exports = (persistence, entity, instance, relationshipNames) => Promise.resolve()
-    .then(() => walk(persistence, entity, instance, relationshipNames))
-;
+module.exports = async (persistence, entity, instance, relationshipNames) => walk(persistence, entity, instance, relationshipNames);

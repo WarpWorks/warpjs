@@ -3,7 +3,9 @@ const Promise = require('bluebird');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const Document = require('./../../../lib/core/first-class/document');
 const itemsWalkByEntity = require('./items-walk-by-entity');
+const routes = require('./../../../lib/constants/routes');
 
 const RELATIONSHIP_NAMES = [
     'Overview',
@@ -12,35 +14,37 @@ const RELATIONSHIP_NAMES = [
     'Target'
 ];
 
-module.exports = (persistence, entity, instance) => Promise.resolve()
-    .then(() => entity ? itemsWalkByEntity(persistence, entity, instance, RELATIONSHIP_NAMES) : [])
-    .then((targetPreviews) => Promise.map(
+module.exports = async (persistence, entity, instance) => {
+    const domain = entity.getDomain();
+
+    const targetPreviews = entity ? await itemsWalkByEntity(persistence, entity, instance, RELATIONSHIP_NAMES) : [];
+
+    return Promise.map(
         targetPreviews,
-        (targetPreview) => Promise.resolve()
-            .then(() => targetPreview.entity.getRelationshipByName('Overview'))
-            .then((relationship) => relationship.getDocuments(persistence, targetPreview.instance))
-            .then((paragraphs) => paragraphs && paragraphs.length ? paragraphs[0] : null)
-            .then((paragraph) => paragraph ? paragraph.Content : null) // FIXME: Hard-coded.
-            .then((content) => {
-                const href = RoutesInfo.expand('entity', {
-                    type: targetPreview.instance.type,
-                    id: targetPreview.instance.id
-                });
+        async (targetPreview) => {
+            const bestDocument = await Document.bestDocument(persistence, domain.getEntityByInstance(targetPreview.instance), targetPreview.instance);
 
-                const resource = warpjsUtils.createResource(href, {
-                    title: targetPreview.entity.getDisplayName(targetPreview.instance),
-                    content
-                });
+            const relationship = targetPreview.entity.getRelationshipByName('Overview');
+            const paragraphs = await relationship.getDocuments(persistence, bestDocument);
+            const paragraph = paragraphs && paragraphs.length ? paragraphs[0] : null;
+            const content = paragraph ? paragraph.Content : null;
 
-                resource.link('preview', {
-                    href: RoutesInfo.expand('W2:portal:preview', {
-                        type: targetPreview.instance.type,
-                        id: targetPreview.instance.id
-                    }),
-                    title: targetPreview.entity.getDisplayName(targetPreview.instance)
-                });
+            const href = await Document.getPortalUrl(persistence, domain.getEntityByInstance(bestDocument), bestDocument);
 
-                return resource;
-            })
-    ))
-;
+            const resource = warpjsUtils.createResource(href, {
+                title: targetPreview.entity.getDisplayName(bestDocument),
+                content
+            });
+
+            resource.link('preview', {
+                title: targetPreview.entity.getDisplayName(bestDocument),
+                href: RoutesInfo.expand(routes.portal.preview, {
+                    type: bestDocument.type,
+                    id: bestDocument.id
+                })
+            });
+
+            return resource;
+        }
+    );
+};

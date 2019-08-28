@@ -1,16 +1,17 @@
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
-const debug = require('./debug')('update-follow');
 const serverUtils = require('./../../utils');
 const User = require('./../../../lib/core/first-class/user');
+
+// const debug = require('./debug')('update-follow');
 
 const config = serverUtils.getConfig();
 
 module.exports = async (req, res) => {
     const { type, id, yesno } = req.params;
 
-    debug(`type=${type}, id=${id}, yesno=${yesno}`);
+    // debug(`type=${type}, id=${id}, yesno=${yesno}`);
 
     const resource = warpjsUtils.createResource(req, {
         type,
