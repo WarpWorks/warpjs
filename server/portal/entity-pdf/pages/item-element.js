@@ -96,6 +96,57 @@ const itemElement = (resource, docDefinition, headlineLevel = 1, req) => {
                 }
                 const converted = htmlToPdfmake(resource.content, jsdomWindow);
 
+                const convertLists = (listItems) => {
+                    const listElements = [];
+                    listItems.forEach((listItem) => {
+                        if(listItem.stack) {
+                            const listStack = [];
+                            listItem.stack.reduce((memo, stackItem, index, array) => {
+                                if (stackItem.table) {
+                                    if (memo.length) {
+                                        listStack.push({
+                                            text: memo,
+                                            marginLeft: 5
+                                        });
+                                    }
+                                    listStack.push(stackItem);
+
+                                    return [];
+                                } else if (stackItem.ul || stackItem.ol) {
+                                    const listType = stackItem.ul ? 'ul' : 'ol';
+                                    stackItem[listType] = convertLists(stackItem[listType]);
+                                    if (memo.length) {
+                                        listStack.push({
+                                            text: memo,
+                                            marginLeft: 5
+                                        });
+                                    }
+
+                                    listStack.push(stackItem);
+
+                                    return [];
+                                } else if (index === array.length - 1) {
+                                    stackItem.marginLeft = null;
+                                    memo.push(stackItem);
+                                    listStack.push({
+                                        text: memo,
+                                        marginLeft: 5
+                                    });
+                                } else {
+                                    stackItem.marginLeft = null;
+
+                                    return memo.concat(stackItem);
+                                }
+                            }, []);
+                            listElements.push(listStack);
+                        } else {
+                            listElements.push(listItem);
+                        }
+                    });
+
+                    return listElements;
+                };
+
                 // Let's separate the paragraph (double '\n') into their own.
                 // Abuse of `.reduce` to keep current value.
                 converted.reduce(
@@ -125,6 +176,8 @@ const itemElement = (resource, docDefinition, headlineLevel = 1, req) => {
 
                             return [];
                         } else if (segment.ul || segment.ol) {
+                            const listType = segment.ul ? 'ul' : 'ol';
+                            segment[listType] = convertLists(segment[listType]);
                             if (memo.length) {
                                 elements.push({
                                     text: memo,
