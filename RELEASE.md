@@ -6,6 +6,10 @@
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
 
+## 1.3.152 - 2019-08-29
+
+- #295: update: use html-to-pdfmake version 1.0.5 instead of latest, avoid parser stripping spaces.
+
 ## 1.3.151 - 2019-08-29
 
 - #295: Html to pdfmake parsing issue with lists.
