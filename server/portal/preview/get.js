@@ -1,4 +1,3 @@
-// const Promise = require('bluebird');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsPlugins = require('@warp-works/warpjs-plugins');
 const warpjsUtils = require('@warp-works/warpjs-utils');
@@ -6,6 +5,8 @@ const warpjsUtils = require('@warp-works/warpjs-utils');
 const convertCustomLinks = require('./convert-custom-links');
 const serverUtils = require('./../../utils');
 const walkExtract = require('./walk-extract');
+
+// const debug = require('./debug')('get');
 
 module.exports = async (req, res) => {
     const { type, id } = req.params;
@@ -19,7 +20,7 @@ module.exports = async (req, res) => {
 
         // Try if in index first
         const plugin = warpjsPlugins.getPlugin('search');
-        const indexed = plugin ? plugin.module.getDocument(plugin.config, type, id) : null;
+        const indexed = plugin ? await plugin.module.getDocument(plugin.config, type, id) : null;
 
         let resource;
         if (indexed) {

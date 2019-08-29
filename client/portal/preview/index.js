@@ -1,5 +1,8 @@
-const _ = require('lodash');
-const Promise = require('bluebird');
+import extend from 'lodash/extend';
+import Promise from 'bluebird';
+import throttle from 'lodash/throttle';
+
+// import _debug from './debug'; const debug = _debug('index');
 
 const BASE_POPOVER_OPTIONS = Object.freeze({
     html: true,
@@ -32,7 +35,7 @@ function findPopover($) {
 }
 
 module.exports = ($) => {
-    $(document).on('mousemove', '[data-warpjs-action="preview"][data-warpjs-preview-url]', _.throttle((evt) => {
+    $(document).on('mousemove', '[data-warpjs-action="preview"][data-warpjs-preview-url]', throttle((evt) => {
         const popover = findPopover($);
         position(popover, evt);
     }, 20));
@@ -54,7 +57,7 @@ module.exports = ($) => {
                         const title = `<span class="close pull-right" data-dismiss="popover" aria-label="Close" aria-hidden="true">×</span>${result.title}`;
                         const content = chunks[0];
 
-                        const popoverOptions = _.extend({}, BASE_POPOVER_OPTIONS, { title, content });
+                        const popoverOptions = extend({}, BASE_POPOVER_OPTIONS, { title, content });
 
                         $(this).popover(popoverOptions);
                         $(this).popover('show');
@@ -68,7 +71,7 @@ module.exports = ($) => {
                     })
                 )
                 .catch(() => {
-                    const popoverOptions = _.extend({}, BASE_POPOVER_OPTIONS, {
+                    const popoverOptions = extend({}, BASE_POPOVER_OPTIONS, {
                         title: "Trouble loading preview",
                         content: `<div class="alert alert-danger">Issue loading preview page</div>`
                     });
