@@ -6,6 +6,10 @@
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
 
+## 1.3.150 - 2019-08-29
+
+- #294: Changed button label from "PDF Download" to "Download".
+
 ## 1.3.149 - 2019-08-29
 
 - Fixed in-text preview in Portal.
