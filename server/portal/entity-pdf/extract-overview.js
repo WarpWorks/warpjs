@@ -1,18 +1,11 @@
-const fs = require('fs');
-const imageToBase64 = require('image-to-base64');
-const mimeTypes = require('mime-types');
-const path = require('path');
-const { PNG } = require('pngjs');
 const Promise = require('bluebird');
 
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const convertImageToPdfmake = require('./convert-image-to-pdfmake');
 const Documents = require('./../../../lib/core/first-class/documents');
-const serverUtils = require('./../../utils');
 // const debug = require('./debug')('extract-overview');
 const isParagraphVisible = require('./is-paragraph-visible');
-
-const config = serverUtils.getConfig();
 
 module.exports = async (req, persistence, entity, document, viewName, level = 0) => {
     const overviewRelationship = entity.getRelationshipByName('Overview');
@@ -54,31 +47,7 @@ module.exports = async (req, persistence, entity, document, viewName, level = 0)
 
                 resource.embed('images', imageResource);
 
-                try {
-                    // Image are now on local disk, so let's find it.
-                    let imageFilePath = path.join(config.folders.w2projects, image.ImageURL);
-                    const mime = mimeTypes.lookup(imageFilePath);
-                    let buffer = fs.readFileSync(imageFilePath);
-                    switch (mime) {
-                        case 'image/png': {
-                            const png = PNG.sync.read(buffer);
-                            if (png.interlace) {
-                                imageFilePath = imageFilePath.replace(".png", "-non-interlace.png");
-                                if (!fs.existsSync(imageFilePath)) {
-                                    buffer = PNG.sync.write(png, { interlace: false });
-                                    fs.writeFileSync(imageFilePath, buffer);
-                                }
-                            }
-                            break;
-                        }
-                    }
-
-                    const base64 = await imageToBase64(imageFilePath);
-                    imageResource.base64 = `data:${mime};base64,${base64}`;
-                } catch (err) {
-                    // eslint-disable-next-line no-console
-                    console.error(`Error with imageToBase64():`, err);
-                }
+                imageResource.base64 = await convertImageToPdfmake(image.ImageURL);
             };
 
             if (paragraph.SubDocuments && paragraph.SubDocuments !== '-1') {

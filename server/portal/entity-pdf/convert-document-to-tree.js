@@ -16,7 +16,8 @@ module.exports = (resource, tocLevel = 1) => {
         status: resource.status,
         description: resource.description,
         keywords: resource.keywords,
-        author: resource.author
+        author: resource.author,
+        PdfCoverImage: resource.PdfCoverImage
     });
 
     if (resource._embedded.editors) {

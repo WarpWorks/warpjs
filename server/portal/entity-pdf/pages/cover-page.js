@@ -1,8 +1,5 @@
-const imageToBase64 = require('image-to-base64');
-const mimeTypes = require('mime-types');
-const path = require('path');
-
 const constants = require('./../constants');
+const convertImageToPdfmake = require('./../convert-image-to-pdfmake');
 // const debug = require('./debug')('cover-page');
 const oxfordComma = require('./../../../../lib/utils/oxford-comma');
 const pageSize = require('./page-size');
@@ -22,10 +19,7 @@ module.exports = async (documentResource, docDefinition) => {
     // Cover logo
     if (!coverLogo) {
         try {
-            const imageFilePath = path.join(config.folders.w2projects, config.pdfExport.coverLogo);
-            const base64 = await imageToBase64(imageFilePath);
-            const mime = mimeTypes.lookup(imageFilePath);
-            coverLogo = `data:${mime};base64,${base64}`;
+            coverLogo = await convertImageToPdfmake(config.pdfExport.coverLogo);
         } catch (err) {
             // eslint-disable-next-line no-console
             console.error(`Error getting logo:`, err);
@@ -109,18 +103,16 @@ module.exports = async (documentResource, docDefinition) => {
 
     if (!defaultCoverImage) {
         try {
-            const imageFilePath = path.join(config.folders.w2projects, config.pdfExport.coverImage);
-            const base64 = await imageToBase64(imageFilePath);
-            const mime = mimeTypes.lookup(imageFilePath);
-            defaultCoverImage = `data:${mime};base64,${base64}`;
+            defaultCoverImage = await convertImageToPdfmake(config.pdfExport.coverImage);
         } catch (err) {
             // eslint-disable-next-line no-console
             console.error(`Error getting defaultCoverImage:`, err);
         }
     };
+
     nodes.push({
         absolutePosition: { x: constants.PAGE_MARGIN_SIDE, y: ABSOLUTE_Y_IMAGE },
-        image: defaultCoverImage,
+        image: documentResource.PdfCoverImage || defaultCoverImage,
         fit: [ MAX_IMAGE_WIDTH, MAX_IMAGE_HEIGHT ]
     });
 

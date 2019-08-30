@@ -6,6 +6,10 @@
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
 
+## 1.3.154 - 2019-08-30
+
+- #282: Back-end logic to select PDF cover image.
+
 ## 1.3.153 - 2019-08-30
 
 - #291: PDF Generator: use best version to filter subdocuments.
