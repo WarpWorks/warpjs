@@ -99,7 +99,7 @@ const itemElement = (resource, docDefinition, headlineLevel = 1, req) => {
                 const convertLists = (listItems) => {
                     const listElements = [];
                     listItems.forEach((listItem) => {
-                        if(listItem.stack) {
+                        if (listItem.stack) {
                             const listStack = [];
                             listItem.stack.reduce((memo, stackItem, index, array) => {
                                 if (stackItem.table) {
