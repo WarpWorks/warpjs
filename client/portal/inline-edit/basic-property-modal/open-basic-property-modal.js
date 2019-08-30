@@ -1,9 +1,12 @@
+// import _debug from './debug'; const debug = _debug('open-basic-property-modal');
+
 const ChangeLogs = require('./../change-logs');
 const constants = require('./../constants');
 const detailTemplate = require('./basic-property-detail.hbs');
 const initializeWysiwyg = require('./../initialize-wysiwyg');
 const paragraphContentChanged = require('./../events/paragraph-content-changed');
 const template = require('./basic-property-modal.hbs');
+
 
 module.exports = ($, element, res) => {
     const elementType = $(element).data('warpjsType');
@@ -20,6 +23,8 @@ module.exports = ($, element, res) => {
 
         modal = $(`[data-warpjs-modal="${constants.MODAL_NAME}"]`);
     }
+
+    constants.onClose(modal);
 
     $('.warpjs-document-name > div > .warpjs-content', modal).text(instance.name);
     modal.modal('show');
