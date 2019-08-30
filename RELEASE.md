@@ -6,6 +6,10 @@
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
 
+## 1.3.153 - 2019-08-30
+
+- #291: PDF Generator: use best version to filter subdocuments.
+
 ## 1.3.152 - 2019-08-29
 
 - #295: update: use html-to-pdfmake version 1.0.5 instead of latest, avoid parser stripping spaces.

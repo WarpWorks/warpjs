@@ -7,6 +7,7 @@ const Promise = require('bluebird');
 
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const Documents = require('./../../../lib/core/first-class/documents');
 const serverUtils = require('./../../utils');
 // const debug = require('./debug')('extract-overview');
 const isParagraphVisible = require('./is-paragraph-visible');
@@ -86,8 +87,10 @@ module.exports = async (req, persistence, entity, document, viewName, level = 0)
                 const subDocumentRelationship = entity.getRelationshipById(paragraph.SubDocuments);
                 if (subDocumentRelationship) {
                     const subDocuments = await subDocumentRelationship.getDocuments(persistence, document);
+                    const bestSubDocuments = await Documents.bestDocuments(persistence, subDocumentRelationship.getDomain(), subDocuments);
+
                     const subDocumentResources = await Promise.map(
-                        subDocuments,
+                        bestSubDocuments,
                         async (subDocument) => extractDocument(req, persistence, subDocument.type, subDocument.id, viewName, level + 1)
                     );
                     resource.embed('items', subDocumentResources);
