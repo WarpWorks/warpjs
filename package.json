@@ -1,6 +1,6 @@
 {
   "name": "@warp-works/warpjs",
-  "version": "1.3.158",
+  "version": "1.3.159",
   "description": "Content management system for WarpWorks in javascript",
   "repository": {
     "type": "git",
@@ -34,11 +34,12 @@
   "main": "index.js",
   "scripts": {
     "prepare": "grunt build",
-    "pretest": "grunt",
+    "pretest": "grunt check",
     "prepack": "npm run coverage",
     "coverage:integration": "nyc --report-dir=reports/coverage/integration npm run -s test:integration",
     "coverage:unit": "nyc --report-dir=reports/coverage/unit npm run -s test:unit",
     "coverage": "npm run -s coverage:unit && npm run -s coverage:integration",
+    "precoverage": "grunt check",
     "test:integration": "mocha \"lib/**/*.integration.test.js\" \"client/**/*.integration.test.js\" \"server/**/*.integration.test.js\"",
     "test:unit": "mocha \"lib/**/*.unit.test.js\" \"client/**/*.unit.test.js\" \"server/**/*.unit.test.js\"",
     "test": "npm run -s test:unit && npm run -s test:integration",

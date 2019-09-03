@@ -1,7 +1,6 @@
 module.exports = (grunt) => {
     grunt.registerTask('default', [
-        'eslint',
-        'jscpd',
+        'check',
         'build'
     ]);
 };

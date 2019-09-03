@@ -5,6 +5,7 @@ const warpjsUtils = require('@warp-works/warpjs-utils');
 const convertImageToPdfmake = require('./convert-image-to-pdfmake');
 const Documents = require('./../../../lib/core/first-class/documents');
 // const debug = require('./debug')('extract-overview');
+const convertInternalLinks = require('./convert-internal-links');
 const isParagraphVisible = require('./is-paragraph-visible');
 
 module.exports = async (req, persistence, entity, document, viewName, level = 0) => {
@@ -21,13 +22,14 @@ module.exports = async (req, persistence, entity, document, viewName, level = 0)
     return Promise.map(
         visibleParagraphs,
         async (paragraph) => {
+            const content = await convertInternalLinks(persistence, entity.getDomain(), paragraph.Content);
             const resource = warpjsUtils.createResource('', {
                 type: paragraph.type,
                 id: paragraph._id,
                 position: paragraph.Position,
                 headingLevel: paragraph.HeadingLevel || 'H1',
                 heading: paragraph.Heading,
-                content: paragraph.Content,
+                content,
                 visibility: paragraph.Visibility || 'WebAndPDF'
             });
 

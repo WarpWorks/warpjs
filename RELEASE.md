@@ -6,6 +6,10 @@
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
 
+## 1.3.159 - 2019-09-03
+
+- #292: In-text internal link now checks for best version and alias.
+
 ## 1.3.158 - 2019-09-03
 
 - #276: List of available associated documents with best version.

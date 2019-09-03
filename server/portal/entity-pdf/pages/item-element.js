@@ -2,6 +2,7 @@ const { JSDOM } = require('jsdom');
 const htmlToPdfmake = require('html-to-pdfmake');
 
 const RoutesInfo = require('@quoin/expressjs-routes-info');
+const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const pageSize = require('./page-size');
 const constants = require('./../constants');
@@ -36,10 +37,16 @@ const itemElement = (resource, docDefinition, headlineLevel = 1, req) => {
     // const { width, height } = pageSize(docDefinition);
     const { width } = pageSize(docDefinition);
     const contentLinkReplacer = (match, label, type, id) => {
-        const href = RoutesInfo.expand('entity', { type, id }, req);
         const icon = String.fromCharCode(0xe144);
 
-        return `<a href="${href}">${label}<a class="icon">${icon}</a></a>`;
+        const href = (type === constants.CONVERTED_CUSTOM_LINK)
+            ? id
+            : RoutesInfo.expand('entity', { type, id }, req)
+        ;
+
+        const fullUrl = warpjsUtils.fullUrl(req, href);
+
+        return `<a href="${fullUrl}">${label}<a class="icon">${icon}</a></a>`;
     };
 
     try {

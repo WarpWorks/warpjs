@@ -5,8 +5,13 @@ import { TYPES } from './../../entity-pdf/constants';
 import BackToToc from './back-to-toc';
 import Content from './content';
 import TocNumber from './toc-number';
+const CONTENT_LINK_RE = require('./../../../../lib/core/content-link-re');
 
 // import _debug from './debug'; const debug = _debug('paragraph');
+
+const contentLinkReplacer = (match, label, type, url) => {
+    return `<a href="${url}">${label}</a>`;
+};
 
 const Component = (props) => {
     // debug(`props=`, props);
@@ -44,9 +49,11 @@ const Component = (props) => {
         );
     }
 
+    const content = (props.item.content || '').replace(CONTENT_LINK_RE, contentLinkReplacer);
+
     return (
         <div className="paragraph">
-            <div className="paragraph-content" dangerouslySetInnerHTML={{ __html: props.item.content }} />
+            <div className="paragraph-content" dangerouslySetInnerHTML={{ __html: content }} />
             {subDocumentContent}
         </div>
     );
