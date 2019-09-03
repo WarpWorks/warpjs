@@ -6,6 +6,10 @@
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
 
+## 1.3.156 - 2019-09-02
+
+- #298: Default status to `Draft`.
+
 ## 1.3.155 - 2019-08-30
 
 - #296: Fixed modal for inline paragraph editing.

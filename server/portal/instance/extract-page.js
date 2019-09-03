@@ -3,6 +3,7 @@ const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const { DEFAULT_VERSION } = require('./../../../lib/constants');
+const Document = require('./../../../lib/core/first-class/document');
 const breadcrumbsByEntity = require('./../resources/breadcrumbs-by-entity');
 const contentConstants = require('./../../content/constants');
 // const debug = require('./debug')('extract-page');
@@ -14,31 +15,6 @@ const targetPreviewsByEntity = require('./../resources/target-previews-by-entity
 
 const config = serverUtils.getConfig();
 const statusConfig = config.status;
-
-const computeDocumentStatus = async (persistence, entity, instance) => {
-    // debug(`computeDocumentStatus()...`);
-    const instanceStatus = instance[statusConfig.property];
-
-    const currentOrParentStatus = (instanceStatus === statusConfig.inheritance)
-        ? await computeParentDocumentStatus(persistence, entity, instance)
-        : instanceStatus
-    ;
-
-    return currentOrParentStatus || instanceStatus;
-};
-
-const computeParentDocumentStatus = async (persistence, entity, instance) => {
-    // debug(`computeParentDocumentStatus()...`);
-    // debug(`computeParentDocumentStatus(): entity=`, entity.constructor.name);
-    const parentInstances = await entity.getParentInstance(persistence, instance);
-    const parentInstance = parentInstances.pop();
-    if (parentInstance) {
-        const parentEntity = await entity.getParentEntity(instance);
-        return computeDocumentStatus(persistence, parentEntity, parentInstance);
-    } else {
-        return null;
-    }
-};
 
 module.exports = async (req, persistence, entity, instance, pageViewName) => {
     const resource = warpjsUtils.createResource(req, {
@@ -109,7 +85,7 @@ module.exports = async (req, persistence, entity, instance, pageViewName) => {
     }
 
     // Document status
-    const documentStatus = await computeDocumentStatus(persistence, entity, instance);
+    const documentStatus = await Document.computeDocumentStatus(persistence, entity, instance);
     resource.status = {
         documentStatus,
         isPublic: (indexOf(statusConfig.public, documentStatus) !== -1),
