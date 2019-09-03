@@ -2,6 +2,7 @@
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const Documents = require('./../../../lib/core/first-class/documents');
 const EntityTypes = require('./../../../lib/core/entity-types');
 const { routes } = require('./../constants');
 
@@ -54,8 +55,9 @@ module.exports = async (persistence, relationship, instance) => {
     });
 
     const documents = await relationship.getDocuments(persistence, instance);
+    const bestDocuments = await Documents.bestDocuments(persistence, relationship.getDomain(), documents);
 
-    resource.embed('items', documents.map((doc) => {
+    resource.embed('items', bestDocuments.map((doc) => {
         const href = RoutesInfo.expand(routes.instanceRelationshipItem, {
             domain,
             type: instance.type,

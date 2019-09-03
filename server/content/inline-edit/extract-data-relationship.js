@@ -13,8 +13,7 @@ module.exports = async (persistence, entity, instance, body) => {
 
     if (relationship) {
         if (!relationship.isAggregation && relationship.getTargetEntity().entityType === EntityTypes.DOCUMENT) {
-            const dataAssociations = await extractDataAssociations(persistence, relationship, instance);
-            return dataAssociations;
+            return extractDataAssociations(persistence, relationship, instance);
         } else {
             debug(`TODO: relationship=`, relationship);
             return [];
