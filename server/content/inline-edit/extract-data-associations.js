@@ -88,7 +88,8 @@ module.exports = async (persistence, relationship, instance) => {
     const firstTargetEntity = targetEntities.length ? targetEntities[0] : null;
     if (firstTargetEntity) {
         const documents = await firstTargetEntity.getDocuments(persistence);
-        const targetInstances = documents.sort(warpjsUtils.byName);
+        const bestDocuments = await Documents.bestDocuments(persistence, relationship.getDomain(), documents);
+        const targetInstances = bestDocuments.sort(warpjsUtils.byName);
         targetEntityResources[0].selected = true;
         targetEntityResources[0].embed('entities', targetInstances.map((targetInstance) => warpjsUtils.createResource('', {
             type: targetInstance.type,

@@ -6,6 +6,10 @@
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
 
+## 1.3.158 - 2019-09-03
+
+- #276: List of available associated documents with best version.
+
 ## 1.3.157 - 2019-09-03
 
 - #276: Make sure documents are unique and best version.
