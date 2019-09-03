@@ -7,7 +7,6 @@ const initializeWysiwyg = require('./../initialize-wysiwyg');
 const paragraphContentChanged = require('./../events/paragraph-content-changed');
 const template = require('./basic-property-modal.hbs');
 
-
 module.exports = ($, element, res) => {
     const elementType = $(element).data('warpjsType');
     const elementId = $(element).data('warpjsId');
