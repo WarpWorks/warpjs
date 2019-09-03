@@ -54,7 +54,7 @@ const Component = (props) => {
         <html>
 
             <head>
-                <title>{props.type} / {props.name}</title>
+                <title>{props.name}</title>
                 <link rel="shortcut icon" href="/public/favicon.ico" />
                 <link rel="icon" href="/public/favicon.ico" />
                 <style dangerouslySetInnerHTML={{ __html: STYLE }}></style>
