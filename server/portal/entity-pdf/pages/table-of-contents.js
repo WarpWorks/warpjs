@@ -85,7 +85,8 @@ module.exports = async (documentResource) => {
                 id: IMAGE_TOC_NAME,
                 title: { text: 'Figures', style: 'headline1' }
             },
-            margin: [ 0, 24, 0, 12 ]
+            margin: [ 0, 24, 0, 12 ],
+            pageBreak: 'before'
         });
     }
 

@@ -6,6 +6,10 @@
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
 
+## 1.3.160 - 2019-09-05
+
+- #305: PDF: Figures TOC on new page.
+
 ## 1.3.159 - 2019-09-03
 
 - #292: In-text internal link now checks for best version and alias.
