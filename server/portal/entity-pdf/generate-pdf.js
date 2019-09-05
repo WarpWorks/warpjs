@@ -108,14 +108,6 @@ module.exports = async (documentResource, req) => {
             if (currentNode.pageNumbers.length === 2) {
                 return true;
             }
-
-            // Make sure headers are not at the end of the page.
-            // if (currentNode.headlineLevel && followingNodesOnPage.length === 0) {
-            //     debug(`pageBreakBefore(): headline as last element.`);
-            //     return true;
-            // }
-
-            // debug(`pageBreakBefore(): currentNode=`, currentNode);
         },
 
         content: []
@@ -138,10 +130,10 @@ module.exports = async (documentResource, req) => {
         const actualNext = getFirst(docDefinition.content[index + 1]);
         const actualPrev = getFirst(docDefinition.content[index - 1]);
 
-        if (actualItem.headlineLevel && actualNext && actualNext.headlineLevel) {
+        if (actualItem && actualItem.headlineLevel && actualNext && actualNext.headlineLevel) {
             getFirst(docDefinition.content[index]).style = actualItem.style + 'NospaceBottom';
         }
-        if (actualItem.headlineLevel && actualPrev && actualPrev.headlineLevel) {
+        if (actualItem && actualItem.headlineLevel && actualPrev && actualPrev.headlineLevel) {
             getFirst(docDefinition.content[index]).style = actualItem.style + 'NospaceTop';
         }
     });

@@ -8,10 +8,12 @@ const pageSize = require('./page-size');
 const constants = require('./../constants');
 const CONTENT_LINK_RE = require('./../../../../lib/core/content-link-re');
 
-// const debug = require('./debug')('item-element');
+const debug = require('./debug')('item-element');
 
 const heading = (resource, docDefinition, headlineLevel) => {
-    const headlineContent = [{
+    debug(`heading(): resource.heading='${resource.heading}'`);
+    if (resource.tocNumber) {
+        return [{
         id: `heading-${resource.tocNumber}`,
         text: `${resource.tocNumber} ${resource.heading || resource.name}`,
         headlineLevel,
@@ -23,8 +25,9 @@ const heading = (resource, docDefinition, headlineLevel) => {
         tocNumberStyle: (headlineLevel === 1) ? 'toc1_number' : 'toc2_number',
         tocMargin: [ ((headlineLevel - 1) * 20), headlineLevel === 1 ? 10 : 5, 0, 0 ]
     }];
-
-    return headlineContent;
+    } else {
+        return [];
+    }
 };
 
 const contentExternalLinkReplacer = () => {
@@ -54,6 +57,7 @@ const itemElement = (resource, docDefinition, headlineLevel = 1, req) => {
 
         if (resource.type === constants.TYPES.PARAGRAPH) {
             if (resource.heading) {
+                debug(`resource.heading=`, resource.heading);
                 elements.push(heading(resource, docDefinition, headlineLevel));
             }
 
