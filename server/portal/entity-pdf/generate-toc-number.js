@@ -1,1 +1,1 @@
-module.exports = (parentVersion, currentNumber) => parentVersion ? `${parentVersion}.${currentNumber}` : currentNumber;
+module.exports = (parentVersion, currentNumber) => parentVersion ? `${parentVersion}.${currentNumber}` : `${currentNumber}`;
