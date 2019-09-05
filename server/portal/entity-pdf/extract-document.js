@@ -33,7 +33,8 @@ module.exports = async (req, persistence, type, id, viewName, level = 0) => {
         status: document.Status,
         description: document.Description,
         keywords: document.Keywords,
-        author: await Document.getAuthors(persistence, entity, document)
+        author: await Document.getAuthors(persistence, entity, document),
+        releaseDate: document.ReleaseDate
     }, req);
 
     if (!level) {

@@ -6,31 +6,31 @@ const { PAGE_MARGIN_SIDE } = require('./../constants');
 
 module.exports = async (documentResource) => (currentPage, pageCount, pageSize) => {
     if (currentPage === 1) {
+        const releaseDate = documentResource.releaseDate || '';
         return [{
             text: [{
                 text: 'Date: ',
                 bold: true
             }, {
-                text: 'xx.xx.xxxx\n'
+                text: `${releaseDate}\n`
             }, {
                 text: 'Version: ',
                 bold: true
             }, {
                 text: `${documentResource.version}\n`
-            }, {
-                text: 'Document Number: ',
-                bold: true
-            }, {
-                text: 'XXXX'
             }],
             style: 'coverPageText',
             color: '#ffffff',
             marginLeft: PAGE_MARGIN_SIDE
         }];
     } else {
+        const releaseDateString = documentResource.releaseDate
+            ? `${documentResource.releaseDate} | `
+            : '';
+
         return [{
             text: [{
-                text: `<TODO: PublicationDate> | version ${documentResource.version}`
+                text: `${releaseDateString}version ${documentResource.version}`
             }, {
                 text: `   page ${currentPage}`,
                 bold: true

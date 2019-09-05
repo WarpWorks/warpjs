@@ -17,6 +17,7 @@ module.exports = (resource, tocLevel = 1) => {
         description: resource.description,
         keywords: resource.keywords,
         author: resource.author,
+        releaseDate: resource.releaseDate,
         PdfCoverImage: resource.PdfCoverImage
     });
 
