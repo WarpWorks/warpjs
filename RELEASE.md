@@ -6,6 +6,10 @@
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
 
+## 1.3.163 - 2019-09-06
+
+- #299: Fixed TOC numbering for paragraph without headings.
+
 ## 1.3.162 - 2019-09-06
 
 - #311: PDF: Center image caption.

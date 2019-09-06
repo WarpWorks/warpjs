@@ -1,31 +1,29 @@
-const debug = require('./debug')('generate-toc-numbers');
+// const debug = require('./debug')('generate-toc-numbers');
 const generateTocNumber = require('./generate-toc-number');
 const setTocNumber = require('./set-toc-number');
 
-const generateTocNumbers = (items, parentVersion, offset = 0) => {
+const generateTocNumbers = (items, parentVersion, offset = 0, level = 1) => {
     if (items) {
-        let newParentVersion = generateTocNumber(parentVersion, 0);
+        let newParentVersion = generateTocNumber(parentVersion, offset);
+        let childOffset = 0;
         items.reduce(
-            (currentCounter, item) => {
-                debug(`${parentVersion}: ${currentCounter}: item=`, item.heading);
+            (currentCounter, item, index) => {
                 if (item.heading || item.name) {
                     newParentVersion = setTocNumber(item, parentVersion, currentCounter + offset);
-                    offset = 0;
-                    debug(`    ${parentVersion}: ${currentCounter}: newParentVersion1=`, newParentVersion);
+                    childOffset = 0;
                     if (item._embedded && item._embedded.items && item._embedded.items.length) {
-                        generateTocNumbers(item._embedded.items, newParentVersion, offset);
+                        generateTocNumbers(item._embedded.items, newParentVersion, childOffset, level + 1);
+                        childOffset += item._embedded.items.length;
                     }
                     return currentCounter + 1;
                 } else if (item._embedded && item._embedded.items && item._embedded.items.length) {
-                    generateTocNumbers(item._embedded.items, newParentVersion, currentCounter + offset);
-                    offset += item._embedded.items.length;
-                } else {
-                    debug(`    ${parentVersion}: ${currentCounter}: No tocNumber`);
+                    generateTocNumbers(item._embedded.items, newParentVersion, childOffset, level + 1);
+                    childOffset += item._embedded.items.length;
                 }
                 return currentCounter;
             },
             1
-        )
+        );
     }
 };
 

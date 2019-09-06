@@ -8,23 +8,23 @@ const pageSize = require('./page-size');
 const constants = require('./../constants');
 const CONTENT_LINK_RE = require('./../../../../lib/core/content-link-re');
 
-const debug = require('./debug')('item-element');
+// const debug = require('./debug')('item-element');
 
 const heading = (resource, docDefinition, headlineLevel) => {
-    debug(`heading(): resource.heading='${resource.heading}'`);
+    // debug(`heading(): resource.heading='${resource.heading}'`);
     if (resource.tocNumber) {
         return [{
-        id: `heading-${resource.tocNumber}`,
-        text: `${resource.tocNumber} ${resource.heading || resource.name}`,
-        headlineLevel,
-        style: (headlineLevel === 1) ? 'headline1' : (headlineLevel === 2) ? 'headline2' : 'headline',
-        pageBreak: (headlineLevel === 1) ? 'before' : null,
+            id: `heading-${resource.tocNumber}`,
+            text: `${resource.tocNumber} ${resource.heading || resource.name}`,
+            headlineLevel,
+            style: (headlineLevel === 1) ? 'headline1' : (headlineLevel === 2) ? 'headline2' : 'headline',
+            pageBreak: (headlineLevel === 1) ? 'before' : null,
 
-        tocItem: constants.TOC_NAME,
-        tocStyle: (headlineLevel === 1) ? 'toc1' : 'toc2',
-        tocNumberStyle: (headlineLevel === 1) ? 'toc1_number' : 'toc2_number',
-        tocMargin: [ ((headlineLevel - 1) * 20), headlineLevel === 1 ? 10 : 5, 0, 0 ]
-    }];
+            tocItem: constants.TOC_NAME,
+            tocStyle: (headlineLevel === 1) ? 'toc1' : 'toc2',
+            tocNumberStyle: (headlineLevel === 1) ? 'toc1_number' : 'toc2_number',
+            tocMargin: [ ((headlineLevel - 1) * 20), headlineLevel === 1 ? 10 : 5, 0, 0 ]
+        }];
     } else {
         return [];
     }
@@ -57,7 +57,7 @@ const itemElement = (resource, docDefinition, headlineLevel = 1, req) => {
 
         if (resource.type === constants.TYPES.PARAGRAPH) {
             if (resource.heading) {
-                debug(`resource.heading=`, resource.heading);
+                // debug(`resource.heading=`, resource.heading);
                 elements.push(heading(resource, docDefinition, headlineLevel));
             }
 
