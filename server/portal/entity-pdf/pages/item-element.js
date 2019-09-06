@@ -87,7 +87,7 @@ const itemElement = (resource, docDefinition, headlineLevel = 1, req) => {
                             lineHeight: 1,
                             font: 'Helvetica'
                         },
-                        tocMargin: [ 0, 0, 0, 0 ],
+                        tocMargin: [ 0, 0, 0, 20 ],
                         alignment: 'center'
                     });
                 }
