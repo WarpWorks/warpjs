@@ -6,6 +6,10 @@
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
 
+## 1.3.162 - 2019-09-06
+
+- #311: PDF: Center image caption.
+
 ## 1.3.161 - 2019-09-05
 
 - #303: Implemented ReleaseDate and removed deprecated document number.
