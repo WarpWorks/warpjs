@@ -6,6 +6,10 @@
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
 
+## 1.3.166 - 2019-09-06
+
+- #314: Portal: Filter table of contents by visiblility.
+
 ## 1.3.165 - 2019-09-06
 
 - #308: Add title to plain portal document template.

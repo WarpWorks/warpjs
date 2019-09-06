@@ -7,11 +7,11 @@ const EntityTypes = require('./../../../lib/core/entity-types');
 
 function buildTOCLevel(items, level, index) {
     // debug(`buildTOCLevel(level=${level}): items=`, items);
-
+    const filteredItems = items.filter((item) => item.showItem);
     const cumulator = [];
 
-    for (let i = index; i < items.length; i++) {
-        const item = items[i];
+    for (let i = index; i < filteredItems.length; i++) {
+        const item = filteredItems[i];
         const currentLevel = parseInt(item.level[1], 10);
 
         if (currentLevel < level) {
@@ -35,7 +35,7 @@ function buildTOCLevel(items, level, index) {
                 resource.embed('items', subDocuments);
             }
 
-            resource.embed('items', buildTOCLevel(items, level + 1, i + 1));
+            resource.embed('items', buildTOCLevel(filteredItems, level + 1, i + 1));
         }
     }
 
