@@ -6,6 +6,10 @@
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
 
+## 1.3.165 - 2019-09-06
+
+- #308: Add title to plain portal document template.
+
 ## 1.3.164 - 2019-09-06
 
 - #309: PDF: Image TOC margin.
