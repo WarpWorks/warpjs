@@ -23,7 +23,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => Object.freeze({
     click: (url) => () => {
         if (url) {
-            document.location.href = url;
+            window.open(url, '_blank');
         }
     }
 });
