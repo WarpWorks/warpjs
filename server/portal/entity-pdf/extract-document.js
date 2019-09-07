@@ -6,6 +6,7 @@ const convertImageToPdfmake = require('./convert-image-to-pdfmake');
 // const debug = require('./debug')('extract-document');
 const Document = require('./../../../lib/core/first-class/document');
 const extractCommunity = require('./extract-community');
+const extractGroups = require('./extract-groups');
 const extractOverview = require('./extract-overview');
 const generateTocNumbers = require('./generate-toc-numbers');
 const serverUtils = require('./../../utils');
@@ -75,6 +76,16 @@ module.exports = async (req, persistence, type, id, viewName, level = 0) => {
         const contributorsResource = await extractCommunity(req, persistence, entity, document, 'Contributors');
         if (contributorsResource) {
             resource.embed('contributors', contributorsResource);
+        }
+
+        const workGroups = await extractGroups(req, persistence, entity, document, 'WorkGroups');
+        if (workGroups) {
+            resource.embed('workGroups', workGroups);
+        }
+
+        const taskGroups = await extractGroups(req, persistence, entity, document, 'TaskGroups');
+        if (taskGroups) {
+            resource.embed('taskGroups', taskGroups);
         }
 
         // If no specific PDF cover image specified, check overview.

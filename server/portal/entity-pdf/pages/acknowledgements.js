@@ -1,3 +1,4 @@
+// const debug = require('./debug')('acknowledgements');
 const oxfordComma = require('./../../../../lib/utils/oxford-comma');
 
 const extractUsers = (items) => items.reduce(
@@ -21,6 +22,25 @@ const extractUsers = (items) => items.reduce(
 module.exports = async (documentResource) => {
     const year = (new Date()).getFullYear();
 
+    const acknowledgement = "This document is a work product of the Industrial Internet Consortium (IIC)";
+
+    let groups = [];
+    if (documentResource._embedded.workGroups && documentResource._embedded.workGroups.length) {
+        groups = groups.concat(documentResource._embedded.workGroups.map((workGroup) => `${workGroup.name} Working Group`));
+    }
+
+    if (documentResource._embedded.taskGroups && documentResource._embedded.taskGroups.length) {
+        groups = groups.concat(documentResource._embedded.taskGroups.map((taskGroup) => `${taskGroup.name} Task Group`));
+    }
+
+    groups.forEach((group, index) => {
+        if (index) {
+            groups[index] = `its ${group}`;
+        }
+    });
+
+    groups = oxfordComma(groups);
+
     const content = [{
         text: `Copyright © ${year}, Industrial Internet Consortium`,
         style: 'paragraph',
@@ -30,7 +50,7 @@ module.exports = async (documentResource) => {
         headlineLevel: 1,
         style: 'headline1'
     }, {
-        text: "TODO: This document is a work product of the Industrial Internet Consortium (IIC) ...WG and its ...TG.",
+        text: `${acknowledgement}${groups ? ` ${groups}` : ''}.`,
         style: 'paragraph'
     }];
 

@@ -37,6 +37,14 @@ module.exports = (resource, tocLevel = 1) => {
         newResource.embed('images', resource._embedded.images);
     }
 
+    if (resource._embedded.workGroups) {
+        newResource.embed('workGroups', resource._embedded.workGroups);
+    }
+
+    if (resource._embedded.taskGroups) {
+        newResource.embed('taskGroups', resource._embedded.taskGroups);
+    }
+
     if ((tocLevel < MAX_TOC_DEEP_LEVEL) && resource._embedded && resource._embedded.items) {
         newResource.embed('items', rebuildItemsTree(resource._embedded.items, 1, 0, tocLevel));
     }
