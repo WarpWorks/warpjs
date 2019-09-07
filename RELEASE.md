@@ -6,6 +6,10 @@
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
 
+## 1.3.171 - 2019-09-07
+
+- #310: Generate document status definition table from custom messages.
+
 ## 1.3.170 - 2019-09-06
 
 - #302: PDF Download opens new tab/window.

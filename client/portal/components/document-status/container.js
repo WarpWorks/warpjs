@@ -2,7 +2,6 @@ import pageHalNamespace from './../page-hal/namespace';
 
 import Component from './component';
 import { orchestrators } from './flux';
-// import namespace from './namespace';
 
 // import _debug from './debug'; const debug = _debug('container');
 
@@ -17,6 +16,7 @@ const mapStateToProps = (state, ownProps) => {
         : null;
 
     return {
+        customMessages: pageHalSubstate.customMessages,
         status: page && page.status ? page.status.documentStatus : ''
     };
 };

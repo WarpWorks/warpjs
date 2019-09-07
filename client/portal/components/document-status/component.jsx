@@ -21,12 +21,14 @@ const Component = (props) => {
         `warpjs-document-status-${props.status}`
     );
 
+    const modalTitle = props.customMessages.ContentDocumentStatusModalTitle;
+
     return (
         <InputGroup>
             <FormControl.Static><span className={classNames}>{props.status}</span></FormControl.Static>
             <InputGroup.Button><Button label="" glyph="info-sign" style="primary" onClick={props.showModal} /></InputGroup.Button>
-            <ModalContainer id={NAME} title="Resource Hub Content Status and Approval Levels" footerButtons={buttons}>
-                <Definition />
+            <ModalContainer id={NAME} title={modalTitle} footerButtons={buttons}>
+                <Definition customMessages={props.customMessages} />
             </ModalContainer>
         </InputGroup>
     );
@@ -35,6 +37,7 @@ const Component = (props) => {
 Component.displayName = NAME;
 
 Component.propTypes = {
+    customMessages: PropTypes.object.isRequired,
     hideModal: PropTypes.func.isRequired,
     showModal: PropTypes.func.isRequired,
     status: PropTypes.string.isRequired

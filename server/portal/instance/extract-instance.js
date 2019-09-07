@@ -82,7 +82,14 @@ module.exports = async (req, res, type, id, pageViewName) => {
 
                 const w2cookies = (req.signedCookies && req.signedCookies.w2cookies) ? JSON.parse(req.signedCookies.w2cookies) : {};
 
-                resource.customMessages = await warpjsUtils.server.getCustomMessagesByPrefix(persistence, config, entity.getDomain(), 'Portal');
+                const portalCustomMessages = await warpjsUtils.server.getCustomMessagesByPrefix(persistence, config, entity.getDomain(), 'Portal');
+
+                const contentDocumentStatusCustomMessages = await warpjsUtils.server.getCustomMessagesByPrefix(persistence, config, entity.getDomain(), 'ContentDocumentStatus');
+
+                resource.customMessages = {
+                    ...portalCustomMessages,
+                    ...contentDocumentStatusCustomMessages
+                };
 
                 if (!w2cookies.accepted) {
                     resource.link('acceptCookies', {

@@ -3,6 +3,7 @@ const ChangeLogs = require('@warp-works/warpjs-change-logs');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const { ALL } = require('./../../../lib/constants/document-status');
 const constants = require('./../constants');
 const editionInstance = require('./../../edition/instance');
 const serverUtils = require('./../../utils');
@@ -95,6 +96,14 @@ module.exports = async (req, res) => {
 
                 // Custom messages
                 resource.customMessages = await warpjsUtils.server.getCustomMessagesByPrefix(persistence, config, entity.getDomain(), 'Content');
+                // Build the document-status definition.
+                const tbody = ALL.map((documentStatus) => {
+                    const prerequisites = resource.customMessages[`ContentDocumentStatusModal${documentStatus}Prerequisites`];
+                    const visiblility = resource.customMessages[`ContentDocumentStatusModal${documentStatus}Visibility`];
+                    return `<tr><td><span class="warpjs-document-status warpjs-document-status-${documentStatus}">${documentStatus}</span></td><td>${prerequisites}</td><td>${visiblility}</td></tr>`;
+                });
+                const thead = `<tr><th>Status</th><th>Prerequisites</th><th>Portal Visibility (Public!)</th></tr>`;
+                resource.customMessages.ContentDocumentStatusModalContent = `<table class="table table-striped table-bordered"><thead>${thead}</thead><tbody>${tbody.join('')}</tbody></table>`;
 
                 // Changelogs
                 const changeLogs = await ChangeLogs.toFormResource(
