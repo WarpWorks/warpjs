@@ -6,7 +6,7 @@ import namespace from './namespace';
 
 import { orchestrators } from './flux';
 
-const { getNamespaceSubstate } = window.WarpJS.ReactUtils;
+const { getNamespaceSubstate, wrapContainer } = window.WarpJS.ReactUtils;
 const { hideModal, saveValue, showModal, updateValue } = orchestrators;
 
 const mapStateToProps = (state, ownProps) => {
@@ -44,4 +44,4 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => Object.freeze({
     ...ownProps
 });
 
-export default window.WarpJS.ReactUtils.wrapContainer(Component, mapStateToProps, mapDispatchToProps, mergeProps);
+export default wrapContainer(Component, mapStateToProps, mapDispatchToProps, mergeProps);

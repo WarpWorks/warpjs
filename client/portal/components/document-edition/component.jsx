@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import { Fragment } from 'react';
-import { ControlLabel, Form, FormControl, FormGroup, Tab, Tabs } from 'react-bootstrap';
+import { ControlLabel, Form, FormGroup, Tab, Tabs } from 'react-bootstrap';
 
 import AliasSelector from './../alias-selector';
 import BreadcrumbActionButton from './../../components/breadcrumb-action-button';
 import CreateNewVersion from './../create-new-version';
 import DocumentEditionFormGroup from './form-group';
+import DocumentStatus from './../document-status';
 import { NAME } from './constants';
 
 // import _debug from './debug'; const debug = _debug('component');
@@ -78,7 +79,7 @@ const Component = (props) => {
                                 controlId={PROPERTIES.STATUS}
                                 className={`warpjs-${PROPERTIES.STATUS}`}
                                 label="Status"
-                                content={<FormControl.Static>{page.status.documentStatus}</FormControl.Static>}
+                                content={<DocumentStatus />}
                             />
 
                             <AliasSelector controlId={PROPERTIES.ALIAS} />

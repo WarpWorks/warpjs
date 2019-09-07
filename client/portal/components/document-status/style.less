@@ -1,0 +1,56 @@
+.warpjs-document-status {
+    padding: 3px 12px;
+    border-radius: 15px;
+    color: white;
+    border: 0;
+
+    &.warpjs-document-status- {
+        &InheritFromParent {
+            background-color: #30c;
+        }
+
+        &Draft {
+            background-color: #39f;
+        }
+
+        &Proposal {
+            background-color: #960;
+        }
+
+        &Approved {
+            background-color: #030;
+        }
+
+        &Declined {
+            background-color: #600;
+        }
+
+        &Retired {
+            background-color: #999;
+        }
+
+        &IndividualContribution {
+            background-color: #f9f;
+        }
+    }
+}
+
+[data-warpjs-modal="DocumentStatus"] {
+    table {
+        width: 100%;
+
+        thead {
+            tr {
+                th {
+                }
+            }
+        }
+
+        tbody {
+            tr {
+                td {
+                }
+            }
+        }
+    }
+}
