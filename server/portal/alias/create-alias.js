@@ -117,6 +117,7 @@ const recursiveAdd = async (persistence, relationship, document, aliasRelationsh
                     await relatedDocumentEntity.updateDocument(persistence, relatedDocument);
                     await recursiveAdd(persistence, relationship, relatedDocument, aliasRelationship, aliasData);
                 } catch (err) {
+                    // eslint-disable-next-line no-console
                     console.error(`Error in Promise.each(): err=`, err);
                 }
             }
