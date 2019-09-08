@@ -6,51 +6,7 @@
       class="warpjs-document-status warpjs-document-status-{{status}}"
       >{{status}}</span>
 
-    <span class="pull-right warpjs-actions">
-      <span id="warpjs-actions-placeholder"></span>
-
-      {{#if _links.studio}}
-        <span class="glyphicon glyphicon-wrench warpjs-action"
-          data-warpjs-action="goto"
-          data-warpjs-url="{{_links.studio.href}}"
-          title="{{_links.studio.title}}"
-          ></span>
-      {{else if _links.content}}
-        <span class="glyphicon glyphicon-list warpjs-action"
-          data-warpjs-action="goto"
-          data-warpjs-url="{{_links.content.href}}"
-          title="{{_links.content.title}}"
-          ></span>
-      {{/if}}
-
-      <span class="glyphicon glyphicon-time warpjs-action"
-        data-warpjs-action="change-logs"
-        title="Change logs"
-        data-warpjs-url="{{_links.history.href}}"
-        ></span>
-      {{#if _links.preview}}
-        <span class="glyphicon glyphicon-eye-open warpjs-action"
-          data-warpjs-action="goto"
-          data-warpjs-url="{{_links.preview.href}}"
-          title="Preview document"
-          ></span>
-      {{/if}}
-
-      <span class="glyphicon glyphicon-trash warpjs-action"
-        data-warpjs-action="delete"
-        data-warpjs-url="{{_links.self.href}}"
-        title="Remove document"
-        {{#unless canEdit}}disabled{{/unless}}
-        ></span>
-
-      {{#unless isRootInstance}}
-      <span class="glyphicon glyphicon-share warpjs-action"
-          data-warpjs-action="add-sibling"
-          data-warpjs-url="{{_links.sibling.href}}"
-          title="Add sibling"
-          {{#unless canEdit}}disabled{{/unless}}
-          ></span>
-      {{/unless}}
+    <span class="pull-right warpjs-actions" id="warpjs-actions-placeholder"></span>
   </div>
 
   <div class="panel-body">

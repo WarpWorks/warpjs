@@ -38,6 +38,9 @@ module.exports = ($, template, postRender = defaultPostRender, onError = default
         } else if (result) {
             ProgressBarModal.show($, 50);
 
+            renderer(template, result);
+            postRender($, result);
+
             //
             //  Getting React ready
             //
@@ -47,9 +50,6 @@ module.exports = ($, template, postRender = defaultPostRender, onError = default
             //  eslint-disable-next-line require-atomic-updates
             window.WarpJS.PAGE_HAL = flattenHAL(result.data);
             window.WarpJS.STORE.dispatch(init(window.WarpJS.PAGE_HAL));
-
-            renderer(template, result);
-            postRender($, result);
 
             reactApps();
         }

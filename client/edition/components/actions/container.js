@@ -1,9 +1,16 @@
+import pageHalNamespace from './../../../components/page-hal/namespace';
+
 import Component from './component';
 
-const { wrapContainer } = window.WarpJS.ReactUtils;
+const { getNamespaceSubstate, wrapContainer } = window.WarpJS.ReactUtils;
 
 const mapStateToProps = (state, ownProps) => {
+    const pageHal = getNamespaceSubstate(state, pageHalNamespace);
+
     return Object.freeze({
+        _links: pageHal._links,
+        canEdit: pageHal.canEdit,
+        isRootInstance: pageHal.isRootInstance
     });
 };
 

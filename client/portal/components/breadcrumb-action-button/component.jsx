@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
-import { Glyphicon } from 'react-bootstrap';
+import { Glyphicon, OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 const TYPES = [ 'default', 'document', 'danger' ];
 
@@ -19,11 +19,21 @@ const Component = (props) => {
         }
     };
 
-    return (
-        <span className={classNames} onClick={onClick} title={props.title}>
+    const subComponent = (
+        <span className={classNames} onClick={onClick}>
             {glyphicon(props.glyph)} {props.label}
         </span>
     );
+
+    if (props.title) {
+        return (
+            <OverlayTrigger placement="top" overlay={<Tooltip>{props.title}</Tooltip>}>
+                {subComponent}
+            </OverlayTrigger>
+        );
+    } else {
+        return subComponent;
+    }
 };
 
 Component.displayName = 'BreadcrumbActionButton';
