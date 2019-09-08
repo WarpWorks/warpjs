@@ -14,11 +14,19 @@ module.exports = async (persistence, entity, instance) => {
     return Promise.map(
         breadcrumbs,
         async (breadcrumb) => {
-            const entity = domain.getEntityByInstance(breadcrumb);
-            const document = await entity.getInstance(persistence, breadcrumb.id);
+            try {
+                const entity = domain.getEntityByInstance(breadcrumb);
+                const document = await entity.getInstance(persistence, breadcrumb.id);
 
-            const href = await Document.getPortalUrl(persistence, entity, document);
-            return warpjsUtils.createResource(href, breadcrumb);
+                const href = await Document.getPortalUrl(persistence, entity, document);
+                return warpjsUtils.createResource(href, breadcrumb);
+            } catch (err) {
+                // eslint-disable-next-line no-console
+                console.error(`*** Breadcrumb error for breadcrumb=`, breadcrumb);
+                // eslint-disable-next-line no-console
+                console.error(`*** ERROR ***:`, err);
+                return null;
+            }
         }
     );
 };
