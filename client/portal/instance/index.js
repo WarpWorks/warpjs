@@ -2,7 +2,7 @@
 import regeneratorRuntime from 'babel-regenerator-runtime';
 
 import addGoogleAnalyticsIfNeeded from './add-google-analytics-if-needed';
-import { init as pageHalInit } from './../components/page-hal/action-creators';
+import { init } from './../../components';
 import breadcrumbActions from './../react-apps/breadcrumb-actions';
 import individualContributionHeader from './../react-apps/individual-contribution-header';
 import pdfExportButton from './../react-apps/pdf-export-button';
@@ -41,7 +41,7 @@ const template = require('./template.hbs');
             window.WarpJS.STORE = window.WarpJS.ReactUtils.createStore(reducers, {}, [], process.env.NODE_ENV === 'development');
             //  eslint-disable-next-line require-atomic-updates
             window.WarpJS.PAGE_HAL = window.WarpJS.flattenHAL(result.data);
-            window.WarpJS.STORE.dispatch(pageHalInit(window.WarpJS.PAGE_HAL));
+            window.WarpJS.STORE.dispatch(init(window.WarpJS.PAGE_HAL));
 
             $(window.WarpJS.CONTENT_PLACEHOLDER).html(template(result.data));
 

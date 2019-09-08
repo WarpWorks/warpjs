@@ -1,4 +1,4 @@
-import pageHalNamespace from './../page-hal/namespace';
+import pageHalNamespace from './../../../components/page-hal/namespace';
 
 import Component from './component';
 import { orchestrators } from './flux';

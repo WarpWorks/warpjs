@@ -2,7 +2,7 @@ import { DEFAULT_VERSION } from './../../../../lib/constants';
 import Component from './component';
 import namespace from './namespace';
 import { createVersion, hide, resetVersion, show, updateVersion } from './orchestrators';
-import pageHalNamespace from './../page-hal/namespace';
+import pageHalNamespace from './../../../components/page-hal/namespace';
 
 // import _debug from './debug'; const debug = _debug('container');
 

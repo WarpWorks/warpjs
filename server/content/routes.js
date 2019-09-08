@@ -1,6 +1,7 @@
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 
 const { routes } = require('./constants');
+const changeParent = require('./change-parent');
 const domain = require('./domain');
 const domains = require('./domains');
 const domainType = require('./domain-type');
@@ -30,6 +31,7 @@ module.exports = (baseUrl) => {
     const routesInfo = new RoutesInfo('/', baseUrl);
 
     routesInfo.route(routes.home, '/', home);
+    routesInfo.route(routes.changeParent, '/documents/{domain}/{type}/{id}/change-parent{?entity}', changeParent);
     routesInfo.route(routes.domains, '/domain', domains);
     routesInfo.route(routes.domain, '/domain/{domain}', domain);
     routesInfo.route(routes.fileUpload, '/domain/{domain}/file-upload', fileUpload);

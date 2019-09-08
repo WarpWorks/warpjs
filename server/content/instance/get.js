@@ -57,6 +57,10 @@ module.exports = async (req, res) => {
         domain,
         profile: 'linkable'
     }));
+    resource.link('changeParent', {
+        title: "Link the document to another parent",
+        href: RoutesInfo.expand(constants.routes.changeParent, { domain, type, id })
+    });
 
     res.format({
         html: () => utils.basicRender(editionInstance.bundles, resource, req, res),

@@ -1,6 +1,6 @@
 import BreadcrumbActions from './../components/breadcrumb-actions';
 import * as actionCreators from './../components/follow-document/action-creators';
-import launchApp from './launch-app';
+import launchApp from './../../react-utils/launch-app';
 
 export default () => {
     const pageHal = window.WarpJS.PAGE_HAL;

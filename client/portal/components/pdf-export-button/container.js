@@ -1,4 +1,4 @@
-import pageHalNamespace from './../page-hal/namespace';
+import pageHalNamespace from './../../../components/page-hal/namespace';
 import Component from './component';
 
 // import _debug from './debug'; const debug = _debug('container');

@@ -1,5 +1,5 @@
 import namespace from './namespace';
-import pageHalNamespace from './../page-hal/namespace';
+import pageHalNamespace from './../../../components/page-hal/namespace';
 import aliasNameValidator from './../../../../lib/core/validators/alias-name';
 
 import _debug from './debug'; const debug = _debug('flux');
