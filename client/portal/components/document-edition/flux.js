@@ -3,7 +3,7 @@ import inlineEditConstants from './../../inline-edit/constants';
 import { NAME } from './constants';
 import namespace from './namespace';
 
-import _debug from './debug'; const debug = _debug('flux');
+// import _debug from './debug'; const debug = _debug('flux');
 
 const { actionCreator, concatenateReducers, getNamespaceSubstate, namespaceKeys, setNamespaceSubstate } = window.WarpJS.ReactUtils;
 const { hideModalContainer, showModalContainer } = window.WarpJS.ReactComponents;
@@ -25,7 +25,7 @@ const { proxy, toast } = window.WarpJS;
 export const orchestrators = Object.freeze({
     hideModal: async (dispatch) => hideModalContainer(dispatch, NAME),
     saveValue: async (dispatch, url, key, value) => {
-        debug(`orchestrators.saveValue(): url=${url}, key=${key}, value=${value}`);
+        // debug(`orchestrators.saveValue(): url=${url}, key=${key}, value=${value}`);
         const toastLoading = toast.loading($, "Saving...");
         try {
             await proxy.patch($, url, { key, value });

@@ -15,6 +15,5 @@ const initializeState = (state = {}, action) => {
 export default window.WarpJS.ReactUtils.concatenateReducers([
     { actions: [ actions.INITIAL_STATE ], reducer: initializeState },
     userProfileDocumentsReducers,
-    userProfileNotificationsReducers,
-    window.WarpJS.ReactComponents.reducers
+    userProfileNotificationsReducers
 ]);

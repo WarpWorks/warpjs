@@ -53,7 +53,7 @@ const Component = (props) => {
 
     return (
         <Fragment>
-            <BreadcrumbActionButton click={props.showModal} glyph='list-alt' label="Meta" />
+            <BreadcrumbActionButton click={props.showModal} glyph="list-alt" label="Meta" />
             <ModalContainer id={NAME} title="Document properties" footerButtons={buttons}>
                 <Form>
                     <Tabs id="warpjs-document-edition-tab" animation={false}>

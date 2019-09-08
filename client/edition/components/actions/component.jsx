@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 
 import * as shapes from './../../../react-utils/shapes';
 import Action from './../action';
+import ChangeParent from './../change-parent';
 
 import { NAME } from './constants';
 
@@ -9,6 +10,10 @@ const { errorBoundary } = window.WarpJS.ReactUtils;
 
 const Component = (props) => {
     const actions = [];
+
+    if (props._links.changeParent) {
+        actions.push(<ChangeParent />);
+    }
 
     if (props._links.studio) {
         actions.push(<Action icon="wrench" action="goto" url={props._links.studio.href} title={props._links.studio.title} />);
