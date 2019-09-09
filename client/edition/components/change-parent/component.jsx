@@ -1,15 +1,49 @@
 import PropTypes from 'prop-types';
 import { Fragment } from 'react';
-import { Glyphicon, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Alert, Col, Glyphicon, Grid, ListGroup, ListGroupItem, OverlayTrigger, Row, Tooltip } from 'react-bootstrap';
 
 import { NAME } from './constants';
 
 const { errorBoundary } = window.WarpJS.ReactUtils;
-const { ModalContainer } = window.WarpJS.ReactComponents;
+const { ModalContainer, Spinner } = window.WarpJS.ReactComponents;
 
 const Component = (props) => {
     if (!props.url) {
         return null;
+    }
+
+    let modalBody = null;
+
+    if (props.documents) {
+        modalBody = (
+            <div>Have documents and types.</div>
+        );
+    } else if (props.types) {
+        const leftPanel = props.types.map((aType) => <ListGroupItem key={aType.id} bsStyle={aType.selected ? 'info' : null}>{aType.name}</ListGroupItem>);
+
+        const rightPanel = props.error
+            ? <Alert bsStyle="danger">{props.error}</Alert>
+            : <Spinner />
+        ;
+
+        modalBody = (
+            <Grid fluid>
+                <Row>
+                    <Col xs={4}><ListGroup>{leftPanel}</ListGroup></Col>
+                    <Col xs={8}>{rightPanel}</Col>
+                </Row>
+            </Grid>
+        );
+    } else {
+        if (props.error) {
+            modalBody = (
+                <Alert bsStyle="danger">{props.error}</Alert>
+            );
+        } else {
+            modalBody = (
+                <div><Spinner /></div>
+            );
+        }
     }
 
     return (
@@ -18,7 +52,7 @@ const Component = (props) => {
                 <Glyphicon glyph="object-align-horizontal" className="warpjs-action" data-warpjs-action="change-parent" onClick={props.showModal} />
             </OverlayTrigger>
             <ModalContainer id={NAME} title={props.title}>
-                <div>Hello.</div>
+                {modalBody}
             </ModalContainer>
         </Fragment>
     );
@@ -27,6 +61,9 @@ const Component = (props) => {
 Component.displayName = NAME;
 
 Component.propTypes = {
+    documents: PropTypes.array,
+    error: PropTypes.string,
+    types: PropTypes.array,
     showModal: PropTypes.func.isRequired,
     title: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired
