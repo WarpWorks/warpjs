@@ -1,5 +1,6 @@
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const serverUtils = require('./../../utils');
 const utils = require('./../utils');
 
 const getTypes = require('./get-types');
@@ -24,12 +25,22 @@ module.exports = async (req, res) => {
         req
     );
 
+    const persistence = serverUtils.getPersistence(domain);
+
     try {
-        const items = entity ? await getInstances(req, domain, type, id, entity) : await getTypes(req, domain, type, id);
+        const entityInstance = await serverUtils.getEntity(domain, type);
+        const document = await entityInstance.getInstance(persistence, id);
+        const parentData = await entityInstance.getParentData(persistence, document);
+
+        const items = entity ? await getInstances(req, persistence, document, parentData, entity) : await getTypes(req, persistence, document, parentData);
         resource.embed('items', items);
 
         utils.sendHal(req, res, resource);
     } catch (err) {
+        // eslint-disable-next-line no-console
+        console.error(`change-parent/get: *** ERROR ***`, err);
         utils.sendErrorHal(req, res, resource, err);
+    } finally {
+        persistence.close();
     }
 };

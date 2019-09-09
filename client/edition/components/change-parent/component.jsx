@@ -14,17 +14,28 @@ const Component = (props) => {
 
     let modalBody = null;
 
-    if (props.documents) {
-        modalBody = (
-            <div>Have documents and types.</div>
-        );
-    } else if (props.types) {
-        const leftPanel = props.types.map((aType) => <ListGroupItem key={aType.id} bsStyle={aType.selected ? 'info' : null}>{aType.name}</ListGroupItem>);
+    if (props.types) {
+        let rightPanel = <Spinner />;
 
-        const rightPanel = props.error
-            ? <Alert bsStyle="danger">{props.error}</Alert>
-            : <Spinner />
-        ;
+        const leftPanel = props.types.map((aType) => (
+            <ListGroupItem key={aType.id}
+                onClick={() => props.selectType(aType)}
+                bsStyle={aType.selected ? 'success' : aType.name === props.selectedType ? 'info' : null}
+            >{aType.name}</ListGroupItem>
+        ));
+
+        if (props.error) {
+            rightPanel = <Alert bsStyle="danger">{props.error}</Alert>;
+        } else if (props.documents) {
+            const instances = props.documents.map((instance) => (
+                <ListGroupItem key={instance.id}
+                    onClick={instance.selected ? null : () => props.selectInstance(instance)}
+                    bsStyle={instance.selected ? 'success' : instance.id === props.selectedInstance ? 'info' : null}
+                >{instance.name}</ListGroupItem>
+            ));
+
+            rightPanel = <ListGroup>{instances}</ListGroup>;
+        }
 
         modalBody = (
             <Grid fluid>
@@ -65,6 +76,10 @@ Component.propTypes = {
     error: PropTypes.string,
     types: PropTypes.array,
     showModal: PropTypes.func.isRequired,
+    selectInstance: PropTypes.func.isRequired,
+    selectType: PropTypes.func.isRequired,
+    selectedInstance: PropTypes.string,
+    selectedType: PropTypes.string,
     title: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired
 };

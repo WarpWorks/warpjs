@@ -6,14 +6,15 @@ import namespace from './namespace';
 
 const { getNamespaceSubstate, wrapContainer } = window.WarpJS.ReactUtils;
 
-const { hideModal, showModal } = orchestrators;
-
 const mapStateToProps = (state, ownProps) => {
     const pageHal = getNamespaceSubstate(state, pageHalNamespace);
 
     const subState = getNamespaceSubstate(state, namespace);
 
+    const documents = subState.selectedType ? subState.instances[subState.selectedType] : null;
+
     return Object.freeze({
+        documents,
         title: pageHal && pageHal._links && pageHal._links.changeParent ? pageHal._links.changeParent.title : null,
         url: pageHal && pageHal._links && pageHal._links.changeParent ? pageHal._links.changeParent.href : null,
         ...subState
@@ -21,8 +22,10 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => Object.freeze({
-    hideModal: async () => hideModal(dispatch),
-    showModal: (url) => async () => showModal(dispatch, url)
+    hideModal: async () => orchestrators.hideModal(dispatch),
+    selectInstance: async (instance) => orchestrators.selectInstance(dispatch, instance),
+    selectType: async (type) => orchestrators.selectType(dispatch, type),
+    showModal: (url) => async () => orchestrators.showModal(dispatch, url)
 });
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => Object.freeze({

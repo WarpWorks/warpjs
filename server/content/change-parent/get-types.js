@@ -2,34 +2,27 @@ const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const routes = require('./../../../lib/constants/routes');
-const serverUtils = require('./../../utils');
 
 // const debug = require('./debug')('get-types');
 
-module.exports = async (req, domain, type, id) => {
-    const domainInstance = await serverUtils.getDomain(domain);
+module.exports = async (req, persistence, document, parentData) => {
+    const domainInstance = parentData.entity.getDomain();
 
     const entities = domainInstance.getEntities();
-    const documentEntities = entities.filter((entity) => entity.isDocument() && !entity.isAbstract);
+    const documentEntities = entities.filter((entity) => entity.isDocument() && !entity.isAbstract && entity.isContent());
 
-    return documentEntities.map((entity) => {
-        const href = RoutesInfo.expand(routes.content.changeParent, {
-            domain,
-            type,
-            id,
+    return documentEntities.map((entity) => warpjsUtils.createResource(
+        RoutesInfo.expand(routes.content.changeParent, {
+            domain: domainInstance.name,
+            type: document.type,
+            id: document.id,
             entity: entity.name
-        });
-
-        const resource = warpjsUtils.createResource(
-            href,
-            {
-                id: entity.id,
-                name: entity.name,
-                selected: entity.name === type
-            },
-            req
-        );
-
-        return resource;
-    });
+        }),
+        {
+            id: entity.id,
+            name: entity.name,
+            selected: entity.id === parentData.entity.id
+        },
+        req
+    ));
 };
