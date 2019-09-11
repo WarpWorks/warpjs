@@ -20,7 +20,7 @@ module.exports = async (req, res) => {
             const user = await User.fromJWT(persistence, config.domainName, req.warpjsUser);
             const notifications = await user.listNotifications(persistence);
             const notificationResources = await Promise.map(notifications, async (notification) => notification.toNotificationListResource(persistence));
-            resource.embed('notifications', notificationResources);
+            resource.embed('notifications', notificationResources.filter((notification) => notification));
             await warpjsUtils.sendHal(req, res, resource, RoutesInfo);
         } catch (err) {
             // eslint-disable-next-line no-console

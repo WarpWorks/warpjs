@@ -1,6 +1,6 @@
 {
   "name": "@warp-works/warpjs",
-  "version": "1.3.171",
+  "version": "1.3.172",
   "description": "Content management system for WarpWorks in javascript",
   "repository": {
     "type": "git",
@@ -105,7 +105,7 @@
     "@warp-works/warpjs-plugins": "~1.2.7",
     "@warp-works/warpjs-session-plugin": "~1.2.27",
     "@warp-works/warpjs-survey-tool-plugin": "~1.2.112",
-    "@warp-works/warpjs-utils": "~1.2.101",
+    "@warp-works/warpjs-utils": "~1.2.102",
     "babel-core": "6.26.x",
     "babel-loader": "7.1.x",
     "babel-plugin-transform-async-to-generator": "~6.24.1",
@@ -137,7 +137,7 @@
     "grunt-webpack": "3.1.x",
     "handlebars": "~4.1.0",
     "handlebars-loader": "1.7.x",
-    "load-grunt-config": "~3.0.0",
+    "load-grunt-config": "~3.0.1",
     "mocha": "~6.2.0",
     "moment": "~2.24.0",
     "mongodb": "2.2.33",
@@ -157,7 +157,7 @@
     "@quoin/expressjs-routes-info": ">=0.2.0",
     "@warp-works/warpjs-plugins": ">=1.2.2",
     "@warp-works/warpjs-session-plugin": ">=1.2.15",
-    "@warp-works/warpjs-utils": ">=1.2.101",
+    "@warp-works/warpjs-utils": ">=1.2.102",
     "body-parser": ">=1.17.0",
     "cookie-parser": ">=1.4.0",
     "express": ">=4.0.0"
