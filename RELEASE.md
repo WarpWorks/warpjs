@@ -6,6 +6,10 @@
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
 
+## 1.3.173 - 2019-09-11
+
+- #317: Trying to display a default user for old changelogs.
+
 ## 1.3.172 - 2019-09-10
 
 - #317: Do not try to displayed removed documents.
