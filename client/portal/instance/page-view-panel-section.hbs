@@ -6,7 +6,7 @@
   {{#if section.isAssociation}}
     {{> ../inline-edit/context-button page=page elementId=section.id elementType='Relationship' reference=null}}
   {{else}}
-    <span class="warpjs-inline-edit-context warpjs-inline-aggregation" data-warpjs-id="{{section.id}}" data-warpjs-url="{{page._links.edit.href}}"></span>
+    <span class="warpjs-inline-aggregation" data-warpjs-id="{{section.id}}" data-warpjs-url="{{page._links.edit.href}}"></span>
   {{/if}}
   {{#if section.isOfStyle.CSV}}
     </div>

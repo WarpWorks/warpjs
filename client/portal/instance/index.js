@@ -2,12 +2,7 @@
 import regeneratorRuntime from 'babel-regenerator-runtime';
 
 import addGoogleAnalyticsIfNeeded from './add-google-analytics-if-needed';
-import { init as pageHalInit } from './../components/page-hal/action-creators';
-import breadcrumbActions from './../react-apps/breadcrumb-actions';
-import individualContributionHeader from './../react-apps/individual-contribution-header';
-import pdfExportButton from './../react-apps/pdf-export-button';
-import reducers from './../components/reducers';
-import userProfileMenu from './../react-apps/user-profile-menu';
+import reactApps from './../react-apps';
 
 /// import _debug from './debug'; const debug = _debug('index');
 
@@ -35,14 +30,6 @@ const template = require('./template.hbs');
         if (result.error) {
             $(window.WarpJS.CONTENT_PLACEHOLDER).html(window.WarpJS.error(result.data));
         } else {
-            // Get everything ready for React.
-            window.WarpJS.ReactUtils.initReactBootstrapDisplayNames();
-            //  eslint-disable-next-line require-atomic-updates
-            window.WarpJS.STORE = window.WarpJS.ReactUtils.createStore(reducers, {}, [], process.env.NODE_ENV === 'development');
-            //  eslint-disable-next-line require-atomic-updates
-            window.WarpJS.PAGE_HAL = window.WarpJS.flattenHAL(result.data);
-            window.WarpJS.STORE.dispatch(pageHalInit(window.WarpJS.PAGE_HAL));
-
             $(window.WarpJS.CONTENT_PLACEHOLDER).html(template(result.data));
 
             if (result.data && result.data._embedded && result.data._embedded.pages) {
@@ -60,8 +47,6 @@ const template = require('./template.hbs');
                 }
 
                 preview($);
-
-                individualContributionHeader();
             }
 
             panelItems($);
@@ -77,9 +62,7 @@ const template = require('./template.hbs');
             processSeparatorPanelItem($);
 
             // React components.
-            breadcrumbActions();
-            pdfExportButton();
-            userProfileMenu($, result.data);
+            reactApps($, result.data);
         }
     } catch (err) {
         // eslint-disable-next-line no-console
