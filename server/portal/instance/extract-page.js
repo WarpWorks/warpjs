@@ -91,7 +91,7 @@ module.exports = async (req, persistence, entity, instance, pageViewName) => {
         isPublic: (indexOf(statusConfig.public, documentStatus) !== -1),
         showDisclaimer: (indexOf(statusConfig.disclaimer, documentStatus) !== -1)
     };
-    resource.status.isVisible = resource.status.isPublic || canEdit || false;
+    resource.status.isVisible = Boolean(req.warpjsUser);
 
     // Page content
     if (resource.status.isVisible) {

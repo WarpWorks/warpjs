@@ -6,6 +6,10 @@
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
 
+## 1.3.175 - 2019-09-12
+
+- #326: All documents are visible if user is logged in.
+
 ## 1.3.174 - 2019-09-11
 
 - #318: Fixed best document to compute status before sorting.
