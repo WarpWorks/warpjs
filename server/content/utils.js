@@ -38,6 +38,7 @@ function basicRender(bundles, data, req, res, isStudio) {
             resource.link('warpjsUtilsJs', editionConstants.assets.studio);
         } else {
             resource.link('warpjsUtilsJs', editionConstants.assets.content);
+            resource.link('warpjsUtilsCss', warpjsUtils.constants.assets.content.css);
         }
     }
 
