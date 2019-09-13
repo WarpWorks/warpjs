@@ -1,8 +1,8 @@
 // const debug = require('debug')('W2:content:instance-relationship/post');
-const Promise = require('bluebird');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const { DEFAULT_VERSION } = require('./../../../lib/constants');
 const { routes } = require('./../constants');
 const EntityTypes = require('./../../../lib/core/entity-types');
 const logger = require('./../../loggers');
@@ -13,7 +13,7 @@ const serverUtils = require('./../../utils');
 const utils = require('./../utils');
 const WarpWorksError = require('./../../../lib/core/error');
 
-module.exports = (req, res) => {
+module.exports = async (req, res) => {
     const { domain, type, id, relationship } = req.params;
     const { body } = req;
 
@@ -30,61 +30,54 @@ module.exports = (req, res) => {
         relationship
     });
 
-    Promise.resolve()
-        .then(() => logger(req, "Trying to create relationship"))
-        .then(() => serverUtils.getEntity(domain, type))
-        .then((entity) => Promise.resolve()
-            .then(() => entity.getRelationshipByName(relationship))
-            .then((relationshipEntity) => Promise.resolve()
-                .then(() => relationshipEntity.getTargetEntity())
-                .then((targetEntity) => Promise.resolve()
-                    .then(() => entity.getInstance(persistence, id))
-                    .then(
-                        (instance) => Promise.resolve()
-                            .then(() => serverUtils.canEdit(persistence, entity, instance, req.warpjsUser))
-                            .then((canEdit) => {
-                                if (!canEdit) {
-                                    throw new WarpWorksError(`You do not have permission to create this entry.`);
-                                }
-                            })
+    try {
+        logger(req, "Trying to create relationship");
+        const entity = await serverUtils.getEntity(domain, type);
+        const relationshipEntity = entity.getRelationshipByName(relationship);
+        const targetEntity = relationshipEntity.getTargetEntity();
 
-                            .then(() => relationshipEntity.getDocuments(persistence, instance))
-                            .then((documents) => documents.find((document) => document.Name === 'TEMPLATE'))
-                            .then((templateInstance) => {
-                                if (templateInstance) {
-                                    // debug(`found TEMPLATE, need deep-copy`);
-                                    return Promise.resolve()
-                                        .then(() => entity.getDomain().getEntityByInstance(templateInstance))
-                                        .then((templateEntity) => templateEntity.clone(persistence, templateInstance))
-                                        .then((deepCopy) => RoutesInfo.expand(routes.instance, {
-                                            domain,
-                                            type: deepCopy.type,
-                                            id: deepCopy.id
-                                        }))
-                                        .then((redirectUrl) => utils.sendRedirect(req, res, resource, redirectUrl))
-                                    ;
-                                } else {
-                                    return Promise.resolve()
-                                        .then(() => (targetEntity.entityType === EntityTypes.EMBEDDED)
-                                            ? postEmbedded
-                                            : (body.id && body.type)
-                                                ? postAssociation
-                                                : postAggregation
-                                        )
-                                        .then((impl) => impl(req, res, persistence, entity, instance, resource))
-                                    ;
-                                }
-                            })
-                        ,
-                        () => serverUtils.documentDoesNotExist(req, res)
-                    )
-                )
-            )
-        )
-        .catch((err) => {
-            logger(req, "Failed", { err });
-            serverUtils.sendError(req, res, err);
-        })
-        .finally(() => persistence.close())
-    ;
+        let instance;
+        try {
+            instance = await entity.getInstance(persistence, id);
+        } catch (err) {
+            serverUtils.documentDoesNotExist(req, res);
+        }
+
+        const canEdit = await serverUtils.canEdit(persistence, entity, instance, req.warpjsUser);
+        if (!canEdit) {
+            throw new WarpWorksError(`You do not have permission to create this entry.`);
+        }
+
+        const documents = await relationshipEntity.getDocuments(persistence, instance);
+        const templateInstance = documents.find((document) => document.Name === 'TEMPLATE');
+
+        if (templateInstance) {
+            const templateEntity = entity.getDomain().getEntityByInstance(templateInstance);
+            const deepCopy = await templateEntity.clone(persistence, templateInstance);
+            deepCopy.Version = instance.Version || DEFAULT_VERSION;
+            const redirectUrl = RoutesInfo.expand(routes.instance, {
+                domain,
+                type: deepCopy.type,
+                id: deepCopy.id
+            });
+            utils.sendRedirect(req, res, resource, redirectUrl);
+        } else {
+            let impl;
+
+            if (targetEntity.entityType === EntityTypes.EMBEDDED) {
+                impl = postEmbedded;
+            } else if (body.id && body.type) {
+                impl = postAssociation;
+            } else {
+                impl = postAggregation;
+            }
+
+            await impl(req, res, persistence, entity, instance, resource);
+        }
+    } catch (err) {
+        logger(req, "Failed", { err });
+        serverUtils.sendError(req, res, err);
+    } finally {
+        persistence.close();
+    }
 };

@@ -1,5 +1,4 @@
 // const debug = require('debug')('W2:content:entity-sibling/post');
-const Promise = require('bluebird');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
@@ -13,18 +12,18 @@ module.exports = async (req, res) => {
 
     const persistence = serverUtils.getPersistence(domain);
 
-    try {
-        const resource = warpjsUtils.createResource(
-            req,
-            {
-                title: `Sibling for domain ${domain} - Type ${type} - Id ${id}`,
-                domain,
-                type,
-                id
-            },
-            req
-        );
+    const resource = warpjsUtils.createResource(
+        req,
+        {
+            title: `Sibling for domain ${domain} - Type ${type} - Id ${id}`,
+            domain,
+            type,
+            id
+        },
+        req
+    );
 
+    try {
         const entity = await serverUtils.getEntity(domain, type);
         const instance = await entity.getInstance(persistence, id);
 
