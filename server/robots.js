@@ -17,7 +17,7 @@ module.exports = async (req, res) => {
             return;
         }
 
-        cache.content = fs.readFileSync(ROBOTS_FILE, { encoding:'utf8' });
+        cache.content = fs.readFileSync(ROBOTS_FILE, { encoding: 'utf8' });
         cache.expiry = Date.now() + EXPIRY_DELTA;
     }
 
