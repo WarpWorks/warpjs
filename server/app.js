@@ -18,6 +18,7 @@ const logFiles = require('./log-files');
 const portal = require('./portal');
 const middlewares = require('./middlewares');
 const pathAlias = require('./path-alias');
+const robots = require('./robots');
 const serverUtils = require('./utils');
 const status = require('./status');
 const studio = require('./studio');
@@ -32,6 +33,8 @@ module.exports = (baseUrl, staticUrl) => {
     const app = express();
 
     app.use(expressUserAgent.express());
+
+    app.get('/robots.txt', robots);
 
     baseUrl = (baseUrl === '/') ? '' : baseUrl;
 
