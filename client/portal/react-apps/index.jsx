@@ -51,10 +51,11 @@ export default ($, data) => {
     $(`.${AGGREGATION_PLACEHOLDER}`).each((i, element) => {
         const warpjsId = $(element).data('warpjsId');
         const warpjsUrl = $(element).data('warpjsUrl');
+        const warpjsTitle = $(element).data('warpjsPanelTitle');
 
         ReactDOM.render(
             <Provider store={window.WarpJS.STORE} id={`${AGGREGATION_PLACEHOLDER}-${warpjsId}`}>
-                <AggregationEditor id={warpjsId} url={warpjsUrl} />
+                <AggregationEditor url={warpjsUrl} title={warpjsTitle} />
             </Provider>,
             element
         );

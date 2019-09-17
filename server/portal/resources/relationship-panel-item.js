@@ -1,6 +1,7 @@
 const extend = require('lodash/extend');
 const Promise = require('bluebird');
 
+const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const Document = require('./../../../lib/core/first-class/document');
@@ -11,6 +12,7 @@ const constants = require('./constants');
 const paragraphsByRelationship = require('./paragraphs-by-relationship');
 const previewByEntity = require('./preview-by-entity');
 const RELATIONSHIP_PANEL_ITEM_STYLES = require('./../../../lib/core/relationship-panel-item-styles');
+const routes = require('./../../../lib/constants/routes');
 const sortIntoColumns = require('./sort-into-columns');
 const visibleOnly = require('./visible-only');
 
@@ -33,7 +35,17 @@ module.exports = async (persistence, panelItem, instance) => {
     if (relationship) {
         const domain = relationship.getDomain();
 
+        const href = RoutesInfo.expand(routes.content.instanceRelationshipItems, {
+            domain: domain.name,
+            type: instance.type,
+            id: instance.id,
+            relationship: relationship.name
+        });
+
+        resource.link('self', href);
+
         resource.isAssociation = !relationship.isAggregation;
+        resource.isDocument = relationship.getTargetEntity().isDocument();
         resource.id = relationship.id;
 
         if (resource.style === RELATIONSHIP_PANEL_ITEM_STYLES.Document) {

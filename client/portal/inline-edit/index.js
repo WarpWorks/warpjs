@@ -1,6 +1,6 @@
 const associationModal = require('./association-modal');
 const basicPropertyModal = require('./basic-property-modal');
-const comingSoon = require('./coming-soon');
+// const comingSoon = require('./coming-soon');
 const textModal = require('./text-modal');
 
 const classes = Object.freeze({
@@ -20,7 +20,7 @@ module.exports = ($) => {
 
     $(document).on('click', `.${classes.IN_EDIT} .warpjs-inline-edit-context`, function() {
         const elementType = $(this).data('warpjsType');
-        const elementId = $(this).data('warpjsId');
+        // const elementId = $(this).data('warpjsId');
 
         switch (elementType) {
             case 'Paragraph': {
@@ -38,10 +38,10 @@ module.exports = ($) => {
                 break;
             }
 
-            default: {
-                console.log(`Handling of {type:${elementType}, id:${elementId}}`);
-                comingSoon($, "This functionality is coming soon.");
-            }
+            // default: {
+            //     console.log(`Handling of {type:${elementType}, id:${elementId}}`);
+            //     comingSoon($, "This functionality is coming soon.");
+            // }
         }
     });
 };
