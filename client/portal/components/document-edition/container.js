@@ -2,9 +2,8 @@ import extend from 'lodash/extend';
 
 import pageHalNamespace from './../page-hal/namespace';
 import Component from './component';
-import namespace from './namespace';
-
 import { orchestrators } from './flux';
+import namespace from './namespace';
 
 const { getNamespaceSubstate, wrapContainer } = window.WarpJS.ReactUtils;
 const { hideModal, saveValue, showModal, updateValue } = orchestrators;
