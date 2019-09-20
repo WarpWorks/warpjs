@@ -11,13 +11,14 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => Object.freeze({
-    hideModal: async () => orchestrators.hideModal(dispatch),
-    showModal: (url) => async (event) => orchestrators.showModal(dispatch, url, event)
+    createChild: (url) => async () => orchestrators.createChild(dispatch, url),
+    showModal: (url) => async () => orchestrators.showModal(dispatch, url)
 });
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => Object.freeze({
     ...stateProps,
     ...dispatchProps,
+    createChild: dispatchProps.createChild(ownProps.url),
     showModal: dispatchProps.showModal(ownProps.url),
     ...ownProps
 });

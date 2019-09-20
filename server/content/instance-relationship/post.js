@@ -53,8 +53,7 @@ module.exports = async (req, res) => {
 
         if (templateInstance) {
             const templateEntity = entity.getDomain().getEntityByInstance(templateInstance);
-            const deepCopy = await templateEntity.clone(persistence, templateInstance);
-            deepCopy.Version = instance.Version || DEFAULT_VERSION;
+            const deepCopy = await templateEntity.clone(persistence, templateInstance, null, instance.Version || DEFAULT_VERSION);
             const redirectUrl = RoutesInfo.expand(routes.instance, {
                 domain,
                 type: deepCopy.type,

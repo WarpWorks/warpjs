@@ -4,7 +4,7 @@ import { Alert, Glyphicon, ListGroup, ListGroupItem, OverlayTrigger, Tooltip } f
 
 import { NAME } from './constants';
 
-import _debug from './debug'; const debug = _debug('component');
+// import _debug from './debug'; const debug = _debug('component');
 
 const { ModalContainer, Spinner } = window.WarpJS.ReactComponents;
 const { errorBoundary } = window.WarpJS.ReactUtils;
@@ -16,12 +16,11 @@ const Component = (props) => {
     if (props.error) {
         content = <Alert bsStyle="danger">{props.error}</Alert>;
     } else if (props.items) {
+        // FIXME: Could have more than one target entity.
         footerButtons = [{
             label: 'new',
             style: 'primary',
-            onClick: () => {
-                debug(`new clicked.`);
-            }
+            onClick: () => props.createChild()
         }];
 
         const listGroupItems = props.items.map((item) => {
@@ -38,7 +37,7 @@ const Component = (props) => {
     return (
         <Fragment>
             <OverlayTrigger placement="top" overlay={<Tooltip>Edit document aggregation</Tooltip>}>
-                <span className="warpjs-inline-edit-context" onClick={props.showModal}>
+                <span className="warpjs-inline-edit-context" onClick={() => props.showModal()}>
                     <Glyphicon glyph="pencil" />
                 </span>
             </OverlayTrigger>
@@ -52,6 +51,7 @@ const Component = (props) => {
 Component.displayName = NAME;
 
 Component.propTypes = {
+    createChild: PropTypes.func.isRequired,
     error: PropTypes.string,
     items: PropTypes.array,
     showModal: PropTypes.func.isRequired,

@@ -1,10 +1,10 @@
 import { NAME } from './constants';
 import namespace from './namespace';
 
-// import _debug from './debug'; const debug = _debug('flux');
+import _debug from './debug'; const debug = _debug('flux');
 
-const { proxy } = window.WarpJS;
-const { hideModalContainer, showModalContainer } = window.WarpJS.ReactComponents;
+const { proxy, toast } = window.WarpJS;
+const { showModalContainer } = window.WarpJS.ReactComponents;
 const { actionCreator, baseAttributeReducer, concatenateReducers, namespaceKeys } = window.WarpJS.ReactUtils;
 
 const actions = namespaceKeys(namespace, [
@@ -18,9 +18,19 @@ const actionCreators = Object.freeze({
 });
 
 export const orchestrators = Object.freeze({
-    hideModal: async (dispatch) => hideModalContainer(dispatch, NAME),
-    showModal: async (dispatch, url, event) => {
-        event.stopPropagation();
+    createChild: async(dispatch, url) => {
+        const toastLoading = toast.loading($, "Creating new child");
+        try {
+            const res = await proxy.post($, url);
+            debug(`res=`, res);
+        } catch (err) {
+            debug(`err=`, err);
+            toast.error($, "Unable to create new child");
+        } finally {
+            toast.close($, toastLoading);
+        }
+    },
+    showModal: async (dispatch, url) => {
         dispatch(actionCreators.setItems(null));
         showModalContainer(dispatch, NAME);
         try {

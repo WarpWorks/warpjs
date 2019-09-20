@@ -3,6 +3,7 @@ const warpjsUtils = require('@warp-works/warpjs-utils');
 const serverUtils = require('./../../utils');
 const utils = require('./../utils');
 
+const debug = require('./debug')('list-items');
 const listAggregationItems = require('./list-items-aggregation');
 
 module.exports = async (req, res) => {
@@ -36,6 +37,11 @@ module.exports = async (req, res) => {
         if (!relationshipInstance) {
             throw new Error(`Cannot find relationship '${type}/${relationship}'.`);
         }
+
+        // Get potential target entities.
+        const targetEntity = relationshipInstance.getTargetEntity();
+        const allTargetEntities = targetEntity.getChildEntities(true, true);
+        debug(`allTargetEntities=`, allTargetEntities);
 
         let items;
         if (relationshipInstance.isAggregation) {
