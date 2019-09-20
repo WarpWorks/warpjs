@@ -1,6 +1,6 @@
 import Component from './component';
 import namespace from './namespace';
-import * as orchestrators from './orchestrators';
+import { orchestrators } from './flux';
 
 const getSubstate = window.WarpJS.ReactUtils.getNamespaceSubstate;
 

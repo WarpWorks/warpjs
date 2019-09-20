@@ -47,19 +47,34 @@ module.exports = (req, res) => {
                 }]
                     .concat(aggregations)
                     .map((reln) => {
-                        const href = RoutesInfo.expand(routesConstants.routes.inlineEditParagraphAggregationUpdate, {
-                            domain,
-                            type,
-                            id,
-                            reln: reln.id
-                        });
-
-                        return warpjsUtils.createResource(href, {
+                        const relnResource = warpjsUtils.createResource('', {
                             type: reln.type,
                             id: reln.id,
                             name: reln.name,
                             label: reln.label || reln.name
                         });
+
+                        relnResource.link('updateParagraphAggregation', {
+                            title: "Update the aggregation of the current paragraph",
+                            href: RoutesInfo.expand(routesConstants.routes.inlineEditParagraphAggregationUpdate, {
+                                domain,
+                                type,
+                                id,
+                                reln: reln.id
+                            })
+                        });
+
+                        relnResource.link('items', {
+                            title: "List of aggregation documents for the current paragraph",
+                            href: RoutesInfo.expand(routesConstants.routes.instanceRelationshipItems, {
+                                domain,
+                                type,
+                                id,
+                                relationship: reln.name
+                            })
+                        });
+
+                        return relnResource;
                     })
                 ;
                 resource.embed('aggregations', aggregationsResources);

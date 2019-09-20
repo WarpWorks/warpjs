@@ -1,4 +1,7 @@
+import { actionCreators } from './flux';
+
 export { default as Container } from './container';
 
-export { default as reducers } from './reducers';
-export { initialize } from './action-creators';
+export { reducers } from './flux';
+
+export const { initialize } = actionCreators;
