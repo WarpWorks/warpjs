@@ -1,16 +1,18 @@
 {{#if section.isOfType.RelationshipPanelItem}}
   {{#if section.isOfStyle.CSV}}
     <div class="row warpjs-panel-section warpjs-panel-section-{{section.type}} warpjs-show-item-{{section.showItem}} warpjs-visibleInEditOnly-{{section.visibleInEditOnly}} warpjs-show-item-{{section.showItem}}">
+  {{else}}
+    <div class="row warpjs-panel-section">
   {{/if}}
-  {{> ./panel-items/template page=page section=section}}
-  {{#if section.isAssociation}}
-    {{> ../inline-edit/context-button page=page elementId=section.id elementType='Relationship' reference=null}}
-  {{else if section.isDocument}}
-    <span class="warpjs-inline-aggregation" data-warpjs-id="{{section.id}}" data-warpjs-url="{{section._links.self.href}}" data-warpjs-panel-title="{{panel.label}}"></span>
-  {{/if}}
-  {{#if section.isOfStyle.CSV}}
-    </div>
-  {{/if}}
+
+    {{> ./panel-items/template page=page section=section}}
+    {{#if section.isAssociation}}
+      {{> ../inline-edit/context-button page=page elementId=section.id elementType='Relationship' reference=null}}
+    {{else if section.isDocument}}
+      <span class="warpjs-inline-edit-button warpjs-inline-aggregation" data-warpjs-id="{{section.id}}" data-warpjs-url="{{section._links.self.href}}" data-warpjs-panel-title="{{panel.label}}"></span>
+    {{/if}}
+
+  </div>
 {{else}}
   <div class="row warpjs-panel-section warpjs-panel-section-{{section.type}} warpjs-show-item-{{section.showItem}} warpjs-visibleInEditOnly-{{section.visibleInEditOnly}} warpjs-show-item-{{section.showItem}}">
     {{#if section.documentStyle}}

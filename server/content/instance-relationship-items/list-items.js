@@ -3,7 +3,7 @@ const warpjsUtils = require('@warp-works/warpjs-utils');
 const serverUtils = require('./../../utils');
 const utils = require('./../utils');
 
-const debug = require('./debug')('list-items');
+// const debug = require('./debug')('list-items');
 const listAggregationItems = require('./list-items-aggregation');
 
 module.exports = async (req, res) => {
@@ -40,8 +40,14 @@ module.exports = async (req, res) => {
 
         // Get potential target entities.
         const targetEntity = relationshipInstance.getTargetEntity();
-        const allTargetEntities = targetEntity.getChildEntities(true, true);
-        debug(`allTargetEntities=`, allTargetEntities);
+        const allTargetEntities = [ targetEntity ].concat(targetEntity.getChildEntities(true, true));
+
+        resource.embed('entities', allTargetEntities.map((entity) => ({
+            name: entity.name,
+            id: entity.id,
+            label: entity.getDisplayName(entity),
+            isAbstract: entity.isAbstract
+        })));
 
         let items;
         if (relationshipInstance.isAggregation) {

@@ -1,4 +1,5 @@
 import constants from './../../inline-edit/constants';
+import { orchestrators as aggregationEditorOrchestrators } from './../aggregation-editor';
 
 import namespace from './namespace';
 
@@ -22,6 +23,8 @@ export const actionCreators = Object.freeze({
 //
 
 export const orchestrators = Object.freeze({
+    editAggregation: async (dispatch, url) => aggregationEditorOrchestrators.showModal(dispatch, url),
+
     updateAggregation: async (dispatch, aggregations, warpjsData, currentAggregationId, clickedElement, aggregationId) => {
         if (currentAggregationId === aggregationId) {
             // Same selection, ignore.

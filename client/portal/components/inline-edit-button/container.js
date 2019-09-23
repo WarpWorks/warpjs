@@ -4,20 +4,16 @@ import namespace from './namespace';
 
 const { getNamespaceSubstate, wrapContainer } = window.WarpJS.ReactUtils;
 
-const mapStateToProps = (state, ownProps) => {
-    const substate = getNamespaceSubstate(state, namespace);
-
-    return substate;
-};
+const mapStateToProps = (state, ownProps) => getNamespaceSubstate(state, namespace);
 
 const mapDispatchToProps = (dispatch, ownProps) => Object.freeze({
-    createChild: (url) => async () => orchestrators.createChild(dispatch, url)
+    showModal: (id, url) => async () => orchestrators.showModal(dispatch, id, url)
 });
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => Object.freeze({
     ...stateProps,
     ...dispatchProps,
-    createChild: dispatchProps.createChild(ownProps.url),
+    showModal: dispatchProps.showModal(ownProps.id, ownProps.url),
     ...ownProps
 });
 

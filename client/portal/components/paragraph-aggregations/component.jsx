@@ -2,6 +2,7 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import { Fragment } from 'react';
 
+import AggregationEditor from './../aggregation-editor';
 import comingSoon from './../../inline-edit/coming-soon';
 
 import { NAME } from './constants';
@@ -31,7 +32,7 @@ const Component = (props) => {
 
         const editButton = props.aggregationSelected === -1
             ? null
-            : <span className="warpjs-paragraph-aggregations-edit-button" onClick={() => props.editAggregation(props.aggregationSelected)}>Edit</span>
+            : <Fragment><span className="warpjs-paragraph-aggregations-edit-button" onClick={() => props.editAggregation(props.aggregationSelected)}>Edit</span><AggregationEditor url={'url change me'} title={'title change me'} /></Fragment>
         ;
 
         return (

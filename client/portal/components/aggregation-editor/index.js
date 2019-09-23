@@ -1,2 +1,2 @@
 export { default } from './container';
-export { reducers } from './flux';
+export { orchestrators, reducers } from './flux';

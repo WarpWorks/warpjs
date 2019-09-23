@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
-import AggregationEditor from './../components/aggregation-editor';
+import InlineEditButton from './../components/inline-edit-button';
 import BreadcrumbActions from './../components/breadcrumb-actions';
 import IndividualContributionHeader from './../components/individual-contribution-header';
 import { init as pageHalInit } from './../components/page-hal/action-creators';
@@ -12,6 +12,8 @@ import UserProfileMenu, { initializeState as initializeUserProfileMenuState } fr
 import * as actionCreators from './../components/follow-document/action-creators';
 
 import launchApp from './launch-app';
+
+import _debug from './debug'; const debug = _debug('index');
 
 export default ($, data) => {
     window.WarpJS.ReactUtils.initReactBootstrapDisplayNames();
@@ -47,15 +49,23 @@ export default ($, data) => {
     }
 
     // Edit-mode
-    const AGGREGATION_PLACEHOLDER = 'warpjs-inline-aggregation';
-    $(`.${AGGREGATION_PLACEHOLDER}`).each((i, element) => {
+    const INLINE_BUTTON = 'warpjs-inline-edit-button';
+    const AGGREGATION_CLASS = 'warpjs-inline-aggregation';
+    $(`.${INLINE_BUTTON}`).each((i, element) => {
+        debug(`inline-button: i=${i}, element=`, element);
+
         const warpjsId = $(element).data('warpjsId');
         const warpjsUrl = $(element).data('warpjsUrl');
         const warpjsTitle = $(element).data('warpjsPanelTitle');
 
+        const warpjsType = $(element).hasClass(AGGREGATION_CLASS)
+            ? 'aggregation'
+            : null
+        ;
+
         ReactDOM.render(
-            <Provider store={window.WarpJS.STORE} id={`${AGGREGATION_PLACEHOLDER}-${warpjsId}`}>
-                <AggregationEditor url={warpjsUrl} title={warpjsTitle} />
+            <Provider store={window.WarpJS.STORE} id={`${INLINE_BUTTON}-${i}`}>
+                <InlineEditButton id={`${INLINE_BUTTON}-${i}-${warpjsId}`} url={warpjsUrl} title={warpjsTitle} type={warpjsType} />
             </Provider>,
             element
         );
