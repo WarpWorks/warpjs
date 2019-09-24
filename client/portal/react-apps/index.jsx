@@ -13,7 +13,7 @@ import * as actionCreators from './../components/follow-document/action-creators
 
 import launchApp from './launch-app';
 
-import _debug from './debug'; const debug = _debug('index');
+// import _debug from './debug'; const debug = _debug('index');
 
 export default ($, data) => {
     window.WarpJS.ReactUtils.initReactBootstrapDisplayNames();
@@ -52,8 +52,6 @@ export default ($, data) => {
     const INLINE_BUTTON = 'warpjs-inline-edit-button';
     const AGGREGATION_CLASS = 'warpjs-inline-aggregation';
     $(`.${INLINE_BUTTON}`).each((i, element) => {
-        debug(`inline-button: i=${i}, element=`, element);
-
         const warpjsId = $(element).data('warpjsId');
         const warpjsUrl = $(element).data('warpjsUrl');
         const warpjsTitle = $(element).data('warpjsPanelTitle');

@@ -23,7 +23,7 @@ export const actionCreators = Object.freeze({
 //
 
 export const orchestrators = Object.freeze({
-    editAggregation: async (dispatch, url) => aggregationEditorOrchestrators.showModal(dispatch, url),
+    editAggregation: async (dispatch, id, url) => aggregationEditorOrchestrators.showModal(dispatch, id, url),
 
     updateAggregation: async (dispatch, aggregations, warpjsData, currentAggregationId, clickedElement, aggregationId) => {
         if (currentAggregationId === aggregationId) {

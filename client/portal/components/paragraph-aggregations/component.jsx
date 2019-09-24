@@ -1,9 +1,9 @@
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import { Fragment } from 'react';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 import AggregationEditor from './../aggregation-editor';
-import comingSoon from './../../inline-edit/coming-soon';
 
 import { NAME } from './constants';
 
@@ -32,7 +32,12 @@ const Component = (props) => {
 
         const editButton = props.aggregationSelected === -1
             ? null
-            : <Fragment><span className="warpjs-paragraph-aggregations-edit-button" onClick={() => props.editAggregation(props.aggregationSelected)}>Edit</span><AggregationEditor url={'url change me'} title={'title change me'} /></Fragment>
+            : <Fragment>
+                <OverlayTrigger placement="top" overlay={<Tooltip>Edit aggregation {'"'}{props.selectedRelationship.name}{'"'}</Tooltip>}>
+                    <span className="warpjs-paragraph-aggregations-edit-button" onClick={props.editAggregation}>Edit</span>
+                </OverlayTrigger>
+                <AggregationEditor id={props.aggregationEditorId} title={props.selectedRelationship.name} />
+            </Fragment>
         ;
 
         return (
@@ -66,17 +71,17 @@ const Component = (props) => {
 Component.displayName = NAME;
 
 Component.propTypes = {
+    aggregationEditorId: PropTypes.string.isRequired,
     aggregations: PropTypes.array.isRequired,
     aggregationSelected: PropTypes.string,
     editAggregation: PropTypes.func.isRequired,
+    selectedRelationship: PropTypes.object,
     updateAggregation: PropTypes.func.isRequired
 };
 
 Component.defaultProps = {
     aggregations: [],
-    aggregationSelected: -1,
-    updateAggregation: () => comingSoon($, "Update aggregation"), // FIXME
-    editAggregation: () => comingSoon($, "Edit aggregation") // FIXME
+    aggregationSelected: -1
 };
 
 export default window.WarpJS.ReactUtils.errorBoundary(Component);
