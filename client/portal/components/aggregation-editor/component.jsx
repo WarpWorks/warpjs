@@ -3,7 +3,7 @@ import { Alert, ListGroup, ListGroupItem } from 'react-bootstrap';
 
 import { NAME } from './constants';
 
-import _debug from './debug'; const debug = _debug('component');
+// import _debug from './debug'; const debug = _debug('component');
 
 const { ModalContainer, Spinner } = window.WarpJS.ReactComponents;
 const { errorBoundary } = window.WarpJS.ReactUtils;
@@ -15,12 +15,11 @@ const Component = (props) => {
     if (props.error) {
         content = <Alert bsStyle="danger">{props.error}</Alert>;
     } else if (props.items) {
-        // FIXME: Could have more than one target entity.
         if (props.entities && props.entities.length) {
             footerButtons = [ props.entities.map((entity) => ({
                 label: `New ${entity.name}`,
                 style: 'primary',
-                onClick: () => debug(`clicked ${entity.name}`)
+                onClick: () => props.createChild(entity.name)
             })) ];
         }
 

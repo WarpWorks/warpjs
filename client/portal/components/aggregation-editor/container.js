@@ -11,13 +11,13 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => Object.freeze({
-    createChild: (url) => async () => orchestrators.createChild(dispatch, url)
+    createChild: (url) => async (entity) => orchestrators.createChild(dispatch, url, entity)
 });
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => Object.freeze({
     ...stateProps,
     ...dispatchProps,
-    createChild: dispatchProps.createChild(ownProps.url),
+    createChild: dispatchProps.createChild(stateProps.url),
     ...ownProps
 });
 

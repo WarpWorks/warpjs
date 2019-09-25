@@ -2,6 +2,8 @@ const debug = require('debug')('W2:content:instance-relationship-items/add-relat
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const allRoutes = require('./../../../lib/constants/routes');
+
 const { routes } = require('./../constants');
 const serverUtils = require('./../../utils');
 const utils = require('./../utils');
@@ -26,16 +28,36 @@ module.exports = async (req, res) => {
     try {
         const entity = await serverUtils.getEntity(domain, type);
         const instance = await entity.getInstance(persistence, id);
-        const relationshipEntity = entity.getRelationshipByName(relationship);
+        const relationshipInstance = entity.getRelationshipByName(relationship);
 
-        if (relationshipEntity.isAggregation) {
-            // TODO: This cannot handle creating an aggregation yet.
-            throw new Error(`Unexpected aggregation relationship '${relationship}'.`);
-        } else if (!relationshipEntity.getTargetEntity().isDocument()) {
+        if (relationshipInstance.isAggregation) {
+            const child = await relationshipInstance.addAggregation(persistence, entity, instance, body.entity);
+
+            // TODO: ChangeLog to child.
+
+            const childEntity = entity.getDomain().getEntityByInstance(child);
+
+            let savedChild;
+            if (child.id) {
+                savedChild = await childEntity.updateDocument(persistence, child);
+            } else {
+                savedChild = await childEntity.createDocument(persistence, child);
+            }
+
+            // TODO: Add ChangeLog to instance.
+
+            resource.link('newChildPortal', {
+                title: "Newly created child",
+                href: RoutesInfo.expand(allRoutes.portal.entity, {
+                    type: savedChild.type,
+                    id: savedChild.id
+                })
+            });
+        } else if (!relationshipInstance.getTargetEntity().isDocument()) {
             // TODO: This cannot handle creating an embedded yet.
             throw new Error(`Unexpected embedded relationship '${relationship}'.`);
         } else {
-            await relationshipEntity.addAssociation(instance, body, persistence);
+            await relationshipInstance.addAssociation(instance, body, persistence);
         }
 
         // TODO: Add history
