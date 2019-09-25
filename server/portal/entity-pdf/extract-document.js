@@ -1,6 +1,8 @@
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const { DEFAULT_VERSION } = require('./../../../lib/constants');
+const { PDF_COVER_IMAGE } = require('./../../../lib/core/image-types');
+
 const convertDocumentToTree = require('./convert-document-to-tree');
 const convertImageToPdfmake = require('./convert-image-to-pdfmake');
 // const debug = require('./debug')('extract-document');
@@ -49,7 +51,7 @@ module.exports = async (req, persistence, type, id, viewName, level = 0) => {
         const imagesRelationship = entity.getRelationshipByName('Images');
         if (imagesRelationship) {
             const imageDocuments = await imagesRelationship.getDocuments(persistence, document);
-            const pdfCoverImageDocument = imageDocuments.find((imageDocument) => imageDocument.Type === 'PdfCoverImage');
+            const pdfCoverImageDocument = imageDocuments.find((imageDocument) => imageDocument.Type === PDF_COVER_IMAGE);
             if (pdfCoverImageDocument && pdfCoverImageDocument.ImageURL) {
                 resource.PdfCoverImage = await convertImageToPdfmake(pdfCoverImageDocument.ImageURL);
             }
