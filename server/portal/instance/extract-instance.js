@@ -1,12 +1,14 @@
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
-// const debug = require('./debug')('extract-instance');
 const Document = require('./../../../lib/core/first-class/document');
-const extractPage = require('./extract-page');
 const routes = require('./../../../lib/constants/routes');
 const serverUtils = require('./../../utils');
 const User = require('./../../../lib/core/first-class/user');
+
+const extractPage = require('./extract-page');
+
+// const debug = require('./debug')('extract-instance');
 
 const config = serverUtils.getConfig();
 

@@ -2,17 +2,10 @@ const Promise = require('bluebird');
 
 const imageResource = require('./image');
 
-module.exports = (persistence, relationship, instance, imageType) => Promise.resolve()
-    .then(() => relationship ? relationship.getDocuments(persistence, instance) : [])
-    .then((images) => {
-        if (imageType) {
-            return images.filter((image) => image.Type === imageType);
-        } else {
-            return images;
-        }
-    })
-    .then((images) => Promise.map(
-        images,
-        (image) => imageResource(persistence, relationship.getTargetEntity(), image)
-    ))
-;
+module.exports = async (persistence, relationship, instance, imageType) => {
+    const images = relationship ? await relationship.getDocuments(persistence, instance) : [];
+    return Promise.map(
+        imageType ? images.filter((image) => image.Type === imageType) : images,
+        async (image) => imageResource(persistence, relationship.getTargetEntity(), image)
+    );
+};
