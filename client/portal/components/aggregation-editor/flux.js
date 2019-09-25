@@ -26,8 +26,14 @@ export const orchestrators = Object.freeze({
         try {
             const res = await proxy.post($, url, { entity });
             debug(`res=`, res);
+            if (res && res._links && res._links.newChildPortal) {
+                document.location.href = res._links.newChildPortal.href;
+            } else {
+                throw new Error(`Cannot find link for new ${entity} document.`);
+            }
         } catch (err) {
-            debug(`err=`, err);
+            // eslint-disable-next-line no-console
+            console.error(`orchestrators.createChild(): err=`, err);
             toast.error($, "Unable to create new child");
         } finally {
             toast.close($, toastLoading);
