@@ -39,7 +39,8 @@ module.exports = async (req, res) => {
 
             let savedChild;
             if (child.id) {
-                savedChild = await childEntity.updateDocument(persistence, child);
+                await childEntity.updateDocument(persistence, child);
+                savedChild = child;
             } else {
                 savedChild = await childEntity.createDocument(persistence, child);
             }

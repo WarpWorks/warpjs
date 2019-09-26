@@ -6,6 +6,10 @@
 - [Releases 1.0.x](RELEASE-1.0.md) from 2017-05-31 to 2017-06-10
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
+## 1.4.4 - 2019-09-26
+
+- #319: Fixed when TEMPLATE exists.
+
 ## 1.4.3 - 2019-09-25
 
 - #319: Allow creating new aggregation documents.
