@@ -2,16 +2,16 @@ const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const { DEFAULT_VERSION } = require('./../../../lib/constants');
 const { PDF_COVER_IMAGE } = require('./../../../lib/core/image-types');
+const Document = require('./../../../lib/core/first-class/document');
+const serverUtils = require('./../../utils');
 
 const convertDocumentToTree = require('./convert-document-to-tree');
 const convertImageToPdfmake = require('./convert-image-to-pdfmake');
-// const debug = require('./debug')('extract-document');
-const Document = require('./../../../lib/core/first-class/document');
+const debug = require('./debug')('extract-document');
 const extractCommunity = require('./extract-community');
 const extractGroups = require('./extract-groups');
 const extractOverview = require('./extract-overview');
 const generateTocNumbers = require('./generate-toc-numbers');
-const serverUtils = require('./../../utils');
 
 module.exports = async (req, persistence, type, id, viewName, level = 0) => {
     const entity = await serverUtils.getEntity(null, type);
@@ -40,30 +40,19 @@ module.exports = async (req, persistence, type, id, viewName, level = 0) => {
         releaseDate: document.ReleaseDate
     }, req);
 
+    const overview = await extractOverview(req, persistence, entity, document, viewName, level);
+    resource.embed('items', overview);
+    debug(`level=${level}, items=`, overview.map((p) => p.heading));
+
+    // Only keep the community at the first level.
     if (!level) {
+        // debug(`overview=`, overview);
+
         // Add links only for top document.
         resource.link('home', {
             title: "Home",
             href: warpjsUtils.fullUrl(req, '/')
         });
-
-        // Find the cover image only for top document.
-        const imagesRelationship = entity.getRelationshipByName('Images');
-        if (imagesRelationship) {
-            const imageDocuments = await imagesRelationship.getDocuments(persistence, document);
-            const pdfCoverImageDocument = imageDocuments.find((imageDocument) => imageDocument.Type === PDF_COVER_IMAGE);
-            if (pdfCoverImageDocument && pdfCoverImageDocument.ImageURL) {
-                resource.PdfCoverImage = await convertImageToPdfmake(pdfCoverImageDocument.ImageURL);
-            }
-        }
-    }
-
-    const overview = await extractOverview(req, persistence, entity, document, viewName, level);
-    resource.embed('items', overview);
-
-    // Only keep the community at the first level.
-    if (!level) {
-        // debug(`overview=`, overview);
 
         const editorResources = await extractCommunity(req, persistence, entity, document, 'Editors');
         if (editorResources) {
@@ -88,6 +77,16 @@ module.exports = async (req, persistence, type, id, viewName, level = 0) => {
         const taskGroups = await extractGroups(req, persistence, entity, document, 'TaskGroups');
         if (taskGroups) {
             resource.embed('taskGroups', taskGroups);
+        }
+
+        // Find the cover image only for top document.
+        const imagesRelationship = entity.getRelationshipByName('Images');
+        if (imagesRelationship) {
+            const imageDocuments = await imagesRelationship.getDocuments(persistence, document);
+            const pdfCoverImageDocument = imageDocuments.find((imageDocument) => imageDocument.Type === PDF_COVER_IMAGE);
+            if (pdfCoverImageDocument && pdfCoverImageDocument.ImageURL) {
+                resource.PdfCoverImage = await convertImageToPdfmake(pdfCoverImageDocument.ImageURL);
+            }
         }
 
         // If no specific PDF cover image specified, check overview.

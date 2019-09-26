@@ -2,9 +2,10 @@ const Promise = require('bluebird');
 
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
-const convertImageToPdfmake = require('./convert-image-to-pdfmake');
 const Documents = require('./../../../lib/core/first-class/documents');
-// const debug = require('./debug')('extract-overview');
+
+const convertImageToPdfmake = require('./convert-image-to-pdfmake');
+const debug = require('./debug')('extract-overview');
 const convertInternalLinks = require('./convert-internal-links');
 const isParagraphVisible = require('./is-paragraph-visible');
 
@@ -64,6 +65,7 @@ module.exports = async (req, persistence, entity, document, viewName, level = 0)
                         bestSubDocuments,
                         async (subDocument) => extractDocument(req, persistence, subDocument.type, subDocument.id, viewName, level + 1)
                     );
+                    debug(`subDocuments=`, subDocumentResources.map((r) => r.name));
                     resource.embed('items', subDocumentResources);
                 } else {
                     // eslint-disable-next-line no-console
