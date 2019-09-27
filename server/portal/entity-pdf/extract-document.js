@@ -14,6 +14,7 @@ const extractOverview = require('./extract-overview');
 const generateTocNumbers = require('./generate-toc-numbers');
 
 module.exports = async (req, persistence, type, id, viewName, level = 0) => {
+    debug(`level=${level}...id=${id}/type=${type}/view=${viewName || ''}`);
     const entity = await serverUtils.getEntity(null, type);
     const document = await entity.getInstance(persistence, id);
 

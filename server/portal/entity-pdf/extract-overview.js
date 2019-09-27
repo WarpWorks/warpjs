@@ -10,6 +10,7 @@ const convertInternalLinks = require('./convert-internal-links');
 const isParagraphVisible = require('./is-paragraph-visible');
 
 module.exports = async (req, persistence, entity, document, viewName, level = 0) => {
+    debug(`level=${level}...id=${document.id}/type=${document.type}/view=${viewName || ''}`);
     const overviewRelationship = entity.getRelationshipByName('Overview');
     const paragraphs = await overviewRelationship.getDocuments(persistence, document);
 
@@ -22,7 +23,8 @@ module.exports = async (req, persistence, entity, document, viewName, level = 0)
 
     return Promise.map(
         visibleParagraphs,
-        async (paragraph) => {
+        async (paragraph, index) => {
+            debug(`level=${level}...id=${document.id}/type=${document.type}/view=${viewName || ''}/paragraph=${index}: headingLevel=${paragraph.HeadingLevel}/heading=${paragraph.Heading}`);
             const content = await convertInternalLinks(persistence, entity.getDomain(), paragraph.Content);
             const resource = warpjsUtils.createResource('', {
                 type: paragraph.type,
@@ -35,35 +37,43 @@ module.exports = async (req, persistence, entity, document, viewName, level = 0)
             });
 
             // Extract first image if any.
-            const images = await imagesRelationship.getDocuments(persistence, paragraph);
-            if (images && images.length && images[0].ImageURL) {
-                const image = images[0];
+            // const images = await imagesRelationship.getDocuments(persistence, paragraph);
+            // if (images && images.length && images[0].ImageURL) {
+            //     debug(`level=${level}...id=${document.id}/type=${document.type}/view=${viewName || ''}/paragraph=${index}: found image`);
+            //     const image = images[0];
 
-                const imageResource = warpjsUtils.createResource(image.ImageURL, {
-                    type: image.type,
-                    id: image._id,
-                    url: image.ImageURL,
-                    width: image.Width,
-                    height: image.Height,
-                    caption: image.Caption
-                }, req);
+            //     const imageResource = warpjsUtils.createResource(image.ImageURL, {
+            //         type: image.type,
+            //         id: image._id,
+            //         url: image.ImageURL,
+            //         width: image.Width,
+            //         height: image.Height,
+            //         caption: image.Caption
+            //     }, req);
 
-                resource.embed('images', imageResource);
+            //     resource.embed('images', imageResource);
 
-                imageResource.base64 = await convertImageToPdfmake(image.ImageURL);
-            };
+            //     imageResource.base64 = await convertImageToPdfmake(image.ImageURL);
+            // };
 
             if (paragraph.SubDocuments && paragraph.SubDocuments !== '-1') {
+                debug(`level=${level}...id=${document.id}/type=${document.type}/view=${viewName || ''}/paragraph=${index}: found SubDocuments=${paragraph.SubDocuments}`);
                 const extractDocument = require('./extract-document');
 
                 const subDocumentRelationship = entity.getRelationshipById(paragraph.SubDocuments);
                 if (subDocumentRelationship) {
+                    debug(`level=${level}...id=${document.id}/type=${document.type}/view=${viewName || ''}/paragraph=${index}: found subDocumentRelationship=${subDocumentRelationship.name}`);
                     const subDocuments = await subDocumentRelationship.getDocuments(persistence, document);
+                    debug(`level=${level}...id=${document.id}/type=${document.type}/view=${viewName || ''}/paragraph=${index}: found subDocuments:${subDocuments.length}`);
                     const bestSubDocuments = await Documents.bestDocuments(persistence, subDocumentRelationship.getDomain(), subDocuments);
 
                     const subDocumentResources = await Promise.map(
                         bestSubDocuments,
-                        async (subDocument) => extractDocument(req, persistence, subDocument.type, subDocument.id, viewName, level + 1)
+                        async (subDocument, subDocumentIndex) => {
+                            debug(`level=${level}...id=${document.id}/type=${document.type}/view=${viewName || ''}/paragraph=${index}:     subDocumentIndex=${subDocumentIndex}`);
+                            return extractDocument(req, persistence, subDocument.type, subDocument.id, viewName, level + 1);
+                        },
+                        { concurrency: 1 }
                     );
                     debug(`subDocuments=`, subDocumentResources.map((r) => r.name));
                     resource.embed('items', subDocumentResources);
@@ -74,6 +84,7 @@ module.exports = async (req, persistence, entity, document, viewName, level = 0)
             }
 
             return resource;
-        }
+        },
+        { concurrency: 1 }
     );
 };

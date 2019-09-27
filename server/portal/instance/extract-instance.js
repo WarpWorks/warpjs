@@ -69,6 +69,9 @@ module.exports = async (req, res, type, id, pageViewName) => {
                     author: await Document.getAuthors(persistence, entity, instance),
                     canonicalUrl: portalUrl === req.path ? null : warpjsUtils.fullUrl(req, portalUrl)
                 });
+            } catch (err) {
+                console.error(`error HTML:`, err);
+                res.status(500).send(err.message);
             } finally {
                 persistence.close();
             }

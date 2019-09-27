@@ -25,12 +25,12 @@ module.exports = async (documentResource, docDefinition) => {
             console.error(`Error getting logo:`, err);
         }
     }
-    nodes.push({
-        absolutePosition: { x: constants.PAGE_MARGIN_SIDE, y: constants.PAGE_MARGIN_TOP },
-        image: coverLogo,
-        alignment: 'left',
-        fit: [ constants.COVER_PAGE_LOGO_MAX_HEIGHT, width - (2 * constants.PAGE_MARGIN_SIDE) ]
-    });
+    // nodes.push({
+    //     absolutePosition: { x: constants.PAGE_MARGIN_SIDE, y: constants.PAGE_MARGIN_TOP },
+    //     image: coverLogo,
+    //     alignment: 'left',
+    //     fit: [ constants.COVER_PAGE_LOGO_MAX_HEIGHT, width - (2 * constants.PAGE_MARGIN_SIDE) ]
+    // });
 
     // Document title
     nodes.push({
@@ -110,11 +110,11 @@ module.exports = async (documentResource, docDefinition) => {
         }
     };
 
-    nodes.push({
-        absolutePosition: { x: constants.PAGE_MARGIN_SIDE, y: ABSOLUTE_Y_IMAGE },
-        image: documentResource.PdfCoverImage || defaultCoverImage,
-        fit: [ MAX_IMAGE_WIDTH, MAX_IMAGE_HEIGHT ]
-    });
+    // nodes.push({
+    //     absolutePosition: { x: constants.PAGE_MARGIN_SIDE, y: ABSOLUTE_Y_IMAGE },
+    //     image: documentResource.PdfCoverImage || defaultCoverImage,
+    //     fit: [ MAX_IMAGE_WIDTH, MAX_IMAGE_HEIGHT ]
+    // });
 
     return nodes;
 };
