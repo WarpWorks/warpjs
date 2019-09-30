@@ -7,7 +7,6 @@ import namespace from './namespace';
 import { orchestrators } from './flux';
 
 const { getNamespaceSubstate, wrapContainer } = window.WarpJS.ReactUtils;
-const { setEditMode, unsetEditMode } = orchestrators;
 
 const mapStateToProps = (state, ownProps) => {
     const pageHalSubstate = getNamespaceSubstate(state, pageHalNamespace);
@@ -27,8 +26,9 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => Object.freeze({
-    setEditMode: () => setEditMode(dispatch),
-    unsetEditMode: () => unsetEditMode(dispatch)
+    setEditMode: () => orchestrators.setEditMode(dispatch),
+    unsetEditMode: () => orchestrators.unsetEditMode(dispatch),
+    setDirty: () => orchestrators.setDirty(dispatch)
 });
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => Object.freeze({

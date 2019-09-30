@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-// import { Fragment } from 'react';
 
 import { NAME } from './constants';
 import BreadcrumbActionButton from './../breadcrumb-action-button';
@@ -15,7 +14,7 @@ const Component = (props) => {
 
     if (props.page._links.edit) {
         if (props.inEditMode) {
-            components.push(<DocumentEdition />);
+            components.push(<DocumentEdition setDirty={props.setDirty} />);
             components.push(
                 <BreadcrumbActionButton
                     click={props.unsetEditMode}
@@ -45,6 +44,7 @@ Component.displayName = NAME;
 Component.propTypes = {
     inEditMode: PropTypes.bool,
     page: PropTypes.object.isRequired,
+    setDirty: PropTypes.func.isRequired,
     setEditMode: PropTypes.func.isRequired,
     unsetEditMode: PropTypes.func.isRequired,
     warpjsUser: PropTypes.object

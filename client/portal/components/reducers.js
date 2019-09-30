@@ -4,6 +4,7 @@ import { reducers as breadcrumbActionsReducers } from './breadcrumb-actions';
 import { reducers as createNewVersionReducers } from './create-new-version';
 import { reducers as documentEditionReducers } from './document-edition';
 import { reducers as documentFiltersReducers } from './document-filters';
+import { reducers as documentStatusReducers } from './document-status';
 import { reducers as followDocumentReducers } from './follow-document';
 import { reducers as paragraphAggregationsReducers } from './paragraph-aggregations';
 import { reducers as pageHalReducers } from './page-hal';
@@ -18,6 +19,7 @@ export default window.WarpJS.ReactUtils.concatenateReducers([
     createNewVersionReducers,
     documentEditionReducers,
     documentFiltersReducers,
+    documentStatusReducers,
     followDocumentReducers,
     paragraphAggregationsReducers,
     pageHalReducers,

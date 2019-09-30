@@ -89,6 +89,8 @@ module.exports = async (req, persistence, entity, instance, pageViewName) => {
     resource.status = {
         documentStatus,
         isPublic: (indexOf(statusConfig.public, documentStatus) !== -1),
+        promotion: Document.statusPromotion(req, entity, instance),
+        realStatus: instance.Status,
         showDisclaimer: (indexOf(statusConfig.disclaimer, documentStatus) !== -1)
     };
     resource.status.isVisible = resource.status.isPublic || Boolean(req.warpjsUser);

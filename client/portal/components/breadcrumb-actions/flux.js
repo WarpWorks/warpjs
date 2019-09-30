@@ -25,6 +25,9 @@ const actionCreators = Object.freeze({
 
 const IN_EDIT_MODE = 'warpjs-inline-edit-global-in-edit';
 export const orchestrators = Object.freeze({
+    setDirty: (dispatch) => {
+    },
+
     setEditMode: (dispatch) => {
         $('body').addClass(IN_EDIT_MODE);
         dispatch(actionCreators.setEditMode());

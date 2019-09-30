@@ -79,7 +79,7 @@ const Component = (props) => {
                                 controlId={PROPERTIES.STATUS}
                                 className={`warpjs-${PROPERTIES.STATUS}`}
                                 label="Status"
-                                content={<DocumentStatus />}
+                                content={<DocumentStatus setDirty={props.setDirty} />}
                             />
 
                             <AliasSelector controlId={PROPERTIES.ALIAS} />
@@ -129,6 +129,7 @@ Component.propTypes = {
     hideModal: PropTypes.func.isRequired,
     page: PropTypes.object,
     saveValue: PropTypes.func.isRequired,
+    setDirty: PropTypes.func.isRequired,
     showModal: PropTypes.func.isRequired,
     updateValue: PropTypes.func.isRequired
 };

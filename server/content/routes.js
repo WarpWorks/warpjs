@@ -21,6 +21,7 @@ const instance = require('./instance');
 const instanceHistory = require('./instance-history');
 const instanceRelationship = require('./instance-relationship');
 const orphans = require('./orphans');
+const status = require('./status');
 
 const ROUTE_OPTIONS = {
     allowPatch: 'application/json'
@@ -40,6 +41,7 @@ module.exports = (baseUrl) => {
     routesInfo.route(routes.instance, '/domain/{domain}/type/{type}/instance/{id}', instance, ROUTE_OPTIONS);
     routesInfo.route(routes.history, '/domain/{domain}/type/{type}/instance/{id}/history', instanceHistory);
     routesInfo.route(routes.sibling, '/domain/{domain}/type/{type}/instance/{id}/sibling', entitySibling);
+    routesInfo.route(routes.status, '/domain/{domain}/type/{type}/instance/{id}/status/{status}', status);
     routesInfo.route(routes.relationship, '/domain/{domain}/type/{type}/instance/{id}/relationship/{relationship}', instanceRelationship, ROUTE_OPTIONS);
     routesInfo.route(routes.instanceRelationshipItems, '/domain/{domain}/type/{type}/instance/{id}/relationship/{relationship}/items', instanceRelationshipItems, ROUTE_OPTIONS);
     routesInfo.route(routes.instanceRelationshipItem, '/domain/{domain}/type/{type}/instance/{id}/relationship/{relationship}/items/{itemId}', instanceRelationshipItem, ROUTE_OPTIONS);
