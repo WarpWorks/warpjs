@@ -35,7 +35,7 @@ module.exports = async (req, res) => {
         }
 
         const statusEnum = entity.getEnumByName('Status');
-        if (! statusEnum) {
+        if (!statusEnum) {
             throw new Error(`Invalid entity without 'Status'.`);
         }
 
@@ -48,7 +48,7 @@ module.exports = async (req, res) => {
         await entity.updateDocument(persistance, document);
 
         if (newValue === DOCUMENT_STATUS.APPROVED) {
-            const predecessorRelationship = entity.getRelationshipByName('Predecessor')
+            const predecessorRelationship = entity.getRelationshipByName('Predecessor');
             const domainEntity = entity.getDomain();
             if (predecessorRelationship) {
                 const predecessors = await predecessorRelationship.recursiveGetDocuments(persistance, document);
@@ -63,7 +63,6 @@ module.exports = async (req, res) => {
                     await predecessorEntity.updateDocument(persistance, predecessor);
                 });
             }
-
         }
 
         resource.status = {
