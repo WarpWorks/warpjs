@@ -37,24 +37,24 @@ module.exports = async (req, persistence, entity, document, viewName, level = 0)
             });
 
             // Extract first image if any.
-            // const images = await imagesRelationship.getDocuments(persistence, paragraph);
-            // if (images && images.length && images[0].ImageURL) {
-            //     debug(`level=${level}...id=${document.id}/type=${document.type}/view=${viewName || ''}/paragraph=${index}: found image`);
-            //     const image = images[0];
+            const images = await imagesRelationship.getDocuments(persistence, paragraph);
+            if (images && images.length && images[0].ImageURL) {
+                debug(`level=${level}...id=${document.id}/type=${document.type}/view=${viewName || ''}/paragraph=${index}: found image`);
+                const image = images[0];
 
-            //     const imageResource = warpjsUtils.createResource(image.ImageURL, {
-            //         type: image.type,
-            //         id: image._id,
-            //         url: image.ImageURL,
-            //         width: image.Width,
-            //         height: image.Height,
-            //         caption: image.Caption
-            //     }, req);
+                const imageResource = warpjsUtils.createResource(image.ImageURL, {
+                    type: image.type,
+                    id: image._id,
+                    url: image.ImageURL,
+                    width: image.Width,
+                    height: image.Height,
+                    caption: image.Caption
+                }, req);
 
-            //     resource.embed('images', imageResource);
+                resource.embed('images', imageResource);
 
-            //     imageResource.base64 = await convertImageToPdfmake(image.ImageURL);
-            // };
+                imageResource.base64 = await convertImageToPdfmake(image.ImageURL);
+            };
 
             if (paragraph.SubDocuments && paragraph.SubDocuments !== '-1') {
                 debug(`level=${level}...id=${document.id}/type=${document.type}/view=${viewName || ''}/paragraph=${index}: found SubDocuments=${paragraph.SubDocuments}`);

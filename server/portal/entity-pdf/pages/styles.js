@@ -2,7 +2,6 @@ const constants = require('./../constants');
 
 // Don't understand why it doesn't work as the default style, so explicitely
 // defining it here.
-const DEFAULT_FONT = 'Helvetica';
 // const DEFAULT_FONT = 'Muli';
 const HEADER_FOOTER_FONT_SIZE = 8;
 
@@ -10,7 +9,6 @@ const HEADLINE_MARGIN_TOP = 30;
 const HEADLINE_MARGIN_BOTTOM = 15;
 
 // const HEADLINE1_FONT = 'Oswald';
-const HEADLINE1_FONT = 'Helvetica';
 const HEADLINE1_FONT_SIZE = 28;
 const HEADLINE1_MARGIN_BOTTOM = 40;
 
@@ -18,13 +16,11 @@ const HEADLINE_NOSPACE_BOTTOM = 5;
 const HEADLINE_NOSPACE_TOP = 5;
 
 // const HEADLINE_FONT = 'Muli';
-const HEADLINE_FONT = 'Helvetica';
 const HEADLINE_FONT_SIZE = 14;
 
-const TOC_FONT = 'Helvetica';
+// const TOC_FONT = 'Helvetica';
 
 // const GLYPH_FONT = 'Glyphicons';
-const GLYPH_FONT = 'Helvetica';
 
 const PARAGRAPH_SPACING = 8;
 
@@ -174,15 +170,12 @@ module.exports = async (documentResource) => ({
 
     toc2: {
         // font: TOC_FONT,
-        // font: DEFAULT_FONT, // FIXME: Why is this not working?
         fontSize: 11,
         marginBottom: constants.PARAGRAPH_SPACING
     },
 
     toc2_number: {
         // font: TOC_FONT,
-        // font: DEFAULT_FONT, // FIXME: Why is this not working?
-        // font: 'Times', // FIXME: DEBUG
         fontSize: 11,
         marginBottom: constants.PARAGRAPH_SPACING
     },

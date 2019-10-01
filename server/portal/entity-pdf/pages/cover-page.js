@@ -110,11 +110,11 @@ module.exports = async (documentResource, docDefinition) => {
         }
     };
 
-    // nodes.push({
-    //     absolutePosition: { x: constants.PAGE_MARGIN_SIDE, y: ABSOLUTE_Y_IMAGE },
-    //     image: documentResource.PdfCoverImage || defaultCoverImage,
-    //     fit: [ MAX_IMAGE_WIDTH, MAX_IMAGE_HEIGHT ]
-    // });
+    nodes.push({
+        absolutePosition: { x: constants.PAGE_MARGIN_SIDE, y: ABSOLUTE_Y_IMAGE },
+        image: documentResource.PdfCoverImage || defaultCoverImage,
+        fit: [ MAX_IMAGE_WIDTH, MAX_IMAGE_HEIGHT ]
+    });
 
     return nodes;
 };

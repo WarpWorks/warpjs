@@ -3,7 +3,7 @@ const PdfMake = require('pdfmake');
 const pdfFonts = require('pdfmake/build/vfs_fonts');
 
 const constants = require('./constants');
-const debug = require('./debug')('generate-pdf');
+// const debug = require('./debug')('generate-pdf');
 const makePdfmakeVfsFonts = require('./make-pdfmake-vfs-fonts');
 const pages = require('./pages');
 
@@ -138,10 +138,11 @@ module.exports = async (documentResource, req) => {
         }
     });
 
-    debug(`docDefinition=`, JSON.stringify(docDefinition, null, 2));
+    // debug(`docDefinition=`, JSON.stringify(docDefinition, null, 2));
 
     const fs = require('fs');
-    fs.writeFileSync('20190927-pdfmake-infinite-loop.json', JSON.stringify(docDefinition, null, 2));
+    const date = (new Date()).toISOString().replace(/[^0-9]/g, '');
+    fs.writeFileSync(`pdfmake-infinite-loop-${date}.txt`, JSON.stringify(docDefinition, null, 2));
 
     const options = {
         bufferPages: false,
