@@ -39,6 +39,12 @@ export const orchestrators = Object.freeze({
             toast.close($, toastLoading);
         }
     },
+    goToPortal: async (dispatch, item) => {
+        document.location.href = item._links.portal.href;
+    },
+    removeDocument: async (dispatch, item) => {
+        debug(`orchestrators.removeDocument(): item=`, item);
+    },
     showModal: async (dispatch, id, url) => {
         dispatch(actionCreators.setItems(null));
         dispatch(actionCreators.setEntities(null));

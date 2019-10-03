@@ -11,13 +11,21 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => Object.freeze({
-    createChild: (url) => async (entity) => orchestrators.createChild(dispatch, url, entity)
+    createChild: (url) => async (entity) => orchestrators.createChild(dispatch, url, entity),
+    goToPortal: (items) => (items || []).forEach((item) => {
+        item.goToPortal = async () => orchestrators.goToPortal(dispatch, item);
+    }),
+    removeDocument: (items) => (items || []).forEach((item) => {
+        item.remove = async () => orchestrators.removeDocument(dispatch, item);
+    })
 });
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => Object.freeze({
     ...stateProps,
     ...dispatchProps,
     createChild: dispatchProps.createChild(stateProps.url),
+    goToPortal: dispatchProps.goToPortal(stateProps.items),
+    removeDocument: dispatchProps.removeDocument(stateProps.items),
     ...ownProps
 });
 

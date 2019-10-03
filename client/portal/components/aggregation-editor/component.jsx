@@ -5,7 +5,7 @@ import { NAME } from './constants';
 
 // import _debug from './debug'; const debug = _debug('component');
 
-const { ModalContainer, Spinner } = window.WarpJS.ReactComponents;
+const { ActionIcon, ModalContainer, Spinner } = window.WarpJS.ReactComponents;
 const { errorBoundary } = window.WarpJS.ReactUtils;
 
 const Component = (props) => {
@@ -30,6 +30,10 @@ const Component = (props) => {
                 return (
                     <ListGroupItem key={item.id}>
                         {name}
+                        <span className="pull-right">
+                            <ActionIcon title={`View document`} glyph="eye-open" onClick={item.goToPortal} />
+                            {/* <ActionIcon title={`Remove document`} glyph="trash" onConfirm={item.remove} /> */}
+                        </span>
                     </ListGroupItem>
                 );
             });
