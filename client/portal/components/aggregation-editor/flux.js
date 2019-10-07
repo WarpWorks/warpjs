@@ -4,20 +4,22 @@ import _debug from './debug'; const debug = _debug('flux');
 
 const { proxy, toast } = window.WarpJS;
 const { showModalContainer } = window.WarpJS.ReactComponents;
-const { actionCreator, baseAttributeReducer, concatenateReducers, namespaceKeys } = window.WarpJS.ReactUtils;
+const { actionCreator, baseAttributeReducer, concatenateReducers, getNamespaceSubstate, namespaceKeys, setNamespaceSubstate } = window.WarpJS.ReactUtils;
 
 const actions = namespaceKeys(namespace, [
     'ERROR',
     'SET_ENTITIES',
     'SET_ITEMS',
-    'SET_URL'
+    'SET_URL',
+    'TOGGLE_FILTERS'
 ]);
 
 const actionCreators = Object.freeze({
     error: (message) => actionCreator(actions.ERROR, { message }),
     setEntities: (entities) => actionCreator(actions.SET_ENTITIES, { entities }),
     setItems: (items) => actionCreator(actions.SET_ITEMS, { items }),
-    setUrl: (url) => actionCreator(actions.SET_URL, { url })
+    setUrl: (url) => actionCreator(actions.SET_URL, { url }),
+    toggleFilters: () => actionCreator(actions.TOGGLE_FILTERS)
 });
 
 export const orchestrators = Object.freeze({
@@ -57,6 +59,9 @@ export const orchestrators = Object.freeze({
         } catch (err) {
             dispatch(actionCreators.error(`Cannot fetch document aggregation.`));
         }
+    },
+    toggleFilters: (dispatch) => {
+        dispatch(actionCreators.toggleFilters());
     }
 });
 
@@ -65,9 +70,16 @@ const setEntities = (state = {}, action) => baseAttributeReducer(state, namespac
 const setItems = (state = {}, action) => baseAttributeReducer(state, namespace, 'items', action.payload.items);
 const setUrl = (state = {}, action) => baseAttributeReducer(state, namespace, 'url', action.payload.url);
 
+const toggleFilters = (state = {}, action) => {
+    const substate = getNamespaceSubstate(state, namespace);
+    substate.showFilters = !substate.showFilters;
+    return setNamespaceSubstate(state, namespace, substate);
+};
+
 export const reducers = concatenateReducers([
     { actions: [ actions.ERROR ], reducer: error },
     { actions: [ actions.SET_ENTITIES ], reducer: setEntities },
     { actions: [ actions.SET_ITEMS ], reducer: setItems },
-    { actions: [ actions.SET_URL ], reducer: setUrl }
+    { actions: [ actions.SET_URL ], reducer: setUrl },
+    { actions: [ actions.TOGGLE_FILTERS ], reducer: toggleFilters }
 ]);

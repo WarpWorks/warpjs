@@ -17,7 +17,8 @@ const mapDispatchToProps = (dispatch, ownProps) => Object.freeze({
     }),
     removeDocument: (items) => (items || []).forEach((item) => {
         item.remove = async () => orchestrators.removeDocument(dispatch, item);
-    })
+    }),
+    toggleFilters: () => orchestrators.toggleFilters(dispatch)
 });
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => Object.freeze({

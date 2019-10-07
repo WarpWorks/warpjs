@@ -14,13 +14,31 @@ const Component = (props) => {
 
     if (props.error) {
         content = <Alert bsStyle="danger">{props.error}</Alert>;
+    } else if (props.showFilters) {
+        footerButtons = [
+            {
+                label: 'Documents',
+                style: 'link',
+                glyph: 'th-list',
+                onClick: () => props.toggleFilters()
+            }
+        ];
     } else if (props.items) {
         if (props.entities && props.entities.length) {
-            footerButtons = [ props.entities.map((entity) => ({
-                label: `New ${entity.name}`,
-                style: 'primary',
-                onClick: () => props.createChild(entity.name)
-            })) ];
+            footerButtons = [
+                {
+                    label: 'Filters',
+                    style: 'link',
+                    glyph: 'cog',
+                    onClick: () => props.toggleFilters()
+                },
+
+                props.entities.map((entity) => ({
+                    label: `New ${entity.name}`,
+                    style: 'primary',
+                    onClick: () => props.createChild(entity.name)
+                }))
+            ];
         }
 
         if (props.items.length) {
@@ -59,8 +77,10 @@ Component.propTypes = {
     error: PropTypes.string,
     id: PropTypes.string.isRequired,
     items: PropTypes.array,
+    showFilters: PropTypes.bool,
     showModal: PropTypes.func.isRequired,
-    title: PropTypes.string.isRequired
+    title: PropTypes.string.isRequired,
+    toggleFilters: PropTypes.func
 };
 
 export default errorBoundary(Component);
