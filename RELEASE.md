@@ -7,6 +7,10 @@
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
 
+## 1.4.10 - 2019-10-07
+
+- #333: Do not assign predecessor/successor for TEMPLATE clone.
+
 ## 1.4.9 - 2019-10-03
 
 - #319: Adding link to view aggregation.
