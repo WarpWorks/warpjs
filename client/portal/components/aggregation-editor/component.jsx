@@ -1,11 +1,13 @@
 import PropTypes from 'prop-types';
-import { Alert, ListGroup, ListGroupItem } from 'react-bootstrap';
+import { Alert } from 'react-bootstrap';
 
+import ConfigPanel from './config-panel';
 import { NAME } from './constants';
+import DocumentPanel from './document-panel';
 
 // import _debug from './debug'; const debug = _debug('component');
 
-const { ActionIcon, ModalContainer, Spinner } = window.WarpJS.ReactComponents;
+const { ModalContainer, Spinner } = window.WarpJS.ReactComponents;
 const { errorBoundary } = window.WarpJS.ReactUtils;
 
 const Component = (props) => {
@@ -23,47 +25,29 @@ const Component = (props) => {
                 onClick: () => props.toggleFilters()
             }
         ];
+
+        content = <ConfigPanel associations={props.associations} filters={props.aggregationFilters} />;
     } else if (props.items) {
+        footerButtons = [{
+            label: 'Filters',
+            style: 'link',
+            glyph: 'cog',
+            onClick: () => props.toggleFilters()
+        }];
+
         if (props.entities && props.entities.length) {
-            footerButtons = [
-                {
-                    label: 'Filters',
-                    style: 'link',
-                    glyph: 'cog',
-                    onClick: () => props.toggleFilters()
-                },
-
-                props.entities.map((entity) => ({
-                    label: `New ${entity.name}`,
-                    style: 'primary',
-                    onClick: () => props.createChild(entity.name)
-                }))
-            ];
+            footerButtons.push(props.entities.map((entity) => ({
+                label: `New ${entity.name}`,
+                style: 'primary',
+                onClick: () => props.createChild(entity.name)
+            })));
         }
 
-        if (props.items.length) {
-            const listGroupItems = props.items.map((item) => {
-                const name = item.name || <i>Untitled</i>;
-
-                return (
-                    <ListGroupItem key={item.id}>
-                        {name}
-                        <span className="pull-right">
-                            <ActionIcon title={`View document`} glyph="eye-open" onClick={item.goToPortal} />
-                            {/* <ActionIcon title={`Remove document`} glyph="trash" onConfirm={item.remove} /> */}
-                        </span>
-                    </ListGroupItem>
-                );
-            });
-
-            content = <ListGroup>{listGroupItems}</ListGroup>;
-        } else {
-            content = <Alert bsStyle="warning">No aggregations found.</Alert>;
-        }
+        content = <DocumentPanel items={props.items} />;
     }
 
     return (
-        <ModalContainer id={props.id} title={props.title} footerButtons={footerButtons}>
+        <ModalContainer id={props.id} title={props.title} footerButtons={footerButtons} onHide={props.onHide}>
             {content}
         </ModalContainer>
     );
@@ -72,11 +56,14 @@ const Component = (props) => {
 Component.displayName = NAME;
 
 Component.propTypes = {
+    aggregationFilters: PropTypes.array,
+    associations: PropTypes.array,
     createChild: PropTypes.func.isRequired,
     entities: PropTypes.array,
     error: PropTypes.string,
     id: PropTypes.string.isRequired,
     items: PropTypes.array,
+    onHide: PropTypes.func.isRequired,
     showFilters: PropTypes.bool,
     showModal: PropTypes.func.isRequired,
     title: PropTypes.string.isRequired,

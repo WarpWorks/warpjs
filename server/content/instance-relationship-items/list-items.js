@@ -1,5 +1,8 @@
+const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const AggregationFilters = require('./../../../lib/core/first-class/aggregation-filters');
+const routes = require('./../../../lib/constants/routes');
 const serverUtils = require('./../../utils');
 const utils = require('./../utils');
 
@@ -38,26 +41,85 @@ module.exports = async (req, res) => {
             throw new Error(`Cannot find relationship '${type}/${relationship}'.`);
         }
 
-        // Get potential target entities.
-        const targetEntity = relationshipInstance.getTargetEntity();
-        const allTargetEntities = [ targetEntity ].concat(targetEntity.getChildEntities(true, true));
-
-        resource.embed('entities', allTargetEntities.map((entity) => ({
-            name: entity.name,
-            id: entity.id,
-            label: entity.getDisplayName(entity),
-            isAbstract: entity.isAbstract
-        })));
-
-        let items;
         if (relationshipInstance.isAggregation) {
-            items = await listAggregationItems(persistence, relationshipInstance, document);
+            // Get potential target entities.
+            const targetEntity = relationshipInstance.getTargetEntity();
+            const allTargetEntities = [ targetEntity ].concat(targetEntity.getChildEntities(true, true));
+
+            resource.embed('entities', allTargetEntities.map((entity) => ({
+                name: entity.name,
+                id: entity.id,
+                label: entity.getDisplayName(entity),
+                isAbstract: entity.isAbstract
+            })));
+
+            // Find all associations that can be used for filters. All
+            // associations with the same target entity are grouped together.
+            //
+            //      associations = [{
+            //          id: <targetEntityID>,
+            //          name: <targetEntityName>
+            //          relationships: [{
+            //              id: <relationshipId>,
+            //              name: <relationshipName>,
+            //              label: <relationshipLabel>
+            //          }]
+            //      }];
+            const associations = allTargetEntities.reduce(
+                (cumulator, targetEntity) => {
+                    const relationships = targetEntity.getRelationships();
+                    const associationRelationships = relationships.filter((relationship) => !relationship.isAggregation && !relationship.isReverse());
+
+                    return associationRelationships.reduce(
+                        (cumulator, association) => {
+                            const associationInfo = {
+                                id: association.id,
+                                name: association.name,
+                                label: association.label,
+                                url: RoutesInfo.expand(routes.content.aggregationFilters, { domain, type, id, relationship })
+                            };
+
+                            const associationTarget = association.getTargetEntity();
+                            if (associationTarget.isAbstract) {
+                                return cumulator;
+                            } else {
+                                const foundEntity = cumulator.find((cumulatedEntity) => cumulatedEntity.id === associationTarget.id);
+                                if (foundEntity) {
+                                    const foundRelationship = foundEntity.relationships.find((reln) => reln.id === association.id);
+                                    if (!foundRelationship) {
+                                        foundEntity.relationships.push(associationInfo);
+                                    }
+                                    return cumulator;
+                                } else {
+                                    return cumulator.concat({
+                                        id: associationTarget.id,
+                                        name: associationTarget.name,
+                                        label: associationTarget.label,
+                                        relationships: [ associationInfo ]
+                                    });
+                                }
+                            }
+                        },
+                        cumulator
+                    );
+                },
+                []
+            );
+            if (associations && associations.length) {
+                resource.embed('associations', associations);
+            }
+
+            const items = await listAggregationItems(persistence, relationshipInstance, document);
+            if (items && items.length) {
+                resource.embed('items', items);
+            }
+
+            const aggregationFilters = AggregationFilters.getRelationshipFilter(document, relationshipInstance.id);
+            if (aggregationFilters) {
+                resource.embed('aggregationFilters', aggregationFilters.entities);
+            }
         } else {
             throw new Error(`This is not implemented yet.`);
-        }
-
-        if (items && items.length) {
-            resource.embed('items', items);
         }
 
         utils.sendHal(req, res, resource);

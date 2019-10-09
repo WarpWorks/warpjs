@@ -1,6 +1,7 @@
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 
 const { routes } = require('./constants');
+const aggregationFilters = require('./aggregation-filters');
 const domain = require('./domain');
 const domains = require('./domains');
 const domainType = require('./domain-type');
@@ -44,6 +45,7 @@ module.exports = (baseUrl) => {
     routesInfo.route(routes.status, '/domain/{domain}/type/{type}/instance/{id}/status/{status}', status);
     routesInfo.route(routes.relationship, '/domain/{domain}/type/{type}/instance/{id}/relationship/{relationship}', instanceRelationship, ROUTE_OPTIONS);
     routesInfo.route(routes.instanceRelationshipItems, '/domain/{domain}/type/{type}/instance/{id}/relationship/{relationship}/items', instanceRelationshipItems, ROUTE_OPTIONS);
+    routesInfo.route(routes.aggregationFilters, '/domain/{domain}/type/{type}/instance/{id}/relationship/{relationship}/filters', aggregationFilters, ROUTE_OPTIONS);
     routesInfo.route(routes.instanceRelationshipItem, '/domain/{domain}/type/{type}/instance/{id}/relationship/{relationship}/items/{itemId}', instanceRelationshipItem, ROUTE_OPTIONS);
     routesInfo.route(routes.relationshipPage, '/domain/{domain}/type/{type}/instance/{id}/relationship/{relationship}/page/{page}', instance);
 

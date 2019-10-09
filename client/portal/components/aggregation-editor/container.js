@@ -12,12 +12,14 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => Object.freeze({
     createChild: (url) => async (entity) => orchestrators.createChild(dispatch, url, entity),
-    goToPortal: (items) => (items || []).forEach((item) => {
-        item.goToPortal = async () => orchestrators.goToPortal(dispatch, item);
+    injectIntoAssociations: (associations) => (associations || []).forEach((association) => {
+        association.addFilter = async () => orchestrators.addFilter(dispatch, association);
     }),
-    removeDocument: (items) => (items || []).forEach((item) => {
+    injectIntoItems: (items) => (items || []).forEach((item) => {
+        item.goToPortal = async () => orchestrators.goToPortal(dispatch, item);
         item.remove = async () => orchestrators.removeDocument(dispatch, item);
     }),
+    onHide: (isDirty) => async () => orchestrators.modalClosed(dispatch, isDirty),
     toggleFilters: () => orchestrators.toggleFilters(dispatch)
 });
 
@@ -25,8 +27,9 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => Object.freeze({
     ...stateProps,
     ...dispatchProps,
     createChild: dispatchProps.createChild(stateProps.url),
-    goToPortal: dispatchProps.goToPortal(stateProps.items),
-    removeDocument: dispatchProps.removeDocument(stateProps.items),
+    injectIntoAssociations: dispatchProps.injectIntoAssociations(stateProps.associations),
+    injectIntoItems: dispatchProps.injectIntoItems(stateProps.items),
+    onHide: dispatchProps.onHide(stateProps.isDirty),
     ...ownProps
 });
 
