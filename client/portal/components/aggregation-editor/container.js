@@ -14,6 +14,7 @@ const mapDispatchToProps = (dispatch, ownProps) => Object.freeze({
     createChild: (url) => async (entity) => orchestrators.createChild(dispatch, url, entity),
     injectIntoAssociations: (associations) => (associations || []).forEach((association) => {
         association.addFilter = async () => orchestrators.addFilter(dispatch, association);
+        association.removeFilter = async () => orchestrators.removeFilter(dispatch, association);
     }),
     injectIntoItems: (items) => (items || []).forEach((item) => {
         item.goToPortal = async () => orchestrators.goToPortal(dispatch, item);

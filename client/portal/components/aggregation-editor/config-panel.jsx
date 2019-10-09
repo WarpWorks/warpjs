@@ -3,7 +3,7 @@ import { Grid, Row, Col, Alert, ListGroup, ListGroupItem } from 'react-bootstrap
 
 import oxfordComma from './../../../../lib/utils/oxford-comma';
 
-const { Button } = window.WarpJS.ReactComponents;
+const { ActionIcon, Button } = window.WarpJS.ReactComponents;
 const { errorBoundary } = window.WarpJS.ReactUtils;
 
 const Component = (props) => {
@@ -20,7 +20,7 @@ const Component = (props) => {
             <ListGroupItem key={association.id}>
                 <span>{name} ({relationships})</span>
                 <span className="pull-right">
-                    <Button size="xs" label="Remove" style="danger" />
+                    <ActionIcon glyph="trash" title="Remove filter" style="danger" onClick={association.removeFilter} />
                 </span>
             </ListGroupItem>
         );

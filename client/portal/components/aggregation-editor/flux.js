@@ -30,12 +30,12 @@ const actionCreators = Object.freeze({
 
 export const orchestrators = Object.freeze({
     addFilter: async (dispatch, association) => {
-        debug(`orchestrators.addFilter(): association=`, association);
         const toastLoading = toast.loading($, "Adding filter");
         try {
             const data = { id: association.id };
             const url = association.relationships[0].url;
-            await proxy.post($, url, data);
+            const res = await proxy.post($, url, data);
+            dispatch(actionCreators.setAggregationFilters(res._embedded.aggregationFilters || []));
             orchestrators.setDirty(dispatch);
         } catch (err) {
             // eslint-disable-next-line no-console
@@ -74,6 +74,22 @@ export const orchestrators = Object.freeze({
     },
     removeDocument: async (dispatch, item) => {
         debug(`orchestrators.removeDocument(): item=`, item);
+    },
+    removeFilter: async (dispatch, association) => {
+        const toastLoading = toast.loading($, "Removing filter");
+        try {
+            const data = { id: association.id };
+            const url = association.relationships[0].url;
+            const res = await proxy.del($, url, data);
+            dispatch(actionCreators.setAggregationFilters(res._embedded.aggregationFilters || []));
+            orchestrators.setDirty(dispatch);
+        } catch (err) {
+            // eslint-disable-next-line no-console
+            console.error(`orchestrators.removeFilter(): err=`, err);
+            toast.error($, "Unable to remove filter!");
+        } finally {
+            toast.close($, toastLoading);
+        }
     },
     setDirty: (dispatch) => {
         dispatch(actionCreators.setDirty(true));

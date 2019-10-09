@@ -4,8 +4,6 @@ const AggregationFilters = require('./../../../lib/core/first-class/aggregation-
 const utils = require('./../utils');
 const serverUtils = require('./../../utils');
 
-// const debug = require('./debug')('add-filter');
-
 module.exports = async (req, res) => {
     const { domain, type, id, relationship } = req.params;
     const { body } = req;
@@ -18,7 +16,7 @@ module.exports = async (req, res) => {
             id,
             relationship,
             body,
-            description: "Adding an aggregation filter."
+            description: "Removing an aggregation filter."
         },
         req
     );
@@ -33,17 +31,16 @@ module.exports = async (req, res) => {
         }
         const relationshipInstance = entity.getRelationshipByName(relationship);
 
-        AggregationFilters.addFilter(document, relationshipInstance.id, body.id);
+        AggregationFilters.removeFilter(document, relationshipInstance.id, body.id);
 
         await entity.updateDocument(persistence, document);
 
         const aggregationFilters = AggregationFilters.getRelationshipFilter(document, relationshipInstance.id);
         resource.embed('aggregationFilters', aggregationFilters.entities);
-
         utils.sendHal(req, res, resource);
     } catch (err) {
         // eslint-disable-next-line no-console
-        console.error(`*** ERROR *** aggregation-filters/add-filters:`, err);
+        console.error(`*** ERROR *** aggregation-filters/remove-filters:`, err);
         utils.sendErrorHal(req, res, resource, err);
     } finally {
         persistence.close();
