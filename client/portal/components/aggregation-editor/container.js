@@ -1,37 +1,38 @@
+import { useDispatch, useSelector } from 'react-redux';
+
 import Component from './component';
 import { orchestrators } from './flux';
 import namespace from './namespace';
 
-const { getNamespaceSubstate, wrapContainer } = window.WarpJS.ReactUtils;
+const { getNamespaceSubstate } = window.WarpJS.ReactUtils;
 
-const mapStateToProps = (state, ownProps) => {
-    const substate = getNamespaceSubstate(state, namespace);
+const Container = (props) => {
+    const dispatch = useDispatch();
+    const subState = useSelector((state) => getNamespaceSubstate(state, namespace));
 
-    return substate;
-};
-
-const mapDispatchToProps = (dispatch, ownProps) => Object.freeze({
-    createChild: (url) => async (entity) => orchestrators.createChild(dispatch, url, entity),
-    injectIntoAssociations: (associations) => (associations || []).forEach((association) => {
+    (subState.associations || []).forEach((association) => {
         association.addFilter = async () => orchestrators.addFilter(dispatch, association);
         association.removeFilter = async () => orchestrators.removeFilter(dispatch, association);
-    }),
-    injectIntoItems: (items) => (items || []).forEach((item) => {
+    });
+
+    (subState.items || []).forEach((item) => {
         item.goToPortal = async () => orchestrators.goToPortal(dispatch, item);
         item.remove = async () => orchestrators.removeDocument(dispatch, item);
-    }),
-    onHide: (isDirty) => async () => orchestrators.modalClosed(dispatch, isDirty),
-    toggleFilters: () => orchestrators.toggleFilters(dispatch)
-});
+    });
 
-const mergeProps = (stateProps, dispatchProps, ownProps) => Object.freeze({
-    ...stateProps,
-    ...dispatchProps,
-    createChild: dispatchProps.createChild(stateProps.url),
-    injectIntoAssociations: dispatchProps.injectIntoAssociations(stateProps.associations),
-    injectIntoItems: dispatchProps.injectIntoItems(stateProps.items),
-    onHide: dispatchProps.onHide(stateProps.isDirty),
-    ...ownProps
-});
+    const dispatchProps = Object.freeze({
+        createChild: async (entity) => orchestrators.createChild(dispatch, subState.url, entity),
+        onHide: async () => orchestrators.modalClosed(dispatch, subState.isDirty),
+        toggleFilters: () => orchestrators.toggleFilters(dispatch)
+    });
 
-export default wrapContainer(Component, mapStateToProps, mapDispatchToProps, mergeProps);
+    const connectedProps = {
+        ...subState,
+        ...dispatchProps,
+        ...props
+    };
+
+    return <Component {...connectedProps} />;
+};
+
+export default Container;
