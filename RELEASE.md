@@ -7,6 +7,10 @@
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
 
+## 1.4.11 - 2019-10-11
+
+- #323: Allow configuration of aggregation filters.
+
 ## 1.4.10 - 2019-10-07
 
 - #333: Do not assign predecessor/successor for TEMPLATE clone.
