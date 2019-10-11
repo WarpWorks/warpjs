@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Grid, Row, Col, Alert, ListGroup, ListGroupItem } from 'react-bootstrap';
+import { Alert, Checkbox, Col, ControlLabel, Form, FormControl, FormGroup, Grid, ListGroup, ListGroupItem, Row } from 'react-bootstrap';
 
 import oxfordComma from './../../../../lib/utils/oxford-comma';
 
@@ -18,10 +18,26 @@ const Component = (props) => {
 
         return (
             <ListGroupItem key={association.id}>
-                <span>{name} ({relationships})</span>
                 <span className="pull-right">
                     <ActionIcon glyph="trash" title="Remove filter" style="danger" onClick={association.removeFilter} />
                 </span>
+                <div>{name} ({relationships})</div>
+                <Form horizontal>
+                    <FormGroup controlId={`filter-label-${association.id}`}>
+                        <Col componentClass={ControlLabel} xs={5}>Filter label:</Col>
+                        <Col xs={7}>
+                            <FormControl type="text" placeholder="Filter name to display"
+                                value={filter.editLabel !== undefined ? filter.editLabel : filter.label}
+                                onChange={(event) => association.updateFilterLabel(event.target.value)}
+                                onBlur={() => association.saveFilterLabel(filter.editLabel, filter.label)}
+                            />
+                        </Col>
+                    </FormGroup>
+                    <FormGroup controlId={`filter-use-parent-${association.id}`}>
+                        <Col componentClass={ControlLabel} xs={5}>Use parent:</Col>
+                        <Col xs={7}><Checkbox checked={filter.useParent} onChange={(event) => association.toggleUseParent(event.target.checked)} /></Col>
+                    </FormGroup>
+                </Form>
             </ListGroupItem>
         );
     }).filter((filter) => filter); // Filter out null.
@@ -42,11 +58,11 @@ const Component = (props) => {
 
         return (
             <ListGroupItem key={association.id}>
-                <span>
-                    {name} ({relationships})
-                </span>
                 <span className="pull-right">
                     <Button size="xs" label="Add" style="primary" onClick={association.addFilter} />
+                </span>
+                <span>
+                    {name} ({relationships})
                 </span>
             </ListGroupItem>
         );

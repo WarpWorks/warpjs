@@ -4,7 +4,7 @@ const AggregationFilters = require('./../../../lib/core/first-class/aggregation-
 const utils = require('./../utils');
 const serverUtils = require('./../../utils');
 
-// const debug = require('./debug')('add-filter');
+// const debug = require('./debug')('patch-filter');
 
 module.exports = async (req, res) => {
     const { domain, type, id, relationship } = req.params;
@@ -33,7 +33,7 @@ module.exports = async (req, res) => {
         }
         const relationshipInstance = entity.getRelationshipByName(relationship);
 
-        AggregationFilters.addFilter(document, relationshipInstance.id, body.id);
+        AggregationFilters.patchFilter(document, relationshipInstance.id, body.id, body.key, body.value);
 
         await entity.updateDocument(persistence, document);
 
@@ -43,7 +43,7 @@ module.exports = async (req, res) => {
         utils.sendHal(req, res, resource);
     } catch (err) {
         // eslint-disable-next-line no-console
-        console.error(`*** ERROR *** aggregation-filters/add-filter:`, err);
+        console.error(`*** ERROR *** aggregation-filters/patch-filter:`, err);
         utils.sendErrorHal(req, res, resource, err);
     } finally {
         persistence.close();

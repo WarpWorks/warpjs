@@ -14,7 +14,8 @@ const actions = namespaceKeys(namespace, [
     'SET_ENTITIES',
     'SET_ITEMS',
     'SET_URL',
-    'TOGGLE_FILTERS'
+    'TOGGLE_FILTERS',
+    'UPDATE_FILTER_LABEL'
 ]);
 
 const actionCreators = Object.freeze({
@@ -25,7 +26,8 @@ const actionCreators = Object.freeze({
     setEntities: (entities) => actionCreator(actions.SET_ENTITIES, { entities }),
     setItems: (items) => actionCreator(actions.SET_ITEMS, { items }),
     setUrl: (url) => actionCreator(actions.SET_URL, { url }),
-    toggleFilters: () => actionCreator(actions.TOGGLE_FILTERS)
+    toggleFilters: () => actionCreator(actions.TOGGLE_FILTERS),
+    updateFilterLabel: (association, label) => actionCreator(actions.UPDATE_FILTER_LABEL, { association, label })
 });
 
 export const orchestrators = Object.freeze({
@@ -63,18 +65,22 @@ export const orchestrators = Object.freeze({
             toast.close($, toastLoading);
         }
     },
+
     goToPortal: async (dispatch, item) => {
         document.location.href = item._links.portal.href;
     },
+
     modalClosed: async (dispatch, isDirty) => {
         if (isDirty) {
             toast.loading($, "Refreshing page");
             setTimeout(() => document.location.reload(), 1500);
         }
     },
+
     removeDocument: async (dispatch, item) => {
         debug(`orchestrators.removeDocument(): item=`, item);
     },
+
     removeFilter: async (dispatch, association) => {
         const toastLoading = toast.loading($, "Removing filter");
         try {
@@ -91,9 +97,11 @@ export const orchestrators = Object.freeze({
             toast.close($, toastLoading);
         }
     },
+
     setDirty: (dispatch) => {
         dispatch(actionCreators.setDirty(true));
     },
+
     showModal: async (dispatch, id, url) => {
         dispatch(actionCreators.setDirty(false));
         dispatch(actionCreators.setItems(null));
@@ -112,9 +120,32 @@ export const orchestrators = Object.freeze({
             dispatch(actionCreators.error(`Cannot fetch document aggregation.`));
         }
     },
+
     toggleFilters: (dispatch) => {
         dispatch(actionCreators.toggleFilters());
+    },
+
+    updateFilterLabel: async (dispatch, association, label) => {
+        dispatch(actionCreators.updateFilterLabel(association, label));
+    },
+
+    updateFilterValue: async (dispatch, association, key, value) => {
+        const toastLoading = toast.loading($, `Update ${key}=${value}`);
+        try {
+            const data = { id: association.id, key, value };
+            const url = association.relationships[0].url;
+            const res = await proxy.patch($, url, data);
+            dispatch(actionCreators.setAggregationFilters(res._embedded.aggregationFilters || []));
+            orchestrators.setDirty(dispatch);
+        } catch (err) {
+            // eslint-disable-next-line no-console
+            console.error(`orchestrators.updateFilterValue(): err=`, err);
+            toast.error($, `Unable to update ${key}=${value}!`);
+        } finally {
+            toast.close($, toastLoading);
+        }
     }
+
 });
 
 export const reducers = concatenateReducers([{
@@ -143,6 +174,16 @@ export const reducers = concatenateReducers([{
     reducer: (state = {}, action) => {
         const substate = getNamespaceSubstate(state, namespace);
         substate.showFilters = !substate.showFilters;
+        return setNamespaceSubstate(state, namespace, substate);
+    }
+}, {
+    actions: [ actions.UPDATE_FILTER_LABEL ],
+    reducer: (state = {}, action) => {
+        const substate = getNamespaceSubstate(state, namespace);
+
+        const aggregationFilter = substate.aggregationFilters.find((filter) => filter.id === action.payload.association.id);
+        aggregationFilter.editLabel = action.payload.label;
+
         return setNamespaceSubstate(state, namespace, substate);
     }
 }]);

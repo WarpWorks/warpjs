@@ -13,6 +13,13 @@ const Container = (props) => {
     (subState.associations || []).forEach((association) => {
         association.addFilter = async () => orchestrators.addFilter(dispatch, association);
         association.removeFilter = async () => orchestrators.removeFilter(dispatch, association);
+        association.toggleUseParent = async (checked) => orchestrators.updateFilterValue(dispatch, association, 'useParent', checked);
+        association.saveFilterLabel = async (editLabel, label) => {
+            if (editLabel !== label) {
+                orchestrators.updateFilterValue(dispatch, association, 'label', editLabel);
+            }
+        };
+        association.updateFilterLabel = async (label) => orchestrators.updateFilterLabel(dispatch, association, label);
     });
 
     (subState.items || []).forEach((item) => {
