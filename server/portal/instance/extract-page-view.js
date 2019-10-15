@@ -28,6 +28,14 @@ module.exports = async (persistence, pageView, instance, customStyle) => {
     const overviewPanel = await overviewByEntity(persistence, pageView.getParentEntity(), instance, resource.isSpecializedPageViewStyle, true);
     resource.embed('mainBodyPanels', overviewPanel);
 
+    if (resource.hasAggregationFilters) {
+        resource.embed('aggregationFilters', overviewPanel._embedded.aggregationFilters);
+        delete overviewPanel._embedded.aggregationFilters;
+
+        resource.embed('aggregationFiltersItems', overviewPanel._embedded.aggregationFiltersItems);
+        delete overviewPanel._embedded.aggregationFiltersItems;
+    }
+
     // Define the authors for all pages
     const community = await communityByEntity(persistence, pageView.getParentEntity(), instance);
     if (community) {
@@ -39,6 +47,32 @@ module.exports = async (persistence, pageView, instance, customStyle) => {
 
     const mainBodyPanels = await extractMainBodyPanels(persistence, pageView, instance, panels, resource.isSpecializedPageViewStyle);
     if (mainBodyPanels && mainBodyPanels.length) {
+        const foundAggregationFilters = mainBodyPanels.filter((panel) => panel.hasAggregationFilters);
+        if (foundAggregationFilters && foundAggregationFilters.length) {
+            resource.hasAggregationFilters = true;
+            resource.embed('aggregationFilters', foundAggregationFilters.reduce(
+                (cumulator, panel) => {
+                    try {
+                        return cumulator.concat(panel._embedded.aggregationFilters);
+                    } finally {
+                        delete panel._embedded.aggregationFilters;
+                    }
+                },
+                []
+            ));
+
+            resource.embed('aggregationFiltersItems', foundAggregationFilters.reduce(
+                (cumulator, panel) => {
+                    try {
+                        return cumulator.concat(panel._embedded.aggregationFiltersItems);
+                    } finally {
+                        delete panel._embedded.aggregationFiltersItems;
+                    }
+                },
+                []
+            ));
+        }
+
         resource.embed('mainBodyPanels', mainBodyPanels);
     }
 

@@ -19,6 +19,37 @@ module.exports = async (persistence, panel, instance) => {
     });
 
     const panelItems = await panelItemsByPanel(persistence, panel, instance);
+
+    const foundAggregationFilters = panelItems.filter((pi) => pi.hasAggregationFilters);
+    if (foundAggregationFilters && foundAggregationFilters.length) {
+        resource.hasAggregationFilters = true;
+
+        const aggregationFilters = foundAggregationFilters.reduce(
+            (cumulator, pi) => {
+                try {
+                    return cumulator.concat(pi._embedded.aggregationFilters);
+                } finally {
+                    delete pi._embedded.aggregationFilters;
+                }
+            },
+            []
+        );
+        resource.embed('aggregationFilters', aggregationFilters);
+
+        const aggregationFiltersItems = foundAggregationFilters.reduce(
+            (cumulator, pi) => {
+                try {
+                    return cumulator.concat(pi._embedded.aggregationFiltersItems);
+                } finally {
+                    delete pi._embedded.aggregationFiltersItems;
+                }
+            },
+            []
+        );
+
+        resource.embed('aggregationFiltersItems', aggregationFiltersItems);
+    }
+
     resource.embed('items', panelItems);
     resource.showPanel = Boolean(panelItems.filter(
         (pi) => pi.showItem && !pi.visibleInEditOnly && pi.type !== ComplexTypes.SeparatorPanelItem

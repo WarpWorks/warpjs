@@ -30,6 +30,10 @@ the current entity `[E1]`. This relationship will point to a target entity
 The `entityId` is the warpjs ID of the target entity's associated targets
 `[E3]`.
 
+If `useParent===true`, then also gather information of the parent of the
+instance `[E3]`.
+
+
 Example of elements:
 
   - `[E1]` would be the `I3C` entity.

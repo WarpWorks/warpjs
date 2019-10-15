@@ -4,6 +4,7 @@ const Promise = require('bluebird');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const AggregationFilters = require('./../../../lib/core/first-class/aggregation-filters');
 const Document = require('./../../../lib/core/first-class/document');
 const Documents = require('./../../../lib/core/first-class/documents');
 const baseInfoByRelationship = require('./base-info-by-relationship');
@@ -34,6 +35,7 @@ module.exports = async (persistence, panelItem, instance) => {
 
     if (relationship) {
         const domain = relationship.getDomain();
+        const targetEntity = relationship.getTargetEntity();
 
         const href = RoutesInfo.expand(routes.content.instanceRelationshipItems, {
             domain: domain.name,
@@ -45,7 +47,7 @@ module.exports = async (persistence, panelItem, instance) => {
         resource.link('self', href);
 
         resource.isAssociation = !relationship.isAggregation;
-        resource.isDocument = relationship.getTargetEntity().isDocument();
+        resource.isDocument = targetEntity.isDocument();
         resource.id = relationship.id;
 
         if (resource.style === RELATIONSHIP_PANEL_ITEM_STYLES.Document) {
@@ -56,12 +58,89 @@ module.exports = async (persistence, panelItem, instance) => {
             const itemsToSort = await baseInfoByRelationship(persistence, relationship, instance);
             items = sortIntoColumns(itemsToSort, 3);
         } else if (resource.style === RELATIONSHIP_PANEL_ITEM_STYLES.Tile) {
+            const aggregationFilters = AggregationFilters.getRelationshipFilter(instance, relationship.id);
+            resource.hasAggregationFilters = Boolean(aggregationFilters && aggregationFilters.entities && aggregationFilters.entities.length);
+
             const docs = await relationship.getDocuments(persistence, instance);
             const visibleOnlyDocs = docs.filter(visibleOnly);
             items = await Promise.map(
                 visibleOnlyDocs,
-                async (doc) => previewByEntity(persistence, relationship.getTargetEntity(), doc)
+                async (doc) => previewByEntity(persistence, targetEntity, doc)
             );
+
+            if (resource.hasAggregationFilters) {
+                resource.embed('aggregationFilters', aggregationFilters);
+
+                const targetEntityRelationships = targetEntity.getRelationships().filter((reln) => !reln.isAggregation);
+                const relationshipsInfo = targetEntityRelationships
+                    .filter((reln) => !reln.isReverse())
+                    .map((reln) => ({
+                        id: reln.id,
+                        name: reln.name,
+                        target: reln.getTargetEntity().id,
+                        reln
+                    }))
+                ;
+
+                const relationshipsToKeep = aggregationFilters.entities.reduce(
+                    (cumulator, targetEntity) => {
+                        const shouldKeep = relationshipsInfo.filter((reln) => reln.target === targetEntity.id);
+                        if (shouldKeep && shouldKeep.length) {
+                            return cumulator.concat(shouldKeep.map((reln) => ({
+                                ...reln,
+                                label: targetEntity.label || null,
+                                useParent: targetEntity.useParent || false
+                            })));
+                        } else {
+                            return cumulator;
+                        }
+                    },
+                    []
+                );
+
+                const aggregationFiltersItems = await Promise.reduce(
+                    visibleOnlyDocs,
+                    async (cumulator, doc) => Promise.reduce(
+                        relationshipsToKeep,
+                        async (cumulator, relnToKeep) => {
+                            // debug(`doc=${doc.type}/${doc.id}/${doc.Name}, relnToKeep=${relnToKeep.id}/${relnToKeep.name}/${relnToKeep.useParent}/${relnToKeep.label}`);
+
+                            const associatedDocs = await relnToKeep.reln.getDocuments(persistence, doc);
+                            const relnEntity = relnToKeep.reln.getTargetEntity();
+
+                            return Promise.reduce(
+                                associatedDocs,
+                                async (cumulator, associatedDoc) => {
+                                    let parent = {};
+                                    if (relnToKeep.useParent) {
+                                        const parentData = await relnEntity.getParentData(persistence, associatedDoc);
+                                        parent = {
+                                            associatedParentDocType: relnEntity.id,
+                                            associatedParentDocId: parentData.instance.id,
+                                            associatedParentDocName: domain.getDisplayName(parentData.instance)
+                                        };
+                                    }
+
+                                    return cumulator.concat({
+                                        docType: doc.type,
+                                        docId: doc.id,
+                                        docName: domain.getDisplayName(doc),
+                                        associatedDocReln: domain.getDisplayName(relnToKeep.reln),
+                                        associatedDocRelnId: relnEntity.id,
+                                        associatedDocId: associatedDoc.id,
+                                        associatedDocName: domain.getDisplayName(associatedDoc),
+                                        ...parent
+                                    });
+                                },
+                                cumulator
+                            );
+                        },
+                        cumulator
+                    ),
+                    []
+                );
+                resource.embed('aggregationFiltersItems', aggregationFiltersItems);
+            }
         } else if (resource.style === RELATIONSHIP_PANEL_ITEM_STYLES.BasicTile) {
             const docs = await relationship.getDocuments(persistence, instance);
             const visibleOnlyDocs = docs.filter(visibleOnly);
@@ -86,7 +165,7 @@ module.exports = async (persistence, panelItem, instance) => {
             const visibleOnlyDocs = docs.filter(visibleOnly);
             items = await Promise.map(
                 visibleOnlyDocs,
-                async (doc) => previewByEntity(persistence, relationship.getTargetEntity(), doc)
+                async (doc) => previewByEntity(persistence, targetEntity, doc)
             );
         } else if (resource.style === RELATIONSHIP_PANEL_ITEM_STYLES.Vocabulary) {
             const docs = await relationship.getDocuments(persistence, instance);
