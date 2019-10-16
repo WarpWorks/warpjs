@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
-import { /* useDispatch, */ useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { pageSubstate } from './../page-hal/selectors';
 
 import Component from './component';
-// import { orchestrators } from './flux';
+import { orchestrators } from './flux';
 import namespace from './namespace';
 
 import _debug from './debug'; const debug = _debug('container');
@@ -14,13 +14,11 @@ const { getNamespaceSubstate } = window.WarpJS.ReactUtils;
 const byName = (a, b) => a.name.localeCompare(b.name);
 
 const Container = (props) => {
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
     const subState = useSelector((state) => getNamespaceSubstate(state, namespace));
     const page = useSelector((state) => pageSubstate(state));
-    debug(`page=`, page);
 
     const pageView = page && page.pageViews && page.pageViews.length ? page.pageViews[0] : null;
-    debug(`pageView=`, pageView);
 
     const aggregationFilters = (pageView.aggregationFilters || []).map((reln) => ({
         id: reln.id,
@@ -39,7 +37,8 @@ const Container = (props) => {
                                 if (!foundChild) {
                                     foundParent.items.push({
                                         id: aggregationFiltersItem.associatedDocId,
-                                        name: aggregationFiltersItem.associatedDocName
+                                        name: aggregationFiltersItem.associatedDocName,
+                                        onClick: (selected) => orchestrators.select(dispatch, selected, reln.id, entity.id, aggregationFiltersItem.associatedParentDocId, aggregationFiltersItem.associatedDocId)
                                     });
 
                                     foundParent.items.sort(byName);
@@ -48,9 +47,11 @@ const Container = (props) => {
                                 cumulator.push({
                                     id: aggregationFiltersItem.associatedParentDocId,
                                     name: aggregationFiltersItem.associatedParentDocName,
+                                    onClick: (selected) => orchestrators.select(dispatch, selected, reln.id, entity.id, aggregationFiltersItem.associatedParentDocId),
                                     items: [{
                                         id: aggregationFiltersItem.associatedDocId,
-                                        name: aggregationFiltersItem.associatedDocName
+                                        name: aggregationFiltersItem.associatedDocName,
+                                        onClick: (selected) => orchestrators.select(dispatch, selected, reln.id, entity.id, aggregationFiltersItem.associatedParentDocId, aggregationFiltersItem.associatedDocId)
                                     }]
                                 });
                                 cumulator.sort(byName);
@@ -60,7 +61,8 @@ const Container = (props) => {
                             if (!foundChild) {
                                 cumulator.push({
                                     id: aggregationFiltersItem.associatedDocId,
-                                    name: aggregationFiltersItem.associatedDocName
+                                    name: aggregationFiltersItem.associatedDocName,
+                                    onClick: (selected) => orchestrators.select(dispatch, selected, reln.id, entity.id, aggregationFiltersItem.associatedDocId)
                                 });
 
                                 cumulator.sort(byName);

@@ -8,7 +8,7 @@ import Selection from './selection';
 const { errorBoundary } = window.WarpJS.ReactUtils;
 
 const Component = (props) => {
-    const selections = props.entity.items.map((item) => <Selection key={item.id} item={item} {...props} />);
+    const selections = props.entity.items.map((item) => <Selection key={item.id} relnId={props.relnId} entityId={props.entity.id} item={item} {...props} />);
 
     return (
         <Panel>
@@ -27,7 +27,8 @@ Component.propTypes = {
         id: PropTypes.number.isRequired,
         name: PropTypes.string.isRequired,
         items: PropTypes.array.isRequired
-    })
+    }),
+    relnId: PropTypes.number.isRequired
 };
 
 export default errorBoundary(Component);

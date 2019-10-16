@@ -1,5 +1,5 @@
 import { reducers as aggregationEditorReducers } from './aggregation-editor';
-// import { reducers as aggregationFiltersReducers } from './aggregation-filters';
+import { reducers as aggregationFiltersReducers } from './aggregation-filters';
 import { reducers as aliasSelectorReducers } from './alias-selector';
 import { reducers as breadcrumbActionsReducers } from './breadcrumb-actions';
 import { reducers as createNewVersionReducers } from './create-new-version';
@@ -15,7 +15,7 @@ import { reducers as userProfileNotificationsReducers } from './user-profile-not
 
 export default window.WarpJS.ReactUtils.concatenateReducers([
     aggregationEditorReducers,
-    // aggregationFiltersReducers,
+    aggregationFiltersReducers,
     aliasSelectorReducers,
     breadcrumbActionsReducers,
     createNewVersionReducers,

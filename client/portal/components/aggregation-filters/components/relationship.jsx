@@ -8,7 +8,7 @@ import Entity from './entity';
 const { errorBoundary } = window.WarpJS.ReactUtils;
 
 const Component = (props) => {
-    const entities = props.reln.entities.map((entity) => <Entity key={entity.id} entity={entity} {...props} />);
+    const entities = props.reln.entities.map((entity) => <Entity key={entity.id} relnId={props.reln.id} entity={entity} {...props} />);
 
     return (
         <Panel>
