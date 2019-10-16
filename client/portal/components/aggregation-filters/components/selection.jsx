@@ -3,6 +3,7 @@ import { Fragment } from 'react';
 import { Checkbox } from 'react-bootstrap';
 
 import { NAME } from './../constants';
+import * as SHAPES from './../shapes';
 
 import SubSelections from './sub-selections';
 
@@ -27,19 +28,9 @@ Component.displayName = `${NAME}Selection`;
 
 Component.propTypes = {
     entityId: PropTypes.number.isRequired,
-    item: PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        name: PropTypes.string.isRequired,
-        onClick: PropTypes.func.isRequired,
-        items: PropTypes.array
-    }),
+    item: SHAPES.ITEM,
     relnId: PropTypes.number.isRequired,
-    selection: PropTypes.shape({
-        relnId: PropTypes.number,
-        entityId: PropTypes.number,
-        firstLevelId: PropTypes.number,
-        secondLevelId: PropTypes.number
-    })
+    selection: SHAPES.SELECTION
 };
 
 export default errorBoundary(Component);

@@ -7,7 +7,7 @@ import Component from './component';
 import { orchestrators } from './flux';
 import namespace from './namespace';
 
-import _debug from './debug'; const debug = _debug('container');
+// import _debug from './debug'; const debug = _debug('container');
 
 const { getNamespaceSubstate } = window.WarpJS.ReactUtils;
 
@@ -75,8 +75,6 @@ const Container = (props) => {
             };
         })
     }));
-
-    debug(`aggregationFilters=`, aggregationFilters);
 
     return <Component {...subState} section={props.section} aggregationFilters={aggregationFilters} />;
 };

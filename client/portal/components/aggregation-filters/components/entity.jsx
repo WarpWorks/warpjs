@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { Panel } from 'react-bootstrap';
 
 import { NAME } from './../constants';
+import * as SHAPES from './../shapes';
 
 import Selection from './selection';
 
@@ -23,11 +24,7 @@ const Component = (props) => {
 Component.displayName = `${NAME}Entity`;
 
 Component.propTypes = {
-    entity: PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        name: PropTypes.string.isRequired,
-        items: PropTypes.array.isRequired
-    }),
+    entity: SHAPES.ENTITY,
     relnId: PropTypes.number.isRequired
 };
 

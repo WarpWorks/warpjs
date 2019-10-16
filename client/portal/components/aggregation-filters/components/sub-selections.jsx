@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { Checkbox } from 'react-bootstrap';
 
 import { NAME } from './../constants';
+import * as SHAPES from './../shapes';
 
 const { errorBoundary } = window.WarpJS.ReactUtils;
 
@@ -35,19 +36,10 @@ Component.displayName = `${NAME}SubSelections`;
 Component.propTypes = {
     entityId: PropTypes.number.isRequired,
     firstLevelId: PropTypes.number.isRequired,
-    items: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        name: PropTypes.string.isRequired,
-        onClick: PropTypes.func.isRequired
-    })),
+    items: PropTypes.arrayOf(SHAPES.SUB_ITEM),
     open: PropTypes.bool,
     relnId: PropTypes.number.isRequired,
-    selection: PropTypes.shape({
-        relnId: PropTypes.number,
-        entityId: PropTypes.number,
-        firstLevelId: PropTypes.number,
-        secondLevelId: PropTypes.number
-    })
+    selection: SHAPES.SELECTION
 };
 
 export default errorBoundary(Component);

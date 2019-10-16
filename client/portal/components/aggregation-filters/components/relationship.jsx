@@ -1,7 +1,7 @@
-import PropTypes from 'prop-types';
 import { Panel } from 'react-bootstrap';
 
 import { NAME } from './../constants';
+import * as SHAPES from './../shapes';
 
 import Entity from './entity';
 
@@ -22,10 +22,7 @@ const Component = (props) => {
 Component.displayName = `${NAME}Relationship`;
 
 Component.propTypes = {
-    reln: PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        entities: PropTypes.array.isRequired
-    })
+    reln: SHAPES.RELATIONSHIP
 };
 
 export default errorBoundary(Component);
