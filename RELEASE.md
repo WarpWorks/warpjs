@@ -7,6 +7,10 @@
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
 
+## 1.4.12 - 2019-10-16
+
+- #323: Showing filters on Portal view and clickable.
+
 ## 1.4.11 - 2019-10-11
 
 - #323: Allow configuration of aggregation filters.
