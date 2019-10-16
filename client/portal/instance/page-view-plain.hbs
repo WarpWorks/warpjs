@@ -12,19 +12,27 @@
     {{> left-right-margin}}
   </div>
 {{/unless}}
-{{#each pageView._embedded.mainBodyPanels as |panel|}}
-  {{#if panel.showPanel}}
-    <div class="row warpjs-panel">
-      {{> left-right-margin}}
 
-      <div class="col-xs-12 col-sm-8 col-sm-offset-1 warpjs-content">
-        {{> page-view-panel page=../page panel=panel}}
+{{#if pageView.hasAggregationFilters}}
+  <div class="row">
+    {{> left-right-margin}}
+
+    <div class="col-xs-12 col-sm-10 warpjs-content">
+
+      <div id="warpjs-aggregation-filters-input" class="col-xs-12"></div>
+
+      <div id="warpjs-aggregation-filters-panel" class="col-xs-12 col-sm-4"></div>
+
+      <div class="col-xs-12 col-sm-8 warpjs-page-view-main-body">
+        {{> ./page-view-main-body-panels page=page pageView=pageView showMargin=false}}
       </div>
-
-      {{> left-right-margin}}
     </div>
-  {{/if}}
-{{/each}}
+
+    {{> left-right-margin}}
+  </div>
+{{else}}
+  {{> ./page-view-main-body-panels page=page pageView=pageView showMargin=true}}
+{{/if}}
 
 {{#each pageView._embedded.communities as |community|}}
   {{#if community.showPanel}}

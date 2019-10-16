@@ -1,0 +1,19 @@
+{{#each pageView._embedded.mainBodyPanels as |panel|}}
+  {{#if panel.showPanel}}
+    <div class="row warpjs-panel">
+      {{#if ../showMargin}}
+        {{> left-right-margin}}
+
+        <div class="col-xs-12 col-sm-8 col-sm-offset-1 warpjs-content">
+      {{/if}}
+
+      {{> page-view-panel page=../page panel=panel}}
+
+      {{#if ../showMargin}}
+        </div>
+
+        {{> left-right-margin}}
+      {{/if}}
+    </div>
+  {{/if}}
+{{/each}}

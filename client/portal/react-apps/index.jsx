@@ -1,6 +1,7 @@
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
+import AggregationFilters from './../components/aggregation-filters';
 import InlineEditButton from './../components/inline-edit-button';
 import BreadcrumbActions from './../components/breadcrumb-actions';
 import IndividualContributionHeader from './../components/individual-contribution-header';
@@ -68,4 +69,21 @@ export default ($, data) => {
             element
         );
     });
+
+    // Aggregation filters
+    const aggregationFiltersInput = document.getElementById('warpjs-aggregation-filters-input');
+    if (aggregationFiltersInput) {
+        ReactDOM.render(
+            <Provider store={window.WarpJS.STORE} id={`warpjs-aggregation-filters-input`}>
+                <AggregationFilters section="input" />
+            </Provider>,
+            aggregationFiltersInput
+        );
+        ReactDOM.render(
+            <Provider store={window.WarpJS.STORE} id={`warpjs-aggregation-filters-panel`}>
+                <AggregationFilters section="filters" />
+            </Provider>,
+            document.getElementById('warpjs-aggregation-filters-panel')
+        );
+    }
 };
