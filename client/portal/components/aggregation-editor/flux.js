@@ -1,17 +1,20 @@
+import { batch } from 'react-redux';
+
 import namespace from './namespace';
 
 import _debug from './debug'; const debug = _debug('flux');
 
 const { proxy, toast } = window.WarpJS;
-const { showModalContainer } = window.WarpJS.ReactComponents;
+const { hideModalContainer, showModalContainer } = window.WarpJS.ReactComponents;
 const { actionCreator, baseAttributeReducer, concatenateReducers, getNamespaceSubstate, namespaceKeys, setNamespaceSubstate } = window.WarpJS.ReactUtils;
 
 const actions = namespaceKeys(namespace, [
-    'ERROR',
+    'RESET_SHOW_FILTERS',
     'SET_AGGREGATION_FILTERS',
     'SET_ASSOCIATIONS',
     'SET_DIRTY',
     'SET_ENTITIES',
+    'SET_ERROR',
     'SET_ITEMS',
     'SET_URL',
     'TOGGLE_FILTERS',
@@ -19,11 +22,12 @@ const actions = namespaceKeys(namespace, [
 ]);
 
 const actionCreators = Object.freeze({
-    error: (message) => actionCreator(actions.ERROR, { message }),
+    resetShowFilter: () => actionCreator(actions.RESET_SHOW_FILTERS),
     setAggregationFilters: (aggregationFilters) => actionCreator(actions.SET_AGGREGATION_FILTERS, { aggregationFilters }),
     setAssociations: (associations) => actionCreator(actions.SET_ASSOCIATIONS, { associations }),
     setDirty: (dirty) => actionCreator(actions.SET_DIRTY, { dirty }),
     setEntities: (entities) => actionCreator(actions.SET_ENTITIES, { entities }),
+    setError: (message) => actionCreator(actions.SET_ERROR, { message }),
     setItems: (items) => actionCreator(actions.SET_ITEMS, { items }),
     setUrl: (url) => actionCreator(actions.SET_URL, { url }),
     toggleFilters: () => actionCreator(actions.TOGGLE_FILTERS),
@@ -47,6 +51,8 @@ export const orchestrators = Object.freeze({
             toast.close($, toastLoading);
         }
     },
+
+    closeModal: async (dispatch, id) => hideModalContainer(dispatch, id),
 
     createChild: async(dispatch, url, entity) => {
         const toastLoading = toast.loading($, "Creating new child");
@@ -103,21 +109,28 @@ export const orchestrators = Object.freeze({
     },
 
     showModal: async (dispatch, id, url) => {
-        dispatch(actionCreators.setDirty(false));
-        dispatch(actionCreators.setItems(null));
-        dispatch(actionCreators.setEntities(null));
-        dispatch(actionCreators.setAssociations(null));
-        dispatch(actionCreators.setAggregationFilters(null));
+        batch(() => {
+            dispatch(actionCreators.resetShowFilter());
+            dispatch(actionCreators.setError(null));
+            dispatch(actionCreators.setDirty(false));
+            dispatch(actionCreators.setItems(null));
+            dispatch(actionCreators.setEntities(null));
+            dispatch(actionCreators.setAssociations(null));
+            dispatch(actionCreators.setAggregationFilters(null));
+        });
+
         showModalContainer(dispatch, id);
         try {
             const res = await proxy.get($, url, true);
-            dispatch(actionCreators.setItems(res._embedded.items || []));
-            dispatch(actionCreators.setEntities(res._embedded.entities || []));
-            dispatch(actionCreators.setAssociations(res._embedded.associations || []));
-            dispatch(actionCreators.setAggregationFilters(res._embedded.aggregationFilters || []));
-            dispatch(actionCreators.setUrl(url));
+            batch(() => {
+                dispatch(actionCreators.setItems(res._embedded.items || []));
+                dispatch(actionCreators.setEntities(res._embedded.entities || []));
+                dispatch(actionCreators.setAssociations(res._embedded.associations || []));
+                dispatch(actionCreators.setAggregationFilters(res._embedded.aggregationFilters || []));
+                dispatch(actionCreators.setUrl(url));
+            });
         } catch (err) {
-            dispatch(actionCreators.error(`Cannot fetch document aggregation.`));
+            dispatch(actionCreators.setError(`Cannot fetch document aggregation.`));
         }
     },
 
@@ -149,8 +162,8 @@ export const orchestrators = Object.freeze({
 });
 
 export const reducers = concatenateReducers([{
-    actions: [ actions.ERROR ],
-    reducer: (state = {}, action) => baseAttributeReducer(state, namespace, 'error', action.payload.message)
+    actions: [ actions.RESET_SHOW_FILTERS ],
+    reducer: (state = {}, action) => baseAttributeReducer(state, namespace, 'showFilters', false)
 }, {
     actions: [ actions.SET_AGGREGATION_FILTERS ],
     reducer: (state = {}, action) => baseAttributeReducer(state, namespace, 'aggregationFilters', action.payload.aggregationFilters)
@@ -163,6 +176,9 @@ export const reducers = concatenateReducers([{
 }, {
     actions: [ actions.SET_ENTITIES ],
     reducer: (state = {}, action) => baseAttributeReducer(state, namespace, 'entities', action.payload.entities)
+}, {
+    actions: [ actions.SET_ERROR ],
+    reducer: (state = {}, action) => baseAttributeReducer(state, namespace, 'error', action.payload.message)
 }, {
     actions: [ actions.SET_ITEMS ],
     reducer: (state = {}, action) => baseAttributeReducer(state, namespace, 'items', action.payload.items)

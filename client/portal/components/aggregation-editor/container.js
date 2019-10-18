@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Component from './component';
@@ -28,6 +29,7 @@ const Container = (props) => {
     });
 
     const dispatchProps = Object.freeze({
+        closeModal: async () => orchestrators.closeModal(dispatch, props.id),
         createChild: async (entity) => orchestrators.createChild(dispatch, subState.url, entity),
         onHide: async () => orchestrators.modalClosed(dispatch, subState.isDirty),
         toggleFilters: () => orchestrators.toggleFilters(dispatch)
@@ -40,6 +42,10 @@ const Container = (props) => {
     };
 
     return <Component {...connectedProps} />;
+};
+
+Container.propTypes = {
+    id: PropTypes.string.isRequired
 };
 
 export default Container;

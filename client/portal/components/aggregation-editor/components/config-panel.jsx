@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
-import { Alert, Checkbox, Col, ControlLabel, Form, FormControl, FormGroup, Grid, ListGroup, ListGroupItem, Row } from 'react-bootstrap';
+import { Alert, Checkbox, Col, Form, FormControl, Grid, ListGroup, ListGroupItem, Row } from 'react-bootstrap';
 
-import oxfordComma from './../../../../lib/utils/oxford-comma';
+import oxfordComma from './../../../../../lib/utils/oxford-comma';
+import { NAME } from './../constants';
 
 const { ActionIcon, Button } = window.WarpJS.ReactComponents;
 const { errorBoundary } = window.WarpJS.ReactUtils;
@@ -21,22 +22,14 @@ const Component = (props) => {
                 <span className="pull-right">
                     <ActionIcon glyph="trash" title="Remove filter" style="danger" onClick={association.removeFilter} />
                 </span>
-                <div>{name} ({relationships})</div>
-                <Form horizontal>
-                    <FormGroup controlId={`filter-label-${association.id}`}>
-                        <Col componentClass={ControlLabel} xs={5}>Filter label:</Col>
-                        <Col xs={7}>
-                            <FormControl type="text" placeholder="Filter name to display"
-                                value={filter.editLabel !== undefined ? filter.editLabel : filter.label}
-                                onChange={(event) => association.updateFilterLabel(event.target.value)}
-                                onBlur={() => association.saveFilterLabel(filter.editLabel, filter.label)}
-                            />
-                        </Col>
-                    </FormGroup>
-                    <FormGroup controlId={`filter-use-parent-${association.id}`}>
-                        <Col componentClass={ControlLabel} xs={5}>Use parent:</Col>
-                        <Col xs={7}><Checkbox checked={filter.useParent} onChange={(event) => association.toggleUseParent(event.target.checked)} /></Col>
-                    </FormGroup>
+                <div><strong>{name}</strong> ({relationships})</div>
+                <Form>
+                    <FormControl bsSize="sm" type="text" placeholder="Filter name to display"
+                        value={filter.editLabel !== undefined ? filter.editLabel : filter.label}
+                        onChange={(event) => association.updateFilterLabel(event.target.value)}
+                        onBlur={() => association.saveFilterLabel(filter.editLabel, filter.label)}
+                    />
+                    <Checkbox checked={filter.useParent} onChange={(event) => association.toggleUseParent(event.target.checked)}>Use parent</Checkbox>
                 </Form>
             </ListGroupItem>
         );
@@ -76,12 +69,18 @@ const Component = (props) => {
     return (
         <Grid fluid>
             <Row>
+                <Col xs={6}><h2>Selected filters</h2></Col>
+                <Col xs={6}><h2>Available filters</h2></Col>
+            </Row>
+            <Row>
                 <Col xs={6}>{filterItems}</Col>
                 <Col xs={6}>{associationItems}</Col>
             </Row>
         </Grid>
     );
 };
+
+Component.displayName = `${NAME}ConfigPanel`;
 
 Component.propTypes = {
     associations: PropTypes.arrayOf(PropTypes.shape({
