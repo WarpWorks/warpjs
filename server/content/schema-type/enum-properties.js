@@ -1,4 +1,4 @@
-const _ = require('lodash');
+const pick = require('lodash/pick');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
 const validEnumSelections = require('./../../../lib/core/valid-enum-selections');
@@ -13,7 +13,7 @@ const MIN_MAX = {
 
 module.exports = (entity, resource) => {
     entity.getEnums().forEach((property) => {
-        const choices = property.literals.map((literal) => _.pick(literal, [
+        const choices = property.literals.map((literal) => pick(literal, [
             'type',
             'name',
             'desc',

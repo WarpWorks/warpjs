@@ -1,4 +1,4 @@
-const _ = require('lodash');
+const filter = require('lodash/filter');
 const Promise = require('bluebird');
 
 const ChangeLogs = require('./../change-logs');
@@ -23,9 +23,7 @@ const saveItemDelete = ($, modal, element, items) => {
             .then(() => constants.setDirty())
             .then(() => ChangeLogs.dirty())
             .then(() => {
-                items = _.filter(items, (item) => {
-                    return item.id !== data.id;
-                });
+                items = filter(items, (item) => item.id !== data.id);
                 $('.warpjs-document-elements > div > .warpjs-content', modal).html(itemsTemplate({ items: items }));
                 if (items.length) {
                     $('.warpjs-list-container .warpjs-list-item:first-child .warpjs-list-item-value').trigger('click');

@@ -1,4 +1,4 @@
-const _ = require('lodash');
+const clone = require('lodash/clone');
 const testHelpers = require('@quoin/node-test-helpers');
 
 const moduleToTest = require('./middlewares');
@@ -14,14 +14,14 @@ describe("lib/middlewares", () => {
     });
 
     it("should expose known properties", () => {
-        const clone = _.clone(moduleToTest);
+        const aClone = clone(moduleToTest);
 
-        testHelpers.verifyProperties(clone, 'function', [
+        testHelpers.verifyProperties(aClone, 'function', [
             'canAccessAsAdmin',
             'canAccessAsContentManager'
         ]);
 
-        expect(clone).to.be.empty();
+        expect(aClone).to.be.empty();
     });
 
     describe("canAccessAsAdmin()", () => {

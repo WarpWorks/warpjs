@@ -1,4 +1,4 @@
-const _ = require('lodash');
+const extend = require('lodash/extend');
 const rc = require('@quoin/node-rc');
 
 const packageJson = require('./../../package.json');
@@ -23,7 +23,7 @@ const baseConfig = {
 
 const config = rc(packageJson.name, baseConfig);
 
-module.exports = _.extend(config, {
+module.exports = extend(config, {
     serverVersion: packageJson.version,
     serverStarted: new Date()
 });

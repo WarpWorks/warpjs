@@ -1,4 +1,4 @@
-const _ = require('lodash');
+const cloneDeep = require('lodash/cloneDeep');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
@@ -7,7 +7,7 @@ const REASONS = require('./reasons');
 class Orphan {
     constructor(reason, document, details) {
         this.reason = reason;
-        this.document = _.cloneDeep(document);
+        this.document = cloneDeep(document);
         this.details = details;
     }
 

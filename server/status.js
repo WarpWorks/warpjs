@@ -1,4 +1,5 @@
-const _ = require('lodash');
+const extend = require('lodash/extend');
+const reduce = require('lodash/reduce');
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const RoutesInfoPackageJson = require('@quoin/expressjs-routes-info/package.json');
 const warpjsPlugins = require('@warp-works/warpjs-plugins');
@@ -9,9 +10,9 @@ const packageJson = require('./../package.json');
 const serverStarted = (new Date()).toString();
 
 function getRoutes() {
-    return _.reduce(
+    return reduce(
         RoutesInfo.all(),
-        (memo, route, key) => _.extend({}, memo, {
+        (memo, route, key) => extend({}, memo, {
             [route.name]: route.pathname
         }),
         {}

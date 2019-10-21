@@ -1,13 +1,13 @@
-const _ = require('lodash');
+const clone = require('lodash/clone');
 // const debug = require('debug')('W2:portal:resources/sort-into-columns');
 
 module.exports = (items, nbOfColumns) => {
-    const clone = _.clone(items);
+    const aClone = clone(items);
     const sorted = [];
 
     for (let columnIndex = nbOfColumns; columnIndex > 0; columnIndex--) {
-        const nbElements = Math.ceil(clone.length / columnIndex);
-        sorted.push(clone.splice(0, nbElements));
+        const nbElements = Math.ceil(aClone.length / columnIndex);
+        sorted.push(aClone.splice(0, nbElements));
     }
 
     // debug(`sorted=`, sorted);

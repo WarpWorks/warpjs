@@ -131,7 +131,8 @@ module.exports = (baseUrl, staticUrl) => {
     app.get('/_status', status);
 
     // --- DEBUG ---
-    debug("RoutesInfo.all()=", require('lodash').map(RoutesInfo.all(), (route, key) => `${route.name} => ${route.pathname}`));
+    const map = require('lodash/map');
+    debug("RoutesInfo.all()=", map(RoutesInfo.all(), (route, key) => `${route.name} => ${route.pathname}`));
     // --- /DEBUG ---
 
     app.use(middlewares.error);

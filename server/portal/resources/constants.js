@@ -1,4 +1,6 @@
-const _ = require('lodash');
+const extend = require('lodash/extend');
+const reduce = require('lodash/reduce');
+const values = require('lodash/values');
 // const debug = require('debug')('W2:portal:resources/constants');
 
 const BasicTypes = require('./../../../lib/core/basic-types');
@@ -8,9 +10,9 @@ const RELATIONSHIP_PANEL_ITEM_STYLES = require('./../../../lib/core/relationship
 
 function generateIndicators(obj, itemToCompare) {
     // debug(`generateIndicators(obj, itemToCompare='${itemToCompare}'): obj=`, obj);
-    return Object.freeze(_.reduce(
-        _.values(obj),
-        (indicators, indicator) => _.extend(indicators, {
+    return Object.freeze(reduce(
+        values(obj),
+        (indicators, indicator) => extend(indicators, {
             [indicator]: itemToCompare === indicator
         }),
         {}
@@ -68,7 +70,7 @@ module.exports = Object.freeze({
     }),
 
     isSpecializedPanel(name) {
-        return _.values(this.PANEL_ITEM_NAMES).indexOf(name) !== -1;
+        return values(this.PANEL_ITEM_NAMES).indexOf(name) !== -1;
     },
 
     isOfRelationshipPanelItemStyle(panelItem) {

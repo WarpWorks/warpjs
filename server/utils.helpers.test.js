@@ -1,4 +1,4 @@
-const _ = require('lodash');
+const forEach = require('lodash/forEach');
 const testHelpers = require('@quoin/node-test-helpers');
 
 const app = require('./app');
@@ -12,7 +12,7 @@ function verifyEachLink(expect, link) {
 function verifyHal(expect, data) {
     expect(data).to.have.property('_links').to.be.an('object');
 
-    _.forEach(data._links, verifyEachLink.bind(null, expect));
+    forEach(data._links, verifyEachLink.bind(null, expect));
 
     // We always have the copyrightYear
     expect(data).to.have.property('copyrightYear').to.equal((new Date()).getFullYear());

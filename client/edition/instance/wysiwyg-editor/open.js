@@ -1,4 +1,4 @@
-const _ = require('lodash');
+const extend = require('lodash/extend');
 const Promise = require('bluebird');
 const tinymce = require('tinymce');
 require('tinymce/themes/modern/theme');
@@ -18,7 +18,7 @@ function openModal($, instanceDoc, element) {
     Promise.resolve()
         .then(() => {
             if (!$(constants.MODAL_SELECTOR, instanceDoc).length) {
-                const content = template(_.extend({}, constants, {
+                const content = template(extend({}, constants, {
                     canEdit
                 }));
                 instanceDoc.append(content);

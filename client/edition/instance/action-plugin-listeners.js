@@ -1,4 +1,4 @@
-const _ = require('lodash');
+const debounce = require('lodash/debounce');
 
 const queue = [];
 
@@ -16,7 +16,7 @@ function insertScriptTags($) {
 }
 
 module.exports = ($) => {
-    const debouncedScriptTagsInsert = _.debounce(insertScriptTags, 500);
+    const debouncedScriptTagsInsert = debounce(insertScriptTags, 500);
 
     $(document).on('warpjs-add-action-plugin', function(e) {
         queue.push(e.detail.href);

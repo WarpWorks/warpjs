@@ -1,4 +1,4 @@
-const _ = require('lodash');
+const forEach = require('lodash/forEach');
 const Promise = require('bluebird');
 
 const constants = require('./constants');
@@ -76,7 +76,7 @@ class FileUpload {
                                     if (res.info) {
                                         const tabPane = uploadButton.closest('.tab-pane');
 
-                                        _.forEach(res.info, (value, key) => {
+                                        forEach(res.info, (value, key) => {
                                             const inputField = tabPane.find(`.warpjs-basic-property-${key} input`);
                                             if (inputField) {
                                                 changeIndex += 1;

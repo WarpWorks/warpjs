@@ -1,4 +1,5 @@
-const _ = require('lodash');
+const find = require('lodash/find');
+const findIndex = require('lodash/findIndex');
 const Promise = require('bluebird');
 
 const constants = require('./constants');
@@ -49,9 +50,9 @@ const saveItemPosition = ($, modal, item, index) => {
 };
 
 module.exports = ($, modal, itemId, items, offset) => Promise.resolve()
-    .then(() => _.find(items, [ 'id', itemId ]))
+    .then(() => find(items, [ 'id', itemId ]))
     .then((foundItem) => Promise.resolve()
-        .then(() => _.findIndex(items, [ 'id', itemId ]))
+        .then(() => findIndex(items, [ 'id', itemId ]))
         .then((foundItemIndex) => {
             if (isNaN(offset)) {
                 moveToAnEnd(items, foundItem, offset);
@@ -72,6 +73,6 @@ module.exports = ($, modal, itemId, items, offset) => Promise.resolve()
         $.each(items, (index, item) => {
             $('.warpjs-list-item-value[data-warpjs-id="' + item.id + '"]').data('warpjsPosition', index);
         });
-        $('.warpjs-navigation.warpjs-navigation-position').html('Position ' + (_.findIndex(items, [ 'id', itemId ]) + 1));
+        $('.warpjs-navigation.warpjs-navigation-position').html('Position ' + (findIndex(items, [ 'id', itemId ]) + 1));
     })
 ;
