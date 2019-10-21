@@ -111,26 +111,24 @@ module.exports = async (persistence, panelItem, instance) => {
                             return Promise.reduce(
                                 associatedDocs,
                                 async (cumulator, associatedDoc) => {
-                                    let parent = {};
-                                    if (relnToKeep.useParent) {
-                                        const parentData = await relnEntity.getParentData(persistence, associatedDoc);
-                                        parent = {
-                                            associatedParentDocType: relnEntity.id,
-                                            associatedParentDocId: parentData.instance.id,
-                                            associatedParentDocName: domain.getDisplayName(parentData.instance)
-                                        };
-                                    }
-
-                                    return cumulator.concat({
+                                    const item = {
                                         docType: doc.type,
                                         docId: doc.id,
                                         docName: domain.getDisplayName(doc),
-                                        associatedDocReln: domain.getDisplayName(relnToKeep.reln),
-                                        associatedDocRelnId: relnEntity.id,
-                                        associatedDocId: associatedDoc.id,
-                                        associatedDocName: domain.getDisplayName(associatedDoc),
-                                        ...parent
-                                    });
+                                        firstLevelRelnId: relnEntity.id,
+                                        firstLevelDocId: associatedDoc.id,
+                                        firstLevelDocName: domain.getDisplayName(associatedDoc)
+                                    };
+
+                                    if (relnToKeep.useParent) {
+                                        const parentData = await relnEntity.getParentData(persistence, associatedDoc);
+                                        item.secondLevelDocId = item.firstLevelDocId;
+                                        item.secondLevelDocName = item.firstLevelDocName;
+                                        item.firstLevelDocId = parentData.instance.id;
+                                        item.firstLevelDocName = domain.getDisplayName(parentData.instance);
+                                    }
+
+                                    return cumulator.concat(item);
                                 },
                                 cumulator
                             );
