@@ -1,21 +1,60 @@
 .warpjs-relationship-style-Tile {
     .warpjs-value {
+        display: flex;
+        flex-direction: column;
+        flex-flow: wrap;
+
         .warpjs-value-item-container {
             padding-left: 10px;
             padding-right: 10px;
+            padding-bottom: 20px;
 
             &:nth-child(3n+1) {
                 padding-left: 0px;
                 clear: both;
+
+                &.warpjs-aggregation-filter-still-visible-as-second {
+                    padding-left: 10px;
+                    clear: none;
+                }
+
+                &.warpjs-aggregation-filter-still-visible-as-third {
+                    padding-left: 10px;
+                    padding-right: 0px;
+                    clear: none;
+                }
+            }
+
+            &:nth-child(3n+2) {
+                &.warpjs-aggregation-filter-still-visible-as-first {
+                    padding-left: 0px;
+                    padding-right: 10px;
+                    clear: both;
+                }
+
+                &.warpjs-aggregation-filter-still-visible-as-third {
+                    padding-right: 0px;
+                }
             }
 
             &:nth-child(3n+3) {
                 padding-right: 0px;
+
+                &.warpjs-aggregation-filter-still-visible-as-first {
+                    padding-left: 0px;
+                    padding-right: 10px;
+                    clear: both;
+                }
+
+                &.warpjs-aggregation-filter-still-visible-as-second {
+                    padding-right: 10px;
+                }
             }
 
             .warpjs-value-item {
                 background-color: #ececec;
-                margin-bottom: 20px;
+                // margin-bottom: 20px;
+                height: 100%;
 
                 .warpjs-container {
                     // max-height: calc(~"100% - 32px");
