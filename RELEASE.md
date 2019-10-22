@@ -7,6 +7,10 @@
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
 
+## 1.4.14 - 2019-10-22
+
+- #319: Adding history and make sure Status=Draft.
+
 ## 1.4.13 - 2019-10-22
 
 - #323: Filtering tiles to show in Portal.
