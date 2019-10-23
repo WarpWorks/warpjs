@@ -68,7 +68,7 @@ module.exports = async (req, res) => {
             const associations = allTargetEntities.reduce(
                 (cumulator, targetEntity) => {
                     const relationships = targetEntity.getRelationships();
-                    const associationRelationships = relationships.filter((relationship) => !relationship.isAggregation && !relationship.isReverse());
+                    const associationRelationships = relationships.filter((relationship) => !relationship.isAggregation);
 
                     return associationRelationships.reduce(
                         (cumulator, association) => {
