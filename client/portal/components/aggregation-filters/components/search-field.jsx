@@ -46,9 +46,9 @@ const Component = (props) => {
         <InputGroup>
             {firstLevel}
             {secondLevel}
-            <FormControl type="text" value={props.searchValue} placeholder="Enter search terms" />
+            <FormControl type="text" value={props.searchValue} placeholder="Enter search terms" onChange={(event) => props.setSearchValue(event.target.value)} />
             <InputGroup.Addon>
-                <ActionIcon glyph="remove" title={`Clear search terms`} />
+                <ActionIcon glyph="remove" title={`Clear search terms`} onClick={props.clearSearchValue} />
             </InputGroup.Addon>
         </InputGroup>
     );
@@ -58,8 +58,10 @@ Component.displayName = `${NAME}SearchField`;
 
 Component.propTypes = {
     aggregationFilters: PropTypes.arrayOf(SHAPES.RELATIONSHIP),
+    clearSearchValue: PropTypes.func.isRequired,
     searchValue: PropTypes.string,
-    selection: SHAPES.SELECTION
+    selection: SHAPES.SELECTION,
+    setSearchValue: PropTypes.func.isRequired
 };
 
 export default errorBoundary(Component);

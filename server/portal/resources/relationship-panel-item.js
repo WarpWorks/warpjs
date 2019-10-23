@@ -115,6 +115,7 @@ module.exports = async (persistence, panelItem, instance) => {
                                         docType: doc.type,
                                         docId: doc.id,
                                         docName: domain.getDisplayName(doc),
+                                        docDesc: doc.Description || null,
                                         firstLevelRelnId: relnEntity.id,
                                         firstLevelDocId: associatedDoc.id,
                                         firstLevelDocName: domain.getDisplayName(associatedDoc)

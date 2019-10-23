@@ -7,6 +7,10 @@
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
 
+## 1.4.15 - 2019-10-23
+
+- #323: Adding search term filtering for aggregation filters.
+
 ## 1.4.14 - 2019-10-22
 
 - #319: Adding history and make sure Status=Draft.

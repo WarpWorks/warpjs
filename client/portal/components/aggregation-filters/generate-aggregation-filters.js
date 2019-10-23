@@ -1,8 +1,6 @@
-import { orchestrators } from './flux';
-
 const byName = (a, b) => a.name.localeCompare(b.name);
 
-export default (dispatch, pageViewAggregationFilters, pageViewAggregationFiltersItems) => (pageViewAggregationFilters || []).map((reln) => ({
+export default (dispatch, pageViewAggregationFilters, pageViewAggregationFiltersItems, select) => (pageViewAggregationFilters || []).map((reln) => ({
     id: reln.id,
     entities: (reln.entities || []).map((entity) => {
         const aggregationFiltersItems = (pageViewAggregationFiltersItems || []).filter((aggregationFiltersItem) => aggregationFiltersItem.firstLevelRelnId === entity.id);
@@ -20,7 +18,7 @@ export default (dispatch, pageViewAggregationFilters, pageViewAggregationFilters
                                 foundParent.items.push({
                                     id: aggregationFiltersItem.secondLevelDocId,
                                     name: aggregationFiltersItem.secondLevelDocName,
-                                    onClick: (selected) => orchestrators.select(dispatch, selected, reln.id, entity.id, aggregationFiltersItem.firstLevelDocId, aggregationFiltersItem.secondLevelDocId)
+                                    onClick: (selected) => select(dispatch, selected, reln.id, entity.id, aggregationFiltersItem.firstLevelDocId, aggregationFiltersItem.secondLevelDocId)
                                 });
 
                                 foundParent.items.sort(byName);
@@ -29,11 +27,11 @@ export default (dispatch, pageViewAggregationFilters, pageViewAggregationFilters
                             cumulator.push({
                                 id: aggregationFiltersItem.firstLevelDocId,
                                 name: aggregationFiltersItem.firstLevelDocName,
-                                onClick: (selected) => orchestrators.select(dispatch, selected, reln.id, entity.id, aggregationFiltersItem.firstLevelDocId),
+                                onClick: (selected) => select(dispatch, selected, reln.id, entity.id, aggregationFiltersItem.firstLevelDocId),
                                 items: [{
                                     id: aggregationFiltersItem.secondLevelDocId,
                                     name: aggregationFiltersItem.secondLevelDocName,
-                                    onClick: (selected) => orchestrators.select(dispatch, selected, reln.id, entity.id, aggregationFiltersItem.firstLevelDocId, aggregationFiltersItem.secondLevelDocId)
+                                    onClick: (selected) => select(dispatch, selected, reln.id, entity.id, aggregationFiltersItem.firstLevelDocId, aggregationFiltersItem.secondLevelDocId)
                                 }]
                             });
                             cumulator.sort(byName);
@@ -44,7 +42,7 @@ export default (dispatch, pageViewAggregationFilters, pageViewAggregationFilters
                             cumulator.push({
                                 id: aggregationFiltersItem.firstLevelDocId,
                                 name: aggregationFiltersItem.firstLevelDocName,
-                                onClick: (selected) => orchestrators.select(dispatch, selected, reln.id, entity.id, aggregationFiltersItem.firstLevelDocId)
+                                onClick: (selected) => select(dispatch, selected, reln.id, entity.id, aggregationFiltersItem.firstLevelDocId)
                             });
 
                             cumulator.sort(byName);
