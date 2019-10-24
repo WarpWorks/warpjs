@@ -1,6 +1,8 @@
 import Component from './component';
 import * as orchestrators from './orchestrators';
 
+const { wrapContainer } = window.WarpJS.ReactUtils;
+
 const mapStateToProps = (state, ownProps) => Object.freeze({
     name: state.name,
     relationship: (state && state.items && state.items.length) ? state.items[0] : {}
@@ -26,4 +28,4 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => Object.freeze({
     ...ownProps
 });
 
-export default window.WarpJS.ReactUtils.wrapContainer(Component, mapStateToProps, mapDispatchToProps, mergeProps);
+export default wrapContainer(Component, mapStateToProps, mapDispatchToProps, mergeProps);

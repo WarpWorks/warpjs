@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+const { errorBoundary, PropTypes } = window.WarpJS.ReactUtils;
 
 const oxfordComma = (relationships) => {
     switch (relationships.length) {
@@ -50,4 +50,4 @@ Component.propTypes = {
     item: PropTypes.object
 };
 
-export default window.WarpJS.ReactUtils.errorBoundary(Component);
+export default errorBoundary(Component);

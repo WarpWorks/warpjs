@@ -16,21 +16,23 @@ const processSeparatorPanelItem = require('./process-separator-panel-item');
 const tableOfContents = require('./../table-of-contents');
 const template = require('./template.hbs');
 
+const { cache, CONTENT_PLACEHOLDER, displayCookiePopup, error, getCurrentPageHAL, toast } = window.WarpJS;
+
 (($) => $(document).ready(async () => {
     try {
         let result;
 
         try {
-            result = await window.WarpJS.getCurrentPageHAL($);
+            result = await getCurrentPageHAL($);
         } catch (err) {
             console.error("Error contacting server:", err);
-            window.WarpJS.toast.error($, err.message, "Error contacting server");
+            toast.error($, err.message, "Error contacting server");
         }
 
         if (result.error) {
-            $(window.WarpJS.CONTENT_PLACEHOLDER).html(window.WarpJS.error(result.data));
+            $(CONTENT_PLACEHOLDER).html(error(result.data));
         } else {
-            $(window.WarpJS.CONTENT_PLACEHOLDER).html(template(result.data));
+            $(CONTENT_PLACEHOLDER).html(template(result.data));
 
             if (result.data && result.data._embedded && result.data._embedded.pages) {
                 const page = result.data._embedded.pages[0];
@@ -40,7 +42,7 @@ const template = require('./template.hbs');
                 }
 
                 if (page && page._embedded && page._embedded.previews) {
-                    page._embedded.previews.forEach((preview) => window.WarpJS.cache.set(preview._links.preview.href, {
+                    page._embedded.previews.forEach((preview) => cache.set(preview._links.preview.href, {
                         title: preview.title,
                         content: preview.content
                     }));
@@ -55,7 +57,7 @@ const template = require('./template.hbs');
             actionGoto($);
             documentStatus($, result.data);
 
-            window.WarpJS.displayCookiePopup(result.data.customMessages, result.data._links.acceptCookies);
+            displayCookiePopup(result.data.customMessages, result.data._links.acceptCookies);
 
             imageResizer($);
             addGoogleAnalyticsIfNeeded($);
@@ -67,6 +69,6 @@ const template = require('./template.hbs');
     } catch (err) {
         // eslint-disable-next-line no-console
         console.error("Error processing response:", err);
-        window.WarpJS.toast.error($, err.message, "Error processing response");
+        toast.error($, err.message, "Error processing response");
     }
 }))(jQuery);

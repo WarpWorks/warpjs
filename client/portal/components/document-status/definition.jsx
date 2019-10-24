@@ -1,5 +1,3 @@
-import classnames from 'classnames';
-import PropTypes from 'prop-types';
 import { Table } from 'react-bootstrap';
 
 import { ALL } from './../../../../lib/constants/document-status';
@@ -7,6 +5,7 @@ import { NAME } from './constants';
 
 // import _debug from './debug'; const debug = _debug('definition');
 
+const { classnames, PropTypes } = window.WarpJS.ReactUtils;
 const { errorBoundary } = window.WarpJS.ReactUtils;
 
 const Component = (props) => {

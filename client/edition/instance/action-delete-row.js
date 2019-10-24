@@ -3,6 +3,8 @@ const Promise = require('bluebird');
 const ChangeLogs = require('./../change-logs');
 const deleteConfirm = require('./../delete-confirm');
 
+const { proxy, toast } = window.WarpJS;
+
 module.exports = ($, instanceDoc) => {
     instanceDoc.on('click', '[data-warpjs-action="delete-row"][data-warpjs-url]:not([disabled])', function() {
         Promise.resolve()
@@ -10,12 +12,12 @@ module.exports = ($, instanceDoc) => {
             .then((confirmed) => {
                 if (confirmed) {
                     Promise.resolve()
-                        .then(() => window.WarpJS.toast.loading($, "This can take few seconds.", "Deleting..."))
+                        .then(() => toast.loading($, "This can take few seconds.", "Deleting..."))
                         .then((toastLoading) => Promise.resolve()
-                            .then(() => window.WarpJS.proxy.del($, $(this).data('warpjsUrl')))
+                            .then(() => proxy.del($, $(this).data('warpjsUrl')))
                             .then(() => ChangeLogs.dirty())
                             .then(() => {
-                                window.WarpJS.toast.success($, "Deleted");
+                                toast.success($, "Deleted");
 
                                 // Immediate UI feedback
 
@@ -39,9 +41,9 @@ module.exports = ($, instanceDoc) => {
                             })
                             .catch((err) => {
                                 console.error("Error delete-row on server:", err);
-                                window.WarpJS.toast.error($, err.message, "Error deleting element");
+                                toast.error($, err.message, "Error deleting element");
                             })
-                            .finally(() => window.WarpJS.toast.close($, toastLoading))
+                            .finally(() => toast.close($, toastLoading))
                         )
                     ;
                 }

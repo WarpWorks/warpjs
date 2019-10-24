@@ -1,9 +1,8 @@
-import PropTypes from 'prop-types';
-
 import Sidebar from './components/sidebar';
 import SearchField from './components/search-field';
 import { NAME } from './constants';
 
+const { PropTypes } = window.WarpJS.ReactUtils;
 const { errorBoundary } = window.WarpJS.ReactUtils;
 
 const Component = (props) => {

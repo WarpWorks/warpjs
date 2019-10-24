@@ -1,6 +1,6 @@
 import actions from './actions';
 
-const actionCreator = window.WarpJS.ReactUtils.actionCreator;
+const { actionCreator } = window.WarpJS.ReactUtils;
 
 export const initializeState = (following, followUrl, unfollowUrl) => actionCreator(actions.INITIAL_STATE, {
     following, followUrl, unfollowUrl

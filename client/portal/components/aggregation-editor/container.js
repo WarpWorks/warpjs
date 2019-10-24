@@ -1,13 +1,11 @@
-import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
-
 import Component from './component';
 import { orchestrators } from './flux';
 import namespace from './namespace';
 
-const { getNamespaceSubstate } = window.WarpJS.ReactUtils;
+const { PropTypes, useDispatch, useSelector } = window.WarpJS.ReactUtils;
+const { getNamespaceSubstate, wrapHookContainer } = window.WarpJS.ReactUtils;
 
-const Container = (props) => {
+const getComponentProps = (props) => {
     const dispatch = useDispatch();
     const subState = useSelector((state) => getNamespaceSubstate(state, namespace));
 
@@ -28,24 +26,18 @@ const Container = (props) => {
         item.remove = async () => orchestrators.removeDocument(dispatch, item);
     });
 
-    const dispatchProps = Object.freeze({
+    return {
+        ...subState,
         closeModal: async () => orchestrators.closeModal(dispatch, props.id, subState.isDirty),
         createChild: async (entity) => orchestrators.createChild(dispatch, subState.url, entity),
         onHide: async () => orchestrators.modalClosed(dispatch, subState.isDirty),
-        toggleFilters: () => orchestrators.toggleFilters(dispatch)
-    });
-
-    const connectedProps = {
-        ...subState,
-        ...dispatchProps,
+        toggleFilters: () => orchestrators.toggleFilters(dispatch),
         ...props
     };
-
-    return <Component {...connectedProps} />;
 };
 
-Container.propTypes = {
+const propTypes = {
     id: PropTypes.string.isRequired
 };
 
-export default Container;
+export default wrapHookContainer(Component, getComponentProps, propTypes);

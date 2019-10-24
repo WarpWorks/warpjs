@@ -1,6 +1,8 @@
 // import debug from './../../../debug';
 // const log = debug('inline-edit/association-modal/orchestrators/sync-association-description');
 
+const { proxy, toast } = window.WarpJS;
+
 export default async (dispatch, item) => {
     const url = item._links.self.href;
     const data = {
@@ -8,14 +10,14 @@ export default async (dispatch, item) => {
         value: event.target.value
     };
 
-    const toastLoading = window.WarpJS.toast.loading($, "Updating description...");
+    const toastLoading = toast.loading($, "Updating description...");
     try {
-        await window.WarpJS.proxy.patch($, url, data);
-        window.WarpJS.toast.success($, "Updated description");
+        await proxy.patch($, url, data);
+        toast.success($, "Updated description");
     } catch (err) {
         console.error("Error syncAssociationDescription(): err=", err);
-        window.WarpJS.toast.error($, err.message, "Error!");
+        toast.error($, err.message, "Error!");
     } finally {
-        window.WarpJS.toast.close($, toastLoading);
+        toast.close($, toastLoading);
     }
 };

@@ -6,7 +6,6 @@ import { orchestrators } from './flux';
 // import _debug from './debug'; const debug = _debug('container');
 
 const { getNamespaceSubstate, wrapContainer } = window.WarpJS.ReactUtils;
-const { hideModal, showModal } = orchestrators;
 
 const mapStateToProps = (state, ownProps) => {
     const pageHalSubstate = getNamespaceSubstate(state, pageHalNamespace);
@@ -29,12 +28,12 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => Object.freeze({
-    hideModal: async () => hideModal(dispatch),
+    hideModal: async () => orchestrators.hideModal(dispatch),
     promotions: (items, setDirty) => items.map((item) => ({
         label: item.label,
         onClick: async () => orchestrators.promote(dispatch, item, setDirty)
     })),
-    showModal: async () => showModal(dispatch)
+    showModal: async () => orchestrators.showModal(dispatch)
 });
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => Object.freeze({

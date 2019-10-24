@@ -6,11 +6,10 @@ import namespace from './namespace';
 
 // import _debug from './debug'; const debug = _debug('reducers');
 
-const getSubstate = window.WarpJS.ReactUtils.getNamespaceSubstate;
-const setSubstate = window.WarpJS.ReactUtils.setNamespaceSubstate;
+const { concatenateReducers, getNamespaceSubstate, setNamespaceSubstate } = window.WarpJS.ReactUtils;
 
 const updateFilter = (state = {}, action) => {
-    const substate = getSubstate(state, namespace);
+    const substate = getNamespaceSubstate(state, namespace);
 
     if (!substate[action.payload.id]) {
         substate[action.payload.id] = {};
@@ -30,21 +29,21 @@ const updateFilter = (state = {}, action) => {
         }
     });
 
-    return setSubstate(state, namespace, substate);
+    return setNamespaceSubstate(state, namespace, substate);
 };
 
 const updateSortBy = (state = {}, action) => {
-    const substate = getSubstate(state, namespace);
+    const substate = getNamespaceSubstate(state, namespace);
     if (!substate[action.payload.id]) {
         substate[action.payload.id] = {};
     }
     const substateId = substate[action.payload.id];
 
     substateId.sortBy = action.payload.value;
-    return setSubstate(state, namespace, substate);
+    return setNamespaceSubstate(state, namespace, substate);
 };
 
-export default window.WarpJS.ReactUtils.concatenateReducers([
+export default concatenateReducers([
     { actions: [ actions.UPDATE_FILTER ], reducer: updateFilter },
     { actions: [ actions.UPDATE_SORT_BY ], reducer: updateSortBy }
 ]);

@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { Panel } from 'react-bootstrap';
 
 import { NAME } from './../constants';
@@ -6,6 +5,7 @@ import * as SHAPES from './../shapes';
 
 import Selection from './selection';
 
+const { PropTypes } = window.WarpJS.ReactUtils;
 const { errorBoundary } = window.WarpJS.ReactUtils;
 
 const Component = (props) => {

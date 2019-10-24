@@ -1,10 +1,10 @@
-import PropTypes from 'prop-types';
-import { Fragment } from 'react';
 import { Col, Glyphicon, Grid, Row } from 'react-bootstrap';
 
 import DetailItem from './../detail-item';
 
 // import _debug from './debug'; const debug = _debug('component');
+
+const { errorBoundary, Fragment, PropTypes } = window.WarpJS.ReactUtils;
 
 const Component = (props) => {
     const item = props.items.find((item) => item.type === props.detailsFor.type && item.id === props.detailsFor.id);
@@ -54,4 +54,4 @@ Component.propTypes = {
     items: PropTypes.array.isRequired
 };
 
-export default window.WarpJS.ReactUtils.errorBoundary(Component);
+export default errorBoundary(Component);

@@ -5,8 +5,10 @@ const selectedDocumentsTemplate = require('./selected-documents.hbs');
 const typeDocumentsTemplate = require('./type-documents.hbs');
 const typeOptionsTemplate = require('./type-options.hbs');
 
+const { proxy, toast } = window.WarpJS;
+
 module.exports = ($, modal, clickedElement) => Promise.resolve()
-    .then(() => window.WarpJS.proxy.post($, modal.data('warpjsUrl'), {
+    .then(() => proxy.post($, modal.data('warpjsUrl'), {
         action: contentConstants.ACTIONS.LIST_TYPES,
         reference: {
             type: $(clickedElement).data('warpjsReferenceType'),
@@ -26,7 +28,7 @@ module.exports = ($, modal, clickedElement) => Promise.resolve()
                     $('#warpjs-inline-edit-type-selector', modal).html(typeOptionsTemplate({ types: instance._embedded.types }));
                     $('#warpjs-inline-edit-type-selector', modal).prop('disabled', (instance._embedded.types.length <= 1));
                 } else {
-                    window.WarpJS.toast.error($, "Could not find any types.");
+                    toast.error($, "Could not find any types.");
                 }
 
                 if (instance._embedded.documents) {
@@ -38,11 +40,11 @@ module.exports = ($, modal, clickedElement) => Promise.resolve()
                 }
             }
         } else {
-            window.WarpJS.toast.error($, "Document not found");
+            toast.error($, "Document not found");
         }
     })
     .catch((err) => {
-        window.WarpJS.toast.error($, err.message, "Fetching data error");
+        toast.error($, err.message, "Fetching data error");
         $('#warpjs-inline-edit-type-selector', modal)
             .html($('<option>Unable to load types</option>'))
             .closest('.form-group').addClass('has-error').removeClass('has-warning')

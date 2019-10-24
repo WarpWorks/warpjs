@@ -1,9 +1,9 @@
-import PropTypes from 'prop-types';
 import { Checkbox } from 'react-bootstrap';
 
 import { NAME } from './../constants';
 import * as SHAPES from './../shapes';
 
+const { PropTypes } = window.WarpJS.ReactUtils;
 const { errorBoundary } = window.WarpJS.ReactUtils;
 
 const Component = (props) => {

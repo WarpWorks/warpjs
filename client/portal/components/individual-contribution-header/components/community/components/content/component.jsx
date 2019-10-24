@@ -1,5 +1,3 @@
-import PropTypes from 'prop-types';
-import React from 'react';
 import { Col } from 'react-bootstrap';
 
 import And from './../and';
@@ -7,6 +5,8 @@ import AndMore from './../and-more';
 import ResponsiveImage from './../../../responsive-image';
 import SeeAll from './../see-all';
 import UserName from './../user-name';
+
+const { errorBoundary, Fragment, PropTypes } = window.WarpJS.ReactUtils;
 
 const displayImages = (displayedUsers) => displayedUsers.map((user) => <ResponsiveImage key={user.id} src={user._links.image.href} />);
 
@@ -18,30 +18,30 @@ const displayNames = (displayedUsers, moreUsers) => {
 
     if (displayedUsers.length >= 2) {
         names.push(
-            <React.Fragment key={displayedUsers[1].id}>
+            <Fragment key={displayedUsers[1].id}>
                 {
                     displayedUsers.length === 2
-                        ? <React.Fragment> <And/ > </React.Fragment>
-                        : <React.Fragment>, </React.Fragment>
+                        ? <Fragment> <And/ > </Fragment>
+                        : <Fragment>, </Fragment>
                 }
                 <UserName user={displayedUsers[1]} />
-            </React.Fragment>
+            </Fragment>
         );
     }
 
     if (displayedUsers.length >= 3) {
         names.push(
-            <React.Fragment key={displayedUsers[2].id}>
+            <Fragment key={displayedUsers[2].id}>
                 {displayedUsers.length === 3 ? ', and' : ','} <UserName user={displayedUsers[2]} />
-            </React.Fragment>
+            </Fragment>
         );
     }
 
     if (displayedUsers.length === 4) {
         names.push(
-            <React.Fragment key={displayedUsers[3].id}>
+            <Fragment key={displayedUsers[3].id}>
                 {moreUsers ? ',' : ', and'} <UserName user={displayedUsers[3]} />
-            </React.Fragment>
+            </Fragment>
         );
     }
 
@@ -63,7 +63,7 @@ const Component = (props) => {
         const displayedNames = displayNames(displayedUsers, moreUsers);
 
         return (
-            <React.Fragment>
+            <Fragment>
                 <Col xs={12} xsHidden className="warpjs-individual-contribution-container">
                     <div className={`warpjs-individual-contribution-images warpjs-individual-contribution-images-${displayedUsers.length}`}>
                         {displayedImages}
@@ -81,7 +81,7 @@ const Component = (props) => {
                         {displayedNames}
                     </div>
                 </Col>
-            </React.Fragment>
+            </Fragment>
         );
     } else {
         return (
@@ -98,4 +98,4 @@ Component.propTypes = {
     users: PropTypes.array.isRequired
 };
 
-export default window.WarpJS.ReactUtils.errorBoundary(Component);
+export default errorBoundary(Component);

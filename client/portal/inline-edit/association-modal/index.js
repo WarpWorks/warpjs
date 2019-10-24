@@ -7,6 +7,9 @@ import constants from './../constants';
 import Container from './container';
 import reducers from './reducers';
 
+const { bareModal, flattenHAL, proxy, toast } = window.WarpJS;
+const { createStore } = window.WarpJS.ReactUtils;
+
 module.exports = async ($, element) => {
     const data = {
         elementType: $(element).data('warpjsType'),
@@ -17,17 +20,17 @@ module.exports = async ($, element) => {
         }
     };
 
-    const toastLoading = window.WarpJS.toast.loading($, "Loading data...", "Loading");
+    const toastLoading = toast.loading($, "Loading data...", "Loading");
     try {
-        const res = await window.WarpJS.proxy.post($, $(element).data('warpjsUrl'), data);
-        const state = window.WarpJS.flattenHAL(res);
+        const res = await proxy.post($, $(element).data('warpjsUrl'), data);
+        const state = flattenHAL(res);
 
-        const store = window.WarpJS.ReactUtils.createStore(reducers, {}, [], process.env.NODE_ENV === 'development');
+        const store = createStore(reducers, {}, [], process.env.NODE_ENV === 'development');
         if (state && state.instances && state.instances.length) {
             store.dispatch(actionCreators.initializeState(state.instances[0]));
         }
 
-        const modal = window.WarpJS.bareModal($, constants.MODAL_NAME);
+        const modal = bareModal($, constants.MODAL_NAME);
         constants.onClose(modal);
 
         ReactDOM.render(
@@ -40,8 +43,8 @@ module.exports = async ($, element) => {
         modal.modal('show');
     } catch (err) {
         console.error("Error:", err);
-        window.WarpJS.toast.error($, err.message, "Error getting data");
+        toast.error($, err.message, "Error getting data");
     } finally {
-        window.WarpJS.toast.close($, toastLoading);
+        toast.close($, toastLoading);
     }
 };

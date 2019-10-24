@@ -1,10 +1,10 @@
-import PropTypes from 'prop-types';
-
 import IndividualContributionCommunity from './components/community';
 import IndividualContributionTitle from './components/title';
 import IndividualContributionHeader from './components/header';
 
 // import _debug from './debug'; const debug = _debug('component');
+
+const { errorBoundary, PropTypes } = window.WarpJS.ReactUtils;
 
 const Component = (props) => {
     const pageViews = props.page.pageViews;
@@ -36,4 +36,4 @@ Component.propTypes = {
     page: PropTypes.object.isRequired
 };
 
-export default window.WarpJS.ReactUtils.errorBoundary(Component);
+export default errorBoundary(Component);

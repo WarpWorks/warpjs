@@ -1,9 +1,9 @@
-import PropTypes from 'prop-types';
-
 import DocumentFilters from './../../../document-filters';
 import ComponentItems from './../items';
 
 const COMPONENT_NAME = 'UserProfileDocumentsContent';
+
+const { errorBoundary, PropTypes } = window.WarpJS.ReactUtils;
 
 const byDate = (documentA, documentB) => {
     const lastUpdatedA = (new Date(documentA.lastUpdated)).getTime();
@@ -36,4 +36,4 @@ Component.propTypes = {
     items: PropTypes.array
 };
 
-export default window.WarpJS.ReactUtils.errorBoundary(Component);
+export default errorBoundary(Component);

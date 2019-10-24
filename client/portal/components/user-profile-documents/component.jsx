@@ -1,12 +1,10 @@
-import PropTypes from 'prop-types';
-
 import { NAME } from './constants';
 import Content from './components/content';
 
 // import _debug from './debug'; const debug = _debug('component');
 
-const ModalContainer = window.WarpJS.ReactComponents.ModalContainer;
-const Spinner = window.WarpJS.ReactComponents.Spinner;
+const { ModalContainer, Spinner } = window.WarpJS.ReactComponents;
+const { errorBoundary, PropTypes } = window.WarpJS.ReactUtils;
 
 const Component = (props) => {
     let content = <Spinner />;
@@ -32,4 +30,4 @@ Component.propTypes = {
     errorMessage: PropTypes.string
 };
 
-export default window.WarpJS.ReactUtils.errorBoundary(Component);
+export default errorBoundary(Component);

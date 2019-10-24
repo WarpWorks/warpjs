@@ -5,16 +5,17 @@ import namespace from './namespace';
 import { reducers as userProfileDocumentsReducers } from './../user-profile-documents';
 import { reducers as userProfileNotificationsReducers } from './../user-profile-notifications';
 
-const setSubstate = window.WarpJS.ReactUtils.setNamespaceSubstate;
+const { reducers } = window.WarpJS.ReactComponents;
+const { concatenateReducers, setNamespaceSubstate } = window.WarpJS.ReactUtils;
 
 const initializeState = (state = {}, action) => {
     const substate = cloneDeep(action.payload);
-    return setSubstate(state, namespace, substate);
+    return setNamespaceSubstate(state, namespace, substate);
 };
 
-export default window.WarpJS.ReactUtils.concatenateReducers([
+export default concatenateReducers([
     { actions: [ actions.INITIAL_STATE ], reducer: initializeState },
     userProfileDocumentsReducers,
     userProfileNotificationsReducers,
-    window.WarpJS.ReactComponents.reducers
+    reducers
 ]);

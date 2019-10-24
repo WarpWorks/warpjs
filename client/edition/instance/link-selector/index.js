@@ -8,6 +8,8 @@ const saveSeletedEntities = require('./save-selected-entities');
 const selectOnChange = require('./select-on-change');
 const template = require('./template.hbs');
 
+const { proxy } = window.WarpJS;
+
 module.exports = ($, instanceDoc) => Promise.resolve()
     .then(() => {
         if (!$(`.${constants.SELECTION_MODAL_CLASS}`).length) {
@@ -17,7 +19,7 @@ module.exports = ($, instanceDoc) => Promise.resolve()
             saveSeletedEntities($, instanceDoc);
 
             return Promise.resolve()
-                .then(() => window.WarpJS.proxy.get($, instanceDoc.data('warpjsTypesUrl')))
+                .then(() => proxy.get($, instanceDoc.data('warpjsTypesUrl')))
                 .then((res) => {
                     const content = template({
                         SELECTION_MODAL_CLASS: constants.SELECTION_MODAL_CLASS,

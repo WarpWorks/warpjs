@@ -4,6 +4,8 @@ import throttle from 'lodash/throttle';
 
 // import _debug from './debug'; const debug = _debug('index');
 
+const { proxy } = window.WarpJS;
+
 const BASE_POPOVER_OPTIONS = Object.freeze({
     html: true,
     placement: 'top',
@@ -48,7 +50,7 @@ module.exports = ($) => {
             position(popover, evt);
         } else {
             Promise.resolve()
-                .then(() => window.WarpJS.proxy.get($, $(this).data('warpjsPreviewUrl')))
+                .then(() => proxy.get($, $(this).data('warpjsPreviewUrl')))
                 .then((result) => Promise.resolve()
                     .then(() => {
                         // Tinymce dependent.

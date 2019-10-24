@@ -1,5 +1,7 @@
 import namespace from './namespace';
 
-export default window.WarpJS.ReactUtils.namespaceKeys(namespace, [
+const { namespaceKeys } = window.WarpJS.ReactUtils;
+
+export default namespaceKeys(namespace, [
     'INITIAL_STATE'
 ]);

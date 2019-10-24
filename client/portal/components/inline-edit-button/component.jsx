@@ -1,11 +1,10 @@
-import PropTypes from 'prop-types';
-import { Fragment } from 'react';
 import { Glyphicon, OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 import AggregationEditor from './../aggregation-editor';
 
 import { NAME } from './constants';
 
+const { Fragment, PropTypes } = window.WarpJS.ReactUtils;
 const { errorBoundary } = window.WarpJS.ReactUtils;
 
 const Component = (props) => {

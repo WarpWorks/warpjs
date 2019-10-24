@@ -1,5 +1,6 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+
+import warpjsUtils from '@warp-works/warpjs-utils';
 
 import { TYPES } from './../../entity-pdf/constants';
 import BackToToc from './back-to-toc';
@@ -8,6 +9,8 @@ import TocNumber from './toc-number';
 const CONTENT_LINK_RE = require('./../../../../lib/core/content-link-re');
 
 // import _debug from './debug'; const debug = _debug('paragraph');
+
+const { PropTypes } = warpjsUtils.reactUtils;
 
 const contentLinkReplacer = (match, label, type, url) => {
     return `<a href="${url}">${label}</a>`;

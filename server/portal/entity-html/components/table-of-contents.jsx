@@ -1,10 +1,13 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+
+import warpjsUtils from '@warp-works/warpjs-utils';
 
 import constants from './../../entity-pdf/constants';
 import TocNumber from './toc-number';
 
 // import _debug from './debug'; const debug = _debug('table-of-contents');
+
+const { PropTypes } = warpjsUtils.reactUtils;
 
 const Component = (props) => {
     const content = (items) => items.map((item) => {

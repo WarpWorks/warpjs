@@ -1,10 +1,9 @@
-import PropTypes from 'prop-types';
-import { Fragment } from 'react';
 import { FormControl, Glyphicon, InputGroup } from 'react-bootstrap';
 
 import { NAME } from './constants';
 
-const Button = window.WarpJS.ReactComponents.Button;
+const { Button } = window.WarpJS.ReactComponents;
+const { errorBoundary, Fragment, PropTypes } = window.WarpJS.ReactUtils;
 
 const addVersionLink = (elements, link, label) => {
     if (link) {
@@ -70,4 +69,4 @@ Component.propTypes = {
     version: PropTypes.string.isRequired
 };
 
-export default window.WarpJS.ReactUtils.errorBoundary(Component);
+export default errorBoundary(Component);

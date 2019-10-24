@@ -5,6 +5,7 @@ import namespace from './namespace';
 
 import _debug from './debug'; const debug = _debug('flux');
 
+const { proxy, toast } = window.WarpJS;
 const { actionCreator, concatenateReducers, getNamespaceSubstate, namespaceKeys, setNamespaceSubstate } = window.WarpJS.ReactUtils;
 const { hideModalContainer, showModalContainer } = window.WarpJS.ReactComponents;
 
@@ -19,8 +20,6 @@ export const actionCreators = Object.freeze({
 //
 //  Orchestrators
 //
-
-const { proxy, toast } = window.WarpJS;
 
 export const orchestrators = Object.freeze({
     hideModal: async (dispatch) => hideModalContainer(dispatch, NAME),

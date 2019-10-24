@@ -1,10 +1,10 @@
-import PropTypes from 'prop-types';
 import { Alert, Checkbox, Col, Form, FormControl, Grid, ListGroup, ListGroupItem, Row } from 'react-bootstrap';
 
 import oxfordComma from './../../../../../lib/utils/oxford-comma';
 import { NAME } from './../constants';
 
 const { ActionIcon, Button } = window.WarpJS.ReactComponents;
+const { PropTypes } = window.WarpJS.ReactUtils;
 const { errorBoundary } = window.WarpJS.ReactUtils;
 
 const Component = (props) => {

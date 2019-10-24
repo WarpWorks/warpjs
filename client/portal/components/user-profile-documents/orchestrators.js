@@ -3,11 +3,14 @@ import { NAME } from './constants';
 
 // import _debug from './debug'; const debug = _debug('orchestrators');
 
+const { proxy } = window.WarpJS;
+const { showModalContainer } = window.WarpJS.ReactComponents;
+
 export const show = async (dispatch, url) => {
-    await window.WarpJS.ReactComponents.showModalContainer(dispatch, NAME);
+    await showModalContainer(dispatch, NAME);
 
     try {
-        const result = await window.WarpJS.proxy.get($, url, true);
+        const result = await proxy.get($, url, true);
         if (result && result._embedded && result._embedded.documents) {
             dispatch(actionCreators.results(result._embedded.documents));
         } else {

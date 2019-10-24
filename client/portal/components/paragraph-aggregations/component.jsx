@@ -1,11 +1,10 @@
-import classnames from 'classnames';
-import PropTypes from 'prop-types';
-import { Fragment } from 'react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 import AggregationEditor from './../aggregation-editor';
 
 import { NAME } from './constants';
+
+const { classnames, errorBoundary, Fragment, PropTypes } = window.WarpJS.ReactUtils;
 
 const Component = (props) => {
     if (props.aggregations.length) {
@@ -84,4 +83,4 @@ Component.defaultProps = {
     aggregationSelected: -1
 };
 
-export default window.WarpJS.ReactUtils.errorBoundary(Component);
+export default errorBoundary(Component);

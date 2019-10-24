@@ -1,11 +1,10 @@
-import PropTypes from 'prop-types';
-import React from 'react';
-
 import And from './../and';
+
+const { Fragment, PropTypes } = window.WarpJS.ReactUtils;
 
 const Component = (props) => {
     return (
-        <React.Fragment>, <And /> <span className="warpjs-individual-contribution-names-more">{props.moreUsers} more</span></React.Fragment>
+        <Fragment>, <And /> <span className="warpjs-individual-contribution-names-more">{props.moreUsers} more</span></Fragment>
     );
 };
 

@@ -1,6 +1,6 @@
-import PropTypes from 'prop-types';
 import { ControlLabel, FormGroup } from 'react-bootstrap';
 
+const { PropTypes } = window.WarpJS.ReactUtils;
 const { errorBoundary } = window.WarpJS.ReactUtils;
 
 const Component = (props) => (

@@ -1,11 +1,11 @@
-import PropTypes from 'prop-types';
-import { Fragment } from 'react';
 import { Glyphicon, ListGroup, ListGroupItem } from 'react-bootstrap';
 
 import * as shapes from './../../../../../react-utils/shapes';
 
+const { AutoSaveField, BaseList } = window.WarpJS.ReactComponents;
+const { Fragment, PropTypes } = window.WarpJS.ReactUtils;
+
 const Component = (props) => {
-    const { AutoSaveField, BaseList } = window.WarpJS.ReactComponents;
     const items = props.relationship.items;
 
     const listRender = (items, itemsRenderer) => {

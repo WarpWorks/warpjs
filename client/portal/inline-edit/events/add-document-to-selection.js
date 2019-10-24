@@ -2,6 +2,8 @@ const Promise = require('bluebird');
 
 const selectedDocumentsItemTemplate = require('./../selected-documents-item.hbs');
 
+const { toast } = window.WarpJS;
+
 function findAddedSelection($, modal, doc) {
     return $(`.warpjs-section-selected-documents .warpjs-section-item[data-warpjs-id="${doc.id}"]`, modal);
 }
@@ -24,7 +26,7 @@ module.exports = ($, modal, elementToAdd) => {
         .then((addedDocument) => addedDocument.length
             ? addedDocument
             : Promise.resolve()
-                .then(() => window.WarpJS.toast.warning($, "Create assocation on server", "TODO"))
+                .then(() => toast.warning($, "Create assocation on server", "TODO"))
                 .then((res) => {
                     if (!$('.warpjs-section-selected-documents .warpjs-section-item').length) {
                         $('.warpjs-section-selected-documents .warpjs-no-documents').remove();

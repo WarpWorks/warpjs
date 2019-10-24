@@ -1,8 +1,11 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+
+import warpjsUtils from '@warp-works/warpjs-utils';
 
 import Content from './content';
 import TableOfContent from './table-of-contents';
+
+const { PropTypes } = warpjsUtils.reactUtils;
 
 const STYLE = `
     .table-of-contents {

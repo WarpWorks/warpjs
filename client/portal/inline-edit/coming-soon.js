@@ -1,3 +1,5 @@
+const { toast } = window.WarpJS;
+
 module.exports = ($, message) => {
-    window.WarpJS.toast.warning($, message, "Coming soon...");
+    toast.warning($, message, "Coming soon...");
 };

@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { Button, Row } from 'react-bootstrap';
 
 import LeftRightMargin from './../left-right-margin';
@@ -7,6 +6,8 @@ import UserProfileDocuments from './../user-profile-documents';
 import UserProfileNotifications from './../user-profile-notifications';
 
 // import _debug from './debug'; const debug = _debug('component');
+
+const { errorBoundary, PropTypes } = window.WarpJS.ReactUtils;
 
 const Component = (props) => {
     if (props.myPage) {
@@ -38,4 +39,4 @@ Component.propTypes = {
     showNotifications: PropTypes.func.isRequired
 };
 
-export default window.WarpJS.ReactUtils.errorBoundary(Component);
+export default errorBoundary(Component);

@@ -1,9 +1,9 @@
 import cloneDeep from 'lodash/cloneDeep';
-import { Fragment } from 'react';
-import PropTypes from 'prop-types';
 import { Checkbox, FormControl, FormGroup } from 'react-bootstrap';
 
 import { LABELS, KEYS, SORT_KEYS, SORT_KEYS_LIST, SORT_LABELS } from './constants';
+
+const { errorBoundary, Fragment, PropTypes } = window.WarpJS.ReactUtils;
 
 const Component = (props) => {
     const filters = KEYS.map((key) => {
@@ -69,4 +69,4 @@ Component.propTypes = {
     updateSortBy: PropTypes.func.isRequired
 };
 
-export default window.WarpJS.ReactUtils.errorBoundary(Component);
+export default errorBoundary(Component);

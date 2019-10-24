@@ -1,5 +1,3 @@
-import PropTypes from 'prop-types';
-import { Fragment } from 'react';
 import { Checkbox } from 'react-bootstrap';
 
 import { NAME } from './../constants';
@@ -7,6 +5,7 @@ import * as SHAPES from './../shapes';
 
 import SubSelections from './sub-selections';
 
+const { Fragment, PropTypes } = window.WarpJS.ReactUtils;
 const { errorBoundary } = window.WarpJS.ReactUtils;
 
 const Component = (props) => {

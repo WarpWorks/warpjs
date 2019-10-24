@@ -1,9 +1,9 @@
-import PropTypes from 'prop-types';
 import { Alert, ListGroup, ListGroupItem } from 'react-bootstrap';
 
 import { NAME } from './../constants';
 
 const { ActionIcon } = window.WarpJS.ReactComponents;
+const { PropTypes } = window.WarpJS.ReactUtils;
 const { errorBoundary } = window.WarpJS.ReactUtils;
 
 const Component = (props) => {

@@ -1,5 +1,3 @@
-import PropTypes from 'prop-types';
-import { Fragment } from 'react';
 import { FormControl, HelpBlock, InputGroup } from 'react-bootstrap';
 
 import DocumentEditionFormGroup from './../document-edition/form-group';
@@ -8,6 +6,7 @@ import { NAME } from './constants';
 // import _debug from './debug'; const debug = _debug('component');
 
 const { Button } = window.WarpJS.ReactComponents;
+const { Fragment, PropTypes } = window.WarpJS.ReactUtils;
 const { errorBoundary } = window.WarpJS.ReactUtils;
 
 const Component = (props) => {

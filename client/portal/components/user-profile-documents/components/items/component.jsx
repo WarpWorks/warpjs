@@ -1,6 +1,6 @@
-import PropTypes from 'prop-types';
-
 import ComponentItem from './../item';
+
+const { errorBoundary, PropTypes } = window.WarpJS.ReactUtils;
 
 const Component = (props) => {
     const filteredItems = props.items.filter((item) => {
@@ -42,4 +42,4 @@ Component.propTypes = {
     items: PropTypes.array
 };
 
-export default window.WarpJS.ReactUtils.errorBoundary(Component);
+export default errorBoundary(Component);

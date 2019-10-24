@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+const { PropTypes } = window.WarpJS.ReactUtils;
 
 const Component = (props) => {
     return (

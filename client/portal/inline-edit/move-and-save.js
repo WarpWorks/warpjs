@@ -5,6 +5,8 @@ const Promise = require('bluebird');
 const constants = require('./constants');
 const itemsTemplate = require('./text-modal-elements.hbs');
 
+const { proxy, toast } = window.WarpJS;
+
 const moveOnePosition = (items, element, offset) => {
     const index = items.indexOf(element);
     const newIndex = index + offset;
@@ -40,10 +42,10 @@ const saveItemPosition = ($, modal, item, index) => {
                     oldValue: item.position,
                     newValue: index
                 }))
-                .then((data) => window.WarpJS.proxy.patch($, modal.data('warpjsUrl'), data))
+                .then((data) => proxy.patch($, modal.data('warpjsUrl'), data))
                 .then(() => constants.setDirty())
                 .then(() => true)
-                .catch((err) => window.WarpJS.toast.error($, err.message, "Failed"))
+                .catch((err) => toast.error($, err.message, "Failed"))
             )
         ;
     }
@@ -61,11 +63,11 @@ module.exports = ($, modal, itemId, items, offset) => Promise.resolve()
             }
         })
     )
-    .then(() => window.WarpJS.toast.loading($, "Saving..."))
+    .then(() => toast.loading($, "Saving..."))
     .then((toastLoading) => Promise.resolve()
         .then(() => Promise.each(items, (item, index) => saveItemPosition($, modal, item, index)))
-        .then(() => window.WarpJS.toast.success($, "Data updated"))
-        .finally(() => window.WarpJS.toast.close($, toastLoading))
+        .then(() => toast.success($, "Data updated"))
+        .finally(() => toast.close($, toastLoading))
     )
     .then(() => {
         $('.warpjs-document-elements > div > .warpjs-content', modal).html(itemsTemplate({ items: items }));

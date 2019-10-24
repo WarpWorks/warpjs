@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+const { PropTypes } = window.WarpJS.ReactUtils;
 
 export const relationship = PropTypes.shape({
     items: PropTypes.array,

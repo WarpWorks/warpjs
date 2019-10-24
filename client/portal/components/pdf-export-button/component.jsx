@@ -1,9 +1,8 @@
-import PropTypes from 'prop-types';
-
 import BreadcrumbActionButton from './../breadcrumb-action-button';
 
 import { NAME } from './constants';
 
+const { PropTypes } = window.WarpJS.ReactUtils;
 const { errorBoundary } = window.WarpJS.ReactUtils;
 
 const Component = (props) => {

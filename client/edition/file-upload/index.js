@@ -4,6 +4,8 @@ const Promise = require('bluebird');
 const constants = require('./constants');
 const modalTemplate = require('./modal.hbs');
 
+const { HAL_CONTENT_TYPE, toast } = window.WarpJS;
+
 const TITLE = "File Upload";
 
 function getModal($, instanceDoc) {
@@ -51,14 +53,14 @@ class FileUpload {
                         const url = $('form', modal).data('warpjsUrl');
 
                         Promise.resolve()
-                            .then(() => window.WarpJS.toast.loading($, "Uploading file...", TITLE))
+                            .then(() => toast.loading($, "Uploading file...", TITLE))
                             .then((toastLoading) => Promise.resolve()
                                 // Not compatible with our window.WarpJS.proxy...
                                 .then(() => $.ajax({
                                     method: 'POST',
                                     url,
                                     headers: {
-                                        Accept: window.WarpJS.HAL_CONTENT_TYPE
+                                        Accept: HAL_CONTENT_TYPE
                                     },
                                     data,
                                     processData: false,
@@ -66,7 +68,7 @@ class FileUpload {
                                 }))
                                 .then((res) => {
                                     let changeIndex = 0;
-                                    window.WarpJS.toast.success($, "File uploaded successfully.", TITLE);
+                                    toast.success($, "File uploaded successfully.", TITLE);
                                     modal.modal('hide');
                                     const inputField = uploadButton.closest('.form-group').find('input.warpjs-file-field');
                                     inputField.val(res._links.uploadedFile.href);
@@ -92,13 +94,13 @@ class FileUpload {
                                 .catch((err) => {
                                     // eslint-disable-next-line no-console
                                     console.error("Error upload-file:", err);
-                                    window.WarpJS.toast.error($, "File upload failed!", TITLE);
+                                    toast.error($, "File upload failed!", TITLE);
                                 })
-                                .finally(() => window.WarpJS.toast.close($, toastLoading))
+                                .finally(() => toast.close($, toastLoading))
                             )
                         ;
                     } else {
-                        window.WarpJS.toast.warning($, "Please select a file to upload", TITLE);
+                        toast.warning($, "Please select a file to upload", TITLE);
                         $(input).closest('.form-group').addClass('has-error');
                     }
                 });

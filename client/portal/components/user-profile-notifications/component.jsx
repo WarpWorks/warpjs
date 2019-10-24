@@ -1,11 +1,9 @@
-import PropTypes from 'prop-types';
-
 import { NAME } from './constants';
 import Content from './components/content';
 import Details from './components/details';
 
-const ModalContainer = window.WarpJS.ReactComponents.ModalContainer;
-const Spinner = window.WarpJS.ReactComponents.Spinner;
+const { ModalContainer, Spinner } = window.WarpJS.ReactComponents;
+const { errorBoundary, PropTypes } = window.WarpJS.ReactUtils;
 
 const Component = (props) => {
     let content = <Spinner />;
@@ -42,4 +40,4 @@ Component.defaultProps = {
     notifications: []
 };
 
-export default window.WarpJS.ReactUtils.errorBoundary(Component);
+export default errorBoundary(Component);

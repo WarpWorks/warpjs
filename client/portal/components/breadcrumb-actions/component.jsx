@@ -1,9 +1,9 @@
-import PropTypes from 'prop-types';
-
 import { NAME } from './constants';
 import BreadcrumbActionButton from './../breadcrumb-action-button';
 import DocumentEdition from './../document-edition';
 import FollowDocument from './../follow-document';
+
+const { errorBoundary, PropTypes } = window.WarpJS.ReactUtils;
 
 const Component = (props) => {
     const components = [];
@@ -50,4 +50,4 @@ Component.propTypes = {
     warpjsUser: PropTypes.object
 };
 
-export default window.WarpJS.ReactUtils.errorBoundary(Component);
+export default errorBoundary(Component);

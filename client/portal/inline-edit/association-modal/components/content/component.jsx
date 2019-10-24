@@ -1,5 +1,3 @@
-import PropTypes from 'prop-types';
-import { Fragment } from 'react';
 import { Button, Form, FormControl, ListGroup, ListGroupItem } from 'react-bootstrap';
 
 import * as shapes from './../../../../../react-utils/shapes';
@@ -7,9 +5,10 @@ import * as shapes from './../../../../../react-utils/shapes';
 // import debug from './../../../../debug';
 // const log = debug('client/portal/inline-editor/association-modal/components/content/component');
 
-const Component = (props) => {
-    const { FilterableList } = window.WarpJS.ReactComponents;
+const { FilterableList } = window.WarpJS.ReactComponents;
+const { Fragment, PropTypes } = window.WarpJS.ReactUtils;
 
+const Component = (props) => {
     const selected = props.relationship.targets.find((target) => target.selected);
 
     const selectComponent = (

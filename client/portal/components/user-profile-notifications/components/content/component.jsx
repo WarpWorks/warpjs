@@ -1,10 +1,11 @@
-import PropTypes from 'prop-types';
 import { Col, Grid, Row } from 'react-bootstrap';
 
 import DocumentFilters from './../../../document-filters';
 import Items from './../items';
 
 // import _debug from './debug'; const debug = _debug('component');
+
+const { errorBoundary, PropTypes } = window.WarpJS.ReactUtils;
 
 const COMPONENT_NAME = 'UserProfileNotificationsContent';
 
@@ -48,4 +49,4 @@ Component.propTypes = {
     showDetails: PropTypes.func.isRequired
 };
 
-export default window.WarpJS.ReactUtils.errorBoundary(Component);
+export default errorBoundary(Component);

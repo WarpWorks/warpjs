@@ -1,5 +1,7 @@
 const constants = require('./constants');
 
+const { CONTENT_PLACEHOLDER, modal } = window.WarpJS;
+
 module.exports = ($, instanceDoc) => {
     $('select[data-doc-level="Enum:Status"]', instanceDoc).on('change', function() {
         const statusValue = $(this).val();
@@ -11,16 +13,16 @@ module.exports = ($, instanceDoc) => {
     });
 
     $(constants.PLACEHOLDER, instanceDoc).on('click', function() {
-        const customMessages = $(window.WarpJS.CONTENT_PLACEHOLDER).data('customMessages');
+        const customMessages = $(CONTENT_PLACEHOLDER).data('customMessages');
 
         const modalTitle = customMessages.ContentDocumentStatusModalTitle;
         const modalContent = customMessages.ContentDocumentStatusModalContent;
 
-        const modal = window.WarpJS.modal($, constants.IDENTIFIER, modalTitle, [
+        const newModal = modal($, constants.IDENTIFIER, modalTitle, [
             { label: 'Close' }
         ]);
-        $('> .modal-dialog > .modal-content > .modal-body', modal).html(modalContent);
+        $('> .modal-dialog > .modal-content > .modal-body', newModal).html(modalContent);
 
-        modal.modal('show');
+        newModal.modal('show');
     });
 };

@@ -1,8 +1,9 @@
-import PropTypes from 'prop-types';
 import { Col, Grid, Row } from 'react-bootstrap';
 
 import LeftRightMargin from './../../../../components/left-right-margin';
 import PortalContent from './../../../../components/portal-content';
+
+const { errorBoundary, PropTypes } = window.WarpJS.ReactUtils;
 
 const Component = (props) => {
     return (
@@ -30,4 +31,4 @@ Component.propTypes = {
     name: PropTypes.string.isRequired
 };
 
-export default window.WarpJS.ReactUtils.errorBoundary(Component);
+export default errorBoundary(Component);

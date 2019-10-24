@@ -1,6 +1,6 @@
 import actions from './actions';
 
-const actionCreator = window.WarpJS.ReactUtils.actionCreator;
+const { actionCreator } = window.WarpJS.ReactUtils;
 
 export const error = (message, err) => actionCreator(actions.ERROR, { message, err });
 export const hideDetails = (type, id) => actionCreator(actions.HIDE_DETAILS);

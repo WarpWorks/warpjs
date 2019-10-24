@@ -1,5 +1,6 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+
+import warpjsUtils from '@warp-works/warpjs-utils';
 
 import BackToToc from './back-to-toc';
 import constants from './../../entity-pdf/constants';
@@ -7,6 +8,8 @@ import constants from './../../entity-pdf/constants';
 import Community from './community';
 import Paragraph from './paragraph';
 import TocNumber from './toc-number';
+
+const { PropTypes } = warpjsUtils.reactUtils;
 
 const Component = (props) => {
     const content = (items) => items.map((item) => {

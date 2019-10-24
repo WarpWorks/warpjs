@@ -3,6 +3,8 @@ import { Col, Grid, Row } from 'react-bootstrap';
 import AssociationModalContent from './components/content';
 import AssociationModalList from './components/list';
 
+const { errorBoundary } = window.WarpJS.ReactUtils;
+
 const Component = (props) => {
     return (
         <Grid fluid className="warpjs-association-modal">
@@ -19,4 +21,4 @@ const Component = (props) => {
 };
 Component.displayName = 'AssociationModal';
 
-export default window.WarpJS.ReactUtils.errorBoundary(Component);
+export default errorBoundary(Component);

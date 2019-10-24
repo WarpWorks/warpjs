@@ -1,7 +1,10 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 
+import warpjsUtils from '@warp-works/warpjs-utils';
+
 // import _debug from './debug'; const debug = _debug('community-image');
+
+const { PropTypes } = warpjsUtils.reactUtils;
 
 const Component = (props) => {
     return (

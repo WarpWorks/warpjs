@@ -1,5 +1,6 @@
 import { Col } from 'react-bootstrap';
-import PropTypes from 'prop-types';
+
+const { PropTypes } = window.WarpJS.ReactUtils;
 
 const Component = (props) => (
     <Col xs={12} sm={8} smOffset={1} {...props}>

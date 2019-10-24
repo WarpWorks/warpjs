@@ -1,5 +1,3 @@
-import PropTypes from 'prop-types';
-import { Fragment } from 'react';
 import { ControlLabel, Form, FormGroup, Tab, Tabs } from 'react-bootstrap';
 
 import AliasSelector from './../alias-selector';
@@ -12,6 +10,7 @@ import { NAME } from './constants';
 // import _debug from './debug'; const debug = _debug('component');
 
 const { AutoSaveField, ModalContainer } = window.WarpJS.ReactComponents;
+const { errorBoundary, Fragment, PropTypes } = window.WarpJS.ReactUtils;
 
 const PROPERTIES = {
     ALIAS: 'document-edition-property-alias',
@@ -134,4 +133,4 @@ Component.propTypes = {
     updateValue: PropTypes.func.isRequired
 };
 
-export default window.WarpJS.ReactUtils.errorBoundary(Component);
+export default errorBoundary(Component);
