@@ -41,8 +41,10 @@ export const orchestrators = Object.freeze({
             const data = { id: association.id };
             const url = association.relationships[0].url;
             const res = await proxy.post($, url, data);
-            dispatch(actionCreators.setAggregationFilters(res._embedded.aggregationFilters || []));
-            orchestrators.setDirty(dispatch);
+            batch(() => {
+                dispatch(actionCreators.setAggregationFilters(res._embedded.aggregationFilters || []));
+                orchestrators.setDirty(dispatch);
+            });
         } catch (err) {
             // eslint-disable-next-line no-console
             console.error(`orchestrators.addFilter(): err=`, err);
@@ -52,7 +54,12 @@ export const orchestrators = Object.freeze({
         }
     },
 
-    closeModal: async (dispatch, id) => hideModalContainer(dispatch, id),
+    closeModal: async (dispatch, id, isDirty) => {
+        batch(() => {
+            hideModalContainer(dispatch, id, isDirty);
+            orchestrators.modalClosed(dispatch, isDirty);
+        });
+    },
 
     createChild: async(dispatch, url, entity) => {
         const toastLoading = toast.loading($, "Creating new child");
@@ -77,6 +84,7 @@ export const orchestrators = Object.freeze({
     },
 
     modalClosed: async (dispatch, isDirty) => {
+        debug(`orchestrators.modalClosed(): isDirty=`, isDirty);
         if (isDirty) {
             toast.loading($, "Refreshing page");
             setTimeout(() => document.location.reload(), 1500);
@@ -93,8 +101,10 @@ export const orchestrators = Object.freeze({
             const data = { id: association.id };
             const url = association.relationships[0].url;
             const res = await proxy.del($, url, data);
-            dispatch(actionCreators.setAggregationFilters(res._embedded.aggregationFilters || []));
-            orchestrators.setDirty(dispatch);
+            batch(() => {
+                dispatch(actionCreators.setAggregationFilters(res._embedded.aggregationFilters || []));
+                orchestrators.setDirty(dispatch);
+            });
         } catch (err) {
             // eslint-disable-next-line no-console
             console.error(`orchestrators.removeFilter(): err=`, err);
@@ -139,7 +149,10 @@ export const orchestrators = Object.freeze({
     },
 
     updateFilterLabel: async (dispatch, association, label) => {
-        dispatch(actionCreators.updateFilterLabel(association, label));
+        batch(() => {
+            dispatch(actionCreators.updateFilterLabel(association, label));
+            orchestrators.setDirty(dispatch);
+        });
     },
 
     updateFilterValue: async (dispatch, association, key, value) => {
@@ -148,8 +161,10 @@ export const orchestrators = Object.freeze({
             const data = { id: association.id, key, value };
             const url = association.relationships[0].url;
             const res = await proxy.patch($, url, data);
-            dispatch(actionCreators.setAggregationFilters(res._embedded.aggregationFilters || []));
-            orchestrators.setDirty(dispatch);
+            batch(() => {
+                dispatch(actionCreators.setAggregationFilters(res._embedded.aggregationFilters || []));
+                orchestrators.setDirty(dispatch);
+            });
         } catch (err) {
             // eslint-disable-next-line no-console
             console.error(`orchestrators.updateFilterValue(): err=`, err);

@@ -29,7 +29,7 @@ const Container = (props) => {
     });
 
     const dispatchProps = Object.freeze({
-        closeModal: async () => orchestrators.closeModal(dispatch, props.id),
+        closeModal: async () => orchestrators.closeModal(dispatch, props.id, subState.isDirty),
         createChild: async (entity) => orchestrators.createChild(dispatch, subState.url, entity),
         onHide: async () => orchestrators.modalClosed(dispatch, subState.isDirty),
         toggleFilters: () => orchestrators.toggleFilters(dispatch)

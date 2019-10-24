@@ -51,7 +51,7 @@ const Component = (props) => {
     });
 
     return (
-        <ModalContainer id={props.id} title={props.title} footerButtons={footerButtons} onHide={props.onHide}>
+        <ModalContainer id={props.id} title={props.title} footerButtons={footerButtons} onHide={props.onHide} isDirty={props.isDirty}>
             {content}
         </ModalContainer>
     );
@@ -67,11 +67,16 @@ Component.propTypes = {
     entities: PropTypes.array,
     error: PropTypes.string,
     id: PropTypes.string.isRequired,
+    isDirty: PropTypes.bool.isRequired,
     items: PropTypes.array,
     onHide: PropTypes.func.isRequired,
     showFilters: PropTypes.bool,
     title: PropTypes.string.isRequired,
     toggleFilters: PropTypes.func
+};
+
+Component.defaultProps = {
+    isDirty: false
 };
 
 export default errorBoundary(Component);
