@@ -8,6 +8,7 @@ const { ActionIcon } = window.WarpJS.ReactComponents;
 const { errorBoundary } = window.WarpJS.ReactUtils;
 
 const Component = (props) => {
+    let filterName = null;
     let firstLevel = null;
     let secondLevel = null;
 
@@ -18,6 +19,10 @@ const Component = (props) => {
             const entity = (relationship.entities || []).find((entity) => entity.id === props.selection.entityId);
 
             if (entity) {
+                if (entity.name) {
+                    filterName = <InputGroup.Addon>{entity.name}:</InputGroup.Addon>;
+                }
+
                 const firstLevelItem = (entity.items || []).find((item) => item.id === props.selection.firstLevelId);
 
                 if (firstLevelItem) {
@@ -44,6 +49,7 @@ const Component = (props) => {
 
     return (
         <InputGroup>
+            {filterName}
             {firstLevel}
             {secondLevel}
             <FormControl type="text" value={props.searchValue} placeholder="Enter search terms" onChange={(event) => props.setSearchValue(event.target.value)} />
