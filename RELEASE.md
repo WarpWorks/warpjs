@@ -7,6 +7,10 @@
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
 
+## 1.4.17 - 2019-10-23
+
+- #336: Adding data for reverse association from server.
+
 ## 1.4.16 - 2019-10-23
 
 - #336: Keeping reverse relationship in aggregation filters.

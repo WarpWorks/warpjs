@@ -72,15 +72,12 @@ module.exports = async (persistence, panelItem, instance) => {
                 resource.embed('aggregationFilters', aggregationFilters);
 
                 const targetEntityRelationships = targetEntity.getRelationships().filter((reln) => !reln.isAggregation);
-                const relationshipsInfo = targetEntityRelationships
-                    .filter((reln) => !reln.isReverse())
-                    .map((reln) => ({
-                        id: reln.id,
-                        name: reln.name,
-                        target: reln.getTargetEntity().id,
-                        reln
-                    }))
-                ;
+                const relationshipsInfo = targetEntityRelationships.map((reln) => ({
+                    id: reln.id,
+                    name: reln.name,
+                    target: reln.getTargetEntity().id,
+                    reln
+                }));
 
                 const relationshipsToKeep = aggregationFilters.entities.reduce(
                     (cumulator, targetEntity) => {
