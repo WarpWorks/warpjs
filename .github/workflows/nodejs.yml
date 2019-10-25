@@ -20,6 +20,8 @@ jobs:
     - name: npm install, build, and test
       run: |
         npm ci
-        npm pack
+        npm run coverage
       env:
         CI: true
+    - name: Coverage report
+      run: npm run coverage-report

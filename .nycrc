@@ -1,6 +1,7 @@
 {
   "all": true,
   "report-dir": "./reports/coverage",
+  "temp-dir": "./reports/nyc_output",
   "check-coverage": false,
   "exclude": [
     "**/*.*.test.js",
@@ -15,9 +16,7 @@
   ],
   "reporter": [
     "cobertura",
-    "html",
-    "text",
-    "text-summary"
+    "html"
   ],
   "watermarks": {
     "statements": [50, 80],
