@@ -16,9 +16,9 @@ const processSeparatorPanelItem = require('./process-separator-panel-item');
 const tableOfContents = require('./../table-of-contents');
 const template = require('./template.hbs');
 
-const { cache, CONTENT_PLACEHOLDER, displayCookiePopup, error, getCurrentPageHAL, toast } = window.WarpJS;
-
 (($) => $(document).ready(async () => {
+    const { CONTENT_PLACEHOLDER, displayCookiePopup, error, getCurrentPageHAL, toast } = window.WarpJS;
+
     try {
         let result;
 
@@ -42,6 +42,8 @@ const { cache, CONTENT_PLACEHOLDER, displayCookiePopup, error, getCurrentPageHAL
                 }
 
                 if (page && page._embedded && page._embedded.previews) {
+                    const { cache } = window.WarpJS;
+
                     page._embedded.previews.forEach((preview) => cache.set(preview._links.preview.href, {
                         title: preview.title,
                         content: preview.content
