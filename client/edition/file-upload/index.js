@@ -1,5 +1,4 @@
 const forEach = require('lodash/forEach');
-const Promise = require('bluebird');
 
 const constants = require('./constants');
 const modalTemplate = require('./modal.hbs');
@@ -34,15 +33,11 @@ class FileUpload {
                     $(this).closest('.form-group').removeClass('has-error');
                 });
 
-                $('[data-warpjs-action="cancel-upload"]', modal).on('click', function(e) {
-                    modal.modal('hide');
-                });
+                $('[data-warpjs-action="cancel-upload"]', modal).on('click', () => modal.modal('hide'));
 
-                modal.on('hidden.bs.modal', (event) => {
-                    modal.remove();
-                });
+                modal.on('hidden.bs.modal', () => modal.remove());
 
-                $('[data-warpjs-action="confirm-upload"]', modal).on('click', function(e) {
+                $('[data-warpjs-action="confirm-upload"]', modal).on('click', async function(e) {
                     const input = $('form input[type="file"]', modal).get(0);
                     const files = input.files;
 
@@ -52,53 +47,50 @@ class FileUpload {
 
                         const url = $('form', modal).data('warpjsUrl');
 
-                        Promise.resolve()
-                            .then(() => toast.loading($, "Uploading file...", TITLE))
-                            .then((toastLoading) => Promise.resolve()
-                                // Not compatible with our window.WarpJS.proxy...
-                                .then(() => $.ajax({
-                                    method: 'POST',
-                                    url,
-                                    headers: {
-                                        Accept: HAL_CONTENT_TYPE
-                                    },
-                                    data,
-                                    processData: false,
-                                    contentType: false
-                                }))
-                                .then((res) => {
-                                    let changeIndex = 0;
-                                    toast.success($, "File uploaded successfully.", TITLE);
-                                    modal.modal('hide');
-                                    const inputField = uploadButton.closest('.form-group').find('input.warpjs-file-field');
-                                    inputField.val(res._links.uploadedFile.href);
-                                    inputField.trigger('change');
-                                    changeIndex += 1;
+                        const toastLoading = toast.loading($, "Uploading file...", TITLE);
+                        try {
+                            // Not compatible with our window.WarpJS.proxy...
+                            const res = await $.ajax({
+                                method: 'POST',
+                                url,
+                                headers: {
+                                    Accept: HAL_CONTENT_TYPE
+                                },
+                                data,
+                                processData: false,
+                                contentType: false
+                            });
 
-                                    if (res.info) {
-                                        const tabPane = uploadButton.closest('.tab-pane');
+                            let changeIndex = 0;
+                            toast.success($, "File uploaded successfully.", TITLE);
+                            modal.modal('hide');
+                            const inputField = uploadButton.closest('.form-group').find('input.warpjs-file-field');
+                            inputField.val(res._links.uploadedFile.href);
+                            inputField.trigger('change');
+                            changeIndex += 1;
 
-                                        forEach(res.info, (value, key) => {
-                                            const inputField = tabPane.find(`.warpjs-basic-property-${key} input`);
-                                            if (inputField) {
-                                                changeIndex += 1;
-                                                inputField.val(value);
+                            if (res.info) {
+                                const tabPane = uploadButton.closest('.tab-pane');
 
-                                                // Introduce delay to avoid
-                                                // concurrent changes.
-                                                setTimeout(() => inputField.trigger('change'), changeIndex * 500);
-                                            }
-                                        });
+                                forEach(res.info, (value, key) => {
+                                    const inputField = tabPane.find(`.warpjs-basic-property-${key} input`);
+                                    if (inputField) {
+                                        changeIndex += 1;
+                                        inputField.val(value);
+
+                                        // Introduce delay to avoid
+                                        // concurrent changes.
+                                        setTimeout(() => inputField.trigger('change'), changeIndex * 500);
                                     }
-                                })
-                                .catch((err) => {
-                                    // eslint-disable-next-line no-console
-                                    console.error("Error upload-file:", err);
-                                    toast.error($, "File upload failed!", TITLE);
-                                })
-                                .finally(() => toast.close($, toastLoading))
-                            )
-                        ;
+                                });
+                            }
+                        } catch (err) {
+                            // eslint-disable-next-line no-console
+                            console.error("Error upload-file:", err);
+                            toast.error($, "File upload failed!", TITLE);
+                        } finally {
+                            toast.close($, toastLoading);
+                        }
                     } else {
                         toast.warning($, "Please select a file to upload", TITLE);
                         $(input).closest('.form-group').addClass('has-error');

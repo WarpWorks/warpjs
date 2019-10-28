@@ -1,5 +1,3 @@
-const Promise = require('bluebird');
-
 const addDocumentToSelection = require('./events/add-document-to-selection');
 const addParagraph = require('./events/add-paragraph');
 const constants = require('./constants');
@@ -59,15 +57,12 @@ module.exports = ($, modal, items) => {
         movePosition($, modal, event, items, 'last');
     });
 
-    modal.on('click', '[data-warpjs-action="inline-edit-delete"]', (event) => Promise.resolve()
-        .then(() => deleteClicked($, modal, event, items))
-        .then((updatedItems) => {
-            items = updatedItems;
-        })
-    );
-    modal.on('click', '.warpjs-list-item-add', (event) => Promise.resolve()
-        .then(() => addParagraph($, modal, event, items))
-    );
+    modal.on('click', '[data-warpjs-action="inline-edit-delete"]', async (event) => {
+        const updatedItems = await deleteClicked($, modal, event, items);
+        // eslint-disable-next-line require-atomic-updates
+        items = updatedItems;
+    });
+    modal.on('click', '.warpjs-list-item-add', async (event) => addParagraph($, modal, event, items));
 
     // fix second modal appearing behind first
     $(document).on('show.bs.modal', '.modal', function() {

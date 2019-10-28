@@ -26,55 +26,54 @@ const moveToAnEnd = (items, element, position) => {
     }
 };
 
-const saveItemPosition = ($, modal, item, index) => {
+const saveItemPosition = async ($, modal, item, index) => {
     if (index !== item.position) {
-        return Promise.resolve()
-            .then(() => $('.warpjs-list-item-value[data-warpjs-id="' + item.id + '"]'))
-            .then((itemElement) => Promise.resolve()
-                .then(() => ({
-                    id: item.id,
-                    field: 'Position',
-                    reference: {
-                        type: $(itemElement).data('warpjsReferenceType'),
-                        id: $(itemElement).data('warpjsReferenceId'),
-                        name: $(itemElement).data('warpjsReferenceName')
-                    },
-                    oldValue: item.position,
-                    newValue: index
-                }))
-                .then((data) => proxy.patch($, modal.data('warpjsUrl'), data))
-                .then(() => constants.setDirty())
-                .then(() => true)
-                .catch((err) => toast.error($, err.message, "Failed"))
-            )
-        ;
+        const itemElement = $('.warpjs-list-item-value[data-warpjs-id="' + item.id + '"]');
+        const data = {
+            id: item.id,
+            field: 'Position',
+            reference: {
+                type: $(itemElement).data('warpjsReferenceType'),
+                id: $(itemElement).data('warpjsReferenceId'),
+                name: $(itemElement).data('warpjsReferenceName')
+            },
+            oldValue: item.position,
+            newValue: index
+        };
+
+        try {
+            await proxy.patch($, modal.data('warpjsUrl'), data);
+            constants.setDirty();
+            return true;
+        } catch (err) {
+            toast.error($, err.message, "Failed");
+        }
     }
 };
 
-module.exports = ($, modal, itemId, items, offset) => Promise.resolve()
-    .then(() => find(items, [ 'id', itemId ]))
-    .then((foundItem) => Promise.resolve()
-        .then(() => findIndex(items, [ 'id', itemId ]))
-        .then((foundItemIndex) => {
-            if (isNaN(offset)) {
-                moveToAnEnd(items, foundItem, offset);
-            } else {
-                moveOnePosition(items, foundItem, offset);
-            }
-        })
-    )
-    .then(() => toast.loading($, "Saving..."))
-    .then((toastLoading) => Promise.resolve()
-        .then(() => Promise.each(items, (item, index) => saveItemPosition($, modal, item, index)))
-        .then(() => toast.success($, "Data updated"))
-        .finally(() => toast.close($, toastLoading))
-    )
-    .then(() => {
-        $('.warpjs-document-elements > div > .warpjs-content', modal).html(itemsTemplate({ items: items }));
-        $('.warpjs-list-item-value[data-warpjs-id="' + itemId + '"]').closest('.warpjs-list-item').addClass('warpjs-list-item-selected');
-        $.each(items, (index, item) => {
-            $('.warpjs-list-item-value[data-warpjs-id="' + item.id + '"]').data('warpjsPosition', index);
-        });
-        $('.warpjs-navigation.warpjs-navigation-position').html('Position ' + (findIndex(items, [ 'id', itemId ]) + 1));
-    })
-;
+module.exports = async ($, modal, itemId, items, offset) => {
+    const foundItem = find(items, [ 'id', itemId ]);
+
+    // const foundItemIndex = findIndex(items, [ 'id', itemId ]);
+
+    if (isNaN(offset)) {
+        moveToAnEnd(items, foundItem, offset);
+    } else {
+        moveOnePosition(items, foundItem, offset);
+    }
+
+    const toastLoading = toast.loading($, "Saving...");
+    try {
+        await Promise.each(items, async (item, index) => saveItemPosition($, modal, item, index));
+        toast.success($, "Data updated");
+    } finally {
+        toast.close($, toastLoading);
+    }
+
+    $('.warpjs-document-elements > div > .warpjs-content', modal).html(itemsTemplate({ items: items }));
+    $('.warpjs-list-item-value[data-warpjs-id="' + itemId + '"]').closest('.warpjs-list-item').addClass('warpjs-list-item-selected');
+    $.each(items, (index, item) => {
+        $('.warpjs-list-item-value[data-warpjs-id="' + item.id + '"]').data('warpjsPosition', index);
+    });
+    $('.warpjs-navigation.warpjs-navigation-position').html('Position ' + (findIndex(items, [ 'id', itemId ]) + 1));
+};

@@ -1,5 +1,4 @@
 import extend from 'lodash/extend';
-import Promise from 'bluebird';
 import throttle from 'lodash/throttle';
 
 // import _debug from './debug'; const debug = _debug('index');
@@ -42,51 +41,46 @@ module.exports = ($) => {
         position(popover, evt);
     }, 20));
 
-    $(document).on('mouseenter', '[data-warpjs-action="preview"][data-warpjs-preview-url]', function(evt) {
+    $(document).on('mouseenter', '[data-warpjs-action="preview"][data-warpjs-preview-url]', async function(evt) {
         if ($(this).data(INITIALIZED)) {
             $(this).popover('show');
 
             const popover = findPopover($);
             position(popover, evt);
         } else {
-            Promise.resolve()
-                .then(() => proxy.get($, $(this).data('warpjsPreviewUrl')))
-                .then((result) => Promise.resolve()
-                    .then(() => {
-                        // Tinymce dependent.
-                        const chunks = (result.content || '').split('<br />');
+            try {
+                const result = await proxy.get($, $(this).data('warpjsPreviewUrl'));
 
-                        const title = `<span class="close pull-right" data-dismiss="popover" aria-label="Close" aria-hidden="true">×</span>${result.title}`;
-                        const content = chunks[0];
+                // Tinymce dependent.
+                const chunks = (result.content || '').split('<br />');
 
-                        const popoverOptions = extend({}, BASE_POPOVER_OPTIONS, { title, content });
+                const title = `<span class="close pull-right" data-dismiss="popover" aria-label="Close" aria-hidden="true">×</span>${result.title}`;
+                const content = chunks[0];
 
-                        $(this).popover(popoverOptions);
-                        $(this).popover('show');
+                const popoverOptions = extend({}, BASE_POPOVER_OPTIONS, { title, content });
 
-                        const popover = findPopover($);
-                        $('[data-dismiss="popover"]', popover).on('click', () => popover.popover('hide'));
+                $(this).popover(popoverOptions);
+                $(this).popover('show');
 
-                        if ($(this).hasClass('map-hover-area')) {
-                            position(popover, evt);
-                        }
-                    })
-                )
-                .catch(() => {
-                    const popoverOptions = extend({}, BASE_POPOVER_OPTIONS, {
-                        title: "Trouble loading preview",
-                        content: `<div class="alert alert-danger">Issue loading preview page</div>`
-                    });
+                const popover = findPopover($);
+                $('[data-dismiss="popover"]', popover).on('click', () => popover.popover('hide'));
 
-                    $(this).popover(popoverOptions);
-                    $(this).popover('show');
+                if ($(this).hasClass('map-hover-area')) {
+                    position(popover, evt);
+                }
+            } catch (err) {
+                const popoverOptions = extend({}, BASE_POPOVER_OPTIONS, {
+                    title: "Trouble loading preview",
+                    content: `<div class="alert alert-danger">Issue loading preview page</div>`
+                });
 
-                    findPopover($);
-                })
-                .finally(() => {
-                    $(this).data(INITIALIZED, true);
-                })
-            ;
+                $(this).popover(popoverOptions);
+                $(this).popover('show');
+
+                findPopover($);
+            } finally {
+                $(this).data(INITIALIZED, true);
+            }
         }
     });
 };
