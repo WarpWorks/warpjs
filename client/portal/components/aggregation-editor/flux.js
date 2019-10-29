@@ -1,5 +1,7 @@
 import { batch } from 'react-redux';
 
+import { orchestrators as pageHalOrchestrators } from './../page-hal';
+
 import namespace from './namespace';
 
 import _debug from './debug'; const debug = _debug('flux');
@@ -83,13 +85,7 @@ export const orchestrators = Object.freeze({
         document.location.href = item._links.portal.href;
     },
 
-    modalClosed: async (dispatch, isDirty) => {
-        debug(`orchestrators.modalClosed(): isDirty=`, isDirty);
-        if (isDirty) {
-            toast.loading($, "Refreshing page");
-            setTimeout(() => document.location.reload(), 1500);
-        }
-    },
+    modalClosed: async (dispatch, isDirty) => pageHalOrchestrators.refreshPage(dispatch, isDirty),
 
     removeDocument: async (dispatch, item) => {
         debug(`orchestrators.removeDocument(): item=`, item);

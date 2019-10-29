@@ -1,3 +1,5 @@
+import { orchestrators as pageHalOrchestrators } from './../components/page-hal';
+
 module.exports = Object.freeze({
     MODAL_NAME: 'warpjs-inline-edit',
     IS_DIRTY: 'warpjsIsDirty',
@@ -10,10 +12,7 @@ module.exports = Object.freeze({
     onClose(modal) {
         modal = modal || $(this.selector);
         modal.on('hidden.bs.modal', () => {
-            if (modal.data(this.IS_DIRTY)) {
-                window.WarpJS.toast.loading($, "Data has been updated, page will be reloaded.", "Reload needed");
-                setTimeout(() => document.location.reload(), 2500);
-            }
+            pageHalOrchestrators.refreshPage(null, modal.data(this.IS_DIRTY));
             modal.remove();
         });
     }
