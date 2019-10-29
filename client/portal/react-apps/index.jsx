@@ -5,7 +5,7 @@ import AggregationFilters from './../components/aggregation-filters';
 import InlineEditButton from './../components/inline-edit-button';
 import BreadcrumbActions from './../components/breadcrumb-actions';
 import IndividualContributionHeader from './../components/individual-contribution-header';
-import { init as pageHalInit } from './../components/page-hal/action-creators';
+import { orchestrators as pageHalOrchestrators } from './../components/page-hal';
 import PdfExportButton from './../components/pdf-export-button';
 import reducers from './../components/reducers';
 import UserProfileMenu, { initializeState as initializeUserProfileMenuState } from './../components/user-profile-menu';
@@ -25,7 +25,7 @@ export default ($, data) => {
     //  eslint-disable-next-line require-atomic-updates
     window.WarpJS.PAGE_HAL = window.WarpJS.flattenHAL(data);
 
-    window.WarpJS.STORE.dispatch(pageHalInit(window.WarpJS.PAGE_HAL));
+    pageHalOrchestrators.init(window.WarpJS.STORE.dispatch, window.WarpJS.PAGE_HAL);
 
     const pageHal = window.WarpJS.PAGE_HAL;
 

@@ -1,1 +1,1 @@
-export { default as reducers } from './reducers';
+export { orchestrators, reducers } from './flux';
