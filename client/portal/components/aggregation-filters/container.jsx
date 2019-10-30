@@ -1,8 +1,4 @@
-import PropTypes from 'prop-types';
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-
-import { pageSubstate } from './../page-hal/selectors';
+import { selectors as pageHalSelectors } from './../page-hal';
 
 import Component from './component';
 import filterTiles from './filter-tiles';
@@ -12,12 +8,13 @@ import namespace from './namespace';
 
 // import _debug from './debug'; const debug = _debug('container');
 
+const { PropTypes, useDispatch, useEffect, useSelector } = window.WarpJS.ReactUtils;
 const { getNamespaceSubstate } = window.WarpJS.ReactUtils;
 
 const Container = (props) => {
     const dispatch = useDispatch();
     const subState = useSelector((state) => getNamespaceSubstate(state, namespace));
-    const page = useSelector((state) => pageSubstate(state));
+    const page = useSelector((state) => pageHalSelectors.pageSubstate(state));
 
     const pageView = page && page.pageViews && page.pageViews.length ? page.pageViews[0] : null;
 

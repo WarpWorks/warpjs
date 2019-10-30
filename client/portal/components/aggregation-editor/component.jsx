@@ -1,6 +1,3 @@
-import PropTypes from 'prop-types';
-import { Alert } from 'react-bootstrap';
-
 import ConfigPanel from './components/config-panel';
 import { NAME } from './constants';
 import DocumentPanel from './components/document-panel';
@@ -8,6 +5,7 @@ import DocumentPanel from './components/document-panel';
 // import _debug from './debug'; const debug = _debug('component');
 
 const { ModalContainer, Spinner } = window.WarpJS.ReactComponents;
+const { Alert, PropTypes } = window.WarpJS.ReactUtils;
 const { errorBoundary } = window.WarpJS.ReactUtils;
 
 const Component = (props) => {

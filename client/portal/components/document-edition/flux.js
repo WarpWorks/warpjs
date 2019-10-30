@@ -1,10 +1,11 @@
-import inlineEditConstants from './../../inline-edit/constants';
+import { orchestrators as pageHalOrchestrators } from './../page-hal';
 
 import { NAME } from './constants';
 import namespace from './namespace';
 
-import _debug from './debug'; const debug = _debug('flux');
+// import _debug from './debug'; const debug = _debug('flux');
 
+const { batch } = window.WarpJS.ReactUtils;
 const { actionCreator, concatenateReducers, getNamespaceSubstate, namespaceKeys, setNamespaceSubstate } = window.WarpJS.ReactUtils;
 const { hideModalContainer, showModalContainer } = window.WarpJS.ReactComponents;
 
@@ -23,13 +24,17 @@ export const actionCreators = Object.freeze({
 const { proxy, toast } = window.WarpJS;
 
 export const orchestrators = Object.freeze({
-    hideModal: async (dispatch) => hideModalContainer(dispatch, NAME),
-    saveValue: async (dispatch, url, key, value) => {
-        debug(`orchestrators.saveValue(): url=${url}, key=${key}, value=${value}`);
+    hideModal: async (dispatch, isDirty) => {
+        batch(() => {
+            hideModalContainer(dispatch, NAME);
+            pageHalOrchestrators.refreshPage(dispatch, isDirty);
+        });
+    },
+    saveValue: async (dispatch, url, key, value, setDirty) => {
         const toastLoading = toast.loading($, "Saving...");
         try {
             await proxy.patch($, url, { key, value });
-            inlineEditConstants.setDirty();
+            setDirty(dispatch);
             toast.success($, "Saved");
         } catch (err) {
             // eslint-disable-next-line no-console
@@ -41,7 +46,12 @@ export const orchestrators = Object.freeze({
         }
     },
     showModal: async (dispatch) => showModalContainer(dispatch, NAME),
-    updateValue: async (dispatch, key, value) => dispatch(actionCreators.updateValue(key, value))
+    updateValue: async (dispatch, key, value, setDirty) => {
+        batch(() => {
+            dispatch(actionCreators.updateValue(key, value));
+            setDirty(dispatch);
+        });
+    }
 });
 
 //

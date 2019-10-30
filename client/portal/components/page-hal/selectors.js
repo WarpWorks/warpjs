@@ -2,9 +2,7 @@ import namespace from './namespace';
 
 const { getNamespaceSubstate } = window.WarpJS.ReactUtils;
 
-export const pageHalSubstate = (state = {}) => {
-    return getNamespaceSubstate(state, namespace);
-};
+export const pageHalSubstate = (state = {}) => getNamespaceSubstate(state, namespace);
 
 export const pageSubstate = (state = {}) => {
     const pageHal = pageHalSubstate(state);

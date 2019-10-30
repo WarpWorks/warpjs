@@ -1,12 +1,9 @@
-import classnames from 'classnames';
-import PropTypes from 'prop-types';
-import { Fragment } from 'react';
-import { FormControl, InputGroup } from 'react-bootstrap';
-
 import { NAME } from './constants';
 import Definition from './definition';
 
 const { Button, ModalContainer } = window.WarpJS.ReactComponents;
+const { FormControl, InputGroup } = window.WarpJS.ReactUtils;
+const { classnames, Fragment, PropTypes } = window.WarpJS.ReactUtils;
 const { errorBoundary } = window.WarpJS.ReactUtils;
 
 const Component = (props) => {

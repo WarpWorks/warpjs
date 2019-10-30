@@ -1,9 +1,8 @@
-import { batch } from 'react-redux';
-
 import namespace from './namespace';
 
 // import _debug from './debug'; const debug = _debug('flux');
 
+const { batch } = window.WarpJS.ReactUtils;
 const { actionCreator, baseAttributeReducer, concatenateReducers, getNamespaceSubstate, namespaceKeys, setNamespaceSubstate } = window.WarpJS.ReactUtils;
 
 const actions = namespaceKeys(namespace, [

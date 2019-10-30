@@ -1,46 +1,41 @@
 import extend from 'lodash/extend';
 
-import pageHalNamespace from './../page-hal/namespace';
+import { selectors as pageHalSelectors, orchestrators as pageHalOrchestrators } from './../page-hal';
+
 import Component from './component';
 import { orchestrators } from './flux';
 import namespace from './namespace';
 
-const { getNamespaceSubstate, wrapContainer } = window.WarpJS.ReactUtils;
-const { hideModal, saveValue, showModal, updateValue } = orchestrators;
+const { useDispatch, useSelector } = window.WarpJS.ReactUtils;
+const { getNamespaceSubstate, wrapHookContainer } = window.WarpJS.ReactUtils;
 
-const mapStateToProps = (state, ownProps) => {
-    const pageHalSubstate = getNamespaceSubstate(state, pageHalNamespace);
+const getComponentProps = (props) => {
+    const dispatch = useDispatch();
 
-    if (pageHalSubstate.warpjsUser &&
-        pageHalSubstate.pages &&
-        pageHalSubstate.pages.length &&
-        pageHalSubstate.pages[0]._links &&
-        pageHalSubstate.pages[0]._links.edit) {
-        const substate = getNamespaceSubstate(state, namespace);
+    const pageHalSubstate = useSelector((state) => pageHalSelectors.pageHalSubstate(state));
+    const warpjsUser = useSelector((state) => pageHalSelectors.warpjsUser(state));
+    const pageSubstate = useSelector((state) => pageHalSelectors.pageSubstate(state));
 
-        const page = extend({}, pageHalSubstate.pages[0], substate.editedValues);
+    if (warpjsUser &&
+        pageSubstate &&
+        pageSubstate._links &&
+        pageSubstate._links.edit) {
+        const substate = useSelector((state) => getNamespaceSubstate(state, namespace));
+        const page = extend({}, pageSubstate, substate.editedValues);
+        page.isDirty = pageHalSubstate.isDirty || false;
 
-        return {
+        return Object.freeze({
             page,
-            ...substate
-        };
+            ...substate,
+            hideModal: async () => orchestrators.hideModal(dispatch, pageHalSubstate.isDirty),
+            showModal: async () => orchestrators.showModal(dispatch),
+            saveValue: async (key, value) => orchestrators.saveValue(dispatch, page._links.self.href, key, value, pageHalOrchestrators.setDirty),
+            updateValue: (key, value) => orchestrators.updateValue(dispatch, key, value, pageHalOrchestrators.setDirty),
+            ...props
+        });
     } else {
-        return {};
+        return Object.freeze({});
     }
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => Object.freeze({
-    hideModal: async () => hideModal(dispatch),
-    showModal: async () => showModal(dispatch),
-    saveValue: (url) => async (key, value) => saveValue(dispatch, url, key, value),
-    updateValue: (key, value) => updateValue(dispatch, key, value)
-});
-
-const mergeProps = (stateProps, dispatchProps, ownProps) => Object.freeze({
-    ...stateProps,
-    ...dispatchProps,
-    saveValue: dispatchProps.saveValue(stateProps.page._links.self.href),
-    ...ownProps
-});
-
-export default wrapContainer(Component, mapStateToProps, mapDispatchToProps, mergeProps);
+export default wrapHookContainer(Component, getComponentProps);

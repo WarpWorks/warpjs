@@ -2,8 +2,9 @@ import namespace from './namespace';
 import pageHalNamespace from './../page-hal/namespace';
 import aliasNameValidator from './../../../../lib/core/validators/alias-name';
 
-import _debug from './debug'; const debug = _debug('flux');
+// import _debug from './debug'; const debug = _debug('flux');
 
+const { batch } = window.WarpJS.ReactUtils;
 const { actionCreator, baseAttributeReducer, concatenateReducers, getNamespaceSubstate, namespaceKeys, setNamespaceSubstate } = window.WarpJS.ReactUtils;
 const { proxy, toast } = window.WarpJS;
 
@@ -39,26 +40,32 @@ const actionCreators = Object.freeze({
 //  Orchestrators
 //
 export const orchestrators = Object.freeze({
-    createAlias: async (dispatch, url, value) => {
-        debug(`orchestrators.createAlias(dispatch, url=${url}, value=${value}`);
-        dispatch(actionCreators.enableActionButton(false));
-        dispatch(actionCreators.valueMessage(null));
-        dispatch(actionCreators.updateEditValueState('warning'));
+    createAlias: async (dispatch, url, value, setDirty) => {
+        batch(() => {
+            dispatch(actionCreators.enableActionButton(false));
+            dispatch(actionCreators.valueMessage(null));
+            dispatch(actionCreators.updateEditValueState('warning'));
+        });
 
         const toastLoading = toast.loading($, "Creating...");
         try {
             await proxy.post($, url, { value });
-            orchestrators.unsetEditMode(dispatch);
-            dispatch(actionCreators.updatePageAlias(value));
+            batch(() => {
+                orchestrators.unsetEditMode(dispatch);
+                dispatch(actionCreators.updatePageAlias(value));
+                setDirty(dispatch);
+            });
         } catch (err) {
             console.error(`orchestrators.createAlias(): err=`, err);
             toast.error($, "Unable to create alias");
             dispatch(actionCreators.updateEditValueState('error'));
             setTimeout(
                 () => {
-                    dispatch(actionCreators.updateEditValueState('warning'));
-                    dispatch(actionCreators.valueMessage(null));
-                    dispatch(actionCreators.enableActionButton(true));
+                    batch(() => {
+                        dispatch(actionCreators.updateEditValueState('warning'));
+                        dispatch(actionCreators.valueMessage(null));
+                        dispatch(actionCreators.enableActionButton(true));
+                    });
                 },
                 2000
             );
@@ -66,25 +73,31 @@ export const orchestrators = Object.freeze({
             toast.close($, toastLoading);
         }
     },
-    renameAlias: async (dispatch, url, value) => {
-        dispatch(actionCreators.enableActionButton(false));
-        dispatch(actionCreators.valueMessage(null));
-        dispatch(actionCreators.updateEditValueState('warning'));
+    renameAlias: async (dispatch, url, value, setDirty) => {
+        batch(() => {
+            dispatch(actionCreators.enableActionButton(false));
+            dispatch(actionCreators.valueMessage(null));
+            dispatch(actionCreators.updateEditValueState('warning'));
+        });
 
         const toastLoading = toast.loading($, "Renaming...");
         try {
             await proxy.patch($, url, { value });
-            orchestrators.unsetEditMode(dispatch);
-            dispatch(actionCreators.updatePageAlias(value));
+            batch(() => {
+                orchestrators.unsetEditMode(dispatch);
+                dispatch(actionCreators.updatePageAlias(value));
+                setDirty(dispatch);
+            });
         } catch (err) {
-            debug(`renameAlias(): err=`, err);
             toast.error($, "Unable to rename alias");
             dispatch(actionCreators.updateEditValueState('error'));
             setTimeout(
                 () => {
-                    dispatch(actionCreators.updateEditValueState('warning'));
-                    dispatch(actionCreators.valueMessage(null));
-                    dispatch(actionCreators.enableActionButton(true));
+                    batch(() => {
+                        dispatch(actionCreators.updateEditValueState('warning'));
+                        dispatch(actionCreators.valueMessage(null));
+                        dispatch(actionCreators.enableActionButton(true));
+                    });
                 },
                 2000
             );
@@ -100,7 +113,7 @@ export const orchestrators = Object.freeze({
             const res = await proxy.get($, url, true);
             dispatch(actionCreators.setListOfExistingAliases(res.items));
         } catch (err) {
-            debug(`error proxy.get(): err=`, err);
+            console.error(`error proxy.get(): err=`, err);
         }
     },
     unsetEditMode: (dispatch) => {
@@ -110,23 +123,26 @@ export const orchestrators = Object.freeze({
     },
     updateAlias: (dispatch, value) => dispatch(actionCreators.updateAlias(value)),
     updateEditValue: (dispatch, value, aliases, currentValue) => {
-        dispatch(actionCreators.enableActionButton(false));
-        dispatch(actionCreators.updateEditValueState('warning'));
-        dispatch(actionCreators.updateEditValue(value));
-        dispatch(actionCreators.valueMessage(null));
-        if (aliasNameValidator(value)) {
-            if (aliases.indexOf(value) === -1) {
-                dispatch(actionCreators.enableActionButton(true));
-            } else if (value === currentValue) {
-                dispatch(actionCreators.updateEditValueState(null));
+        batch(() => {
+            dispatch(actionCreators.enableActionButton(false));
+            dispatch(actionCreators.updateEditValueState('warning'));
+            dispatch(actionCreators.updateEditValue(value));
+            dispatch(actionCreators.valueMessage(null));
+
+            if (aliasNameValidator(value)) {
+                if (aliases.indexOf(value) === -1) {
+                    dispatch(actionCreators.enableActionButton(true));
+                } else if (value === currentValue) {
+                    dispatch(actionCreators.updateEditValueState(null));
+                } else {
+                    dispatch(actionCreators.valueMessage("The alias is already in use."));
+                    dispatch(actionCreators.updateEditValueState('error'));
+                }
             } else {
-                dispatch(actionCreators.valueMessage("The alias is already in use."));
+                dispatch(actionCreators.valueMessage("Invalid alias. Use A-Z, a-z, 0-9, or dash ('-') only."));
                 dispatch(actionCreators.updateEditValueState('error'));
             }
-        } else {
-            dispatch(actionCreators.valueMessage("Invalid alias. Use A-Z, a-z, 0-9, or dash ('-') only."));
-            dispatch(actionCreators.updateEditValueState('error'));
-        }
+        });
     }
 });
 

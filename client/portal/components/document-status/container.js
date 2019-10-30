@@ -1,47 +1,35 @@
-import pageHalNamespace from './../page-hal/namespace';
+import { selectors as pageHalSelectors, orchestrators as pageHalOrchestrators } from './../page-hal';
 
 import Component from './component';
 import { orchestrators } from './flux';
 
 // import _debug from './debug'; const debug = _debug('container');
 
-const { getNamespaceSubstate, wrapContainer } = window.WarpJS.ReactUtils;
-const { hideModal, showModal } = orchestrators;
+const { useDispatch, useSelector, wrapHookContainer } = window.WarpJS.ReactUtils;
 
-const mapStateToProps = (state, ownProps) => {
-    const pageHalSubstate = getNamespaceSubstate(state, pageHalNamespace);
+const getComponentProps = (props) => {
+    const dispatch = useDispatch();
 
-    const page = pageHalSubstate && pageHalSubstate.pages && pageHalSubstate.pages.length
-        ? pageHalSubstate.pages[0]
-        : null;
+    const pageHalSubstate = useSelector((state) => pageHalSelectors.pageHalSubstate(state));
+    const page = useSelector((state) => pageHalSelectors.pageSubstate(state));
 
     const promotions = (page && page.status && page.status.promotion)
         ? page.status.promotion.map((promotion) => ({ label: promotion.status, href: promotion._links.self.href }))
         : []
     ;
 
-    return {
+    return Object.freeze({
         customMessages: pageHalSubstate.customMessages,
-        promotions,
+        hideModal: async () => orchestrators.hideModal(dispatch, pageHalSubstate.isDirty),
+        promotions: promotions.map((item) => ({
+            label: item.label,
+            onClick: async () => orchestrators.promote(dispatch, item, pageHalOrchestrators.setDirty)
+        })),
         realStatus: page && page.status ? page.status.realStatus : '',
-        status: page && page.status ? page.status.documentStatus : ''
-    };
+        showModal: async () => orchestrators.showModal(dispatch),
+        status: page && page.status ? page.status.documentStatus : '',
+        ...props
+    });
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => Object.freeze({
-    hideModal: async () => hideModal(dispatch),
-    promotions: (items, setDirty) => items.map((item) => ({
-        label: item.label,
-        onClick: async () => orchestrators.promote(dispatch, item, setDirty)
-    })),
-    showModal: async () => showModal(dispatch)
-});
-
-const mergeProps = (stateProps, dispatchProps, ownProps) => Object.freeze({
-    ...stateProps,
-    ...dispatchProps,
-    promotions: dispatchProps.promotions(stateProps.promotions, ownProps.setDirty),
-    ...ownProps
-});
-
-export default wrapContainer(Component, mapStateToProps, mapDispatchToProps, mergeProps);
+export default wrapHookContainer(Component, getComponentProps);

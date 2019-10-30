@@ -1,48 +1,39 @@
-import pageHalNamespace from './../page-hal/namespace';
+import { selectors as pageHalSelectors, orchestrators as pageHalOrchestrators } from './../page-hal';
+
 import Component from './component';
 import namespace from './namespace';
 import { orchestrators } from './flux';
 
 // import _debug from './debug'; const debug = _debug(`container`);
 
-const { getNamespaceSubstate, wrapContainer } = window.WarpJS.ReactUtils;
+const { useDispatch, useSelector } = window.WarpJS.ReactUtils;
+const { getNamespaceSubstate, wrapHookContainer } = window.WarpJS.ReactUtils;
 
-const mapStateToProps = (state, ownProps) => {
-    const pageHalSubstate = getNamespaceSubstate(state, pageHalNamespace);
+const getComponentProps = (props) => {
+    const dispatch = useDispatch();
 
-    const page = pageHalSubstate.pages[0];
+    const pageSubstate = useSelector((state) => pageHalSelectors.pageSubstate(state));
 
-    if (pageHalSubstate.pages && pageHalSubstate.pages.length) {
-        const subState = getNamespaceSubstate(state, namespace);
-
-        subState.currentValue = (page.aliases && page.aliases.length) ? page.aliases[0].name : null;
+    if (pageSubstate) {
+        const subState = useSelector((state) => getNamespaceSubstate(state, namespace));
+        subState.currentValue = (pageSubstate.aliases && pageSubstate.aliases.length) ? pageSubstate.aliases[0].name : null;
         subState.editValue = subState.editValue || subState.currentValue;
 
+        const url = pageSubstate._links.alias.href;
+
         return Object.freeze({
-            page,
-            ...subState
+            page: pageSubstate,
+            ...subState,
+            createAlias: async () => orchestrators.createAlias(dispatch, url, subState.editValue, pageHalOrchestrators.setDirty),
+            renameAlias: async () => orchestrators.renameAlias(dispatch, url, subState.editValue, pageHalOrchestrators.setDirty),
+            setEditMode: async () => orchestrators.setEditMode(dispatch, url),
+            unsetEditMode: async () => orchestrators.unsetEditMode(dispatch),
+            updateEditValue: async (value) => orchestrators.updateEditValue(dispatch, value, subState.aliases, subState.currentValue),
+            ...props
         });
     } else {
         return Object.freeze({});
     }
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => Object.freeze({
-    createAlias: (url, value) => async () => orchestrators.createAlias(dispatch, url, value),
-    setEditMode: (url) => async () => orchestrators.setEditMode(dispatch, url),
-    renameAlias: (url, value) => async () => orchestrators.renameAlias(dispatch, url, value),
-    unsetEditMode: () => orchestrators.unsetEditMode(dispatch),
-    updateEditValue: (aliases, currentValue) => (value) => orchestrators.updateEditValue(dispatch, value, aliases, currentValue)
-});
-
-const mergeProps = (stateProps, dispatchProps, ownProps) => Object.freeze({
-    ...stateProps,
-    ...dispatchProps,
-    createAlias: dispatchProps.createAlias(stateProps.page._links.alias.href, stateProps.editValue),
-    renameAlias: dispatchProps.renameAlias(stateProps.page._links.alias.href, stateProps.editValue),
-    setEditMode: dispatchProps.setEditMode(stateProps.page._links.alias.href),
-    updateEditValue: dispatchProps.updateEditValue(stateProps.aliases, stateProps.currentValue),
-    ...ownProps
-});
-
-export default wrapContainer(Component, mapStateToProps, mapDispatchToProps, mergeProps);
+export default wrapHookContainer(Component, getComponentProps);

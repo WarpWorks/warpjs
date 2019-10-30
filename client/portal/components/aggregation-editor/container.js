@@ -1,26 +1,27 @@
-import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
+import { selectors as pageHalSelectors, orchestrators as pageHalOrchestrators } from './../page-hal';
 
 import Component from './component';
 import { orchestrators } from './flux';
 import namespace from './namespace';
 
-const { getNamespaceSubstate } = window.WarpJS.ReactUtils;
+const { PropTypes, useDispatch, useSelector } = window.WarpJS.ReactUtils;
+const { getNamespaceSubstate, wrapHookContainer } = window.WarpJS.ReactUtils;
 
-const Container = (props) => {
+const getComponentProps = (props) => {
     const dispatch = useDispatch();
+    const pageHalSubstate = useSelector((state) => pageHalSelectors.pageHalSubstate(state));
     const subState = useSelector((state) => getNamespaceSubstate(state, namespace));
 
     (subState.associations || []).forEach((association) => {
-        association.addFilter = async () => orchestrators.addFilter(dispatch, association);
-        association.removeFilter = async () => orchestrators.removeFilter(dispatch, association);
+        association.addFilter = async () => orchestrators.addFilter(dispatch, association, pageHalOrchestrators.setDirty);
+        association.removeFilter = async () => orchestrators.removeFilter(dispatch, association, pageHalOrchestrators.setDirty);
         association.toggleUseParent = async (checked) => orchestrators.updateFilterValue(dispatch, association, 'useParent', checked);
         association.saveFilterLabel = async (editLabel, label) => {
             if (editLabel !== label) {
-                orchestrators.updateFilterValue(dispatch, association, 'label', editLabel);
+                orchestrators.updateFilterValue(dispatch, association, 'label', editLabel, pageHalOrchestrators.setDirty);
             }
         };
-        association.updateFilterLabel = async (label) => orchestrators.updateFilterLabel(dispatch, association, label);
+        association.updateFilterLabel = async (label) => orchestrators.updateFilterLabel(dispatch, association, label, pageHalOrchestrators.setDirty);
     });
 
     (subState.items || []).forEach((item) => {
@@ -28,24 +29,18 @@ const Container = (props) => {
         item.remove = async () => orchestrators.removeDocument(dispatch, item);
     });
 
-    const dispatchProps = Object.freeze({
-        closeModal: async () => orchestrators.closeModal(dispatch, props.id, subState.isDirty),
-        createChild: async (entity) => orchestrators.createChild(dispatch, subState.url, entity),
-        onHide: async () => orchestrators.modalClosed(dispatch, subState.isDirty),
-        toggleFilters: () => orchestrators.toggleFilters(dispatch)
-    });
-
-    const connectedProps = {
+    return {
         ...subState,
-        ...dispatchProps,
+        closeModal: async () => orchestrators.closeModal(dispatch, props.id, pageHalSubstate.isDirty),
+        createChild: async (entity) => orchestrators.createChild(dispatch, subState.url, entity),
+        onHide: async () => orchestrators.modalClosed(dispatch, pageHalSubstate.isDirty),
+        toggleFilters: () => orchestrators.toggleFilters(dispatch),
         ...props
     };
-
-    return <Component {...connectedProps} />;
 };
 
-Container.propTypes = {
+const propTypes = {
     id: PropTypes.string.isRequired
 };
 
-export default Container;
+export default wrapHookContainer(Component, getComponentProps, propTypes);

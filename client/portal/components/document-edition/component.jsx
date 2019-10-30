@@ -1,7 +1,3 @@
-import PropTypes from 'prop-types';
-import { Fragment } from 'react';
-import { ControlLabel, Form, FormGroup, Tab, Tabs } from 'react-bootstrap';
-
 import AliasSelector from './../alias-selector';
 import BreadcrumbActionButton from './../../components/breadcrumb-action-button';
 import CreateNewVersion from './../create-new-version';
@@ -12,6 +8,8 @@ import { NAME } from './constants';
 // import _debug from './debug'; const debug = _debug('component');
 
 const { AutoSaveField, ModalContainer } = window.WarpJS.ReactComponents;
+const { ControlLabel, Form, FormGroup, Tab, Tabs } = window.WarpJS.ReactUtils;
+const { Fragment, PropTypes } = window.WarpJS.ReactUtils;
 
 const PROPERTIES = {
     ALIAS: 'document-edition-property-alias',
@@ -54,7 +52,7 @@ const Component = (props) => {
     return (
         <Fragment>
             <BreadcrumbActionButton click={props.showModal} glyph='list-alt' label="Meta" />
-            <ModalContainer id={NAME} title="Document properties" footerButtons={buttons}>
+            <ModalContainer id={NAME} title="Document properties" footerButtons={buttons} isDirty={page.isDirty}>
                 <Form>
                     <Tabs id="warpjs-document-edition-tab" animation={false}>
                         <Tab eventKey={1} title="Basics">

@@ -1,5 +1,3 @@
-import { batch } from 'react-redux';
-
 import { orchestrators as pageHalOrchestrators } from './../page-hal';
 
 import namespace from './namespace';
@@ -8,13 +6,13 @@ import _debug from './debug'; const debug = _debug('flux');
 
 const { proxy, toast } = window.WarpJS;
 const { hideModalContainer, showModalContainer } = window.WarpJS.ReactComponents;
+const { batch } = window.WarpJS.ReactUtils;
 const { actionCreator, baseAttributeReducer, concatenateReducers, getNamespaceSubstate, namespaceKeys, setNamespaceSubstate } = window.WarpJS.ReactUtils;
 
 const actions = namespaceKeys(namespace, [
     'RESET_SHOW_FILTERS',
     'SET_AGGREGATION_FILTERS',
     'SET_ASSOCIATIONS',
-    'SET_DIRTY',
     'SET_ENTITIES',
     'SET_ERROR',
     'SET_ITEMS',
@@ -27,7 +25,6 @@ const actionCreators = Object.freeze({
     resetShowFilter: () => actionCreator(actions.RESET_SHOW_FILTERS),
     setAggregationFilters: (aggregationFilters) => actionCreator(actions.SET_AGGREGATION_FILTERS, { aggregationFilters }),
     setAssociations: (associations) => actionCreator(actions.SET_ASSOCIATIONS, { associations }),
-    setDirty: (dirty) => actionCreator(actions.SET_DIRTY, { dirty }),
     setEntities: (entities) => actionCreator(actions.SET_ENTITIES, { entities }),
     setError: (message) => actionCreator(actions.SET_ERROR, { message }),
     setItems: (items) => actionCreator(actions.SET_ITEMS, { items }),
@@ -37,7 +34,7 @@ const actionCreators = Object.freeze({
 });
 
 export const orchestrators = Object.freeze({
-    addFilter: async (dispatch, association) => {
+    addFilter: async (dispatch, association, setDirty) => {
         const toastLoading = toast.loading($, "Adding filter");
         try {
             const data = { id: association.id };
@@ -45,7 +42,7 @@ export const orchestrators = Object.freeze({
             const res = await proxy.post($, url, data);
             batch(() => {
                 dispatch(actionCreators.setAggregationFilters(res._embedded.aggregationFilters || []));
-                orchestrators.setDirty(dispatch);
+                setDirty(dispatch);
             });
         } catch (err) {
             // eslint-disable-next-line no-console
@@ -91,7 +88,7 @@ export const orchestrators = Object.freeze({
         debug(`orchestrators.removeDocument(): item=`, item);
     },
 
-    removeFilter: async (dispatch, association) => {
+    removeFilter: async (dispatch, association, setDirty) => {
         const toastLoading = toast.loading($, "Removing filter");
         try {
             const data = { id: association.id };
@@ -99,7 +96,7 @@ export const orchestrators = Object.freeze({
             const res = await proxy.del($, url, data);
             batch(() => {
                 dispatch(actionCreators.setAggregationFilters(res._embedded.aggregationFilters || []));
-                orchestrators.setDirty(dispatch);
+                setDirty(dispatch);
             });
         } catch (err) {
             // eslint-disable-next-line no-console
@@ -110,15 +107,10 @@ export const orchestrators = Object.freeze({
         }
     },
 
-    setDirty: (dispatch) => {
-        dispatch(actionCreators.setDirty(true));
-    },
-
     showModal: async (dispatch, id, url) => {
         batch(() => {
             dispatch(actionCreators.resetShowFilter());
             dispatch(actionCreators.setError(null));
-            dispatch(actionCreators.setDirty(false));
             dispatch(actionCreators.setItems(null));
             dispatch(actionCreators.setEntities(null));
             dispatch(actionCreators.setAssociations(null));
@@ -144,14 +136,14 @@ export const orchestrators = Object.freeze({
         dispatch(actionCreators.toggleFilters());
     },
 
-    updateFilterLabel: async (dispatch, association, label) => {
+    updateFilterLabel: async (dispatch, association, label, setDirty) => {
         batch(() => {
             dispatch(actionCreators.updateFilterLabel(association, label));
-            orchestrators.setDirty(dispatch);
+            setDirty(dispatch);
         });
     },
 
-    updateFilterValue: async (dispatch, association, key, value) => {
+    updateFilterValue: async (dispatch, association, key, value, setDirty) => {
         const toastLoading = toast.loading($, `Update ${key}=${value}`);
         try {
             const data = { id: association.id, key, value };
@@ -159,7 +151,7 @@ export const orchestrators = Object.freeze({
             const res = await proxy.patch($, url, data);
             batch(() => {
                 dispatch(actionCreators.setAggregationFilters(res._embedded.aggregationFilters || []));
-                orchestrators.setDirty(dispatch);
+                setDirty(dispatch);
             });
         } catch (err) {
             // eslint-disable-next-line no-console
@@ -181,9 +173,6 @@ export const reducers = concatenateReducers([{
 }, {
     actions: [ actions.SET_ASSOCIATIONS ],
     reducer: (state = {}, action) => baseAttributeReducer(state, namespace, 'associations', action.payload.associations)
-}, {
-    actions: [ actions.SET_DIRTY ],
-    reducer: (state = {}, action) => baseAttributeReducer(state, namespace, 'isDirty', action.payload.dirty)
 }, {
     actions: [ actions.SET_ENTITIES ],
     reducer: (state = {}, action) => baseAttributeReducer(state, namespace, 'entities', action.payload.entities)
