@@ -1,6 +1,6 @@
 {
   "name": "@warp-works/warpjs",
-  "version": "1.4.18",
+  "version": "1.4.19",
   "description": "Content management system for WarpWorks in javascript",
   "repository": {
     "type": "git",
@@ -33,8 +33,10 @@
   ],
   "main": "index.js",
   "scripts": {
+    "check": "grunt check && npm run jscpd",
+    "jscpd": "jscpd lib client server",
     "prepare": "grunt build",
-    "pretest": "grunt check",
+    "pretest": "npm run check",
     "prepack": "npm run coverage",
     "coverage:integration": "nyc --report-dir=reports/coverage/integration npm run -s test:integration",
     "coverage:unit": "nyc --report-dir=reports/coverage/unit npm run -s test:unit",
@@ -63,6 +65,7 @@
     "@warp-works/warpjs-filter-box": "~1.0.1",
     "bcrypt-nodejs": "0.0.3",
     "bluebird": "~3.7.1",
+    "canvas": "~2.6.0",
     "classnames": "~2.2.6",
     "debug": "~4.1.1",
     "diff": "~4.0.1",
@@ -75,6 +78,7 @@
     "html-to-pdfmake": "~1.1.5",
     "image-size": "~0.8.3",
     "image-to-base64": "~2.0.1",
+    "jscpd": "~2.0.16",
     "jsdom": "~15.2.0",
     "lodash": "~4.17.15",
     "mime-types": "~2.1.24",
@@ -133,7 +137,6 @@
     "grunt-contrib-copy": "1.0.0",
     "grunt-contrib-less": "2.0.x",
     "grunt-eslint": "~22.0.0",
-    "grunt-jscpd": "0.0.12",
     "grunt-webpack": "3.1.x",
     "handlebars": "~4.5.1",
     "handlebars-loader": "1.7.x",
