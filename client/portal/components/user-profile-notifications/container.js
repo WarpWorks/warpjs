@@ -2,9 +2,9 @@ import Component from './component';
 import namespace from './namespace';
 import { hideDetails, resetModal, showDetails } from './orchestrators';
 
-const getSubstate = window.WarpJS.ReactUtils.getNamespaceSubstate;
+const { getNamespaceSubstate, wrapContainer } = window.WarpJS.ReactUtils;
 
-const mapStateToProps = (state, ownProps) => getSubstate(state, namespace);
+const mapStateToProps = (state, ownProps) => getNamespaceSubstate(state, namespace);
 
 const mapDispatchToProps = (dispatch, ownProps) => Object.freeze({
     hideDetails: async () => hideDetails(dispatch),
@@ -18,4 +18,4 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => Object.freeze({
     ...ownProps
 });
 
-export default window.WarpJS.ReactUtils.wrapContainer(Component, mapStateToProps, mapDispatchToProps, mergeProps);
+export default wrapContainer(Component, mapStateToProps, mapDispatchToProps, mergeProps);

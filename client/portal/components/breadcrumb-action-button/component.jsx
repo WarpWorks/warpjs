@@ -2,6 +2,8 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import { Glyphicon } from 'react-bootstrap';
 
+const { errorBoundary } = window.WarpJS.ReactUtils;
+
 const TYPES = [ 'default', 'document', 'danger' ];
 
 const glyphicon = (glyph) => glyph ? <Glyphicon glyph={glyph} /> : null;
@@ -40,4 +42,4 @@ Component.defaultProps = {
     type: TYPES[0]
 };
 
-export default window.WarpJS.ReactUtils.errorBoundary(Component);
+export default errorBoundary(Component);

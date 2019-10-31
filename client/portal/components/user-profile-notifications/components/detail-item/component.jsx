@@ -6,6 +6,8 @@ import { Col } from 'react-bootstrap';
 import Diff from './../diff';
 // import _debug from './debug'; const debug = _debug('component');
 
+const { errorBoundary } = window.WarpJS.ReactUtils;
+
 const Component = (props) => {
     let element = null;
 
@@ -58,4 +60,4 @@ Component.propTypes = {
     })
 };
 
-export default window.WarpJS.ReactUtils.errorBoundary(Component);
+export default errorBoundary(Component);

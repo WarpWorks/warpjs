@@ -7,6 +7,8 @@ import AggregationEditor from './../aggregation-editor';
 
 import { NAME } from './constants';
 
+const { errorBoundary } = window.WarpJS.ReactUtils;
+
 const Component = (props) => {
     if (props.aggregations.length) {
         const selectedAggregation = props.aggregations.find((aggregation) => aggregation.id === props.aggregationSelected);
@@ -84,4 +86,4 @@ Component.defaultProps = {
     aggregationSelected: -1
 };
 
-export default window.WarpJS.ReactUtils.errorBoundary(Component);
+export default errorBoundary(Component);

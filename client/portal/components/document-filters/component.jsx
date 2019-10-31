@@ -5,6 +5,8 @@ import { Checkbox, FormControl, FormGroup } from 'react-bootstrap';
 
 import { LABELS, KEYS, SORT_KEYS, SORT_KEYS_LIST, SORT_LABELS } from './constants';
 
+const { errorBoundary } = window.WarpJS.ReactUtils;
+
 const Component = (props) => {
     const filters = KEYS.map((key) => {
         const currentStatus = Boolean(props.filters && props.filters[key]);
@@ -69,4 +71,4 @@ Component.propTypes = {
     updateSortBy: PropTypes.func.isRequired
 };
 
-export default window.WarpJS.ReactUtils.errorBoundary(Component);
+export default errorBoundary(Component);

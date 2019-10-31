@@ -8,6 +8,8 @@ import ResponsiveImage from './../../../responsive-image';
 import SeeAll from './../see-all';
 import UserName from './../user-name';
 
+const { errorBoundary } = window.WarpJS.ReactUtils;
+
 const displayImages = (displayedUsers) => displayedUsers.map((user) => <ResponsiveImage key={user.id} src={user._links.image.href} />);
 
 const displayNames = (displayedUsers, moreUsers) => {
@@ -98,4 +100,4 @@ Component.propTypes = {
     users: PropTypes.array.isRequired
 };
 
-export default window.WarpJS.ReactUtils.errorBoundary(Component);
+export default errorBoundary(Component);

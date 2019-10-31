@@ -6,6 +6,8 @@ import Items from './../items';
 
 // import _debug from './debug'; const debug = _debug('component');
 
+const { errorBoundary } = window.WarpJS.ReactUtils;
+
 const COMPONENT_NAME = 'UserProfileNotificationsContent';
 
 const byDate = (documentA, documentB) => {
@@ -48,4 +50,4 @@ Component.propTypes = {
     showDetails: PropTypes.func.isRequired
 };
 
-export default window.WarpJS.ReactUtils.errorBoundary(Component);
+export default errorBoundary(Component);

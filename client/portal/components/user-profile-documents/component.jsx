@@ -5,6 +5,8 @@ import Content from './components/content';
 
 // import _debug from './debug'; const debug = _debug('component');
 
+const { errorBoundary } = window.WarpJS.ReactUtils;
+
 const ModalContainer = window.WarpJS.ReactComponents.ModalContainer;
 const Spinner = window.WarpJS.ReactComponents.Spinner;
 
@@ -32,4 +34,4 @@ Component.propTypes = {
     errorMessage: PropTypes.string
 };
 
-export default window.WarpJS.ReactUtils.errorBoundary(Component);
+export default errorBoundary(Component);

@@ -5,6 +5,8 @@ import isNull from 'lodash/isNull';
 
 // import { ACTIONS } from '@warp-works/warpjs-change-logs';
 
+const { errorBoundary } = window.WarpJS.ReactUtils;
+
 const TOO_MUCH_TEXT_LENGTH = 100;
 const TOO_MUCH_TEXT_PART_LENGTH = (TOO_MUCH_TEXT_LENGTH - 5) / 2;
 
@@ -80,4 +82,4 @@ Component.displayName = 'UserProfileNotificationsDiff';
 // changeLog: PropTypes.object.isRequired
 // };
 
-export default window.WarpJS.ReactUtils.errorBoundary(Component);
+export default errorBoundary(Component);

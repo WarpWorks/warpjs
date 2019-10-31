@@ -16,11 +16,13 @@ import launchApp from './launch-app';
 
 // import _debug from './debug'; const debug = _debug('index');
 
+const { createStore, initReactBootstrapDisplayNames } = window.WarpJS.ReactUtils;
+
 export default ($, data) => {
-    window.WarpJS.ReactUtils.initReactBootstrapDisplayNames();
+    initReactBootstrapDisplayNames();
 
     //  eslint-disable-next-line require-atomic-updates
-    window.WarpJS.STORE = window.WarpJS.ReactUtils.createStore(reducers, {}, [], process.env.NODE_ENV === 'development');
+    window.WarpJS.STORE = createStore(reducers, {}, [], process.env.NODE_ENV === 'development');
 
     //  eslint-disable-next-line require-atomic-updates
     window.WarpJS.PAGE_HAL = window.WarpJS.flattenHAL(data);

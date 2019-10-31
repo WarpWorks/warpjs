@@ -5,10 +5,10 @@ import namespace from './namespace';
 
 // import _debug from './debug'; const debug = _debug('reducers');
 
-const { baseAttributeReducer, concatenateReducers, getNamespaceSubstate, setNamespaceSubstate } = window.WarpJS.ReactUtils;
+const { baseAttributeReducer, concatenateReducers, getNamespaceSubstate, INIT_TYPE, setNamespaceSubstate } = window.WarpJS.ReactUtils;
 
 export default concatenateReducers([{
-    actions: [ window.WarpJS.ReactUtils.INIT_TYPE ],
+    actions: [ INIT_TYPE ],
     reducer: (state = {}, action) => {
         const substate = getNamespaceSubstate(state, namespace);
         substate.error = false;

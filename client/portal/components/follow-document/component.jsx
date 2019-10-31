@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 // import _debug from './debug'; const debug = _debug('component');
 import BreadcrumbActionButton from './../../components/breadcrumb-action-button';
 
+const { errorBoundary } = window.WarpJS.ReactUtils;
+
 const Component = (props) => {
     if (props.followUrl && props.unfollowUrl) {
         const onClick = () => {
@@ -30,4 +32,4 @@ Component.propTypes = {
     updateFollow: PropTypes.func.isRequired
 };
 
-export default window.WarpJS.ReactUtils.errorBoundary(Component);
+export default errorBoundary(Component);

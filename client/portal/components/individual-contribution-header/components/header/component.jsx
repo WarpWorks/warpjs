@@ -4,6 +4,8 @@ import { Col, Grid, Row } from 'react-bootstrap';
 import LeftRightMargin from './../../../../components/left-right-margin';
 import PortalContent from './../../../../components/portal-content';
 
+const { errorBoundary } = window.WarpJS.ReactUtils;
+
 const Component = (props) => {
     return (
         <Row className="warpjs-individual-contribution-top">
@@ -38,4 +40,4 @@ Component.propTypes = {
     customMessages: PropTypes.object.isRequired
 };
 
-export default window.WarpJS.ReactUtils.errorBoundary(Component);
+export default errorBoundary(Component);

@@ -6,10 +6,10 @@ import pageHalNamespace from './../page-hal/namespace';
 
 // import _debug from './debug'; const debug = _debug('container');
 
-const getSubstate = window.WarpJS.ReactUtils.getNamespaceSubstate;
+const { getNamespaceSubstate, wrapContainer } = window.WarpJS.ReactUtils;
 
 const mapStateToProps = (state, ownProps) => {
-    const pageHalSubstate = getSubstate(state, pageHalNamespace);
+    const pageHalSubstate = getNamespaceSubstate(state, pageHalNamespace);
     if (pageHalSubstate.warpjsUser &&
         pageHalSubstate.pages &&
         pageHalSubstate.pages.length &&
@@ -34,7 +34,7 @@ const mapStateToProps = (state, ownProps) => {
             version,
             nextVersion,
             page: pageHalSubstate.pages[0],
-            ...getSubstate(state, namespace)
+            ...getNamespaceSubstate(state, namespace)
         };
     } else {
         return {};
@@ -56,4 +56,4 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => Object.freeze({
     ...ownProps
 });
 
-export default window.WarpJS.ReactUtils.wrapContainer(Component, mapStateToProps, mapDispatchToProps, mergeProps);
+export default wrapContainer(Component, mapStateToProps, mapDispatchToProps, mergeProps);

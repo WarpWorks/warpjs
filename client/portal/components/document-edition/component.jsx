@@ -10,6 +10,7 @@ import { NAME } from './constants';
 const { AutoSaveField, ModalContainer } = window.WarpJS.ReactComponents;
 const { ControlLabel, Form, FormGroup, Tab, Tabs } = window.WarpJS.ReactUtils;
 const { Fragment, PropTypes } = window.WarpJS.ReactUtils;
+const { errorBoundary } = window.WarpJS.ReactUtils;
 
 const PROPERTIES = {
     ALIAS: 'document-edition-property-alias',
@@ -132,4 +133,4 @@ Component.propTypes = {
     updateValue: PropTypes.func.isRequired
 };
 
-export default window.WarpJS.ReactUtils.errorBoundary(Component);
+export default errorBoundary(Component);

@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import DocumentFilters from './../../../document-filters';
 import ComponentItems from './../items';
 
+const { errorBoundary } = window.WarpJS.ReactUtils;
+
 const COMPONENT_NAME = 'UserProfileDocumentsContent';
 
 const byDate = (documentA, documentB) => {
@@ -36,4 +38,4 @@ Component.propTypes = {
     items: PropTypes.array
 };
 
-export default window.WarpJS.ReactUtils.errorBoundary(Component);
+export default errorBoundary(Component);

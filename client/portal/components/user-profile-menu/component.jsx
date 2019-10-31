@@ -8,6 +8,8 @@ import UserProfileNotifications from './../user-profile-notifications';
 
 // import _debug from './debug'; const debug = _debug('component');
 
+const { errorBoundary } = window.WarpJS.ReactUtils;
+
 const Component = (props) => {
     if (props.myPage) {
         return (
@@ -38,4 +40,4 @@ Component.propTypes = {
     showNotifications: PropTypes.func.isRequired
 };
 
-export default window.WarpJS.ReactUtils.errorBoundary(Component);
+export default errorBoundary(Component);

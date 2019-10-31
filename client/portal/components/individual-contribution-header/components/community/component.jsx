@@ -5,6 +5,8 @@ import CommunityContent from './components/content';
 import LeftRightMargin from './../../../../components/left-right-margin';
 import PortalContent from './../../../../components/portal-content';
 
+const { errorBoundary } = window.WarpJS.ReactUtils;
+
 const Component = (props) => {
     return (
         <Row className="warpjs-individual-contribution-community">
@@ -29,4 +31,4 @@ Component.propTypes = {
     users: PropTypes.array.isRequired
 };
 
-export default window.WarpJS.ReactUtils.errorBoundary(Component);
+export default errorBoundary(Component);

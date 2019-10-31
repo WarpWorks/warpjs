@@ -7,10 +7,10 @@ import { KEYS, SORT_KEYS } from './constants';
 import namespace from './namespace';
 import { updateFilter, updateSortBy } from './orchestrators';
 
-const getSubstate = window.WarpJS.ReactUtils.getNamespaceSubstate;
+const { getNamespaceSubstate, wrapContainer } = window.WarpJS.ReactUtils;
 
 const mapStateToProps = (state, ownProps) => {
-    const substate = getSubstate(state, namespace);
+    const substate = getNamespaceSubstate(state, namespace);
     const substateId = substate[ownProps.id] || {};
 
     if (!substateId.filters) {
@@ -35,7 +35,7 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => Object.freeze({
     ...omit(ownProps, [ 'updateFilter', 'updateSortBy' ])
 });
 
-const Container = window.WarpJS.ReactUtils.wrapContainer(Component, mapStateToProps, mapDispatchToProps, mergeProps);
+const Container = wrapContainer(Component, mapStateToProps, mapDispatchToProps, mergeProps);
 
 Container.propTypes = {
     id: PropTypes.string.isRequired,

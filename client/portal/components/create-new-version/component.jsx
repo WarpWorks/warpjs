@@ -4,6 +4,8 @@ import { FormControl, Glyphicon, InputGroup } from 'react-bootstrap';
 
 import { NAME } from './constants';
 
+const { errorBoundary } = window.WarpJS.ReactUtils;
+
 const Button = window.WarpJS.ReactComponents.Button;
 
 const addVersionLink = (elements, link, label) => {
@@ -70,4 +72,4 @@ Component.propTypes = {
     version: PropTypes.string.isRequired
 };
 
-export default window.WarpJS.ReactUtils.errorBoundary(Component);
+export default errorBoundary(Component);

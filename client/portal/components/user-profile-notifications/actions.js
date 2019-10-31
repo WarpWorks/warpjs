@@ -1,6 +1,8 @@
 import namespace from './namespace';
 
-export default window.WarpJS.ReactUtils.namespaceKeys(namespace, [
+const { namespaceKeys } = window.WarpJS.ReactUtils;
+
+export default namespaceKeys(namespace, [
     'ERROR',
     'HIDE_DETAILS',
     'RESET_MODAL',

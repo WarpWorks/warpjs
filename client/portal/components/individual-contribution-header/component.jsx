@@ -6,6 +6,8 @@ import IndividualContributionHeader from './components/header';
 
 // import _debug from './debug'; const debug = _debug('component');
 
+const { errorBoundary } = window.WarpJS.ReactUtils;
+
 const Component = (props) => {
     const pageViews = props.page.pageViews;
     const pageView = pageViews && pageViews.length ? pageViews[0] : null;
@@ -36,4 +38,4 @@ Component.propTypes = {
     page: PropTypes.object.isRequired
 };
 
-export default window.WarpJS.ReactUtils.errorBoundary(Component);
+export default errorBoundary(Component);

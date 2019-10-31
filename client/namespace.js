@@ -1,3 +1,5 @@
 import packageJson from './../package.json';
 
-export default (key) => window.WarpJS.ReactUtils.namespace(`${packageJson.name}.${key}`);
+const { namespace } = window.WarpJS.ReactUtils;
+
+export default (key) => namespace(`${packageJson.name}.${key}`);

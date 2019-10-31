@@ -3,6 +3,8 @@ import { Col, Glyphicon, Grid, Panel, Row } from 'react-bootstrap';
 
 import DetailItem from './../detail-item';
 
+const { errorBoundary } = window.WarpJS.ReactUtils;
+
 const Component = (props) => {
     const changeLog = props.item.changeLogs[0];
     const timestamp = (new Date(props.item.lastUpdated)).getTime();
@@ -45,4 +47,4 @@ Component.propTypes = {
     showDetails: PropTypes.func.isRequired
 };
 
-export default window.WarpJS.ReactUtils.errorBoundary(Component);
+export default errorBoundary(Component);

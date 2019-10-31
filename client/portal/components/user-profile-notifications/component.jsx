@@ -4,6 +4,8 @@ import { NAME } from './constants';
 import Content from './components/content';
 import Details from './components/details';
 
+const { errorBoundary } = window.WarpJS.ReactUtils;
+
 const ModalContainer = window.WarpJS.ReactComponents.ModalContainer;
 const Spinner = window.WarpJS.ReactComponents.Spinner;
 
@@ -42,4 +44,4 @@ Component.defaultProps = {
     notifications: []
 };
 
-export default window.WarpJS.ReactUtils.errorBoundary(Component);
+export default errorBoundary(Component);
