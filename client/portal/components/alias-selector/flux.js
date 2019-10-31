@@ -4,9 +4,9 @@ import aliasNameValidator from './../../../../lib/core/validators/alias-name';
 
 // import _debug from './debug'; const debug = _debug('flux');
 
+const { proxy, toast } = window.WarpJS;
 const { batch } = window.WarpJS.ReactUtils;
 const { actionCreator, baseAttributeReducer, concatenateReducers, getNamespaceSubstate, namespaceKeys, setNamespaceSubstate } = window.WarpJS.ReactUtils;
-const { proxy, toast } = window.WarpJS;
 
 //
 //  Actions

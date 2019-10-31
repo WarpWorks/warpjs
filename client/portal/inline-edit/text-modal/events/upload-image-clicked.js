@@ -12,6 +12,8 @@ function getModal($, instanceDoc) {
 }
 
 module.exports = ($, modal) => {
+    const { HAL_CONTENT_TYPE, toast } = window.WarpJS;
+
     // FileUpload.init($, modal);
 
     modal.on('click', '.image-carousel-container .warpjs-inline-edit-image-upload-button', function(e) {
@@ -52,20 +54,20 @@ module.exports = ($, modal) => {
                     const url = $('form', imageUploadModal).data('warpjsUrl');
 
                     Promise.resolve()
-                        .then(() => window.WarpJS.toast.loading($, "Uploading file...", TITLE))
+                        .then(() => toast.loading($, "Uploading file...", TITLE))
                         .then((toastLoading) => Promise.resolve()
                             .then(() => $.ajax({
                                 method: 'POST',
                                 url,
                                 headers: {
-                                    Accept: window.WarpJS.HAL_CONTENT_TYPE
+                                    Accept: HAL_CONTENT_TYPE
                                 },
                                 data,
                                 processData: false,
                                 contentType: false
                             }))
                             .then((res) => {
-                                window.WarpJS.toast.success($, "File uploaded successfully.", TITLE);
+                                toast.success($, "File uploaded successfully.", TITLE);
                                 imageUploadModal.modal('hide');
                                 const uploadUrl = $('[data-warpjs-action="file-upload"]').data('warpjsAddImageUrl');
                                 const docLevel = $('[data-warpjs-action="file-upload"]').data('warpjsDocLevel');
@@ -98,13 +100,13 @@ module.exports = ($, modal) => {
                             .catch((err) => {
                                 // eslint-disable-next-line no-console
                                 console.error("Error upload-file:", err);
-                                window.WarpJS.toast.error($, "File upload failed!", TITLE);
+                                toast.error($, "File upload failed!", TITLE);
                             })
-                            .finally(() => window.WarpJS.toast.close($, toastLoading))
+                            .finally(() => toast.close($, toastLoading))
                         )
                     ;
                 } else {
-                    window.WarpJS.toast.warning($, "Please select a file to upload", TITLE);
+                    toast.warning($, "Please select a file to upload", TITLE);
                     $(input).closest('.form-group').addClass('has-error');
                 }
             });

@@ -55,6 +55,8 @@ export default ($, data) => {
     const INLINE_BUTTON = 'warpjs-inline-edit-button';
     const AGGREGATION_CLASS = 'warpjs-inline-aggregation';
     $(`.${INLINE_BUTTON}`).each((i, element) => {
+        const { STORE } = window.WarpJS;
+
         const warpjsId = $(element).data('warpjsId');
         const warpjsUrl = $(element).data('warpjsUrl');
         const warpjsTitle = $(element).data('warpjsPanelTitle');
@@ -65,7 +67,7 @@ export default ($, data) => {
         ;
 
         ReactDOM.render(
-            <Provider store={window.WarpJS.STORE} id={`${INLINE_BUTTON}-${i}`}>
+            <Provider store={STORE} id={`${INLINE_BUTTON}-${i}`}>
                 <InlineEditButton id={`${INLINE_BUTTON}-${i}-${warpjsId}`} url={warpjsUrl} title={warpjsTitle} type={warpjsType} />
             </Provider>,
             element

@@ -4,9 +4,8 @@ import { NAME } from './constants';
 import Content from './components/content';
 import Details from './components/details';
 
-const { errorBoundary } = window.WarpJS.ReactUtils;
-
 const { ModalContainer, Spinner } = window.WarpJS.ReactComponents;
+const { errorBoundary } = window.WarpJS.ReactUtils;
 
 const Component = (props) => {
     let content = <Spinner />;

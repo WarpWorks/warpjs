@@ -5,6 +5,7 @@ import namespace from './namespace';
 
 // import _debug from './debug'; const debug = _debug('orchestrators');
 
+const { proxy, toast } = window.WarpJS;
 const { actionCreator, baseAttributeReducer, baseNamespaceReducer, concatenateReducers, namespaceKeys } = window.WarpJS.ReactUtils;
 
 const actions = namespaceKeys(namespace, [
@@ -31,7 +32,7 @@ export const orchestrators = Object.freeze({
             return;
         }
 
-        const toastLoading = await window.WarpJS.toast.loading($, "Updating aggregation...");
+        const toastLoading = await toast.loading($, "Updating aggregation...");
         try {
             const data = {
                 type: warpjsData.type,
@@ -42,19 +43,19 @@ export const orchestrators = Object.freeze({
 
             const aggregation = aggregations.find((aggr) => aggr.id === aggregationId);
 
-            const result = await window.WarpJS.proxy.post($, aggregation._links.updateParagraphAggregation.href, data);
+            const result = await proxy.post($, aggregation._links.updateParagraphAggregation.href, data);
             if (result && result.error) {
-                await window.WarpJS.toast.error($, "Unable to update aggregation");
+                await toast.error($, "Unable to update aggregation");
             } else {
-                await window.WarpJS.toast.success($, "Updated aggregation");
+                await toast.success($, "Updated aggregation");
                 dispatch(actionCreators.updateAggregation(aggregationId));
                 $(clickedElement).data('warpjsSubdocuments', aggregationId);
                 constants.setDirty();
             }
         } catch (err) {
-            await window.WarpJS.toast.error($, "Unable to update aggregation");
+            await toast.error($, "Unable to update aggregation");
         } finally {
-            await window.WarpJS.toast.close($, toastLoading);
+            await toast.close($, toastLoading);
         }
     }
 });

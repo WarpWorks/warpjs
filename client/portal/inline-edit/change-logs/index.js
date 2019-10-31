@@ -13,11 +13,13 @@ const constants = {
 class ChangeLogs {
     static init($, res, instanceDoc, element) {
         $(document).on('click', constants.ACTION_SELECTOR, function(event) {
+            const { proxy, toast } = window.WarpJS;
+
             event.preventDefault();
             Promise.resolve()
                 .then(() => ChangeLogs.isDirty
                     ? Promise.resolve()
-                        .then(() => window.WarpJS.toast.loading($, "Updating change logs...", constants.TOAST_TITLE))
+                        .then(() => toast.loading($, "Updating change logs...", constants.TOAST_TITLE))
                         .then((toastLoading) => Promise.resolve()
                             .then(() => {
                                 return {
@@ -29,10 +31,10 @@ class ChangeLogs {
                                     }
                                 };
                             })
-                            .then((data) => window.WarpJS.proxy.post($, $(element).data('warpjsUrl'), data))
+                            .then((data) => proxy.post($, $(element).data('warpjsUrl'), data))
                             .then((res) => bodyTemplate({ changeLogs: res._embedded.changeLogs }))
                             .then((content) => $('.warpjs-detail-container .warpjs-placeholder').html(content))
-                            .then(() => window.WarpJS.toast.close($, toastLoading))
+                            .then(() => toast.close($, toastLoading))
                         )
                     : Promise.resolve()
                         .then(() => bodyTemplate({ changeLogs: res._embedded.changeLogs }))
@@ -47,7 +49,7 @@ class ChangeLogs {
                 })
                 .then(() => $(constants.MODAL_SELECTOR, instanceDoc).modal('show'))
                 .then(() => ChangeLogs.clean())
-                .catch(() => window.WarpJS.toast.error($, "Trouble getting the change logs", constants.TOAST_TITLE))
+                .catch(() => toast.error($, "Trouble getting the change logs", constants.TOAST_TITLE))
             ;
         });
 

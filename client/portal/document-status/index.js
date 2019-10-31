@@ -1,5 +1,7 @@
 module.exports = ($, result) => {
-    $(window.WarpJS.CONTENT_PLACEHOLDER).on('click', '.warpjs-document-status-container .warpjs-document-status-content .warpjs-content[data-warpjs-document-status-open-modal="true"] a[href="#"]', (event) => {
+    const { CONTENT_PLACEHOLDER, modal } = window.WarpJS;
+
+    $(CONTENT_PLACEHOLDER).on('click', '.warpjs-document-status-container .warpjs-document-status-content .warpjs-content[data-warpjs-document-status-open-modal="true"] a[href="#"]', (event) => {
         event.stopPropagation();
         event.preventDefault();
 
@@ -10,10 +12,10 @@ module.exports = ($, result) => {
         const modalTitle = result.customMessages[modalTitleKey];
         const modalContent = result.customMessages[modalContentKey];
 
-        const modal = window.WarpJS.modal($, 'document-status', { html: true, value: modalTitle }, [
+        const aModal = modal($, 'document-status', { html: true, value: modalTitle }, [
             { label: 'Close' }
         ]);
-        $('> .modal-dialog > .modal-content > .modal-body', modal).html(modalContent);
-        modal.modal('show');
+        $('> .modal-dialog > .modal-content > .modal-body', aModal).html(modalContent);
+        aModal.modal('show');
     });
 };

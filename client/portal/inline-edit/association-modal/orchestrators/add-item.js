@@ -7,6 +7,8 @@ import setPositions from './set-positions';
 // import debug from './../../../debug';
 // const log = debug('inline-edit/association-modal/orchestrators/add-item');
 
+const { proxy, toast } = window.WarpJS;
+
 export default async (dispatch, items, item, itemUrl, reorderUrl) => {
     const cloned = cloneDeep(items);
     const indexOf = cloned.findIndex((currentItem) => currentItem.id === item.id);
@@ -22,9 +24,9 @@ export default async (dispatch, items, item, itemUrl, reorderUrl) => {
             position: items.length + 1
         };
 
-        const toastLoading = window.WarpJS.toast.loading($, "Linking...");
+        const toastLoading = toast.loading($, "Linking...");
         try {
-            const result = await window.WarpJS.proxy.post($, itemUrl, newItem);
+            const result = await proxy.post($, itemUrl, newItem);
             if (result && result._embedded && result._embedded.references && result._embedded.references.length) {
                 cloned.push({
                     _links: result._embedded.references[0]._links,
@@ -40,11 +42,11 @@ export default async (dispatch, items, item, itemUrl, reorderUrl) => {
                 const toUpdate = setPositions(cloned);
                 if (toUpdate.length) {
                     try {
-                        await window.WarpJS.proxy.patch($, reorderUrl, toUpdate);
-                        window.WarpJS.toast.success($, "Linked");
+                        await proxy.patch($, reorderUrl, toUpdate);
+                        toast.success($, "Linked");
                     } catch (err) {
                         console.error("Error updating positions: err=", err);
-                        window.WarpJS.toast.error($, err.message, "Error updating positions!");
+                        toast.error($, err.message, "Error updating positions!");
                     }
                 }
 
@@ -52,9 +54,9 @@ export default async (dispatch, items, item, itemUrl, reorderUrl) => {
             }
         } catch (err) {
             console.error("Error! err=", err);
-            window.WarpJS.toast.error($, err.message, "Error!");
+            toast.error($, err.message, "Error!");
         } finally {
-            window.WarpJS.toast.close($, toastLoading);
+            toast.close($, toastLoading);
         }
     }
 };

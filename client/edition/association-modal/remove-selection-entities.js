@@ -4,6 +4,8 @@ const ChangeLogs = require('./../change-logs');
 const constants = require('./constants');
 
 module.exports = ($, instanceDoc) => {
+    const { proxy, toast } = window.WarpJS;
+
     instanceDoc.on('click', `${constants.DIALOG_SELECTOR} .warpjs-selected-details .warpjs-remove`, function() {
         const element = $(constants.DIALOG_SELECTOR).data(constants.CURRENT_ELEMENT_KEY);
         const textarea = $(`${constants.DIALOG_SELECTOR} .warpjs-selected-details .warpjs-relationship-description`, instanceDoc);
@@ -22,11 +24,11 @@ module.exports = ($, instanceDoc) => {
 
         // Call server async
         Promise.resolve()
-            .then(() => window.WarpJS.proxy.patch($, $(element).data('warpjsUrl'), { id, type, updatePath, patchAction }))
+            .then(() => proxy.patch($, $(element).data('warpjsUrl'), { id, type, updatePath, patchAction }))
             .then(() => ChangeLogs.dirty())
             .catch((err) => {
                 console.error("Error removing association", err);
-                window.WarpJS.toast.error($, err.message, "Error removing association");
+                toast.error($, err.message, "Error removing association");
             })
         ;
     });

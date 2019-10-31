@@ -1,6 +1,8 @@
 const openModal = require('./open-modal');
 
 module.exports = async ($, element) => {
+    const { proxy, toast } = window.WarpJS;
+
     const data = {
         elementType: $(element).data('warpjsType'),
         elementId: $(element).data('warpjsId'),
@@ -10,14 +12,14 @@ module.exports = async ($, element) => {
         }
     };
 
-    const toastLoading = await window.WarpJS.toast.loading($, "Loading data...", "Loading");
+    const toastLoading = await toast.loading($, "Loading data...", "Loading");
     try {
-        const res = await window.WarpJS.proxy.post($, $(element).data('warpjsUrl'), data);
+        const res = await proxy.post($, $(element).data('warpjsUrl'), data);
         await openModal($, element, res);
     } catch (err) {
         console.error("Error:", err);
-        await window.WarpJS.toast.error($, err.message, "Error getting data");
+        await toast.error($, err.message, "Error getting data");
     } finally {
-        await window.WarpJS.toast.close($, toastLoading);
+        await toast.close($, toastLoading);
     }
 };

@@ -4,6 +4,8 @@ const constants = require('./../constants');
 const formFeedback = require('./../../form-feedback');
 
 module.exports = ($, instanceDoc) => {
+    const { proxy, byPositionThenName, toast } = window.WarpJS;
+
     const selector = `${constants.DIALOG_SELECTOR} #warpjs-association-modal-selected-position`;
 
     instanceDoc.on('change', selector, function() {
@@ -17,7 +19,7 @@ module.exports = ($, instanceDoc) => {
 
         return Promise.resolve()
             .then(() => formFeedback.start($, this))
-            .then(() => window.WarpJS.proxy.patch($, undefined, data))
+            .then(() => proxy.patch($, undefined, data))
             .then(() => formFeedback.success($, this))
 
             // Reposition the selected in the modal.
@@ -29,7 +31,7 @@ module.exports = ($, instanceDoc) => {
                     position: $(item).data('warpjsRelationshipPosition'),
                     item
                 })))
-                .then((items) => items.sort(window.WarpJS.byPositionThenName))
+                .then((items) => items.sort(byPositionThenName))
                 .then((items) => items.map((item) => item.item))
                 .then((items) => items.forEach((item) => section.append(item)))
             )
@@ -44,7 +46,7 @@ module.exports = ($, instanceDoc) => {
                     position: $(item).data('warpjsRelationshipPosition'),
                     item
                 })))
-                .then((items) => items.sort(window.WarpJS.byPositionThenName))
+                .then((items) => items.sort(byPositionThenName))
                 .then((items) => items.map((item) => item.item))
                 .then((items) => items.forEach((item) => section.append(item)))
             )
@@ -52,7 +54,7 @@ module.exports = ($, instanceDoc) => {
             .catch((err) => {
                 formFeedback.error($, this);
                 console.error("Error updating association position:", err);
-                window.WarpJS.toast.error($, err.message, "Error updating association position");
+                toast.error($, err.message, "Error updating association position");
             })
         ;
     });

@@ -8,6 +8,8 @@ import * as ParagraphAggregations from './../components/paragraph-aggregations';
 const PLACEHOLDER = 'warpjs-paragraph-aggregations';
 
 export default async ($, modal, clickedElement) => {
+    const { STORE } = window.WarpJS;
+
     // debug(`clickedElement=`, clickedElement);
 
     const aggregationSelected = parseInt($(clickedElement).data('warpjsSubdocuments') || -1, 10);
@@ -22,10 +24,10 @@ export default async ($, modal, clickedElement) => {
         }
     };
 
-    window.WarpJS.STORE.dispatch(ParagraphAggregations.initialize(aggregations, aggregationSelected, warpjsData, clickedElement));
+    STORE.dispatch(ParagraphAggregations.initialize(aggregations, aggregationSelected, warpjsData, clickedElement));
 
     ReactDOM.render(
-        <Provider store={window.WarpJS.STORE} id={PLACEHOLDER}>
+        <Provider store={STORE} id={PLACEHOLDER}>
             <ParagraphAggregations.Container />
         </Provider>,
         $(`.${PLACEHOLDER}`).get(0)

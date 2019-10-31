@@ -7,6 +7,8 @@ function findAddedSelection($, modal, doc) {
 }
 
 module.exports = ($, modal, elementToAdd) => {
+    const { toast } = window.WarpJS;
+
     const section = $(elementToAdd).closest('.warpjs-section');
 
     const doc = {
@@ -24,7 +26,7 @@ module.exports = ($, modal, elementToAdd) => {
         .then((addedDocument) => addedDocument.length
             ? addedDocument
             : Promise.resolve()
-                .then(() => window.WarpJS.toast.warning($, "Create assocation on server", "TODO"))
+                .then(() => toast.warning($, "Create assocation on server", "TODO"))
                 .then((res) => {
                     if (!$('.warpjs-section-selected-documents .warpjs-section-item').length) {
                         $('.warpjs-section-selected-documents .warpjs-no-documents').remove();

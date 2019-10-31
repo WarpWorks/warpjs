@@ -2,8 +2,8 @@ import cloneDeep from 'lodash/cloneDeep';
 
 import actions from './actions';
 
-const { concatenateReducers } = window.WarpJS.ReactUtils;
 const { reducers } = window.WarpJS.ReactComponents;
+const { concatenateReducers } = window.WarpJS.ReactUtils;
 
 export default concatenateReducers([
     {

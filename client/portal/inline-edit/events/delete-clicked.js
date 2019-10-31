@@ -7,6 +7,8 @@ const deleteConfirm = require('./../../../edition/delete-confirm');
 const itemsTemplate = require('./../text-modal-elements.hbs');
 
 const saveItemDelete = ($, modal, element, items) => {
+    const { proxy, toast } = window.WarpJS;
+
     return Promise.resolve()
         .then(() => ({
             id: $(element).data('warpjsId'),
@@ -19,7 +21,7 @@ const saveItemDelete = ($, modal, element, items) => {
             action: 'delete'
         }))
         .then((data) => Promise.resolve()
-            .then(() => window.WarpJS.proxy.patch($, modal.data('warpjsUrl'), data))
+            .then(() => proxy.patch($, modal.data('warpjsUrl'), data))
             .then(() => constants.setDirty())
             .then(() => ChangeLogs.dirty())
             .then(() => {
@@ -32,7 +34,7 @@ const saveItemDelete = ($, modal, element, items) => {
                 }
             })
         )
-        .catch((err) => window.WarpJS.toast.error($, err.message, "Failed"))
+        .catch((err) => toast.error($, err.message, "Failed"))
         .then(() => items)
     ;
 };

@@ -6,6 +6,8 @@ const itemsTemplate = require('./../text-modal-elements.hbs');
 const moveAndSave = require('./../move-and-save');
 
 module.exports = ($, modal, event, items) => {
+    const { proxy, toast } = window.WarpJS;
+
     event.preventDefault();
 
     return Promise.resolve()
@@ -16,7 +18,7 @@ module.exports = ($, modal, event, items) => {
                 action: 'add'
             }))
             .then((data) => Promise.resolve()
-                .then(() => window.WarpJS.proxy.patch($, modal.data('warpjsUrl'), data))
+                .then(() => proxy.patch($, modal.data('warpjsUrl'), data))
                 .then((newInstance) => Promise.resolve()
                     .then(() => constants.setDirty())
                     .then(() => ChangeLogs.dirty())
@@ -47,7 +49,7 @@ module.exports = ($, modal, event, items) => {
                     .then(() => $('.warpjs-list-item-value[data-warpjs-id="' + newInstance.newParagraph._id + '"]').trigger('click'))
                 )
             )
-            .catch((err) => window.WarpJS.toast.error($, err.message, "Failed"))
+            .catch((err) => toast.error($, err.message, "Failed"))
             .then(() => items)
         )
     ;

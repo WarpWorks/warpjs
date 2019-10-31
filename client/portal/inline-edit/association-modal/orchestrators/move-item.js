@@ -5,6 +5,8 @@ import constants from './../../constants';
 import setPositions from './set-positions';
 import swapArrayItems from './swap-array-items';
 
+const { proxy, toast } = window.WarpJS;
+
 export default async (dispatch, items, item, moveDown, url) => {
     const cloned = cloneDeep(items);
     const indexOf = cloned.findIndex((currentItem) => currentItem.id === item.id);
@@ -16,18 +18,18 @@ export default async (dispatch, items, item, moveDown, url) => {
     const toUpdate = setPositions(cloned);
     cloned.sort((a, b) => a.relnPosition - b.relnPosition);
 
-    const toastLoading = window.WarpJS.toast.loading($, "Reordering...");
+    const toastLoading = toast.loading($, "Reordering...");
     try {
-        await window.WarpJS.proxy.patch($, url, toUpdate);
+        await proxy.patch($, url, toUpdate);
 
         constants.setDirty();
 
-        window.WarpJS.toast.success($, "Reordered");
+        toast.success($, "Reordered");
         dispatch(actionCreators.updateItems(cloned));
     } catch (err) {
         console.error("error patch:", err);
-        window.WarpJS.toast.error($, err.message, "Error!");
+        toast.error($, err.message, "Error!");
     } finally {
-        window.WarpJS.toast.close($, toastLoading);
+        toast.close($, toastLoading);
     }
 };

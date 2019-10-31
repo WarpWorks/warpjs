@@ -3,6 +3,8 @@ const Promise = require('bluebird');
 const openBasicPropertyModal = require('./open-basic-property-modal');
 
 module.exports = ($, element) => {
+    const { proxy, toast } = window.WarpJS;
+
     const data = {
         elementType: $(element).data('warpjsType'),
         elementId: $(element).data('warpjsId'),
@@ -13,15 +15,15 @@ module.exports = ($, element) => {
     };
 
     Promise.resolve()
-        .then(() => window.WarpJS.toast.loading($, "Loading data...", "Loading"))
+        .then(() => toast.loading($, "Loading data...", "Loading"))
         .then((toastLoading) => Promise.resolve()
-            .then(() => window.WarpJS.proxy.post($, $(element).data('warpjsUrl'), data))
+            .then(() => proxy.post($, $(element).data('warpjsUrl'), data))
             .then((res) => openBasicPropertyModal($, element, res))
             .catch((err) => {
                 console.error("Error:", err);
-                window.WarpJS.toast.error($, err.message, "Error getting data");
+                toast.error($, err.message, "Error getting data");
             })
-            .finally(() => window.WarpJS.toast.close($, toastLoading))
+            .finally(() => toast.close($, toastLoading))
         )
     ;
 };

@@ -3,18 +3,20 @@ import cloneDeep from 'lodash/cloneDeep';
 import * as actionCreators from './../action-creators';
 import constants from './../../constants';
 
+const { proxy, toast } = window.WarpJS;
+
 export default async (dispatch, items, item) => {
-    const toastLoading = window.WarpJS.toast.loading($, "Unlinking...");
+    const toastLoading = toast.loading($, "Unlinking...");
 
     try {
-        await window.WarpJS.proxy.del($, item._links.self.href);
+        await proxy.del($, item._links.self.href);
         constants.setDirty();
-        window.WarpJS.toast.success($, "Unlinked");
+        toast.success($, "Unlinked");
         const cloned = cloneDeep(items).filter((current) => current.id !== item.id);
         dispatch(actionCreators.updateItems(cloned));
     } catch (err) {
-        window.WarpJS.toast.error($, err.message, "Error!");
+        toast.error($, err.message, "Error!");
     } finally {
-        window.WarpJS.toast.close($, toastLoading);
+        toast.close($, toastLoading);
     }
 };

@@ -10,6 +10,8 @@ const template = require('./selected-entity.hbs');
 const csvTemplate = require('./../instance/relationship-panel-item-csv-item.hbs');
 
 module.exports = ($, instanceDoc) => {
+    const { proxy, toast } = window.WarpJS;
+
     instanceDoc.on('click', `${constants.DIALOG_SELECTOR} .warpjs-selection-entities .warpjs-selection-entity`, function() {
         const element = $(constants.DIALOG_SELECTOR).data(constants.CURRENT_ELEMENT_KEY);
 
@@ -34,7 +36,7 @@ module.exports = ($, instanceDoc) => {
         if (!added.length) {
             // Call this async
             Promise.resolve()
-                .then(() => window.WarpJS.proxy.post($, $(element).data('warpjsUrl'), {
+                .then(() => proxy.post($, $(element).data('warpjsUrl'), {
                     id,
                     type,
                     docLevel,
@@ -49,7 +51,7 @@ module.exports = ($, instanceDoc) => {
                 })
                 .catch((err) => {
                     console.error("Error adding data to server:", err);
-                    window.WarpJS.toast.error($, err.message, "Error adding association");
+                    toast.error($, err.message, "Error adding association");
                 });
         } else {
             $(`${selector} a`, instanceDoc).trigger('click');

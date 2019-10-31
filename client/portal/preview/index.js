@@ -35,6 +35,8 @@ function findPopover($) {
 }
 
 module.exports = ($) => {
+    const { proxy } = window.WarpJS;
+
     $(document).on('mousemove', '[data-warpjs-action="preview"][data-warpjs-preview-url]', throttle((evt) => {
         const popover = findPopover($);
         position(popover, evt);
@@ -48,7 +50,7 @@ module.exports = ($) => {
             position(popover, evt);
         } else {
             Promise.resolve()
-                .then(() => window.WarpJS.proxy.get($, $(this).data('warpjsPreviewUrl')))
+                .then(() => proxy.get($, $(this).data('warpjsPreviewUrl')))
                 .then((result) => Promise.resolve()
                     .then(() => {
                         // Tinymce dependent.

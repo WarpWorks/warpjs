@@ -4,6 +4,8 @@ const ChangeLogs = require('./../change-logs');
 const constants = require('./../constants');
 
 module.exports = ($, modal, changedElement) => {
+    const { proxy, toast } = window.WarpJS;
+
     const url = modal.data('warpjsUrl');
     const id = $(changedElement).data('warpjsId');
     const newValue = $(changedElement).val();
@@ -20,10 +22,10 @@ module.exports = ($, modal, changedElement) => {
     };
 
     Promise.resolve()
-        .then(() => window.WarpJS.toast.loading($, "Saving..."))
+        .then(() => toast.loading($, "Saving..."))
         .then((toastLoading) => Promise.resolve()
-            .then(() => window.WarpJS.proxy.patch($, url, data))
-            .then(() => window.WarpJS.toast.success($, "Data updated"))
+            .then(() => proxy.patch($, url, data))
+            .then(() => toast.success($, "Data updated"))
             .then(() => {
                 constants.setDirty();
                 ChangeLogs.dirty();
@@ -31,8 +33,8 @@ module.exports = ($, modal, changedElement) => {
                     .data('warpjsDescription', newValue)
                 ;
             })
-            .catch((err) => window.WarpJS.toast.error($, err.message, "Failed"))
-            .finally(() => window.WarpJS.toast.close($, toastLoading))
+            .catch((err) => toast.error($, err.message, "Failed"))
+            .finally(() => toast.close($, toastLoading))
         )
     ;
 };

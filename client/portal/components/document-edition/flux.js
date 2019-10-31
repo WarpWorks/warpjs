@@ -5,9 +5,9 @@ import namespace from './namespace';
 
 // import _debug from './debug'; const debug = _debug('flux');
 
+const { hideModalContainer, showModalContainer } = window.WarpJS.ReactComponents;
 const { batch } = window.WarpJS.ReactUtils;
 const { actionCreator, concatenateReducers, getNamespaceSubstate, namespaceKeys, setNamespaceSubstate } = window.WarpJS.ReactUtils;
-const { hideModalContainer, showModalContainer } = window.WarpJS.ReactComponents;
 
 export const actions = namespaceKeys(namespace, [
     'UPDATE_VALUE'

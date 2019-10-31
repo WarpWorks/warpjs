@@ -10,6 +10,8 @@ function getModal($, instanceDoc) {
 }
 
 module.exports = ($, modal) => {
+    const { toast } = window.WarpJS;
+
     modal.on('click', '.warpjs-inline-edit-image-delete-button', function(e) {
         e.stopPropagation();
         e.preventDefault();
@@ -48,7 +50,7 @@ module.exports = ($, modal) => {
                 };
 
                 Promise.resolve()
-                    .then(() => window.WarpJS.toast.loading($, "deleting file...", TITLE))
+                    .then(() => toast.loading($, "deleting file...", TITLE))
                     .then((toastLoading) => Promise.resolve()
                         .then(() => $.ajax({
                             method: 'POST',
@@ -57,7 +59,7 @@ module.exports = ($, modal) => {
                             data: JSON.stringify(data)
                         }))
                         .then((res) => {
-                            window.WarpJS.toast.success($, "File deleted successfully.", TITLE);
+                            toast.success($, "File deleted successfully.", TITLE);
                             $('.inline-editor-image').css('background-image', '');
                             $('.warpjs-inline-edit-image-delete-button').addClass('hide-delete-button');
                             $('.warpjs-list-item.warpjs-list-item-selected .warpjs-list-item-value').data('warpjsImages', []);
@@ -67,9 +69,9 @@ module.exports = ($, modal) => {
                         .catch((err) => {
                             // eslint-disable-next-line no-console
                             console.error("Error delete-file:", err);
-                            window.WarpJS.toast.error($, "File delete failed!", TITLE);
+                            toast.error($, "File delete failed!", TITLE);
                         })
-                        .finally(() => window.WarpJS.toast.close($, toastLoading))
+                        .finally(() => toast.close($, toastLoading))
                     )
                 ;
             });

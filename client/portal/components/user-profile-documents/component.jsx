@@ -5,9 +5,8 @@ import Content from './components/content';
 
 // import _debug from './debug'; const debug = _debug('component');
 
-const { errorBoundary } = window.WarpJS.ReactUtils;
-
 const { ModalContainer, Spinner } = window.WarpJS.ReactComponents;
+const { errorBoundary } = window.WarpJS.ReactUtils;
 
 const Component = (props) => {
     let content = <Spinner />;
