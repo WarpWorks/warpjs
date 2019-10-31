@@ -6,7 +6,7 @@ import { NAME } from './constants';
 
 const { errorBoundary } = window.WarpJS.ReactUtils;
 
-const Button = window.WarpJS.ReactComponents.Button;
+const { Button } = window.WarpJS.ReactComponents;
 
 const addVersionLink = (elements, link, label) => {
     if (link) {

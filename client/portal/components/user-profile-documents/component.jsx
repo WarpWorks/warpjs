@@ -7,8 +7,7 @@ import Content from './components/content';
 
 const { errorBoundary } = window.WarpJS.ReactUtils;
 
-const ModalContainer = window.WarpJS.ReactComponents.ModalContainer;
-const Spinner = window.WarpJS.ReactComponents.Spinner;
+const { ModalContainer, Spinner } = window.WarpJS.ReactComponents;
 
 const Component = (props) => {
     let content = <Spinner />;

@@ -5,6 +5,7 @@ import actions from './actions';
 import namespace from './namespace';
 
 const { concatenateReducers, setNamespaceSubstate } = window.WarpJS.ReactUtils;
+const { reducers } = window.WarpJS.ReactComponents;
 
 export default concatenateReducers([
     {
@@ -13,5 +14,5 @@ export default concatenateReducers([
     },
     userProfileDocumentsReducers,
     userProfileNotificationsReducers,
-    window.WarpJS.ReactComponents.reducers
+    reducers
 ]);

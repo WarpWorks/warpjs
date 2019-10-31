@@ -7,9 +7,9 @@ import * as shapes from './../../../../../react-utils/shapes';
 // import debug from './../../../../debug';
 // const log = debug('client/portal/inline-editor/association-modal/components/content/component');
 
-const Component = (props) => {
-    const { FilterableList } = window.WarpJS.ReactComponents;
+const { FilterableList } = window.WarpJS.ReactComponents;
 
+const Component = (props) => {
     const selected = props.relationship.targets.find((target) => target.selected);
 
     const selectComponent = (
