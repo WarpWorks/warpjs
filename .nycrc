@@ -15,9 +15,7 @@
   ],
   "reporter": [
     "cobertura",
-    "html",
-    "text",
-    "text-summary"
+    "html"
   ],
   "watermarks": {
     "statements": [50, 80],
