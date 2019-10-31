@@ -13,7 +13,9 @@ import { reducers as userProfileDocumentsReducers } from './user-profile-documen
 import { reducers as userProfileMenuReducers } from './user-profile-menu';
 import { reducers as userProfileNotificationsReducers } from './user-profile-notifications';
 
-export default window.WarpJS.ReactUtils.concatenateReducers([
+const { concatenateReducers } = window.WarpJS.ReactUtils;
+
+export default concatenateReducers([
     aggregationEditorReducers,
     aggregationFiltersReducers,
     aliasSelectorReducers,

@@ -59,15 +59,10 @@ export const orchestrators = Object.freeze({
     }
 });
 
-//
-//  Reducers
-//
-
-const initialize = (state = {}, action) => baseNamespaceReducer(state, namespace, action.payload);
-
-const updateAggregation = (state = {}, action) => baseAttributeReducer(state, namespace, 'aggregationSelected', action.payload.aggregationSelected);
-
-export const reducers = concatenateReducers([
-    { actions: [ actions.INITIAL_STATE ], reducer: initialize },
-    { actions: [ actions.UPDATE_AGGREGATION ], reducer: updateAggregation }
-]);
+export const reducers = concatenateReducers([{
+    actions: [ actions.INITIAL_STATE ],
+    reducer: (state = {}, action) => baseNamespaceReducer(state, namespace, action.payload)
+}, {
+    actions: [ actions.UPDATE_AGGREGATION ],
+    reducer: (state = {}, action) => baseAttributeReducer(state, namespace, 'aggregationSelected', action.payload.aggregationSelected)
+}]);

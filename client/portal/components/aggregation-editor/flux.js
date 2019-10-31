@@ -29,7 +29,7 @@ const actionCreators = Object.freeze({
     setError: (message) => actionCreator(actions.SET_ERROR, { message }),
     setItems: (items) => actionCreator(actions.SET_ITEMS, { items }),
     setUrl: (url) => actionCreator(actions.SET_URL, { url }),
-    toggleFilters: () => actionCreator(actions.TOGGLE_FILTERS),
+    toggleFilters: (value) => actionCreator(actions.TOGGLE_FILTERS, { value }),
     updateFilterLabel: (association, label) => actionCreator(actions.UPDATE_FILTER_LABEL, { association, label })
 });
 
@@ -132,8 +132,8 @@ export const orchestrators = Object.freeze({
         }
     },
 
-    toggleFilters: (dispatch) => {
-        dispatch(actionCreators.toggleFilters());
+    toggleFilters: (dispatch, value) => {
+        dispatch(actionCreators.toggleFilters(value));
     },
 
     updateFilterLabel: async (dispatch, association, label, setDirty) => {
@@ -187,11 +187,7 @@ export const reducers = concatenateReducers([{
     reducer: (state = {}, action) => baseAttributeReducer(state, namespace, 'url', action.payload.url)
 }, {
     actions: [ actions.TOGGLE_FILTERS ],
-    reducer: (state = {}, action) => {
-        const substate = getNamespaceSubstate(state, namespace);
-        substate.showFilters = !substate.showFilters;
-        return setNamespaceSubstate(state, namespace, substate);
-    }
+    reducer: (state = {}, action) => baseAttributeReducer(state, namespace, 'showFilters', action.payload.value)
 }, {
     actions: [ actions.UPDATE_FILTER_LABEL ],
     reducer: (state = {}, action) => {

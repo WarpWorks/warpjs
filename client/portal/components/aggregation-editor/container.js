@@ -34,7 +34,7 @@ const getComponentProps = (props) => {
         closeModal: async () => orchestrators.closeModal(dispatch, props.id, pageHalSubstate.isDirty),
         createChild: async (entity) => orchestrators.createChild(dispatch, subState.url, entity),
         onHide: async () => orchestrators.modalClosed(dispatch, pageHalSubstate.isDirty),
-        toggleFilters: () => orchestrators.toggleFilters(dispatch),
+        toggleFilters: () => orchestrators.toggleFilters(dispatch, !subState.showFilters),
         ...props
     };
 };

@@ -54,17 +54,12 @@ export const orchestrators = Object.freeze({
     }
 });
 
-//
-//  Reducers
-//
-
-const updateValue = (state = {}, action) => {
-    const substate = getNamespaceSubstate(state, namespace);
-    substate.editedValues = substate.editedValues || {};
-    substate.editedValues[action.payload.key] = action.payload.value;
-    return setNamespaceSubstate(state, namespace, substate);
-};
-
-export const reducers = concatenateReducers([
-    { actions: [ actions.UPDATE_VALUE ], reducer: updateValue }
-]);
+export const reducers = concatenateReducers([{
+    actions: [ actions.UPDATE_VALUE ],
+    reducer: (state = {}, action) => {
+        const substate = getNamespaceSubstate(state, namespace);
+        substate.editedValues = substate.editedValues || {};
+        substate.editedValues[action.payload.key] = action.payload.value;
+        return setNamespaceSubstate(state, namespace, substate);
+    }
+}]);

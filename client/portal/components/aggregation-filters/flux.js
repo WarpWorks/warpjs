@@ -3,7 +3,7 @@ import namespace from './namespace';
 // import _debug from './debug'; const debug = _debug('flux');
 
 const { batch } = window.WarpJS.ReactUtils;
-const { actionCreator, baseAttributeReducer, concatenateReducers, getNamespaceSubstate, namespaceKeys, setNamespaceSubstate } = window.WarpJS.ReactUtils;
+const { actionCreator, baseAttributeReducer, concatenateReducers, namespaceKeys } = window.WarpJS.ReactUtils;
 
 const actions = namespaceKeys(namespace, [
     'SET_SELECTION',
@@ -41,11 +41,7 @@ export const orchestrators = Object.freeze({
 
 export const reducers = concatenateReducers([{
     actions: [ actions.SET_SELECTION ],
-    reducer: (state = {}, action) => {
-        const substate = getNamespaceSubstate(state, namespace);
-        substate.selection = action.payload;
-        return setNamespaceSubstate(state, namespace, substate);
-    }
+    reducer: (state = {}, action) => baseAttributeReducer(state, namespace, 'selection', action.payload)
 }, {
     actions: [ actions.SET_SEARCH_VALUE ],
     reducer: (state = {}, action) => baseAttributeReducer(state, namespace, 'searchValue', action.payload.value)

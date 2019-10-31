@@ -1,6 +1,6 @@
 import namespace from './namespace';
 
-const { actionCreator, concatenateReducers, getNamespaceSubstate, namespaceKeys, setNamespaceSubstate } = window.WarpJS.ReactUtils;
+const { actionCreator, baseAttributeReducer, concatenateReducers, namespaceKeys } = window.WarpJS.ReactUtils;
 
 //
 //  Actions
@@ -42,12 +42,8 @@ export const orchestrators = Object.freeze({
 //
 //  Reducers
 //
-const updateEditMode = (state = {}, action) => {
-    const substate = getNamespaceSubstate(state, namespace);
-    substate.inEditMode = action.payload.value || false;
-    return setNamespaceSubstate(state, namespace, substate);
-};
 
-export const reducers = concatenateReducers([
-    { actions: [ actions.UPDATE_EDIT_MODE ], reducer: updateEditMode }
-]);
+export const reducers = concatenateReducers([{
+    actions: [ actions.UPDATE_EDIT_MODE ],
+    reducer: (state = {}, action) => baseAttributeReducer(state, namespace, 'inEditMode', action.payload.value || false)
+}]);
