@@ -86,6 +86,7 @@
     "mkdirp": "0.5.1",
     "mmmagic": "~0.5.0",
     "morgan": "~1.9.0",
+    "nanositemap": "0.0.2",
     "pdfmake": "~0.1.61",
     "pngjs": "^3.4.0",
     "random-words": "0.0.1",
@@ -95,7 +96,8 @@
     "shelljs": "~0.8.2",
     "url-template": "2.0.8",
     "uuid": "3.3.x",
-    "winston": "~3.2.1"
+    "winston": "~3.2.1",
+    "xml2js": "~0.4.22"
   },
   "devDependencies": {
     "@quoin/eslint-config-quoin": "~0.3.2",

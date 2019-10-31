@@ -1,11 +1,12 @@
 #!/usr/bin/env node
 
-const debug = require('debug')('W2:WarpJS');
 const express = require('express');
 const path = require('path');
 const Promise = require('bluebird');
 
 const config = require('./server/config');
+
+const debug = require('./debug')('server');
 
 Promise.config({
     longStackTraces: true

@@ -1,17 +1,20 @@
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const debug = require('debug')('W2:WarpJS:app');
 const express = require('express');
 const expressBusboy = require('express-busboy');
 const expressUserAgent = require('express-useragent');
 const hbs = require('hbs');
 const hbsUtils = require('hbs-utils')(hbs);
 const path = require('path');
+
 const RoutesInfo = require('@quoin/expressjs-routes-info');
 const warpjsPlugins = require('@warp-works/warpjs-plugins');
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const warpjsCore = require('./../lib/core');
+
 const content = require('./content');
+const debug = require('./debug')('app');
 const extractAuthMiddlewares = require('./extract-auth-middlewares');
 const favicon = require('serve-favicon');
 const logFiles = require('./log-files');
@@ -20,9 +23,9 @@ const middlewares = require('./middlewares');
 const pathAlias = require('./path-alias');
 const robots = require('./robots');
 const serverUtils = require('./utils');
+const sitemap = require('./sitemap');
 const status = require('./status');
 const studio = require('./studio');
-const warpjsCore = require('./../lib/core');
 
 const ROOT_DIR = path.dirname(require.resolve('./../package.json'));
 
@@ -129,6 +132,7 @@ module.exports = (baseUrl, staticUrl) => {
     });
 
     app.get('/_status', status);
+    app.get('/sitemap.xml', sitemap);
 
     // --- DEBUG ---
     const map = require('lodash/map');
