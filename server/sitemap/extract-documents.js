@@ -13,22 +13,26 @@ const extractDocuments = async (persistence, domain, document, level = 1, stop =
 
     if (!subEntities) {
         const contentEntity = domain.getEntityByName('Content'); // FIXME: Hard-coded.
-        subEntities = contentEntity.getChildEntities(true, true).filter((e) => !e.isAbstract).map((e) => e.name);
+        subEntities = contentEntity.getChildEntities(true, true)
+            .filter((e) => !e.isAbstract)
+            .filter((e) => e.getPageViews().filter((pv) => pv.name !== 'DefaultPageView').length)
+            .map((e) => e.name)
+        ;
     }
 
     const entity = domain.getEntityByInstance(document);
 
-    if (level === 3) {
+    const bestDocument = await Document.bestDocument(persistence, entity, document);
+    if (bestDocument.id !== document.id) {
         return cumulator;
     }
 
     // FIXME: What are the rules to keep the document?
     //  - Status?
-    const statusBasicProperty = entity.getBasicPropertyByName('Status');
     const isVisible = await Document.isVisible(persistence, entity, document);
-    if ((statusBasicProperty || level === 1 || level === 2) && isVisible && (subEntities.indexOf(document.type) !== -1)) {
-        debug(`    isVisible`);
+    const isSubEntityOfContent = subEntities.indexOf(document.type) !== -1;
 
+    if (isVisible && isSubEntityOfContent) {
         let lastmod;
         try {
             lastmod = (new Date(document.lastUpdated)).toISOString().replace(/T.*/, '');
@@ -53,12 +57,12 @@ const extractDocuments = async (persistence, domain, document, level = 1, stop =
     const nextStop = Boolean(document.ReleaseableContent);
 
     const aggregationRelationships = entity.getRelationships().filter((reln) => reln.isAggregation && reln.getTargetEntity().isDocument());
-    debug(`    found ${aggregationRelationships.length} aggregation relationships.`);
+    // debug(`    found ${aggregationRelationships.length} aggregation relationships.`);
 
     return Promise.reduce(
         aggregationRelationships,
         async (cumulator, aggregationRelationship) => {
-            debug(`      - relationship=${aggregationRelationship.name}`);
+            // debug(`      - relationship=${aggregationRelationship.name}`);
             const aggregationDocuments = await aggregationRelationship.getDocuments(persistence, document);
             // const bestDocuments = await Documents.bestDocuments(persistence, domain, aggregationDocuments); // FIXME: Too long for Users
             return Promise.reduce(

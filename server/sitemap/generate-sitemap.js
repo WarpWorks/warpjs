@@ -21,7 +21,6 @@ module.exports = async (req, res) => {
         const homepageDocument = bestDocuments[0];
 
         const documents = await extractDocuments(persistence, domain, homepageDocument);
-        // const urls = documents.filter((d) => d).map((doc) => ({ url: { ...doc, loc: warpjsUtils.fullUrl(req, doc.loc) } }));
 
         const urlPrefix = `${req.protocol}://${req.get('host')}`;
         return nanositemap(urlPrefix, documents.reduce(
@@ -33,6 +32,8 @@ module.exports = async (req, res) => {
             }),
             {}
         ));
+
+        // const urls = documents.filter((d) => d).map((doc) => ({ url: { ...doc, loc: warpjsUtils.fullUrl(req, doc.loc) } }));
 
         // const xmlObj = {
         //     urlset: {
