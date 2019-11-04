@@ -4,6 +4,7 @@ const Document = require('./../../lib/core/first-class/document');
 // const Documents = require('./../../lib/core/first-class/documents');
 
 const { PRIORITY } = require('./constants');
+const convertTime = require('./convert-time');
 const debug = require('./debug')('extract-document');
 
 let subEntities;
@@ -35,7 +36,7 @@ const extractDocuments = async (persistence, domain, document, level = 1, stop =
     if (isVisible && isSubEntityOfContent) {
         let lastmod;
         try {
-            lastmod = (new Date(document.lastUpdated)).toISOString().replace(/T.*/, '');
+            lastmod = convertTime(document.lastUpdated);
         } catch (err) {
             debug(`Invalid lastUpdated=${document.lastUpdated} for ${document.type}/${document.id}`);
         }
@@ -50,7 +51,6 @@ const extractDocuments = async (persistence, domain, document, level = 1, stop =
     // TODO: Get images?
 
     if (stop) {
-        debug(`    stop!!!`);
         return cumulator;
     }
 

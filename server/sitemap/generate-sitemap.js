@@ -4,9 +4,12 @@ const nanositemap = require('nanositemap');
 
 // const warpjsUtils = require('@warp-works/warpjs-utils');
 
+const aliases = require('./../../lib/core/first-class/aliases');
 const Documents = require('./../../lib/core/first-class/documents');
 const serverUtils = require('./../utils');
 
+const convertTime = require('./convert-time');
+// const debug = require('./debug')('generate-sitemap');
 const extractDocuments = require('./extract-documents');
 
 module.exports = async (req, res) => {
@@ -21,6 +24,21 @@ module.exports = async (req, res) => {
         const homepageDocument = bestDocuments[0];
 
         const documents = await extractDocuments(persistence, domain, homepageDocument);
+
+        const aliasedDocuments = await aliases.getAll(persistence);
+
+        aliasedDocuments.forEach((aliasedDocument) => {
+            const foundAlias = documents.find((doc) => doc.loc === aliasedDocument.url);
+            if (foundAlias) {
+                foundAlias.priority = (foundAlias.priority === '1.0') ? '1.0' : '0.8';
+            } else {
+                documents.push({
+                    lastmod: convertTime(aliasedDocument.lastUpdated),
+                    loc: aliasedDocument.url,
+                    priority: '0.8'
+                });
+            }
+        });
 
         const urlPrefix = `${req.protocol}://${req.get('host')}`;
         return nanositemap(urlPrefix, documents.reduce(
