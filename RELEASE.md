@@ -6,6 +6,10 @@
 - [Releases 1.0.x](RELEASE-1.0.md) from 2017-05-31 to 2017-06-10
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
+## 1.4.22 - 2019-11-06
+
+- #341: Adding internal aliases to sitemap.
+
 ## 1.4.21 - 2019-11-04
 
 - #329: Added missing alias and set all alias priority to 0.8.
