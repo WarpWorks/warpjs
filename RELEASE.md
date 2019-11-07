@@ -6,7 +6,11 @@
 - [Releases 1.0.x](RELEASE-1.0.md) from 2017-05-31 to 2017-06-10
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
-## 1.3.24 - 2019-11-07
+## 1.4.25 - 2019-11-07
+
+- #343: Use page view's name when not using default portal view.
+
+## 1.4.24 - 2019-11-07
 
 - #351: Adding tooltip to selected aggregation filters.
 

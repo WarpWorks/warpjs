@@ -6,12 +6,13 @@ const { DEFAULT_VERSION } = require('./../../../lib/constants');
 const Document = require('./../../../lib/core/first-class/document');
 const breadcrumbsByEntity = require('./../resources/breadcrumbs-by-entity');
 const contentConstants = require('./../../content/constants');
-// const debug = require('./debug')('extract-page');
-const extractPageView = require('./extract-page-view');
 const headerImageByEntity = require('./../resources/header-image-by-entity');
 const routes = require('./../../../lib/constants/routes');
 const serverUtils = require('./../../utils');
 const targetPreviewsByEntity = require('./../resources/target-previews-by-entity');
+
+// const debug = require('./debug')('extract-page');
+const extractPageView = require('./extract-page-view');
 
 const config = serverUtils.getConfig();
 const statusConfig = config.status;
@@ -106,6 +107,13 @@ module.exports = async (req, persistence, entity, instance, pageViewName) => {
         const pageView = await entity.getPageView(pageViewName, config.views.portal);
         const pageViewResource = await extractPageView(persistence, pageView, instance, req.query.style);
         resource.embed('pageViews', pageViewResource);
+
+        if (pageViewName !== 'DefaultPortalView') {
+            resource.name = entity.getDisplayName(pageView);
+
+            const lastBreadcrumb = resource._embedded.breadcrumbs[resource._embedded.breadcrumbs.length - 1];
+            lastBreadcrumb.name = resource.name;
+        }
     }
 
     // Versions
