@@ -4,11 +4,10 @@ import { FormControl, InputGroup } from 'react-bootstrap';
 import { NAME } from './../constants';
 import * as SHAPES from './../shapes';
 
-const { ActionIcon } = window.WarpJS.ReactComponents;
+const { ActionIcon, Tooltip } = window.WarpJS.ReactComponents;
 const { errorBoundary } = window.WarpJS.ReactUtils;
 
 const Component = (props) => {
-    let filterName = null;
     let firstLevel = null;
     let secondLevel = null;
 
@@ -19,16 +18,12 @@ const Component = (props) => {
             const entity = (relationship.entities || []).find((entity) => entity.id === props.selection.entityId);
 
             if (entity) {
-                if (entity.name) {
-                    filterName = <InputGroup.Addon>{entity.name}:</InputGroup.Addon>;
-                }
-
                 const firstLevelItem = (entity.items || []).find((item) => item.id === props.selection.firstLevelId);
 
                 if (firstLevelItem) {
                     firstLevel = (
                         <InputGroup.Addon>
-                            {firstLevelItem.name}
+                            <Tooltip title={entity.name}><span>{firstLevelItem.name}</span></Tooltip>
                             <ActionIcon glyph="remove" title={`Remove '${firstLevelItem.name}'`} onClick={() => firstLevelItem.onClick(false)} />
                         </InputGroup.Addon>
                     );
@@ -37,7 +32,7 @@ const Component = (props) => {
                     if (secondLevelItem) {
                         secondLevel = (
                             <InputGroup.Addon>
-                                {secondLevelItem.name}
+                                <Tooltip title={`${entity.name} / ${firstLevelItem.name}`}><span>{secondLevelItem.name}</span></Tooltip>
                                 <ActionIcon glyph="remove" title={`Remove '${secondLevelItem.name}'`} onClick={() => secondLevelItem.onClick(false)} />
                             </InputGroup.Addon>
                         );
@@ -49,7 +44,6 @@ const Component = (props) => {
 
     return (
         <InputGroup>
-            {filterName}
             {firstLevel}
             {secondLevel}
             <FormControl type="text" value={props.searchValue} placeholder="Enter search terms" onChange={(event) => props.setSearchValue(event.target.value)} />
