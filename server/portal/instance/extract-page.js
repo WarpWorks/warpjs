@@ -98,15 +98,15 @@ module.exports = async (req, persistence, entity, instance, pageViewName) => {
 
     // Page content
     if (resource.status.isVisible) {
-        const headerImages = await headerImageByEntity(persistence, entity, instance);
+        const pageView = await entity.getPageView(pageViewName, config.views.portal);
+        const pageViewResource = await extractPageView(persistence, pageView, instance, req.query.style);
+        resource.embed('pageViews', pageViewResource);
+
+        const headerImages = await headerImageByEntity(persistence, entity, instance, pageView);
         resource.embed('headerImages', headerImages);
 
         const targetPreviews = await targetPreviewsByEntity(persistence, entity, instance);
         resource.embed('previews', targetPreviews);
-
-        const pageView = await entity.getPageView(pageViewName, config.views.portal);
-        const pageViewResource = await extractPageView(persistence, pageView, instance, req.query.style);
-        resource.embed('pageViews', pageViewResource);
 
         if (pageViewName !== 'DefaultPortalView') {
             resource.name = entity.getDisplayName(pageView);
