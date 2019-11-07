@@ -1,13 +1,18 @@
 const byName = (a, b) => a.name.localeCompare(b.name);
 
-export default (dispatch, pageViewAggregationFilters, pageViewAggregationFiltersItems, select) => (pageViewAggregationFilters || []).map((reln) => ({
+export default (dispatch, pageViewAggregationFilters, pageViewAggregationFiltersItems, showingAll, select, showAll) => (pageViewAggregationFilters || []).map((reln) => ({
     id: reln.id,
     entities: (reln.entities || []).map((entity) => {
         const aggregationFiltersItems = (pageViewAggregationFiltersItems || []).filter((aggregationFiltersItem) => aggregationFiltersItem.firstLevelRelnId === entity.id);
 
+        const foundShowingAll = (showingAll || []).find((item) => item.relnId === reln.id && item.entityId === entity.id);
+
         return {
             id: entity.id,
             name: entity.label,
+            showAll: () => showAll(dispatch, reln.id, entity.id),
+            showLess: () => showAll(dispatch, reln.id, entity.id, false),
+            showingAll: foundShowingAll ? foundShowingAll.showAll : false,
             items: aggregationFiltersItems.reduce(
                 (cumulator, aggregationFiltersItem) => {
                     if (entity.useParent) {

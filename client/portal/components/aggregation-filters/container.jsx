@@ -2,23 +2,21 @@ import { selectors as pageHalSelectors } from './../page-hal';
 
 import Component from './component';
 import filterTiles from './filter-tiles';
-import { orchestrators } from './flux';
+import { orchestrators, selectors } from './flux';
 import generateAggregationFilters from './generate-aggregation-filters';
-import namespace from './namespace';
 
 // import _debug from './debug'; const debug = _debug('container');
 
 const { PropTypes, useDispatch, useEffect, useSelector } = window.WarpJS.ReactUtils;
-const { getNamespaceSubstate } = window.WarpJS.ReactUtils;
 
 const Container = (props) => {
     const dispatch = useDispatch();
-    const subState = useSelector((state) => getNamespaceSubstate(state, namespace));
+    const subState = useSelector((state) => selectors.substate(state));
     const page = useSelector((state) => pageHalSelectors.pageSubstate(state));
 
     const pageView = page && page.pageViews && page.pageViews.length ? page.pageViews[0] : null;
 
-    const aggregationFilters = generateAggregationFilters(dispatch, pageView.aggregationFilters, pageView.aggregationFiltersItems, orchestrators.select);
+    const aggregationFilters = generateAggregationFilters(dispatch, pageView.aggregationFilters, pageView.aggregationFiltersItems, subState.showingAll, orchestrators.select, orchestrators.showAll);
     const setSearchValue = (value) => orchestrators.setSearchValue(dispatch, value);
     const clearSearchValue = () => orchestrators.clearSearchValue(dispatch);
 
@@ -27,7 +25,8 @@ const Container = (props) => {
     });
 
     return (
-        <Component {...subState}
+        <Component
+            {...subState}
             section={props.section}
             aggregationFilters={aggregationFilters}
             setSearchValue={setSearchValue}
