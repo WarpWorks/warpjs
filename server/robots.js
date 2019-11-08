@@ -1,26 +1,20 @@
 const fs = require('fs');
 const path = require('path');
 
+// const debug = require('./debug')('robots');
 const serverUtils = require('./utils');
 
 const config = serverUtils.getConfig();
 
-const cache = {};
-
-const EXPIRY_DELTA = 24 * 60 * 60 * 1000; // 24 hours
-const ROBOTS_FILE = path.join(config.folders.w2projects, 'public', 'robots.txt');
-
 module.exports = async (req, res) => {
-    if (!cache.content || Date.now() > cache.expiry) {
-        if (!fs.existsSync(ROBOTS_FILE)) {
-            res.status(404).send(`'robots.txt' file not found.`);
-            return;
-        }
+    const host = req.host.replace(/\./g, '-');
 
-        cache.content = fs.readFileSync(ROBOTS_FILE, { encoding: 'utf8' });
-        cache.expiry = Date.now() + EXPIRY_DELTA;
+    const robotsHost = path.resolve(path.join(config.folders.w2projects, 'public', `robots.${host}.txt`));
+
+    if (fs.existsSync(robotsHost)) {
+        res.status(200).sendFile(robotsHost);
+    } else {
+        const robotsDefault = path.resolve(path.join(config.folders.w2projects, 'public', 'robots.default.txt'));
+        res.status(200).sendFile(robotsDefault);
     }
-
-    res.set('Content-Type', 'text/plain');
-    res.send(cache.content);
 };
