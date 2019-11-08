@@ -6,6 +6,37 @@
     margin-top: 20px;
 }
 
+#warpjs-aggregation-filters-input {
+    .input-group {
+        padding: 4px;
+        border: thin solid #245580;
+        border-radius: 50px;
+
+        .input-group-addon {
+            background-color: transparent;
+            border: none;
+            padding: unset;
+
+            .btn {
+                border-radius: 50px;
+            }
+
+            + input.form-control {
+                margin-left: 4px;
+            }
+        }
+
+        input.form-control {
+            border: none;
+            border-radius: 50px;
+
+            + .input-group-addon button {
+                margin-left: 6px;
+            }
+        }
+    }
+}
+
 .warpjs-aggregation-filters-entity {
     .warpjs-aggregation-filters-button {
         padding-left: 40px;

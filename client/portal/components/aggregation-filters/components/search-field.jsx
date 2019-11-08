@@ -4,7 +4,7 @@ import { FormControl, InputGroup } from 'react-bootstrap';
 import { NAME } from './../constants';
 import * as SHAPES from './../shapes';
 
-const { ActionIcon, Tooltip } = window.WarpJS.ReactComponents;
+const { ActionIcon, Button, Tooltip } = window.WarpJS.ReactComponents;
 const { errorBoundary } = window.WarpJS.ReactUtils;
 
 const Component = (props) => {
@@ -23,8 +23,10 @@ const Component = (props) => {
                 if (firstLevelItem) {
                     firstLevel = (
                         <InputGroup.Addon>
-                            <Tooltip title={entity.name}><span>{firstLevelItem.name}</span></Tooltip>
-                            <ActionIcon glyph="remove" title={`Remove '${firstLevelItem.name}'`} onClick={() => firstLevelItem.onClick(false)} />
+                            <Button style="primary" size="sm">
+                                <Tooltip title={entity.name}><span>{firstLevelItem.name}</span></Tooltip>
+                                <ActionIcon glyph="remove" title={`Remove '${firstLevelItem.name}'`} onClick={() => firstLevelItem.onClick(false)} />
+                            </Button>
                         </InputGroup.Addon>
                     );
 
@@ -32,8 +34,10 @@ const Component = (props) => {
                     if (secondLevelItem) {
                         secondLevel = (
                             <InputGroup.Addon>
-                                <Tooltip title={`${entity.name} / ${firstLevelItem.name}`}><span>{secondLevelItem.name}</span></Tooltip>
-                                <ActionIcon glyph="remove" title={`Remove '${secondLevelItem.name}'`} onClick={() => secondLevelItem.onClick(false)} />
+                                <Button style="primary" size="sm">
+                                    <Tooltip title={`${entity.name} / ${firstLevelItem.name}`}><span>{secondLevelItem.name}</span></Tooltip>
+                                    <ActionIcon glyph="remove" title={`Remove '${secondLevelItem.name}'`} onClick={() => secondLevelItem.onClick(false)} />
+                                </Button>
                             </InputGroup.Addon>
                         );
                     }
@@ -42,14 +46,17 @@ const Component = (props) => {
         }
     }
 
+    const searchButton = props.searchValue || firstLevel
+        ? <Button style="primary" size="sm" glyph="remove" title="Clear search terms" onClick={props.clearSearchValue} inverse={true} outline={false} />
+        : <Button style="primary" size="sm" glyph="search" inverse={true} outline={false} />
+    ;
+
     return (
         <InputGroup>
             {firstLevel}
             {secondLevel}
             <FormControl type="text" value={props.searchValue} placeholder="Enter search terms" onChange={(event) => props.setSearchValue(event.target.value)} />
-            <InputGroup.Addon>
-                <ActionIcon glyph="remove" title={`Clear search terms`} onClick={props.clearSearchValue} />
-            </InputGroup.Addon>
+            <InputGroup.Addon>{searchButton}</InputGroup.Addon>
         </InputGroup>
     );
 };
