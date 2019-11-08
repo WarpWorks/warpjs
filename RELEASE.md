@@ -6,6 +6,10 @@
 - [Releases 1.0.x](RELEASE-1.0.md) from 2017-05-31 to 2017-06-10
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
+## 1.4.29 - 2019-11-08
+
+- #356: Allowing to handle google site ownership validation.
+
 ## 1.4.28 - 2019-11-07
 
 - #347: Adjust search field with rounded elements. Right button changes when criteria are defined.

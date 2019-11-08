@@ -3,6 +3,7 @@ const cookieParser = require('cookie-parser');
 const express = require('express');
 const expressBusboy = require('express-busboy');
 const expressUserAgent = require('express-useragent');
+const favicon = require('serve-favicon');
 const hbs = require('hbs');
 const hbsUtils = require('hbs-utils')(hbs);
 const path = require('path');
@@ -16,7 +17,7 @@ const warpjsCore = require('./../lib/core');
 const content = require('./content');
 const debug = require('./debug')('app');
 const extractAuthMiddlewares = require('./extract-auth-middlewares');
-const favicon = require('serve-favicon');
+const googleOwnership = require('./google-ownership');
 const logFiles = require('./log-files');
 const portal = require('./portal');
 const middlewares = require('./middlewares');
@@ -133,6 +134,7 @@ module.exports = (baseUrl, staticUrl) => {
 
     app.get('/_status', status);
     app.get('/sitemap.xml', sitemap);
+    app.get('/google:id.html', googleOwnership);
 
     // --- DEBUG ---
     const map = require('lodash/map');
