@@ -108,7 +108,7 @@ module.exports = async (req, persistence, entity, instance, pageViewName) => {
         const targetPreviews = await targetPreviewsByEntity(persistence, entity, instance);
         resource.embed('previews', targetPreviews);
 
-        if (pageViewName !== 'DefaultPortalView') {
+        if (pageViewName && pageViewName !== 'DefaultPortalView') {
             resource.name = entity.getDisplayName(pageView);
 
             const lastBreadcrumb = resource._embedded.breadcrumbs[resource._embedded.breadcrumbs.length - 1];

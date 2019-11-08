@@ -6,6 +6,10 @@
 - [Releases 1.0.x](RELEASE-1.0.md) from 2017-05-31 to 2017-06-10
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
+## 1.4.27 - 2019-11-07
+
+- #343: Fixed when no page view name defined.
+
 ## 1.4.26 - 2019-11-07
 
 - #328: Also apply to any page view of style `Testbed`.
