@@ -63,6 +63,10 @@ module.exports = (baseUrl, staticUrl) => {
     const logFolder = path.join(config.folders.w2projects, 'logs');
     logFiles(app, logFolder);
 
+    app.get('/_status', status);
+    app.get('/sitemap.xml', sitemap);
+    app.get('/google:id.html', googleOwnership);
+
     RoutesInfo.staticPath('W2:app:public', app, baseUrl, '/public', path.join(config.folders.w2projects, 'public'));
     RoutesInfo.staticPath('W2:app:static', app, baseUrl, staticUrl, 'public');
 
@@ -131,10 +135,6 @@ module.exports = (baseUrl, staticUrl) => {
     app.get('/', (req, res) => {
         res.redirect(RoutesInfo.expand('homepage'));
     });
-
-    app.get('/_status', status);
-    app.get('/sitemap.xml', sitemap);
-    app.get('/google:id.html', googleOwnership);
 
     // --- DEBUG ---
     const map = require('lodash/map');

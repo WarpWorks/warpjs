@@ -6,6 +6,10 @@
 - [Releases 1.0.x](RELEASE-1.0.md) from 2017-05-31 to 2017-06-10
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
+## 1.4.30 - 2019-11-08
+
+- #356: Trying to put that before SSO.
+
 ## 1.4.29 - 2019-11-08
 
 - #356: Allowing to handle google site ownership validation.
