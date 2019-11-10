@@ -6,6 +6,10 @@
 - [Releases 1.0.x](RELEASE-1.0.md) from 2017-05-31 to 2017-06-10
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
+## 1.4.32 - 2019-11-09
+
+- #342: Adding canonical URL on pages when needed.
+
 ## 1.4.31 - 2019-11-08
 
 - #329: Sending back robots.txt file depending on host.

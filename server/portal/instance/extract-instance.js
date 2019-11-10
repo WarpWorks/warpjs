@@ -61,10 +61,13 @@ module.exports = async (req, res, type, id, pageViewName) => {
                 const entity = await serverUtils.getEntity(null, type);
                 const instance = await entity.getInstance(persistence, id);
 
+                const portalUrl = await Document.getPortalUrl(persistence, entity, instance, pageViewName);
+
                 await warpjsUtils.sendPortalIndex(req, res, RoutesInfo, instance ? instance.Name : 'Entity', 'portal', undefined, {
                     description: instance.Description,
                     keywords: instance.Keywords,
-                    author: await Document.getAuthors(persistence, entity, instance)
+                    author: await Document.getAuthors(persistence, entity, instance),
+                    canonicalUrl: portalUrl === req.path ? null : warpjsUtils.fullUrl(req, portalUrl)
                 });
             } finally {
                 persistence.close();
