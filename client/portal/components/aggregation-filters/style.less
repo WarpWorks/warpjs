@@ -4,6 +4,16 @@
 
 #warpjs-aggregation-filters-panel {
     margin-top: 20px;
+
+    > .panel {
+        box-shadow: none;
+        border: none;
+        border-radius: unset;
+
+        > .panel-body {
+            padding: 0px;
+        }
+    }
 }
 
 #warpjs-aggregation-filters-input {
@@ -38,6 +48,24 @@
 }
 
 .warpjs-aggregation-filters-entity {
+    background-color: #ececec;
+    border: none;
+    border-radius: unset;
+    box-shadow: none;
+
+    > .panel-heading {
+        background-color: transparent;
+        background-image: none;
+        border: none;
+        border-radius: unset;
+        font-size: 120%;
+        font-weight: bold;
+    }
+
+    > .panel-body {
+        padding-top: 0px;
+    }
+
     .warpjs-aggregation-filters-button {
         padding-left: 40px;
         padding-right: 40px;
