@@ -32,7 +32,8 @@ module.exports = ($) => {
                     template: constants.TEMPLATES.POPOVER_WITH_FOOTER({
                         okLabel: 'Create',
                         cancelLabel: 'Cancel'
-                    })
+                    }),
+                    sanitize: false
                 };
 
                 $(element).addClass(constants.HAS_POPOVER);

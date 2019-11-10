@@ -8,7 +8,8 @@ const BASE_POPOVER_OPTIONS = Object.freeze({
     html: true,
     placement: 'top',
     trigger: 'hover focus',
-    container: 'body'
+    container: 'body',
+    sanitize: false
 });
 const INITIALIZED = 'warpjsPopoverInitialized';
 const CSS = Object.freeze({

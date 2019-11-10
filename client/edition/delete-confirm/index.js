@@ -1,9 +1,12 @@
-const Promise = require('bluebird');
+import Promise from 'bluebird';
 
-const bodyTemplate = require('./body.hbs');
-const constants = require('./../../constants');
+import constants from './../../constants';
 
-module.exports = ($, element, position = 'auto') => new Promise((resolve, reject) => {
+import bodyTemplate from './body.hbs';
+
+// import _debug from './debug'; const debug = _debug('index');
+
+module.exports = async ($, element, position = 'auto') => new Promise((resolve, reject) => {
     // Remove any existing popover.
     $(`.${constants.HAS_POPOVER}`).popover('destroy');
 
@@ -11,7 +14,8 @@ module.exports = ($, element, position = 'auto') => new Promise((resolve, reject
         html: true,
         placement: position,
         title: `Delete confirmation`,
-        content: bodyTemplate()
+        content: bodyTemplate(),
+        sanitize: false
     };
 
     $(element).addClass(constants.HAS_POPOVER);
