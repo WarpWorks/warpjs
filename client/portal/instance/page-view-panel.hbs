@@ -1,8 +1,10 @@
 <div class="warpjs-panel warpjs-show-item-{{panel.showPanel}} warpjs-visibleInEditOnly-{{panel.visibleInEditOnly}}">
   <div class="panel panel-default warpjs-panel-style-{{panel.style}}">
-    <div class="panel-heading warpjs-is-overview-panel-{{panel.isOverviewPanel}}">
-      <div class="panel-title">{{panel.label}}</div>
-    </div>
+    {{#if panel.labelLength}}
+      <div class="panel-heading warpjs-is-overview-panel-{{panel.isOverviewPanel}}">
+        <div class="panel-title">{{panel.label}}</div>
+      </div>
+    {{/if}}
 
     <div class="panel-body">
       {{> ../table-of-contents/template panel=panel}}

@@ -11,6 +11,7 @@ module.exports = async (persistence, panel, instance) => {
         name: panel.name,
         description: panel.desc,
         label: panel.label || panel.name,
+        labelLength: (panel.label || panel.name).trim().length,
         style: panel.style,
         reference: {
             type: "Relationship",

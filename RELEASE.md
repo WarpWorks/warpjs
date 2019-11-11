@@ -6,11 +6,16 @@
 - [Releases 1.0.x](RELEASE-1.0.md) from 2017-05-31 to 2017-06-10
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
-## 1.3.35 - 2019-11-11
+## 1.4.36 - 2019-11-11
+
+- #346: Remove panel-heading if label.trim() is empty.
+- #358: Also searching on keywords for aggregation filters search term.
+
+## 1.4.35 - 2019-11-11
 
 - #354: Display empty message when only search term.
 
-## 1.3.34 - 2019-11-11
+## 1.4.34 - 2019-11-11
 
 - #354: Display when no results are found.
 
