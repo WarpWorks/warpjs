@@ -96,7 +96,7 @@ export default (selection, searchValue, aggregationFiltersItems) => {
             });
         });
     }
-    if (!counters.visibleItems && relnId) {
+    if (!counters.visibleItems && (relnId || searchValue)) {
         $(`.${constants.ELEMENTS.EMPTY_RESULTS}`).each((i, element) => show(element));
     }
 };
