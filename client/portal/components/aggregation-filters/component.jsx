@@ -1,27 +1,28 @@
+import { NAME, SECTIONS } from './constants';
+import * as shapes from './shapes';
+
+import EmptyResults from './components/empty-results';
 import Sidebar from './components/sidebar';
 import SearchField from './components/search-field';
-import { NAME } from './constants';
 
-const { PropTypes } = window.WarpJS.ReactUtils;
 const { errorBoundary } = window.WarpJS.ReactUtils;
 
 const Component = (props) => {
-    if (props.section === 'input') {
+    if (props.section === SECTIONS.INPUT) {
         return <SearchField {...props} />;
-    } else if (props.section === 'filters') {
+    } else if (props.section === SECTIONS.FILTERS) {
         return <Sidebar {...props} />;
+    } else if (props.section === SECTIONS.EMPTY_RESULTS) {
+        return <EmptyResults {...props} />;
     } else {
-        return <div>{NAME} - section:{props.section}</div>;
+        return <div>*** NOT IMPLEMENTED *** {NAME} - section:{props.section}</div>;
     }
 };
 
 Component.displayName = NAME;
 
 Component.propTypes = {
-    section: PropTypes.oneOf([
-        'input',
-        'filters'
-    ])
+    section: shapes.SECTION
 };
 
 export default errorBoundary(Component);

@@ -14,16 +14,17 @@
 {{/unless}}
 
 {{#if pageView.hasAggregationFilters}}
-  <div class="row">
+  <div class="row warpjs-page-view-with-aggregation-filters">
     {{> left-right-margin}}
 
-    <div class="col-xs-12 col-sm-10 warpjs-content">
+    <div class="col-xs-12 col-sm-8 col-sm-offset-1 warpjs-content">
 
       <div id="warpjs-aggregation-filters-input" class="col-xs-12"></div>
 
       <div id="warpjs-aggregation-filters-panel" class="col-xs-12 col-sm-4"></div>
 
       <div class="col-xs-12 col-sm-8 warpjs-page-view-main-body">
+        <div id="warpjs-aggregation-filters-empty-results"></div>
         {{> ./page-view-main-body-panels page=page pageView=pageView showMargin=false}}
       </div>
     </div>

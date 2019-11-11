@@ -89,5 +89,11 @@ export default ($, data) => {
             </Provider>,
             document.getElementById('warpjs-aggregation-filters-panel')
         );
+        ReactDOM.render(
+            <Provider store={window.WarpJS.STORE} id={`warpjs-aggregation-filters-empty-results`}>
+                <AggregationFilters section="empty-results" />
+            </Provider>,
+            document.getElementById('warpjs-aggregation-filters-empty-results')
+        );
     }
 };

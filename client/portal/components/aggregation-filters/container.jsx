@@ -4,10 +4,11 @@ import Component from './component';
 import filterTiles from './filter-tiles';
 import { orchestrators, selectors } from './flux';
 import generateAggregationFilters from './generate-aggregation-filters';
+import * as shapes from './shapes';
 
 // import _debug from './debug'; const debug = _debug('container');
 
-const { PropTypes, useDispatch, useEffect, useSelector } = window.WarpJS.ReactUtils;
+const { useDispatch, useEffect, useSelector } = window.WarpJS.ReactUtils;
 
 const Container = (props) => {
     const dispatch = useDispatch();
@@ -36,10 +37,7 @@ const Container = (props) => {
 };
 
 Container.propTypes = {
-    section: PropTypes.oneOf([
-        'input',
-        'filters'
-    ])
+    section: shapes.SECTION
 };
 
 export default Container;

@@ -17,3 +17,13 @@ export const SUB_CLASS = [
     STILL_VISIBLE_AS_SECOND,
     STILL_VISIBLE_AS_THIRD
 ];
+
+export const SECTIONS = Object.freeze({
+    INPUT: 'input',
+    FILTERS: 'filters',
+    EMPTY_RESULTS: 'empty-results'
+});
+
+export const ELEMENTS = Object.freeze({
+    EMPTY_RESULTS: 'warpjs-aggregation-filters-empty-results'
+});

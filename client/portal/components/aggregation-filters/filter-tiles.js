@@ -6,8 +6,10 @@ import show from './show';
 
 // import _debug from './debug'; const debug = _debug('filter-tiles');
 
-const showRelnPanelItem = (relnPanelItem, item) => {
+const showRelnPanelItem = (relnPanelItem, item, counters) => {
     $(`.warpjs-relationship-panel-item-id-${item.docId}`, relnPanelItem).each((index, relnPanelItemDoc) => {
+        counters.visibleItems += 1;
+
         show(relnPanelItemDoc);
         show(relnPanelItem);
 
@@ -28,6 +30,9 @@ const showRelnPanelItem = (relnPanelItem, item) => {
 };
 
 export default (selection, searchValue, aggregationFiltersItems) => {
+    const counters = {
+        visibleItems: 0
+    };
     const mainBody = $('.warpjs-page-view-main-body').get(0);
 
     if (!mainBody) {
@@ -37,6 +42,8 @@ export default (selection, searchValue, aggregationFiltersItems) => {
     // Make everything is visible at the beginning.
     $(`.${constants.HIDE}`, mainBody).each((index, item) => show(item));
     $('.warpjs-relationship-panel-item-tile', mainBody).removeClass(constants.ALL_VISIBLE_CLASSES);
+
+    $(`.${constants.ELEMENTS.EMPTY_RESULTS}`).each((i, element) => hide(element));
 
     const relnId = selection ? selection.relnId : null;
 
@@ -69,17 +76,17 @@ export default (selection, searchValue, aggregationFiltersItems) => {
                                     if ((item.firstLevelRelnId === selection.entityId) && (item.firstLevelDocId === selection.firstLevelId)) {
                                         if (selection.secondLevelId) {
                                             if (item.secondLevelDocId === selection.secondLevelId) {
-                                                showRelnPanelItem(relnPanelItem, item);
+                                                showRelnPanelItem(relnPanelItem, item, counters);
                                             }
                                         } else {
-                                            showRelnPanelItem(relnPanelItem, item);
+                                            showRelnPanelItem(relnPanelItem, item, counters);
                                         }
                                     }
                                 });
                             }
                         } else if (searchValue) {
                             filteredAggregationFiltersItems.forEach((item) => {
-                                showRelnPanelItem(relnPanelItem, item);
+                                showRelnPanelItem(relnPanelItem, item, counters);
                             });
                         }
 
@@ -88,5 +95,8 @@ export default (selection, searchValue, aggregationFiltersItems) => {
                 });
             });
         });
+    }
+    if (!counters.visibleItems && relnId) {
+        $(`.${constants.ELEMENTS.EMPTY_RESULTS}`).each((i, element) => show(element));
     }
 };

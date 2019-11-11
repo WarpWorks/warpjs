@@ -1,11 +1,8 @@
-import PropTypes from 'prop-types';
-import { FormControl, InputGroup } from 'react-bootstrap';
-
 import { NAME } from './../constants';
 import * as SHAPES from './../shapes';
 
 const { ActionIcon, Button, Tooltip } = window.WarpJS.ReactComponents;
-const { errorBoundary } = window.WarpJS.ReactUtils;
+const { errorBoundary, FormControl, InputGroup, PropTypes } = window.WarpJS.ReactUtils;
 
 const Component = (props) => {
     let firstLevel = null;

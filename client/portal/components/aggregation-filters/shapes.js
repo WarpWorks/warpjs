@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types';
 
+import { SECTIONS } from './constants';
+
 export const SELECTION = PropTypes.shape({
     relnId: PropTypes.number,
     entityId: PropTypes.number,
@@ -30,3 +32,9 @@ export const RELATIONSHIP = PropTypes.shape({
     id: PropTypes.number.isRequired,
     entities: PropTypes.arrayOf(ENTITY).isRequired
 });
+
+export const SECTION = PropTypes.oneOf([
+    SECTIONS.INPUT,
+    SECTIONS.FILTERS,
+    SECTIONS.EMPTY_RESULTS
+]);
