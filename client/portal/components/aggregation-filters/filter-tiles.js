@@ -29,7 +29,7 @@ const showRelnPanelItem = (relnPanelItem, item, counters) => {
     });
 };
 
-export default (selection, searchValue, aggregationFiltersItems) => {
+export default (selection, searchValue, aggregationFiltersItems, aggregationDocuments) => {
     const counters = {
         visibleItems: 0
     };
@@ -85,9 +85,10 @@ export default (selection, searchValue, aggregationFiltersItems) => {
                                 });
                             }
                         } else if (searchValue) {
-                            filteredAggregationFiltersItems.forEach((item) => {
-                                showRelnPanelItem(relnPanelItem, item, counters);
-                            });
+                            aggregationDocuments
+                                .filter((item) => matchSearchValue(searchValue, item))
+                                .forEach((item) => showRelnPanelItem(relnPanelItem, item, counters))
+                            ;
                         }
 
                         repositionPanelItems(relnPanelItem);

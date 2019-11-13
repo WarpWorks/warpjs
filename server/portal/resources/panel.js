@@ -25,7 +25,7 @@ module.exports = async (persistence, panel, instance) => {
     if (foundAggregationFilters && foundAggregationFilters.length) {
         resource.hasAggregationFilters = true;
 
-        const aggregationFilters = foundAggregationFilters.reduce(
+        resource.embed('aggregationFilters', foundAggregationFilters.reduce(
             (cumulator, pi) => {
                 try {
                     return cumulator.concat(pi._embedded.aggregationFilters);
@@ -34,10 +34,9 @@ module.exports = async (persistence, panel, instance) => {
                 }
             },
             []
-        );
-        resource.embed('aggregationFilters', aggregationFilters);
+        ));
 
-        const aggregationFiltersItems = foundAggregationFilters.reduce(
+        resource.embed('aggregationFiltersItems', foundAggregationFilters.reduce(
             (cumulator, pi) => {
                 try {
                     return cumulator.concat(pi._embedded.aggregationFiltersItems);
@@ -46,9 +45,18 @@ module.exports = async (persistence, panel, instance) => {
                 }
             },
             []
-        );
+        ));
 
-        resource.embed('aggregationFiltersItems', aggregationFiltersItems);
+        resource.embed('aggregationDocuments', foundAggregationFilters.reduce(
+            (cumulator, pi) => {
+                try {
+                    return cumulator.concat(pi._embedded.aggregationDocuments);
+                } finally {
+                    delete pi._embedded.aggregationDocuments;
+                }
+            },
+            []
+        ));
     }
 
     resource.embed('items', panelItems);

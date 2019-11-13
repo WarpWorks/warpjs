@@ -34,6 +34,9 @@ module.exports = async (persistence, pageView, instance, customStyle) => {
 
         resource.embed('aggregationFiltersItems', overviewPanel._embedded.aggregationFiltersItems);
         delete overviewPanel._embedded.aggregationFiltersItems;
+
+        resource.embed('aggregationDocuments', overviewPanel._embedded.aggregationDocuments);
+        delete overviewPanel._embedded.aggregationDocuments;
     }
 
     // Define the authors for all pages
@@ -67,6 +70,17 @@ module.exports = async (persistence, pageView, instance, customStyle) => {
                         return cumulator.concat(panel._embedded.aggregationFiltersItems);
                     } finally {
                         delete panel._embedded.aggregationFiltersItems;
+                    }
+                },
+                []
+            ));
+
+            resource.embed('aggregationDocuments', foundAggregationFilters.reduce(
+                (cumulator, panel) => {
+                    try {
+                        return cumulator.concat(panel._embedded.aggregationDocuments);
+                    } finally {
+                        delete panel._embedded.aggregationDocuments;
                     }
                 },
                 []

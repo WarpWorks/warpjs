@@ -22,7 +22,7 @@ const Container = (props) => {
     const clearSearchValue = () => orchestrators.clearSearchValue(dispatch);
 
     useEffect(() => {
-        filterTiles(subState.selection, subState.searchValue, pageView.aggregationFiltersItems);
+        filterTiles(subState.selection, subState.searchValue, pageView.aggregationFiltersItems, pageView.aggregationDocuments);
     });
 
     return (

@@ -71,6 +71,15 @@ module.exports = async (persistence, panelItem, instance) => {
             if (resource.hasAggregationFilters) {
                 resource.embed('aggregationFilters', aggregationFilters);
 
+                const allVisibleDocuments = visibleOnlyDocs.map((doc) => ({
+                    docType: doc.type,
+                    docId: doc.id,
+                    docName: domain.getDisplayName(doc),
+                    docDesc: doc.Description || null,
+                    docKeywords: doc.Keywords || null
+                }));
+                resource.embed('aggregationDocuments', allVisibleDocuments);
+
                 const targetEntityRelationships = targetEntity.getRelationships().filter((reln) => !reln.isAggregation);
                 const relationshipsInfo = targetEntityRelationships.map((reln) => ({
                     id: reln.id,
