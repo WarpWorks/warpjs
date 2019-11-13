@@ -22,7 +22,7 @@
   {{else if section.isOfStyle.Document}}
     <div class="col-xs-12 warpjs-value">
       {{#each section._embedded.items as |item|}}
-        {{> ../page-view-panel-section page=page section=item}}
+        {{> ../page-view-panel-section page=../page section=item}}
       {{/each}}
     </div>
   {{else if section.isOfStyle.Vocabulary}}

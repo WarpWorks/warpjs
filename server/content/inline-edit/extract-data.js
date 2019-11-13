@@ -90,65 +90,67 @@ module.exports = (req, res) => {
                 resource.embed('instances', instanceResource);
 
                 if (body.action === constants.ACTIONS.LIST_TYPES) {
-                    return await listTypes(persistence, entity, instance, body, instanceResource);
-                } else {
-                    if (body && body.reference && body.reference.type) {
-                        if (body.reference.type === ComplexTypes.Relationship) {
-                            const relationship = entity.getRelationshipById(body.reference.id);
+                    return listTypes(persistence, entity, instance, body, instanceResource);
+                }
 
-                            if (relationship.getTargetEntity().name === 'Paragraph') {
-                                resource.body.reference.name = relationship.name;
-                                const paragraphs = await relationship.getDocuments(persistence, instance);
-                                paragraphs.sort(warpjsUtils.byPositionThenName);
+                if (body && body.reference && body.reference.type) {
+                    if (body.reference.type === ComplexTypes.Relationship) {
+                        const relationship = entity.getRelationshipById(body.reference.id);
 
-                                const paragraphResources = await Promise.map(paragraphs, async (paragraph) => {
-                                    const paragraphResource = warpjsUtils.createResource('', {
-                                        type: paragraph.type,
-                                        id: paragraph.id || paragraph._id,
-                                        level: paragraph.HeadingLevel || 'H1',
-                                        visibility: paragraph.Visibility,
-                                        isOfHeadingLevel: constants.isOfHeadingLevel(paragraph.HeadingLevel || 'H1'),
-                                        name: paragraph.Heading,
-                                        description: paragraph.Content,
-                                        subDocuments: paragraph.SubDocuments || '-1',
-                                        reference: {
-                                            type: relationship.type,
-                                            id: relationship.id,
-                                            name: relationship.name
-                                        }
-                                    });
+                        if (relationship.getTargetEntity().name === 'Paragraph') {
+                            resource.body.reference.name = relationship.name;
+                            const paragraphs = await relationship.getDocuments(persistence, instance);
+                            paragraphs.sort(warpjsUtils.byPositionThenName);
 
-                                    const images = await imagesByParagraph(persistence, relationship.getTargetEntity(), paragraph);
-                                    if (images && images.length) {
-                                        paragraphResource.embed('images', images);
+                            const paragraphResources = await Promise.map(paragraphs, async (paragraph) => {
+                                const paragraphResource = warpjsUtils.createResource('', {
+                                    type: paragraph.type,
+                                    id: paragraph.id || paragraph._id,
+                                    level: paragraph.HeadingLevel || 'H1',
+                                    visibility: paragraph.Visibility,
+                                    isOfHeadingLevel: constants.isOfHeadingLevel(paragraph.HeadingLevel || 'H1'),
+                                    name: paragraph.Heading,
+                                    description: paragraph.Content,
+                                    subDocuments: paragraph.SubDocuments || '-1',
+                                    reference: {
+                                        type: relationship.type,
+                                        id: relationship.id,
+                                        name: relationship.name
                                     }
-                                    return paragraphResource;
                                 });
-                                instanceResource.embed('items', paragraphResources);
-                            } else {
-                                throw new Error(`Relationship ${relationship.name}'s target is not Paragraph.`);
-                            }
-                        } else {
-                            debug(`TODO: body.reference.type=`, body.reference.type);
-                        }
-                    } else if (body && body.elementType === 'Relationship' && body.elementId) {
-                        const items = await extractDataRelationship(persistence, entity, instance, body);
-                        instanceResource.embed('items', items);
-                    } else if (body && body.elementType === 'BasicProperty' && !body.reference.type) {
-                        const domainModel = entity.getDomain();
-                        const panelElement = domainModel.getElementById(body.elementId);
-                        const basicPropertyElement = domainModel.getElementById(panelElement.basicProperty[0].id);
-                        const basicPropertyValue = basicPropertyElement.getValue(instance);
 
-                        const basicPropertyResource = warpjsUtils.createResource(req, {
-                            id: basicPropertyElement.id,
-                            name: basicPropertyElement.name,
-                            value: basicPropertyValue
-                        });
-                        instanceResource.embed('basicProperties', basicPropertyResource);
+                                const images = await imagesByParagraph(persistence, relationship.getTargetEntity(), paragraph);
+                                if (images && images.length) {
+                                    paragraphResource.embed('images', images);
+                                }
+                                return paragraphResource;
+                            });
+                            instanceResource.embed('items', paragraphResources);
+                        } else {
+                            throw new Error(`Relationship ${relationship.name}'s target is not Paragraph.`);
+                        }
                     } else {
-                        debug(`TODO: Handle body=`, body);
+                        debug(`TODO: body.reference.type=`, body.reference.type);
                     }
+                } else if (body && body.elementType === 'Relationship' && body.elementId) {
+                    const items = await extractDataRelationship(persistence, entity, instance, body);
+                    instanceResource.embed('items', items);
+                } else if (body && body.elementType === 'BasicProperty' && !body.reference.type) {
+                    const domainModel = entity.getDomain();
+                    const panelElement = domainModel.getElementById(body.elementId);
+                    const basicPropertyElement = domainModel.getElementById(panelElement.basicProperty[0].id);
+                    const basicPropertyValue = basicPropertyElement.getValue(instance);
+
+                    const basicPropertyResource = warpjsUtils.createResource(req, {
+                        id: basicPropertyElement.id,
+                        name: basicPropertyElement.name,
+                        value: basicPropertyValue
+                    });
+                    instanceResource.embed('basicProperties', basicPropertyResource);
+                } else if (body.elementType === 'Paragraph') {
+                    debug(`A paragraph from another relationship?`);
+                } else {
+                    debug(`TODO: Handle body=`, body);
                 }
 
                 // Changelogs
