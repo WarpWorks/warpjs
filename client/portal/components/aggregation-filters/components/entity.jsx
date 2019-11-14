@@ -27,9 +27,9 @@ const Component = (props) => {
     });
 
     if (shouldShowAllButton) {
-        showAllButton = <Button className="warpjs-aggregation-filters-button" label="show all" glyph="chevron-down" style="primary" title={`Show all ${props.entity.name}`} onClick={props.entity.showAll} />;
+        showAllButton = <Button className="warpjs-aggregation-filters-button" label="show all" style="primary" title={`Show all ${props.entity.name}`} onClick={props.entity.showAll} />;
     } else if (props.entity.showingAll) {
-        showAllButton = <Button className="warpjs-aggregation-filters-button" label="show less" glyph="chevron-up" style="primary" title={`Show less ${props.entity.name}`} onClick={props.entity.showLess} />;
+        showAllButton = <Button className="warpjs-aggregation-filters-button" label="show less" style="primary" title={`Show less ${props.entity.name}`} onClick={props.entity.showLess} />;
     }
 
     return (
