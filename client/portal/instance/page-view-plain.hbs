@@ -4,7 +4,11 @@
 {{#unless page._embedded.headerImages.[0]._links}}
   <div class="row warpjs-panel warpjs-page-title">
     {{> left-right-margin}}
+      {{#if pageView.hasAggregationFilters}}
+      <div class="col-xs-12 col-sm-10 warpjs-content">
+      {{else}}
       <div class="col-xs-12 col-sm-8 col-sm-offset-1 warpjs-content">
+      {{/if}}
         <div class="panel-body">
           <h1>{{page.name}}</h1>
         </div>
@@ -17,7 +21,11 @@
   <div class="row warpjs-page-view-with-aggregation-filters">
     {{> left-right-margin}}
 
+    {{#if pageView.hasAggregationFilters}}
+    <div class="col-xs-12 col-sm-10 warpjs-content">
+    {{else}}
     <div class="col-xs-12 col-sm-8 col-sm-offset-1 warpjs-content">
+    {{/if}}
 
       <div id="warpjs-aggregation-filters-input" class="col-xs-12"></div>
 
