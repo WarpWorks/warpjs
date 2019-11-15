@@ -1,13 +1,11 @@
-import PropTypes from 'prop-types';
-import { Fragment } from 'react';
-import { Checkbox } from 'react-bootstrap';
-
 import { NAME } from './../constants';
 import * as SHAPES from './../shapes';
 
 import SubSelections from './sub-selections';
 
+const { PropTypes } = window.WarpJS.ReactUtils;
 const { errorBoundary } = window.WarpJS.ReactUtils;
+const { RoundedCheckbox } = window.WarpJS.ReactComponents;
 
 const Component = (props) => {
     const checked = Boolean(props.selection &&
@@ -17,10 +15,10 @@ const Component = (props) => {
     );
 
     return (
-        <Fragment>
-            <Checkbox checked={checked} onClick={(event) => props.item.onClick(event.target.checked)}>{props.item.name}</Checkbox>
+        <div className="warpjs-aggregation-filters-selection">
+            <RoundedCheckbox checked={checked} onClick={() => props.item.onClick(!checked)}>{props.item.name}</RoundedCheckbox>
             <SubSelections relnId={props.relnId} entityId={props.entityId} firstLevelId={props.item.id} open={checked} items={props.item.items} selection={props.selection} />
-        </Fragment>
+        </div>
     );
 };
 
