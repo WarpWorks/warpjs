@@ -6,6 +6,14 @@
 - [Releases 1.0.x](RELEASE-1.0.md) from 2017-05-31 to 2017-06-10
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
+## 1.4.38 - 2019-11-14
+
+- #359: Align input with content
+- #359: Using new color for btn-primary and input field.
+- #359: Removing chevron "show all" and "show less".
+- #359: Shift buttons up when page not releasable.
+- #359: Adjust width if content has aggregation filters.
+
 ## 1.4.37 - 2019-11-13
 
 - #354: Fixed issue for aggregation without any association.
