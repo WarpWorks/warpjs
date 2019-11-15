@@ -2,18 +2,14 @@
   <div class="row breadcrumb-container">
     {{> left-right-margin}}
 
-    <div class="col-xs-10 col-md-8 no-padding">
+    <div class="col-xs-12 col-md-6 no-padding">
       {{> page-breadcrumb breadcrumbs=page._embedded.breadcrumbs}}
     </div>
-    <div class="col-xs-2 col-md-2 no-padding text-right">
-      <span id="warpjs-pdf-export-button"></span>
+    <div class="col-xs-12 col-md-4 no-padding text-right">
+      <div id="warpjs-pdf-export-button"></div>
+      <div id="warpjs-breadcrumb-actions"></div>
     </div>
 
-    {{> left-right-margin}}
-  </div>
-  <div class="row">
-    {{> left-right-margin}}
-    <div id="warpjs-breadcrumb-actions" class="col-xs-12 col-md-10 no-padding text-right"></div>
     {{> left-right-margin}}
   </div>
 </div>
