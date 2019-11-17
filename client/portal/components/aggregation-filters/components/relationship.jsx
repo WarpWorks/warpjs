@@ -1,10 +1,9 @@
-import { Panel } from 'react-bootstrap';
-
 import { NAME } from './../constants';
 import * as SHAPES from './../shapes';
 
 import Entity from './entity';
 
+const { Panel } = window.WarpJS.ReactUtils;
 const { errorBoundary } = window.WarpJS.ReactUtils;
 
 const Component = (props) => {

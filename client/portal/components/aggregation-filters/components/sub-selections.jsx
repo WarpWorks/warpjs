@@ -1,10 +1,9 @@
-import PropTypes from 'prop-types';
-import { Checkbox } from 'react-bootstrap';
-
 import { NAME } from './../constants';
 import * as SHAPES from './../shapes';
 
+const { PropTypes } = window.WarpJS.ReactUtils;
 const { errorBoundary } = window.WarpJS.ReactUtils;
+const { RoundedCheckbox } = window.WarpJS.ReactComponents;
 
 const Component = (props) => {
     if (!props.open) {
@@ -23,12 +22,10 @@ const Component = (props) => {
             (props.selection.secondLevelId === item.id)
         );
 
-        return <Checkbox key={item.id} checked={checked} onClick={(event) => item.onClick(event.target.checked)}>{item.name}</Checkbox>;
+        return <RoundedCheckbox key={item.id} checked={checked} onClick={() => item.onClick(!item.checked)}>{item.name}</RoundedCheckbox>;
     });
 
-    const style = { marginLeft: '20px' };
-
-    return <div style={style}>{checkboxes}</div>;
+    return <div className="warpjs-aggregation-filters-sub-selections">{checkboxes}</div>;
 };
 
 Component.displayName = `${NAME}SubSelections`;

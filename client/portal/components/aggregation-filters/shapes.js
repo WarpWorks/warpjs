@@ -1,6 +1,6 @@
-import PropTypes from 'prop-types';
-
 import { SECTIONS } from './constants';
+
+const { PropTypes } = window.WarpJS.ReactUtils;
 
 export const SELECTION = PropTypes.shape({
     relnId: PropTypes.number,
