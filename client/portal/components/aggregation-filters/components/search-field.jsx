@@ -18,10 +18,16 @@ const Component = (props) => {
                 const firstLevelItem = (entity.items || []).find((item) => item.id === props.selection.firstLevelId);
 
                 if (firstLevelItem) {
+                    const label = <span>{firstLevelItem.name}</span>;
+                    const tooltipOrNot = entity.name
+                        ? <Tooltip title={entity.name}>{label}</Tooltip>
+                        : label
+                    ;
+
                     firstLevel = (
                         <InputGroup.Addon>
                             <Button style="primary" size="sm">
-                                <Tooltip title={entity.name}><span>{firstLevelItem.name}</span></Tooltip>
+                                {tooltipOrNot}
                                 <ActionIcon glyph="remove" title={`Remove '${firstLevelItem.name}'`} onClick={() => firstLevelItem.onClick(false)} />
                             </Button>
                         </InputGroup.Addon>
@@ -29,10 +35,12 @@ const Component = (props) => {
 
                     const secondLevelItem = (firstLevelItem.items || []).find((item) => item.id === props.selection.secondLevelId);
                     if (secondLevelItem) {
+                        const tooltipText = entity.name ? `${entity.name} / ${firstLevelItem.name}` : firstLevelItem.name;
+
                         secondLevel = (
                             <InputGroup.Addon>
                                 <Button style="primary" size="sm">
-                                    <Tooltip title={`${entity.name} / ${firstLevelItem.name}`}><span>{secondLevelItem.name}</span></Tooltip>
+                                    <Tooltip title={tooltipText}><span>{secondLevelItem.name}</span></Tooltip>
                                     <ActionIcon glyph="remove" title={`Remove '${secondLevelItem.name}'`} onClick={() => secondLevelItem.onClick(false)} />
                                 </Button>
                             </InputGroup.Addon>
