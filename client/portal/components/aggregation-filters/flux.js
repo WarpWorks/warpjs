@@ -21,9 +21,10 @@ export const orchestrators = Object.freeze({
     clearSearchValue: (dispatch) => {
         batch(() => {
             orchestrators.setSearchValue(dispatch, '');
+            orchestrators.select(dispatch);
         });
     },
-    select: async (dispatch, selected, relnId, entityId, firstLevelId, secondLevelId) => {
+    select: (dispatch, selected, relnId, entityId, firstLevelId, secondLevelId) => {
         if (selected) {
             dispatch(actionCreators.select(relnId, entityId, firstLevelId, secondLevelId));
         } else if (secondLevelId) {

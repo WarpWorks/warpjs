@@ -6,6 +6,10 @@
 - [Releases 1.0.x](RELEASE-1.0.md) from 2017-05-31 to 2017-06-10
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
+## 1.4.42 - 2019-11-18
+
+- #355: `X` to remove both search term and selected filters.
+
 ## 1.4.41 - 2019-11-18
 
 - #363: Fixed aggregation sorting.
