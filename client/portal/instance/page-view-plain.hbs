@@ -10,7 +10,9 @@
       <div class="col-xs-12 col-sm-8 col-sm-offset-1 warpjs-content">
       {{/if}}
         <div class="panel-body">
-          <h1>{{page.name}}</h1>
+          {{#unless pageView.isOfStyle.IndividualContribution}}
+            <h1>{{page.name}}</h1>
+          {{/unless}}
         </div>
       </div>
     {{> left-right-margin}}
