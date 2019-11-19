@@ -1,6 +1,14 @@
 const byName = (a, b) => a.name.localeCompare(b.name);
 
-export default (dispatch, pageViewAggregationFilters, pageViewAggregationFiltersItems, showingAll, select, showAll) => (pageViewAggregationFilters || []).map((reln) => ({
+export default (
+        dispatch,
+        pageViewAggregationFilters,
+        pageViewAggregationFiltersItems,
+        showingAll,
+        select,
+        showAll,
+        matchedTiles
+) => (pageViewAggregationFilters || []).map((reln) => ({
     id: reln.id,
     entities: (reln.entities || []).map((entity) => {
         const aggregationFiltersItems = (pageViewAggregationFiltersItems || []).filter((aggregationFiltersItem) => aggregationFiltersItem.firstLevelRelnId === entity.id);

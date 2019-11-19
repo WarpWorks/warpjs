@@ -6,12 +6,14 @@ const { batch } = window.WarpJS.ReactUtils;
 const { actionCreator, concatenateReducers, getNamespaceAttribute, getNamespaceSubstate, namespaceKeys, setNamespaceAttribute, setNamespaceSubstate } = window.WarpJS.ReactUtils;
 
 const actions = namespaceKeys(namespace, [
+    'INIT',
     'SET_SELECTION',
     'SET_SEARCH_VALUE',
     'SET_SHOWING_ALL'
 ]);
 
 const actionCreators = Object.freeze({
+    init: (filters, documents) => actionCreator(actions.INIT, { filters, documents }),
     select: (relnId, entityId, firstLevelId, secondLevelId) => actionCreator(actions.SET_SELECTION, { relnId, entityId, firstLevelId, secondLevelId }),
     setSearchValue: (value) => actionCreator(actions.SET_SEARCH_VALUE, { value }),
     showAll: (relnId, entityId, showAll) => actionCreator(actions.SET_SHOWING_ALL, { relnId, entityId, showAll })
@@ -24,6 +26,64 @@ export const orchestrators = Object.freeze({
             orchestrators.select(dispatch);
         });
     },
+    init: (dispatch, allDocuments, pageFilters, filterableDocuments) => {
+        const filters = pageFilters.map((pageFilter) => {
+            return {
+                id: pageFilter.id,
+                items: pageFilter.entities.map((entity) => {
+                    const filteredDocuments = filterableDocuments.filter((doc) => doc.firstLevelRelnId === entity.id);
+                    const items = filteredDocuments.reduce(
+                        (items, doc) => {
+                            let firstLevel = items.find((item) => item.id === doc.firstLevelDocId);
+                            if (!firstLevel) {
+                                firstLevel = {
+                                    id: doc.firstLevelDocId,
+                                    label: doc.firstLevelDocName,
+                                    docs: [],
+                                    items: []
+                                };
+                                items.push(firstLevel);
+                            }
+
+                            const alreadyAdded = firstLevel.docs.find((item) => item === doc.docId);
+                            if (!alreadyAdded) {
+                                firstLevel.docs.push(doc.docId);
+                            }
+
+                            if (doc.secondLevelDocId) {
+                                let secondLevel = firstLevel.items.find((item) => item.id === doc.secondLevelDocId);
+                                if (!secondLevel) {
+                                    secondLevel = {
+                                        id: doc.secondLevelDocId,
+                                        label: doc.secondLevelDocName,
+                                        docs: []
+                                    };
+                                    firstLevel.items.push(secondLevel);
+                                }
+
+                                const alreadyAdded = secondLevel.docs.find((doc) => doc === doc.docId);
+                                if (!alreadyAdded) {
+                                    secondLevel.docs.push(doc.docId);
+                                }
+                            }
+
+                            return items;
+                        },
+                        []
+                    );
+
+                    return {
+                        id: entity.id,
+                        label: entity.label,
+                        items
+                    };
+                })
+            };
+        });
+
+        dispatch(actionCreators.init(filters, allDocuments));
+    },
+
     select: (dispatch, selected, relnId, entityId, firstLevelId, secondLevelId) => {
         if (selected) {
             dispatch(actionCreators.select(relnId, entityId, firstLevelId, secondLevelId));
@@ -38,6 +98,15 @@ export const orchestrators = Object.freeze({
 });
 
 export const reducers = concatenateReducers([{
+    actions: [ actions.INIT ],
+    reducer: (state = {}, action) => {
+        const substate = selectors.substate(state);
+        substate.initialized = true;
+        substate.filters = action.payload.filters;
+        substate.documents = action.payload.documents;
+        return updaters.substate(state, substate);
+    }
+}, {
     actions: [ actions.SET_SELECTION ],
     reducer: (state = {}, action) => updaters.attribute(state, 'selection', action.payload)
 }, {
