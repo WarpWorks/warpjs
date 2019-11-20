@@ -1,36 +1,28 @@
 /*
  *  substate = {
- *    filters: [ // List of aggregations with filters.
- *      {
- *        id: number (aggregation id)
- *        selected: bool (injected by reducer when user clicks in one aggregation)
- *        show: bool (injected by container)
- *        items: [ // List of entity to filter on
- *          {
- *            id: number (entity id)
- *            label: string (entity filter label defined in edit)
- *            selected: bool (injected by reducer when user clicks in first level filter)
- *            showingAll: bool (injected by reducer)
- *            items: [ // List of first level filters
- *              {
- *                id: string (doc id of first level)
- *                label: string (name of first level)
- *                selected: bool (injected by reducer)
- *                docs: [ string ] // documents matching this first level filter
- *                items: [ // List of second level filters
- *                  {
- *                    id: string (doc is of second level)
- *                    label: string (name of second level)
- *                    selected: bool (injected by reducer)
- *                    docs: [ string ] // documents matching his second level filter.
- *                  }
- *                ]
- *              }
- *            ]
- *          }
- *        ]
- *      }
- *    ]
+ *    filters: [{ // List of aggregations with filters.
+ *      id: number (aggregation id)
+ *      selected: bool (injected by reducer when user clicks in one aggregation)
+ *      show: bool (injected by container)
+ *      items: [{ // List of entity to filter on
+ *        id: number (entity id)
+ *        label: string (entity filter label defined in edit)
+ *        selected: bool (injected by reducer when user clicks in first level filter)
+ *        showingAll: bool (injected by reducer)
+ *        items: [{ // List of first level filters
+ *          id: string (doc id of first level)
+ *          label: string (name of first level)
+ *          selected: bool (injected by reducer)
+ *          docs: [ string ] // documents matching this first level filter
+ *          items: [{ // List of second level filters
+ *            id: string (doc is of second level)
+ *            label: string (name of second level)
+ *            selected: bool (injected by reducer)
+ *            docs: [ string ] // documents matching his second level filter.
+ *          }]
+ *        }]
+ *      }]
+ *    }]
  *  };
  */
 
@@ -42,17 +34,21 @@ const { batch } = window.WarpJS.ReactUtils;
 const { actionCreator, concatenateReducers, getNamespaceAttribute, getNamespaceSubstate, namespaceKeys, setNamespaceAttribute, setNamespaceSubstate } = window.WarpJS.ReactUtils;
 
 const actions = namespaceKeys(namespace, [
+    'CLEAR_FILTERS',
     'INIT',
-    'SET_SELECTION',
+    'SELECT_FILTER',
     'SET_SEARCH_VALUE',
     'SET_SHOWING_ALL'
 ]);
 
+const byLabel = (a, b) => a.label.localeCompare(b.label);
+
 const actionCreators = Object.freeze({
+    clearFilters: () => actionCreator(actions.CLEAR_FILTERS),
     init: (filters, documents) => actionCreator(actions.INIT, { filters, documents }),
-    select: (relnId, entityId, firstLevelId, secondLevelId) => actionCreator(actions.SET_SELECTION, { relnId, entityId, firstLevelId, secondLevelId }),
+    selectFilter: (selected, relnId, entityId, firstLevelId, secondLevelId) => actionCreator(actions.SELECT_FILTER, { selected, relnId, entityId, firstLevelId, secondLevelId }),
     setSearchValue: (value) => actionCreator(actions.SET_SEARCH_VALUE, { value }),
-    showAll: (relnId, entityId, showAll) => actionCreator(actions.SET_SHOWING_ALL, { relnId, entityId, showAll })
+    showAll: (relnId, entityId, showingAll) => actionCreator(actions.SET_SHOWING_ALL, { relnId, entityId, showingAll })
 });
 
 export const orchestrators = Object.freeze({
@@ -62,6 +58,7 @@ export const orchestrators = Object.freeze({
             orchestrators.select(dispatch);
         });
     },
+
     init: (dispatch, allDocuments, pageFilters, filterableDocuments) => {
         const filters = pageFilters.map((pageFilter) => {
             return {
@@ -79,6 +76,7 @@ export const orchestrators = Object.freeze({
                                     items: []
                                 };
                                 items.push(firstLevel);
+                                items.sort(byLabel);
                             }
 
                             const alreadyAdded = firstLevel.docs.find((item) => item === doc.docId);
@@ -95,6 +93,7 @@ export const orchestrators = Object.freeze({
                                         docs: []
                                     };
                                     firstLevel.items.push(secondLevel);
+                                    firstLevel.items.sort(byLabel);
                                 }
 
                                 const alreadyAdded = secondLevel.docs.find((doc) => doc === doc.docId);
@@ -121,19 +120,41 @@ export const orchestrators = Object.freeze({
     },
 
     select: (dispatch, selected, relnId, entityId, firstLevelId, secondLevelId) => {
-        if (selected) {
-            dispatch(actionCreators.select(relnId, entityId, firstLevelId, secondLevelId));
-        } else if (secondLevelId) {
-            dispatch(actionCreators.select(relnId, entityId, firstLevelId));
+        if (relnId) {
+            dispatch(actionCreators.selectFilter(selected, relnId, entityId, firstLevelId, secondLevelId));
         } else {
-            dispatch(actionCreators.select());
+            dispatch(actionCreators.clearFilters());
         }
     },
-    showAll: (dispatch, relnId, entityId, showAll = true) => dispatch(actionCreators.showAll(relnId, entityId, showAll)),
+
+    showAll: (dispatch, relnId, entityId, showingAll = true) => dispatch(actionCreators.showAll(relnId, entityId, showingAll)),
     setSearchValue: (dispatch, value) => dispatch(actionCreators.setSearchValue(value))
 });
 
 export const reducers = concatenateReducers([{
+    actions: [ actions.CLEAR_FILTERS ],
+    reducer: (state = {}, action) => {
+        const substate = selectors.substate(state);
+
+        substate.filters.forEach((aggregation) => {
+            aggregation.selected = false;
+
+            aggregation.items.forEach((entity) => {
+                entity.selected = false;
+
+                entity.items.forEach((firstLevel) => {
+                    firstLevel.selected = false;
+
+                    firstLevel.items.forEach((secondLevel) => {
+                        secondLevel.selected = false;
+                    });
+                });
+            });
+        });
+
+        return updaters.substate(state, substate);
+    }
+}, {
     actions: [ actions.INIT ],
     reducer: (state = {}, action) => {
         const substate = selectors.substate(state);
@@ -143,28 +164,38 @@ export const reducers = concatenateReducers([{
         return updaters.substate(state, substate);
     }
 }, {
-    actions: [ actions.SET_SELECTION ],
-    reducer: (state = {}, action) => updaters.attribute(state, 'selection', action.payload)
+    actions: [ actions.SELECT_FILTER ],
+    reducer: (state = {}, action) => {
+        const substate = selectors.substate(state);
+        const aggregation = substate.filters.find((aggregation) => aggregation.id === action.payload.relnId);
+        const entity = aggregation.items.find((entity) => entity.id === action.payload.entityId);
+        const firstLevel = entity.items.find((firstLevel) => firstLevel.id === action.payload.firstLevelId);
+        if (action.payload.secondLevelId) {
+            const secondLevel = firstLevel.items.find((secondLevel) => secondLevel.id === action.payload.secondLevelId);
+            secondLevel.selected = action.payload.selected;
+        } else {
+            firstLevel.selected = action.payload.selected;
+            firstLevel.items.forEach((secondLevel) => {
+                secondLevel.selected = false;
+            });
+        }
+
+        entity.selected = Boolean(entity.items.find((firstLevel) => firstLevel.selected));
+        aggregation.selected = Boolean(aggregation.items.find((entity) => entity.selected));
+
+        return updaters.substate(state, substate);
+    }
 }, {
     actions: [ actions.SET_SEARCH_VALUE ],
     reducer: (state = {}, action) => updaters.attribute(state, 'searchValue', action.payload.value)
 }, {
     actions: [ actions.SET_SHOWING_ALL ],
     reducer: (state = {}, action) => {
-        const showingAll = selectors.attribute(state, 'showingAll', []);
-
-        const foundShowingAll = showingAll.find((item) => item.relnId === action.payload.relnId && item.entityId === action.payload.entityId);
-        if (foundShowingAll) {
-            foundShowingAll.showAll = action.payload.showAll;
-        } else {
-            showingAll.push({
-                relnId: action.payload.relnId,
-                entityId: action.payload.entityId,
-                showAll: action.payload.showAll
-            });
-        }
-
-        return updaters.attribute(state, 'showingAll', showingAll);
+        const substate = selectors.substate(state);
+        const aggregation = substate.filters.find((aggregation) => aggregation.id === action.payload.relnId);
+        const entity = aggregation.items.find((entity) => entity.id === action.payload.entityId);
+        entity.showingAll = action.payload.showingAll;
+        return updaters.substate(state, substate);
     }
 }]);
 

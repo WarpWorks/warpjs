@@ -5,7 +5,7 @@ import Selection from './selection';
 
 // import _debug from './debug'; const debug = _debug('entity');
 
-const { Panel, PropTypes } = window.WarpJS.ReactUtils;
+const { Panel } = window.WarpJS.ReactUtils;
 const { errorBoundary } = window.WarpJS.ReactUtils;
 const { Button } = window.WarpJS.ReactComponents;
 
@@ -21,7 +21,7 @@ const Component = (props) => {
             shouldShowAllButton = true;
             return null;
         }
-        return <Selection key={item.id} relnId={props.relnId} entityId={props.entity.id} item={item} {...props} />;
+        return <Selection key={item.id} entityId={props.entity.id} item={item} />;
     });
 
     if (shouldShowAllButton) {
@@ -30,9 +30,14 @@ const Component = (props) => {
         showAllButton = <Button className="warpjs-aggregation-filters-button" label="show less" style="primary" title={`Show less ${props.entity.name}`} onClick={props.entity.showLess} />;
     }
 
+    const panelHeading = props.entity.label
+        ? <Panel.Heading>{props.entity.label}</Panel.Heading>
+        : null
+    ;
+
     return (
         <Panel className="warpjs-aggregation-filters-entity">
-            <Panel.Heading>{props.entity.name}</Panel.Heading>
+            {panelHeading}
             <Panel.Body>
                 {selections}
                 {showAllButton}
@@ -44,8 +49,7 @@ const Component = (props) => {
 Component.displayName = `${NAME}Entity`;
 
 Component.propTypes = {
-    entity: SHAPES.ENTITY,
-    relnId: PropTypes.number.isRequired
+    entity: SHAPES.ENTITY
 };
 
 export default errorBoundary(Component);

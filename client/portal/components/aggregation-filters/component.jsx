@@ -11,7 +11,7 @@ const Component = (props) => {
     if (props.section === SECTIONS.INPUT) {
         return <SearchField {...props} />;
     } else if (props.section === SECTIONS.FILTERS) {
-        return <Sidebar {...props} />;
+        return <Sidebar filters={props.filters} />;
     } else if (props.section === SECTIONS.EMPTY_RESULTS) {
         return <EmptyResults {...props} />;
     } else {

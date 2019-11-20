@@ -15,14 +15,7 @@ const Component = (props) => {
     }
 
     const checkboxes = props.items.map((item) => {
-        const checked = Boolean(props.selection &&
-            (props.selection.relnId === props.relnId) &&
-            (props.selection.entityId === props.entityId) &&
-            (props.selection.firstLevelId === props.firstLevelId) &&
-            (props.selection.secondLevelId === item.id)
-        );
-
-        return <RoundedCheckbox key={item.id} checked={checked} onClick={() => item.onClick(!item.checked)}>{item.name}</RoundedCheckbox>;
+        return <RoundedCheckbox key={item.id} checked={item.selected} onClick={() => item.onClick(!item.selected)}>{item.label}</RoundedCheckbox>;
     });
 
     return <div className="warpjs-aggregation-filters-sub-selections">{checkboxes}</div>;
@@ -34,9 +27,7 @@ Component.propTypes = {
     entityId: PropTypes.number.isRequired,
     firstLevelId: PropTypes.number.isRequired,
     items: PropTypes.arrayOf(SHAPES.SUB_ITEM),
-    open: PropTypes.bool,
-    relnId: PropTypes.number.isRequired,
-    selection: SHAPES.SELECTION
+    open: PropTypes.bool
 };
 
 export default errorBoundary(Component);

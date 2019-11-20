@@ -8,16 +8,10 @@ const { errorBoundary } = window.WarpJS.ReactUtils;
 const { RoundedCheckbox } = window.WarpJS.ReactComponents;
 
 const Component = (props) => {
-    const checked = Boolean(props.selection &&
-        (props.selection.relnId === props.relnId) &&
-        (props.selection.entityId === props.entityId) &&
-        (props.selection.firstLevelId === props.item.id)
-    );
-
     return (
         <div className="warpjs-aggregation-filters-selection">
-            <RoundedCheckbox checked={checked} onClick={() => props.item.onClick(!checked)}>{props.item.name}</RoundedCheckbox>
-            <SubSelections relnId={props.relnId} entityId={props.entityId} firstLevelId={props.item.id} open={checked} items={props.item.items} selection={props.selection} />
+            <RoundedCheckbox checked={props.item.selected} onClick={() => props.item.onClick(!props.item.selected)}>{props.item.label}</RoundedCheckbox>
+            <SubSelections entityId={props.entityId} firstLevelId={props.item.id} open={props.item.selected} items={props.item.items} />
         </div>
     );
 };
@@ -26,9 +20,7 @@ Component.displayName = `${NAME}Selection`;
 
 Component.propTypes = {
     entityId: PropTypes.number.isRequired,
-    item: SHAPES.ITEM,
-    relnId: PropTypes.number.isRequired,
-    selection: SHAPES.SELECTION
+    item: SHAPES.ITEM
 };
 
 export default errorBoundary(Component);

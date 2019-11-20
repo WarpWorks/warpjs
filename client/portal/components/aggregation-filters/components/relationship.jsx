@@ -7,15 +7,19 @@ const { Panel } = window.WarpJS.ReactUtils;
 const { errorBoundary } = window.WarpJS.ReactUtils;
 
 const Component = (props) => {
-    const entities = props.reln.entities.map((entity) => <Entity key={entity.id} relnId={props.reln.id} entity={entity} {...props} />);
+    if (props.reln.show) {
+        const entities = props.reln.items.map((entity) => <Entity key={entity.id} entity={entity} />);
 
-    return (
-        <Panel>
-            <Panel.Body>
-                {entities}
-            </Panel.Body>
-        </Panel>
-    );
+        return (
+            <Panel>
+                <Panel.Body>
+                    {entities}
+                </Panel.Body>
+            </Panel>
+        );
+    } else {
+        return null;
+    }
 };
 
 Component.displayName = `${NAME}Relationship`;
