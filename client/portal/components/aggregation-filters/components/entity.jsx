@@ -28,9 +28,11 @@ const Component = (props) => {
     });
 
     if (shouldShowAllButton) {
-        showAllButton = <Button className="warpjs-aggregation-filters-button" label="show all" style="primary" title={`Show all ${props.entity.name}`} onClick={props.entity.showAll} />;
+        const showAllTooltip = props.entity.label ? `Show all ${props.entity.label}` : `Show all`;
+        showAllButton = <Button className="warpjs-aggregation-filters-button" label="show all" style="primary" title={showAllTooltip} onClick={props.entity.showAll} />;
     } else if (props.entity.showingAll) {
-        showAllButton = <Button className="warpjs-aggregation-filters-button" label="show less" style="primary" title={`Show less ${props.entity.name}`} onClick={props.entity.showLess} />;
+        const showLessTooltip = props.entity.label ? `Show less ${props.entity.label}` : `Show less`;
+        showAllButton = <Button className="warpjs-aggregation-filters-button" label="show less" style="primary" title={showLessTooltip} onClick={props.entity.showLess} />;
     }
 
     const panelHeading = props.entity.label
