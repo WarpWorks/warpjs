@@ -2,12 +2,13 @@
   "name": "@warp-works/warpjs",
   "version": "1.4.51",
   "description": "Content management system for WarpWorks in javascript",
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/WarpWorks/warpjs.git"
   },
   "engines": {
-    "node": ">=8.12.0"
+    "node": ">=12.13.0"
   },
   "license": "SEE LICENSE IN LICENSE.txt",
   "author": {
@@ -52,6 +53,7 @@
     "lint": "grunt eslint",
     "backup": "node ./scripts/backup-data.js",
     "build:dev": "DEBUG=W2:* NODE_ENV=development grunt",
+    "node12": "node --experimental-modules server.js",
     "dev": "DEBUG=W2:* npm start"
   },
   "bin": {
