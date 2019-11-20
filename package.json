@@ -89,7 +89,7 @@
     "nanositemap": "0.0.2",
     "pdfmake": "~0.1.62",
     "pngjs": "~3.4.0",
-    "random-words": "0.0.1",
+    "random-words": "~1.1.0",
     "react": "~16.12.0",
     "react-dom": "~16.12.0",
     "serve-favicon": "2.5.0",
