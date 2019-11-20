@@ -1,4 +1,5 @@
 import { NAME } from './../constants';
+import byResultCount from './../by-result-count';
 import * as SHAPES from './../shapes';
 
 import Selection from './selection';
@@ -15,6 +16,8 @@ const NUMBER_TO_DISPLAY_BEFORE_BUTTON = 5;
 const Component = (props) => {
     let shouldShowAllButton;
     let showAllButton = null;
+
+    props.entity.items.sort(byResultCount);
 
     const selections = props.entity.items.map((item, index, array) => {
         if (!props.entity.showingAll && (array.length > MAX_TO_DISPLAY_WITHOUT_NEED_BUTTON) && (index >= NUMBER_TO_DISPLAY_BEFORE_BUTTON)) {

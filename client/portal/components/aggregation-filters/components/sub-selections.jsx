@@ -1,5 +1,8 @@
 import { NAME } from './../constants';
+import byResultCount from './../by-result-count';
 import * as SHAPES from './../shapes';
+
+import LabelAndCount from './label-and-count';
 
 const { PropTypes } = window.WarpJS.ReactUtils;
 const { errorBoundary } = window.WarpJS.ReactUtils;
@@ -14,8 +17,14 @@ const Component = (props) => {
         return null;
     }
 
+    props.items.sort(byResultCount);
+
     const checkboxes = props.items.map((item) => {
-        return <RoundedCheckbox key={item.id} checked={item.selected} onClick={() => item.onClick(!item.selected)}>{item.label}</RoundedCheckbox>;
+        return (
+            <RoundedCheckbox key={item.id} checked={item.selected} onClick={() => item.onClick(!item.selected)}>
+                <LabelAndCount label={item.label} count={item.docs.length} />
+            </RoundedCheckbox>
+        );
     });
 
     return <div className="warpjs-aggregation-filters-sub-selections">{checkboxes}</div>;
