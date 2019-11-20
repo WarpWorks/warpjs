@@ -1,3 +1,39 @@
+/*
+ *  substate = {
+ *    filters: [ // List of aggregations with filters.
+ *      {
+ *        id: number (aggregation id)
+ *        selected: bool (injected by reducer when user clicks in one aggregation)
+ *        show: bool (injected by container)
+ *        items: [ // List of entity to filter on
+ *          {
+ *            id: number (entity id)
+ *            label: string (entity filter label defined in edit)
+ *            selected: bool (injected by reducer when user clicks in first level filter)
+ *            showingAll: bool (injected by reducer)
+ *            items: [ // List of first level filters
+ *              {
+ *                id: string (doc id of first level)
+ *                label: string (name of first level)
+ *                selected: bool (injected by reducer)
+ *                docs: [ string ] // documents matching this first level filter
+ *                items: [ // List of second level filters
+ *                  {
+ *                    id: string (doc is of second level)
+ *                    label: string (name of second level)
+ *                    selected: bool (injected by reducer)
+ *                    docs: [ string ] // documents matching his second level filter.
+ *                  }
+ *                ]
+ *              }
+ *            ]
+ *          }
+ *        ]
+ *      }
+ *    ]
+ *  };
+ */
+
 import namespace from './namespace';
 
 // import _debug from './debug'; const debug = _debug('flux');

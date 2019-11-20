@@ -14,6 +14,26 @@ const { useDispatch, useEffect, useSelector } = window.WarpJS.ReactUtils;
 const Container = (props) => {
     const dispatch = useDispatch();
     const substate = useSelector((state) => selectors.substate(state));
+
+    if (substate.filters) {
+        debug(`substate.filters=`, substate.filters);
+        const selectedAggregation = substate.filters.find((filter) => filter.selected);
+        substate.filters.forEach((aggregation) => {
+            aggregation.show = selectedAggregation ? selectedAggregation.id === aggregation.id : true;
+            aggregation.items.forEach((entity) => {
+                entity.showAll = orchestrators.showAll(dispatch, aggregation.id, entity.id, !entity.showingAll);
+
+                entity.items.forEach((firstLevel) => {
+                    firstLevel.onClick = orchestrators.select(dispatch, !firstLevel.selected, aggregation.id, entity.id, firstLevel.id);
+
+                    firstLevel.items.forEach((secondLevel) => {
+                        secondLevel.onClick = orchestrators.select(dispatch, !secondLevel.selected, aggregation.id, entity.id, firstLevel.id, secondLevel.id);
+                    });
+                });
+            });
+        });
+    }
+
     const page = useSelector((state) => pageHalSelectors.pageSubstate(state));
 
     const pageView = page && page.pageViews && page.pageViews.length ? page.pageViews[0] : null;
