@@ -7,7 +7,7 @@ const serverUtils = require('./utils');
 const config = serverUtils.getConfig();
 
 module.exports = async (req, res) => {
-    const host = req.host.replace(/\./g, '-');
+    const host = req.hostname.replace(/\./g, '-');
 
     const robotsHost = path.resolve(path.join(config.folders.w2projects, 'public', `robots.${host}.txt`));
 
