@@ -54,6 +54,38 @@
             }
         }
     }
+
+    .dropdown {
+        .dropdown-menu {
+            .warpjs-aggregation-filters-search-field-selected {
+                padding: 8px;
+
+                .warpjs-label {
+                    display: inline-block;
+                    width: 250px;
+                    text-overflow: ellipsis;
+                    overflow-x: hidden;
+                    line-height: 1.4em;
+                }
+
+                .warpjs-action {
+                }
+
+                &.warpjs-aggregation-filters-search-field-selected-level-1 {
+                    color: red;
+                }
+
+                &.warpjs-aggregation-filters-search-field-selected-level-2 {
+                    color: blue;
+                    padding-left: 16px;
+
+                    .warpjs-label {
+                        width: 242px;
+                    }
+                }
+            }
+        }
+    }
 }
 
 .warpjs-aggregation-filters-entity {

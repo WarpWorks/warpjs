@@ -1,5 +1,4 @@
 import { NAME } from './../constants';
-import byResultCount from './../by-result-count';
 import * as SHAPES from './../shapes';
 
 import LabelAndCount from './label-and-count';
@@ -16,8 +15,6 @@ const Component = (props) => {
     if (!props.items) {
         return null;
     }
-
-    props.items.sort(byResultCount);
 
     const checkboxes = props.items.map((item) => {
         return (

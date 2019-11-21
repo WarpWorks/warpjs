@@ -1,65 +1,71 @@
 import { NAME } from './../constants';
-import * as SHAPES from './../shapes';
 
-const { ActionIcon, Button, Tooltip } = window.WarpJS.ReactComponents;
-const { errorBoundary, FormControl, InputGroup, PropTypes } = window.WarpJS.ReactUtils;
+import MenuItem from './menu-item';
+
+import _debug from './debug'; const debug = _debug('search-field');
+
+const { Button } = window.WarpJS.ReactComponents;
+const { DropdownButton, errorBoundary, FormControl, InputGroup, PropTypes } = window.WarpJS.ReactUtils;
 
 const Component = (props) => {
-    let firstLevel = null;
-    let secondLevel = null;
+    const inputGroupAddons = props.filters.reduce(
+        (inputGroupAddons, aggregation) => {
+            if (!aggregation.selected) {
+                return inputGroupAddons;
+            }
 
-    if (props.selection) {
-        const relationship = (props.aggregationFilters || []).find((reln) => reln.id === props.selection.relnId);
+            return aggregation.items.reduce(
+                (inputGroupAddons, entity) => {
+                    if (!entity.selected) {
+                        return inputGroupAddons;
+                    }
 
-        if (relationship) {
-            const entity = (relationship.entities || []).find((entity) => entity.id === props.selection.entityId);
-
-            if (entity) {
-                const firstLevelItem = (entity.items || []).find((item) => item.id === props.selection.firstLevelId);
-
-                if (firstLevelItem) {
-                    const label = <span>{firstLevelItem.name}</span>;
-                    const tooltipOrNot = entity.name
-                        ? <Tooltip title={entity.name}>{label}</Tooltip>
-                        : label
-                    ;
-
-                    firstLevel = (
-                        <InputGroup.Addon>
-                            <Button style="primary" size="sm">
-                                {tooltipOrNot}
-                                <ActionIcon glyph="remove" title={`Remove '${firstLevelItem.name}'`} onClick={() => firstLevelItem.onClick(false)} />
-                            </Button>
-                        </InputGroup.Addon>
+                    const selectedFilters = entity.items.reduce(
+                        (selectedFilters, firstLevel) => {
+                            if (firstLevel.selected) {
+                                debug(`firstLevel=`, firstLevel);
+                                const firstLevelItem = <MenuItem key={firstLevel.id} level={1} label={firstLevel.label} onClick={firstLevel.onClick} />;
+                                const secondLevelItems = firstLevel.items.reduce(
+                                    (secondLevels, secondLevel) => {
+                                        if (secondLevel.selected) {
+                                            return secondLevels.concat(<MenuItem key={secondLevel.id} level={2} label={secondLevel.label} onClick={secondLevel.onClick} />);
+                                        } else {
+                                            return secondLevels;
+                                        }
+                                    },
+                                    []
+                                );
+                                return selectedFilters.concat(firstLevelItem).concat(secondLevelItems);
+                            } else {
+                                return selectedFilters;
+                            }
+                        },
+                        []
                     );
 
-                    const secondLevelItem = (firstLevelItem.items || []).find((item) => item.id === props.selection.secondLevelId);
-                    if (secondLevelItem) {
-                        const tooltipText = entity.name ? `${entity.name} / ${firstLevelItem.name}` : firstLevelItem.name;
+                    const dropdownTitle = entity.label || 'Untitled';
+                    return inputGroupAddons.concat(
+                        <InputGroup.Addon key={entity.id}>
+                            <DropdownButton bsStyle="primary" title={dropdownTitle} key={`${entity.id}`} id={`warpjs-aggregation-filters-entity-${entity.id}`}>
+                                {selectedFilters}
+                            </DropdownButton>
+                        </InputGroup.Addon>
+                    );
+                },
+                inputGroupAddons
+            );
+        },
+        []
+    );
 
-                        secondLevel = (
-                            <InputGroup.Addon>
-                                <Button style="primary" size="sm">
-                                    <Tooltip title={tooltipText}><span>{secondLevelItem.name}</span></Tooltip>
-                                    <ActionIcon glyph="remove" title={`Remove '${secondLevelItem.name}'`} onClick={() => secondLevelItem.onClick(false)} />
-                                </Button>
-                            </InputGroup.Addon>
-                        );
-                    }
-                }
-            }
-        }
-    }
-
-    const searchButton = props.searchValue || firstLevel
+    const searchButton = props.searchValue || inputGroupAddons.length
         ? <Button style="primary" size="sm" glyph="remove" title="Clear search terms" onClick={props.clearSearchValue} inverse={true} outline={false} />
         : <Button style="primary" size="sm" glyph="search" inverse={true} outline={false} />
     ;
 
     return (
         <InputGroup>
-            {firstLevel}
-            {secondLevel}
+            {inputGroupAddons}
             <FormControl type="text" value={props.searchValue} placeholder="Enter search terms" onChange={(event) => props.setSearchValue(event.target.value)} />
             <InputGroup.Addon>{searchButton}</InputGroup.Addon>
         </InputGroup>
@@ -69,11 +75,14 @@ const Component = (props) => {
 Component.displayName = `${NAME}SearchField`;
 
 Component.propTypes = {
-    aggregationFilters: PropTypes.arrayOf(SHAPES.RELATIONSHIP),
     clearSearchValue: PropTypes.func.isRequired,
+    filters: PropTypes.array.isRequired,
     searchValue: PropTypes.string,
-    selection: SHAPES.SELECTION,
     setSearchValue: PropTypes.func.isRequired
+};
+
+Component.defaultProps = {
+    filters: []
 };
 
 export default errorBoundary(Component);

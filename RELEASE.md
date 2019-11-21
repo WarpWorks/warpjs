@@ -6,6 +6,10 @@
 - [Releases 1.0.x](RELEASE-1.0.md) from 2017-05-31 to 2017-06-10
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
+## 1.4.45 - 2019-11-21
+
+- #361: First draft for multiple filters select. Output filtering pending.
+
 ## 1.4.43 - 2019-11-18
 
 - #365: Handle empty filter names.

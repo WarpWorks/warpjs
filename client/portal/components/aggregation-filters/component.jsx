@@ -9,7 +9,7 @@ const { errorBoundary } = window.WarpJS.ReactUtils;
 
 const Component = (props) => {
     if (props.section === SECTIONS.INPUT) {
-        return <SearchField {...props} />;
+        return <SearchField filters={props.filters} searchValue={props.searchValue} clearSearchValue={props.clearSearchValue} />;
     } else if (props.section === SECTIONS.FILTERS) {
         return <Sidebar filters={props.filters} />;
     } else if (props.section === SECTIONS.EMPTY_RESULTS) {

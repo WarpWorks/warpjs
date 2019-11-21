@@ -1,5 +1,6 @@
 import { selectors as pageHalSelectors } from './../page-hal';
 
+import byResultCount from './by-result-count';
 import Component from './component';
 // import filterTiles from './filter-tiles';
 import { orchestrators, selectors } from './flux';
@@ -35,7 +36,11 @@ const Container = (props) => {
                         secondLevel.onClick = () => orchestrators.select(dispatch, !secondLevel.selected, aggregation.id, entity.id, firstLevel.id, secondLevel.id);
                         secondLevel.docs = secondLevel.docs.filter((doc) => matchedTiles.has(doc));
                     });
+
+                    firstLevel.items.sort(byResultCount);
                 });
+
+                entity.items.sort(byResultCount);
             });
         });
     }
