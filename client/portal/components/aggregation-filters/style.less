@@ -56,7 +56,11 @@
     }
 
     .dropdown {
+        margin-right: 4px;
+
         .dropdown-menu {
+            padding: 15px 15px 22px 15px;
+
             .warpjs-aggregation-filters-search-field-selected {
                 padding: 8px;
 
@@ -72,15 +76,15 @@
                 }
 
                 &.warpjs-aggregation-filters-search-field-selected-level-1 {
-                    color: red;
+                    // color: red;
                 }
 
                 &.warpjs-aggregation-filters-search-field-selected-level-2 {
-                    color: blue;
-                    padding-left: 16px;
+                    // color: blue;
+                    // padding-left: 15px;
 
                     .warpjs-label {
-                        width: 242px;
+                        padding-left: 24px;
                     }
                 }
             }
@@ -111,6 +115,10 @@
         .warpjs-aggregation-filters-selection {
             margin-bottom: 8px;
 
+            .result-count {
+                color: #666666;
+            }
+
             .warpjs-aggregation-filters-sub-selections {
                 margin-top: 8px;
                 margin-left: 24px;
@@ -118,6 +126,10 @@
                 .warpjs-rounded-checkbox {
                     margin-bottom: 8px;
                 }
+            }
+
+            + .warpjs-aggregation-filters-button {
+                margin-top: 12px;
             }
         }
 

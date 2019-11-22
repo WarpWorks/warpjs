@@ -14,7 +14,7 @@ const Component = (props) => {
     return (
         <div className={classNames}>
             <Tooltip title={props.label}><span className="warpjs-label">{props.label}</span></Tooltip>
-            <ActionIcon glyph="remove" title={`Remove '${props.label}`} onClick={props.onClick} />
+            <ActionIcon style="primary" glyph="remove" title={`Remove '${props.label}`} onClick={props.onClick} />
         </div>
     );
 };

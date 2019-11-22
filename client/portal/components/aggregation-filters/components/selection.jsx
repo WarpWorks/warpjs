@@ -15,7 +15,7 @@ const Component = (props) => {
         const actionIconTitle = props.item.expanded ? 'collapse' : 'expand';
         const actionIconGlyph = props.item.expanded ? 'chevron-up' : 'chevron-down';
 
-        expandIcon = <ActionIcon className="pull-right" glyph={actionIconGlyph} title={`${actionIconTitle} ${props.item.label}`} onClick={props.item.onExpand} />;
+        expandIcon = <ActionIcon className="pull-right" style="primary" glyph={actionIconGlyph} title={`${actionIconTitle} ${props.item.label}`} onClick={props.item.onExpand} />;
     }
 
     return (
