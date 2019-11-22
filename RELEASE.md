@@ -6,6 +6,10 @@
 - [Releases 1.0.x](RELEASE-1.0.md) from 2017-05-31 to 2017-06-10
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
+## 1.4.48 - 2019-11-22
+
+- #361: Filtering element by search terms. Work in progress for filters.
+
 ## 1.4.47 - 2019-11-22
 
 - #361: Adjusting some styling from feedbacks.

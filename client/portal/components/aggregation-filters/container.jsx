@@ -1,8 +1,9 @@
+import { clone } from './../../../../lib/utils/set';
 import { selectors as pageHalSelectors } from './../page-hal';
 
 import byResultCount from './by-result-count';
 import Component from './component';
-// import filterTiles from './filter-tiles';
+import filterTiles from './filter-tiles';
 import { orchestrators, selectors } from './flux';
 import matchSearchValue from './match-search-value';
 import * as shapes from './shapes';
@@ -15,11 +16,15 @@ const Container = (props) => {
     const dispatch = useDispatch();
     const substate = useSelector((state) => selectors.substate(state));
 
+    let visibleTiles = new Set(substate.documents);
+
     if (substate.filters) {
         const matchedTiles = new Set(substate.documents
             .filter((doc) => matchSearchValue(substate.searchValue, doc))
             .map((doc) => doc.docId)
         );
+
+        visibleTiles = clone(matchedTiles);
 
         const selectedAggregation = substate.filters.find((filter) => filter.selected);
         substate.filters.forEach((aggregation) => {
@@ -55,8 +60,8 @@ const Container = (props) => {
         if (!substate.initialized) {
             const pageView = page && page.pageViews && page.pageViews.length ? page.pageViews[0] : null;
             orchestrators.init(dispatch, pageView.aggregationDocuments, pageView.aggregationFilters, pageView.aggregationFiltersItems);
-            // } else {
-            //     filterTiles(substate.selection, substate.searchValue, pageView.aggregationFiltersItems, pageView.aggregationDocuments);
+        } else {
+            filterTiles(substate.searchValue, substate.filters, visibleTiles);
         }
     });
 
@@ -66,6 +71,7 @@ const Container = (props) => {
             section={props.section}
             setSearchValue={setSearchValue}
             clearSearchValue={clearSearchValue}
+            visibleTiles={visibleTiles}
         />
     );
 };

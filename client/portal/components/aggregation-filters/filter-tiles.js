@@ -1,15 +1,12 @@
-import * as constants from './constants';
+import { ALL_VISIBLE_CLASSES, ELEMENTS, HIDE } from './constants';
 import hide from './hide';
-import matchSearchValue from './match-search-value';
 import repositionPanelItems from './reposition-panel-items';
 import show from './show';
 
 // import _debug from './debug'; const debug = _debug('filter-tiles');
 
-const showRelnPanelItem = (relnPanelItem, item, counters) => {
-    $(`.warpjs-relationship-panel-item-id-${item.docId}`, relnPanelItem).each((index, relnPanelItemDoc) => {
-        counters.visibleItems += 1;
-
+const showRelnPanelItem = (relnPanelItem, id) => {
+    $(`.warpjs-relationship-panel-item-id-${id}`, relnPanelItem).each((index, relnPanelItemDoc) => {
         show(relnPanelItemDoc);
         show(relnPanelItem);
 
@@ -29,10 +26,7 @@ const showRelnPanelItem = (relnPanelItem, item, counters) => {
     });
 };
 
-export default (selection, searchValue, aggregationFiltersItems, aggregationDocuments) => {
-    const counters = {
-        visibleItems: 0
-    };
+export default (searchValue, filters, visibleTiles) => {
     const mainBody = $('.warpjs-page-view-main-body').get(0);
 
     if (!mainBody) {
@@ -40,20 +34,14 @@ export default (selection, searchValue, aggregationFiltersItems, aggregationDocu
     }
 
     // Make everything is visible at the beginning.
-    $(`.${constants.HIDE}`, mainBody).each((index, item) => show(item));
-    $('.warpjs-relationship-panel-item-tile', mainBody).removeClass(constants.ALL_VISIBLE_CLASSES);
+    $(`.${HIDE}`, mainBody).each((index, item) => show(item));
+    $('.warpjs-relationship-panel-item-tile', mainBody).removeClass(ALL_VISIBLE_CLASSES);
 
-    $(`.${constants.ELEMENTS.EMPTY_RESULTS}`).each((i, element) => hide(element));
+    $(`.${ELEMENTS.EMPTY_RESULTS}`).each((i, element) => hide(element));
 
-    const relnId = selection ? selection.relnId : null;
+    const selectedAggregation = filters.find((aggregation) => aggregation.selected);
 
-    if (relnId || searchValue) {
-        const filteredAggregationFiltersItems = searchValue
-            ? aggregationFiltersItems.filter((item) => matchSearchValue(searchValue, item))
-            : aggregationFiltersItems
-        ;
-
-        // each pageview panel
+    if (selectedAggregation || searchValue) {
         $('> .warpjs-panel', mainBody).each((index, panelContainer) => {
             hide(panelContainer);
 
@@ -70,25 +58,12 @@ export default (selection, searchValue, aggregationFiltersItems, aggregationDocu
 
                         $('> .warpjs-value > .warpjs-value-item-container', relnPanelItem).each((index, relnPanelItemDoc) => hide(relnPanelItemDoc));
 
-                        if (relnId) {
-                            if ($(relnPanelItem).hasClass(`warpjs-relationship-id-${relnId}`)) {
-                                filteredAggregationFiltersItems.forEach((item) => {
-                                    if ((item.firstLevelRelnId === selection.entityId) && (item.firstLevelDocId === selection.firstLevelId)) {
-                                        if (selection.secondLevelId) {
-                                            if (item.secondLevelDocId === selection.secondLevelId) {
-                                                showRelnPanelItem(relnPanelItem, item, counters);
-                                            }
-                                        } else {
-                                            showRelnPanelItem(relnPanelItem, item, counters);
-                                        }
-                                    }
-                                });
+                        if (selectedAggregation) {
+                            if ($(relnPanelItem).hasClass(`warpjs-relationship-id-${selectedAggregation.id}`)) {
+                                visibleTiles.forEach((id) => showRelnPanelItem(relnPanelItem, id));
                             }
                         } else if (searchValue) {
-                            aggregationDocuments
-                                .filter((item) => matchSearchValue(searchValue, item))
-                                .forEach((item) => showRelnPanelItem(relnPanelItem, item, counters))
-                            ;
+                            visibleTiles.forEach((id) => showRelnPanelItem(relnPanelItem, id));
                         }
 
                         repositionPanelItems(relnPanelItem);
@@ -96,8 +71,5 @@ export default (selection, searchValue, aggregationFiltersItems, aggregationDocu
                 });
             });
         });
-    }
-    if (!counters.visibleItems && (relnId || searchValue)) {
-        $(`.${constants.ELEMENTS.EMPTY_RESULTS}`).each((i, element) => show(element));
     }
 };

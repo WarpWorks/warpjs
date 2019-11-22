@@ -5,24 +5,29 @@ import EmptyResults from './components/empty-results';
 import Sidebar from './components/sidebar';
 import SearchField from './components/search-field';
 
-const { errorBoundary } = window.WarpJS.ReactUtils;
+const { Alert, errorBoundary, PropTypes } = window.WarpJS.ReactUtils;
 
 const Component = (props) => {
     if (props.section === SECTIONS.INPUT) {
-        return <SearchField filters={props.filters} searchValue={props.searchValue} clearSearchValue={props.clearSearchValue} />;
+        return <SearchField filters={props.filters} searchValue={props.searchValue} setSearchValue={props.setSearchValue} clearSearchValue={props.clearSearchValue} />;
     } else if (props.section === SECTIONS.FILTERS) {
         return <Sidebar filters={props.filters} />;
     } else if (props.section === SECTIONS.EMPTY_RESULTS) {
-        return <EmptyResults {...props} />;
+        return <EmptyResults visibleTiles={props.visibleTiles} />;
     } else {
-        return <div>*** NOT IMPLEMENTED *** {NAME} - section:{props.section}</div>;
+        return <Alert bsStyle="danger">*** NOT IMPLEMENTED *** {NAME} - section:{props.section}</Alert>;
     }
 };
 
 Component.displayName = NAME;
 
 Component.propTypes = {
-    section: shapes.SECTION
+    clearSearchValue: PropTypes.func,
+    filters: PropTypes.array,
+    searchValue: PropTypes.string,
+    section: shapes.SECTION,
+    setSearchValue: PropTypes.func,
+    visibleTiles: PropTypes.instanceOf(Set)
 };
 
 export default errorBoundary(Component);
