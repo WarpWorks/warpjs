@@ -13,6 +13,7 @@
  *          id: string (doc id of first level)
  *          label: string (name of first level)
  *          selected: bool (injected by reducer)
+ *          expanded: bool (injected by reducer)
  *          docs: [ string ] // documents matching this first level filter
  *          items: [{ // List of second level filters
  *            id: string (doc is of second level)
@@ -35,6 +36,7 @@ const { actionCreator, concatenateReducers, getNamespaceAttribute, getNamespaceS
 
 const actions = namespaceKeys(namespace, [
     'CLEAR_FILTERS',
+    'EXPAND',
     'INIT',
     'SELECT_FILTER',
     'SET_SEARCH_VALUE',
@@ -45,6 +47,7 @@ const byLabel = (a, b) => a.label.localeCompare(b.label);
 
 const actionCreators = Object.freeze({
     clearFilters: () => actionCreator(actions.CLEAR_FILTERS),
+    expand: (expanded, relnId, entityId, firstLevelId) => actionCreator(actions.EXPAND, { expanded, relnId, entityId, firstLevelId }),
     init: (filters, documents) => actionCreator(actions.INIT, { filters, documents }),
     selectFilter: (selected, relnId, entityId, firstLevelId, secondLevelId) => actionCreator(actions.SELECT_FILTER, { selected, relnId, entityId, firstLevelId, secondLevelId }),
     setSearchValue: (value) => actionCreator(actions.SET_SEARCH_VALUE, { value }),
@@ -57,6 +60,11 @@ export const orchestrators = Object.freeze({
             orchestrators.setSearchValue(dispatch, '');
             orchestrators.select(dispatch);
         });
+    },
+
+    expand: (event, dispatch, expanded, relnId, entityId, firstLevelId) => {
+        event.stopPropagation();
+        dispatch(actionCreators.expand(expanded, relnId, entityId, firstLevelId));
     },
 
     init: (dispatch, allDocuments, pageFilters, filterableDocuments) => {
@@ -155,6 +163,16 @@ export const reducers = concatenateReducers([{
         return updaters.substate(state, substate);
     }
 }, {
+    actions: [ actions.EXPAND ],
+    reducer: (state = {}, action) => {
+        const filters = selectors.attribute(state, 'filters', []);
+        const aggregation = filters.find((aggregation) => aggregation.id === action.payload.relnId);
+        const entity = aggregation.items.find((entity) => entity.id === action.payload.entityId);
+        const firstLevel = entity.items.find((firstLevel) => firstLevel.id === action.payload.firstLevelId);
+        firstLevel.expanded = action.payload.expanded;
+        return updaters.attribute(state, 'filters', filters);
+    }
+}, {
     actions: [ actions.INIT ],
     reducer: (state = {}, action) => {
         const substate = selectors.substate(state);
@@ -173,8 +191,12 @@ export const reducers = concatenateReducers([{
         if (action.payload.secondLevelId) {
             const secondLevel = firstLevel.items.find((secondLevel) => secondLevel.id === action.payload.secondLevelId);
             secondLevel.selected = action.payload.selected;
+            if (secondLevel.selected) {
+                firstLevel.selected = true;
+            }
         } else {
             firstLevel.selected = action.payload.selected;
+            firstLevel.expanded = action.payload.selected;
             firstLevel.items.forEach((secondLevel) => {
                 secondLevel.selected = false;
             });

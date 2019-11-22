@@ -30,6 +30,7 @@ const Container = (props) => {
 
                 entity.items.forEach((firstLevel) => {
                     firstLevel.onClick = () => orchestrators.select(dispatch, !firstLevel.selected, aggregation.id, entity.id, firstLevel.id);
+                    firstLevel.onExpand = (event) => orchestrators.expand(event, dispatch, !firstLevel.expanded, aggregation.id, entity.id, firstLevel.id);
                     firstLevel.docs = firstLevel.docs.filter((doc) => matchedTiles.has(doc));
 
                     firstLevel.items.forEach((secondLevel) => {
