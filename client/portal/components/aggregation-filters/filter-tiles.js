@@ -1,4 +1,4 @@
-import { ALL_VISIBLE_CLASSES, ELEMENTS, HIDE } from './constants';
+import { ALL_VISIBLE_CLASSES, HIDE } from './constants';
 import hide from './hide';
 import repositionPanelItems from './reposition-panel-items';
 import show from './show';
@@ -36,8 +36,6 @@ export default (searchValue, filters, visibleTiles) => {
     // Make everything is visible at the beginning.
     $(`.${HIDE}`, mainBody).each((index, item) => show(item));
     $('.warpjs-relationship-panel-item-tile', mainBody).removeClass(ALL_VISIBLE_CLASSES);
-
-    $(`.${ELEMENTS.EMPTY_RESULTS}`).each((i, element) => hide(element));
 
     const selectedAggregation = filters.find((aggregation) => aggregation.selected);
 
