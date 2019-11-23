@@ -1,4 +1,4 @@
-import { clone } from './../../../../lib/utils/set';
+import { intersection, union } from './../../../../lib/utils/set';
 import { selectors as pageHalSelectors } from './../page-hal';
 
 import byResultCount from './by-result-count';
@@ -16,7 +16,7 @@ const Container = (props) => {
     const dispatch = useDispatch();
     const substate = useSelector((state) => selectors.substate(state));
 
-    let visibleTiles = new Set(substate.documents);
+    let visibleTiles = new Set();
 
     if (substate.filters) {
         const matchedTiles = new Set(substate.documents
@@ -24,7 +24,7 @@ const Container = (props) => {
             .map((doc) => doc.docId)
         );
 
-        visibleTiles = clone(matchedTiles);
+        visibleTiles = intersection(matchedTiles);
 
         const selectedAggregation = substate.filters.find((filter) => filter.selected);
         substate.filters.forEach((aggregation) => {
@@ -43,11 +43,34 @@ const Container = (props) => {
                         secondLevel.docs = secondLevel.docs.filter((doc) => matchedTiles.has(doc));
                     });
 
+                    if (firstLevel.selected) {
+                        const selectedSecondLevels = firstLevel.items.filter((secondLevel) => secondLevel.selected);
+                        if (selectedSecondLevels.length) {
+                            firstLevel.filteredTiles = selectedSecondLevels.reduce(
+                                (set, secondLevel) => union(set, new Set(secondLevel.docs)),
+                                new Set()
+                            );
+                        } else {
+                            firstLevel.filteredTiles = new Set(firstLevel.docs);
+                        }
+                    }
+
                     firstLevel.items.sort(byResultCount);
                 });
 
+                if (entity.selected) {
+                    const selectedFirstLevels = entity.items.filter((firstLevel) => firstLevel.selected);
+                    entity.filteredTiles = union(...selectedFirstLevels.map((firstLevel) => firstLevel.filteredTiles));
+                }
+
                 entity.items.sort(byResultCount);
             });
+
+            if (aggregation.selected) {
+                const selectedEntities = aggregation.items.filter((entity) => entity.selected);
+                aggregation.filteredTiles = intersection(...selectedEntities.map((entity) => entity.filteredTiles));
+                visibleTiles = intersection(visibleTiles, aggregation.filteredTiles);
+            }
         });
     }
 
