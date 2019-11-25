@@ -6,6 +6,10 @@
 - [Releases 1.0.x](RELEASE-1.0.md) from 2017-05-31 to 2017-06-10
 - [Releases 0.6.x](RELEASE-0.6.md) up to 2017-05-12
 
+## 1.4.51 - 2019-11-25
+
+- #367: `overflow:hidden` to not display scrolls on Firefox.
+
 ## 1.4.50 - 2019-11-25
 
 - #367: Adding `word-wrap:break-word` to Tile.
