@@ -59,6 +59,17 @@
                 .warpjs-container {
                     // max-height: calc(~"100% - 32px");
                     // overflow: hidden;
+
+                    .warpjs-body {
+                        .warpjs-label {
+                            text-overflow: ellipsis;
+                            overflow-x: hidden;
+                        }
+
+                        .warpjs-title, .warpjs-content {
+                            word-wrap: break-word;
+                        }
+                    }
                 }
 
                 .warpjs-image {
