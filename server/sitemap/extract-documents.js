@@ -63,7 +63,7 @@ const extractDocuments = async (persistence, domain, document, level = 1, stop =
                 return targetEntity.isDocument();
             } else {
                 // eslint-disable-next-line no-console
-                console.error(`Relationship '${reln.id}/${reln.name}' doesn't have a target entity.`);
+                console.error(`Relationship '${entity.name}/${reln.id}/${reln.name}' doesn't have a target entity.`);
                 return false;
             }
         }
