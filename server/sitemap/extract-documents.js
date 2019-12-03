@@ -56,7 +56,18 @@ const extractDocuments = async (persistence, domain, document, level = 1, stop =
 
     const nextStop = Boolean(document.ReleaseableContent);
 
-    const aggregationRelationships = entity.getRelationships().filter((reln) => reln.isAggregation && reln.getTargetEntity().isDocument());
+    const aggregationRelationships = entity.getRelationships().filter((reln) => {
+        if (reln.isAggregation) {
+            const targetEntity = reln.getTargetEntity();
+            if (targetEntity) {
+                return targetEntity.isDocument();
+            } else {
+                // eslint-disable-next-line no-console
+                console.error(`Relationship '${reln.id}/${reln.name}' doesn't have a target entity.`);
+                return false;
+            }
+        }
+    });
     // debug(`    found ${aggregationRelationships.length} aggregation relationships.`);
 
     return Promise.reduce(
