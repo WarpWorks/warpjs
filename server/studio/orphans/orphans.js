@@ -1,6 +1,8 @@
 const Orphan = require('./../../edition/orphan');
 const { routes } = require('./../constants');
 
+// const debug = require('./debug')('orphans');
+
 class Orphans {
     constructor(domainInstance) {
         this.domainInstance = domainInstance;
@@ -33,7 +35,10 @@ class Orphans {
             // relationship's targetEntity
             entity.relationships.forEach((reln) => {
                 const oid = reln.targetEntity && reln.targetEntity.length ? reln.targetEntity[0] : null;
-                if (this.isInvalid(oid)) {
+                // debug(`findInvalidReferences(): reln=${reln.name}, oid=`, oid);
+                if (!oid) {
+                    this.addOrphan(Orphan.REASONS.MISSING_TARGET_ENTITY, entity, reln.name);
+                } else if (this.isInvalid(oid)) {
                     this.addOrphan(Orphan.REASONS.INVALID_TARGET_ENTITY, entity, reln.name);
                 }
             });

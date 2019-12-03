@@ -7,5 +7,6 @@ module.exports = Object.freeze({
     INVALID_TABLEVIEW_PROPERTY: "TableItem property invalid",
     MISSING_ENTITY: "Document's entity is missing",
     MISSING_PARENT: "Parent document is missing",
-    MISSING_RELATIONSHIP: "Parent document relationship is missing"
+    MISSING_RELATIONSHIP: "Parent document relationship is missing",
+    MISSING_TARGET_ENTITY: "Relationship doesn't define a target entity"
 });
