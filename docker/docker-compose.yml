@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+
+  mongo:
+    image: 'mongo:3.4.2'
+    container_name: 'iic-hub-mongo'
+    ports:
+      - 27017:27017
+    volumes:
+    - iic-hub-mongo-db:/data/db
+    - iic-hub-mongo-configdb:/data/configdb
+    - ../../w2projects:/srv/w2projects
+    restart: always
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.8.4
+    container_name: 'iic-hub-elasticsearch'
+    environment:
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - iic-hub-esdata:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+    restart: always
+
+volumes:
+  iic-hub-esdata:
+    driver: local
+  iic-hub-mongo-db:
+    driver: local
+  iic-hub-mongo-configdb:
+    driver: local

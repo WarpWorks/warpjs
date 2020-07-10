@@ -7,20 +7,25 @@ const warpjsPlugins = require('@warp-works/warpjs-plugins');
 const serverUtils = require('./../server/utils');
 const warpCore = require('./../lib/core');
 
+(async () => {
+    debug("Starting re-index process...");
+    const config = serverUtils.getConfig();
+    warpjsPlugins.init(config.domainName, config.persistence, config.plugins);
+    const plugin = warpjsPlugins.getPlugin('search');
+    if (plugin) {
+        await plugin.module.initializeIndex(plugin.config);
+    }
+})();
+
 Promise.resolve()
-    .then(() => debug("Starting re-index process..."))
-    .then(() => serverUtils.getConfig())
-    .then((config) => warpjsPlugins.init(config.domainName, config.persistence, config.plugins))
-    .then(() => warpjsPlugins.getPlugin('search'))
     .then((plugin) => plugin
         ? Promise.resolve()
-            .then(() => plugin.module.initializeIndex(plugin.config))
             .then(() => plugin.module.indexDomain(plugin.config, warpCore))
         : null
     )
     .then(() => debug("re-index process completed successfully."))
     .catch((err) => {
         // eslint-disable-next-line no-console
-        console.log("re-index process error:", err);
+        console.error("re-index process error:", err);
     })
 ;
