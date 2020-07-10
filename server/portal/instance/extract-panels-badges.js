@@ -2,7 +2,6 @@ const Promise = require('bluebird');
 
 const warpjsUtils = require('@warp-works/warpjs-utils');
 
-const Document = require('./../../../lib/core/first-class/document');
 const Documents = require('./../../../lib/core/first-class/documents');
 const badgeCategoriesByEntity = require('./../resources/badge-categories-by-entity');
 const constants = require('./../resources/constants');
@@ -54,7 +53,6 @@ module.exports = async (persistence, entity, instance, entityPanels) => {
                                                 const stars = assignedBadge.Stars;
                                                 const image = badgeDefinition._embedded.images.find((image) => image.name === stars);
 
-                                                badgeDefinition._links.self.href = await Document.getPortalUrl(persistence, domain.getEntityByInstance(assignedBadge), assignedBadge);
                                                 if (image) {
                                                     badgeDefinition._links.image.href = image._links.self.href;
                                                 }
