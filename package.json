@@ -142,7 +142,7 @@
     "grunt-contrib-less": "2.0.x",
     "grunt-eslint": "~22.0.0",
     "grunt-webpack": "3.1.x",
-    "handlebars": "~4.5.3",
+    "handlebars": "~4.7.7",
     "handlebars-loader": "1.7.x",
     "load-grunt-config": "~3.0.1",
     "mocha": "~6.2.2",
