@@ -44,6 +44,7 @@ const Component = (props) => {
     let paragraphImage = null;
     if (props.item._embedded && props.item._embedded.images) {
         const image = props.item._embedded.images[0];
+        // eslint-disable-next-line no-unused-vars
         paragraphImage = (
             <img src={image.base64} alt={image.caption} />
         );

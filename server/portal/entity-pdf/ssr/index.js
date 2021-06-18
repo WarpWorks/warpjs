@@ -4,15 +4,15 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _react = require('react');
+const _react = require('react');
 
-var _react2 = _interopRequireDefault(_react);
+const _react2 = _interopRequireDefault(_react);
 
-var _server = require('react-dom/server');
+const _server = require('react-dom/server');
 
-var _main = require('./main');
+const _main = require('./main');
 
-var _main2 = _interopRequireDefault(_main);
+const _main2 = _interopRequireDefault(_main);
 
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : { default: obj };
