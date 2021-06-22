@@ -1,6 +1,6 @@
 {
   "name": "@warp-works/warpjs",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Content management system for WarpWorks in javascript",
   "repository": {
     "type": "git",
@@ -169,7 +169,7 @@
     "@quoin/expressjs-routes-info": ">=2.0.0",
     "@warp-works/warpjs-plugins": ">=2.0.0",
     "@warp-works/warpjs-session-plugin": ">=2.0.0",
-    "@warp-works/warpjs-utils": ">=2.0.0",
+    "@warp-works/warpjs-utils": ">=2.0.1",
     "body-parser": ">=1.17.0",
     "cookie-parser": ">=1.4.0",
     "express": ">=4.0.0"
