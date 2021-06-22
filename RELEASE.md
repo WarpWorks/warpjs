@@ -1,5 +1,9 @@
 # WarpJS Releases Notes
 
+## 2.0.2 - 2021-06-21
+
+- Merging into master branch and latest tag.
+
 ## 2.0.1 - 2021-06-21
 
 - Updating packages and node@14
