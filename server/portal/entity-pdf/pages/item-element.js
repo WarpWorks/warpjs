@@ -144,6 +144,7 @@ const itemElement = (resource, docDefinition, headlineLevel = 1, req) => {
                                         text: memo,
                                         marginLeft: 5
                                     });
+                                    return memo;
                                 } else {
                                     stackItem.marginLeft = null;
 
@@ -209,6 +210,7 @@ const itemElement = (resource, docDefinition, headlineLevel = 1, req) => {
                                 text: memo,
                                 style: 'paragraph'
                             });
+                            return memo;
                         } else {
                             return memo.concat(segment);
                         }

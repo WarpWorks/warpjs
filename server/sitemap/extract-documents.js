@@ -67,6 +67,7 @@ const extractDocuments = async (persistence, domain, document, level = 1, stop =
                 return false;
             }
         }
+        return false;
     });
     // debug(`    found ${aggregationRelationships.length} aggregation relationships.`);
 

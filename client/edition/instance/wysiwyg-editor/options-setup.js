@@ -1,7 +1,7 @@
 const openLinkSelectionModal = require('./open-link-selection-modal');
 
 module.exports = ($, instanceDoc, editor) => {
-    var menuItems = [];
+    const menuItems = [];
 
     menuItems.push({
         text: 'External URL',

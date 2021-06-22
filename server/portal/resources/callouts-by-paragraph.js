@@ -17,4 +17,6 @@ module.exports = (persistence, paragraphEntity, paragraphInstance) => Promise.re
 
             return resource;
         }
+
+        return null;
     }));
