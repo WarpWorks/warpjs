@@ -1,6 +1,6 @@
 {
   "name": "@warp-works/warpjs",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Content management system for WarpWorks in javascript",
   "repository": {
     "type": "git",
@@ -39,17 +39,12 @@
     "check": "grunt check && npm run jscpd",
     "jscpd": "jscpd lib client server",
     "prepare": "grunt build",
-    "pretest": "npm run check",
     "prepack": "npm run coverage",
-    "coverage:integration": "nyc --report-dir=reports/coverage/integration npm run -s test:integration",
-    "coverage:unit": "nyc --report-dir=reports/coverage/unit npm run -s test:unit",
-    "coverage": "npm run -s coverage:unit && npm run -s coverage:integration",
+    "coverage": "nyc npm test",
     "coverage-report": "nyc report --reporter=text --reporter=text-summary",
     "precoverage": "npm run check",
     "docker-compose": "cd .. && docker-compose -f warpjs/docker/docker-compose.yml up",
-    "test:integration": "mocha \"lib/**/*.integration.test.js\" \"client/**/*.integration.test.js\" \"server/**/*.integration.test.js\"",
-    "test:unit": "mocha \"lib/**/*.unit.test.js\" \"client/**/*.unit.test.js\" \"server/**/*.unit.test.js\"",
-    "test": "npm run -s test:unit && npm run -s test:integration",
+    "test": "mocha",
     "eslint:client": "grunt eslint:client",
     "eslint:node": "grunt eslint:node",
     "eslint:test": "grunt eslint:test",
@@ -68,7 +63,7 @@
     "@quoin/node-rc": "^2.0.1",
     "@warp-works/warpjs-change-logs": "^2.0.2",
     "@warp-works/warpjs-filter-box": "^2.0.1",
-    "bcrypt-nodejs": "0.0.3",
+    "bcrypt": "^5.0.1",
     "bluebird": "~3.7.2",
     "canvas": "^2.8.0",
     "classnames": "^2.3.1",
@@ -115,7 +110,7 @@
     "@warp-works/warpjs-map-plugin": "^2.0.2",
     "@warp-works/warpjs-mongo-persistence": "^2.0.3",
     "@warp-works/warpjs-plugins": "^2.0.1",
-    "@warp-works/warpjs-session-plugin": "^2.0.1",
+    "@warp-works/warpjs-session-plugin": "^2.0.2",
     "@warp-works/warpjs-survey-tool-plugin": "^2.0.1",
     "@warp-works/warpjs-utils": "^2.0.3",
     "babel-core": "6.26.x",
@@ -159,7 +154,6 @@
     "redux": "^4.1.0",
     "redux-concatenate-reducers": "~1.0.0",
     "redux-logger": "~3.0.6",
-    "time-grunt": "~2.0.0",
     "tinymce": "^4.9.11",
     "webpack": "2.7.0",
     "webpack-visualizer-plugin": "0.1.11"
@@ -172,5 +166,61 @@
     "body-parser": ">=1.17.0",
     "cookie-parser": ">=1.4.0",
     "express": ">=4.0.0"
+  },
+  "mocha": {
+    "diff": true,
+    "exit": true,
+    "recursive": true,
+    "spec": [
+      "lib/**/*.test.js",
+      "client/**/*.test.js",
+      "server/**/*.test.js"
+    ]
+  },
+  "nyc": {
+    "all": true,
+    "temp-dir": "./reports/nyc_output",
+    "report-dir": "./reports/coverage",
+    "check-coverage": false,
+    "include": [
+      "lib/**/*.js",
+      "client/**/*.js",
+      "client/**/*.jsx",
+      "server/**/*.js"
+    ],
+    "exclude": [
+      "**/*.*.test.js",
+      "Gruntfile.js",
+      "grunt/**/*.js",
+      "public/3rd-party",
+      "public/app",
+      "public/libs",
+      "reports",
+      "server.js",
+      "studio"
+    ],
+    "reporter": [
+      "cobertura",
+      "lcov",
+      "html"
+    ],
+    "watermarks": {
+      "statements": [
+        50,
+        80
+      ],
+      "lines": [
+        50,
+        80
+      ],
+      "functions": [
+        50,
+        80
+      ],
+      "branches": [
+        50,
+        80
+      ]
+    }
   }
 }
