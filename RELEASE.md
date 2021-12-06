@@ -1,5 +1,9 @@
 # WarpJS Releases Notes
 
+## 2.0.5 - 2021-06-24
+
+- Updated warpjs-session-plugin version
+
 ## 2.0.3 - 2021-06-24
 
 - Updated bcrypt
