@@ -1,6 +1,6 @@
 {
   "name": "@warp-works/warpjs",
-  "version": "2.0.3",
+  "version": "2.0.5",
   "description": "Content management system for WarpWorks in javascript",
   "repository": {
     "type": "git",
@@ -110,7 +110,7 @@
     "@warp-works/warpjs-map-plugin": "^2.0.2",
     "@warp-works/warpjs-mongo-persistence": "^2.0.3",
     "@warp-works/warpjs-plugins": "^2.0.1",
-    "@warp-works/warpjs-session-plugin": "^2.0.2",
+    "@warp-works/warpjs-session-plugin": "^2.0.4",
     "@warp-works/warpjs-survey-tool-plugin": "^2.0.1",
     "@warp-works/warpjs-utils": "^2.0.3",
     "babel-core": "6.26.x",
