@@ -1,6 +1,6 @@
 {
   "name": "@warp-works/warpjs",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "description": "Content management system for WarpWorks in javascript",
   "repository": {
     "type": "git",
@@ -105,7 +105,7 @@
     "@quoin/node-test-helpers": "^2.0.1",
     "@warp-works/progress-bar-modal": "^2.0.1",
     "@warp-works/warpjs-domain-json-exporter-plugin": "^2.0.1",
-    "@warp-works/warpjs-elasticsearch-plugin": "^2.0.1",
+    "@warp-works/warpjs-elasticsearch-plugin": "^2.0.2",
     "@warp-works/warpjs-imagemap-editor-plugin": "^2.0.1",
     "@warp-works/warpjs-map-plugin": "^2.0.2",
     "@warp-works/warpjs-mongo-persistence": "^2.0.3",

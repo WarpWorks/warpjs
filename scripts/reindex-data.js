@@ -18,6 +18,7 @@ const warpCore = require('./../lib/core');
 })();
 
 Promise.resolve()
+    .then(() => warpjsPlugins.getPlugin('search'))
     .then((plugin) => plugin
         ? Promise.resolve()
             .then(() => plugin.module.indexDomain(plugin.config, warpCore))
