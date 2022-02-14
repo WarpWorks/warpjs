@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 const ContextButton = (props) => {
     const { page, elementId, elementType, reference = {} } = props;
 
@@ -17,6 +19,13 @@ const ContextButton = (props) => {
     } else {
         return null;
     }
+};
+
+ContextButton.propTypes = {
+    page: PropTypes.any,
+    elementId: PropTypes.any,
+    elementType: PropTypes.any,
+    reference: PropTypes.any
 };
 
 module.exports = ContextButton;
