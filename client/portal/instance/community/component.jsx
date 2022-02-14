@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 const CommunitySection = require('./../community-section');
 
 const Community = (props) => {
@@ -16,6 +18,11 @@ const Community = (props) => {
     } else {
         return null;
     }
+};
+
+Community.propTypes = {
+    community: PropTypes.any,
+    page: PropTypes.any
 };
 
 module.exports = Community;

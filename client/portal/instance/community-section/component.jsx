@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 const CommunityUser = require('./../community-user');
 const ContextButton = require('./../context-button');
 
@@ -25,6 +27,12 @@ const CommunitySection = (props) => {
     } else {
         return null;
     }
+};
+
+CommunitySection.propTypes = {
+    users: PropTypes.any,
+    page: PropTypes.any,
+    title: PropTypes.any
 };
 
 module.exports = CommunitySection;
