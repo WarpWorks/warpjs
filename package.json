@@ -145,7 +145,7 @@
     "jscpd": "^3.3.26",
     "load-grunt-config": "~3.0.1",
     "mocha": "^9.0.2",
-    "moment": "~2.24.0",
+    "moment": "~2.29.2",
     "mongodb": "^3.6.10",
     "nyc": "^15.1.0",
     "prop-types": "~15.7.2",
